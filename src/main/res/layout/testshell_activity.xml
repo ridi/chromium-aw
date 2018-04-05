@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/testshell_activity" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:textSize="18.0sp" android:gravity="bottom" android:id="@id/url" android:layout_width="0.0dip" android:layout_height="wrap_content" android:singleLine="true" android:selectAllOnFocus="true" android:layout_weight="1.0" android:inputType="textUri" android:imeOptions="actionGo" />
+        <ImageButton android:id="@id/prev" android:layout_width="38.0dip" android:layout_height="38.0dip" android:src="@android:drawable/ic_media_previous" android:scaleType="center" android:contentDescription="@null" />
+        <ImageButton android:id="@id/next" android:layout_width="38.0dip" android:layout_height="38.0dip" android:src="@android:drawable/ic_media_next" android:scaleType="center" android:contentDescription="@null" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:id="@id/content_container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+</LinearLayout>

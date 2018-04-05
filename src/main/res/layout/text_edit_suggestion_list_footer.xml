@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:id="@id/divider" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+    <TextView android:id="@id/addToDictionaryButton" android:text="@string/add_to_dictionary" style="@style/TextSuggestionButton" />
+    <TextView android:id="@id/deleteButton" android:text="@string/delete_suggestion_text" style="@style/TextSuggestionButton" />
+</LinearLayout>

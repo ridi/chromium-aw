@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/start_dropdown_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="@dimen/dropdown_icon_margin" android:contentDescription="@null" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/dropdown_label_wrapper" android:layout_width="0.0dip" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <TextView android:textSize="@dimen/text_size_large" android:textColor="@drawable/dropdown_label_color" android:ellipsize="end" android:id="@id/dropdown_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:includeFontPadding="false" android:textAlignment="viewStart" android:layout_marginStart="@dimen/dropdown_item_label_margin" android:layout_marginEnd="@dimen/dropdown_item_label_margin" />
+        <TextView android:textAppearance="@style/BlackCaption" android:ellipsize="end" android:id="@id/dropdown_sublabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:includeFontPadding="false" android:textAlignment="viewStart" android:layout_marginStart="@dimen/dropdown_item_label_margin" android:layout_marginEnd="@dimen/dropdown_item_label_margin" />
+    </LinearLayout>
+    <ImageView android:id="@id/end_dropdown_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="8.0dip" android:contentDescription="@null" />
+</LinearLayout>

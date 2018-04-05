@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="config_key_system_uuid_mapping">
+        <item>x-com.oem.test-keysystem,EDEF8BA9-79D6-4ACE-A3C8-27DCD51D21ED</item>
+        <item>com.oem.test-keysystem,EDEF8BA9-79D6-4ACE-A3C8-27DCD51D21ED</item>
+    </string-array>
+</resources>

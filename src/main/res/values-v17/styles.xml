@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DropdownPopupWindow" parent="@android:style/Widget.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/dropdown_popup_background</item>
+    </style>
+    <style name="ButtonCompatOverlay">
+        <item name="android:buttonStyle">@style/ButtonCompat</item>
+    </style>
+    <style name="ButtonCompatBorderlessOverlay">
+        <item name="android:buttonStyle">@style/ButtonCompatBorderless</item>
+    </style>
+    <style name="ButtonCompatBase">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">5.0dip</item>
+        <item name="android:paddingBottom">5.0dip</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:minWidth">88.0dip</item>
+        <item name="android:minHeight">36.0dip</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingStart">20.0dip</item>
+        <item name="android:paddingEnd">20.0dip</item>
+    </style>
+    <style name="ButtonCompat" parent="@style/ButtonCompatBase">
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_compat_shape</item>
+    </style>
+    <style name="ButtonCompatBorderless" parent="@style/ButtonCompat">
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+    <style name="RobotoMediumStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="BlackHeadline1">
+        <item name="android:textSize">@dimen/headline_size_large</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackHeadline2" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/headline_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackTitle1">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackTitle2" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackHint1">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackHint2">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackDisabledText1">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/black_alpha_38</item>
+    </style>
+    <style name="BlackDisabledText2">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/black_alpha_38</item>
+    </style>
+    <style name="BlackBodyDefault">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackBody">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackCaptionDefault">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackCaption">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackDenseListText1">
+        <item name="android:textSize">@dimen/text_size_medium_dense</item>
+        <item name="android:textColor">@color/black_alpha_87</item>
+    </style>
+    <style name="BlackDenseListText2">
+        <item name="android:textSize">@dimen/text_size_medium_dense</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackButtonText" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="BlackLink">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black_alpha_54</item>
+    </style>
+    <style name="WhiteHeadline1">
+        <item name="android:textSize">@dimen/headline_size_large</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="WhiteHeadline2" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/headline_size_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="WhiteBodyIncognito">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/white_alpha_70</item>
+    </style>
+    <style name="WhiteBody">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="WhiteTitle2" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="WhiteLink">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="BlueButtonText1" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/google_blue_300</item>
+    </style>
+    <style name="BlueButtonText2" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/google_blue_500</item>
+    </style>
+    <style name="BlueLink1">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/google_blue_700</item>
+    </style>
+    <style name="BlueLink2">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/google_blue_700</item>
+    </style>
+    <style name="RtlOverlay.DialogWindowTitle.AppCompat" parent="@style/Base.DialogWindowTitle.AppCompat">
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.ActionBar.TitleItem" parent="@android:style/Widget">
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:paddingEnd">8.0dip</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.DialogTitle.Icon" parent="@android:style/Widget">
+        <item name="android:layout_marginEnd">8.0dip</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.PopupMenuItem" parent="@android:style/Widget">
+        <item name="android:paddingEnd">16.0dip</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.PopupMenuItem.InternalGroup" parent="@android:style/Widget">
+        <item name="android:layout_marginStart">16.0dip</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.PopupMenuItem.Text" parent="@android:style/Widget">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.Search.DropDown" parent="@android:style/Widget">
+        <item name="android:paddingStart">@dimen/abc_dropdownitem_text_padding_left</item>
+        <item name="android:paddingEnd">4.0dip</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.Search.DropDown.Icon1" parent="@android:style/Widget">
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.Search.DropDown.Icon2" parent="@android:style/Widget">
+        <item name="android:layout_toStartOf">@id/edit_query</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.Search.DropDown.Query" parent="@android:style/Widget">
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.Search.DropDown.Text" parent="@style/Base.Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:layout_toStartOf">@android:id/icon2</item>
+        <item name="android:layout_toEndOf">@android:id/icon1</item>
+    </style>
+    <style name="RtlOverlay.Widget.AppCompat.SearchView.MagIcon" parent="@android:style/Widget">
+        <item name="android:layout_marginStart">@dimen/abc_dropdownitem_text_padding_left</item>
+    </style>
+    <style name="RtlUnderlay.Widget.AppCompat.ActionButton" parent="@android:style/Widget">
+        <item name="android:paddingStart">12.0dip</item>
+        <item name="android:paddingEnd">12.0dip</item>
+    </style>
+    <style name="RtlUnderlay.Widget.AppCompat.ActionButton.Overflow" parent="@style/Base.Widget.AppCompat.ActionButton">
+        <item name="android:paddingStart">@dimen/abc_action_bar_overflow_padding_start_material</item>
+        <item name="android:paddingEnd">@dimen/abc_action_bar_overflow_padding_end_material</item>
+    </style>
+    <style name="SelectPopupDialog">
+        <item name="select_dialog_multichoice">@android:layout/select_dialog_multichoice</item>
+        <item name="select_dialog_singlechoice">@android:layout/select_dialog_singlechoice</item>
+    </style>
+    <style name="SelectActionMenuShare">
+        <item name="android:icon">@drawable/ic_menu_share_holo_light</item>
+    </style>
+    <style name="SelectActionMenuWebSearch">
+        <item name="android:icon">@drawable/ic_search</item>
+    </style>
+    <style name="TextSuggestionButton" parent="@style/RobotoMediumStyle">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">@color/google_blue_500</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:paddingTop">8.0dip</item>
+        <item name="android:paddingBottom">8.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">48.0dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">8.0dip</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingStart">16.0dip</item>
+        <item name="android:paddingEnd">16.0dip</item>
+    </style>
+</resources>

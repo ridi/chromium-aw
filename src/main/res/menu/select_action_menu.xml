@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@id/select_action_menu_assist_items" android:orderInCategory="1" />
+    <group android:id="@id/select_action_menu_default_items">
+        <item android:icon="?android:actionModeCutDrawable" android:id="@id/select_action_menu_cut" android:orderInCategory="2" android:title="@android:string/cut" android:alphabeticShortcut="x" android:showAsAction="always|withText" />
+        <item android:icon="?android:actionModeCopyDrawable" android:id="@id/select_action_menu_copy" android:orderInCategory="3" android:title="@android:string/copy" android:alphabeticShortcut="c" android:showAsAction="always|withText" />
+        <item android:icon="?android:actionModePasteDrawable" android:id="@id/select_action_menu_paste" android:orderInCategory="4" android:title="@android:string/paste" android:alphabeticShortcut="v" android:showAsAction="always|withText" />
+        <item android:id="@id/select_action_menu_share" android:orderInCategory="5" android:title="@string/actionbar_share" android:showAsAction="always|withText" style="@style/SelectActionMenuShare" />
+        <item android:icon="?android:actionModeSelectAllDrawable" android:id="@id/select_action_menu_select_all" android:orderInCategory="6" android:title="@android:string/selectAll" android:alphabeticShortcut="a" android:showAsAction="always|withText" />
+        <item android:id="@id/select_action_menu_paste_as_plain_text" android:orderInCategory="7" android:title="@android:string/paste_as_plain_text" android:showAsAction="always|withText" />
+        <item android:id="@id/select_action_menu_web_search" android:orderInCategory="8" android:title="@string/actionbar_web_search" android:showAsAction="always|withText" style="@style/SelectActionMenuWebSearch" />
+    </group>
+    <group android:id="@id/select_action_menu_text_processing_menus" android:orderInCategory="9" />
+</menu>
