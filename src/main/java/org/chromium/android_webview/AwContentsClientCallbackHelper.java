@@ -301,7 +301,7 @@ public class AwContentsClientCallbackHelper {
     public void postOnNewPicture(Callable<Picture> pictureProvider) {
         if (mHasPendingOnNewPicture) return;
         mHasPendingOnNewPicture = true;
-        long pictureTime = Math.max(mLastPictureTime + ON_NEW_PICTURE_MIN_PERIOD_MILLIS,
+        long pictureTime = java.lang.Math.max(mLastPictureTime + ON_NEW_PICTURE_MIN_PERIOD_MILLIS,
                 SystemClock.uptimeMillis());
         mHandler.sendMessageAtTime(mHandler.obtainMessage(MSG_ON_NEW_PICTURE, pictureProvider),
                 pictureTime);

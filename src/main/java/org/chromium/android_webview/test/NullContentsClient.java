@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.android_webview.shell;
+package org.chromium.android_webview.test;
 
 import android.graphics.Bitmap;
 import android.graphics.Picture;
@@ -53,7 +53,7 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(AwWebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(AwContentsClient.AwWebResourceRequest request) {
         return false;
     }
 
@@ -75,7 +75,7 @@ public class NullContentsClient extends AwContentsClient {
 
     @Override
     public AwWebResourceResponse shouldInterceptRequest(
-            AwWebResourceRequest request) {
+            AwContentsClient.AwWebResourceRequest request) {
         return null;
     }
 

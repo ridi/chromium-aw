@@ -25,138 +25,138 @@ import android.view.inputmethod.InputConnection;
 interface AwViewMethods {
 
     /**
-     * @see View#onDraw
+     * @see android.view.View#onDraw
      */
     void onDraw(Canvas canvas);
 
     /**
-     * @see View#onMeasure
+     * @see android.view.View#onMeasure
      */
     void onMeasure(int widthMeasureSpec, int heightMeasureSpec);
 
     /**
-     * @see View#requestFocus
+     * @see android.view.View#requestFocus
      */
     void requestFocus();
 
     /**
-     * @see View#setLayerType
+     * @see android.view.View#setLayerType
      */
     void setLayerType(int layerType, Paint paint);
 
     /**
-     * @see View#onCreateInputConnection
+     * @see android.view.View#onCreateInputConnection
      */
     InputConnection onCreateInputConnection(EditorInfo outAttrs);
 
     /**
-     * @see View#onDragEvent
+     * @see android.view.View#onDragEvent
      */
     boolean onDragEvent(DragEvent event);
 
     /**
-     * @see View#onKeyUp
+     * @see android.view.View#onKeyUp
      */
     boolean onKeyUp(int keyCode, KeyEvent event);
 
     /**
-     * @see View#dispatchKeyEvent
+     * @see android.view.View#dispatchKeyEvent
      */
     boolean dispatchKeyEvent(KeyEvent event);
 
     /**
-     * @see View#onTouchEvent
+     * @see android.view.View#onTouchEvent
      */
     boolean onTouchEvent(MotionEvent event);
 
     /**
-     * @see View#onHoverEvent
+     * @see android.view.View#onHoverEvent
      */
     boolean onHoverEvent(MotionEvent event);
 
     /**
-     * @see View#onGenericMotionEvent
+     * @see android.view.View#onGenericMotionEvent
      */
     boolean onGenericMotionEvent(MotionEvent event);
 
     /**
-     * @see View#onConfigurationChanged
+     * @see android.view.View#onConfigurationChanged
      */
     void onConfigurationChanged(Configuration newConfig);
 
     /**
-     * @see View#onAttachedToWindow
+     * @see android.view.View#onAttachedToWindow
      */
     void onAttachedToWindow();
 
     /**
-     * @see View#onDetachedFromWindow
+     * @see android.view.View#onDetachedFromWindow
      */
     void onDetachedFromWindow();
 
     /**
-     * @see View#onWindowFocusChanged
+     * @see android.view.View#onWindowFocusChanged
      */
     void onWindowFocusChanged(boolean hasWindowFocus);
 
     /**
-     * @see View#onFocusChanged
+     * @see android.view.View#onFocusChanged
      */
     void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect);
 
     /**
-     * @see View#onSizeChanged
+     * @see android.view.View#onSizeChanged
      */
     void onSizeChanged(int w, int h, int ow, int oh);
 
     /**
-     * @see View#onVisibilityChanged
+     * @see android.view.View#onVisibilityChanged
      */
     void onVisibilityChanged(View changedView, int visibility);
 
     /**
-     * @see View#onWindowVisibilityChanged
+     * @see android.view.View#onWindowVisibilityChanged
      */
     void onWindowVisibilityChanged(int visibility);
 
     /**
-     * @see View#onScrollChanged
+     * @see android.view.View#onScrollChanged
      */
     void onContainerViewScrollChanged(int l, int t, int oldl, int oldt);
 
     /**
-     * @see View#onOverScrolled
+     * @see android.view.View#onOverScrolled
      */
     void onContainerViewOverScrolled(
             int scrollX, int scrollY, boolean clampedX, boolean clampedY);
 
     /**
-     * @see View#computeHorizontalScrollRange
+     * @see android.view.View#computeHorizontalScrollRange
      */
     int computeHorizontalScrollRange();
 
     /**
-     * @see View#computeHorizontalScrollOffset
+     * @see android.view.View#computeHorizontalScrollOffset
      */
     int computeHorizontalScrollOffset();
 
     /**
-     * @see View#computeVerticalScrollRange
+     * @see android.view.View#computeVerticalScrollRange
      */
     int computeVerticalScrollRange();
 
     /**
-     * @see View#computeVerticalScrollOffset
+     * @see android.view.View#computeVerticalScrollOffset
      */
     int computeVerticalScrollOffset();
 
     /**
-     * @see View#computeVerticalScrollExtent
+     * @see android.view.View#computeVerticalScrollExtent
      */
     int computeVerticalScrollExtent();
 
     /**
-     * @see View#computeScroll
+     * @see android.view.View#computeScroll
      */
     void computeScroll();
 }

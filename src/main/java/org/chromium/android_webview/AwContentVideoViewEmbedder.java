@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.chromium.android_webview.R;
-
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
 
@@ -88,13 +86,13 @@ public class AwContentVideoViewEmbedder implements ContentVideoViewEmbedder {
         public ProgressView(Context context) {
             super(context);
             setOrientation(LinearLayout.VERTICAL);
-            setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT));
+            setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
             mProgressBar = new ProgressBar(context, null, android.R.attr.progressBarStyleLarge);
             mTextView = new TextView(context);
 
             String videoLoadingText = context.getString(
-                    R.string.media_player_loading_video);
+                    org.chromium.android_webview.R.string.media_player_loading_video);
 
             mTextView.setText(videoLoadingText);
             addView(mProgressBar);

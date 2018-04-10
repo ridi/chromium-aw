@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.android_webview.shell;
+package org.chromium.android_webview.test;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.android_webview.AwContents;
+import org.chromium.android_webview.shell.DrawGL;
 import org.chromium.content.browser.ContentViewCore;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -245,9 +246,9 @@ public class AwTestContainerView extends FrameLayout {
         }
         if (isBackedByHardwareView()) {
             addView(mHardwareView,
-                    new LayoutParams(
-                        LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT));
+                    new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT));
         } else {
             setLayerType(LAYER_TYPE_SOFTWARE, null);
         }

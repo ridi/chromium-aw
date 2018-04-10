@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -31,6 +32,8 @@ import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwDevToolsServer;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.R;
+import org.chromium.android_webview.test.AwTestContainerView;
+import org.chromium.android_webview.test.NullContentsClient;
 import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
@@ -64,18 +67,18 @@ public class AwShellActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        AwShellResourceProvider.registerResources(this);
-//
-//        ContentApplication.initCommandLine(this);
-//        waitForDebuggerIfNeeded();
-//
-//        ContextUtils.initApplicationContext(getApplicationContext());
-//        AwBrowserProcess.loadLibrary();
-//
-//        if (CommandLine.getInstance().hasSwitch(AwShellSwitches.ENABLE_ATRACE)) {
-//            Log.e(TAG, "Enabling Android trace.");
-//            TraceEvent.setATraceEnabled(true);
-//        }
+        AwShellResourceProvider.registerResources(this);
+
+        ContentApplication.initCommandLine(this);
+        waitForDebuggerIfNeeded();
+
+        ContextUtils.initApplicationContext(getApplicationContext());
+        AwBrowserProcess.loadLibrary();
+
+        if (CommandLine.getInstance().hasSwitch(AwShellSwitches.ENABLE_ATRACE)) {
+            Log.e(TAG, "Enabling Android trace.");
+            TraceEvent.setATraceEnabled(true);
+        }
 
         setContentView(R.layout.testshell_activity);
 
@@ -112,7 +115,7 @@ public class AwShellActivity extends Activity {
     }
 
     private AwTestContainerView createAwTestContainerView() {
-//        AwBrowserProcess.start();
+        AwBrowserProcess.start();
         AwTestContainerView testContainerView = new AwTestContainerView(this, true);
         AwContentsClient awContentsClient = new NullContentsClient() {
             private View mCustomView;
@@ -132,8 +135,8 @@ public class AwShellActivity extends Activity {
 
                 getWindow().addContentView(view,
                         new FrameLayout.LayoutParams(
-                                LayoutParams.MATCH_PARENT,
-                                LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
                                 Gravity.CENTER));
                 mCustomView = view;
             }

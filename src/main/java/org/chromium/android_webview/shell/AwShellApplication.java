@@ -4,11 +4,7 @@
 
 package org.chromium.android_webview.shell;
 
-import android.content.Context;
-import android.support.multidex.MultiDex;
-
-import org.chromium.base.*;
-import org.chromium.base.BuildConfig;
+import org.chromium.base.CommandLine;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.content.app.ContentApplication;
 
@@ -25,15 +21,6 @@ public class AwShellApplication extends ContentApplication {
     public void initCommandLine() {
         if (!CommandLine.isInitialized()) {
             CommandLine.initFromFile("/data/local/tmp/android-webview-command-line");
-        }
-    }
-
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        if (BuildConfig.isMultidexEnabled()) {
-            MultiDex.install(this);
         }
     }
 }

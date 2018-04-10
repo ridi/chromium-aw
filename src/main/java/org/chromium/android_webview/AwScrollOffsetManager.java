@@ -33,7 +33,7 @@ public class AwScrollOffsetManager {
     public interface Delegate {
         // Call View#overScrollBy on the containerView.
         void overScrollContainerViewBy(int deltaX, int deltaY, int scrollX, int scrollY,
-                                       int scrollRangeX, int scrollRangeY, boolean isTouchEvent);
+                int scrollRangeX, int scrollRangeY, boolean isTouchEvent);
         // Call View#scrollTo on the containerView.
         void scrollContainerViewTo(int x, int y);
         // Store the scroll offset in the native side. This should really be a simple store
