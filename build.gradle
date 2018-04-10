@@ -37,6 +37,14 @@ android {
 
         vectorDrawables.useSupportLibrary = true
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            useProguard true
+            consumerProguardFile 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
