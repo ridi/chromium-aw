@@ -1,0 +1,13 @@
+diff --git a/gni/v8.gni b/gni/v8.gni
+index 0467720..24dc0bf 100644
+--- a/gni/v8.gni
++++ b/gni/v8.gni
+@@ -33,7 +33,7 @@ declare_args() {
+ 
+   # Enable the snapshot feature, for fast context creation.
+   # http://v8project.blogspot.com/2015/09/custom-startup-snapshots.html
+-  v8_use_snapshot = true
++  v8_use_snapshot = false
+ 
+   # Use external files for startup data blobs:
+   # the JS builtins sources and the start snapshot.

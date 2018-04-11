@@ -1,0 +1,35 @@
+diff --git a/android_webview/browser/aw_devtools_server.cc b/android_webview/browser/aw_devtools_server.cc
+index 9ac0027..2f02ed5 100644
+--- a/android_webview/browser/aw_devtools_server.cc
++++ b/android_webview/browser/aw_devtools_server.cc
+@@ -32,8 +32,8 @@ namespace {
+ 
+ const char kFrontEndURL[] =
+     "http://chrome-devtools-frontend.appspot.com/serve_rev/%s/inspector.html";
+-const char kSocketNameFormat[] = "webview_devtools_remote_%d";
+-const char kTetheringSocketName[] = "webview_devtools_tethering_%d_%d";
++const char kSocketNameFormat[] = "ridi_webview_devtools_remote_%d";
++const char kTetheringSocketName[] = "ridi_webview_devtools_tethering_%d_%d";
+ 
+ const int kBackLog = 10;
+ 
+diff --git a/gin/v8_initializer.cc b/gin/v8_initializer.cc
+index e03635f..16d5a70 100644
+--- a/gin/v8_initializer.cc
++++ b/gin/v8_initializer.cc
+@@ -26,13 +26,13 @@
+ #include "base/time/time.h"
+ #include "build/build_config.h"
+ 
+-#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
++//#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+ #if defined(OS_ANDROID)
+ #include "base/android/apk_assets.h"
+ #elif defined(OS_MACOSX)
+ #include "base/mac/foundation_util.h"
+ #endif
+-#endif  // V8_USE_EXTERNAL_STARTUP_DATA
++//#endif  // V8_USE_EXTERNAL_STARTUP_DATA
+ 
+ namespace gin {
+ 
