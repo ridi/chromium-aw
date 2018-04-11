@@ -18,7 +18,7 @@ $ ./gradlew sourcesJar
 
 ## Usage
 
-1. Copy `chromium-aw-release.aar` file to your project(Latest release is [here](releases)).
+1. Copy `chromium-aw-release.aar` file to your project(You can find the latest release [here](https://github.com/ridi-viewer/chromium-aw/releases)).
 
 2. Add dependency script to `build.gradle` file of your project.
 
