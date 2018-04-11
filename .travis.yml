@@ -1,0 +1,19 @@
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    - tools
+    - tools
+    - platform-tools
+    - build-tools-26.0.3
+    - android-26
+
+script: ./gradlew assembleRelease
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      - 'rididev:KMm0EBQYY1ThicCJo0CwYb5U'
+    on_success: change
