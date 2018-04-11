@@ -299,7 +299,7 @@ CancelAllWatchesResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -404,7 +404,7 @@ CancelAllWatchesResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -435,7 +435,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcSetClientParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -528,7 +528,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcPushParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -631,7 +631,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcPushResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -722,7 +722,7 @@ CancelAllWatchesResponse callback) {
 
                 mCallback.call(response.error);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -785,7 +785,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelPushParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -878,7 +878,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelPushResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -969,7 +969,7 @@ CancelAllWatchesResponse callback) {
 
                 mCallback.call(response.error);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -1032,7 +1032,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcWatchParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1126,7 +1126,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcWatchResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1226,7 +1226,7 @@ CancelAllWatchesResponse callback) {
 
                 mCallback.call(response.id, response.error);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -1291,7 +1291,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelWatchParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1383,7 +1383,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelWatchResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1474,7 +1474,7 @@ CancelAllWatchesResponse callback) {
 
                 mCallback.call(response.error);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -1536,7 +1536,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelAllWatchesParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1618,7 +1618,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcCancelAllWatchesResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1709,7 +1709,7 @@ CancelAllWatchesResponse callback) {
 
                 mCallback.call(response.error);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -1771,7 +1771,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcSuspendNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -1852,7 +1852,7 @@ CancelAllWatchesResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcResumeNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)

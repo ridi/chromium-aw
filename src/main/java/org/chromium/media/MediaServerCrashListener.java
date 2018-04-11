@@ -7,8 +7,6 @@ package org.chromium.media;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 
-import org.chromium.android_webview.R;
-
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
@@ -61,7 +59,7 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
         if (mPlayer != null) return true;
 
         try {
-            mPlayer = MediaPlayer.create(ContextUtils.getApplicationContext(), R.raw.empty);
+            mPlayer = MediaPlayer.create(ContextUtils.getApplicationContext(), org.chromium.android_webview.R.raw.empty);
         } catch (IllegalStateException e) {
             Log.e(TAG, "Exception while creating the watchdog player.", e);
         } catch (RuntimeException e) {

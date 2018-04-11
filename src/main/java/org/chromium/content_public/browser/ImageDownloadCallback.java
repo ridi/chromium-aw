@@ -25,5 +25,5 @@ public interface ImageDownloadCallback {
      * @param originalImageSizes The original sizes of {@link bitmaps} prior to the resizing.
      */
     void onFinishDownloadImage(int id, int httpStatusCode, String imageUrl, List<Bitmap> bitmaps,
-                               List<Rect> originalImageSizes);
+            List<Rect> originalImageSizes);
 }

@@ -16,7 +16,7 @@ import org.chromium.content.browser.SelectionPopupController;
 
 /**
  * Helper class for {@link WebActionMode} encapsulating
- * {@link ActionMode}. Exposes the functionality of the class
+ * {@link android.view.ActionMode}. Exposes the functionality of the class
  * for embedder to provide with the callback instance that interacts with it.
  */
 public abstract class ActionModeCallbackHelper {

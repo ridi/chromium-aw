@@ -53,8 +53,8 @@ public class UnguessableToken implements Parcelable {
         dest.writeLong(mLow);
     }
 
-    public static final Creator<UnguessableToken> CREATOR =
-            new Creator<UnguessableToken>() {
+    public static final Parcelable.Creator<UnguessableToken> CREATOR =
+            new Parcelable.Creator<UnguessableToken>() {
                 @Override
                 public UnguessableToken createFromParcel(Parcel source) {
                     long high = source.readLong();

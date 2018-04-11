@@ -138,7 +138,7 @@ public interface MessagePipeHandle extends Handle {
     }
 
     /**
-     * @see Handle#pass()
+     * @see org.chromium.mojo.system.Handle#pass()
      */
     @Override
     public MessagePipeHandle pass();

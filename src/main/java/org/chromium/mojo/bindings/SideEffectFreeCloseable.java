@@ -12,7 +12,7 @@ import java.io.Closeable;
 public class SideEffectFreeCloseable implements Closeable {
 
     /**
-     * @see Closeable#close()
+     * @see java.io.Closeable#close()
      */
     @Override
     public void close() {

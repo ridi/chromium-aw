@@ -22,12 +22,12 @@ public interface BarcodeDetection extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends BarcodeDetection, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<BarcodeDetection, Proxy> MANAGER = BarcodeDetection_Internal.MANAGER;
+    Manager<BarcodeDetection, BarcodeDetection.Proxy> MANAGER = BarcodeDetection_Internal.MANAGER;
 
 
     void detect(
-            org.chromium.skia.mojom.Bitmap bitmapData,
-            DetectResponse callback);
+org.chromium.skia.mojom.Bitmap bitmapData, 
+DetectResponse callback);
 
     interface DetectResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<BarcodeDetectionResult[]> { }
 

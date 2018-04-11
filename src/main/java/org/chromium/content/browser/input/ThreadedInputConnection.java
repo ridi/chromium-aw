@@ -283,7 +283,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#setComposingText(CharSequence, int)
+     * @see InputConnection#setComposingText(java.lang.CharSequence, int)
      */
     @Override
     public boolean setComposingText(final CharSequence text, final int newCursorPosition) {
@@ -317,7 +317,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#commitText(CharSequence, int)
+     * @see InputConnection#commitText(java.lang.CharSequence, int)
      */
     @Override
     public boolean commitText(final CharSequence text, final int newCursorPosition) {
@@ -365,7 +365,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#getExtractedText(ExtractedTextRequest, int)
+     * @see InputConnection#getExtractedText(android.view.inputmethod.ExtractedTextRequest, int)
      */
     @Override
     public ExtractedText getExtractedText(ExtractedTextRequest request, int flags) {
@@ -460,7 +460,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#sendKeyEvent(KeyEvent)
+     * @see InputConnection#sendKeyEvent(android.view.KeyEvent)
      */
     @Override
     public boolean sendKeyEvent(final KeyEvent event) {
@@ -611,7 +611,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#commitCompletion(CompletionInfo)
+     * @see InputConnection#commitCompletion(android.view.inputmethod.CompletionInfo)
      */
     @Override
     public boolean commitCompletion(CompletionInfo text) {
@@ -620,7 +620,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#commitCorrection(CorrectionInfo)
+     * @see InputConnection#commitCorrection(android.view.inputmethod.CorrectionInfo)
      */
     @Override
     public boolean commitCorrection(CorrectionInfo correctionInfo) {
@@ -653,7 +653,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     /**
-     * @see InputConnection#performPrivateCommand(String, Bundle)
+     * @see InputConnection#performPrivateCommand(java.lang.String, android.os.Bundle)
      */
     @Override
     public boolean performPrivateCommand(String action, Bundle data) {

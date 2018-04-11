@@ -22,41 +22,41 @@ public interface Nfc extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends Nfc, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<Nfc, Proxy> MANAGER = Nfc_Internal.MANAGER;
+    Manager<Nfc, Nfc.Proxy> MANAGER = Nfc_Internal.MANAGER;
 
 
     void setClient(
-            NfcClient client);
+NfcClient client);
 
 
 
     void push(
-            NfcMessage message, NfcPushOptions options,
-            PushResponse callback);
+NfcMessage message, NfcPushOptions options, 
+PushResponse callback);
 
     interface PushResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NfcError> { }
 
 
 
     void cancelPush(
-            int target,
-            CancelPushResponse callback);
+int target, 
+CancelPushResponse callback);
 
     interface CancelPushResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NfcError> { }
 
 
 
     void watch(
-            NfcWatchOptions options,
-            WatchResponse callback);
+NfcWatchOptions options, 
+WatchResponse callback);
 
     interface WatchResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, NfcError> { }
 
 
 
     void cancelWatch(
-            int id,
-            CancelWatchResponse callback);
+int id, 
+CancelWatchResponse callback);
 
     interface CancelWatchResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NfcError> { }
 
@@ -64,19 +64,19 @@ public interface Nfc extends org.chromium.mojo.bindings.Interface {
 
     void cancelAllWatches(
 
-            CancelAllWatchesResponse callback);
+CancelAllWatchesResponse callback);
 
     interface CancelAllWatchesResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NfcError> { }
 
 
 
     void suspendNfcOperations(
-    );
+);
 
 
 
     void resumeNfcOperations(
-    );
+);
 
 
 }

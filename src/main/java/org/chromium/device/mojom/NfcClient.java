@@ -22,11 +22,11 @@ public interface NfcClient extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends NfcClient, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<NfcClient, Proxy> MANAGER = NfcClient_Internal.MANAGER;
+    Manager<NfcClient, NfcClient.Proxy> MANAGER = NfcClient_Internal.MANAGER;
 
 
     void onWatch(
-            int[] watchIds, NfcMessage message);
+int[] watchIds, NfcMessage message);
 
 
 }

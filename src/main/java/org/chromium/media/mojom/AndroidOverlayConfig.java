@@ -39,7 +39,7 @@ public final class AndroidOverlayConfig extends org.chromium.mojo.bindings.Struc
     /**
      * Similar to the method above, but deserializes from a |ByteBuffer| instance.
      *
-     * @throws DeserializationException on deserialization failure.
+     * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
      */
     public static AndroidOverlayConfig deserialize(java.nio.ByteBuffer data) {
         if (data == null)

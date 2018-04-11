@@ -42,21 +42,21 @@ public abstract class ContentApplication extends BaseChromiumApplication {
         super.onCreate();
 
         // Delay TracingControllerAndroid.registerReceiver() until the main loop is idle.
-//        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-//            @Override
-//            public boolean queueIdle() {
-//                // Will retry if the native library has not been initialized.
-//                if (!LibraryLoader.isInitialized()) return true;
-//
-//                try {
-//                    getTracingController().registerReceiver(ContentApplication.this);
-//                } catch (SecurityException e) {
-//                    // Happens if the process is isolated. Ignore.
-//                }
-//                // Remove the idle handler.
-//                return false;
-//            }
-//        });
+        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                // Will retry if the native library has not been initialized.
+                if (!LibraryLoader.isInitialized()) return true;
+
+                try {
+                    getTracingController().registerReceiver(ContentApplication.this);
+                } catch (SecurityException e) {
+                    // Happens if the process is isolated. Ignore.
+                }
+                // Remove the idle handler.
+                return false;
+            }
+        });
 
         mLibraryDependenciesInitialized = true;
     }

@@ -22,11 +22,11 @@ public interface AndroidOverlay extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends AndroidOverlay, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<AndroidOverlay, Proxy> MANAGER = AndroidOverlay_Internal.MANAGER;
+    Manager<AndroidOverlay, AndroidOverlay.Proxy> MANAGER = AndroidOverlay_Internal.MANAGER;
 
 
     void scheduleLayout(
-            org.chromium.gfx.mojom.Rect rect);
+org.chromium.gfx.mojom.Rect rect);
 
 
 }

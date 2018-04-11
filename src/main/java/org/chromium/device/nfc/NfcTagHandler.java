@@ -55,7 +55,7 @@ public class NfcTagHandler {
 
     /**
      * Implementation of TagTechnologyHandler that uses Ndef tag technology.
-     * @see Ndef
+     * @see android.nfc.tech.Ndef
      */
     private static class NdefHandler implements TagTechnologyHandler {
         private final Ndef mNdef;
@@ -79,7 +79,7 @@ public class NfcTagHandler {
 
     /**
      * Implementation of TagTechnologyHandler that uses NdefFormatable tag technology.
-     * @see NdefFormatable
+     * @see android.nfc.tech.NdefFormatable
      */
     private static class NdefFormattableHandler implements TagTechnologyHandler {
         private final NdefFormatable mNdefFormattable;

@@ -136,7 +136,7 @@ public class RouterImpl implements Router {
     }
 
     /**
-     * @see Router#start()
+     * @see org.chromium.mojo.bindings.Router#start()
      */
     @Override
     public void start() {

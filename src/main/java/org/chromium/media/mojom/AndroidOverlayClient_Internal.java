@@ -140,7 +140,7 @@ long surfaceKey) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -169,7 +169,7 @@ long surfaceKey) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -200,7 +200,7 @@ long surfaceKey) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static AndroidOverlayClientOnSurfaceReadyParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -291,7 +291,7 @@ long surfaceKey) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static AndroidOverlayClientOnDestroyedParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)

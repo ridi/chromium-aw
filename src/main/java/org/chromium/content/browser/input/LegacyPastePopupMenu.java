@@ -42,8 +42,8 @@ public class LegacyPastePopupMenu implements OnClickListener, PastePopupMenu {
         mContainer.setClippingEnabled(false);
         mContainer.setAnimationStyle(0);
 
-        mContainer.setWidth(LayoutParams.WRAP_CONTENT);
-        mContainer.setHeight(LayoutParams.WRAP_CONTENT);
+        mContainer.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mContainer.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
         final int[] popupLayoutAttrs = {
                 android.R.attr.textEditPasteWindowLayout,
@@ -142,7 +142,7 @@ public class LegacyPastePopupMenu implements OnClickListener, PastePopupMenu {
 
             final int size = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
             mPasteView.setLayoutParams(new LayoutParams(
-                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             mPasteView.measure(size, size);
 
             mPasteView.setOnClickListener(this);

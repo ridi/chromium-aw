@@ -113,7 +113,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -140,7 +140,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -172,7 +172,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static NfcProviderGetNfcForHostParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)

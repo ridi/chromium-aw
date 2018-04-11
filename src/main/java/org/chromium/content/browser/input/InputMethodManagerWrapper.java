@@ -38,7 +38,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager#restartInput(View)
+     * @see android.view.inputmethod.InputMethodManager#restartInput(View)
      */
     public void restartInput(View view) {
         if (DEBUG_LOGS) Log.i(TAG, "restartInput");
@@ -46,7 +46,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager#showSoftInput(View, int, ResultReceiver)
+     * @see android.view.inputmethod.InputMethodManager#showSoftInput(View, int, ResultReceiver)
      */
     public void showSoftInput(View view, int flags, ResultReceiver resultReceiver) {
         if (DEBUG_LOGS) Log.i(TAG, "showSoftInput");
@@ -59,7 +59,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager#isActive(View)
+     * @see android.view.inputmethod.InputMethodManager#isActive(View)
      */
     public boolean isActive(View view) {
         final boolean active = getInputMethodManager().isActive(view);
@@ -83,7 +83,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager#updateSelection(View, int, int, int, int)
+     * @see android.view.inputmethod.InputMethodManager#updateSelection(View, int, int, int, int)
      */
     public void updateSelection(View view, int selStart, int selEnd,
             int candidatesStart, int candidatesEnd) {
@@ -96,7 +96,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager#updateCursorAnchorInfo(View,
+     * @see android.view.inputmethod.InputMethodManager#updateCursorAnchorInfo(View,
      * CursorAnchorInfo)
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -108,7 +108,7 @@ public class InputMethodManagerWrapper {
     }
 
     /**
-     * @see InputMethodManager
+     * @see android.view.inputmethod.InputMethodManager
      * #updateExtractedText(View,int, ExtractedText)
      */
     void updateExtractedText(View view, int token, android.view.inputmethod.ExtractedText text) {

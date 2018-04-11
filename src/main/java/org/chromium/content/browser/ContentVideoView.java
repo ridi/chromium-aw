@@ -19,8 +19,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import org.chromium.android_webview.R;
-
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -160,18 +158,18 @@ public class ContentVideoView extends FrameLayout
     private void initResources(Context context) {
         if (mPlaybackErrorText != null) return;
         mPlaybackErrorText = context.getString(
-                R.string.media_player_error_text_invalid_progressive_playback);
+                org.chromium.android_webview.R.string.media_player_error_text_invalid_progressive_playback);
         mUnknownErrorText = context.getString(
-                R.string.media_player_error_text_unknown);
+                org.chromium.android_webview.R.string.media_player_error_text_unknown);
         mErrorButton = context.getString(
-                R.string.media_player_error_button);
+                org.chromium.android_webview.R.string.media_player_error_button);
         mErrorTitle = context.getString(
-                R.string.media_player_error_title);
+                org.chromium.android_webview.R.string.media_player_error_title);
     }
 
     private void showContentVideoView() {
         mVideoSurfaceView.getHolder().addCallback(this);
-        addView(mVideoSurfaceView, new LayoutParams(
+        addView(mVideoSurfaceView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER));

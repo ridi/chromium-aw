@@ -22,7 +22,7 @@ public class ServiceMessage extends Message {
      */
     public ServiceMessage(Message baseMessage, MessageHeader header) {
         super(baseMessage.getData(), baseMessage.getHandles());
-        assert header.equals(new MessageHeader(baseMessage));
+        assert header.equals(new org.chromium.mojo.bindings.MessageHeader(baseMessage));
         this.mHeader = header;
     }
 
@@ -31,7 +31,7 @@ public class ServiceMessage extends Message {
      * header as the start of it's raw data, which will be parsed by this constructor.
      */
     ServiceMessage(Message baseMessage) {
-        this(baseMessage, new MessageHeader(baseMessage));
+        this(baseMessage, new org.chromium.mojo.bindings.MessageHeader(baseMessage));
     }
 
     /**

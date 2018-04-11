@@ -37,7 +37,7 @@ public final class RunResponseMessageParams extends org.chromium.mojo.bindings.S
     /**
      * Similar to the method above, but deserializes from a |ByteBuffer| instance.
      *
-     * @throws DeserializationException on deserialization failure.
+     * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
      */
     public static RunResponseMessageParams deserialize(java.nio.ByteBuffer data) {
         if (data == null)

@@ -90,7 +90,7 @@ public class UiUtils {
          * @param mimeTypes A list of mime types to show in the dialog.
          */
         void showPhotoPicker(Context context, PhotoPickerListener listener, boolean allowMultiple,
-                             List<String> mimeTypes);
+                List<String> mimeTypes);
 
         /**
          * Called when the photo picker dialog has been dismissed.

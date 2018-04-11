@@ -18,7 +18,7 @@ public interface MessageReceiver extends Closeable {
     boolean accept(Message message);
 
     /**
-     * @see Closeable#close()
+     * @see java.io.Closeable#close()
      */
     @Override
     public void close();

@@ -22,11 +22,11 @@ public interface FaceDetectionProvider extends org.chromium.mojo.bindings.Interf
     public interface Proxy extends FaceDetectionProvider, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<FaceDetectionProvider, Proxy> MANAGER = FaceDetectionProvider_Internal.MANAGER;
+    Manager<FaceDetectionProvider, FaceDetectionProvider.Proxy> MANAGER = FaceDetectionProvider_Internal.MANAGER;
 
 
     void createFaceDetection(
-            org.chromium.mojo.bindings.InterfaceRequest<FaceDetection> request, FaceDetectorOptions options);
+org.chromium.mojo.bindings.InterfaceRequest<FaceDetection> request, FaceDetectorOptions options);
 
 
 }

@@ -57,7 +57,7 @@ public class VSyncMonitor {
      * @param context The application context.
      * @param listener The listener receiving VSync notifications.
      */
-    public VSyncMonitor(Context context, Listener listener) {
+    public VSyncMonitor(Context context, VSyncMonitor.Listener listener) {
         mListener = listener;
         float refreshRate = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getRefreshRate();

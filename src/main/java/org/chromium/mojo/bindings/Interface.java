@@ -29,7 +29,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
     /**
      * The close method is called when the connection to the interface is closed.
      *
-     * @see Closeable#close()
+     * @see java.io.Closeable#close()
      */
     @Override
     public void close();
@@ -92,7 +92,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
         /**
          * Implementation of {@link Handler}.
          */
-        protected static class HandlerImpl implements Handler, ConnectionErrorHandler {
+        protected static class HandlerImpl implements Proxy.Handler, ConnectionErrorHandler {
             /**
              * The {@link Core} implementation to use.
              */
@@ -170,7 +170,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
             }
 
             /**
-             * @see Handler#passHandle()
+             * @see Interface.Proxy.Handler#passHandle()
              */
             @Override
             public MessagePipeHandle passHandle() {
@@ -189,7 +189,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
             }
 
             /**
-             * @see Handler#queryVersion(Callback1)
+             * @see Handler#queryVersion(org.chromium.mojo.bindings.Callbacks.Callback1)
              */
             @Override
             public void queryVersion(final Callback1<Integer> callback) {
@@ -255,7 +255,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
         }
 
         /**
-         * @see ConnectionErrorHandler#onConnectionError(MojoException)
+         * @see ConnectionErrorHandler#onConnectionError(org.chromium.mojo.system.MojoException)
          */
         @Override
         public void onConnectionError(MojoException e) {

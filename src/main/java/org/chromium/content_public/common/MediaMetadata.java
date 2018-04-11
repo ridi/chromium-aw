@@ -98,7 +98,7 @@ public final class MediaMetadata {
 
         /**
          * @return The hash code of this {@link MediaImage}. The method uses the same algorithm in
-         * {@link List} for combinine hash values.
+         * {@link java.util.List} for combinine hash values.
          */
         @Override
         public int hashCode() {
@@ -223,7 +223,7 @@ public final class MediaMetadata {
 
     /**
      * @return The hash code of this {@link MediaMetadata}. The method uses the same algorithm in
-     * {@link List} for combinine hash values.
+     * {@link java.util.List} for combinine hash values.
      */
     @Override
     public int hashCode() {

@@ -550,7 +550,7 @@ class MediaCodecBridge {
     // Taken from exoplayer:
     // https://github.com/google/ExoPlayer/blob/8595c65678a181296cdf673eacb93d8135479340/library/src/main/java/com/google/android/exoplayer/MediaCodecVideoTrackRenderer.java
     private void maybeSetMaxInputSize(MediaFormat format) {
-        if (format.containsKey(MediaFormat.KEY_MAX_INPUT_SIZE)) {
+        if (format.containsKey(android.media.MediaFormat.KEY_MAX_INPUT_SIZE)) {
             // Already set. The source of the format may know better, so do nothing.
             return;
         }

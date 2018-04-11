@@ -420,7 +420,7 @@ public class NfcImpl implements Nfc {
 
     /**
      * Enables reader mode, allowing NFC device to read / write NFC tags.
-     * @see NfcAdapter#enableReaderMode
+     * @see android.nfc.NfcAdapter#enableReaderMode
      */
     private void enableReaderModeIfNeeded() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
@@ -439,7 +439,7 @@ public class NfcImpl implements Nfc {
 
     /**
      * Disables reader mode.
-     * @see NfcAdapter#disableReaderMode
+     * @see android.nfc.NfcAdapter#disableReaderMode
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void disableReaderMode() {

@@ -61,13 +61,13 @@ public class Clipboard implements ClipboardManager.OnPrimaryClipChangedListener 
     /**
      * Emulates the behavior of the now-deprecated
      * {@link android.text.ClipboardManager#getText()} by invoking
-     * {@link ClipData.Item#coerceToText(Context)} on the first
+     * {@link android.content.ClipData.Item#coerceToText(Context)} on the first
      * item in the clipboard (if any) and returning the result as a string.
      * <p>
      * This is quite different than simply calling {@link Object#toString()} on
      * the clip; consumers of this API should familiarize themselves with the
      * process described in
-     * {@link ClipData.Item#coerceToText(Context)} before using
+     * {@link android.content.ClipData.Item#coerceToText(Context)} before using
      * this method.
      *
      * @return a string representation of the first item on the clipboard, if

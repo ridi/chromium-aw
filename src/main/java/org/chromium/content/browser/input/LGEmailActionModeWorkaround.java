@@ -80,8 +80,8 @@ public final class LGEmailActionModeWorkaround {
         // this causes crashes in two places.
         try {
             // Part I: post ActionMode.Callback2#onDestroyActionMode() on UI thread.
-            final Callback2 c = (Callback2) getField(actionMode, "mCallback");
-            setField(actionMode, "mCallback", new Callback2() {
+            final ActionMode.Callback2 c = (Callback2) getField(actionMode, "mCallback");
+            setField(actionMode, "mCallback", new ActionMode.Callback2() {
                 @Override
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                     return c.onCreateActionMode(mode, menu);

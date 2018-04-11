@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
- * Allows converting Java policies, contained as key/value pairs in {@link Bundle}s to
+ * Allows converting Java policies, contained as key/value pairs in {@link android.os.Bundle}s to
  * native {@code PolicyBundle}s.
  *
  * This class is to be used to send key/value pairs to its native equivalent, that can then be used

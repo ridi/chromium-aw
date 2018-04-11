@@ -135,7 +135,7 @@ public class Connector implements MessageReceiver, HandleOwner<MessagePipeHandle
 
     private class WatcherCallback implements Watcher.Callback {
         /**
-         * @see Watcher.Callback#onResult(int)
+         * @see org.chromium.mojo.system.Watcher.Callback#onResult(int)
          */
         @Override
         public void onResult(int result) {
@@ -145,7 +145,7 @@ public class Connector implements MessageReceiver, HandleOwner<MessagePipeHandle
     }
 
     /**
-     * @see Watcher.Callback#onResult(int)
+     * @see org.chromium.mojo.system.Watcher.Callback#onResult(int)
      */
     private void onWatcherResult(int result) {
         if (result == MojoResult.OK) {

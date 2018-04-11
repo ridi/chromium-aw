@@ -15,7 +15,7 @@ import org.chromium.mojo.system.DataPipe.ProducerHandle;
 public interface UntypedHandle extends Handle {
 
     /**
-     * @see Handle#pass()
+     * @see org.chromium.mojo.system.Handle#pass()
      */
     @Override
     public UntypedHandle pass();

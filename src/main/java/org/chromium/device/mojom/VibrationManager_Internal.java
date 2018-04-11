@@ -129,7 +129,7 @@ CancelResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -183,7 +183,7 @@ CancelResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -214,7 +214,7 @@ CancelResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static VibrationManagerVibrateParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -305,7 +305,7 @@ CancelResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static VibrationManagerVibrateResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -383,7 +383,7 @@ CancelResponse callback) {
 
                 mCallback.call();
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }
@@ -443,7 +443,7 @@ CancelResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static VibrationManagerCancelParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -524,7 +524,7 @@ CancelResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static VibrationManagerCancelResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -602,7 +602,7 @@ CancelResponse callback) {
 
                 mCallback.call();
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }

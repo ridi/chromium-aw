@@ -111,7 +111,7 @@ org.chromium.gfx.mojom.Rect rect) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -138,7 +138,7 @@ org.chromium.gfx.mojom.Rect rect) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -169,7 +169,7 @@ org.chromium.gfx.mojom.Rect rect) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static AndroidOverlayScheduleLayoutParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)

@@ -21,8 +21,8 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      */
     public interface Factory {
         ChromiumBaseInputConnection initializeAndGet(View view, ImeAdapter imeAdapter,
-                                                     int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
-                                                     EditorInfo outAttrs);
+                int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
+                EditorInfo outAttrs);
 
         @VisibleForTesting
         Handler getHandler();
@@ -49,7 +49,7 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      * @param replyToRequest True when the update was made in a reply to IME's request.
      */
     void updateStateOnUiThread(String text, int selectionStart, int selectionEnd,
-                               int compositionStart, int compositionEnd, boolean singleLine, boolean replyToRequest);
+            int compositionStart, int compositionEnd, boolean singleLine, boolean replyToRequest);
 
     /**
      * Send key event on UI thread.

@@ -56,7 +56,7 @@ public class TextViewWithClickableSpans extends TextView {
         setSaveEnabled(false);
         mAccessibilityManager = (AccessibilityManager)
                 getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
-        setOnLongClickListener(new OnLongClickListener() {
+        setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (!mAccessibilityManager.isTouchExplorationEnabled()) {

@@ -22,12 +22,12 @@ public interface VibrationManager extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends VibrationManager, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<VibrationManager, Proxy> MANAGER = VibrationManager_Internal.MANAGER;
+    Manager<VibrationManager, VibrationManager.Proxy> MANAGER = VibrationManager_Internal.MANAGER;
 
 
     void vibrate(
-            long milliseconds,
-            VibrateResponse callback);
+long milliseconds, 
+VibrateResponse callback);
 
     interface VibrateResponse extends org.chromium.mojo.bindings.Callbacks.Callback0 { }
 
@@ -35,7 +35,7 @@ public interface VibrationManager extends org.chromium.mojo.bindings.Interface {
 
     void cancel(
 
-            CancelResponse callback);
+CancelResponse callback);
 
     interface CancelResponse extends org.chromium.mojo.bindings.Callbacks.Callback0 { }
 

@@ -37,7 +37,7 @@ public final class RunOrClosePipeMessageParams extends org.chromium.mojo.binding
     /**
      * Similar to the method above, but deserializes from a |ByteBuffer| instance.
      *
-     * @throws DeserializationException on deserialization failure.
+     * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
      */
     public static RunOrClosePipeMessageParams deserialize(java.nio.ByteBuffer data) {
         if (data == null)

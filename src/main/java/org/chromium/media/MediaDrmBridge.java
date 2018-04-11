@@ -334,7 +334,7 @@ public class MediaDrmBridge {
             byte[] sessionId = mMediaDrm.openSession();
             // Make a clone here in case the underlying byte[] is modified.
             return sessionId.clone();
-        } catch (RuntimeException e) {  // TODO(xhwang): Drop this?
+        } catch (java.lang.RuntimeException e) {  // TODO(xhwang): Drop this?
             Log.e(TAG, "Cannot open a new session", e);
             release();
             return null;
@@ -394,10 +394,10 @@ public class MediaDrmBridge {
         } catch (android.media.UnsupportedSchemeException e) {
             Log.e(TAG, "Unsupported DRM scheme", e);
             return null;
-        } catch (IllegalArgumentException e) {
+        } catch (java.lang.IllegalArgumentException e) {
             Log.e(TAG, "Failed to create MediaDrmBridge", e);
             return null;
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "Failed to create MediaDrmBridge", e);
             return null;
         }
@@ -436,9 +436,9 @@ public class MediaDrmBridge {
             mMediaDrm.setPropertyString(ORIGIN, origin);
             mOriginSet = true;
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (java.lang.IllegalArgumentException e) {
             Log.e(TAG, "Failed to set security origin %s", origin, e);
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "Failed to set security origin %s", origin, e);
         }
 
@@ -475,9 +475,9 @@ public class MediaDrmBridge {
         try {
             mMediaDrm.setPropertyString(SECURITY_LEVEL, securityLevel);
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (java.lang.IllegalArgumentException e) {
             Log.e(TAG, "Failed to set security level %s", securityLevel, e);
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "Failed to set security level %s", securityLevel, e);
         }
 
@@ -501,9 +501,9 @@ public class MediaDrmBridge {
         try {
             mMediaDrm.setPropertyByteArray(SERVER_CERTIFICATE, certificate);
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (java.lang.IllegalArgumentException e) {
             Log.e(TAG, "Failed to set server certificate", e);
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "Failed to set server certificate", e);
         }
 
@@ -634,7 +634,7 @@ public class MediaDrmBridge {
             request = mMediaDrm.getKeyRequest(scopeId, data, mime, keyType, optionalParameters);
         } catch (IllegalStateException e) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && e
-                    instanceof MediaDrm.MediaDrmStateException) {
+                    instanceof android.media.MediaDrm.MediaDrmStateException) {
                 // See b/21307186 for details.
                 Log.e(TAG, "MediaDrmStateException fired during getKeyRequest().", e);
             }
@@ -911,7 +911,7 @@ public class MediaDrmBridge {
             Log.e(TAG, "failed to provide key response", e);
         } catch (android.media.DeniedByServerException e) {
             Log.e(TAG, "failed to provide key response", e);
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "failed to provide key response", e);
         }
         onPromiseRejected(promiseId, "Update session failed.");
@@ -976,7 +976,7 @@ public class MediaDrmBridge {
         } catch (android.media.NotProvisionedException e) {
             // If device isn't provisioned, storage loading should fail.
             assert false;
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             // license doesn't exist
             if (sessionId.drmId() == null) {
                 // TODO(yucliu): Check if the license is released or doesn't exist.
@@ -1149,7 +1149,7 @@ public class MediaDrmBridge {
             return true;
         } catch (android.media.DeniedByServerException e) {
             Log.e(TAG, "failed to provide provision response", e);
-        } catch (IllegalStateException e) {
+        } catch (java.lang.IllegalStateException e) {
             Log.e(TAG, "failed to provide provision response", e);
         }
         return false;

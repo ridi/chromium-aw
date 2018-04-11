@@ -308,7 +308,7 @@ public interface WebContents extends Parcelable {
      *                  message ports to pass.
      */
     void postMessageToFrame(String frameName, String message,
-                            String sourceOrigin, String targetOrigin, MessagePort[] ports);
+            String sourceOrigin, String targetOrigin, MessagePort[] ports);
 
     /**
      * Creates a message channel for sending postMessage requests and returns the ports for
@@ -416,7 +416,7 @@ public interface WebContents extends Parcelable {
      * @return The unique id of the download request
      */
     public int downloadImage(String url, boolean isFavicon, int maxBitmapSize,
-                             boolean bypassCache, ImageDownloadCallback callback);
+            boolean bypassCache, ImageDownloadCallback callback);
 
     /**
      * Whether the WebContents has an active fullscreen video with native or custom controls.

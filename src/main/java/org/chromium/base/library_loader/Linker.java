@@ -748,8 +748,8 @@ public abstract class Linker {
         }
 
         // from Parcelable
-        public static final Creator<LibInfo> CREATOR =
-                new Creator<LibInfo>() {
+        public static final Parcelable.Creator<LibInfo> CREATOR =
+                new Parcelable.Creator<LibInfo>() {
                     @Override
                     public LibInfo createFromParcel(Parcel in) {
                         return new LibInfo(in);

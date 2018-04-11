@@ -22,12 +22,12 @@ public interface BatteryMonitor extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends BatteryMonitor, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<BatteryMonitor, Proxy> MANAGER = BatteryMonitor_Internal.MANAGER;
+    Manager<BatteryMonitor, BatteryMonitor.Proxy> MANAGER = BatteryMonitor_Internal.MANAGER;
 
 
     void queryNextStatus(
 
-            QueryNextStatusResponse callback);
+QueryNextStatusResponse callback);
 
     interface QueryNextStatusResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<BatteryStatus> { }
 

@@ -57,7 +57,7 @@ public interface MessagePort {
      * {@link Handler} is not null, then the callback is received on the handler thread, if not
      * it is on UI thread.
      *
-     * See {@link MessageCallback}
+     * See {@link MessagePort.MessageCallback}
      */
     void setMessageCallback(MessageCallback messageCallback, Handler handler);
 

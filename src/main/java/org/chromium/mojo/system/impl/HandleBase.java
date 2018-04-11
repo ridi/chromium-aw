@@ -123,7 +123,7 @@ abstract class HandleBase implements Handle {
      * Close the handle if it is valid. Necessary because we cannot let handle leak, and we cannot
      * ensure that every handle will be manually closed.
      *
-     * @see Object#finalize()
+     * @see java.lang.Object#finalize()
      */
     @Override
     protected final void finalize() throws Throwable {

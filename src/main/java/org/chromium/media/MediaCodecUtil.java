@@ -222,7 +222,7 @@ class MediaCodecUtil {
       */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static void addVp9CodecProfileLevels(CodecProfileLevelList profileLevels,
-            CodecCapabilities codecCapabilities) {
+            MediaCodecInfo.CodecCapabilities codecCapabilities) {
         // https://www.webmproject.org/vp9/levels
         final int[][] bitrateMapping = {
                 {200, 10}, {800, 11}, {1800, 20}, {3600, 21}, {7200, 30}, {12000, 31}, {18000, 40},
@@ -464,10 +464,10 @@ class MediaCodecUtil {
                 return false;
             }
 
-            CodecCapabilities capabilities = info.getCapabilitiesForType(mime);
+            MediaCodecInfo.CodecCapabilities capabilities = info.getCapabilitiesForType(mime);
             return (capabilities != null)
                     && capabilities.isFeatureSupported(
-                               CodecCapabilities.FEATURE_AdaptivePlayback);
+                               MediaCodecInfo.CodecCapabilities.FEATURE_AdaptivePlayback);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Cannot retrieve codec information", e);
         }

@@ -59,13 +59,13 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
          * @param timeView The TimePicker view associated with this listener.
          * @param year The year that was set.
          * @param monthOfYear The month that was set (0-11) for compatibility
-         *            with {@link Calendar}.
+         *            with {@link java.util.Calendar}.
          * @param dayOfMonth The day of the month that was set.
          * @param hourOfDay The hour that was set.
          * @param minute The minute that was set.
          */
         void onDateTimeSet(DatePicker dateView, TimePicker timeView, int year, int monthOfYear,
-                           int dayOfMonth, int hourOfDay, int minute);
+                int dayOfMonth, int hourOfDay, int minute);
     }
 
     /**

@@ -22,12 +22,12 @@ public interface FaceDetection extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends FaceDetection, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<FaceDetection, Proxy> MANAGER = FaceDetection_Internal.MANAGER;
+    Manager<FaceDetection, FaceDetection.Proxy> MANAGER = FaceDetection_Internal.MANAGER;
 
 
     void detect(
-            org.chromium.skia.mojom.Bitmap bitmapData,
-            DetectResponse callback);
+org.chromium.skia.mojom.Bitmap bitmapData, 
+DetectResponse callback);
 
     interface DetectResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<FaceDetectionResult[]> { }
 

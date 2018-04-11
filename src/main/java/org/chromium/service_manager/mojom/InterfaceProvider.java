@@ -22,11 +22,11 @@ public interface InterfaceProvider extends org.chromium.mojo.bindings.Interface 
     public interface Proxy extends InterfaceProvider, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<InterfaceProvider, Proxy> MANAGER = InterfaceProvider_Internal.MANAGER;
+    Manager<InterfaceProvider, InterfaceProvider.Proxy> MANAGER = InterfaceProvider_Internal.MANAGER;
 
 
     void getInterface(
-            String interfaceName, org.chromium.mojo.system.MessagePipeHandle pipe);
+String interfaceName, org.chromium.mojo.system.MessagePipeHandle pipe);
 
 
 }

@@ -22,12 +22,12 @@ public interface TextDetection extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends TextDetection, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<TextDetection, Proxy> MANAGER = TextDetection_Internal.MANAGER;
+    Manager<TextDetection, TextDetection.Proxy> MANAGER = TextDetection_Internal.MANAGER;
 
 
     void detect(
-            org.chromium.skia.mojom.Bitmap bitmapData,
-            DetectResponse callback);
+org.chromium.skia.mojom.Bitmap bitmapData, 
+DetectResponse callback);
 
     interface DetectResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<TextDetectionResult[]> { }
 

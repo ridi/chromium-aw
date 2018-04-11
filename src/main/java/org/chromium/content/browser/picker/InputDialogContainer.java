@@ -168,7 +168,7 @@ public class InputDialogContainer {
                 })
             .create();
 
-        mDialog.setOnDismissListener(new OnDismissListener() {
+        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if (mDialog == dialog && !mDialogAlreadyDismissed) {

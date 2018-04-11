@@ -103,7 +103,7 @@ QueryNextStatusResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -142,7 +142,7 @@ QueryNextStatusResponse callback) {
                     default:
                         return false;
                 }
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 System.err.println(e.toString());
                 return false;
             }
@@ -172,7 +172,7 @@ QueryNextStatusResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static BatteryMonitorQueryNextStatusParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -254,7 +254,7 @@ QueryNextStatusResponse callback) {
         /**
          * Similar to the method above, but deserializes from a |ByteBuffer| instance.
          *
-         * @throws DeserializationException on deserialization failure.
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
         public static BatteryMonitorQueryNextStatusResponseParams deserialize(java.nio.ByteBuffer data) {
             if (data == null)
@@ -345,7 +345,7 @@ QueryNextStatusResponse callback) {
 
                 mCallback.call(response.status);
                 return true;
-            } catch (DeserializationException e) {
+            } catch (org.chromium.mojo.bindings.DeserializationException e) {
                 return false;
             }
         }

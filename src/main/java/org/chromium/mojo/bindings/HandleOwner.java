@@ -21,7 +21,7 @@ public interface HandleOwner<H extends Handle> extends Closeable {
     public H passHandle();
 
     /**
-     * @see Closeable#close()
+     * @see java.io.Closeable#close()
      */
     @Override
     public void close();

@@ -106,7 +106,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#setLayoutDirection(int)
+     * @see android.view.View#setLayoutDirection(int)
      */
     public static void setLayoutDirection(View view, int layoutDirection) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -117,7 +117,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#setTextAlignment(int)
+     * @see android.view.View#setTextAlignment(int)
      */
     public static void setTextAlignment(View view, int textAlignment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -128,7 +128,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#setTextDirection(int)
+     * @see android.view.View#setTextDirection(int)
      */
     public static void setTextDirection(View view, int textDirection) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -139,7 +139,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * See {@link View#setLabelFor(int)}.
+     * See {@link android.view.View#setLabelFor(int)}.
      */
     public static void setLabelFor(View labelView, int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -150,7 +150,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see MarginLayoutParams#setMarginEnd(int)
+     * @see android.view.ViewGroup.MarginLayoutParams#setMarginEnd(int)
      */
     public static void setMarginEnd(MarginLayoutParams layoutParams, int end) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -161,7 +161,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see MarginLayoutParams#getMarginEnd()
+     * @see android.view.ViewGroup.MarginLayoutParams#getMarginEnd()
      */
     public static int getMarginEnd(MarginLayoutParams layoutParams) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -172,7 +172,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see MarginLayoutParams#setMarginStart(int)
+     * @see android.view.ViewGroup.MarginLayoutParams#setMarginStart(int)
      */
     public static void setMarginStart(MarginLayoutParams layoutParams, int start) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -183,7 +183,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see MarginLayoutParams#getMarginStart()
+     * @see android.view.ViewGroup.MarginLayoutParams#getMarginStart()
      */
     public static int getMarginStart(MarginLayoutParams layoutParams) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -194,7 +194,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#setPaddingRelative(int, int, int, int)
+     * @see android.view.View#setPaddingRelative(int, int, int, int)
      */
     public static void setPaddingRelative(View view, int start, int top, int end, int bottom) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -206,7 +206,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#getPaddingStart()
+     * @see android.view.View#getPaddingStart()
      */
     public static int getPaddingStart(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -218,7 +218,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see View#getPaddingEnd()
+     * @see android.view.View#getPaddingEnd()
      */
     public static int getPaddingEnd(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -230,7 +230,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see TextView#setCompoundDrawablesRelative(Drawable, Drawable, Drawable,
+     * @see android.widget.TextView#setCompoundDrawablesRelative(Drawable, Drawable, Drawable,
      *      Drawable)
      */
     public static void setCompoundDrawablesRelative(TextView textView, Drawable start, Drawable top,
@@ -249,7 +249,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see TextView#setCompoundDrawablesRelativeWithIntrinsicBounds(Drawable,
+     * @see android.widget.TextView#setCompoundDrawablesRelativeWithIntrinsicBounds(Drawable,
      *      Drawable, Drawable, Drawable)
      */
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
@@ -267,7 +267,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see TextView#setCompoundDrawablesRelativeWithIntrinsicBounds(int, int, int,
+     * @see android.widget.TextView#setCompoundDrawablesRelativeWithIntrinsicBounds(int, int, int,
      *      int)
      */
     public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
@@ -285,7 +285,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Html#toHtml(Spanned, int)
+     * @see android.text.Html#toHtml(Spanned, int)
      * @param option is ignored on below N
      */
     @SuppressWarnings("deprecation")
@@ -300,7 +300,7 @@ public class ApiCompatibilityUtils {
     // These methods have a new name, and the old name is deprecated.
 
     /**
-     * @see PendingIntent#getCreatorPackage()
+     * @see android.app.PendingIntent#getCreatorPackage()
      */
     @SuppressWarnings("deprecation")
     public static String getCreatorPackage(PendingIntent intent) {
@@ -312,7 +312,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Settings.Global#DEVICE_PROVISIONED
+     * @see android.provider.Settings.Global#DEVICE_PROVISIONED
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static boolean isDeviceProvisioned(Context context) {
@@ -324,7 +324,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Activity#finishAndRemoveTask()
+     * @see android.app.Activity#finishAndRemoveTask()
      */
     public static void finishAndRemoveTask(Activity activity) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
@@ -395,7 +395,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Settings.Secure#SKIP_FIRST_USE_HINTS
+     * @see android.provider.Settings.Secure#SKIP_FIRST_USE_HINTS
      */
     public static boolean shouldSkipFirstUseHints(ContentResolver contentResolver) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -424,7 +424,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Window#setStatusBarColor(int color).
+     * @see android.view.Window#setStatusBarColor(int color).
      */
     public static void setStatusBarColor(Window window, int statusBarColor) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
@@ -443,7 +443,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Resources#getDrawable(int id).
+     * @see android.content.res.Resources#getDrawable(int id).
      */
     @SuppressWarnings("deprecation")
     public static Drawable getDrawable(Resources res, int id) throws NotFoundException {
@@ -460,7 +460,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Resources#getDrawableForDensity(int id, int density).
+     * @see android.content.res.Resources#getDrawableForDensity(int id, int density).
      */
     @SuppressWarnings("deprecation")
     public static Drawable getDrawableForDensity(Resources res, int id, int density) {
@@ -472,7 +472,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Activity#finishAfterTransition().
+     * @see android.app.Activity#finishAfterTransition().
      */
     public static void finishAfterTransition(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -483,7 +483,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see PackageManager#getUserBadgedIcon(Drawable, android.os.UserHandle).
+     * @see android.content.pm.PackageManager#getUserBadgedIcon(Drawable, android.os.UserHandle).
      */
     public static Drawable getUserBadgedIcon(Context context, int id) {
         Drawable drawable = getDrawable(context.getResources(), id);
@@ -495,7 +495,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see PackageManager#getUserBadgedDrawableForDensity(Drawable drawable,
+     * @see android.content.pm.PackageManager#getUserBadgedDrawableForDensity(Drawable drawable,
      * UserHandle user, Rect badgeLocation, int badgeDensity).
      */
     public static Drawable getUserBadgedDrawableForDensity(
@@ -509,7 +509,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Resources#getColor(int id).
+     * @see android.content.res.Resources#getColor(int id).
      */
     @SuppressWarnings("deprecation")
     public static int getColor(Resources res, int id) throws NotFoundException {
@@ -521,7 +521,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Drawable#getColorFilter().
+     * @see android.graphics.drawable.Drawable#getColorFilter().
      */
     @SuppressWarnings("NewApi")
     public static ColorFilter getColorFilter(Drawable drawable) {
@@ -533,7 +533,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Resources#getColorStateList(int id).
+     * @see android.content.res.Resources#getColorStateList(int id).
      */
     @SuppressWarnings("deprecation")
     public static ColorStateList getColorStateList(Resources res, int id) throws NotFoundException {
@@ -545,7 +545,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see TextView#setTextAppearance(int id).
+     * @see android.widget.TextView#setTextAppearance(int id).
      */
     @SuppressWarnings("deprecation")
     public static void setTextAppearance(TextView view, int id) {
@@ -557,7 +557,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * See {@link StatFs#getAvailableBlocksLong}.
+     * See {@link android.os.StatFs#getAvailableBlocksLong}.
      */
     @SuppressWarnings("deprecation")
     public static long getAvailableBlocks(StatFs statFs) {
@@ -569,7 +569,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * See {@link StatFs#getBlockCount}.
+     * See {@link android.os.StatFs#getBlockCount}.
      */
     @SuppressWarnings("deprecation")
     public static long getBlockCount(StatFs statFs) {
@@ -581,7 +581,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * See {@link StatFs#getBlockSize}.
+     * See {@link android.os.StatFs#getBlockSize}.
      */
     @SuppressWarnings("deprecation")
     public static long getBlockSize(StatFs statFs) {
@@ -657,7 +657,7 @@ public class ApiCompatibilityUtils {
     }
 
     /**
-     * @see Window#FEATURE_INDETERMINATE_PROGRESS
+     * @see android.view.Window#FEATURE_INDETERMINATE_PROGRESS
      */
     public static void setWindowIndeterminateProgress(Window window) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

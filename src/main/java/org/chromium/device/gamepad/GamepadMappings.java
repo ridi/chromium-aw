@@ -43,7 +43,7 @@ abstract class GamepadMappings {
 
     public static GamepadMappings getMappings(InputDevice device, int[] axes) {
         GamepadMappings mappings = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mappings = getMappings(device.getProductId(), device.getVendorId());
         }
         if (mappings == null) mappings = getMappings(device.getName());

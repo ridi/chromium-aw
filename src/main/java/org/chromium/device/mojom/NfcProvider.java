@@ -22,11 +22,11 @@ public interface NfcProvider extends org.chromium.mojo.bindings.Interface {
     public interface Proxy extends NfcProvider, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<NfcProvider, Proxy> MANAGER = NfcProvider_Internal.MANAGER;
+    Manager<NfcProvider, NfcProvider.Proxy> MANAGER = NfcProvider_Internal.MANAGER;
 
 
     void getNfcForHost(
-            int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc);
+int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc);
 
 
 }

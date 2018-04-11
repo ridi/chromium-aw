@@ -213,7 +213,7 @@ public interface DataPipe {
     public static interface ProducerHandle extends Handle {
 
         /**
-         * @see Handle#pass()
+         * @see org.chromium.mojo.system.Handle#pass()
          */
         @Override
         public ProducerHandle pass();
@@ -277,7 +277,7 @@ public interface DataPipe {
      */
     public static interface ConsumerHandle extends Handle {
         /**
-         * @see Handle#pass()
+         * @see org.chromium.mojo.system.Handle#pass()
          */
         @Override
         public ConsumerHandle pass();

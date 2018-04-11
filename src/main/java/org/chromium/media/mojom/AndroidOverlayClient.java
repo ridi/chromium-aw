@@ -22,16 +22,16 @@ public interface AndroidOverlayClient extends org.chromium.mojo.bindings.Interfa
     public interface Proxy extends AndroidOverlayClient, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
-    Manager<AndroidOverlayClient, Proxy> MANAGER = AndroidOverlayClient_Internal.MANAGER;
+    Manager<AndroidOverlayClient, AndroidOverlayClient.Proxy> MANAGER = AndroidOverlayClient_Internal.MANAGER;
 
 
     void onSurfaceReady(
-            long surfaceKey);
+long surfaceKey);
 
 
 
     void onDestroyed(
-    );
+);
 
 
 }

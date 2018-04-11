@@ -61,7 +61,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see Handle#pass()
+     * @see org.chromium.mojo.system.Handle#pass()
      */
     @Override
     public InvalidHandle pass() {
@@ -133,7 +133,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see SharedBufferHandle#unmap(ByteBuffer)
+     * @see SharedBufferHandle#unmap(java.nio.ByteBuffer)
      */
     @Override
     public void unmap(ByteBuffer buffer) {
@@ -141,7 +141,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ProducerHandle#writeData(ByteBuffer, DataPipe.WriteFlags)
+     * @see DataPipe.ProducerHandle#writeData(java.nio.ByteBuffer, DataPipe.WriteFlags)
      */
     @Override
     public ResultAnd<Integer> writeData(ByteBuffer elements, DataPipe.WriteFlags flags) {
@@ -149,7 +149,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ProducerHandle#beginWriteData(int, DataPipe.WriteFlags)
+     * @see DataPipe.ProducerHandle#beginWriteData(int, DataPipe.WriteFlags)
      */
     @Override
     public ByteBuffer beginWriteData(int numBytes,
@@ -158,7 +158,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ProducerHandle#endWriteData(int)
+     * @see DataPipe.ProducerHandle#endWriteData(int)
      */
     @Override
     public void endWriteData(int numBytesWritten) {
@@ -166,7 +166,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ConsumerHandle#discardData(int, DataPipe.ReadFlags)
+     * @see DataPipe.ConsumerHandle#discardData(int, DataPipe.ReadFlags)
      */
     @Override
     public int discardData(int numBytes, DataPipe.ReadFlags flags) {
@@ -174,7 +174,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ConsumerHandle#readData(ByteBuffer, DataPipe.ReadFlags)
+     * @see DataPipe.ConsumerHandle#readData(java.nio.ByteBuffer, DataPipe.ReadFlags)
      */
     @Override
     public ResultAnd<Integer> readData(ByteBuffer elements, DataPipe.ReadFlags flags) {
@@ -182,7 +182,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ConsumerHandle#beginReadData(int, DataPipe.ReadFlags)
+     * @see DataPipe.ConsumerHandle#beginReadData(int, DataPipe.ReadFlags)
      */
     @Override
     public ByteBuffer beginReadData(int numBytes,
@@ -191,7 +191,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see ConsumerHandle#endReadData(int)
+     * @see DataPipe.ConsumerHandle#endReadData(int)
      */
     @Override
     public void endReadData(int numBytesRead) {
@@ -199,7 +199,7 @@ public class InvalidHandle implements UntypedHandle, MessagePipeHandle, Consumer
     }
 
     /**
-     * @see MessagePipeHandle#writeMessage(ByteBuffer, List,
+     * @see MessagePipeHandle#writeMessage(java.nio.ByteBuffer, java.util.List,
      *      MessagePipeHandle.WriteFlags)
      */
     @Override

@@ -70,7 +70,7 @@ import java.util.UUID;
     }
 
     /**
-     * A {@link Parcelable.Creator} instance that is used to build
+     * A {@link android.os.Parcelable.Creator} instance that is used to build
      * {@link WebContentsImpl} objects from a {@link Parcel}.
      */
     // TODO(crbug.com/635567): Fix this properly.

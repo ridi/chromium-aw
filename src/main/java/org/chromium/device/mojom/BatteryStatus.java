@@ -29,7 +29,7 @@ public final class BatteryStatus extends org.chromium.mojo.bindings.Struct {
         super(STRUCT_SIZE, version);
         this.charging = (boolean) true;
         this.chargingTime = (double) 0.0;
-        this.dischargingTime = (double) Double.POSITIVE_INFINITY;
+        this.dischargingTime = (double) java.lang.Double.POSITIVE_INFINITY;
         this.level = (double) 1.0;
     }
 
@@ -44,7 +44,7 @@ public final class BatteryStatus extends org.chromium.mojo.bindings.Struct {
     /**
      * Similar to the method above, but deserializes from a |ByteBuffer| instance.
      *
-     * @throws DeserializationException on deserialization failure.
+     * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
      */
     public static BatteryStatus deserialize(java.nio.ByteBuffer data) {
         if (data == null)

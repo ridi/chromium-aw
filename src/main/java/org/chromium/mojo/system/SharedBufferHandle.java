@@ -130,7 +130,7 @@ public interface SharedBufferHandle extends Handle {
     }
 
     /**
-     * @see Handle#pass()
+     * @see org.chromium.mojo.system.Handle#pass()
      */
     @Override
     public SharedBufferHandle pass();

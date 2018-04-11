@@ -63,7 +63,7 @@ public class EventForwarder {
                                || event.getActionMasked() == MotionEvent.ACTION_MOVE
                                || event.getActionMasked() == MotionEvent.ACTION_UP);
 
-            if (apiVersion >= Build.VERSION_CODES.M && !isTouchpadScroll) {
+            if (apiVersion >= android.os.Build.VERSION_CODES.M && !isTouchpadScroll) {
                 return onMouseEvent(event);
             }
         }

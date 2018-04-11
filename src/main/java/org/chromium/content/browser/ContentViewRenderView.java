@@ -47,9 +47,9 @@ public class ContentViewRenderView extends FrameLayout {
 
         setSurfaceViewBackgroundColor(Color.WHITE);
         addView(mSurfaceView,
-                new LayoutParams(
-                        LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT));
+                new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT));
         mSurfaceView.setVisibility(GONE);
     }
 

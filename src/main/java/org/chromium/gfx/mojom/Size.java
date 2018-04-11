@@ -38,7 +38,7 @@ public final class Size extends org.chromium.mojo.bindings.Struct {
     /**
      * Similar to the method above, but deserializes from a |ByteBuffer| instance.
      *
-     * @throws DeserializationException on deserialization failure.
+     * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
      */
     public static Size deserialize(java.nio.ByteBuffer data) {
         if (data == null)

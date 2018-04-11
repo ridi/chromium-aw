@@ -503,7 +503,7 @@ public class PackageManagerWrapper extends PackageManager {
 
     @Override
     public PackageInfo getPackageInfo(VersionedPackage versionedPackage, int flags)
-            throws NameNotFoundException {
+            throws PackageManager.NameNotFoundException {
         return mWrapped.getPackageInfo(versionedPackage, flags);
     }
 

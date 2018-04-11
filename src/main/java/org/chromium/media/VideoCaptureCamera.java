@@ -71,7 +71,7 @@ public class VideoCaptureCamera
 
         static int getImageFormat() {
             for (String buggyDevice : COLORSPACE_BUGGY_DEVICE_LIST) {
-                if (buggyDevice.contentEquals(Build.MODEL)) {
+                if (buggyDevice.contentEquals(android.os.Build.MODEL)) {
                     return ImageFormat.NV21;
                 }
             }

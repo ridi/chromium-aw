@@ -42,7 +42,7 @@ public class ChildConnectionAllocator {
     @VisibleForTesting
     public interface ConnectionFactory {
         ChildProcessConnection createConnection(Context context, ComponentName serviceName,
-                                                boolean bindToCaller, boolean bindAsExternalService, Bundle serviceBundle);
+                boolean bindToCaller, boolean bindAsExternalService, Bundle serviceBundle);
     }
 
     /** Default implementation of the ConnectionFactory that creates actual connections. */

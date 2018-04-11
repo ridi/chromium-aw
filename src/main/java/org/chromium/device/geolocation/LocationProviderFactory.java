@@ -11,7 +11,7 @@ import org.chromium.base.VisibleForTesting;
  * Factory to create a LocationProvider to allow us to inject a mock for tests.
  */
 public class LocationProviderFactory {
-    private static LocationProvider sProviderImpl;
+    private static LocationProviderFactory.LocationProvider sProviderImpl;
     private static boolean sUseGmsCoreLocationProvider;
 
     /**
@@ -39,7 +39,7 @@ public class LocationProviderFactory {
     private LocationProviderFactory() {}
 
     @VisibleForTesting
-    public static void setLocationProviderImpl(LocationProvider provider) {
+    public static void setLocationProviderImpl(LocationProviderFactory.LocationProvider provider) {
         sProviderImpl = provider;
     }
 

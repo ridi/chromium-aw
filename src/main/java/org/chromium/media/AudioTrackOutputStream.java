@@ -41,7 +41,7 @@ class AudioTrackOutputStream {
     interface Callback {
         int getMinBufferSize(int sampleRateInHz, int channelConfig, int audioFormat);
         AudioTrack createAudioTrack(int streamType, int sampleRateInHz, int channelConfig,
-                                    int audioFormat, int bufferSizeInBytes, int mode);
+                int audioFormat, int bufferSizeInBytes, int mode);
         AudioBufferInfo onMoreData(ByteBuffer audioData, long delayInFrames);
         long getAddress(ByteBuffer byteBuffer);
         void onError();

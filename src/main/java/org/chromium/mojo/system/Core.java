@@ -156,7 +156,7 @@ public interface Core {
      * @return the new |SharedBufferHandle|.
      */
     public SharedBufferHandle createSharedBuffer(SharedBufferHandle.CreateOptions options,
-                                                 long numBytes);
+            long numBytes);
 
     /**
      * Acquires a handle from the native side. The handle will be owned by the returned object and
