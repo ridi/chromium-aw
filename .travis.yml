@@ -9,7 +9,17 @@ android:
     - build-tools-26.0.3
     - android-26
 
-script: ./gradlew assembleRelease
+script: ./gradlew assembleRelease sourcesJar
+
+deploy:
+  provider: releases
+  api_key:
+    secure: +GdqNAQPoGhMCIwp9VloODiTNsUIE0vhyMht2eFi1G3Xx/f5HU9MvpsOgBaYV6Hj46+6DEVKTwKHhX3zHanfvOEpr49YhINb9jx5KDAPQvH2hBwHPZSYzMyS+6pUvTe21HKDw2pUpq9kUV0tnt/tj9BT2KwrkMhD67ZjqyGDGnfIXYdIMeQd2a0mnVZJfcfyz84PnUWgNybfsRp75p+jCv1vvPjhlk2LmKBTODp3u/xix3pFBrR7auiBIrGLDcAA5Z5Vufs0Z7073a/ICpBJlj8JEeVFrTIb9LwHfGFPdtscsTWpP68uAARrpV59IW64MwCqm+ftoDhGWz7GBo+vqGf/rQJtWMktDYFfq+8mfrtv1A6BnoVi+bbB4Y+RFqQoOYlOL+nyktV0SnSC8IXGTtD3IM/XUnCwEXA9Cu2IfoJuGe6Y+kL9uDjqcYDDTQRwvX02eW4sR5UyzUFTpg1/NWxxntdP+qxK8qG7u6QD4vOBiR186KxRXbeCyuKb+DZXtSmzhhQt2Ug6E/uddCdVfX71Qn1B19h4Ac0n6ekp6xHaghqc8EQIO7D8vAOtxa7rEscDAhEoBWD6AxyWrnvsdDScLTiOI07jf9nWPCH854Z0glar7422XIg44NdxefdCdXpdNmSMJ+yiQQzmYDPQO+Rrc/WfYMS26CRLpt/pQjI=
+  file:
+    - /build/outputs/aar/chromium-aw-release.aar
+    - /build/libs/chromium-aw-sources.jar
+  on:
+    tags: true
 
 notifications:
   email: false
