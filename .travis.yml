@@ -18,6 +18,7 @@ deploy:
   file:
     - /build/outputs/aar/chromium-aw-release.aar
     - /build/libs/chromium-aw-sources.jar
+  skip_cleanup: true
   on:
     tags: true
 
