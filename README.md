@@ -32,6 +32,18 @@ dependencies {
 }
 ```
 
+3. Add following `aaptOptions` to prevent asset files being compressed.
+
+```
+android {
+    ...
+    aaptOptions {
+        noCompress 'dat', 'pak'
+    }
+    ...
+}
+```
+
 ## Chromium build information
 
 Current version is based on [`62.0.3202.101`](https://chromium.googlesource.com/chromium/src.git/+/0971c880c3f82e5fdbc6d65d1fc4d8ae9aa47ddc)
