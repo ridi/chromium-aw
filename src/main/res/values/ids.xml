@@ -1,142 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="dropdown_popup_window" />
-    <item type="id" name="action_bar_activity_content" />
-    <item type="id" name="action_bar_spinner" />
-    <item type="id" name="action_menu_divider" />
-    <item type="id" name="action_menu_presenter" />
-    <item type="id" name="home" />
-    <item type="id" name="progress_circular" />
-    <item type="id" name="progress_horizontal" />
-    <item type="id" name="split_action_bar" />
-    <item type="id" name="up" />
-    <item type="id" name="action_bar_title">false</item>
-    <item type="id" name="action_bar_subtitle">false</item>
-    <item type="id" name="action_mode_close_button">false</item>
-    <item type="id" name="activity_chooser_view_content">false</item>
-    <item type="id" name="expand_activities_button">false</item>
-    <item type="id" name="image">false</item>
-    <item type="id" name="default_activity_button">false</item>
-    <item type="id" name="list_item">false</item>
-    <item type="id" name="icon">false</item>
-    <item type="id" name="title">false</item>
-    <item type="id" name="buttonPanel">false</item>
-    <item type="id" name="spacer">false</item>
-    <item type="id" name="parentPanel">false</item>
-    <item type="id" name="topPanel">false</item>
-    <item type="id" name="title_template">false</item>
-    <item type="id" name="alertTitle">false</item>
-    <item type="id" name="contentPanel">false</item>
-    <item type="id" name="scrollIndicatorUp">false</item>
-    <item type="id" name="scrollView">false</item>
-    <item type="id" name="textSpacerNoButtons">false</item>
-    <item type="id" name="scrollIndicatorDown">false</item>
-    <item type="id" name="customPanel">false</item>
-    <item type="id" name="custom">false</item>
-    <item type="id" name="expanded_menu">false</item>
-    <item type="id" name="checkbox">false</item>
-    <item type="id" name="shortcut">false</item>
-    <item type="id" name="radio">false</item>
-    <item type="id" name="submenuarrow">false</item>
-    <item type="id" name="action_bar_root">false</item>
-    <item type="id" name="action_mode_bar_stub">false</item>
-    <item type="id" name="action_mode_bar">false</item>
-    <item type="id" name="decor_content_parent">false</item>
-    <item type="id" name="action_bar_container">false</item>
-    <item type="id" name="action_bar">false</item>
-    <item type="id" name="action_context_bar">false</item>
-    <item type="id" name="edit_query">false</item>
-    <item type="id" name="search_bar">false</item>
-    <item type="id" name="search_badge">false</item>
-    <item type="id" name="search_button">false</item>
-    <item type="id" name="search_edit_frame">false</item>
-    <item type="id" name="search_mag_icon">false</item>
-    <item type="id" name="search_plate">false</item>
-    <item type="id" name="search_src_text">false</item>
-    <item type="id" name="search_close_btn">false</item>
-    <item type="id" name="submit_area">false</item>
-    <item type="id" name="search_go_btn">false</item>
-    <item type="id" name="search_voice_btn">false</item>
-    <item type="id" name="select_dialog_listview">false</item>
-    <item type="id" name="autofill_keyboard_accessory_item_label">false</item>
-    <item type="id" name="autofill_keyboard_accessory_item_sublabel">false</item>
-    <item type="id" name="text">false</item>
-    <item type="id" name="gradient_border">false</item>
-    <item type="id" name="gradient">false</item>
-    <item type="id" name="seek_bar">false</item>
-    <item type="id" name="color_picker_advanced">false</item>
-    <item type="id" name="color_picker_simple">false</item>
-    <item type="id" name="more_colors_button_border">false</item>
-    <item type="id" name="more_colors_button">false</item>
-    <item type="id" name="selected_color_view_border">false</item>
-    <item type="id" name="selected_color_view">false</item>
-    <item type="id" name="date_picker">false</item>
-    <item type="id" name="time_picker">false</item>
-    <item type="id" name="date_time_suggestion">false</item>
-    <item type="id" name="date_time_suggestion_value">false</item>
-    <item type="id" name="date_time_suggestion_label">false</item>
-    <item type="id" name="start_dropdown_icon">false</item>
-    <item type="id" name="dropdown_label_wrapper">false</item>
-    <item type="id" name="dropdown_label">false</item>
-    <item type="id" name="dropdown_sublabel">false</item>
-    <item type="id" name="end_dropdown_icon">false</item>
-    <item type="id" name="hour">false</item>
-    <item type="id" name="minute">false</item>
-    <item type="id" name="second_colon">false</item>
-    <item type="id" name="second">false</item>
-    <item type="id" name="second_dot">false</item>
-    <item type="id" name="milli">false</item>
-    <item type="id" name="ampm">false</item>
-    <item type="id" name="action_container">false</item>
-    <item type="id" name="action_image">false</item>
-    <item type="id" name="action_text">false</item>
-    <item type="id" name="action0">false</item>
-    <item type="id" name="cancel_action">false</item>
-    <item type="id" name="status_bar_latest_event_content">false</item>
-    <item type="id" name="media_actions">false</item>
-    <item type="id" name="action_divider">false</item>
-    <item type="id" name="notification_main_column_container">false</item>
-    <item type="id" name="notification_main_column">false</item>
-    <item type="id" name="right_side">false</item>
-    <item type="id" name="time">false</item>
-    <item type="id" name="chronometer">false</item>
-    <item type="id" name="info">false</item>
-    <item type="id" name="right_icon">false</item>
-    <item type="id" name="notification_background">false</item>
-    <item type="id" name="actions">false</item>
-    <item type="id" name="icon_group">false</item>
-    <item type="id" name="line1">false</item>
-    <item type="id" name="text2">false</item>
-    <item type="id" name="line3">false</item>
-    <item type="id" name="end_padder">false</item>
-    <item type="id" name="testshell_activity">false</item>
-    <item type="id" name="toolbar">false</item>
-    <item type="id" name="url">false</item>
-    <item type="id" name="prev">false</item>
-    <item type="id" name="next">false</item>
-    <item type="id" name="content_container">false</item>
-    <item type="id" name="suggestionContainer">false</item>
-    <item type="id" name="divider">false</item>
-    <item type="id" name="addToDictionaryButton">false</item>
-    <item type="id" name="deleteButton">false</item>
-    <item type="id" name="pickers">false</item>
-    <item type="id" name="position_in_year">false</item>
-    <item type="id" name="year">false</item>
-    <item type="id" name="top_view">false</item>
-    <item type="id" name="icon_view">false</item>
-    <item type="id" name="text_wrapper">false</item>
-    <item type="id" name="arrow_image">false</item>
-    <item type="id" name="main_text">false</item>
-    <item type="id" name="sub_text">false</item>
-    <item type="id" name="color_button_swatch">false</item>
-    <item type="id" name="select_action_menu_assist_items">false</item>
-    <item type="id" name="select_action_menu_default_items">false</item>
-    <item type="id" name="select_action_menu_cut">false</item>
-    <item type="id" name="select_action_menu_copy">false</item>
-    <item type="id" name="select_action_menu_paste">false</item>
-    <item type="id" name="select_action_menu_share">false</item>
-    <item type="id" name="select_action_menu_select_all">false</item>
-    <item type="id" name="select_action_menu_paste_as_plain_text">false</item>
-    <item type="id" name="select_action_menu_web_search">false</item>
-    <item type="id" name="select_action_menu_text_processing_menus">false</item>
+    <item type="id" name="autofill_keyboard_accessory_item_label" />
+    <item type="id" name="autofill_keyboard_accessory_item_sublabel" />
+    <item type="id" name="gradient_border" />
+    <item type="id" name="gradient" />
+    <item type="id" name="seek_bar" />
+    <item type="id" name="color_picker_advanced" />
+    <item type="id" name="color_picker_simple" />
+    <item type="id" name="more_colors_button_border" />
+    <item type="id" name="more_colors_button" />
+    <item type="id" name="selected_color_view_border" />
+    <item type="id" name="selected_color_view" />
+    <item type="id" name="date_picker" />
+    <item type="id" name="time_picker" />
+    <item type="id" name="date_time_suggestion" />
+    <item type="id" name="date_time_suggestion_value" />
+    <item type="id" name="date_time_suggestion_label" />
+    <item type="id" name="start_dropdown_icon" />
+    <item type="id" name="dropdown_label_wrapper" />
+    <item type="id" name="dropdown_label" />
+    <item type="id" name="dropdown_sublabel" />
+    <item type="id" name="end_dropdown_icon" />
+    <item type="id" name="hour" />
+    <item type="id" name="minute" />
+    <item type="id" name="second_colon" />
+    <item type="id" name="second" />
+    <item type="id" name="second_dot" />
+    <item type="id" name="milli" />
+    <item type="id" name="ampm" />
+    <item type="id" name="testshell_activity" />
+    <item type="id" name="toolbar" />
+    <item type="id" name="url" />
+    <item type="id" name="prev" />
+    <item type="id" name="next" />
+    <item type="id" name="content_container" />
+    <item type="id" name="suggestionContainer" />
+    <item type="id" name="divider" />
+    <item type="id" name="addToDictionaryButton" />
+    <item type="id" name="deleteButton" />
+    <item type="id" name="pickers" />
+    <item type="id" name="position_in_year" />
+    <item type="id" name="year" />
+    <item type="id" name="top_view" />
+    <item type="id" name="icon_view" />
+    <item type="id" name="text_wrapper" />
+    <item type="id" name="arrow_image" />
+    <item type="id" name="main_text" />
+    <item type="id" name="sub_text" />
+    <item type="id" name="color_button_swatch" />
+    <item type="id" name="select_action_menu_assist_items" />
+    <item type="id" name="select_action_menu_default_items" />
+    <item type="id" name="select_action_menu_cut" />
+    <item type="id" name="select_action_menu_copy" />
+    <item type="id" name="select_action_menu_paste" />
+    <item type="id" name="select_action_menu_share" />
+    <item type="id" name="select_action_menu_select_all" />
+    <item type="id" name="select_action_menu_paste_as_plain_text" />
+    <item type="id" name="select_action_menu_web_search" />
+    <item type="id" name="select_action_menu_text_processing_menus" />
 </resources>
