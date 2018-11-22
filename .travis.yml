@@ -4,27 +4,15 @@ jdk: oraclejdk8
 android:
   components:
     - tools
-    - tools
     - platform-tools
     - build-tools-26.0.3
     - android-26
 
-script: ./gradlew assembleRelease sourcesJar
-
-deploy:
-  provider: releases
-  api_key:
-    secure: +GdqNAQPoGhMCIwp9VloODiTNsUIE0vhyMht2eFi1G3Xx/f5HU9MvpsOgBaYV6Hj46+6DEVKTwKHhX3zHanfvOEpr49YhINb9jx5KDAPQvH2hBwHPZSYzMyS+6pUvTe21HKDw2pUpq9kUV0tnt/tj9BT2KwrkMhD67ZjqyGDGnfIXYdIMeQd2a0mnVZJfcfyz84PnUWgNybfsRp75p+jCv1vvPjhlk2LmKBTODp3u/xix3pFBrR7auiBIrGLDcAA5Z5Vufs0Z7073a/ICpBJlj8JEeVFrTIb9LwHfGFPdtscsTWpP68uAARrpV59IW64MwCqm+ftoDhGWz7GBo+vqGf/rQJtWMktDYFfq+8mfrtv1A6BnoVi+bbB4Y+RFqQoOYlOL+nyktV0SnSC8IXGTtD3IM/XUnCwEXA9Cu2IfoJuGe6Y+kL9uDjqcYDDTQRwvX02eW4sR5UyzUFTpg1/NWxxntdP+qxK8qG7u6QD4vOBiR186KxRXbeCyuKb+DZXtSmzhhQt2Ug6E/uddCdVfX71Qn1B19h4Ac0n6ekp6xHaghqc8EQIO7D8vAOtxa7rEscDAhEoBWD6AxyWrnvsdDScLTiOI07jf9nWPCH854Z0glar7422XIg44NdxefdCdXpdNmSMJ+yiQQzmYDPQO+Rrc/WfYMS26CRLpt/pQjI=
-  file:
-    - build/outputs/aar/chromium-aw-release.aar
-    - build/libs/chromium-aw-sources.jar
-  skip_cleanup: true
-  on:
-    tags: true
+script: ./gradlew assembleRelease
 
 notifications:
   email: false
   slack:
     rooms:
-      - 'rididev:KMm0EBQYY1ThicCJo0CwYb5U'
+      secure: nb2vXyQHvB46G8mrjpa6paiuFLih0M6gq+jpDFI3EgaaGMl+KMlnA1X7kjqW9SdXRDaKiCGlgKvmYzBetTINVVUe6FmAOhU939Z80qXVjoWnAUM+JrCre7WlfOm2bWvaR/LShcLP/0LKwojcZAbN27Hyw9RXu5Q2E4z1z5ofcPNtWCkr7CsOAeqjvu1o9qOXXxRFfplcvBPUfMybpYhRVPu2a8nvEBUw1WnlKvXIx95TOUnSJKSgqjSzvrOYr4Wurb6x8+dq60azUKJxkN7wc1Sa/ydjlEJfR/IV3iw6ZTKoKVHERXkDCPxA+RTfeZGBljKWvWiBjo3//PPVJkTlphDsfXgehpcwXkjveqJ+is+BPSkSfJKfP4ZY159vsGQ89a2YUcOi2sPgsD1s7cTzr/4mc28oCAU6QKEKSCDS8qTB5WSc92X9LEuL/UzOr0PSX/pBBbf4AWeG/JnyjgeEKukMy/L8I0rQa2EXuZQNbjGQdQsd99YOyDKwJ90B8N8zjyq/jVjVGT317DMehDaq6zFXRK3Cf+4qaZFK14Wi8coQt0tkijsNwCCX75TMeSkndHiXnrqESRKPawjFq2K4D7yvA63xEW1v3i1T2hWEQTAimx3mRu0XAf7sOJV8x6zqZr4Blc8QjgzVyrXSZoWxcHSEImk+xslJeWORzD5p3Aw=
     on_success: change
