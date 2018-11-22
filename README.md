@@ -4,35 +4,31 @@
 
 [Chromium](https://www.chromium.org) based Android WebView engine to be embedded in Ridibooks-Android
 
-## Build instructions
+## Getting started
 
-### Build AAR (Androd Archive)
+This library is distributed by [jitpack](https://jitpack.io).
 
-```sh
-$ ./gradlew assembleRelease
-```
-
-### Build sources JAR
-
-```sh
-$ ./gradlew sourcesJar
-```
-
-## Usage
-
-1. Copy `chromium-aw-release.aar` file to your project(You can find the latest release [here](https://github.com/ridi-viewer/chromium-aw/releases/latest)).
-
-2. Add dependency script to `build.gradle` file of your project.
+You should add jitpack maven repository to build.gradle file of your project.
 
 ```
-dependencies {
+repositories {
     ...
-    implementation files('/path/to/chromium-aw-release.aar')
+    maven { url 'https://jitpack.io' }
     ...
 }
 ```
 
-3. Add following `aaptOptions` to prevent asset files being compressed.
+Then you can include this library by adding dependency script to build.gradle file of your project.
+
+```
+dependencies {
+    ...
+    compile 'com.github.ridi:chromium-aw:<version>'
+    ...
+}
+```
+
+**IMPORTANT : Add following `aaptOptions` to prevent asset files being compressed.**
 
 ```
 android {
