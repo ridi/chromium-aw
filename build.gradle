@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -17,6 +18,10 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.ridi'
+version = '62.0.3202.101-4'
 
 android {
     compileSdkVersion 26
@@ -30,7 +35,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         versionCode 1
-        versionName '62.0.3202.101-4'
+        versionName version
         vectorDrawables.useSupportLibrary = true
     }
 
