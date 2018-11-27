@@ -21,7 +21,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ridi'
-version = '62.0.3202.101-4'
+version = '62.0.3202.101-5'
 
 android {
     compileSdkVersion 26
@@ -64,4 +64,18 @@ task sourcesJar(type: Jar) {
 
 artifacts {
     archives sourcesJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            licenses {
+                license {
+                    name 'The 3-Clause BSD License'
+                    url 'https://opensource.org/licenses/BSD-3-Clause'
+                    distribution 'repo'
+                }
+            }
+        }
+    }
 }
