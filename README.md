@@ -78,7 +78,7 @@ $ gn gen --args='target_os="android" target_cpu="$TARGET" is_debug=false' out/$T
 $ ninja -C out/$TARGET webview_instrumentation_apk
 ```
 
-In this project `$TARGET` must be one of `arm`, `arm64`, `x86`.
+In this project `$TARGET` must be one of `arm`, `arm64`, `x86`, and `x64`.
 
 After building, there will be `out/$TARGET/libstandalonelibchromiumwebview.so`, `out/$TARGET/libdrawgl.so`.
 
