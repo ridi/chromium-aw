@@ -22,13 +22,15 @@ class SslUtil {
     /**
      * Creates an SslError object from a chromium net error code.
      */
-    public static SslError sslErrorFromNetErrorCode(int error, SslCertificate cert, String url) {
+    public static SslError sslErrorFromNetErrorCode(
+            @NetError int error, SslCertificate cert, String url) {
         assert (error >= NetError.ERR_CERT_END && error <= NetError.ERR_CERT_COMMON_NAME_INVALID);
         switch(error) {
             case NetError.ERR_CERT_COMMON_NAME_INVALID:
                 return new SslError(SslError.SSL_IDMISMATCH, cert, url);
             case NetError.ERR_CERT_DATE_INVALID:
                 return new SslError(SslError.SSL_DATE_INVALID, cert, url);
+            case NetError.ERR_CERT_KNOWN_INTERCEPTION_BLOCKED:
             case NetError.ERR_CERT_AUTHORITY_INVALID:
                 return new SslError(SslError.SSL_UNTRUSTED, cert, url);
             default:

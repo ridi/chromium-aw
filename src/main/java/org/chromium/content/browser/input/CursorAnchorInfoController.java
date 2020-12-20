@@ -4,27 +4,24 @@
 
 package org.chromium.content.browser.input;
 
-import android.annotation.TargetApi;
 import android.graphics.Matrix;
-import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.CursorAnchorInfo;
 
-import org.chromium.base.VisibleForTesting;
-import org.chromium.base.annotations.SuppressFBWarnings;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
+import org.chromium.content_public.browser.InputMethodManagerWrapper;
 
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * A state machine interface which receives Chromium internal events to determines when to call
  * {@link InputMethodManager#updateCursorAnchorInfo(View, CursorAnchorInfo)}. This interface is
- * also used in unit tests to mock out {@link CursorAnchorInfo}, which is available only in
- * Android 5.0 (Lollipop) and later.
+ * also used in unit tests to mock out {@link CursorAnchorInfo}.
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 final class CursorAnchorInfoController {
     /**
      * An interface to mock out {@link View#getLocationOnScreen(int[])} for testing.
@@ -100,9 +97,7 @@ final class CursorAnchorInfoController {
                 });
     }
 
-    @VisibleForTesting
-    public void setInputMethodManagerWrapperForTest(
-            InputMethodManagerWrapper inputMethodManagerWrapper) {
+    public void setInputMethodManagerWrapper(InputMethodManagerWrapper inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
     }
 
@@ -152,7 +147,6 @@ final class CursorAnchorInfoController {
      * @param insertionMarkerBottom Y coordinate of the bottom of the first selection marker.
      * @param view The attached view.
      */
-    @SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY")
     public void onUpdateFrameInfo(float scale, float contentOffsetYPix, boolean hasInsertionMarker,
             boolean isInsertionMarkerVisible, float insertionMarkerHorizontal,
             float insertionMarkerTop, float insertionMarkerBottom, @Nonnull View view) {

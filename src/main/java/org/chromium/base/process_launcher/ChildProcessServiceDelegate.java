@@ -32,16 +32,19 @@ public interface ChildProcessServiceDelegate {
      */
     void onConnectionSetup(Bundle connectionBundle, List<IBinder> clientInterfaces);
 
-    /** Called when the service gets destroyed. */
-    void onDestroy();
-
     /**
      * Called when the delegate should load the native library.
      * @param hostContext The host context the library should be loaded with (i.e. Chrome).
-     * @return true if the library was loaded successfully, false otherwise in which case the
-     * service stops.
      */
-    boolean loadNativeLibrary(Context hostContext);
+    void loadNativeLibrary(Context hostContext);
+
+    /**
+     * Called when the delegate should preload the native library.
+     * Preloading is automatically done during library loading, but can also be called explicitly
+     * to speed up the loading. See {@link LibraryLoader.preloadNow}.
+     * @param hostContext The host context the library should be preloaded with (i.e. Chrome).
+     */
+    void preloadNativeLibrary(Context hostContext);
 
     /**
      * Should return a map that associatesfile descriptors' IDs to keys.

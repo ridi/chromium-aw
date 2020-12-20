@@ -4,32 +4,39 @@
 
 package org.chromium.base;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.MessageQueue;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.MainDex;
+import org.chromium.base.annotations.NativeMethods;
+
+import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * Thread in Java with an Android Handler. This class is not thread safe.
  */
 @JNINamespace("base::android")
+@MainDex
 public class JavaHandlerThread {
     private final HandlerThread mThread;
+
+    private Throwable mUnhandledException;
 
     /**
      * Construct a java-only instance. Can be connected with native side later.
      * Useful for cases where a java thread is needed before native library is loaded.
      */
-    public JavaHandlerThread(String name) {
-        mThread = new HandlerThread(name);
+    public JavaHandlerThread(String name, int priority) {
+        mThread = new HandlerThread(name, priority);
     }
 
     @CalledByNative
-    private static JavaHandlerThread create(String name) {
-        return new JavaHandlerThread(name);
+    private static JavaHandlerThread create(String name, int priority) {
+        return new JavaHandlerThread(name, priority);
     }
 
     public Looper getLooper() {
@@ -48,34 +55,25 @@ public class JavaHandlerThread {
         new Handler(mThread.getLooper()).post(new Runnable() {
             @Override
             public void run() {
-                nativeInitializeThread(nativeThread, nativeEvent);
+                JavaHandlerThreadJni.get().initializeThread(nativeThread, nativeEvent);
             }
         });
     }
 
     @CalledByNative
-    private void stopOnThread(final long nativeThread) {
-        nativeStopThread(nativeThread);
-        MessageQueue queue = mThread.getLooper().getQueue();
-        // Add an idle handler so that the thread cleanup code can run after the message loop has
-        // detected an idle state and quit properly.
-        // This matches the behavior of base::Thread in that it will keep running non-delayed posted
-        // tasks indefinitely (until an idle state is reached). HandlerThread#quit() and
-        // HandlerThread#quitSafely() aren't sufficient because they prevent new tasks from being
-        // added to the queue, and don't allow us to wait for the Runloop to quit properly before
-        // stopping the thread.
-        queue.addIdleHandler(new MessageQueue.IdleHandler() {
+    private void quitThreadSafely(final long nativeThread) {
+        // Allow pending java tasks to run, but don't run any delayed or newly queued up tasks.
+        new Handler(mThread.getLooper()).post(new Runnable() {
             @Override
-            public boolean queueIdle() {
-                // The MessageQueue may not be empty, but only delayed tasks remain. To
-                // match the behavior of other platforms, we should quit now. Calling quit
-                // here is equivalent to calling quitSafely(), but doesn't require target
-                // API guards.
-                mThread.getLooper().quit();
-                nativeOnLooperStopped(nativeThread);
-                return false;
+            public void run() {
+                mThread.quit();
+                JavaHandlerThreadJni.get().onLooperStopped(nativeThread);
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            // When we can, signal that new tasks queued up won't be run.
+            mThread.getLooper().quitSafely();
+        }
     }
 
     @CalledByNative
@@ -90,18 +88,6 @@ public class JavaHandlerThread {
         }
     }
 
-    @CalledByNative
-    private void stop(final long nativeThread) {
-        assert hasStarted();
-        new Handler(mThread.getLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                stopOnThread(nativeThread);
-            }
-        });
-        joinThread();
-    }
-
     private boolean hasStarted() {
         return mThread.getState() != Thread.State.NEW;
     }
@@ -111,7 +97,27 @@ public class JavaHandlerThread {
         return mThread.isAlive();
     }
 
-    private native void nativeInitializeThread(long nativeJavaHandlerThread, long nativeEvent);
-    private native void nativeStopThread(long nativeJavaHandlerThread);
-    private native void nativeOnLooperStopped(long nativeJavaHandlerThread);
+    // This should *only* be used for tests. In production we always need to call the original
+    // uncaught exception handler (the framework's) after any uncaught exception handling we do, as
+    // it generates crash dumps and kills the process.
+    @CalledByNative
+    private void listenForUncaughtExceptionsForTesting() {
+        mThread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                mUnhandledException = e;
+            }
+        });
+    }
+
+    @CalledByNative
+    private Throwable getUncaughtExceptionIfAny() {
+        return mUnhandledException;
+    }
+
+    @NativeMethods
+    interface Natives {
+        void initializeThread(long nativeJavaHandlerThread, long nativeEvent);
+        void onLooperStopped(long nativeJavaHandlerThread);
+    }
 }

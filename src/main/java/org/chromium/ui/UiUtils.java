@@ -5,16 +5,15 @@
 package org.chromium.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -25,14 +24,25 @@ import android.view.inputmethod.InputMethodSubtype;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Utility functions for common Android UI tasks.
@@ -41,12 +51,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UiUtils {
     private static final String TAG = "UiUtils";
 
-    private static final int KEYBOARD_RETRY_ATTEMPTS = 10;
-    private static final long KEYBOARD_RETRY_DELAY_MS = 100;
-
     public static final String EXTERNAL_IMAGE_FILE_PATH = "browser-images";
     // Keep this variable in sync with the value defined in file_paths.xml.
     public static final String IMAGE_FILE_PATH = "images";
+
+    /**
+     * A static map of manufacturers to the version where theming Android UI is completely
+     * supported. If there is no entry, it means the manufacturer supports theming at the same
+     * version Android did.
+     */
+    private static final Map<String, Integer> sAndroidUiThemeBlacklist = new HashMap<>();
+    static {
+        // Xiaomi doesn't support SYSTEM_UI_FLAG_LIGHT_STATUS_BAR until Android N; more info at
+        // https://crbug.com/823264.
+        sAndroidUiThemeBlacklist.put("xiaomi", Build.VERSION_CODES.N);
+        // HTC doesn't respect theming flags on activity restart until Android O; this affects both
+        // the system nav and status bar. More info at https://crbug.com/831737.
+        sAndroidUiThemeBlacklist.put("htc", Build.VERSION_CODES.O);
+    }
+
+    /** Whether theming the Android system UI has been disabled. */
+    private static Boolean sSystemUiThemingDisabled;
 
     /**
      * Guards this class from being instantiated.
@@ -54,167 +79,76 @@ public class UiUtils {
     private UiUtils() {
     }
 
-    /** The minimum size of the bottom margin below the app to detect a keyboard. */
-    private static final float KEYBOARD_DETECT_BOTTOM_THRESHOLD_DP = 100;
-
-    /** A delegate that allows disabling keyboard visibility detection. */
-    private static KeyboardShowingDelegate sKeyboardShowingDelegate;
-
-    /** A delegate for the photo picker. */
-    private static PhotoPickerDelegate sPhotoPickerDelegate;
+    /** A delegate for the contacts picker. */
+    private static ContactsPickerDelegate sContactsPickerDelegate;
 
     /**
-     * A delegate that can be implemented to override whether or not keyboard detection will be
-     * used.
+     * A delegate interface for the contacts picker.
      */
-    public interface KeyboardShowingDelegate {
+    public interface ContactsPickerDelegate {
         /**
-         * Will be called to determine whether or not to detect if the keyboard is visible.
-         * @param context A {@link Context} instance.
-         * @param view    A {@link View}.
-         * @return        Whether or not the keyboard check should be disabled.
-         */
-        boolean disableKeyboardCheck(Context context, View view);
-    }
-
-    /**
-     * A delegate interface for the photo picker.
-     */
-    public interface PhotoPickerDelegate {
-        /**
-         * Called to display the photo picker.
+         * Called to display the contacts picker.
          * @param context  The context to use.
          * @param listener The listener that will be notified of the action the user took in the
          *                 picker.
-         * @param allowMultiple Whether the dialog should allow multiple images to be selected.
-         * @param mimeTypes A list of mime types to show in the dialog.
+         * @param allowMultiple Whether to allow multiple contacts to be picked.
+         * @param includeNames Whether to include names of the contacts shared.
+         * @param includeEmails Whether to include emails of the contacts shared.
+         * @param includeTel Whether to include telephone numbers of the contacts shared.
+         * @param includeAddresses Whether to include addresses of the contacts shared.
+         * @param includeIcons Whether to include addresses of the contacts shared.
+         * @param formattedOrigin The origin the data will be shared with, formatted for display
+         *                        with the scheme omitted.
          */
-        void showPhotoPicker(Context context, PhotoPickerListener listener, boolean allowMultiple,
-                List<String> mimeTypes);
+        void showContactsPicker(Context context, ContactsPickerListener listener,
+                boolean allowMultiple, boolean includeNames, boolean includeEmails,
+                boolean includeTel, boolean includeAddresses, boolean includeIcons,
+                String formattedOrigin);
 
         /**
-         * Called when the photo picker dialog has been dismissed.
+         * Called when the contacts picker dialog has been dismissed.
          */
-        void onPhotoPickerDismissed();
+        void onContactsPickerDismissed();
     }
 
-    // PhotoPickerDelegate:
+    // ContactsPickerDelegate:
 
     /**
-     * Allows setting a delegate to override the default Android stock photo picker.
-     * @param delegate A {@link PhotoPickerDelegate} instance.
+     * Allows setting a delegate for an Android contacts picker.
+     * @param delegate A {@link ContactsPickerDelegate} instance.
      */
-    public static void setPhotoPickerDelegate(PhotoPickerDelegate delegate) {
-        sPhotoPickerDelegate = delegate;
+    public static void setContactsPickerDelegate(ContactsPickerDelegate delegate) {
+        sContactsPickerDelegate = delegate;
     }
 
     /**
-     * Returns whether a photo picker should be called.
-     */
-    public static boolean shouldShowPhotoPicker() {
-        return sPhotoPickerDelegate != null;
-    }
-
-    /**
-     * Called to display the photo picker.
+     * Called to display the contacts picker.
      * @param context  The context to use.
      * @param listener The listener that will be notified of the action the user took in the
      *                 picker.
-     * @param allowMultiple Whether the dialog should allow multiple images to be selected.
-     * @param mimeTypes A list of mime types to show in the dialog.
+     * @param allowMultiple Whether to allow multiple contacts to be selected.
+     * @param includeNames Whether to include names in the contact data returned.
+     * @param includeEmails Whether to include emails in the contact data returned.
+     * @param includeTel Whether to include telephone numbers in the contact data returned.
+     * @param includeAddresses Whether to include addresses of the contacts shared.
+     * @param includeIcons Whether to include icons of the contacts shared.
+     * @param formattedOrigin The origin the data will be shared with.
      */
-    public static boolean showPhotoPicker(Context context, PhotoPickerListener listener,
-            boolean allowMultiple, List<String> mimeTypes) {
-        if (sPhotoPickerDelegate == null) return false;
-        sPhotoPickerDelegate.showPhotoPicker(context, listener, allowMultiple, mimeTypes);
+    public static boolean showContactsPicker(Context context, ContactsPickerListener listener,
+            boolean allowMultiple, boolean includeNames, boolean includeEmails, boolean includeTel,
+            boolean includeAddresses, boolean includeIcons, String formattedOrigin) {
+        if (sContactsPickerDelegate == null) return false;
+        sContactsPickerDelegate.showContactsPicker(context, listener, allowMultiple, includeNames,
+                includeEmails, includeTel, includeAddresses, includeIcons, formattedOrigin);
         return true;
     }
 
     /**
-     * Called when the photo picker dialog has been dismissed.
+     * Called when the contacts picker dialog has been dismissed.
      */
-    public static void onPhotoPickerDismissed() {
-        if (sPhotoPickerDelegate == null) return;
-        sPhotoPickerDelegate.onPhotoPickerDismissed();
-    }
-
-    // KeyboardShowingDelegate:
-
-    /**
-     * Allows setting a delegate to override the default software keyboard visibility detection.
-     * @param delegate A {@link KeyboardShowingDelegate} instance.
-     */
-    public static void setKeyboardShowingDelegate(KeyboardShowingDelegate delegate) {
-        sKeyboardShowingDelegate = delegate;
-    }
-
-    /**
-     * Shows the software keyboard if necessary.
-     * @param view The currently focused {@link View}, which would receive soft keyboard input.
-     */
-    public static void showKeyboard(final View view) {
-        final Handler handler = new Handler();
-        final AtomicInteger attempt = new AtomicInteger();
-        Runnable openRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // Not passing InputMethodManager.SHOW_IMPLICIT as it does not trigger the
-                // keyboard in landscape mode.
-                InputMethodManager imm =
-                        (InputMethodManager) view.getContext().getSystemService(
-                                Context.INPUT_METHOD_SERVICE);
-                // Third-party touches disk on showSoftInput call. http://crbug.com/619824,
-                // http://crbug.com/635118
-                StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
-                try {
-                    imm.showSoftInput(view, 0);
-                } catch (IllegalArgumentException e) {
-                    if (attempt.incrementAndGet() <= KEYBOARD_RETRY_ATTEMPTS) {
-                        handler.postDelayed(this, KEYBOARD_RETRY_DELAY_MS);
-                    } else {
-                        Log.e(TAG, "Unable to open keyboard.  Giving up.", e);
-                    }
-                } finally {
-                    StrictMode.setThreadPolicy(oldPolicy);
-                }
-            }
-        };
-        openRunnable.run();
-    }
-
-    /**
-     * Hides the keyboard.
-     * @param view The {@link View} that is currently accepting input.
-     * @return Whether the keyboard was visible before.
-     */
-    public static boolean hideKeyboard(View view) {
-        InputMethodManager imm =
-                (InputMethodManager) view.getContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-        return imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    /**
-     * Detects whether or not the keyboard is showing.  This is a best guess as there is no
-     * standardized/foolproof way to do this.
-     * @param context A {@link Context} instance.
-     * @param view    A {@link View}.
-     * @return        Whether or not the software keyboard is visible and taking up screen space.
-     */
-    public static boolean isKeyboardShowing(Context context, View view) {
-        if (sKeyboardShowingDelegate != null
-                && sKeyboardShowingDelegate.disableKeyboardCheck(context, view)) {
-            return false;
-        }
-
-        View rootView = view.getRootView();
-        if (rootView == null) return false;
-        Rect appRect = new Rect();
-        rootView.getWindowVisibleDisplayFrame(appRect);
-
-        final float density = context.getResources().getDisplayMetrics().density;
-        final float bottomMarginDp = Math.abs(rootView.getHeight() - appRect.height()) / density;
-        return bottomMarginDp > KEYBOARD_DETECT_BOTTOM_THRESHOLD_DP;
+    public static void onContactsPickerDismissed() {
+        if (sContactsPickerDelegate == null) return;
+        sContactsPickerDelegate.onContactsPickerDismissed();
     }
 
     /**
@@ -407,12 +341,48 @@ public class UiUtils {
      * @return Typeface that can be applied to a View.
      */
     public static Typeface createRobotoMediumTypeface() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Roboto Medium, regular.
-            return Typeface.create("sans-serif-medium", Typeface.NORMAL);
-        } else {
-            return Typeface.create("sans-serif", Typeface.BOLD);
+        // Roboto Medium, regular.
+        return Typeface.create("sans-serif-medium", Typeface.NORMAL);
+    }
+
+    /**
+     * Iterates through all items in the specified ListAdapter (including header and footer views)
+     * and returns the width of the widest item (when laid out with height and width set to
+     * WRAP_CONTENT).
+     *
+     * WARNING: do not call this on a ListAdapter with more than a handful of items, the performance
+     * will be terrible since it measures every single item.
+     *
+     * @param adapter The ListAdapter whose widest item's width will be returned.
+     * @param parentView The parent view.
+     * @return The measured width (in pixels) of the widest item in the passed-in ListAdapter.
+     */
+    public static int computeMaxWidthOfListAdapterItems(ListAdapter adapter, ViewGroup parentView) {
+        final int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+                AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT);
+
+        int maxWidth = 0;
+        View[] itemViews = new View[adapter.getViewTypeCount()];
+        for (int i = 0; i < adapter.getCount(); ++i) {
+            View itemView;
+            int type = adapter.getItemViewType(i);
+            if (type < 0) {
+                // Type is negative for header/footer views, or views the adapter does not want
+                // recycled.
+                itemView = adapter.getView(i, null, parentView);
+            } else {
+                itemViews[type] = adapter.getView(i, itemViews[type], parentView);
+                itemView = itemViews[type];
+            }
+
+            itemView.setLayoutParams(params);
+            itemView.measure(widthMeasureSpec, heightMeasureSpec);
+            maxWidth = Math.max(maxWidth, itemView.getMeasuredWidth());
         }
+
+        return maxWidth;
     }
 
     /**
@@ -427,30 +397,112 @@ public class UiUtils {
      * @return The measured width (in pixels) of the widest item in the passed-in ListAdapter.
      */
     public static int computeMaxWidthOfListAdapterItems(ListAdapter adapter) {
-        final int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-                AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT);
+        return computeMaxWidthOfListAdapterItems(adapter, null);
+    }
 
-        int maxWidth = 0;
-        View[] itemViews = new View[adapter.getViewTypeCount()];
-        for (int i = 0; i < adapter.getCount(); ++i) {
-            View itemView;
-            int type = adapter.getItemViewType(i);
-            if (type < 0) {
-                // Type is negative for header/footer views, or views the adapter does not want
-                // recycled.
-                itemView = adapter.getView(i, null, null);
-            } else {
-                itemViews[type] = adapter.getView(i, itemViews[type], null);
-                itemView = itemViews[type];
+    /**
+     * Get the index of a child {@link View} in a {@link ViewGroup}.
+     * @param child The child to find the index of.
+     * @return The index of the child in its parent. -1 if the child has no parent.
+     */
+    public static int getChildIndexInParent(View child) {
+        if (child.getParent() == null) return -1;
+        ViewGroup parent = (ViewGroup) child.getParent();
+        int indexInParent = -1;
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            if (parent.getChildAt(i) == child) {
+                indexInParent = i;
+                break;
             }
+        }
+        return indexInParent;
+    }
 
-            itemView.setLayoutParams(params);
-            itemView.measure(widthMeasureSpec, heightMeasureSpec);
-            maxWidth = Math.max(maxWidth, itemView.getMeasuredWidth());
+    /**
+     * Gets a drawable from the resources and applies the specified tint to it. Uses Support Library
+     * for vector drawables and tinting on older Android versions.
+     * @param drawableId The resource id for the drawable.
+     * @param tintColorId The resource id for the color or ColorStateList.
+     */
+    public static Drawable getTintedDrawable(
+            Context context, @DrawableRes int drawableId, @ColorRes int tintColorId) {
+        Drawable drawable = AppCompatResources.getDrawable(context, drawableId);
+        assert drawable != null;
+        drawable = DrawableCompat.wrap(drawable).mutate();
+        DrawableCompat.setTintList(
+                drawable, AppCompatResources.getColorStateList(context, tintColorId));
+        return drawable;
+    }
+
+    /**
+     * @return Whether the support for theming on a particular device has been completely disabled
+     *         due to lack of support by the OEM.
+     */
+    public static boolean isSystemUiThemingDisabled() {
+        if (sSystemUiThemingDisabled == null) {
+            sSystemUiThemingDisabled = false;
+            if (sAndroidUiThemeBlacklist.containsKey(Build.MANUFACTURER.toLowerCase(Locale.US))) {
+                sSystemUiThemingDisabled = Build.VERSION.SDK_INT
+                        < sAndroidUiThemeBlacklist.get(Build.MANUFACTURER.toLowerCase(Locale.US));
+            }
+        }
+        return sSystemUiThemingDisabled;
+    }
+
+    /**
+     * Sets the navigation bar icons to dark or light. Note that this is only valid for Android
+     * O+.
+     * @param rootView The root view used to request updates to the system UI theme.
+     * @param useDarkIcons Whether the navigation bar icons should be dark.
+     */
+    public static void setNavigationBarIconColor(View rootView, boolean useDarkIcons) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
+
+        int systemUiVisibility = rootView.getSystemUiVisibility();
+        if (useDarkIcons) {
+            systemUiVisibility |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        } else {
+            systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        }
+        rootView.setSystemUiVisibility(systemUiVisibility);
+    }
+
+    /**
+     * Extends {@link AlertDialog.Builder} to work around issues in support library. Note that
+     * any AlertDialogs shown in CustomTabActivity should be created from this class.
+     */
+    public static class CompatibleAlertDialogBuilder extends AlertDialog.Builder {
+        private final boolean mIsInNightMode;
+
+        public CompatibleAlertDialogBuilder(@NonNull Context context) {
+            super(context);
+            mIsInNightMode = isInNightMode(context);
         }
 
-        return maxWidth;
+        public CompatibleAlertDialogBuilder(@NonNull Context context, int themeResId) {
+            super(context, themeResId);
+            mIsInNightMode = isInNightMode(context);
+        }
+
+        @Override
+        public AlertDialog create() {
+            AlertDialog dialog = super.create();
+            // Sets local night mode state to reflect the night mode state of the owner activity.
+            // This is to work around an issue in the support library that the dialog night mode
+            // state is not inheriting the night mode state of the owner activity, and also resets
+            // the night mode state of the owner activity. See https://crbug.com/966002 for details.
+            // TODO(https://crbug.com/966101): Remove this class once support library is updated to
+            // AndroidX.
+            dialog.getDelegate().setLocalNightMode(mIsInNightMode
+                            ? AppCompatDelegate.MODE_NIGHT_YES
+                            : AppCompatDelegate.MODE_NIGHT_NO);
+            return dialog;
+        }
+
+        private static boolean isInNightMode(Context context) {
+            return (context.getResources().getConfiguration().uiMode
+                           & Configuration.UI_MODE_NIGHT_MASK)
+                    == Configuration.UI_MODE_NIGHT_YES;
+        }
     }
 }

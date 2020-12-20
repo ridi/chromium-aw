@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices;
 
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
+import org.chromium.components.location.LocationUtils;
 
 /**
  * This is a LocationProvider using Google Play Services.
@@ -27,9 +28,8 @@ import org.chromium.base.ThreadUtils;
  * https://developers.google.com/android/reference/com/google/android/gms/location/package-summary
  */
 public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectionFailedListener,
-                                                LocationListener,
-                                                LocationProviderFactory.LocationProvider {
-    private static final String TAG = "cr_LocationProvider";
+                                                LocationListener, LocationProvider {
+    private static final String TAG = "LocationProvider";
 
     // Values for the LocationRequest's setInterval for normal and high accuracy, respectively.
     private static final long UPDATE_INTERVAL_MS = 1000;
@@ -68,11 +68,23 @@ public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectio
 
         mLocationRequest = LocationRequest.create();
         if (mEnablehighAccuracy) {
+            // With enableHighAccuracy, request a faster update interval and configure the provider
+            // for high accuracy mode.
             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(UPDATE_INTERVAL_FAST_MS);
         } else {
-            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-                    .setInterval(UPDATE_INTERVAL_MS);
+            // Use balanced mode by default. In this mode, the API will prefer the network provider
+            // but may use sensor data (for instance, GPS) if high accuracy is requested by another
+            // app.
+            //
+            // If location is configured for sensors-only then elevate the priority to ensure GPS
+            // and other sensors are used.
+            if (LocationUtils.getInstance().isSystemLocationSettingSensorsOnly()) {
+                mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            } else {
+                mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+            }
+            mLocationRequest.setInterval(UPDATE_INTERVAL_MS);
         }
 
         final Location location = mLocationProviderApi.getLastLocation(mGoogleApiClient);
@@ -105,7 +117,7 @@ public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectio
                 "Failed to connect to Google Play Services: " + result.toString());
     }
 
-    // LocationProviderFactory.LocationProvider implementation
+    // LocationProvider implementation
     @Override
     public void start(boolean enableHighAccuracy) {
         ThreadUtils.assertOnUiThread();

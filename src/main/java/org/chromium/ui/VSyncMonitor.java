@@ -8,7 +8,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Choreographer;
-import android.view.WindowManager;
 
 import org.chromium.base.TraceEvent;
 
@@ -19,7 +18,12 @@ public class VSyncMonitor {
     private static final long NANOSECONDS_PER_SECOND = 1000000000;
     private static final long NANOSECONDS_PER_MICROSECOND = 1000;
 
-    private boolean mInsideVSync;
+    private static final ThreadLocal<Boolean> sInsideVSync = new ThreadLocal<Boolean>() {
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.FALSE;
+        }
+    };
 
     // Conservative guess about vsync's consecutivity.
     // If true, next tick is guaranteed to be consecutive.
@@ -41,6 +45,7 @@ public class VSyncMonitor {
 
     // Display refresh rate as reported by the system.
     private long mRefreshPeriodNano;
+    private boolean mUseEstimatedRefreshRate;
 
     private boolean mHaveRequestInFlight;
 
@@ -57,21 +62,16 @@ public class VSyncMonitor {
      * @param context The application context.
      * @param listener The listener receiving VSync notifications.
      */
-    public VSyncMonitor(Context context, VSyncMonitor.Listener listener) {
+    public VSyncMonitor(Context context, VSyncMonitor.Listener listener, float refreshRate) {
         mListener = listener;
-        float refreshRate = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay().getRefreshRate();
-        final boolean useEstimatedRefreshPeriod = refreshRate < 30;
-
-        if (refreshRate <= 0) refreshRate = 60;
-        mRefreshPeriodNano = (long) (NANOSECONDS_PER_SECOND / refreshRate);
+        updateRefreshRate(refreshRate);
 
         mChoreographer = Choreographer.getInstance();
         mVSyncFrameCallback = new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
                 TraceEvent.begin("VSync");
-                if (useEstimatedRefreshPeriod && mConsecutiveVSync) {
+                if (mUseEstimatedRefreshRate && mConsecutiveVSync) {
                     // Display.getRefreshRate() is unreliable on some platforms.
                     // Adjust refresh period- initial value is based on Display.getRefreshRate()
                     // after that it asymptotically approaches the real value.
@@ -86,6 +86,12 @@ public class VSyncMonitor {
             }
         };
         mGoodStartingPointNano = getCurrentNanoTime();
+    }
+
+    public void updateRefreshRate(float refreshRate) {
+        mUseEstimatedRefreshRate = refreshRate < 30;
+        if (refreshRate <= 0) refreshRate = 60;
+        mRefreshPeriodNano = (long) (NANOSECONDS_PER_SECOND / refreshRate);
     }
 
     /**
@@ -106,14 +112,14 @@ public class VSyncMonitor {
     }
 
     /**
-     * @return true if onVSync handler is executing. If onVSync handler
-     * introduces invalidations, View#invalidate() should be called. If
-     * View#postInvalidateOnAnimation is called instead, the corresponding onDraw
-     * will be delayed by one frame. The embedder of VSyncMonitor should check
-     * this value if it wants to post an invalidation.
+     * @return true if any onVSync handler is executing on the current thread.
+     * If onVSync handler introduces invalidations, View#invalidate() should be
+     * called. If View#postInvalidateOnAnimation is called instead, the
+     * corresponding onDraw will be delayed by one frame. The embedder of
+     * VSyncMonitor should check this value if it wants to post an invalidation.
      */
-    public boolean isInsideVSync() {
-        return mInsideVSync;
+    public static boolean isInsideVSync() {
+        return VSyncMonitor.sInsideVSync.get();
     }
 
     private long getCurrentNanoTime() {
@@ -122,21 +128,21 @@ public class VSyncMonitor {
 
     private void onVSyncCallback(long frameTimeNanos, long currentTimeNanos) {
         assert mHaveRequestInFlight;
-        mInsideVSync = true;
+        VSyncMonitor.sInsideVSync.set(true);
         mHaveRequestInFlight = false;
         try {
             if (mListener != null) {
                 mListener.onVSync(this, frameTimeNanos / NANOSECONDS_PER_MICROSECOND);
             }
         } finally {
-            mInsideVSync = false;
+            VSyncMonitor.sInsideVSync.set(false);
         }
     }
 
     private void postCallback() {
         if (mHaveRequestInFlight) return;
         mHaveRequestInFlight = true;
-        mConsecutiveVSync = mInsideVSync;
+        mConsecutiveVSync = VSyncMonitor.sInsideVSync.get();
         mChoreographer.postFrameCallback(mVSyncFrameCallback);
     }
 }

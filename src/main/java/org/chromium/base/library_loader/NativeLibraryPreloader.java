@@ -4,11 +4,17 @@
 
 package org.chromium.base.library_loader;
 
-import android.content.Context;
+import android.content.pm.ApplicationInfo;
 
 /**
  * This is interface to preload the native library before calling System.loadLibrary.
+ *
+ * Preloading shouldn't call System.loadLibrary() or otherwise cause any Chromium
+ * code to be run, because it can be called before Chromium command line is known.
+ * It can however open the library via dlopen() or android_dlopen_ext() so that
+ * dlopen() later called by System.loadLibrary() becomes a noop. This is what the
+ * only subclass (MonochromeLibraryPreloader) is doing.
  */
 public abstract class NativeLibraryPreloader {
-    public abstract int loadLibrary(Context context);
+    public abstract int loadLibrary(ApplicationInfo appInfo);
 }

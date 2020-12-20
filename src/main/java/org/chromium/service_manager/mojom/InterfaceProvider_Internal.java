@@ -11,10 +11,6 @@
 
 package org.chromium.service_manager.mojom;
 
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.mojo.bindings.DeserializationException;
-
-
 class InterfaceProvider_Internal {
 
     public static final org.chromium.mojo.bindings.Interface.Manager<InterfaceProvider, InterfaceProvider.Proxy> MANAGER =

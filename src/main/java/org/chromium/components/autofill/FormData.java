@@ -4,8 +4,11 @@
 
 package org.chromium.components.autofill;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
 import java.util.ArrayList;
 
@@ -18,35 +21,36 @@ public class FormData {
     public final String mHost;
     public final ArrayList<FormFieldData> mFields;
 
-    private long mNativeObj;
-
     @CalledByNative
     private static FormData createFormData(
             long nativeObj, String name, String origin, int fieldCount) {
         return new FormData(nativeObj, name, origin, fieldCount);
     }
 
-    private FormData(long nativeObj, String name, String host, int fieldCount) {
-        mNativeObj = nativeObj;
+    private static ArrayList<FormFieldData> popupFormFields(long nativeObj, int fieldCount) {
+        FormFieldData formFieldData = FormDataJni.get().getNextFormFieldData(nativeObj);
+        ArrayList<FormFieldData> fields = new ArrayList<FormFieldData>(fieldCount);
+        while (formFieldData != null) {
+            fields.add(formFieldData);
+            formFieldData = FormDataJni.get().getNextFormFieldData(nativeObj);
+        }
+        assert fields.size() == fieldCount;
+        return fields;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public FormData(String name, String host, ArrayList<FormFieldData> fields) {
         mName = name;
         mHost = host;
-        mFields = new ArrayList<FormFieldData>(fieldCount);
-        popupFormFields(fieldCount);
+        mFields = fields;
     }
 
-    private void popupFormFields(int fieldCount) {
-        FormFieldData formFieldData = nativeGetNextFormFieldData(mNativeObj);
-        while (formFieldData != null) {
-            mFields.add(formFieldData);
-            formFieldData = nativeGetNextFormFieldData(mNativeObj);
-        }
-        assert mFields.size() == fieldCount;
+    private FormData(long nativeObj, String name, String host, int fieldCount) {
+        this(name, host, popupFormFields(nativeObj, fieldCount));
     }
 
-    @CalledByNative
-    private void onNativeDestroyed() {
-        mNativeObj = 0;
+    @NativeMethods
+    interface Natives {
+        FormFieldData getNextFormFieldData(long nativeFormDataAndroid);
     }
-
-    private native FormFieldData nativeGetNextFormFieldData(long nativeFormDataAndroid);
 }

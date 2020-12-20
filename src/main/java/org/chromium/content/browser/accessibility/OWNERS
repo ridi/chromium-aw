@@ -1,10 +1,5 @@
-# Preferred revewers for browser accessibility classes.
-dmazzoni@chromium.org
-plundblad@chromium.org
+file://ui/accessibility/OWNERS
 
-# Preferred reviewer for accessibility injector.
-dtrainor@chromium.org
-
-# TEAM: chromium-accessibility@chromium.org
-# COMPONENT: UI>Accessibility
+# COMPONENT: UI>Accessibility>Compatibility
 # OS: Android
+# TEAM: chromium-accessibility@chromium.org

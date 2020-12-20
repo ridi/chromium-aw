@@ -4,11 +4,14 @@
 
 package org.chromium.content_public.browser;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.chromium.content.browser.MediaSessionImpl;
-import org.chromium.content_public.common.MediaMetadata;
+import org.chromium.services.media_session.MediaImage;
+import org.chromium.services.media_session.MediaMetadata;
+import org.chromium.services.media_session.MediaPosition;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -69,6 +72,18 @@ public abstract class MediaSessionObserver {
      * @param actions The new action list after the change.
      */
     public void mediaSessionActionsChanged(Set<Integer> actions) {}
+
+    /**
+     * Called when the observed {@link MediaSession} artwork has changed.
+     * @param images The list of artwork images after the changed.
+     */
+    public void mediaSessionArtworkChanged(List<MediaImage> images) {}
+
+    /**
+     * Called when the observed {@link MediaSession} position has changed.
+     * @param position The new MediaPosition after change.
+     */
+    public void mediaSessionPositionChanged(@Nullable MediaPosition position) {}
 
     /**
      * Stop observing the media session. Users must explicitly call this before dereferencing the

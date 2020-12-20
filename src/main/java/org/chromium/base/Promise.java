@@ -5,7 +5,8 @@
 package org.chromium.base;
 
 import android.os.Handler;
-import android.support.annotation.IntDef;
+
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -20,16 +21,16 @@ import java.util.List;
 public class Promise<T> {
     // TODO(peconn): Implement rejection handlers that can recover from rejection.
 
+    @IntDef({PromiseState.UNFULFILLED, PromiseState.FULFILLED, PromiseState.REJECTED})
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({UNFULFILLED, FULFILLED, REJECTED})
-    private @interface PromiseState {}
-
-    private static final int UNFULFILLED = 0;
-    private static final int FULFILLED = 1;
-    private static final int REJECTED = 2;
+    private @interface PromiseState {
+        int UNFULFILLED = 0;
+        int FULFILLED = 1;
+        int REJECTED = 2;
+    }
 
     @PromiseState
-    private int mState = UNFULFILLED;
+    private int mState = PromiseState.UNFULFILLED;
 
     private T mResult;
     private final List<Callback<T>> mFulfillCallbacks = new LinkedList<>();
@@ -43,22 +44,11 @@ public class Promise<T> {
     private boolean mThrowingRejectionHandler;
 
     /**
-     * A function class for use when chaining Promises with {@link Promise#then(Function)}.
-     * @param <A> The type of the function input.
-     * @param <R> The type of the function output.
-     */
-    public interface Function<A, R> {
-        R apply(A argument);
-    }
-
-    /**
      * A function class for use when chaining Promises with {@link Promise#then(AsyncFunction)}.
      * @param <A> The type of the function input.
-     * @param <R> The type of the function output.
+     * @param <RT> The type of the function output.
      */
-    public interface AsyncFunction<A, R> {
-        Promise<R> apply(A argument);
-    }
+    public interface AsyncFunction<A, RT> extends Function<A, Promise<RT>> {}
 
     /**
      * An exception class for when a rejected Promise is not handled and cannot pass the rejection
@@ -124,9 +114,9 @@ public class Promise<T> {
     }
 
     private void thenInner(Callback<T> onFulfill) {
-        if (mState == FULFILLED) {
+        if (mState == PromiseState.FULFILLED) {
             postCallbackToLooper(onFulfill, mResult);
-        } else if (mState == UNFULFILLED) {
+        } else if (mState == PromiseState.UNFULFILLED) {
             mFulfillCallbacks.add(onFulfill);
         }
     }
@@ -135,22 +125,22 @@ public class Promise<T> {
         assert !mThrowingRejectionHandler : "Do not add an exception handler to a Promise you have "
             + "called the single argument Promise.then(Callback) on.";
 
-        if (mState == REJECTED) {
+        if (mState == PromiseState.REJECTED) {
             postCallbackToLooper(onReject, mRejectReason);
-        } else if (mState == UNFULFILLED) {
+        } else if (mState == PromiseState.UNFULFILLED) {
             mRejectCallbacks.add(onReject);
         }
     }
 
     /**
-     * Queues a {@link Promise.Function} to be run when the Promise is fulfilled. When this Promise
-     * is fulfilled, the function will be run and its result will be place in the returned Promise.
+     * Queues a {@link Function} to be run when the Promise is fulfilled. When this Promise is
+     * fulfilled, the function will be run and its result will be place in the returned Promise.
      */
-    public <R> Promise<R> then(final Function<T, R> function) {
+    public <RT> Promise<RT> then(final Function<T, RT> function) {
         checkThread();
 
         // Create a new Promise to store the result of the function.
-        final Promise<R> promise = new Promise<>();
+        final Promise<RT> promise = new Promise<>();
 
         // Once this Promise is fulfilled:
         // - Apply the given function to the result.
@@ -175,11 +165,11 @@ public class Promise<T> {
      * Promise is fulfilled, the AsyncFunction will be run. When the result of the AsyncFunction is
      * available, it will be placed in the returned Promise.
      */
-    public <R> Promise<R> then(final AsyncFunction<T, R> function) {
+    public <RT> Promise<RT> then(final AsyncFunction<T, RT> function) {
         checkThread();
 
         // Create a new Promise to be returned.
-        final Promise<R> promise = new Promise<>();
+        final Promise<RT> promise = new Promise<>();
 
         // Once this Promise is fulfilled:
         // - Apply the given function to the result (giving us an inner Promise).
@@ -207,9 +197,9 @@ public class Promise<T> {
      */
     public void fulfill(final T result) {
         checkThread();
-        assert mState == UNFULFILLED;
+        assert mState == PromiseState.UNFULFILLED;
 
-        mState = FULFILLED;
+        mState = PromiseState.FULFILLED;
         mResult = result;
 
         for (final Callback<T> callback : mFulfillCallbacks) {
@@ -228,9 +218,9 @@ public class Promise<T> {
      */
     public void reject(final Exception reason) {
         checkThread();
-        assert mState == UNFULFILLED;
+        assert mState == PromiseState.UNFULFILLED;
 
-        mState = REJECTED;
+        mState = PromiseState.REJECTED;
         mRejectReason = reason;
 
         for (final Callback<Exception> callback : mRejectCallbacks) {
@@ -251,7 +241,7 @@ public class Promise<T> {
      */
     public boolean isFulfilled() {
         checkThread();
-        return mState == FULFILLED;
+        return mState == PromiseState.FULFILLED;
     }
 
     /**
@@ -259,7 +249,7 @@ public class Promise<T> {
      */
     public boolean isRejected() {
         checkThread();
-        return mState == REJECTED;
+        return mState == PromiseState.REJECTED;
     }
 
     /**
@@ -281,6 +271,15 @@ public class Promise<T> {
         return promise;
     }
 
+    /**
+     * Convenience method to return a rejected Promise.
+     */
+    public static <T> Promise<T> rejected() {
+        Promise<T> promise = new Promise<>();
+        promise.reject();
+        return promise;
+    }
+
     private void checkThread() {
         assert mThread == Thread.currentThread() : "Promise must only be used on a single Thread.";
     }
@@ -289,6 +288,6 @@ public class Promise<T> {
     private <S> void postCallbackToLooper(final Callback<S> callback, final S result) {
         // Post the callbacks to the Thread looper so we don't get a long chain of callbacks
         // holding up the thread.
-        mHandler.post(() -> callback.onResult(result));
+        mHandler.post(callback.bind(result));
     }
 }

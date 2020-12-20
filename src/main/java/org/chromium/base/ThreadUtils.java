@@ -27,13 +27,82 @@ public class ThreadUtils {
 
     private static boolean sThreadAssertsDisabled;
 
-    public static void setWillOverrideUiThread() {
-        synchronized (sLock) {
-            sWillOverride = true;
+    /**
+     * A helper object to ensure that interactions with a particular object only happens on a
+     * particular thread.
+     *
+     * Example:
+     * <pre>
+     * {@code
+     * class Foo {
+     *     // Valid thread is set during construction here.
+     *     private final ThreadChecker mThreadChecker = new ThreadChecker();
+     *
+     *     public void doFoo() {
+     *         mThreadChecker.assertOnValidThread();
+     *     }
+     * }
+     * }
+     * </pre>
+     *
+     * Another way to use this class is to also use the baked in support for destruction:
+     * <pre>
+     * {@code
+     * class Foo {
+     *     // Valid thread is set during construction here.
+     *     private final ThreadChecker mThreadChecker = new ThreadChecker();
+     *
+     *     public void doFoo() {
+     *         mThreadChecker.assertOnValidThreadAndState();
+     *     }
+     *
+     *     public void destroy() {
+     *         mThreadChecker.destroy();
+     *     }
+     * }
+     * }
+     * </pre>
+     */
+    public static class ThreadChecker {
+        private final long mThreadId = Process.myTid();
+        private boolean mDestroyed;
+
+        /**
+         * Asserts that the current thread is the same as the one the ThreadChecker was constructed
+         * on.
+         */
+        public void assertOnValidThread() {
+            assert sThreadAssertsDisabled
+                    || mThreadId == Process.myTid() : "Must only be used on a single thread.";
+        }
+
+        /**
+         * Asserts that the current thread is the same as the one the ThreadChecker was constructed
+         * on and that the ThreadChecker has not been marked as destroyed.
+         */
+        public void assertOnValidThreadAndState() {
+            assertOnValidThread();
+            if (mDestroyed) {
+                throw new IllegalStateException("Operation is not allowed after destroy().");
+            }
+        }
+
+        /**
+         * Marks the ThreadChecker as destroyed, leading to all future calls to
+         * {@link #assertOnValidThreadAndState} to throw an IllegalStateException.
+         */
+        public void destroy() {
+            assertOnValidThreadAndState();
+            mDestroyed = true;
         }
     }
 
-    @VisibleForTesting
+    public static void setWillOverrideUiThread(boolean willOverrideUiThread) {
+        synchronized (sLock) {
+            sWillOverride = willOverrideUiThread;
+        }
+    }
+
     public static void setUiThread(Looper looper) {
         synchronized (sLock) {
             if (looper == null) {
@@ -51,7 +120,7 @@ public class ThreadUtils {
         }
     }
 
-    private static Handler getUiThreadHandler() {
+    public static Handler getUiThreadHandler() {
         synchronized (sLock) {
             if (sUiThreadHandler == null) {
                 if (sWillOverride) {
@@ -67,8 +136,17 @@ public class ThreadUtils {
      * Run the supplied Runnable on the main thread. The method will block until the Runnable
      * completes.
      *
+     * @deprecated Use {@link
+     *         org.chromium.content_public.browser.test.util.TestThreadUtils#runOnUiThreadBlocking(Runnable)
+     *         TestThreadUtils.runOnUiThreadBlocking(r)} instead. For non-test usage (heavily
+     * discouraged) use {@link org.chromium.base.task.PostTask#runSynchronously(TaskTraits,
+     * Runnable) PostTask.runSynchronously(TaskTraits, Runnable)} with task traits chosen from
+     * {@link org.chromium.content_public.browser.UiThreadTaskTraits}. If the call site can't import
+     * content, it means it shouldn't be posting to the UI thread at all; all such usages will
+     * gradually get rewritten.
      * @param r The Runnable to run.
      */
+    @Deprecated
     public static void runOnUiThreadBlocking(final Runnable r) {
         if (runningOnUiThread()) {
             r.run();
@@ -87,10 +165,13 @@ public class ThreadUtils {
      * Run the supplied Callable on the main thread, wrapping any exceptions in a RuntimeException.
      * The method will block until the Callable completes.
      *
+     * @deprecated Use {@link
+     *         org.chromium.content_public.browser.test.util.TestThreadUtils#runOnUiThreadBlockingNoException(Callable)
+     *         TestThreadUtils.runOnUiThreadBlockingNoException(c)} instead.
      * @param c The Callable to run
      * @return The result of the callable
      */
-    @VisibleForTesting
+    @Deprecated
     public static <T> T runOnUiThreadBlockingNoException(Callable<T> c) {
         try {
             return runOnUiThreadBlocking(c);
@@ -103,10 +184,14 @@ public class ThreadUtils {
      * Run the supplied Callable on the main thread, The method will block until the Callable
      * completes.
      *
+     * @deprecated Use {@link
+     *         org.chromium.content_public.browser.test.util.TestThreadUtils#runOnUiThreadBlocking(Callable)
+     *         TestThreadUtils.runOnUiThreadBlocking(c)} instead.
      * @param c The Callable to run
      * @return The result of the callable
      * @throws ExecutionException c's exception
      */
+    @Deprecated
     public static <T> T runOnUiThreadBlocking(Callable<T> c) throws ExecutionException {
         FutureTask<T> task = new FutureTask<T>(c);
         runOnUiThread(task);
@@ -121,9 +206,15 @@ public class ThreadUtils {
      * Run the supplied FutureTask on the main thread. The method will block only if the current
      * thread is the main thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#runOrPostTask(TaskTraits, Runnable)
+     *         PostTask.runOrPostTask(TaskTraits, Runnable)} with task traits chosen from {@link
+     *         org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param task The FutureTask to run
      * @return The queried task (to aid inline construction)
      */
+    @Deprecated
     public static <T> FutureTask<T> runOnUiThread(FutureTask<T> task) {
         if (runningOnUiThread()) {
             task.run();
@@ -137,9 +228,15 @@ public class ThreadUtils {
      * Run the supplied Callable on the main thread. The method will block only if the current
      * thread is the main thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#runOrPostTask(TaskTraits, Runnable)
+     *         PostTask.runOrPostTask(TaskTraits, Runnable)} with task traits chosen from {@link
+     *         org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param c The Callable to run
      * @return A FutureTask wrapping the callable to retrieve results
      */
+    @Deprecated
     public static <T> FutureTask<T> runOnUiThread(Callable<T> c) {
         return runOnUiThread(new FutureTask<T>(c));
     }
@@ -148,8 +245,14 @@ public class ThreadUtils {
      * Run the supplied Runnable on the main thread. The method will block only if the current
      * thread is the main thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#runOrPostTask(TaskTraits, Runnable)
+     *         PostTask.runOrPostTask(TaskTraits, Runnable)} with task traits chosen from {@link
+     *         org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param r The Runnable to run
      */
+    @Deprecated
     public static void runOnUiThread(Runnable r) {
         if (runningOnUiThread()) {
             r.run();
@@ -162,9 +265,15 @@ public class ThreadUtils {
      * Post the supplied FutureTask to run on the main thread. The method will not block, even if
      * called on the UI thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#postTask(TaskTraits, Runnable)
+     *         PostTask.postTask(TaskTraits, Runnable)} with task traits chosen from {@link
+     *         org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param task The FutureTask to run
      * @return The queried task (to aid inline construction)
      */
+    @Deprecated
     public static <T> FutureTask<T> postOnUiThread(FutureTask<T> task) {
         getUiThreadHandler().post(task);
         return task;
@@ -174,8 +283,14 @@ public class ThreadUtils {
      * Post the supplied Runnable to run on the main thread. The method will not block, even if
      * called on the UI thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#postTask(TaskTraits, Runnable)
+     *         PostTask.postTask(TaskTraits, Runnable)} with task traits chosen from {@link
+     *         org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param task The Runnable to run
      */
+    @Deprecated
     public static void postOnUiThread(Runnable task) {
         getUiThreadHandler().post(task);
     }
@@ -184,10 +299,15 @@ public class ThreadUtils {
      * Post the supplied Runnable to run on the main thread after the given amount of time. The
      * method will not block, even if called on the UI thread.
      *
+     * @deprecated Use {@link org.chromium.base.task.PostTask#postDelayedTask(TaskTraits, Runnable,
+     *         long) PostTask.postDelayedTask(TaskTraits, Runnable, long)} with task traits chosen
+     *         from {@link org.chromium.content_public.browser.UiThreadTaskTraits}.
+     *         If the call site can't import content, it means it shouldn't be posting to the UI
+     *         thread at all; all such usages will gradually get rewritten.
      * @param task The Runnable to run
      * @param delayMillis The delay in milliseconds until the Runnable will be run
      */
-    @VisibleForTesting
+    @Deprecated
     public static void postOnUiThreadDelayed(Runnable task, long delayMillis) {
         getUiThreadHandler().postDelayed(task, delayMillis);
     }

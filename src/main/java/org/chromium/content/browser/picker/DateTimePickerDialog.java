@@ -14,7 +14,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +22,10 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
-import org.chromium.android_webview.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
-import org.chromium.base.VisibleForTesting;
+import org.chromium.android_webview.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -231,9 +231,11 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
             return mWrappedResources;
         }
 
-        private class WrappedResources extends Resources {
+        private static class WrappedResources extends Resources {
+            @SuppressWarnings("deprecation")
             WrappedResources(AssetManager assets, DisplayMetrics displayMetrics,
                     Configuration configuration) {
+                // The Resources constructor is safe to use on L & L_MR1
                 super(assets, displayMetrics, configuration);
             }
 
@@ -260,7 +262,9 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
                         return locales.get(0);
                     }
                 }
-                return getConfiguration().locale;
+                @SuppressWarnings("deprecation")
+                Locale locale = getConfiguration().locale;
+                return locale;
             }
         }
     }

@@ -1,5 +1,5 @@
 
-// Copyright 2018 The Chromium Authors. All rights reserved.
+// Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -10,7 +10,7 @@
 
 package org.chromium.media;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,4 +25,5 @@ public @interface AndroidFillLightMode {
   int OFF = 1;
   int AUTO = 2;
   int FLASH = 3;
+  int NUM_ENTRIES = 4;
 }

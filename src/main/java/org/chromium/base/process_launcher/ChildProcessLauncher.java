@@ -12,7 +12,6 @@ import android.os.Looper;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.annotations.SuppressFBWarnings;
 
 import java.io.IOException;
 import java.util.List;
@@ -105,7 +104,6 @@ public class ChildProcessLauncher {
      * @param clientInterfaces the interfaces that should be passed to the started process so it can
      * communicate with the parent process.
      */
-    @SuppressFBWarnings("EI_EXPOSE_REP2")
     public ChildProcessLauncher(Handler launcherHandler, Delegate delegate, String[] commandLine,
             FileDescriptorInfo[] filesToBeMapped, ChildConnectionAllocator connectionAllocator,
             List<IBinder> clientInterfaces) {
@@ -165,7 +163,6 @@ public class ChildProcessLauncher {
                     };
             mConnection = mDelegate.getBoundConnection(mConnectionAllocator, serviceCallback);
             if (mConnection != null) {
-                assert mConnectionAllocator.isConnectionFromAllocator(mConnection);
                 setupConnection();
                 return true;
             }
@@ -202,19 +199,9 @@ public class ChildProcessLauncher {
                 Log.d(TAG, "Failed to allocate a child connection (no queuing).");
                 return false;
             }
-            // No connection is available at this time. Add a listener so when one becomes
-            // available we can create the service.
-            mConnectionAllocator.addListener(new ChildConnectionAllocator.Listener() {
-                @Override
-                public void onConnectionFreed(
-                        ChildConnectionAllocator allocator, ChildProcessConnection connection) {
-                    assert allocator == mConnectionAllocator;
-                    if (!allocator.isFreeConnectionAvailable()) return;
-                    allocator.removeListener(this);
-                    allocateAndSetupConnection(
-                            serviceCallback, setupConnection, queueIfNoFreeConnection);
-                }
-            });
+            mConnectionAllocator.queueAllocation(
+                    () -> allocateAndSetupConnection(
+                                    serviceCallback, setupConnection, queueIfNoFreeConnection));
             return false;
         }
 
@@ -229,8 +216,7 @@ public class ChildProcessLauncher {
                 new ChildProcessConnection.ConnectionCallback() {
                     @Override
                     public void onConnected(ChildProcessConnection connection) {
-                        assert mConnection == connection;
-                        onServiceConnected();
+                        onServiceConnected(connection);
                     }
                 };
         Bundle connectionBundle = createConnectionBundle();
@@ -238,8 +224,9 @@ public class ChildProcessLauncher {
         mConnection.setupConnection(connectionBundle, getClientInterfaces(), connectionCallback);
     }
 
-    private void onServiceConnected() {
+    private void onServiceConnected(ChildProcessConnection connection) {
         assert isRunningOnLauncherThread();
+        assert mConnection == connection || connection == null;
 
         Log.d(TAG, "on connect callback, pid=%d", mConnection.getPid());
 

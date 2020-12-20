@@ -33,14 +33,6 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
-    <style name="BlackHeadline1">
-        <item name="android:textSize">@dimen/headline_size_large</item>
-        <item name="android:textColor">@color/black_alpha_87</item>
-    </style>
-    <style name="BlackHeadline2" parent="@style/RobotoMediumStyle">
-        <item name="android:textSize">@dimen/headline_size_medium</item>
-        <item name="android:textColor">@color/black_alpha_87</item>
-    </style>
     <style name="BlackTitle1">
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@color/black_alpha_87</item>
@@ -81,14 +73,6 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/black_alpha_54</item>
     </style>
-    <style name="BlackDenseListText1">
-        <item name="android:textSize">@dimen/text_size_medium_dense</item>
-        <item name="android:textColor">@color/black_alpha_87</item>
-    </style>
-    <style name="BlackDenseListText2">
-        <item name="android:textSize">@dimen/text_size_medium_dense</item>
-        <item name="android:textColor">@color/black_alpha_54</item>
-    </style>
     <style name="BlackButtonText" parent="@style/RobotoMediumStyle">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/black_alpha_54</item>
@@ -97,14 +81,6 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black_alpha_54</item>
-    </style>
-    <style name="WhiteHeadline1">
-        <item name="android:textSize">@dimen/headline_size_large</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-    <style name="WhiteHeadline2" parent="@style/RobotoMediumStyle">
-        <item name="android:textSize">@dimen/headline_size_medium</item>
-        <item name="android:textColor">@android:color/white</item>
     </style>
     <style name="WhiteBodyIncognito">
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -148,6 +124,9 @@
     </style>
     <style name="SelectActionMenuWebSearch">
         <item name="android:icon">@drawable/ic_search</item>
+    </style>
+    <style name="TextAppearance.SuggestionPrefixOrSuffix">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
     <style name="TextSuggestionButton" parent="@style/RobotoMediumStyle">
         <item name="android:textSize">14.0sp</item>

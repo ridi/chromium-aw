@@ -4,14 +4,16 @@
 
 package org.chromium.device.gamepad;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import org.chromium.base.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.annotations.JNINamespace;
+
+import java.util.BitSet;
 
 /**
  * Class to manage mapping information related to each supported gamepad controller device.
@@ -23,7 +25,7 @@ abstract class GamepadMappings {
     @VisibleForTesting
     static final String MICROSOFT_XBOX_PAD_DEVICE_NAME = "Microsoft X-Box 360 pad";
     @VisibleForTesting
-    static final String PS3_SIXAXIS_DEVICE_NAME = "Sony PLAYSTATION(R)3 Controller";
+    static final String PS_DUALSHOCK_3_SIXAXIS_DEVICE_NAME = "Sony PLAYSTATION(R)3 Controller";
     @VisibleForTesting
     static final String SAMSUNG_EI_GP20_DEVICE_NAME = "Samsung Game Pad EI-GP20";
     @VisibleForTesting
@@ -35,31 +37,47 @@ abstract class GamepadMappings {
     static final int PS_DUALSHOCK_4_PRODUCT_ID = 1476;
     @VisibleForTesting
     static final int PS_DUALSHOCK_4_SLIM_PRODUCT_ID = 2508;
+    @VisibleForTesting
+    static final int PS_DUALSHOCK_4_USB_RECEIVER_PRODUCT_ID = 2976;
 
     @VisibleForTesting
     static final int XBOX_ONE_S_2016_FIRMWARE_VENDOR_ID = 0x045e;
     @VisibleForTesting
     static final int XBOX_ONE_S_2016_FIRMWARE_PRODUCT_ID = 0x02e0;
 
-    public static GamepadMappings getMappings(InputDevice device, int[] axes) {
-        GamepadMappings mappings = null;
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mappings = getMappings(device.getProductId(), device.getVendorId());
+    @VisibleForTesting
+    static final int BROADCOM_VENDOR_ID = 0x0a5c;
+    @VisibleForTesting
+    static final int SNAKEBYTE_IDROIDCON_PRODUCT_ID = 0x8502;
+
+    private static final float BUTTON_AXIS_DEADZONE = 0.01f;
+
+    public static GamepadMappings getMappings(InputDevice device, int[] axes, BitSet buttons) {
+        GamepadMappings mappings = getMappings(device.getProductId(), device.getVendorId(), axes);
+        if (mappings == null) {
+            mappings = getMappings(device.getName());
         }
-        if (mappings == null) mappings = getMappings(device.getName());
-        if (mappings == null) mappings = new UnknownGamepadMappings(axes);
+        if (mappings == null) {
+            mappings = new UnknownGamepadMappings(axes, buttons);
+        }
         return mappings;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @VisibleForTesting
-    static GamepadMappings getMappings(int productId, int vendorId) {
-        // Device name of a PS4 gamepad is "Wireless Controller". This is not reliably unique
-        // so we better go by the product and vendor ids.
+    static GamepadMappings getMappings(int productId, int vendorId, int[] axes) {
+        // Device name of a DualShock 4 gamepad is "Wireless Controller". This is not reliably
+        // unique so we better go by the product and vendor ids.
         if (vendorId == PS_DUALSHOCK_4_VENDOR_ID
                 && (productId == PS_DUALSHOCK_4_PRODUCT_ID
-                           || productId == PS_DUALSHOCK_4_SLIM_PRODUCT_ID)) {
-            return new PS4GamepadMappings();
+                           || productId == PS_DUALSHOCK_4_SLIM_PRODUCT_ID
+                           || productId == PS_DUALSHOCK_4_USB_RECEIVER_PRODUCT_ID)) {
+            // Android 9 included improvements for Sony PlayStation gamepads that changed the
+            // KeyEvent and MotionEvent codes for some buttons and axes. Use an alternate mapping
+            // for versions of Android that include these improvements.
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                return new XboxCompatibleGamepadMappings();
+            }
+            return new Dualshock4GamepadMappingsPreP();
         }
         // Microsoft released a firmware update for the Xbox One S gamepad that modified the button
         // and axis assignments. With the new firmware, these gamepads work correctly in Android
@@ -70,6 +88,9 @@ abstract class GamepadMappings {
                 && productId == XBOX_ONE_S_2016_FIRMWARE_PRODUCT_ID) {
             return new XboxOneS2016FirmwareMappings();
         }
+        if (vendorId == BROADCOM_VENDOR_ID && productId == SNAKEBYTE_IDROIDCON_PRODUCT_ID) {
+            return new SnakebyteIDroidConMappings(axes);
+        }
         return null;
     }
 
@@ -78,8 +99,14 @@ abstract class GamepadMappings {
         if (deviceName.startsWith(NVIDIA_SHIELD_DEVICE_NAME_PREFIX)
                 || deviceName.equals(MICROSOFT_XBOX_PAD_DEVICE_NAME)) {
             return new XboxCompatibleGamepadMappings();
-        } else if (deviceName.equals(PS3_SIXAXIS_DEVICE_NAME)) {
-            return new PS3SixAxisGamepadMappings();
+        } else if (deviceName.equals(PS_DUALSHOCK_3_SIXAXIS_DEVICE_NAME)) {
+            // Android 9 included improvements for Sony PlayStation gamepads that changed the
+            // KeyEvent and MotionEvent codes for some buttons and axes. Use an alternate mapping
+            // for versions of Android that include these improvements.
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                return new Dualshock3SixAxisGamepadMappings();
+            }
+            return new Dualshock3SixAxisGamepadMappingsPreP();
         } else if (deviceName.equals(SAMSUNG_EI_GP20_DEVICE_NAME)) {
             return new SamsungEIGP20GamepadMappings();
         } else if (deviceName.equals(AMAZON_FIRE_DEVICE_NAME)) {
@@ -89,8 +116,8 @@ abstract class GamepadMappings {
     }
 
     @VisibleForTesting
-    static GamepadMappings getUnknownGamepadMappings(int[] axes) {
-        return new UnknownGamepadMappings(axes);
+    static GamepadMappings getUnknownGamepadMappings(int[] axes, BitSet buttons) {
+        return new UnknownGamepadMappings(axes, buttons);
     }
 
     /**
@@ -100,6 +127,14 @@ abstract class GamepadMappings {
      */
     public boolean isStandard() {
         return true;
+    }
+
+    /**
+     * Returns the number of mapped buttons. Subclasses which support more or fewer buttons (e.g. no
+     * meta button) should override this.
+     */
+    public int getButtonsLength() {
+        return CanonicalButtonIndex.COUNT;
     }
 
     /**
@@ -197,6 +232,12 @@ abstract class GamepadMappings {
         mappedButtons[CanonicalButtonIndex.RIGHT_TRIGGER] = rTrigger;
     }
 
+    private static void mapZAxisToBottomShoulder(float[] mappedButtons, float[] rawAxes) {
+        float z = rawAxes[MotionEvent.AXIS_Z];
+        mappedButtons[CanonicalButtonIndex.LEFT_TRIGGER] = z > BUTTON_AXIS_DEADZONE ? z : 0.0f;
+        mappedButtons[CanonicalButtonIndex.RIGHT_TRIGGER] = -z > BUTTON_AXIS_DEADZONE ? -z : 0.0f;
+    }
+
     private static void mapLowerTriggerButtonsToBottomShoulder(float[] mappedButtons,
             float[] rawButtons) {
         float l2 = rawButtons[KeyEvent.KEYCODE_BUTTON_L2];
@@ -266,9 +307,61 @@ abstract class GamepadMappings {
         }
     }
 
+    private static class SnakebyteIDroidConMappings extends GamepadMappings {
+        private final boolean mAnalogMode;
+
+        public SnakebyteIDroidConMappings(int[] axes) {
+            // Digital mode has X, Y, Z, RZ, HAT_X, HAT_Y
+            // Analog mode has X, Y, Z, RX, RY, HAT_X, HAT_Y
+            mAnalogMode = arrayContains(axes, MotionEvent.AXIS_RX);
+        }
+
+        private static boolean arrayContains(int[] array, int element) {
+            for (int e : array) {
+                if (e == element) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public int getButtonsLength() {
+            // No meta button.
+            return CanonicalButtonIndex.COUNT - 1;
+        }
+
+        @Override
+        public void mapToStandardGamepad(
+                float[] mappedAxes, float[] mappedButtons, float[] rawAxes, float[] rawButtons) {
+            mapCommonXYABButtons(mappedButtons, rawButtons);
+            mapTriggerButtonsToTopShoulder(mappedButtons, rawButtons);
+            mapCommonStartSelectMetaButtons(mappedButtons, rawButtons);
+            mapXYAxes(mappedAxes, rawAxes);
+            mapHatAxisToDpadButtons(mappedButtons, rawAxes);
+
+            // On older versions of Android the thumbstick buttons are incorrectly mapped to C and
+            // Z. Support either.
+            float thumbL = rawButtons[KeyEvent.KEYCODE_BUTTON_THUMBL];
+            float thumbR = rawButtons[KeyEvent.KEYCODE_BUTTON_THUMBR];
+            float c = rawButtons[KeyEvent.KEYCODE_BUTTON_C];
+            float z = rawButtons[KeyEvent.KEYCODE_BUTTON_Z];
+            mappedButtons[CanonicalButtonIndex.LEFT_THUMBSTICK] = Math.max(thumbL, c);
+            mappedButtons[CanonicalButtonIndex.RIGHT_THUMBSTICK] = Math.max(thumbR, z);
+
+            if (mAnalogMode) {
+                mapZAxisToBottomShoulder(mappedButtons, rawAxes);
+                mapRXAndRYAxesToRightStick(mappedAxes, rawAxes);
+            } else {
+                mapLowerTriggerButtonsToBottomShoulder(mappedButtons, rawButtons);
+                mapZAndRZAxesToRightStick(mappedAxes, rawAxes);
+            }
+        }
+    }
+
     private static class XboxOneS2016FirmwareMappings extends GamepadMappings {
-        private boolean mLeftTriggerActivated = false;
-        private boolean mRightTriggerActivated = false;
+        private boolean mLeftTriggerActivated;
+        private boolean mRightTriggerActivated;
 
         /**
          * Method for mapping Xbox One S controller (in Bluetooth mode) to
@@ -326,18 +419,23 @@ abstract class GamepadMappings {
             mapXYAxes(mappedAxes, rawAxes);
             mapRXAndRYAxesToRightStick(mappedAxes, rawAxes);
         }
+
+        @Override
+        public int getButtonsLength() {
+            // No meta button.
+            return CanonicalButtonIndex.COUNT - 1;
+        }
     }
 
-    private static class PS3SixAxisGamepadMappings extends GamepadMappings {
-
+    private static class Dualshock3SixAxisGamepadMappingsPreP extends GamepadMappings {
         /**
-         * Method for mapping PS3 gamepad axis and button values
-         * to standard gamepad button and axes values.
+         * Method for mapping DualShock 3 and SIXAXIS gamepad inputs to standard gamepad button and
+         * axis values. This mapping function should only be used on Android 8 and earlier.
          */
         @Override
         public void mapToStandardGamepad(float[] mappedAxes, float[] mappedButtons,
                 float[] rawAxes, float[] rawButtons) {
-            // On PS3 X/Y has higher priority.
+            // On DualShock 3 and SIXAXIS, X/Y has higher priority.
             float a = rawButtons[KeyEvent.KEYCODE_BUTTON_A];
             float b = rawButtons[KeyEvent.KEYCODE_BUTTON_B];
             float x = rawButtons[KeyEvent.KEYCODE_BUTTON_X];
@@ -358,15 +456,34 @@ abstract class GamepadMappings {
         }
     }
 
-    static class PS4GamepadMappings extends GamepadMappings {
+    private static class Dualshock3SixAxisGamepadMappings extends GamepadMappings {
+        /**
+         * Method for mapping DualShock 3 and SIXAXIS gamepad inputs to standard gamepad button and
+         * axis values. This mapping function should only be used on Android 10+.
+         */
+        @Override
+        public void mapToStandardGamepad(
+                float[] mappedAxes, float[] mappedButtons, float[] rawAxes, float[] rawButtons) {
+            mapCommonXYABButtons(mappedButtons, rawButtons);
+            mapTriggerButtonsToTopShoulder(mappedButtons, rawButtons);
+            mapCommonThumbstickButtons(mappedButtons, rawButtons);
+            mapCommonStartSelectMetaButtons(mappedButtons, rawButtons);
+            mapCommonDpadButtons(mappedButtons, rawButtons);
+            mapXYAxes(mappedAxes, rawAxes);
+            mapZAndRZAxesToRightStick(mappedAxes, rawAxes);
+            mapTriggerAxesToBottomShoulder(mappedButtons, rawAxes);
+        }
+    }
+
+    static class Dualshock4GamepadMappingsPreP extends GamepadMappings {
         // Scale input from [-1, 1] to [0, 1] uniformly.
         private static float scaleRxRy(float input) {
             return 1.f - ((1.f - input) / 2.f);
         }
 
         /**
-         * Method for mapping PS4 gamepad axis and button values
-         * to standard gamepad button and axes values.
+         * Method for mapping DualShock 4 gamepad inputs to standard gamepad button and axis values.
+         * This mapping function should only be used on Android 9 and earlier.
          */
         @Override
         public void mapToStandardGamepad(
@@ -390,18 +507,28 @@ abstract class GamepadMappings {
             mappedButtons[CanonicalButtonIndex.LEFT_TRIGGER] = scaleRxRy(rx);
             mappedButtons[CanonicalButtonIndex.RIGHT_TRIGGER] = scaleRxRy(ry);
 
-            mapHatAxisToDpadButtons(mappedButtons, rawAxes);
-            mapCommonStartSelectMetaButtons(mappedButtons, rawButtons);
+            float share = rawButtons[KeyEvent.KEYCODE_BUTTON_L2];
+            float options = rawButtons[KeyEvent.KEYCODE_BUTTON_R2];
+            mappedButtons[CanonicalButtonIndex.BACK_SELECT] = share;
+            mappedButtons[CanonicalButtonIndex.START] = options;
 
+            float thumbL = rawButtons[KeyEvent.KEYCODE_BUTTON_SELECT];
+            float thumbR = rawButtons[KeyEvent.KEYCODE_BUTTON_START];
+            mappedButtons[CanonicalButtonIndex.LEFT_THUMBSTICK] = thumbL;
+            mappedButtons[CanonicalButtonIndex.RIGHT_THUMBSTICK] = thumbR;
+
+            float mode = rawButtons[KeyEvent.KEYCODE_BUTTON_MODE];
+            mappedButtons[CanonicalButtonIndex.META] = mode;
+
+            mapHatAxisToDpadButtons(mappedButtons, rawAxes);
             mapXYAxes(mappedAxes, rawAxes);
             mapZAndRZAxesToRightStick(mappedAxes, rawAxes);
         }
     }
 
     private static class SamsungEIGP20GamepadMappings extends GamepadMappings {
-
         /**
-         * Method for mapping PS3 gamepad axis and button values
+         * Method for mapping Samsung GamePad EI-GP20 axis and button values
          * to standard gamepad button and axes values.
          */
         @Override
@@ -424,8 +551,11 @@ abstract class GamepadMappings {
         private int mRightStickXAxis = -1;
         private int mRightStickYAxis = -1;
         private boolean mUseHatAxes;
+        private final boolean mHasMetaButton;
 
-        UnknownGamepadMappings(int[] axes) {
+        UnknownGamepadMappings(int[] axes, BitSet buttons) {
+            mHasMetaButton = buttons.get(KeyEvent.KEYCODE_BUTTON_MODE);
+
             int hatAxesFound = 0;
 
             for (int axis : axes) {
@@ -467,6 +597,11 @@ abstract class GamepadMappings {
         public boolean isStandard() {
             // These mappings should not be considered standard
             return false;
+        }
+
+        @Override
+        public int getButtonsLength() {
+            return mHasMetaButton ? CanonicalButtonIndex.COUNT : CanonicalButtonIndex.COUNT - 1;
         }
 
         @Override

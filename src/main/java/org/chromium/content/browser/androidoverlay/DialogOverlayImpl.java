@@ -13,6 +13,9 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
+import org.chromium.base.task.PostTask;
+import org.chromium.content_public.browser.UiThreadTaskTraits;
 import org.chromium.gfx.mojom.Rect;
 import org.chromium.media.mojom.AndroidOverlay;
 import org.chromium.media.mojom.AndroidOverlayClient;
@@ -32,6 +35,10 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     private Handler mOverlayHandler;
     // Runnable that we'll run when the overlay notifies us that it's been released.
     private Runnable mReleasedRunnable;
+
+    // Runnable that will release |mDialogCore| when posted to mOverlayHandler.  We keep this
+    // separately from mDialogCore itself so that we can call it after we've discarded the latter.
+    private Runnable mReleaseCoreRunnable;
 
     private final ThreadHoppingHost mHoppingHost;
 
@@ -69,7 +76,8 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         // Register to get token updates.  Note that this may not call us back directly, since
         // |mDialogCore| hasn't been initialized yet.
-        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
+        mNativeHandle = DialogOverlayImplJni.get().init(DialogOverlayImpl.this,
+                config.routingToken.high, config.routingToken.low, config.powerEfficient);
 
         if (mNativeHandle == 0) {
             mClient.onDestroyed();
@@ -80,22 +88,31 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         // Post init to the overlay thread.
         final DialogOverlayCore dialogCore = mDialogCore;
         final Context context = ContextUtils.getApplicationContext();
-        nativeGetCompositorOffset(mNativeHandle, config.rect);
+        DialogOverlayImplJni.get().getCompositorOffset(
+                mNativeHandle, DialogOverlayImpl.this, config.rect);
         mOverlayHandler.post(new Runnable() {
             @Override
             public void run() {
                 dialogCore.initialize(context, config, mHoppingHost, asPanel);
                 // Now that |mDialogCore| has been initialized, we are ready for token callbacks.
-                ThreadUtils.postOnUiThread(new Runnable() {
+                PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
                     @Override
                     public void run() {
                         if (mNativeHandle != 0) {
-                            nativeCompleteInit(mNativeHandle);
+                            DialogOverlayImplJni.get().completeInit(
+                                    mNativeHandle, DialogOverlayImpl.this);
                         }
                     }
                 });
             }
         });
+
+        mReleaseCoreRunnable = new Runnable() {
+            @Override
+            public void run() {
+                dialogCore.release();
+            }
+        };
     }
 
     // AndroidOverlay impl.
@@ -112,19 +129,12 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         // that the client calls it.
 
         // Allow surfaceDestroyed to proceed, if it's waiting.
-        mHoppingHost.onCleanup();
+        mHoppingHost.onClose();
 
-        // Notify |mDialogCore| that it has been released.  This might not be called if it notifies
-        // us that it's been destroyed.  We still might send it in that case if the client closes
-        // the connection before we find out that it's been destroyed on the overlay thread.
-        if (mDialogCore != null) {
-            final DialogOverlayCore dialogCore = mDialogCore;
-            mOverlayHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    dialogCore.release();
-                }
-            });
+        // Notify |mDialogCore| that it has been released.
+        if (mReleaseCoreRunnable != null) {
+            mOverlayHandler.post(mReleaseCoreRunnable);
+            mReleaseCoreRunnable = null;
 
             // Note that we might get messagaes from |mDialogCore| after this, since they might be
             // dispatched before |r| arrives.  Clearing |mDialogCore| causes us to ignore them.
@@ -155,7 +165,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         if (mDialogCore == null) return;
 
         // |rect| is relative to the compositor surface.  Convert it to be relative to the screen.
-        nativeGetCompositorOffset(mNativeHandle, rect);
+        DialogOverlayImplJni.get().getCompositorOffset(mNativeHandle, DialogOverlayImpl.this, rect);
 
         final DialogOverlayCore dialogCore = mDialogCore;
         mOverlayHandler.post(new Runnable() {
@@ -181,7 +191,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         if (mDialogCore == null || mClient == null) return;
 
-        mSurfaceId = nativeRegisterSurface(surface);
+        mSurfaceId = DialogOverlayImplJni.get().registerSurface(surface);
         mClient.onSurfaceReady(mSurfaceId);
     }
 
@@ -207,8 +217,16 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     // DialogOverlayCore.Host impl.
     // Due to threading issues, |mHoppingHost| doesn't forward this.
     @Override
-    public void waitForCleanup() {
+    public void waitForClose() {
         assert false : "Not reached";
+    }
+
+    // DialogOverlayCore.Host impl
+    @Override
+    public void enforceClose() {
+        // Pretend that the client closed us, even if they didn't.  It's okay if this is called more
+        // than once.  The client might have already called it, or might call it later.
+        close();
     }
 
     /**
@@ -262,6 +280,17 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     }
 
     /**
+     * Callback from native to tell us that the power-efficient state has changed.
+     */
+    @CalledByNative
+    private void onPowerEfficientState(boolean isPowerEfficient) {
+        ThreadUtils.assertOnUiThread();
+        if (mDialogCore == null) return;
+        if (mClient == null) return;
+        mClient.onPowerEfficientState(isPowerEfficient);
+    }
+
+    /**
      * Unregister for callbacks, unregister any surface that we have, and forget about
      * |mDialogCore|.  Multiple calls are okay.
      */
@@ -269,13 +298,13 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         ThreadUtils.assertOnUiThread();
 
         if (mSurfaceId != 0) {
-            nativeUnregisterSurface(mSurfaceId);
+            DialogOverlayImplJni.get().unregisterSurface(mSurfaceId);
             mSurfaceId = 0;
         }
 
         // Note that we might not be registered for a token.
         if (mNativeHandle != 0) {
-            nativeDestroy(mNativeHandle);
+            DialogOverlayImplJni.get().destroy(mNativeHandle, DialogOverlayImpl.this);
             mNativeHandle = 0;
         }
 
@@ -285,49 +314,55 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         mDialogCore = null;
 
         // If we wanted to send any message to |mClient|, we should have done so already.
+        // We close |mClient| first to prevent leaking the mojo router object.
+        if (mClient != null) mClient.close();
         mClient = null;
     }
-
-    /**
-     * Initializes native side.  Will register for onWindowToken callbacks on |this|.  Returns a
-     * handle that should be provided to nativeDestroy.  This will not call back with a window token
-     * immediately.  Call nativeCompleteInit() for the initial token.
-     */
-    private native long nativeInit(long high, long low);
 
     /**
      * Notify the native side that we are ready for token / dismissed callbacks.  This may result in
      * a callback before it returns.
      */
-    private native void nativeCompleteInit(long nativeDialogOverlayImpl);
 
-    /**
-     * Stops native side and deallocates |handle|.
-     */
-    private native void nativeDestroy(long nativeDialogOverlayImpl);
+    @NativeMethods
+    interface Natives {
+        /**
+         * Initializes native side.  Will register for onWindowToken callbacks on |this|.  Returns a
+         * handle that should be provided to nativeDestroy.  This will not call back with a window
+         * token immediately.  Call nativeCompleteInit() for the initial token.
+         */
+        long init(DialogOverlayImpl caller, long high, long low, boolean isPowerEfficient);
 
-    /**
-     * Calls back ReceiveCompositorOffset with the screen location (in the View.getLocationOnScreen
-     * sense) of the compositor for our WebContents.  Sends |rect| along verbatim.
-     */
-    private native void nativeGetCompositorOffset(long nativeDialogOverlayImpl, Rect rect);
+        void completeInit(long nativeDialogOverlayImpl, DialogOverlayImpl caller);
+        /**
+         * Stops native side and deallocates |handle|.
+         */
+        void destroy(long nativeDialogOverlayImpl, DialogOverlayImpl caller);
 
-    /**
-     * Register a surface and return the surface id for it.
-     * @param surface Surface that we should register.
-     * @return surface id that we associated with |surface|.
-     */
-    private static native int nativeRegisterSurface(Surface surface);
+        /**
+         * Calls back ReceiveCompositorOffset with the screen location (in the
+         * View.getLocationOnScreen sense) of the compositor for our WebContents.  Sends |rect|
+         * along verbatim.
+         */
+        void getCompositorOffset(long nativeDialogOverlayImpl, DialogOverlayImpl caller, Rect rect);
 
-    /**
-     * Unregister a surface.
-     * @param surfaceId Id that was returned by registerSurface.
-     */
-    private static native void nativeUnregisterSurface(int surfaceId);
+        /**
+         * Register a surface and return the surface id for it.
+         * @param surface Surface that we should register.
+         * @return surface id that we associated with |surface|.
+         */
+        int registerSurface(Surface surface);
 
-    /**
-     * Look up and return a surface.
-     * @param surfaceId Id that was returned by registerSurface.
-     */
-    /* package */ static native Surface nativeLookupSurfaceForTesting(int surfaceId);
+        /**
+         * Unregister a surface.
+         * @param surfaceId Id that was returned by registerSurface.
+         */
+        void unregisterSurface(int surfaceId);
+
+        /**
+         * Look up and return a surface.
+         * @param surfaceId Id that was returned by registerSurface.
+         */
+        Surface lookupSurfaceForTesting(int surfaceId);
+    }
 }

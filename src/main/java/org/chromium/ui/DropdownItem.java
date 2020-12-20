@@ -20,6 +20,10 @@ public interface DropdownItem {
      */
     String getSublabel();
     /**
+     * Returns the item tag that should be shown in the dropdown.
+     */
+    String getItemTag();
+    /**
      * Returns the drawable id of the icon that should be shown in the dropdown, or NO_ICON.
      */
     int getIconId();
@@ -44,17 +48,9 @@ public interface DropdownItem {
      */
     int getLabelFontColorResId();
     /**
-     * Returns resource ID of label's font size.
-     */
-    int getLabelFontSizeResId();
-    /**
      * Returns resource ID of sublabel's font size.
      */
     int getSublabelFontSizeResId();
-    /**
-     * Returns whether label and sublabel should be on the same line.
-     */
-    boolean isLabelAndSublabelOnSameLine();
     /**
      * Returns whether the icon should be displayed at the start, before label
      * and sublabel.

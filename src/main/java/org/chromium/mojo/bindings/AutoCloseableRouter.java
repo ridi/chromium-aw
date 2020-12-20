@@ -10,10 +10,11 @@ import org.chromium.mojo.system.MessagePipeHandle;
 import java.util.concurrent.Executor;
 
 /**
- * Wrapper around {@link Router} that will close the connection when not referenced anymore.
+ * Wrapper around {@link Router}. Unlike the class name suggested, it doesn't auto-close the
+ * connection without a try-with-resources statement. If the callsite isn't using try-with-resources
+ * mechanism, it needs to call close() explicitly.
  */
 class AutoCloseableRouter implements Router {
-
     /**
      * The underlying router.
      */
@@ -23,6 +24,12 @@ class AutoCloseableRouter implements Router {
      * The executor to close the underlying router.
      */
     private final Executor mExecutor;
+
+    /**
+     * Exception used to track AutoCloseableRouter's allocation location for debugging puproses when
+     * leaked.
+     */
+    private final Exception mAllocationException;
 
     /**
      * Flags to keep track if this router has been correctly closed.
@@ -35,6 +42,7 @@ class AutoCloseableRouter implements Router {
     public AutoCloseableRouter(Core core, Router router) {
         mRouter = router;
         mExecutor = ExecutorFactory.getExecutorForCurrentThread(core);
+        mAllocationException = new Exception("AutocloseableRouter allocated at:");
     }
 
     /**
@@ -108,8 +116,9 @@ class AutoCloseableRouter implements Router {
                     close();
                 }
             });
-            throw new IllegalStateException("Warning: Router objects should be explicitly closed " +
-                    "when no longer required otherwise you may leak handles.");
+            throw new IllegalStateException("Warning: Router objects should be explicitly closed "
+                            + "when no longer required otherwise you may leak handles.",
+                    mAllocationException);
         }
         super.finalize();
     }

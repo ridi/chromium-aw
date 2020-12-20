@@ -14,7 +14,7 @@ import org.chromium.base.annotations.JNINamespace;
  */
 @JNINamespace("content")
 public class SyntheticGestureTarget {
-    private final MotionEventSynthesizer mMotionEventSynthesizer;
+    private final MotionEventSynthesizerImpl mMotionEventSynthesizer;
 
     @CalledByNative
     private static SyntheticGestureTarget create(View target) {
@@ -22,7 +22,7 @@ public class SyntheticGestureTarget {
     }
 
     private SyntheticGestureTarget(View target) {
-        mMotionEventSynthesizer = new MotionEventSynthesizer(target);
+        mMotionEventSynthesizer = MotionEventSynthesizerImpl.create(target);
     }
 
     @CalledByNative
@@ -31,12 +31,12 @@ public class SyntheticGestureTarget {
     }
 
     @CalledByNative
-    private void setPointer(int index, int x, int y, int id) {
+    private void setPointer(int index, float x, float y, int id) {
         mMotionEventSynthesizer.setPointer(index, x, y, id);
     }
 
     @CalledByNative
-    private void setScrollDeltas(int x, int y, int dx, int dy) {
+    private void setScrollDeltas(float x, float y, float dx, float dy) {
         mMotionEventSynthesizer.setScrollDeltas(x, y, dx, dy);
     }
 }

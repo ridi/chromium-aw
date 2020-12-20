@@ -9,16 +9,13 @@ import static android.view.accessibility.AccessibilityNodeInfo.EXTRA_DATA_TEXT_C
 import static android.view.accessibility.AccessibilityNodeInfo.EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.Arrays;
@@ -28,26 +25,18 @@ import java.util.Arrays;
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.O)
-public class OWebContentsAccessibility extends LollipopWebContentsAccessibility {
-    OWebContentsAccessibility(Context context, ViewGroup containerView, WebContents webContents,
-            RenderCoordinates renderCoordinates, boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+public class OWebContentsAccessibility extends WebContentsAccessibilityImpl {
+    OWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
     }
 
     @Override
     protected void setAccessibilityNodeInfoOAttributes(
-            AccessibilityNodeInfo node, boolean hasCharacterLocations) {
-        if (!hasCharacterLocations) return;
+            AccessibilityNodeInfo node, boolean hasCharacterLocations, String hint) {
+        if (hasCharacterLocations) {
+            node.setAvailableExtraData(Arrays.asList(EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY));
+        }
 
-        node.setAvailableExtraData(Arrays.asList(EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY));
-    }
-
-    @Override
-    protected void setAccessibilityNodeInfoKitKatAttributes(AccessibilityNodeInfo node,
-            boolean isRoot, boolean isEditableText, String roleDescription, String hint,
-            int selectionStartIndex, int selectionEndIndex) {
-        super.setAccessibilityNodeInfoKitKatAttributes(node, isRoot, isEditableText,
-                roleDescription, hint, selectionStartIndex, selectionEndIndex);
         node.setHintText(hint);
     }
 
@@ -56,8 +45,10 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
             int virtualViewId, AccessibilityNodeInfo info, String extraDataKey, Bundle arguments) {
         if (!extraDataKey.equals(EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY)) return;
 
-        if (!nativeAreInlineTextBoxesLoaded(mNativeObj, virtualViewId)) {
-            nativeLoadInlineTextBoxes(mNativeObj, virtualViewId);
+        if (!WebContentsAccessibilityImplJni.get().areInlineTextBoxesLoaded(
+                    mNativeObj, OWebContentsAccessibility.this, virtualViewId)) {
+            WebContentsAccessibilityImplJni.get().loadInlineTextBoxes(
+                    mNativeObj, OWebContentsAccessibility.this, virtualViewId);
         }
 
         int positionInfoStartIndex =
@@ -66,8 +57,9 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
                 arguments.getInt(EXTRA_DATA_TEXT_CHARACTER_LOCATION_ARG_LENGTH, -1);
         if (positionInfoLength <= 0 || positionInfoStartIndex < 0) return;
 
-        int[] coords = nativeGetCharacterBoundingBoxes(
-                mNativeObj, virtualViewId, positionInfoStartIndex, positionInfoLength);
+        int[] coords = WebContentsAccessibilityImplJni.get().getCharacterBoundingBoxes(mNativeObj,
+                OWebContentsAccessibility.this, virtualViewId, positionInfoStartIndex,
+                positionInfoLength);
         if (coords == null) return;
         assert coords.length == positionInfoLength * 4;
 

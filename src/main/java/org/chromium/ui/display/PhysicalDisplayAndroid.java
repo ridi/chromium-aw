@@ -11,23 +11,27 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
-import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
+import org.chromium.base.compat.ApiHelperForO;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A DisplayAndroid implementation tied to a physical Display.
  */
 /* package */ class PhysicalDisplayAndroid extends DisplayAndroid {
     private static final String TAG = "DisplayAndroid";
+    private static final String SAMSUNG_DEX_DISPLAY = "Desktop";
 
     // When this object exists, a positive value means that the forced DIP scale is set and
     // the zero means it is not. The non existing object (i.e. null reference) means that
     // the existence and value of the forced DIP scale has not yet been determined.
     private static Float sForcedDIPScale;
+
+    // This is a workaround for crbug.com/1042581.
+    private final boolean mDisableSurfaceControlWorkaround;
 
     private static boolean hasForcedDIPScale() {
         if (sForcedDIPScale == null) {
@@ -55,8 +59,42 @@ import java.lang.reflect.Method;
         return sForcedDIPScale.floatValue() > 0;
     }
 
+    /**
+     * This method returns the bitsPerPixel without the alpha channel, as this is the value expected
+     * by Chrome and the CSS media queries.
+     */
     @SuppressWarnings("deprecation")
-    private int bitsPerComponent(int pixelFormatId) {
+    private static int bitsPerPixel(int pixelFormatId) {
+        // For JB-MR1 and above, this is the only value, so we can hard-code the result.
+        if (pixelFormatId == PixelFormat.RGBA_8888) return 24;
+
+        PixelFormat pixelFormat = new PixelFormat();
+        PixelFormat.getPixelFormatInfo(pixelFormatId, pixelFormat);
+        if (!PixelFormat.formatHasAlpha(pixelFormatId)) return pixelFormat.bitsPerPixel;
+
+        switch (pixelFormatId) {
+            case PixelFormat.RGBA_1010102:
+                return 30;
+
+            case PixelFormat.RGBA_4444:
+                return 12;
+
+            case PixelFormat.RGBA_5551:
+                return 15;
+
+            case PixelFormat.RGBA_8888:
+                assert false;
+            // fall through
+            // RGBX_8888 does not have an alpha channel even if it has 8 reserved bits at the end.
+            case PixelFormat.RGBX_8888:
+            case PixelFormat.RGB_888:
+            default:
+                return 24;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private static int bitsPerComponent(int pixelFormatId) {
         switch (pixelFormatId) {
             case PixelFormat.RGBA_4444:
                 return 4;
@@ -89,6 +127,7 @@ import java.lang.reflect.Method;
 
     /* package */ PhysicalDisplayAndroid(Display display) {
         super(display.getDisplayId());
+        mDisableSurfaceControlWorkaround = display.getName().equals(SAMSUNG_DEX_DISPLAY);
     }
 
     @SuppressWarnings("deprecation")
@@ -96,7 +135,6 @@ import java.lang.reflect.Method;
     /* package */ void updateFromDisplay(Display display) {
         Point size = new Point();
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        PixelFormat pixelFormat = new PixelFormat();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             display.getRealSize(size);
             display.getRealMetrics(displayMetrics);
@@ -106,21 +144,34 @@ import java.lang.reflect.Method;
         }
         if (hasForcedDIPScale()) displayMetrics.density = sForcedDIPScale.floatValue();
         boolean isWideColorGamut = false;
-        if (BuildInfo.isAtLeastO()) {
-            try {
-                Method method = display.getClass().getMethod("isWideColorGamut");
-                isWideColorGamut = (Boolean) method.invoke(display);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                Log.e(TAG, "Error invoking isWideColorGamut:", e);
-            }
+        // Although this API was added in Android O, it was buggy.
+        // Restrict to Android Q, where it was fixed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            isWideColorGamut = ApiHelperForO.isWideColorGamut(display);
         }
 
         // JellyBean MR1 and later always uses RGBA_8888.
         int pixelFormatId = (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
                 ? display.getPixelFormat()
                 : PixelFormat.RGBA_8888;
-        PixelFormat.getPixelFormatInfo(pixelFormatId, pixelFormat);
-        super.update(size, displayMetrics.density, pixelFormat.bitsPerPixel,
-                bitsPerComponent(pixelFormatId), display.getRotation(), isWideColorGamut, null);
+
+        Display.Mode currentMode = null;
+        List<Display.Mode> supportedModes = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            currentMode = display.getMode();
+            supportedModes = Arrays.asList(display.getSupportedModes());
+            assert currentMode != null;
+            assert supportedModes != null;
+            assert supportedModes.size() > 0;
+        }
+
+        super.update(size, displayMetrics.density, bitsPerPixel(pixelFormatId),
+                bitsPerComponent(pixelFormatId), display.getRotation(), isWideColorGamut, null,
+                display.getRefreshRate(), currentMode, supportedModes);
+    }
+
+    @Override
+    public boolean applyDisableSurfaceControlWorkaround() {
+        return mDisableSurfaceControlWorkaround;
     }
 }

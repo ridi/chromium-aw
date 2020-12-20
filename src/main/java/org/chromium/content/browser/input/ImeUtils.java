@@ -4,6 +4,8 @@
 
 package org.chromium.content.browser.input;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -14,8 +16,10 @@ import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.VerifiesOnR;
 import org.chromium.blink_public.web.WebTextInputFlags;
 import org.chromium.blink_public.web.WebTextInputMode;
+import org.chromium.ui.base.ime.TextInputAction;
 import org.chromium.ui.base.ime.TextInputType;
 
 import java.util.Locale;
@@ -25,18 +29,40 @@ import java.util.Locale;
  */
 public class ImeUtils {
     /**
+     * A class to contain R-specific code inside a separate class to avoid performance regression.
+     *
+     * See
+     * https://source.chromium.org/chromium/chromium/src/+/master:build/android/docs/class_verification_failures.md
+     * for details.
+     */
+    @VerifiesOnR
+    @TargetApi(Build.VERSION_CODES.R)
+    private static final class HelperForR {
+        /** see {@link EditorInfo#setInitialSurroundingText(EditorInfo, String)} */
+        public static void setInitialSurroundingText(EditorInfo outAttrs, String lastText) {
+            // Note: Android's internal implementation trims the text up to 2048 chars before
+            // sending it to the IMM service. In the future, if we consider limiting the number of
+            // chars between renderer and browser, then consider calling
+            // setInitialSurroundingSubText() instead.
+            outAttrs.setInitialSurroundingText(lastText);
+        }
+    }
+
+    /**
      * Compute {@link EditorInfo} based on the given parameters. This is needed for
      * {@link View#onCreateInputConnection(EditorInfo)}.
      *
      * @param inputType Type defined in {@link TextInputType}.
      * @param inputFlags Flags defined in {@link WebTextInputFlags}.
      * @param inputMode Flags defined in {@link WebTextInputMode}.
+     * @param inputAction Flags defined in {@link TextInputAction}.
      * @param initialSelStart The initial selection start position.
      * @param initialSelEnd The initial selection end position.
      * @param outAttrs An instance of {@link EditorInfo} that we are going to change.
      */
     public static void computeEditorInfo(int inputType, int inputFlags, int inputMode,
-            int initialSelStart, int initialSelEnd, EditorInfo outAttrs) {
+            int inputAction, int initialSelStart, int initialSelEnd, String lastText,
+            EditorInfo outAttrs) {
         outAttrs.inputType =
                 EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT;
 
@@ -73,45 +99,44 @@ public class ImeUtils {
             } else if (inputType == TextInputType.NUMBER) {
                 // Number
                 outAttrs.inputType = InputType.TYPE_CLASS_NUMBER
-                        | InputType.TYPE_NUMBER_VARIATION_NORMAL
                         | InputType.TYPE_NUMBER_FLAG_DECIMAL;
             }
         } else {
             switch (inputMode) {
                 default:
                 case WebTextInputMode.DEFAULT:
-                case WebTextInputMode.VERBATIM:
-                case WebTextInputMode.LATIN:
-                case WebTextInputMode.LATIN_NAME:
-                case WebTextInputMode.LATIN_PROSE:
-                case WebTextInputMode.FULL_WIDTH_LATIN:
-                case WebTextInputMode.KANA:
-                case WebTextInputMode.KANA_NAME:
-                case WebTextInputMode.KATA_KANA:
+                case WebTextInputMode.TEXT:
+                case WebTextInputMode.SEARCH:
                     outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
                     if ((inputFlags & WebTextInputFlags.AUTOCORRECT_OFF) == 0) {
                         outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT;
                     }
                     break;
-                case WebTextInputMode.NUMERIC:
-                    outAttrs.inputType =
-                            InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL;
-                    break;
                 case WebTextInputMode.TEL:
                     outAttrs.inputType = InputType.TYPE_CLASS_PHONE;
-                    break;
-                case WebTextInputMode.EMAIL:
-                    outAttrs.inputType = InputType.TYPE_CLASS_TEXT
-                            | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
                     break;
                 case WebTextInputMode.URL:
                     outAttrs.inputType =
                             InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
                     break;
+                case WebTextInputMode.EMAIL:
+                    outAttrs.inputType = InputType.TYPE_CLASS_TEXT
+                            | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
+                    break;
+                case WebTextInputMode.NUMERIC:
+                    outAttrs.inputType = InputType.TYPE_CLASS_NUMBER;
+                    if (inputType == TextInputType.PASSWORD) {
+                        outAttrs.inputType |= InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                    }
+                    break;
+                case WebTextInputMode.DECIMAL:
+                    outAttrs.inputType =
+                            InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+                    break;
             }
         }
 
-        outAttrs.imeOptions |= getImeAction(inputType, inputFlags, inputMode,
+        outAttrs.imeOptions |= getImeAction(inputType, inputFlags, inputMode, inputAction,
                 (outAttrs.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0);
 
         // Handling of autocapitalize. Blink will send the flag taking into account the element's
@@ -125,30 +150,61 @@ public class ImeUtils {
         } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
         }
-        // Content editable doesn't use autocapitalize so we need to set it manually.
-        if (inputType == TextInputType.CONTENT_EDITABLE) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
+
+        if ((inputFlags & WebTextInputFlags.HAS_BEEN_PASSWORD_FIELD) != 0
+                && (outAttrs.inputType & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == 0) {
+            outAttrs.inputType =
+                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
         }
 
         outAttrs.initialSelStart = initialSelStart;
         outAttrs.initialSelEnd = initialSelEnd;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            HelperForR.setInitialSurroundingText(outAttrs, lastText);
+        }
     }
 
-    private static int getImeAction(
-            int inputType, int inputFlags, int inputMode, boolean isMultiLineInput) {
+    private static int getImeAction(int inputType, int inputFlags, int inputMode, int inputAction,
+            boolean isMultiLineInput) {
         int imeAction = 0;
-        if (inputMode == WebTextInputMode.DEFAULT && inputType == TextInputType.SEARCH) {
-            imeAction |= EditorInfo.IME_ACTION_SEARCH;
-        } else if (isMultiLineInput) {
-            // For textarea that sends you to another webpage on enter key press using
-            // JavaScript, we will only show ENTER.
-            imeAction |= EditorInfo.IME_ACTION_NONE;
-        } else if ((inputFlags & WebTextInputFlags.HAVE_NEXT_FOCUSABLE_ELEMENT) != 0) {
-            imeAction |= EditorInfo.IME_ACTION_NEXT;
+        if (inputAction == TextInputAction.DEFAULT) {
+            if (inputMode == WebTextInputMode.DEFAULT && inputType == TextInputType.SEARCH) {
+                imeAction |= EditorInfo.IME_ACTION_SEARCH;
+            } else if (isMultiLineInput) {
+                // For textarea that sends you to another webpage on enter key press using
+                // JavaScript, we will only show ENTER.
+                imeAction |= EditorInfo.IME_ACTION_NONE;
+            } else if ((inputFlags & WebTextInputFlags.HAVE_NEXT_FOCUSABLE_ELEMENT) != 0) {
+                imeAction |= EditorInfo.IME_ACTION_NEXT;
+            } else {
+                // For last element inside form, we should give preference to GO key as PREVIOUS
+                // has less importance in those cases.
+                imeAction |= EditorInfo.IME_ACTION_GO;
+            }
         } else {
-            // For last element inside form, we should give preference to GO key as PREVIOUS
-            // has less importance in those cases.
-            imeAction |= EditorInfo.IME_ACTION_GO;
+            switch (inputAction) {
+                case TextInputAction.ENTER:
+                    imeAction |= EditorInfo.IME_ACTION_NONE;
+                    break;
+                case TextInputAction.GO:
+                    imeAction |= EditorInfo.IME_ACTION_GO;
+                    break;
+                case TextInputAction.DONE:
+                    imeAction |= EditorInfo.IME_ACTION_DONE;
+                    break;
+                case TextInputAction.NEXT:
+                    imeAction |= EditorInfo.IME_ACTION_NEXT;
+                    break;
+                case TextInputAction.PREVIOUS:
+                    imeAction |= EditorInfo.IME_ACTION_PREVIOUS;
+                    break;
+                case TextInputAction.SEARCH:
+                    imeAction |= EditorInfo.IME_ACTION_SEARCH;
+                    break;
+                case TextInputAction.SEND:
+                    imeAction |= EditorInfo.IME_ACTION_SEND;
+                    break;
+            }
         }
         return imeAction;
     }

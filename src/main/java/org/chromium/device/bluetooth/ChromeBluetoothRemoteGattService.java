@@ -6,7 +6,9 @@ package org.chromium.device.bluetooth;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.annotations.JNIAdditionalImport;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * device::BluetoothRemoteGattServiceAndroid.
  */
 @JNINamespace("device")
+@JNIAdditionalImport(Wrappers.class)
 final class ChromeBluetoothRemoteGattService {
     private static final String TAG = "Bluetooth";
 
@@ -44,18 +47,14 @@ final class ChromeBluetoothRemoteGattService {
         mNativeBluetoothRemoteGattServiceAndroid = 0;
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // BluetoothRemoteGattServiceAndroid methods implemented in java:
-
     // Implements BluetoothRemoteGattServiceAndroid::Create.
-    // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
     @CalledByNative
     private static ChromeBluetoothRemoteGattService create(
-            long nativeBluetoothRemoteGattServiceAndroid, Object bluetoothGattServiceWrapper,
-            String instanceId, ChromeBluetoothDevice chromeDevice) {
-        return new ChromeBluetoothRemoteGattService(nativeBluetoothRemoteGattServiceAndroid,
-                (Wrappers.BluetoothGattServiceWrapper) bluetoothGattServiceWrapper, instanceId,
-                chromeDevice);
+            long nativeBluetoothRemoteGattServiceAndroid,
+            Wrappers.BluetoothGattServiceWrapper serviceWrapper, String instanceId,
+            ChromeBluetoothDevice chromeDevice) {
+        return new ChromeBluetoothRemoteGattService(
+                nativeBluetoothRemoteGattServiceAndroid, serviceWrapper, instanceId, chromeDevice);
     }
 
     // Implements BluetoothRemoteGattServiceAndroid::GetUUID.
@@ -75,17 +74,18 @@ final class ChromeBluetoothRemoteGattService {
             // characteristic instances with the same UUID on this service.
             String characteristicInstanceId = mInstanceId + "/"
                     + characteristic.getUuid().toString() + "," + characteristic.getInstanceId();
-            nativeCreateGattRemoteCharacteristic(mNativeBluetoothRemoteGattServiceAndroid,
+            ChromeBluetoothRemoteGattServiceJni.get().createGattRemoteCharacteristic(
+                    mNativeBluetoothRemoteGattServiceAndroid, ChromeBluetoothRemoteGattService.this,
                     characteristicInstanceId, characteristic, mChromeDevice);
         }
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // BluetoothAdapterDevice C++ methods declared for access from java:
-
-    // Binds to BluetoothRemoteGattServiceAndroid::CreateGattRemoteCharacteristic.
-    // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
-    private native void nativeCreateGattRemoteCharacteristic(
-            long nativeBluetoothRemoteGattServiceAndroid, String instanceId,
-            Object bluetoothGattCharacteristicWrapper, Object chromeBluetoothDevice);
+    @NativeMethods
+    interface Natives {
+        // Binds to BluetoothRemoteGattServiceAndroid::CreateGattRemoteCharacteristic.
+        void createGattRemoteCharacteristic(long nativeBluetoothRemoteGattServiceAndroid,
+                ChromeBluetoothRemoteGattService caller, String instanceId,
+                Wrappers.BluetoothGattCharacteristicWrapper characteristicWrapper,
+                ChromeBluetoothDevice chromeBluetoothDevice);
+    }
 }

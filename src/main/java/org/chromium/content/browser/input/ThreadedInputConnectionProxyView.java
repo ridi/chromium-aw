@@ -12,19 +12,17 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.Log;
-import org.chromium.base.ThreadUtils;
-import org.chromium.base.annotations.UsedByReflection;
+import org.chromium.base.task.PostTask;
+import org.chromium.content_public.browser.UiThreadTaskTraits;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This is a fake View that is only exposed to InputMethodManager.
  */
-@UsedByReflection("ThreadedInputConnectionFactory.java")
 public class ThreadedInputConnectionProxyView extends View {
-    private static final String TAG = "cr_Ime";
+    private static final String TAG = "ImeProxyView";
     private static final boolean DEBUG_LOGS = false;
 
     private final Handler mImeThreadHandler;
@@ -33,9 +31,10 @@ public class ThreadedInputConnectionProxyView extends View {
     private final AtomicBoolean mWindowFocused = new AtomicBoolean();
     private final AtomicReference<IBinder> mWindowToken = new AtomicReference<>();
     private final AtomicReference<View> mRootView = new AtomicReference<>();
+    private final ThreadedInputConnectionFactory mFactory;
 
-    ThreadedInputConnectionProxyView(
-            Context context, Handler imeThreadHandler, View containerView) {
+    ThreadedInputConnectionProxyView(Context context, Handler imeThreadHandler, View containerView,
+            ThreadedInputConnectionFactory factory) {
         super(context);
         mImeThreadHandler = imeThreadHandler;
         mContainerView = containerView;
@@ -48,6 +47,7 @@ public class ThreadedInputConnectionProxyView extends View {
         mWindowFocused.set(mContainerView.hasWindowFocus());
         mWindowToken.set(mContainerView.getWindowToken());
         mRootView.set(mContainerView.getRootView());
+        mFactory = factory;
     }
 
     public void onOriginalViewFocusChanged(boolean gainFocus) {
@@ -55,6 +55,7 @@ public class ThreadedInputConnectionProxyView extends View {
     }
 
     public void onOriginalViewWindowFocusChanged(boolean gainFocus) {
+        if (DEBUG_LOGS) Log.w(TAG, "onOriginalViewWindowFocusChanged: " + gainFocus);
         mWindowFocused.set(gainFocus);
     }
 
@@ -90,27 +91,29 @@ public class ThreadedInputConnectionProxyView extends View {
     @Override
     public InputConnection onCreateInputConnection(final EditorInfo outAttrs) {
         if (DEBUG_LOGS) Log.w(TAG, "onCreateInputConnection");
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<InputConnection>() {
-            @Override
-            public InputConnection call() throws Exception {
-                return mContainerView.onCreateInputConnection(outAttrs);
-            }
+        return PostTask.runSynchronously(UiThreadTaskTraits.USER_BLOCKING, () -> {
+            mFactory.setTriggerDelayedOnCreateInputConnection(false);
+            InputConnection connection = mContainerView.onCreateInputConnection(outAttrs);
+            mFactory.setTriggerDelayedOnCreateInputConnection(true);
+            return connection;
         });
     }
 
     @Override
     public boolean hasWindowFocus() {
-        if (DEBUG_LOGS) Log.w(TAG, "hasWindowFocus");
-        return mWindowFocused.get();
+        boolean focused = mWindowFocused.get();
+        if (DEBUG_LOGS) Log.w(TAG, "hasWindowFocus: " + focused);
+        return focused;
     }
 
     @Override
     public View getRootView() {
-        if (DEBUG_LOGS) Log.w(TAG, "getRootView");
         // Returning a null here matches mCurRootView being null value in InputMethodManager,
         // which represents that the current focused window is not IME target window.
         // In this case, you are still able to type.
-        return mWindowFocused.get() ? mRootView.get() : null;
+        View rootView = mWindowFocused.get() ? mRootView.get() : null;
+        if (DEBUG_LOGS) Log.w(TAG, "getRootView: " + rootView);
+        return rootView;
     }
 
     @Override
@@ -122,8 +125,9 @@ public class ThreadedInputConnectionProxyView extends View {
 
     @Override
     public boolean isFocused() {
-        if (DEBUG_LOGS) Log.w(TAG, "isFocused");
-        return mFocused.get();
+        boolean focused = mFocused.get();
+        if (DEBUG_LOGS) Log.w(TAG, "isFocused: " + focused);
+        return focused;
     }
 
     @Override

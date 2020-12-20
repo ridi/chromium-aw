@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 
 import org.chromium.android_webview.R;
-
 import org.chromium.content.browser.picker.DateTimePickerDialog.OnDateTimeSetListener;
 import org.chromium.content.browser.picker.MultiFieldTimePickerDialog.OnMultiFieldTimeSetListener;
 import org.chromium.ui.base.ime.TextInputType;

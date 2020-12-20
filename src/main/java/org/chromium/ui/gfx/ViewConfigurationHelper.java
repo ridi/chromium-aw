@@ -11,10 +11,11 @@ import android.util.TypedValue;
 import android.view.ViewConfiguration;
 
 import org.chromium.android_webview.R;
-
 import org.chromium.base.ContextUtils;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
 /**
  * This class facilitates access to ViewConfiguration-related properties, also
@@ -32,7 +33,11 @@ public class ViewConfigurationHelper {
     private float mDensity;
 
     private ViewConfigurationHelper() {
-        mViewConfiguration = ViewConfiguration.get(ContextUtils.getApplicationContext());
+        // ViewConfiguration internally accesses WindowManager which triggers vm violations
+        // with the Application context.
+        try (StrictModeContext ignored = StrictModeContext.allowAllVmPolicies()) {
+            mViewConfiguration = ViewConfiguration.get(ContextUtils.getApplicationContext());
+        }
         mDensity = ContextUtils.getApplicationContext().getResources().getDisplayMetrics().density;
         assert mDensity > 0;
     }
@@ -67,8 +72,9 @@ public class ViewConfigurationHelper {
         mViewConfiguration = configuration;
         mDensity = ContextUtils.getApplicationContext().getResources().getDisplayMetrics().density;
         assert mDensity > 0;
-        nativeUpdateSharedViewConfiguration(getMaximumFlingVelocity(), getMinimumFlingVelocity(),
-                getTouchSlop(), getDoubleTapSlop(), getMinScalingSpan());
+        ViewConfigurationHelperJni.get().updateSharedViewConfiguration(ViewConfigurationHelper.this,
+                getMaximumFlingVelocity(), getMinimumFlingVelocity(), getTouchSlop(),
+                getDoubleTapSlop(), getMinScalingSpan());
     }
 
     @CalledByNative
@@ -140,6 +146,10 @@ public class ViewConfigurationHelper {
         return viewConfigurationHelper;
     }
 
-    private native void nativeUpdateSharedViewConfiguration(float maximumFlingVelocity,
-            float minimumFlingVelocity, float touchSlop, float doubleTapSlop, float minScalingSpan);
+    @NativeMethods
+    interface Natives {
+        void updateSharedViewConfiguration(ViewConfigurationHelper caller,
+                float maximumFlingVelocity, float minimumFlingVelocity, float touchSlop,
+                float doubleTapSlop, float minScalingSpan);
+    }
 }

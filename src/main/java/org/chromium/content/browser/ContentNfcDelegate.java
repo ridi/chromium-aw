@@ -10,7 +10,8 @@ import org.chromium.base.Callback;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.device.nfc.NfcDelegate;
 
-/** A //content-specific implementation of the NfcDelegate interface. Maps NFC host ideas to their
+/**
+ * A //content-specific implementation of the NfcDelegate interface. Maps NFC host IDs to their
  * corresponding NfcHost objects, allowing the NFC implementation to access the Activity of the
  * WebContents with which its requesting frame is associated.
  */
@@ -23,16 +24,15 @@ public class ContentNfcDelegate implements NfcDelegate {
     @Override
     public void trackActivityForHost(int hostId, Callback<Activity> callback) {
         NfcHost host = NfcHost.fromContextId(hostId);
-        if (host == null) return;
+        assert host != null : "The corresponding host should have been ready before NfcImpl starts";
         host.trackActivityChanges(callback);
     }
 
     @Override
     public void stopTrackingActivityForHost(int hostId) {
         NfcHost host = NfcHost.fromContextId(hostId);
-        if (host == null) {
-            return;
-        }
+        assert host != null : "Unexpected stop request to an already stopped host";
+        // |host| will destroy itself.
         host.stopTrackingActivityChanges();
     }
 }

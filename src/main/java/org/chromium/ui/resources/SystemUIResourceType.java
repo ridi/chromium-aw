@@ -1,5 +1,5 @@
 
-// Copyright 2018 The Chromium Authors. All rights reserved.
+// Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -10,18 +10,15 @@
 
 package org.chromium.ui.resources;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    SystemUIResourceType.OVERSCROLL_EDGE, SystemUIResourceType.OVERSCROLL_GLOW,
-    SystemUIResourceType.OVERSCROLL_GLOW_L
+    SystemUIResourceType.OVERSCROLL_GLOW
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SystemUIResourceType {
-  int OVERSCROLL_EDGE = 0;
-  int OVERSCROLL_GLOW = 1;
-  int OVERSCROLL_GLOW_L = 2;
+  int OVERSCROLL_GLOW = 0;
 }

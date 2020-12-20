@@ -4,6 +4,7 @@
 
 package org.chromium.android_webview;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.util.Log;
@@ -12,11 +13,14 @@ import android.util.TypedValue;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
+import org.chromium.base.metrics.RecordHistogram;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Implements the Java side of Android URL protocol jobs.
@@ -43,19 +47,33 @@ public class AndroidProtocolHandler {
         if (uri == null) {
             return null;
         }
+        InputStream stream = openByScheme(uri);
+        if (stream != null && uri.getLastPathSegment().endsWith(".svgz")) {
+            try {
+                stream = new GZIPInputStream(stream);
+            } catch (IOException e) {
+                Log.e(TAG, "Error decompressing " + uri + " - " + e.getMessage());
+                return null;
+            }
+        }
+        return stream;
+    }
+
+    private static InputStream openByScheme(Uri uri) {
         try {
-            String path = uri.getPath();
             if (uri.getScheme().equals(FILE_SCHEME)) {
-                if (path.startsWith(nativeGetAndroidAssetPath())) {
+                String path = uri.getPath();
+                if (path.startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath())) {
                     return openAsset(uri);
-                } else if (path.startsWith(nativeGetAndroidResourcePath())) {
+                } else if (path.startsWith(
+                                   AndroidProtocolHandlerJni.get().getAndroidResourcePath())) {
                     return openResource(uri);
                 }
             } else if (uri.getScheme().equals(CONTENT_SCHEME)) {
                 return openContent(uri);
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Error opening inputstream: " + url);
+            Log.e(TAG, "Error opening inputstream: " + uri);
         }
         return null;
     }
@@ -69,34 +87,46 @@ public class AndroidProtocolHandler {
         return input.substring(0, lastDotIndex);
     }
 
-    private static Class<?> getClazz(String assetType) throws ClassNotFoundException {
+    private static Class<?> getClazz(String packageName, String assetType)
+            throws ClassNotFoundException {
         return ContextUtils.getApplicationContext().getClassLoader().loadClass(
-                ContextUtils.getApplicationContext().getPackageName() + ".R$" + assetType);
+                packageName + ".R$" + assetType);
     }
 
     private static int getFieldId(String assetType, String assetName)
             throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+        Context appContext = ContextUtils.getApplicationContext();
+        String packageName = appContext.getPackageName();
+        int id = appContext.getResources().getIdentifier(assetName, assetType, packageName);
+        if (id != 0) {
+            RecordHistogram.recordBooleanHistogram(
+                    "Android.WebView.AndroidProtocolHandler.ResourceGetIdentifier", true);
+            return id;
+        }
+        // Resource id can't be found using Resources class so fallback to reflection.
+        // TODO(https://crbug.com/923956) remove reflection fallback if the histogram is always
+        // true.
         Class<?> clazz = null;
         try {
-            clazz = getClazz(assetType);
+            clazz = getClazz(packageName, assetType);
         } catch (ClassNotFoundException e) {
             // Strip out components from the end so gradle generated application suffix such as
             // com.example.my.pkg.pro works. This is by no means bulletproof.
-            String packageName = ContextUtils.getApplicationContext().getPackageName();
             while (clazz == null) {
                 packageName = removeOneSuffix(packageName);
                 // Throw original exception which contains the entire package id.
                 if (packageName == null) throw e;
                 try {
-                    clazz = getClazz(assetType);
+                    clazz = getClazz(packageName, assetType);
                 } catch (ClassNotFoundException ignored) {
                     // Strip and try again.
                 }
             }
         }
-
+        RecordHistogram.recordBooleanHistogram(
+                "Android.WebView.AndroidProtocolHandler.ResourceGetIdentifier", false);
         java.lang.reflect.Field field = clazz.getField(assetName);
-        int id = field.getInt(null);
+        id = field.getInt(null);
         return id;
     }
 
@@ -109,7 +139,7 @@ public class AndroidProtocolHandler {
     private static InputStream openResource(Uri uri) {
         assert uri.getScheme().equals(FILE_SCHEME);
         assert uri.getPath() != null;
-        assert uri.getPath().startsWith(nativeGetAndroidResourcePath());
+        assert uri.getPath().startsWith(AndroidProtocolHandlerJni.get().getAndroidResourcePath());
         // The path must be of the form "/android_res/asset_type/asset_name.ext".
         List<String> pathSegments = uri.getPathSegments();
         if (pathSegments.size() != 3) {
@@ -119,9 +149,12 @@ public class AndroidProtocolHandler {
         String assetPath = pathSegments.get(0);
         String assetType = pathSegments.get(1);
         String assetName = pathSegments.get(2);
-        if (!("/" + assetPath + "/").equals(nativeGetAndroidResourcePath())) {
-            Log.e(TAG, "Resource path does not start with " + nativeGetAndroidResourcePath()
-                    + ": " + uri);
+        if (!("/" + assetPath + "/")
+                        .equals(AndroidProtocolHandlerJni.get().getAndroidResourcePath())) {
+            Log.e(TAG,
+                    "Resource path does not start with "
+                            + AndroidProtocolHandlerJni.get().getAndroidResourcePath() + ": "
+                            + uri);
             return null;
         }
         // Drop the file extension.
@@ -150,8 +183,9 @@ public class AndroidProtocolHandler {
     private static InputStream openAsset(Uri uri) {
         assert uri.getScheme().equals(FILE_SCHEME);
         assert uri.getPath() != null;
-        assert uri.getPath().startsWith(nativeGetAndroidAssetPath());
-        String path = uri.getPath().replaceFirst(nativeGetAndroidAssetPath(), "");
+        assert uri.getPath().startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath());
+        String path = uri.getPath().replaceFirst(
+                AndroidProtocolHandlerJni.get().getAndroidAssetPath(), "");
         try {
             AssetManager assets = ContextUtils.getApplicationContext().getAssets();
             return assets.open(path, AssetManager.ACCESS_STREAMING);
@@ -191,7 +225,7 @@ public class AndroidProtocolHandler {
                 return ContextUtils.getApplicationContext().getContentResolver().getType(uri);
                 // Asset files may have a known extension.
             } else if (uri.getScheme().equals(FILE_SCHEME)
-                    && path.startsWith(nativeGetAndroidAssetPath())) {
+                    && path.startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath())) {
                 String mimeType = URLConnection.guessContentTypeFromName(path);
                 if (mimeType != null) {
                     return mimeType;
@@ -215,23 +249,20 @@ public class AndroidProtocolHandler {
      * @return a Uri instance, or null if the URL was invalid.
      */
     private static Uri verifyUrl(String url) {
-        if (url == null) {
-            return null;
-        }
-        Uri uri = Uri.parse(url);
-        if (uri == null) {
-            Log.e(TAG, "Malformed URL: " + url);
-            return null;
-        }
+        if (url == null) return null;
+        if (url.isEmpty()) return null;
+        Uri uri = Uri.parse(url); // Never null. parse() doesn't actually parse or verify anything.
         String path = uri.getPath();
-        if (path == null || path.length() == 0) {
+        if (path == null || path.isEmpty() || path.equals("/")) {
             Log.e(TAG, "URL does not have a path: " + url);
             return null;
         }
         return uri;
     }
 
-    private static native String nativeGetAndroidAssetPath();
-
-    private static native String nativeGetAndroidResourcePath();
+    @NativeMethods
+    interface Natives {
+        String getAndroidAssetPath();
+        String getAndroidResourcePath();
+    }
 }

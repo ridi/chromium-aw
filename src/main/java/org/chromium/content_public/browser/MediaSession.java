@@ -4,10 +4,10 @@
 
 package org.chromium.content_public.browser;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import org.chromium.base.ObserverList;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.MediaSessionImpl;
 
 /**
@@ -46,7 +46,30 @@ public abstract class MediaSession {
     public abstract void stop();
 
     /**
+     * Seeks the media session by the specified number of milliseconds. The
+     * number of millseconds can be positive or negative to seek fowards or
+     * backwards. It should not be zero.
+     */
+    public abstract void seek(long millis);
+
+    /**
+     * Seeks the media session to a specific point relative from the beginning
+     * of the media. The number of milliseconds should not be negative.
+     */
+    public abstract void seekTo(long millis);
+
+    /**
      * Notify the media session that an action has been performed.
      */
     public abstract void didReceiveAction(int action);
+
+    /**
+     * Request audio focus from the system.
+     */
+    public abstract void requestSystemAudioFocus();
+
+    /**
+     * Returns whether the media session can be resumed/suspended.
+     */
+    public abstract boolean isControllable();
 }

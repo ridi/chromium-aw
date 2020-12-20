@@ -59,7 +59,12 @@ public class TouchDevice {
         result[0] = result[1] = 0;
 
         for (int deviceId : InputDevice.getDeviceIds()) {
-            InputDevice inputDevice = InputDevice.getDevice(deviceId);
+            InputDevice inputDevice = null;
+            try {
+                inputDevice = InputDevice.getDevice(deviceId);
+            } catch (RuntimeException e) {
+                // Swallow the exception. See crbug.com/781377.
+            }
             if (inputDevice == null) continue;
 
             int sources = inputDevice.getSources();
@@ -77,9 +82,6 @@ public class TouchDevice {
                     || hasSource(sources, InputDevice.SOURCE_TOUCHPAD)
                     || hasSource(sources, InputDevice.SOURCE_TRACKBALL)) {
                 result[1] |= HoverType.HOVER;
-            } else if (hasSource(sources, InputDevice.SOURCE_STYLUS)
-                    || hasSource(sources, InputDevice.SOURCE_TOUCHSCREEN)) {
-                result[1] |= HoverType.NONE;
             }
 
             // Remaining InputDevice sources: SOURCE_DPAD, SOURCE_GAMEPAD, SOURCE_JOYSTICK,
