@@ -4,6 +4,7 @@
 
 package org.chromium.ui.resources.system;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -41,15 +42,22 @@ public class SystemResourceLoader extends AsyncPreloadResourceLoader {
 
     private static Resource createResource(int minScreenSideLengthPx, int resId) {
         switch (resId) {
+            case SystemUIResourceType.OVERSCROLL_EDGE:
+                return StaticResource.create(Resources.getSystem(),
+                        getResourceId("android:drawable/overscroll_edge"), 128, 12);
             case SystemUIResourceType.OVERSCROLL_GLOW:
-                return createOverscrollGlowBitmap(minScreenSideLengthPx);
+                return StaticResource.create(Resources.getSystem(),
+                        getResourceId("android:drawable/overscroll_glow"), 128, 64);
+            case SystemUIResourceType.OVERSCROLL_GLOW_L:
+                return createOverscrollGlowLBitmap(minScreenSideLengthPx);
+
             default:
                 assert false;
         }
         return null;
     }
 
-    private static Resource createOverscrollGlowBitmap(int minScreenSideLengthPx) {
+    private static Resource createOverscrollGlowLBitmap(int minScreenSideLengthPx) {
         float arcWidth = minScreenSideLengthPx * 0.5f / SIN_PI_OVER_6;
         float y = COS_PI_OVER_6 * arcWidth;
         float height = arcWidth - y;
@@ -71,5 +79,10 @@ public class SystemResourceLoader extends AsyncPreloadResourceLoader {
         canvas.drawArc(arcRect, 45, 90, true, arcPaint);
 
         return new StaticResource(bitmap);
+    }
+
+    private static int getResourceId(String name) {
+        Resources systemResources = Resources.getSystem();
+        return systemResources.getIdentifier(name, null, null);
     }
 }

@@ -70,8 +70,6 @@ public final class EventType {
     public static final int POINTER_CAUSED_UA_ACTION = 38;
     public static final int POINTER_TYPE_LAST = 38;
     public static final int TYPE_LAST = 38;
-    public static final int MIN_VALUE = -1;
-    public static final int MAX_VALUE = 38;
 
     public static boolean isKnownValue(int value) {
         return value >= -1 && value <= 38;

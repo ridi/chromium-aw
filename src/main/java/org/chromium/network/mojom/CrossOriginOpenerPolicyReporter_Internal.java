@@ -47,7 +47,7 @@ class CrossOriginOpenerPolicyReporter_Internal {
     };
 
 
-    private static final int QUEUE_ACCESS_REPORT_ORDINAL = 0;
+    private static final int QUEUE_OPENER_BREAKAGE_REPORT_ORDINAL = 0;
 
     private static final int CLONE_ORDINAL = 1;
 
@@ -61,22 +61,22 @@ class CrossOriginOpenerPolicyReporter_Internal {
 
 
         @Override
-        public void queueAccessReport(
-int reportType, String property, SourceLocation sourceLocation) {
+        public void queueOpenerBreakageReport(
+org.chromium.url.mojom.Url otherUrl, boolean isReportedFromDocument, boolean isReportOnly) {
 
-            CrossOriginOpenerPolicyReporterQueueAccessReportParams _message = new CrossOriginOpenerPolicyReporterQueueAccessReportParams();
+            CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams _message = new CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams();
 
-            _message.reportType = reportType;
+            _message.otherUrl = otherUrl;
 
-            _message.property = property;
+            _message.isReportedFromDocument = isReportedFromDocument;
 
-            _message.sourceLocation = sourceLocation;
+            _message.isReportOnly = isReportOnly;
 
 
             getProxyHandler().getMessageReceiver().accept(
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(QUEUE_ACCESS_REPORT_ORDINAL)));
+                            new org.chromium.mojo.bindings.MessageHeader(QUEUE_OPENER_BREAKAGE_REPORT_ORDINAL)));
 
         }
 
@@ -112,11 +112,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                int flags = org.chromium.mojo.bindings.MessageHeader.NO_FLAG;
-                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
-                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
-                }
-                if (!header.validateHeader(flags)) {
+                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.NO_FLAG)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -129,12 +125,12 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
 
 
 
-                    case QUEUE_ACCESS_REPORT_ORDINAL: {
+                    case QUEUE_OPENER_BREAKAGE_REPORT_ORDINAL: {
 
-                        CrossOriginOpenerPolicyReporterQueueAccessReportParams data =
-                                CrossOriginOpenerPolicyReporterQueueAccessReportParams.deserialize(messageWithHeader.getPayload());
+                        CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams data =
+                                CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().queueAccessReport(data.reportType, data.property, data.sourceLocation);
+                        getImpl().queueOpenerBreakageReport(data.otherUrl, data.isReportedFromDocument, data.isReportOnly);
                         return true;
                     }
 
@@ -167,11 +163,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                int flags = org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG;
-                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
-                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
-                }
-                if (!header.validateHeader(flags)) {
+                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -197,24 +189,24 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
 
 
     
-    static final class CrossOriginOpenerPolicyReporterQueueAccessReportParams extends org.chromium.mojo.bindings.Struct {
+    static final class CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 32;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+        private static final int STRUCT_SIZE = 24;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public int reportType;
-        public String property;
-        public SourceLocation sourceLocation;
+        public org.chromium.url.mojom.Url otherUrl;
+        public boolean isReportedFromDocument;
+        public boolean isReportOnly;
 
-        private CrossOriginOpenerPolicyReporterQueueAccessReportParams(int version) {
+        private CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams(int version) {
             super(STRUCT_SIZE, version);
         }
 
-        public CrossOriginOpenerPolicyReporterQueueAccessReportParams() {
+        public CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams() {
             this(0);
         }
 
-        public static CrossOriginOpenerPolicyReporterQueueAccessReportParams deserialize(org.chromium.mojo.bindings.Message message) {
+        public static CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams deserialize(org.chromium.mojo.bindings.Message message) {
             return decode(new org.chromium.mojo.bindings.Decoder(message));
         }
 
@@ -223,35 +215,34 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
          *
          * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
-        public static CrossOriginOpenerPolicyReporterQueueAccessReportParams deserialize(java.nio.ByteBuffer data) {
+        public static CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams deserialize(java.nio.ByteBuffer data) {
             return deserialize(new org.chromium.mojo.bindings.Message(
                     data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
         }
 
         @SuppressWarnings("unchecked")
-        public static CrossOriginOpenerPolicyReporterQueueAccessReportParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+        public static CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
             if (decoder0 == null) {
                 return null;
             }
             decoder0.increaseStackDepth();
-            CrossOriginOpenerPolicyReporterQueueAccessReportParams result;
+            CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams result;
             try {
                 org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
                 final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new CrossOriginOpenerPolicyReporterQueueAccessReportParams(elementsOrVersion);
+                result = new CrossOriginOpenerPolicyReporterQueueOpenerBreakageReportParams(elementsOrVersion);
                     {
                         
-                    result.reportType = decoder0.readInt(8);
-                        CoopAccessReportType.validate(result.reportType);
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
+                    result.otherUrl = org.chromium.url.mojom.Url.decode(decoder1);
                     }
                     {
                         
-                    result.property = decoder0.readString(16, false);
+                    result.isReportedFromDocument = decoder0.readBoolean(16, 0);
                     }
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
-                    result.sourceLocation = SourceLocation.decode(decoder1);
+                    result.isReportOnly = decoder0.readBoolean(16, 1);
                     }
 
             } finally {
@@ -265,11 +256,11 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
         protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            encoder0.encode(this.reportType, 8);
+            encoder0.encode(this.otherUrl, 8, false);
             
-            encoder0.encode(this.property, 16, false);
+            encoder0.encode(this.isReportedFromDocument, 16, 0);
             
-            encoder0.encode(this.sourceLocation, 24, false);
+            encoder0.encode(this.isReportOnly, 16, 1);
         }
     }
 

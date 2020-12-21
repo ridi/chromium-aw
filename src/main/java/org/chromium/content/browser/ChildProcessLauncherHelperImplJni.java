@@ -35,11 +35,6 @@ final class ChildProcessLauncherHelperImplJni implements ChildProcessLauncherHel
     GEN_JNI.org_chromium_content_browser_ChildProcessLauncherHelperImpl_setTerminationInfo(termiantionInfoPtr, bindingState, killedByUs, cleanExit, exceptionDuringInit, remainingStrong, remainingModerate, remainingWaived, reverseRank);
   }
 
-  @Override
-  public boolean serviceGroupImportanceEnabled() {
-    return (boolean)GEN_JNI.org_chromium_content_browser_ChildProcessLauncherHelperImpl_serviceGroupImportanceEnabled();
-  }
-
   public static ChildProcessLauncherHelperImpl.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

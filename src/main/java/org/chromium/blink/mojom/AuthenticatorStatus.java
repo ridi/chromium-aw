@@ -36,8 +36,6 @@ public final class AuthenticatorStatus {
     public static final int INVALID_PROTOCOL = 17;
     public static final int BAD_RELYING_PARTY_ID = 18;
     public static final int UNKNOWN_ERROR = 19;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 19;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 19;

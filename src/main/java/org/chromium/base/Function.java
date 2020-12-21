@@ -10,9 +10,9 @@ package org.chromium.base;
  * <p>A function that takes a single argument and returns a value.
  *
  * @param <T> Function input type.
- * @param <RT> Function return type.
+ * @param <R> Function return type.
  */
-public interface Function<T, RT> {
+public interface Function<T, R> {
     // TODO(crbug.com/1034012): Remove once min Android API level reaches 24.
 
     /**
@@ -21,5 +21,5 @@ public interface Function<T, RT> {
      * @param input Function input argument.
      * @return Function result.
      */
-    RT apply(T input);
+    R apply(T input);
 }

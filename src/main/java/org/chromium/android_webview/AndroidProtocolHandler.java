@@ -4,7 +4,6 @@
 
 package org.chromium.android_webview;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.util.Log;
@@ -14,7 +13,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeMethods;
-import org.chromium.base.metrics.RecordHistogram;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,18 +93,8 @@ public class AndroidProtocolHandler {
 
     private static int getFieldId(String assetType, String assetName)
             throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
-        Context appContext = ContextUtils.getApplicationContext();
-        String packageName = appContext.getPackageName();
-        int id = appContext.getResources().getIdentifier(assetName, assetType, packageName);
-        if (id != 0) {
-            RecordHistogram.recordBooleanHistogram(
-                    "Android.WebView.AndroidProtocolHandler.ResourceGetIdentifier", true);
-            return id;
-        }
-        // Resource id can't be found using Resources class so fallback to reflection.
-        // TODO(https://crbug.com/923956) remove reflection fallback if the histogram is always
-        // true.
         Class<?> clazz = null;
+        String packageName = ContextUtils.getApplicationContext().getPackageName();
         try {
             clazz = getClazz(packageName, assetType);
         } catch (ClassNotFoundException e) {
@@ -123,10 +111,9 @@ public class AndroidProtocolHandler {
                 }
             }
         }
-        RecordHistogram.recordBooleanHistogram(
-                "Android.WebView.AndroidProtocolHandler.ResourceGetIdentifier", false);
+
         java.lang.reflect.Field field = clazz.getField(assetName);
-        id = field.getInt(null);
+        int id = field.getInt(null);
         return id;
     }
 

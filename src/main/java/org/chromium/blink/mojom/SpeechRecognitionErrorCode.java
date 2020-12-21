@@ -26,8 +26,6 @@ public final class SpeechRecognitionErrorCode {
     public static final int BAD_GRAMMAR = 7;
     public static final int LANGUAGE_NOT_SUPPORTED = 8;
     public static final int NO_MATCH = 9;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 9;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 9;

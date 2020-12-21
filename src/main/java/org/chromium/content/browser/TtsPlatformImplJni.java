@@ -23,23 +23,31 @@ final class TtsPlatformImplJni implements TtsPlatformImpl.Natives {
   };
 
   @Override
-  public void voicesChanged(long nativeTtsPlatformImplAndroid) {
-    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_voicesChanged(nativeTtsPlatformImplAndroid);
+  public void requestTtsStop(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_requestTtsStop(nativeTtsPlatformImplAndroid, caller);
   }
 
   @Override
-  public void onEndEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
-    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onEndEvent(nativeTtsPlatformImplAndroid, utteranceId);
+  public void voicesChanged(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_voicesChanged(nativeTtsPlatformImplAndroid, caller);
   }
 
   @Override
-  public void onStartEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
-    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onStartEvent(nativeTtsPlatformImplAndroid, utteranceId);
+  public void onEndEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
+      int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onEndEvent(nativeTtsPlatformImplAndroid, caller, utteranceId);
   }
 
   @Override
-  public void onErrorEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
-    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onErrorEvent(nativeTtsPlatformImplAndroid, utteranceId);
+  public void onStartEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
+      int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onStartEvent(nativeTtsPlatformImplAndroid, caller, utteranceId);
+  }
+
+  @Override
+  public void onErrorEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
+      int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onErrorEvent(nativeTtsPlatformImplAndroid, caller, utteranceId);
   }
 
   public static TtsPlatformImpl.Natives get() {

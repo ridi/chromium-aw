@@ -24,8 +24,6 @@ public final class ColorType {
     public static final int BGRA_8888 = 5;
     public static final int INDEX_8 = 6;
     public static final int GRAY_8 = 7;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 7;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 7;

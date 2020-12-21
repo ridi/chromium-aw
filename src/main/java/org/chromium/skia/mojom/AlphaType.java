@@ -20,8 +20,6 @@ public final class AlphaType {
     public static final int ALPHA_TYPE_OPAQUE = 1;
     public static final int PREMUL = 2;
     public static final int UNPREMUL = 3;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

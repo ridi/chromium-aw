@@ -445,6 +445,7 @@ public class ViewAndroidDelegate {
     }
 
     @CalledByNative
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void requestUnbufferedDispatch(MotionEvent event) {
         ViewGroup container = getContainerViewGroup();
         if (container != null) {

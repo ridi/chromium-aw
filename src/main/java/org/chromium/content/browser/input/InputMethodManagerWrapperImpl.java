@@ -142,13 +142,11 @@ public class InputMethodManagerWrapperImpl implements InputMethodManagerWrapper 
     }
 
     private void showSoftInputInternal(View view, int flags, ResultReceiver resultReceiver) {
+        if (DEBUG_LOGS) Log.i(TAG, "showSoftInputInternal");
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites(); // crbug.com/616283
         try {
             InputMethodManager manager = getInputMethodManager();
-            if (manager != null) {
-                boolean result = manager.showSoftInput(view, flags, resultReceiver);
-                if (DEBUG_LOGS) Log.i(TAG, "showSoftInputInternal: " + view + ", " + result);
-            }
+            if (manager != null) manager.showSoftInput(view, flags, resultReceiver);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -192,9 +190,11 @@ public class InputMethodManagerWrapperImpl implements InputMethodManagerWrapper 
     @Override
     public void updateCursorAnchorInfo(View view, CursorAnchorInfo cursorAnchorInfo) {
         if (DEBUG_LOGS) Log.i(TAG, "updateCursorAnchorInfo");
-        InputMethodManager manager = getInputMethodManager();
-        if (manager == null) return;
-        manager.updateCursorAnchorInfo(view, cursorAnchorInfo);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            InputMethodManager manager = getInputMethodManager();
+            if (manager == null) return;
+            manager.updateCursorAnchorInfo(view, cursorAnchorInfo);
+        }
     }
 
     @Override

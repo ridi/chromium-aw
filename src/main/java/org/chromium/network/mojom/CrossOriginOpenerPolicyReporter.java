@@ -24,8 +24,8 @@ public interface CrossOriginOpenerPolicyReporter extends org.chromium.mojo.bindi
     Manager<CrossOriginOpenerPolicyReporter, CrossOriginOpenerPolicyReporter.Proxy> MANAGER = CrossOriginOpenerPolicyReporter_Internal.MANAGER;
 
 
-    void queueAccessReport(
-int reportType, String property, SourceLocation sourceLocation);
+    void queueOpenerBreakageReport(
+org.chromium.url.mojom.Url otherUrl, boolean isReportedFromDocument, boolean isReportOnly);
 
 
 

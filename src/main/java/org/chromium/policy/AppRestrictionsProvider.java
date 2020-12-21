@@ -4,8 +4,10 @@
 
 package org.chromium.policy;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.UserManager;
@@ -39,11 +41,11 @@ public class AppRestrictionsProvider extends AbstractAppRestrictionsProvider {
 
     public AppRestrictionsProvider(Context context) {
         super(context);
-
         mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     protected Bundle getApplicationRestrictions(String packageName) {
         long startTime = SystemClock.elapsedRealtime();
         Bundle bundle = getApplicationRestrictionsFromUserManager(mUserManager, packageName);
@@ -61,7 +63,10 @@ public class AppRestrictionsProvider extends AbstractAppRestrictionsProvider {
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected String getRestrictionChangeIntentAction() {
+        // Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED was introduced in LOLLIPOP.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return null;
         return Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED;
     }
 }

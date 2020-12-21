@@ -10,9 +10,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import androidx.annotation.VisibleForTesting;
+
 /**
  * The interface for dropdown popup window.
  */
+@VisibleForTesting
 public interface DropdownPopupWindowInterface {
     /**
      * Sets the adapter that provides the data and the views to represent the data

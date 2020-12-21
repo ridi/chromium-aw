@@ -31,15 +31,9 @@ final class ContentCaptureControllerJni implements ContentCaptureController.Nati
   }
 
   @Override
-  public void setAllowlist(long nativeContentCaptureController, ContentCaptureController caller,
-      String[] allowlist, boolean[] isRegex) {
-    GEN_JNI.org_chromium_components_content_1capture_ContentCaptureController_setAllowlist(nativeContentCaptureController, caller, allowlist, isRegex);
-  }
-
-  @Override
-  public boolean shouldCapture(long nativeContentCaptureController, ContentCaptureController caller,
-      String[] urls) {
-    return (boolean)GEN_JNI.org_chromium_components_content_1capture_ContentCaptureController_shouldCapture(nativeContentCaptureController, caller, urls);
+  public void setWhitelist(long nativeContentCaptureController, ContentCaptureController caller,
+      String[] whitelist, boolean[] isRegex) {
+    GEN_JNI.org_chromium_components_content_1capture_ContentCaptureController_setWhitelist(nativeContentCaptureController, caller, whitelist, isRegex);
   }
 
   public static ContentCaptureController.Natives get() {

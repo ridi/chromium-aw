@@ -30,8 +30,6 @@ public final class BarcodeFormat {
     public static final int UNKNOWN = 11;
     public static final int UPC_A = 12;
     public static final int UPC_E = 13;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 13;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 13;

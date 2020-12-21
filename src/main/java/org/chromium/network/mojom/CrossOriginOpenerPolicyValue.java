@@ -19,12 +19,9 @@ public final class CrossOriginOpenerPolicyValue {
     public static final int SAME_ORIGIN = 0;
     public static final int SAME_ORIGIN_ALLOW_POPUPS = 1;
     public static final int UNSAFE_NONE = 2;
-    public static final int SAME_ORIGIN_PLUS_COEP = 3;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 3;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {

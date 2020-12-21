@@ -93,11 +93,7 @@ org.chromium.mojo.bindings.InterfaceRequest<AndroidOverlay> overlay, AndroidOver
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                int flags = org.chromium.mojo.bindings.MessageHeader.NO_FLAG;
-                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
-                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
-                }
-                if (!header.validateHeader(flags)) {
+                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.NO_FLAG)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -135,11 +131,7 @@ org.chromium.mojo.bindings.InterfaceRequest<AndroidOverlay> overlay, AndroidOver
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                int flags = org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG;
-                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
-                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
-                }
-                if (!header.validateHeader(flags)) {
+                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG)) {
                     return false;
                 }
                 switch(header.getType()) {

@@ -67,8 +67,6 @@ public final class CursorType {
     public static final int DND_MOVE = 47;
     public static final int DND_COPY = 48;
     public static final int DND_LINK = 49;
-    public static final int MIN_VALUE = -1;
-    public static final int MAX_VALUE = 49;
 
     public static boolean isKnownValue(int value) {
         return value >= -1 && value <= 49;

@@ -20,8 +20,6 @@ public final class RemoteInvocationError {
     public static final int METHOD_NOT_FOUND = 1;
     public static final int OBJECT_GET_CLASS_BLOCKED = 2;
     public static final int EXCEPTION_THROWN = 3;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

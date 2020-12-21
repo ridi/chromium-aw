@@ -9,7 +9,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeMethods;
 
 /**
- * The abstract class to provide the allowlist and the runtime control of if ContentCapture should
+ * The abstract class to provide the whitelist and the runtime control of if ContentCapture should
  * start.
  */
 @JNINamespace("content_capture")
@@ -45,40 +45,29 @@ public abstract class ContentCaptureController {
     public void clearContentCaptureDataForURLs(String[] urlsToDelete) {}
 
     /**
-     * @param urls the urls need to check.
-     * @return if the content of all urls should be captured.
-     */
-    public boolean shouldCapture(String[] urls) {
-        return ContentCaptureControllerJni.get().shouldCapture(
-                mNativeContentCaptureController, ContentCaptureController.this, urls);
-    }
-
-    /**
-     * Invoked by native side to pull the allowlist, the subclass should implement this and set
-     * the allowlist by call setAllowlist.
+     * Invoked by native side to pull the whitelist, the subclass should implement this and set
+     * the whitelist by call setWhiteList.
      */
     @CalledByNative
-    protected abstract void pullAllowlist();
+    protected abstract void pullWhitelist();
 
     /**
-     * Invoked by subclass to set the allowlist to native side. No allowlist (allowlist == null)
-     * indicates everything is allowed, empty allowlist (allowlist.length == 0) indicates
-     * nothing is allowed.
+     * Invoked by subclass to set the whitelist to native side. No whitelist (whitelist == null)
+     * indicates everything is whitelisted, empty whitelist (whitelist.length == 0) indicates
+     * nothing is whitelisted.
      *
-     * @param allowlist the array of allowlist, it could be the hostname or the regex.
-     * @param isRegex to indicate that the corresponding allowlist is the regex or not.
+     * @param whitelist the array of whitelist, it could be the hostname or the regex.
+     * @param isRegex to indicate that the corresponding whitelist is the regex or not.
      */
-    protected void setAllowlist(String[] allowlist, boolean[] isRegex) {
-        ContentCaptureControllerJni.get().setAllowlist(
-                mNativeContentCaptureController, ContentCaptureController.this, allowlist, isRegex);
+    protected void setWhitelist(String[] whitelist, boolean[] isRegex) {
+        ContentCaptureControllerJni.get().setWhitelist(
+                mNativeContentCaptureController, ContentCaptureController.this, whitelist, isRegex);
     }
 
     @NativeMethods
     interface Natives {
         long init(Object contentCaptureController);
-        void setAllowlist(long nativeContentCaptureController, ContentCaptureController caller,
-                String[] allowlist, boolean[] isRegex);
-        boolean shouldCapture(long nativeContentCaptureController, ContentCaptureController caller,
-                String[] urls);
+        void setWhitelist(long nativeContentCaptureController, ContentCaptureController caller,
+                String[] whitelist, boolean[] isRegex);
     }
 }

@@ -41,15 +41,14 @@ final class TracingControllerAndroidImplJni implements TracingControllerAndroidI
 
   @Override
   public boolean startTracing(long nativeTracingControllerAndroid,
-      TracingControllerAndroidImpl caller, String categories, String traceOptions,
-      boolean useProtobuf) {
-    return (boolean)GEN_JNI.org_chromium_content_browser_TracingControllerAndroidImpl_startTracing(nativeTracingControllerAndroid, caller, categories, traceOptions, useProtobuf);
+      TracingControllerAndroidImpl caller, String categories, String traceOptions) {
+    return (boolean)GEN_JNI.org_chromium_content_browser_TracingControllerAndroidImpl_startTracing(nativeTracingControllerAndroid, caller, categories, traceOptions);
   }
 
   @Override
   public void stopTracing(long nativeTracingControllerAndroid, TracingControllerAndroidImpl caller,
-      String filename, boolean compressFile, boolean useProtobuf, Callback<Void> callback) {
-    GEN_JNI.org_chromium_content_browser_TracingControllerAndroidImpl_stopTracing(nativeTracingControllerAndroid, caller, filename, compressFile, useProtobuf, callback);
+      String filename, boolean compressFile, Callback<Void> callback) {
+    GEN_JNI.org_chromium_content_browser_TracingControllerAndroidImpl_stopTracing(nativeTracingControllerAndroid, caller, filename, compressFile, callback);
   }
 
   @Override

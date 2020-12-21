@@ -4,8 +4,10 @@
 
 package org.chromium.device.usb;
 
+import android.annotation.TargetApi;
 import android.hardware.usb.UsbConfiguration;
 import android.hardware.usb.UsbInterface;
+import android.os.Build;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
@@ -18,6 +20,7 @@ import org.chromium.base.annotations.JNINamespace;
  * Lifetime is controlled by device::UsbConfigurationAndroid.
  */
 @JNINamespace("device")
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 final class ChromeUsbConfiguration {
     private static final String TAG = "Usb";
 

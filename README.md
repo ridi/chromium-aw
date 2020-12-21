@@ -42,7 +42,7 @@ android {
 
 ## Chromium build information
 
-Current version is based on [`86.0.4240.198`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/86.0.4240.198)
+Current version is based on [`85.0.4183.162`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/85.0.4183.162)
 
 ## Customizing
 
@@ -129,7 +129,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/86.0.4240.198
+$ git checkout tags/$VERSION # ex) tags/85.0.4183.162
 
 $ gclient sync
 ```
@@ -159,6 +159,9 @@ arm | armeabi-v7a
 arm64 | arm64-v8a
 x86 | x86
 x64 | x86_64
+
+<details><summary>Commands</summary>
+<p>
 
 ```sh
 # binary
@@ -194,7 +197,6 @@ $ \cp -rf android_webview ~/chromium-aw/src/main/java/org/chromium
 # android_webview/proto (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/android_webview/proto/aw_variations_seed_proto_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf android_webview ~/chromium-aw/src/main/java/org/chromium
-
 $ cd ~/chromium/src/out/$TARGET/gen/android_webview/proto/metrics_bridge_records_proto_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf android_webview ~/chromium-aw/src/main/java/org/chromium
 
@@ -212,6 +214,7 @@ $ cd ~/chromium/src/android_webview/test/shell/java/src/org/chromium/android_web
 $ \cp -f AwTestContainerView.java ~/chromium-aw/src/main/java/org/chromium/android_webview/test
 $ \cp -f NullContentsClient.java ~/chromium-aw/src/main/java/org/chromium/android_webview/test
 
+# android_webview (res)
 $ cd ~/chromium/src/android_webview/java
 $ \cp -rf res ~/chromium-aw/src/main
 
@@ -243,16 +246,48 @@ $ \cp -rf base ~/chromium-aw/src/main/java/org/chromium
 $ \rm -r ~/chromium-aw/src/main/java/org/chromium/base/**/*.aidl
 
 # blink (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/third_party/blink/public/mojom/android_mojo_bindings_java/generated_java/input_srcjars/org/chromium
-$ \cp -rf blink ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/third_party/blink/public/mojom/android_mojo_bindings_java/generated_java/input_srcjars/org/chromium/blink/mojom
+$ \cp -f AuthenticatorStatus.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f Blob.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f Blob_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f BlobReaderClient.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f BlobReaderClient_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteInvocationArgument.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteInvocationError.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteInvocationResult.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteInvocationResultValue.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObject.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObject_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectGateway.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectGateway_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectGatewayFactory.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectGatewayFactory_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectHost.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f RemoteObjectHost_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f SerializedBlob.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f SingletonJavaScriptValue.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ cd ~/chromium/src/out/$TARGET/gen/third_party/blink/public/mojom/mojom_platform_java/generated_java/input_srcjars/org/chromium/blink/mojom
+$ \cp -f ContactIconBlob.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f EventType.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f FeaturePolicyFeature.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+FocusType.java
+$ \cp -f NativeFileSystemDragDropToken.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f NativeFileSystemTransferToken.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+$ \cp -f NativeFileSystemTransferToken_Internal.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+SerializedArrayBufferContents.java
+SpeechAudioErrorDetails.java
+SpeechRecognitionError.java
+$ \cp -f SpeechRecognitionErrorCode.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+ViewportFit.java
+$ cd ~/chromium/src/out/$TARGET/gen/third_party/blink/public/mojom/mojom_core_java/generated_java/input_srcjars/org/chromium/blink/mojom
+$ \cp -f CloneableMessage.java ~/chromium-aw/src/main/java/org/chromium/blink/mojom
+MessagePortDescriptor.java
+TransferableMessage.java
+UserActivationSnapshot.java
 
 # blink_public (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/third_party/blink/public/blink_headers_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf blink_public ~/chromium-aw/src/main/java/org/chromium
-
-# cc (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/cc/base/cc_base_java/generated_java/input_srcjars/org/chromium
-$ \cp -rf cc ~/chromium-aw/src/main/java/org/chromium
 
 # components/autofill
 $ cd ~/chromium/src/components/autofill/android/java/src/org/chromium/components
@@ -260,6 +295,7 @@ $ \cp -rf autofill ~/chromium-aw/src/main/java/org/chromium/components
 $ cd ~/chromium/src/components/autofill/android/provider/src/org/chromium/components
 $ \cp -rf autofill ~/chromium-aw/src/main/java/org/chromium/components
 
+# components/autofill (res)
 $ cd ~/chromium/src/components/autofill/android/java
 $ \cp -rf res ~/chromium-aw/src/main
 
@@ -297,6 +333,7 @@ $ \cp -rf crash ~/chromium-aw/src/main/java/org/chromium/components
 $ cd ~/chromium/src/components/embedder_support/android/java/src/org/chromium/components
 $ \cp -rf embedder_support/delegate ~/chromium-aw/src/main/java/org/chromium/components
 
+# components/embedder_support/delegate (res)
 $ cd ~/chromium/src/components/embedder_support/android/java
 $ \cp -rf res ~/chromium-aw/src/main
 
@@ -422,9 +459,9 @@ $ \cp -rf common ~/chromium-aw/src/main/java/org/chromium/content_public
 $ cd ~/chromium/src/out/$TARGET/gen/content/public/android/content_java/generated_java/input_srcjars/org/chromium/content_public
 $ \cp -rf common ~/chromium-aw/src/main/java/org/chromium/content_public
 
-# device/battery
-$ cd ~/chromium/src/services/device/battery/android/java/src/org/chromium/device
-$ \cp -rf battery ~/chromium-aw/src/main/java/org/chromium/device
+# device (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/services/device/java/device_feature_list_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf device ~/chromium-aw/src/main/java/org/chromium
 
 # device/bluetooth
 $ cd ~/chromium/src/device/bluetooth/android/java/src/org/chromium/device
@@ -441,6 +478,10 @@ $ \cp -rf gamepad ~/chromium-aw/src/main/java/org/chromium/device
 # device/gamepad (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/device/gamepad/java/generated_java/input_srcjars/org/chromium/device
 $ \cp -rf gamepad ~/chromium-aw/src/main/java/org/chromium/device
+
+# device/battery
+$ cd ~/chromium/src/services/device/battery/android/java/src/org/chromium/device
+$ \cp -rf battery ~/chromium-aw/src/main/java/org/chromium/device
 
 # device/geolocation
 $ cd ~/chromium/src/services/device/geolocation/android/java/src/org/chromium/device
@@ -486,8 +527,10 @@ $ \cp -rf usb ~/chromium-aw/src/main/java/org/chromium/device
 $ cd ~/chromium/src/services/device/vibration/android/java/src/org/chromium/device
 $ \cp -rf vibration ~/chromium-aw/src/main/java/org/chromium/device
 
-# gfx (gen)
+# gfx/mojom (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/ui/gfx/geometry/mojom/mojom_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf gfx ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/ui/gfx/range/mojom/mojom_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf gfx ~/chromium-aw/src/main/java/org/chromium
 
 # gpu (gen)
@@ -502,12 +545,24 @@ $ \cp -rf media ~/chromium-aw/src/main/java/org/chromium
 $ cd ~/chromium/src/media/capture/video/android/java/src/org/chromium
 $ \cp -rf media ~/chromium-aw/src/main/java/org/chromium
 
-# media/mojom (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/media/moj/mojom/mojom_java/generated_java/input_srcjars/org/chromium
+# media (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/media/base/android/media_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf media ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/media/capture/video/android/capture_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf media ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/media/capture/content/android/screen_capture_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf media ~/chromium-aw/src/main/java/org/chromium
+
+# media/mojom (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/media/moj/mojom/mojom_java/generated_java/input_srcjars/org/chromium/media/mojom
+$ find . -name "AndroidOverlay*.java" -exec \cp -f ~/chromium-aw/src/main/java/org/chromium/media/mojom "{}" \;
 
 # midi
 $ cd ~/chromium/src/media/midi/java/src/org/chromium
+$ \cp -rf midi ~/chromium-aw/src/main/java/org/chromium
+
+# midi (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/media/midi_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf midi ~/chromium-aw/src/main/java/org/chromium
 
 # mojo
@@ -516,17 +571,83 @@ $ \cp -rf mojo ~/chromium-aw/src/main/java/org/chromium
 $ cd ~/chromium/src/mojo/public/java/system/src/org/chromium
 $ \cp -rf mojo ~/chromium-aw/src/main/java/org/chromium
 
+# mojo (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/mojo/public/java/bindings_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf mojo ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/mojo/public/java/system/system_impl_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf mojo ~/chromium-aw/src/main/java/org/chromium
+
 # mojo_base
 $ cd ~/chromium/src/mojo/public/java/base/src/org/chromium
 $ \cp -rf mojo_base ~/chromium-aw/src/main/java/org/chromium
 
+# mojo_base/mojom (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/mojo/public/mojom/base/base_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf mojo_base ~/chromium-aw/src/main/java/org/chromium
+
 # net
-$ cd ~/chromium/src/net/java/src/org/chromium
+$ cd ~/chromium/src/net/android/java/src/org/chromium
+$ \cp -rf net ~/chromium-aw/src/main/java/org/chromium
+
+# net (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/net/android/net_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf net ~/chromium-aw/src/main/java/org/chromium
 
 # network (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium
-$ \cp -rf network ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium/network/mojom
+$ \cp -f AllowCspFromHeaderValue.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f ContentSecurityPolicy.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+ContentSecurityPolicyHeader.java
+ContentSecurityPolicySource.java
+ContentSecurityPolicyType.java
+ConnectionInfo.java
+$ \cp -f CoopAccessReportType.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+CrossOriginEmbedderPolicy.java
+$ \cp -f CrossOriginEmbedderPolicyReporter.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+CrossOriginEmbedderPolicyReporter_Internal
+CrossOriginEmbedderPolicyValue.java
+CrossOriginOpenerPolicy.java
+$ \cp -f CrossOriginOpenerPolicyReporter.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+CrossOriginOpenerPolicyReporter_Internal.java
+$ \cp -f CrossOriginOpenerPolicyValue.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f CspDirectiveName.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f CspSource.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f CspSourceList.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f CspViolation.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+CtPolicyCompliance.java
+FetchResponseSource.java
+HttpRawHeaderPair.java
+HttpRawRequestResponseInfo.java
+HttpRequestHeaderKeyValuePair.java
+HttpRequestHeaders.java
+HttpResponseHeaders.java
+$ \cp -f LoadTimingInfo.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f LoadTimingInfoConnectTiming.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+OriginPolicy.java
+$ \cp -f ParsedHeaders.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f ReferrerPolicy.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+RequestPriority.java
+SourceLocation.java
+$ \cp -f UrlLoader.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlLoader_Internal.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlLoaderClient.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlLoaderClient_Internal.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlLoaderCompletionStatus.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlRequestRedirectInfo.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f UrlResponseHead.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f WebClientHintsType.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ \cp -f WebSandboxFlags.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/data_pipe_interfaces_java/generated_java/input_srcjars/org/chromium/network/mojom
+$ \cp -f DataPipeGetter.java ~/chromium-aw/src/main/java/org/chromium/network/mojom
+DataPipeGetter_Internal.java
+$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/mojom_ip_address_java/generated_java/input_srcjars/org/chromium/network/mojom
+IpAddress.java
+IpEndPoint.java
+$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/websocket_mojom_java/generated_java/input_srcjars/org/chromium/network/mojom
+AuthChallengeInfo.java
+SslInfo.java
+$ cd ~/chromium/src/out/$TARGET/gen/services/network/public/mojom/mutable_network_traffic_annotation_interface_java/generated_java/input_srcjars/org/chromium/network/mojom
+MutablePartialNetworkTrafficAnnotationTag.java
 
 # payments (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/components/payments/mojom/mojom_java/generated_java/input_srcjars/org/chromium
@@ -536,20 +657,25 @@ $ \cp -rf payments ~/chromium-aw/src/main/java/org/chromium
 $ cd ~/chromium/src/components/policy/androidjava/src/org/chromium
 $ \cp -rf policy ~/chromium-aw/src/main/java/org/chromium
 
+# policy (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/components/policy/android/policy_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf policy ~/chromium-aw/src/main/java/org/chromium
+
 # proxy_resolver (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/services/proxy_resolver/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium
-$ \cp -rf proxy_resolver ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/services/proxy_resolver/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium/proxy_resolver/mojom
+$ \cp -f ProxyScheme.java ~/chromium-aw/src/main/java/org/chromium/proxy_resolver/mojom
+$ \cp -f ProxyServer.java ~/chromium-aw/src/main/java/org/chromium/proxy_resolver/mojom
 
 # service_manager (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/services/service_manager/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf service_manager ~/chromium-aw/src/main/java/org/chromium
 
 # services/device
-$ cd ~/chromium/src/services/device/androidjava/src/org/chromium/services
+$ cd ~/chromium/src/services/device/android/java/src/org/chromium/services
 $ \cp -rf device ~/chromium-aw/src/main/java/org/chromium/services
 
-# services/media_session (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/services/media_session/public/mojom/mojom_java/generated_java/input_srcjars/org/chromium
+# services/media_session
+$ cd ~/chromium/src/services/media_session/public/cpp/android/java/src/org/chromium/services
 $ \cp -rf media_session ~/chromium-aw/src/main/java/org/chromium/services
 
 # services/service_manager
@@ -588,25 +714,48 @@ $ \cp rf widget ~/chromium-aw/src/main/java/org/chromium/ui
 $ cd ~/chromium/src/out/$TARGET/gen/ui/android/ui_full_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf ui ~/chromium-aw/src/main/java/org/chromium
 
-# ui/touch_selection (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/content/public/android/content_java/generated_java/input_srcjars/org/chromium
+# ui/ime (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/ui/base/ime/mojom/mojom_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf ui ~/chromium-aw/src/main/java/org/chromium
 
 # ui/mojom (gen)
 $ cd ~/chromium/src/out/$TARGET/gen/ui/base/cursor/mojom/cursor_type_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf ui ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/ui/latency/mojom/mojom_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf ui ~/chromium-aw/src/main/java/org/chromium
+
+# ui/touch_selection (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/content/public/android/content_java/generated_java/input_srcjars/org/chromium
 $ \cp -rf ui ~/chromium-aw/src/main/java/org/chromium
 
 # url
 $ cd ~/chromium/src/url/android/java/src/org/chromium
 $ \cp -rf url ~/chromium-aw/src/main/java/org/chromium
 
+# url (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/url/gurl_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf url ~/chromium-aw/src/main/java/org/chromium
+
+# url/mojom (gen)
+$ cd ~/chromium/src/out/$TARGET/gen/url/mojom/url_mojom_gurl_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf url ~/chromium-aw/src/main/java/org/chromium
+$ cd ~/chromium/src/out/$TARGET/gen/url/mojom/url_mojom_origin_java/generated_java/input_srcjars/org/chromium
+$ \cp -rf url ~/chromium-aw/src/main/java/org/chromium
+
 # weblayer_private
 $ cd ~/chromium/src/weblayer/browser/java/src/org/chromium/weblayer_private
 $ \cp -rf WebViewCompatibilityHelperImpl.java ~/chromium-aw/src/main/java/org/chromium/weblayer_private
 
-# Remove R.java
-$ \rm -rf ~/chromium-aw/src/main/java/**/R.java
+# Remove files
+$ cd ~/chromium-aw
+$ find . -name "R.java" -exec rm "{}" \;
+$ find . -name "*Tests.java" -exec rm "{}" \;
+$ find . -name "delegate/*Test.java" -exec rm "{}" \;
+$ find . -name "mojom/*Test.java" -exec rm "{}" \;
 ```
+
+</p>
+</details>
 
 ## Crash dump decoding instructions
 

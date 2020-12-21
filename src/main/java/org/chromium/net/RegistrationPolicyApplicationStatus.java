@@ -4,7 +4,6 @@
 
 package org.chromium.net;
 
-import org.chromium.base.ApplicationState;
 import org.chromium.base.ApplicationStatus;
 
 /**
@@ -19,7 +18,7 @@ public class RegistrationPolicyApplicationStatus
     protected void init(NetworkChangeNotifierAutoDetect notifier) {
         super.init(notifier);
         ApplicationStatus.registerApplicationStateListener(this);
-        onApplicationStateChange(ApplicationState.UNKNOWN /* unused */);
+        onApplicationStateChange(0 /* unused */);
     }
 
     @Override

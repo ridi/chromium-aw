@@ -19,8 +19,6 @@ public final class ContentSecurityPolicySource {
     public static final int HTTP = 0;
     public static final int META = 1;
     public static final int ORIGIN_POLICY = 2;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

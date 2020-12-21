@@ -5,6 +5,7 @@
 package org.chromium.device.nfc;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.nfc.NfcAdapter.ReaderCallback;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
+import android.os.Build;
 import android.os.Process;
 import android.os.Vibrator;
 import android.util.SparseArray;
@@ -411,6 +413,7 @@ public class NfcImpl implements Nfc {
      * discovered, Tag object is delegated to mojo service implementation method
      * NfcImpl.onTagDiscovered().
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private static class ReaderCallbackHandler implements ReaderCallback {
         private final NfcImpl mNfcImpl;
 
@@ -446,6 +449,7 @@ public class NfcImpl implements Nfc {
      * Disables reader mode.
      * @see android.nfc.NfcAdapter#disableReaderMode
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void disableReaderMode() {
         // There is no API that could query whether reader mode is enabled for adapter.
         // If mReaderCallbackHandler is null, reader mode is not enabled.

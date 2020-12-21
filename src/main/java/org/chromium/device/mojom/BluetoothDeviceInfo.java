@@ -26,8 +26,6 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         public static final int NOT_CONNECTED = 0;
         public static final int CONNECTING = 1;
         public static final int CONNECTED = 2;
-        public static final int MIN_VALUE = 0;
-        public static final int MAX_VALUE = 2;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;
@@ -58,8 +56,6 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         public static final int MOUSE = 11;
         public static final int TABLET = 12;
         public static final int KEYBOARD_MOUSE_COMBO = 13;
-        public static final int MIN_VALUE = 0;
-        public static final int MAX_VALUE = 13;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 13;

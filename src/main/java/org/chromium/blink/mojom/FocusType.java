@@ -23,8 +23,6 @@ public final class FocusType {
     public static final int MOUSE = 4;
     public static final int ACCESS_KEY = 5;
     public static final int PAGE = 6;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 6;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

@@ -64,8 +64,8 @@ final class AwContentsStaticsJni implements AwContentsStatics.Natives {
   }
 
   @Override
-  public void setSafeBrowsingAllowlist(String[] urls, Callback<Boolean> callback) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_setSafeBrowsingAllowlist(urls, callback);
+  public void setSafeBrowsingWhitelist(String[] urls, Callback<Boolean> callback) {
+    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_setSafeBrowsingWhitelist(urls, callback);
   }
 
   @Override

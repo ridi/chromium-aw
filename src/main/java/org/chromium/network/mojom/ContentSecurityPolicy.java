@@ -16,8 +16,8 @@ package org.chromium.network.mojom;
 
 public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 48;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(48, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public java.util.Map<Integer, CspSourceList> directives;
     public boolean upgradeInsecureRequests;
@@ -26,7 +26,6 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
     public ContentSecurityPolicyHeader header;
     public boolean useReportingApi;
     public String[] reportEndpoints;
-    public String[] parsingErrors;
 
     private ContentSecurityPolicy(int version) {
         super(STRUCT_SIZE, version);
@@ -134,18 +133,6 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
                     }
                 }
                 }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
-                {
-                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                    result.parsingErrors = new String[si1.elementsOrVersion];
-                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
-                        
-                        result.parsingErrors[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
-                    }
-                }
-                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -200,16 +187,6 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
             for (int i0 = 0; i0 < this.reportEndpoints.length; ++i0) {
                 
                 encoder1.encode(this.reportEndpoints[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
-            }
-        }
-        
-        if (this.parsingErrors == null) {
-            encoder0.encodeNullPointer(40, false);
-        } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.parsingErrors.length, 40, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-            for (int i0 = 0; i0 < this.parsingErrors.length; ++i0) {
-                
-                encoder1.encode(this.parsingErrors[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
             }
         }
     }

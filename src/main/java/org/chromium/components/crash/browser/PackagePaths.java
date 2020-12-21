@@ -7,6 +7,7 @@ package org.chromium.components.crash.browser;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
 import android.text.TextUtils;
 
 import org.chromium.base.BuildInfo;
@@ -33,6 +34,9 @@ public abstract class PackagePaths {
      */
     @CalledByNative
     public static String[] makePackagePaths(String arch) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return new String[] {"", ""};
+        }
         try {
             PackageManager pm = ContextUtils.getApplicationContext().getPackageManager();
             PackageInfo pi = pm.getPackageInfo(BuildInfo.getInstance().packageName,

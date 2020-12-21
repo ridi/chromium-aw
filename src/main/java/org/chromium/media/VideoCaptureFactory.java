@@ -46,16 +46,24 @@ class VideoCaptureFactory {
                     Log.w(TAG, "Missing android.permission.CAMERA permission, "
                                     + "no system camera available.");
                 } else {
-                    sNumberOfSystemCameras = VideoCaptureCamera2.getNumberOfCameras();
+                    if (isLReleaseOrLater()) {
+                        sNumberOfSystemCameras = VideoCaptureCamera2.getNumberOfCameras();
+                    } else {
+                        sNumberOfSystemCameras = VideoCaptureCamera.getNumberOfCameras();
+                    }
                 }
             }
             return sNumberOfSystemCameras;
         }
     }
 
+    private static boolean isLReleaseOrLater() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
     @CalledByNative
     static boolean isLegacyOrDeprecatedDevice(int id) {
-        return VideoCaptureCamera2.isLegacyDevice(id);
+        return !isLReleaseOrLater() || VideoCaptureCamera2.isLegacyDevice(id);
     }
 
     // Factory methods.
@@ -78,14 +86,6 @@ class VideoCaptureFactory {
             return VideoCaptureCamera.getCaptureApiType(id);
         }
         return VideoCaptureCamera2.getCaptureApiType(id);
-    }
-
-    @CalledByNative
-    static boolean isPanTiltZoomSupported(int id) {
-        if (isLegacyOrDeprecatedDevice(id)) {
-            return VideoCaptureCamera.isPanTiltZoomSupported(id);
-        }
-        return VideoCaptureCamera2.isPanTiltZoomSupported(id);
     }
 
     @CalledByNative

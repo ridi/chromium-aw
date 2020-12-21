@@ -22,11 +22,6 @@ public class DropdownItemBase implements DropdownItem {
     }
 
     @Override
-    public String getItemTag() {
-        return null;
-    }
-
-    @Override
     public int getIconId() {
         return NO_ICON;
     }

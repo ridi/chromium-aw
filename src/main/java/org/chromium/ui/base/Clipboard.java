@@ -15,6 +15,7 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.style.CharacterStyle;
@@ -54,7 +55,7 @@ public class Clipboard implements ClipboardManager.OnPrimaryClipChangedListener 
     // access to network resources, etceteras (e.g., URI in clipboard)
     private final Context mContext;
 
-    private ClipboardManager mClipboardManager;
+    private final ClipboardManager mClipboardManager;
 
     private long mNativeClipboard;
 
@@ -236,8 +237,10 @@ public class Clipboard implements ClipboardManager.OnPrimaryClipChangedListener 
             Uri uri = getImageUri();
             if (uri == null) return null;
 
-            Bitmap bitmap = ApiCompatibilityUtils.getBitmapByUri(
+            // TODO(crbug.com/1065914): Use ImageDecoder.decodeBitmap for API level 29 and up.
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                     ContextUtils.getApplicationContext().getContentResolver(), uri);
+
             if (!bitmapSupportByGfx(bitmap)) {
                 return bitmap.copy(Bitmap.Config.ARGB_8888, /*mutable=*/false);
             }
@@ -477,17 +480,6 @@ public class Clipboard implements ClipboardManager.OnPrimaryClipChangedListener 
         return bitmap != null
                 && (bitmap.getConfig() == Bitmap.Config.ARGB_8888
                         || bitmap.getConfig() == Bitmap.Config.ALPHA_8);
-    }
-
-    /**
-     * Allows the ClipboardManager Android Service to be replaced with a mock for tests, returning
-     * the original so that it can be restored.
-     */
-    @VisibleForTesting
-    public ClipboardManager overrideClipboardManagerForTesting(ClipboardManager manager) {
-        ClipboardManager oldManager = mClipboardManager;
-        mClipboardManager = manager;
-        return oldManager;
     }
 
     @NativeMethods

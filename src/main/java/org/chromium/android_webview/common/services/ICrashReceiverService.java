@@ -110,13 +110,7 @@ public interface ICrashReceiverService extends android.os.IInterface
     }
     static final int TRANSACTION_transmitCrashes = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
     public static boolean setDefaultImpl(org.chromium.android_webview.common.services.ICrashReceiverService impl) {
-      // Only one user of this interface can use this function
-      // at a time. This is a heuristic to detect if two different
-      // users in the same process use this function.
-      if (Stub.Proxy.sDefaultImpl != null) {
-        throw new IllegalStateException("setDefaultImpl() called twice");
-      }
-      if (impl != null) {
+      if (Stub.Proxy.sDefaultImpl == null && impl != null) {
         Stub.Proxy.sDefaultImpl = impl;
         return true;
       }

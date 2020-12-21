@@ -24,8 +24,6 @@ public final class NdefErrorType {
     public static final int OPERATION_CANCELLED = 5;
     public static final int CANNOT_CANCEL = 6;
     public static final int IO_ERROR = 7;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 7;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 7;

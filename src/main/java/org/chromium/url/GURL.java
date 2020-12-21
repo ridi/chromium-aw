@@ -84,6 +84,9 @@ public class GURL {
 
     /**
      * Enables debug stack trace gathering for GURL.
+     *
+     * TODO(https://crbug.com/783819): Remove this when the the fraction of users hitting this
+     * drops.
      */
     public static void setReportDebugThrowableCallback(ReportDebugThrowableCallback callback) {
         sReportCallback = callback;
@@ -104,8 +107,7 @@ public class GURL {
             RecordHistogram.recordTimesHistogram("Startup.Android.GURLEnsureMainDexInitialized",
                     SystemClock.elapsedRealtime() - time);
             if (sReportCallback != null && new Random().nextInt(100) < DEBUG_REPORT_PERCENTAGE) {
-                final Throwable throwable =
-                        new Throwable("This is not a crash, please ignore. See crbug.com/1065377.");
+                final Throwable throwable = new Throwable("This is not a crash, please ignore.");
                 // This isn't an assert, because by design this is possible, but we would prefer
                 // this path does not get hit more than necessary and getting stack traces from the
                 // wild will help find issues.

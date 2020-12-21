@@ -19,8 +19,6 @@ public final class WakeLockType {
     public static final int PREVENT_APP_SUSPENSION = 0;
     public static final int PREVENT_DISPLAY_SLEEP = 1;
     public static final int PREVENT_DISPLAY_SLEEP_ALLOW_DIMMING = 2;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

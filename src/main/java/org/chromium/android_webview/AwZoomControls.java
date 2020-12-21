@@ -10,29 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import androidx.annotation.VisibleForTesting;
+class AwZoomControls {
 
-// This class is visible purely for tests.
-public class AwZoomControls {
     private AwContents mAwContents;
     // It is advised to use getZoomController() where possible.
     @SuppressWarnings("deprecation")
     private android.widget.ZoomButtonsController mZoomButtonsController;
-    private boolean mCanZoomIn;
-    private boolean mCanZoomOut;
 
     AwZoomControls(AwContents awContents) {
         mAwContents = awContents;
-    }
-
-    @VisibleForTesting
-    public boolean canZoomIn() {
-        return mCanZoomIn;
-    }
-
-    @VisibleForTesting
-    public boolean canZoomOut() {
-        return mCanZoomOut;
     }
 
     @SuppressWarnings("deprecation")
@@ -57,15 +43,15 @@ public class AwZoomControls {
         if (zoomController == null) {
             return;
         }
-        mCanZoomIn = mAwContents.canZoomIn();
-        mCanZoomOut = mAwContents.canZoomOut();
-        if (!mCanZoomIn && !mCanZoomOut) {
+        boolean canZoomIn = mAwContents.canZoomIn();
+        boolean canZoomOut = mAwContents.canZoomOut();
+        if (!canZoomIn && !canZoomOut) {
             // Hide the zoom in and out buttons if the page cannot zoom
             zoomController.getZoomControls().setVisibility(View.GONE);
         } else {
             // Set each one individually, as a page may be able to zoom in or out
-            zoomController.setZoomInEnabled(mCanZoomIn);
-            zoomController.setZoomOutEnabled(mCanZoomOut);
+            zoomController.setZoomInEnabled(canZoomIn);
+            zoomController.setZoomOutEnabled(canZoomOut);
         }
     }
 

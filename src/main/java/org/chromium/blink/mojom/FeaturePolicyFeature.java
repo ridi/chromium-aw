@@ -73,13 +73,8 @@ public final class FeaturePolicyFeature {
     public static final int TRUST_TOKEN_REDEMPTION = 72;
     public static final int CONVERSION_MEASUREMENT = 73;
     public static final int CLIENT_HINT_UA_PLATFORM_VERSION = 74;
-    public static final int CROSS_ORIGIN_ISOLATED = 75;
     public static final int CLIPBOARD_READ = 76;
     public static final int CLIPBOARD_WRITE = 77;
-    public static final int WEB_SHARE = 78;
-    public static final int GAMEPAD = 79;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 79;
 
     public static boolean isKnownValue(int value) {
         switch (value) {
@@ -140,11 +135,8 @@ public final class FeaturePolicyFeature {
             case 72:
             case 73:
             case 74:
-            case 75:
             case 76:
             case 77:
-            case 78:
-            case 79:
                 return true;
         }
         return false;

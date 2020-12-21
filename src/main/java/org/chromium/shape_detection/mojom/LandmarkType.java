@@ -19,8 +19,6 @@ public final class LandmarkType {
     public static final int MOUTH = 0;
     public static final int EYE = 1;
     public static final int NOSE = 2;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

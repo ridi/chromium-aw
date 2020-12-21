@@ -43,11 +43,6 @@ final class FieldTrialListJni implements FieldTrialList.Natives {
     GEN_JNI.org_chromium_base_FieldTrialList_logActiveTrials();
   }
 
-  @Override
-  public boolean createFieldTrial(String trialName, String groupName) {
-    return (boolean)GEN_JNI.org_chromium_base_FieldTrialList_createFieldTrial(trialName, groupName);
-  }
-
   public static FieldTrialList.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

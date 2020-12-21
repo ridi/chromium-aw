@@ -1174,7 +1174,8 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
      * Marshmallow and newer releases. Only available on Lollipop and newer releases.
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static long networkToNetId(Network network) {
+    @VisibleForTesting
+    static long networkToNetId(Network network) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return ApiHelperForM.getNetworkHandle(network);
         } else {

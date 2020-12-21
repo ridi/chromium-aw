@@ -4,6 +4,8 @@
 
 package org.chromium.content_public.browser;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.view.View;
@@ -52,6 +54,7 @@ public interface InputMethodManagerWrapper {
      * @see android.view.inputmethod.InputMethodManager#updateCursorAnchorInfo(View,
      * CursorAnchorInfo)
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     void updateCursorAnchorInfo(View view, CursorAnchorInfo cursorAnchorInfo);
 
     /**

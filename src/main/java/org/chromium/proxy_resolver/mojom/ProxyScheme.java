@@ -23,8 +23,6 @@ public final class ProxyScheme {
     public static final int SOCKS5 = 4;
     public static final int HTTPS = 5;
     public static final int QUIC = 6;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 6;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.media.MediaCrypto;
 import android.media.MediaDrm;
-import android.media.MediaDrm.MediaDrmStateException;
 import android.os.Build;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -60,6 +59,7 @@ import java.util.UUID;
 @JNINamespace("media")
 @MainDex
 @SuppressLint("WrongConstant")
+@TargetApi(Build.VERSION_CODES.KITKAT)
 public class MediaDrmBridge {
     private static final String TAG = "media";
     private static final String SECURITY_LEVEL = "securityLevel";
@@ -731,9 +731,12 @@ public class MediaDrmBridge {
                     keyType == MediaDrm.KEY_TYPE_RELEASE ? sessionId.keySetId() : sessionId.drmId();
             assert scopeId != null;
             request = mMediaDrm.getKeyRequest(scopeId, data, mime, keyType, optionalParameters);
-        } catch (MediaDrmStateException e) {
-            // See b/21307186 for details.
-            Log.e(TAG, "MediaDrmStateException fired during getKeyRequest().", e);
+        } catch (IllegalStateException e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                    && e instanceof android.media.MediaDrm.MediaDrmStateException) {
+                // See b/21307186 for details.
+                Log.e(TAG, "MediaDrmStateException fired during getKeyRequest().", e);
+            }
         }
 
         String result = (request != null) ? "successed" : "failed";

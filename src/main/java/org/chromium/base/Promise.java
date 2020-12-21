@@ -46,9 +46,9 @@ public class Promise<T> {
     /**
      * A function class for use when chaining Promises with {@link Promise#then(AsyncFunction)}.
      * @param <A> The type of the function input.
-     * @param <RT> The type of the function output.
+     * @param <R> The type of the function output.
      */
-    public interface AsyncFunction<A, RT> extends Function<A, Promise<RT>> {}
+    public interface AsyncFunction<A, R> extends Function<A, Promise<R>> {}
 
     /**
      * An exception class for when a rejected Promise is not handled and cannot pass the rejection
@@ -136,11 +136,11 @@ public class Promise<T> {
      * Queues a {@link Function} to be run when the Promise is fulfilled. When this Promise is
      * fulfilled, the function will be run and its result will be place in the returned Promise.
      */
-    public <RT> Promise<RT> then(final Function<T, RT> function) {
+    public <R> Promise<R> then(final Function<T, R> function) {
         checkThread();
 
         // Create a new Promise to store the result of the function.
-        final Promise<RT> promise = new Promise<>();
+        final Promise<R> promise = new Promise<>();
 
         // Once this Promise is fulfilled:
         // - Apply the given function to the result.
@@ -165,11 +165,11 @@ public class Promise<T> {
      * Promise is fulfilled, the AsyncFunction will be run. When the result of the AsyncFunction is
      * available, it will be placed in the returned Promise.
      */
-    public <RT> Promise<RT> then(final AsyncFunction<T, RT> function) {
+    public <R> Promise<R> then(final AsyncFunction<T, R> function) {
         checkThread();
 
         // Create a new Promise to be returned.
-        final Promise<RT> promise = new Promise<>();
+        final Promise<R> promise = new Promise<>();
 
         // Once this Promise is fulfilled:
         // - Apply the given function to the result (giving us an inner Promise).

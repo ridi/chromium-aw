@@ -22,8 +22,6 @@ public final class FetchResponseType {
     public static final int ERROR = 3;
     public static final int OPAQUE = 4;
     public static final int OPAQUE_REDIRECT = 5;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 5;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 5;

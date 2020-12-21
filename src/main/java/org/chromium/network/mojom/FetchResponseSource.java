@@ -20,8 +20,6 @@ public final class FetchResponseSource {
     public static final int NETWORK = 1;
     public static final int HTTP_CACHE = 2;
     public static final int CACHE_STORAGE = 3;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

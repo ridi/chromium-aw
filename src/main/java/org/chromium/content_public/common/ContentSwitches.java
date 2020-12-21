@@ -149,6 +149,9 @@ public final class ContentSwitches {
     // Enable in-progress canvas 2d API features.
     public static final String ENABLE_NEW_CANVAS2DAPI = "new-canvas-2d-api";
 
+    // Disables hardware acceleration of video decode, where available.
+    public static final String DISABLE_ACCELERATED_VIDEO_DECODE = "disable-accelerated-video-decode";
+
     // Disables hardware acceleration of video encode, where available.
     public static final String DISABLE_ACCELERATED_VIDEO_ENCODE = "disable-accelerated-video-encode";
 
@@ -162,9 +165,6 @@ public final class ContentSwitches {
 
     // Disable task throttling of timer tasks from background pages.
     public static final String DISABLE_BACKGROUND_TIMER_THROTTLING = "disable-background-timer-throttling";
-
-    // Disables the BackForwardCache feature.
-    public static final String DISABLE_BACK_FORWARD_CACHE = "disable-back-forward-cache";
 
     // Disable one or more Blink runtime-enabled features.
     // Use names from runtime_enabled_features.json5, separated by commas.
@@ -395,10 +395,6 @@ public final class ContentSwitches {
     // Enables Web Platform features that are in development.
     public static final String ENABLE_EXPERIMENTAL_WEB_PLATFORM_FEATURES = "enable-experimental-web-platform-features";
 
-    // Enables blink runtime enabled features with status:"test" or
-    // status:"experimental", which are enabled when running web tests.
-    public static final String ENABLE_BLINK_TEST_FEATURES = "enable-blink-test-features";
-
     // Enables support for FTP URLs. See https://crbug.com/333943.
     public static final String ENABLE_FTP = "enable-ftp";
 
@@ -509,6 +505,12 @@ public final class ContentSwitches {
     // Turns on out of process raster for the renderer whenever gpu raster
     // would have been used.  Enables the chromium_raster_transport extension.
     public static final String ENABLE_OOP_RASTERIZATION = "enable-oop-rasterization";
+
+    // Pins the default referrer policy to the pre-M80 value of
+    // no-referrer-when-downgrade.
+    // TODO(crbug.com/1016541): After M82, remove when the corresponding
+    // enterprise policy has been deleted.
+    public static final String FORCE_LEGACY_DEFAULT_REFERRER_POLICY = "force-legacy-default-referrer-policy";
 
     // Forces use of hardware overlay for fullscreen video playback. Useful for
     // testing the Android overlay fullscreen functionality on other platforms.
@@ -717,7 +719,7 @@ public final class ContentSwitches {
     public static final String RENDERER_PROCESS_LIMIT = "renderer-process-limit";
 
     // Causes the renderer process to display a dialog on launch. Passing this flag
-    // also adds sandbox::policy::kNoSandbox on Windows non-official builds, since
+    // also adds service_manager::kNoSandbox on Windows non-official builds, since
     // that's needed to show a dialog.
     public static final String RENDERER_STARTUP_DIALOG = "renderer-startup-dialog";
 
@@ -900,9 +902,6 @@ public final class ContentSwitches {
     // without restarting the browser and relaunching without this flag.
     public static final String WEB_RTC_LOCAL_EVENT_LOGGING = "webrtc-event-logging";
 
-    // This switch disables the ScrollToTextFragment feature.
-    public static final String DISABLE_SCROLL_TO_TEXT_FRAGMENT = "disable-scroll-to-text-fragment";
-
     // Forcibly enable and select the specified runtime for webxr.
     // Note that this provides an alternative means of enabling a runtime, and will
     // also functionally disable all other runtimes.
@@ -926,11 +925,8 @@ public final class ContentSwitches {
 
     public static final String WEB_XR_RUNTIME_WMR = "windows-mixed-reality";
 
-    // Disables hardware acceleration of video decode, where available.
-    public static final String DISABLE_ACCELERATED_VIDEO_DECODE = "disable-accelerated-video-decode";
-
-    // Enables hardware acceleration of video decoding on linux. (defaults to off)
-    public static final String ENABLE_ACCELERATED_VIDEO_DECODE = "enable-accelerated-video-decode";
+    // This switch disables the ScrollToTextFragment feature.
+    public static final String DISABLE_SCROLL_TO_TEXT_FRAGMENT = "disable-scroll-to-text-fragment";
 
     // Disable Media Session API
     public static final String DISABLE_MEDIA_SESSION_API = "disable-media-session-api";
@@ -959,9 +955,6 @@ public final class ContentSwitches {
     // Enable drag manipulation of longpress-triggered text selections.
     public static final String ENABLE_LONGPRESS_DRAG_SELECTION = "enable-longpress-drag-selection";
 
-    // Prevent the offline indicator from showing.
-    public static final String FORCE_ONLINE_CONNECTION_STATE_FOR_INDICATOR = "force-online-connection-state-for-indicator";
-
     // The telephony region (ISO country code) to use in phone number detection.
     public static final String NETWORK_COUNTRY_ISO = "network-country-iso";
 
@@ -971,9 +964,6 @@ public final class ContentSwitches {
     // Block ChildProcessMain thread of the renderer's ChildProcessService until a
     // Java debugger is attached.
     public static final String RENDERER_WAIT_FOR_JAVA_DEBUGGER = "renderer-wait-for-java-debugger";
-
-    // Disables debug crash dumps for OOPR.
-    public static final String DISABLE_OOPR_DEBUG_CRASH_DUMP = "disable-oopr-debug-crash-dump";
 
     // Enable the experimental Accessibility Object Model APIs in development.
     public static final String ENABLE_ACCESSIBILITY_OBJECT_MODEL = "enable-accessibility-object-model";

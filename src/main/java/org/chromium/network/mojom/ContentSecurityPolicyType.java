@@ -18,8 +18,6 @@ public final class ContentSecurityPolicyType {
 
     public static final int REPORT = 0;
     public static final int ENFORCE = 1;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 1;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 1;

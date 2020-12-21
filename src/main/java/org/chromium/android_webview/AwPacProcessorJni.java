@@ -29,8 +29,8 @@ final class AwPacProcessorJni implements AwPacProcessor.Natives {
   }
 
   @Override
-  public long createNativePacProcessor(long netHandle) {
-    return (long)GEN_JNI.org_chromium_android_1webview_AwPacProcessor_createNativePacProcessor(netHandle);
+  public long createNativePacProcessor() {
+    return (long)GEN_JNI.org_chromium_android_1webview_AwPacProcessor_createNativePacProcessor();
   }
 
   @Override
@@ -46,11 +46,6 @@ final class AwPacProcessorJni implements AwPacProcessor.Natives {
   @Override
   public void destroyNative(long nativeAwPacProcessor, AwPacProcessor caller) {
     GEN_JNI.org_chromium_android_1webview_AwPacProcessor_destroyNative(nativeAwPacProcessor, caller);
-  }
-
-  @Override
-  public void setNetworkLinkAddresses(long nativeAwPacProcessor, String[] adresses) {
-    GEN_JNI.org_chromium_android_1webview_AwPacProcessor_setNetworkLinkAddresses(nativeAwPacProcessor, adresses);
   }
 
   public static AwPacProcessor.Natives get() {

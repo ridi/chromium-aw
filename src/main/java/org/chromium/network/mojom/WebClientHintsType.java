@@ -31,8 +31,6 @@ public final class WebClientHintsType {
     public static final int UA_MOBILE = 12;
     public static final int UA_FULL_VERSION = 13;
     public static final int UA_PLATFORM_VERSION = 14;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 14;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 14;

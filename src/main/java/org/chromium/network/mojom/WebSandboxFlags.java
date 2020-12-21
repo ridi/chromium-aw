@@ -35,8 +35,6 @@ public final class WebSandboxFlags {
     public static final int DOWNLOADS = 32768;
     public static final int STORAGE_ACCESS_BY_USER_ACTIVATION = 65536;
     public static final int ALL = -1;
-    public static final int MIN_VALUE = -1;
-    public static final int MAX_VALUE = 65536;
 
     public static boolean isKnownValue(int value) {
         switch (value) {

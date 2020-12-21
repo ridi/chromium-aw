@@ -45,9 +45,9 @@ final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
   }
 
   @Override
-  public boolean isFeatureEnabled(long nativeRenderFrameHostAndroid, RenderFrameHostImpl caller,
-      int feature) {
-    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_isFeatureEnabled(nativeRenderFrameHostAndroid, caller, feature);
+  public boolean isPaymentFeaturePolicyEnabled(long nativeRenderFrameHostAndroid,
+      RenderFrameHostImpl caller) {
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_isPaymentFeaturePolicyEnabled(nativeRenderFrameHostAndroid, caller);
   }
 
   @Override

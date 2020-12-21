@@ -20,8 +20,6 @@ public final class ScreenOrientationLockResult {
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_ERROR_NOT_AVAILABLE = 1;
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_ERROR_FULLSCREEN_REQUIRED = 2;
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_ERROR_CANCELED = 3;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

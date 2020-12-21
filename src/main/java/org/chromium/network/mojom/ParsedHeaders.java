@@ -16,16 +16,14 @@ package org.chromium.network.mojom;
 
 public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 72;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(72, 0)};
+    private static final int STRUCT_SIZE = 48;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(48, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public ContentSecurityPolicy[] contentSecurityPolicy;
-    public AllowCspFromHeaderValue allowCspFrom;
     public CrossOriginEmbedderPolicy crossOriginEmbedderPolicy;
     public CrossOriginOpenerPolicy crossOriginOpenerPolicy;
     public boolean originIsolation;
     public int[] acceptCh;
-    public org.chromium.mojo_base.mojom.TimeDelta acceptChLifetime;
 
     private ParsedHeaders(int version) {
         super(STRUCT_SIZE, version);
@@ -76,35 +74,26 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.allowCspFrom = AllowCspFromHeaderValue.decode(decoder0, 16);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
                 result.crossOriginEmbedderPolicy = CrossOriginEmbedderPolicy.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                 result.crossOriginOpenerPolicy = CrossOriginOpenerPolicy.decode(decoder1);
                 }
                 {
                     
-                result.originIsolation = decoder0.readBoolean(48, 0);
+                result.originIsolation = decoder0.readBoolean(32, 0);
                 }
                 {
                     
-                result.acceptCh = decoder0.readInts(56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                result.acceptCh = decoder0.readInts(40, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 if (result.acceptCh != null) {
                     for (int i0 = 0; i0 < result.acceptCh.length; ++i0) {
                         WebClientHintsType.validate(result.acceptCh[i0]);
                     }
                 }
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
-                result.acceptChLifetime = org.chromium.mojo_base.mojom.TimeDelta.decode(decoder1);
                 }
 
         } finally {
@@ -128,16 +117,12 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
             }
         }
         
-        encoder0.encode(this.allowCspFrom, 16, true);
+        encoder0.encode(this.crossOriginEmbedderPolicy, 16, false);
         
-        encoder0.encode(this.crossOriginEmbedderPolicy, 32, false);
+        encoder0.encode(this.crossOriginOpenerPolicy, 24, false);
         
-        encoder0.encode(this.crossOriginOpenerPolicy, 40, false);
+        encoder0.encode(this.originIsolation, 32, 0);
         
-        encoder0.encode(this.originIsolation, 48, 0);
-        
-        encoder0.encode(this.acceptCh, 56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-        
-        encoder0.encode(this.acceptChLifetime, 64, false);
+        encoder0.encode(this.acceptCh, 40, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
     }
 }

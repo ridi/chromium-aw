@@ -25,8 +25,6 @@ public final class ScreenOrientationLockType {
     public static final int LANDSCAPE = 6;
     public static final int PORTRAIT = 7;
     public static final int NATURAL = 8;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 8;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 8;

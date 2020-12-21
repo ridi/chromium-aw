@@ -43,6 +43,7 @@ public class MinidumpUploadJobImpl implements MinidumpUploadJob {
     @VisibleForTesting
     public static final int MAX_UPLOAD_TRIES_ALLOWED = 3;
 
+    @VisibleForTesting
     public MinidumpUploadJobImpl(MinidumpUploaderDelegate delegate) {
         mDelegate = delegate;
     }

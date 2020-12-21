@@ -6,6 +6,8 @@ package org.chromium.device.geolocation;
 
 import android.location.Location;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -21,6 +23,7 @@ import java.util.concurrent.FutureTask;
  * content/browser/geolocation/location_api_adapter_android.h.
  * Based on android.webkit.GeolocationService.java
  */
+@VisibleForTesting
 public class LocationProviderAdapter {
     private static final String TAG = "LocationProvider";
 

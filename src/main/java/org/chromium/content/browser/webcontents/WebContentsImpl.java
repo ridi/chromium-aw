@@ -385,13 +385,6 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
     }
 
     @Override
-    public RenderFrameHost getRenderFrameHostFromId(int renderProcessId, int renderFrameId) {
-        checkNotDestroyed();
-        return WebContentsImplJni.get().getRenderFrameHostFromId(
-                mNativeWebContentsAndroid, renderProcessId, renderFrameId);
-    }
-
-    @Override
     public @Nullable RenderWidgetHostViewImpl getRenderWidgetHostView() {
         if (mNativeWebContentsAndroid == 0) return null;
         RenderWidgetHostViewImpl rwhvi = WebContentsImplJni.get().getRenderWidgetHostView(
@@ -1059,8 +1052,6 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
                 long nativeWebContentsAndroid, WebContentsImpl caller, WindowAndroid windowAndroid);
         RenderFrameHost getMainFrame(long nativeWebContentsAndroid, WebContentsImpl caller);
         RenderFrameHost getFocusedFrame(long nativeWebContentsAndroid, WebContentsImpl caller);
-        RenderFrameHost getRenderFrameHostFromId(
-                long nativeWebContentsAndroid, int renderProcessId, int renderFrameId);
         RenderWidgetHostViewImpl getRenderWidgetHostView(
                 long nativeWebContentsAndroid, WebContentsImpl caller);
         WebContentsImpl[] getInnerWebContents(

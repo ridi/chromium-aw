@@ -49,7 +49,6 @@ public class FormFieldData {
     public final String mHeuristicType;
     public final String[] mDatalistValues;
     public final String[] mDatalistLabels;
-    public final boolean mVisible;
 
     // The bounds in the viewport's coordinates
     private final RectF mBounds;
@@ -67,7 +66,7 @@ public class FormFieldData {
             boolean shouldAutocomplete, String placeholder, String type, String id,
             String[] optionValues, String[] optionContents, boolean isCheckField, boolean isChecked,
             int maxLength, String heuristicType, float left, float top, float right, float bottom,
-            String[] datalistValues, String[] datalistLabels, boolean visible) {
+            String[] datalistValues, String[] datalistLabels) {
         mName = name;
         mLabel = label;
         mValue = value;
@@ -93,7 +92,6 @@ public class FormFieldData {
         mMaxLength = maxLength;
         mHeuristicType = heuristicType;
         mBounds = new RectF(left, top, right, bottom);
-        mVisible = visible;
     }
 
     public @ControlType int getControlType() {
@@ -156,11 +154,9 @@ public class FormFieldData {
             String autocompleteAttr, boolean shouldAutocomplete, String placeholder, String type,
             String id, String[] optionValues, String[] optionContents, boolean isCheckField,
             boolean isChecked, int maxLength, String heuristicType, float left, float top,
-            float right, float bottom, String[] datalistValues, String[] datalistLabels,
-            boolean visible) {
+            float right, float bottom, String[] datalistValues, String[] datalistLabels) {
         return new FormFieldData(name, label, value, autocompleteAttr, shouldAutocomplete,
                 placeholder, type, id, optionValues, optionContents, isCheckField, isChecked,
-                maxLength, heuristicType, left, top, right, bottom, datalistValues, datalistLabels,
-                visible);
+                maxLength, heuristicType, left, top, right, bottom, datalistValues, datalistLabels);
     }
 }

@@ -28,11 +28,6 @@ final class ContentCaptureFeaturesJni implements ContentCaptureFeatures.Natives 
     return (boolean)GEN_JNI.org_chromium_components_content_1capture_ContentCaptureFeatures_isEnabled();
   }
 
-  @Override
-  public boolean shouldTriggerContentCaptureForExperiment() {
-    return (boolean)GEN_JNI.org_chromium_components_content_1capture_ContentCaptureFeatures_shouldTriggerContentCaptureForExperiment();
-  }
-
   public static ContentCaptureFeatures.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

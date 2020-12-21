@@ -19,8 +19,6 @@ public final class ConnectResult {
     public static final int SUCCEEDED = 0;
     public static final int INVALID_ARGUMENT = 1;
     public static final int ACCESS_DENIED = 2;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

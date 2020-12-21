@@ -7,6 +7,7 @@ package org.chromium.content.browser.picker;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.widget.DatePicker;
 
 /**
@@ -47,7 +48,9 @@ class DatePickerDialogCompat extends DatePickerDialog {
         // On Android L+, the dialog shouldn't have a title. This works around a bug in
         // DatePickerDialog where calling updateDate() before the dialog has been shown causes
         // a title to appear. http://crbug.com/541350
-        title = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            title = "";
+        }
         super.setTitle(title);
     }
 }

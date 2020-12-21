@@ -100,11 +100,6 @@ final class AwSettingsJni implements AwSettings.Natives {
     GEN_JNI.org_chromium_android_1webview_AwSettings_updateAllowFileAccessLocked(nativeAwSettings, caller);
   }
 
-  @Override
-  public boolean isDarkMode(long nativeAwSettings, AwSettings caller) {
-    return (boolean)GEN_JNI.org_chromium_android_1webview_AwSettings_isDarkMode(nativeAwSettings, caller);
-  }
-
   public static AwSettings.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

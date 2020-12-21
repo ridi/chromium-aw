@@ -95,18 +95,18 @@ public class AwContentsStatics {
     }
 
     @CalledByNative
-    private static void safeBrowsingAllowlistAssigned(Callback<Boolean> callback, boolean success) {
+    private static void safeBrowsingWhitelistAssigned(Callback<Boolean> callback, boolean success) {
         if (callback == null) return;
         callback.onResult(success);
     }
 
-    public static void setSafeBrowsingAllowlist(List<String> urls, Callback<Boolean> callback) {
+    public static void setSafeBrowsingWhitelist(List<String> urls, Callback<Boolean> callback) {
         String[] urlArray = urls.toArray(new String[urls.size()]);
         if (callback == null) {
             callback = b -> {
             };
         }
-        AwContentsStaticsJni.get().setSafeBrowsingAllowlist(urlArray, callback);
+        AwContentsStaticsJni.get().setSafeBrowsingWhitelist(urlArray, callback);
     }
 
     @SuppressWarnings("NoContextGetApplicationContext")
@@ -190,7 +190,7 @@ public class AwContentsStatics {
         String getProductVersion();
         void setServiceWorkerIoThreadClient(
                 AwContentsIoThreadClient ioThreadClient, AwBrowserContext browserContext);
-        void setSafeBrowsingAllowlist(String[] urls, Callback<Boolean> callback);
+        void setSafeBrowsingWhitelist(String[] urls, Callback<Boolean> callback);
         void setCheckClearTextPermitted(boolean permitted);
         boolean isMultiProcessEnabled();
     }

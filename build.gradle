@@ -26,8 +26,8 @@ group = 'com.github.ridi'
 version = '62.0.3202.101-6'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

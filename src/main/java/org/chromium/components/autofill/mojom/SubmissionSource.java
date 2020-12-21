@@ -23,8 +23,6 @@ public final class SubmissionSource {
     public static final int DOM_MUTATION_AFTER_XHR = 4;
     public static final int PROBABLY_FORM_SUBMITTED = 5;
     public static final int FORM_SUBMISSION = 6;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 6;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

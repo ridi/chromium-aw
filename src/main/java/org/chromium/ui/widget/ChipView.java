@@ -21,8 +21,8 @@ import androidx.annotation.Px;
 import androidx.annotation.StyleRes;
 import androidx.core.view.ViewCompat;
 
-import org.chromium.android_webview.R;
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.android_webview.R;
 
 /**
  * The view responsible for displaying a material chip. The chip has the following components :
@@ -116,6 +116,14 @@ public class ChipView extends LinearLayout {
         mRippleBackgroundHelper = new RippleBackgroundHelper(this, chipColorId, rippleColorId,
                 cornerRadius, R.color.chip_stroke_color, R.dimen.chip_border_width, verticalInset);
         setIcon(INVALID_ICON_ID, false);
+    }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if (mRippleBackgroundHelper != null) {
+            mRippleBackgroundHelper.onDrawableStateChanged();
+        }
     }
 
     /**

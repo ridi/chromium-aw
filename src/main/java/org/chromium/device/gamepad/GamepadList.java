@@ -291,11 +291,10 @@ public class GamepadList {
                     device.updateButtonsAndAxesMapping();
                     GamepadListJni.get().setGamepadData(GamepadList.this, webGamepadsPtr, i,
                             device.isStandardGamepad(), true, device.getName(),
-                            device.getTimestamp(), device.getAxes(), device.getButtons(),
-                            device.getButtonsLength());
+                            device.getTimestamp(), device.getAxes(), device.getButtons());
                 } else {
-                    GamepadListJni.get().setGamepadData(GamepadList.this, webGamepadsPtr, i, false,
-                            false, null, 0, null, null, 0);
+                    GamepadListJni.get().setGamepadData(
+                            GamepadList.this, webGamepadsPtr, i, false, false, null, 0, null, null);
                 }
             }
         }
@@ -326,7 +325,7 @@ public class GamepadList {
     @NativeMethods
     interface Natives {
         void setGamepadData(GamepadList caller, long webGamepadsPtr, int index, boolean mapping,
-                boolean connected, String devicename, long timestamp, float[] axes, float[] buttons,
-                int buttonsLength);
+                boolean connected, String devicename, long timestamp, float[] axes,
+                float[] buttons);
     }
 }

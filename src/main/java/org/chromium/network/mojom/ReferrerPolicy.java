@@ -25,8 +25,7 @@ public final class ReferrerPolicy {
     public static final int STRICT_ORIGIN_WHEN_CROSS_ORIGIN = 6;
     public static final int SAME_ORIGIN = 7;
     public static final int STRICT_ORIGIN = 8;
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 8;
+    public static final int LAST = 8;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 8;

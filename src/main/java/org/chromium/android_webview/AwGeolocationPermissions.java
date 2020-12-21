@@ -6,6 +6,8 @@ package org.chromium.android_webview;
 
 import android.content.SharedPreferences;
 
+import org.chromium.base.task.PostTask;
+import org.chromium.content_public.browser.UiThreadTaskTraits;
 import org.chromium.net.GURLUtils;
 
 import java.util.HashSet;
@@ -99,7 +101,7 @@ public final class AwGeolocationPermissions {
      */
     public void getAllowed(String origin, final org.chromium.base.Callback<Boolean> callback) {
         final boolean finalAllowed = isOriginAllowed(origin);
-        AwThreadUtils.postToUiThreadLooper(callback.bind(finalAllowed));
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, callback.bind(finalAllowed));
     }
 
     /**
@@ -112,7 +114,7 @@ public final class AwGeolocationPermissions {
                 origins.add(name.substring(PREF_PREFIX.length()));
             }
         }
-        AwThreadUtils.postToUiThreadLooper(callback.bind(origins));
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, callback.bind(origins));
     }
 
     /**
