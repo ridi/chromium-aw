@@ -16,11 +16,11 @@ package org.chromium.autofill.mojom;
 
 public final class PasswordFormGenerationData extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 24;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+    private static final int STRUCT_SIZE = 16;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public FieldRendererId newPasswordRendererId;
-    public FieldRendererId confirmationPasswordRendererId;
+    public int newPasswordRendererId;
+    public int confirmationPasswordRendererId;
 
     private PasswordFormGenerationData(int version) {
         super(STRUCT_SIZE, version);
@@ -57,13 +57,11 @@ public final class PasswordFormGenerationData extends org.chromium.mojo.bindings
             result = new PasswordFormGenerationData(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.newPasswordRendererId = FieldRendererId.decode(decoder1);
+                result.newPasswordRendererId = decoder0.readInt(8);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                result.confirmationPasswordRendererId = FieldRendererId.decode(decoder1);
+                result.confirmationPasswordRendererId = decoder0.readInt(12);
                 }
 
         } finally {
@@ -77,8 +75,8 @@ public final class PasswordFormGenerationData extends org.chromium.mojo.bindings
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.newPasswordRendererId, 8, false);
+        encoder0.encode(this.newPasswordRendererId, 8);
         
-        encoder0.encode(this.confirmationPasswordRendererId, 16, false);
+        encoder0.encode(this.confirmationPasswordRendererId, 12);
     }
 }

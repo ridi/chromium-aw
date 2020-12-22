@@ -4,9 +4,10 @@
 
 package org.chromium.base.metrics;
 
-import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+
+import androidx.annotation.IntDef;
 
 import org.chromium.base.Log;
 
@@ -16,14 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.concurrent.GuardedBy;
 
 /**
- * Stores metrics until given an {@link UmaRecorder} to forward the samples to. After flushing, no
- * longer stores metrics, instead immediately forwards them to the given {@link UmaRecorder}.
+ * Stores samples until given an {@link UmaRecorder} to flush the samples to. After flushing, no
+ * longer stores samples, instead immediately delegates to the given {@link UmaRecorder}.
  */
 /* package */ final class CachingUmaRecorder implements UmaRecorder {
     private static final String TAG = "CachingUmaRecorder";
@@ -32,18 +32,11 @@ import javax.annotation.concurrent.GuardedBy;
      * Maximum number of histograms cached at the same time. It is better to drop some samples
      * rather than have a bug cause the cache to grow without limit.
      * <p>
-     * Each sample uses 4 bytes, each histogram uses approx. 12 references (at least 4 bytes each).
+     * Each sample uses 4 bytes, each histogram uses approx. 12 references (4 bytes each).
      * With {@code MAX_HISTOGRAM_COUNT = 256} and {@code MAX_SAMPLE_COUNT = 256} this limits cache
      * size to 270KiB. Changing either value by one, adds or removes approx. 1KiB.
      */
     private static final int MAX_HISTOGRAM_COUNT = 256;
-
-    /**
-     * Maximum number of user actions cached at the same time. It is better to drop some samples
-     * rather than have a bug cause the cache to grow without limit.
-     */
-    @VisibleForTesting
-    static final int MAX_USER_ACTION_COUNT = 256;
 
     /** Stores the definition and samples of a single cached histogram. */
     @VisibleForTesting
@@ -151,10 +144,10 @@ import javax.annotation.concurrent.GuardedBy;
         }
 
         /**
-         * Writes all histogram samples to {@code recorder}, clears the cache.
+         * Writes all samples to {@code recorder}, clears cached samples.
          *
          * @param recorder destination {@link UmaRecorder}.
-         * @return number of flushed histogram samples.
+         * @return number of flushed samples.
          */
         synchronized int flushTo(UmaRecorder recorder) {
             switch (mType) {
@@ -191,22 +184,6 @@ import javax.annotation.concurrent.GuardedBy;
         }
     }
 
-    /** Stores a single cached user action. */
-    private static class UserAction {
-        private final String mName;
-        private final long mElapsedRealtimeMillis;
-
-        UserAction(String name, long elapsedRealtimeMillis) {
-            mName = name;
-            mElapsedRealtimeMillis = elapsedRealtimeMillis;
-        }
-
-        /** Writes this user action to a {@link UmaRecorder}. */
-        void flushTo(UmaRecorder recorder) {
-            recorder.recordUserAction(mName, mElapsedRealtimeMillis);
-        }
-    }
-
     /**
      * The lock doesn't need to be fair - in the worst case a writing record*Histogram call will be
      * starved until reading calls reach cache size limits.
@@ -216,31 +193,11 @@ import javax.annotation.concurrent.GuardedBy;
      */
     private final ReentrantReadWriteLock mRwLock = new ReentrantReadWriteLock(/*fair=*/false);
 
-    /** Cached histograms keyed by histogram name. */
     @GuardedBy("mRwLock")
     private Map<String, Histogram> mHistogramByName = new HashMap<>();
 
     /**
-     * Number of histogram samples that couldn't be cached, because some limit of cache size been
-     * reached.
-     * <p>
-     * Using {@link AtomicInteger} because the value may need to be updated with a read lock held.
-     */
-    private AtomicInteger mDroppedHistogramSampleCount = new AtomicInteger();
-
-    /** Cache of user actions. */
-    @GuardedBy("mRwLock")
-    private List<UserAction> mUserActions = new ArrayList<>();
-
-    /**
-     * Number of user actions that couldn't be cached, because the number of user actions in cache
-     * has reached its limit.
-     */
-    @GuardedBy("mRwLock")
-    private int mDroppedUserActionCount;
-
-    /**
-     * If not {@code null}, all metrics are forwarded to this {@link UmaRecorder}.
+     * If not null, all metrics are forwarded to this {@link UmaRecorder}.
      * <p>
      * The read lock must be held while invoking methods on {@code mDelegate}.
      */
@@ -249,49 +206,53 @@ import javax.annotation.concurrent.GuardedBy;
     private UmaRecorder mDelegate;
 
     /**
-     * Sets the current delegate to {@code recorder}. Forwards and clears all cached metrics if
-     * {@code recorder} is not {@code null}.
+     * Number of samples that couldn't be cached, because the number of histograms in cache has
+     * reached its limit.
+     */
+    @GuardedBy("mRwLock")
+    private int mHistogramLimitSampleCount;
+
+    /**
+     * Number of samples that couldn't be cached, because the number of samples for a histogram has
+     * been reached.
+     */
+    @GuardedBy("this")
+    private int mDroppedSampleCount;
+
+    /**
+     * Replaces the current delegate (if any) with {@code recorder}. Writes and clears all cached
+     * samples if {@code recorder} is not null.
      *
      * @param recorder new delegate.
      * @return the previous delegate.
      */
     public UmaRecorder setDelegate(@Nullable final UmaRecorder recorder) {
         UmaRecorder previous;
-        Map<String, Histogram> histogramCache = null;
-        int droppedHistogramSampleCount = 0;
-        List<UserAction> userActionCache = null;
-        int droppedUserActionCount = 0;
-
+        Map<String, Histogram> cache = null;
+        int histogramLimitSampleCount = 0;
+        int droppedSampleCount = 0;
         mRwLock.writeLock().lock();
         try {
             previous = mDelegate;
             mDelegate = recorder;
-            if (recorder == null) {
-                return previous;
-            }
-            if (!mHistogramByName.isEmpty()) {
-                histogramCache = mHistogramByName;
+            if (recorder != null && !mHistogramByName.isEmpty()) {
+                cache = mHistogramByName;
                 mHistogramByName = new HashMap<>();
-                droppedHistogramSampleCount = mDroppedHistogramSampleCount.getAndSet(0);
+                histogramLimitSampleCount = mHistogramLimitSampleCount;
+                mHistogramLimitSampleCount = 0;
+                synchronized (this) {
+                    droppedSampleCount = mDroppedSampleCount;
+                    mDroppedSampleCount = 0;
+                }
             }
-            if (!mUserActions.isEmpty()) {
-                userActionCache = mUserActions;
-                mUserActions = new ArrayList<>();
-                droppedUserActionCount = mDroppedUserActionCount;
-                mDroppedUserActionCount = 0;
-            }
-            // Downgrade by acquiring read lock before releasing write lock
             mRwLock.readLock().lock();
         } finally {
             mRwLock.writeLock().unlock();
         }
         // Cache is flushed only after downgrading from a write lock to a read lock.
         try {
-            if (histogramCache != null) {
-                flushHistogramsAlreadyLocked(histogramCache, droppedHistogramSampleCount);
-            }
-            if (userActionCache != null) {
-                flushUserActionsAlreadyLocked(userActionCache, droppedUserActionCount);
+            if (cache != null) {
+                flushCacheAlreadyLocked(cache, histogramLimitSampleCount, droppedSampleCount);
             }
         } finally {
             mRwLock.readLock().unlock();
@@ -300,58 +261,56 @@ import javax.annotation.concurrent.GuardedBy;
     }
 
     /**
-     * Writes histogram samples from {@code cache} to the delegate. Assumes that a read lock is held
-     * by the current thread.
+     * Writes metrics from {@code cache} to the delegate. Assumes that a read lock is held by the
+     * current thread.
      *
      * @param cache the cache to be flushed.
-     * @param droppedHistogramSampleCount number of histogram samples that were not recorded due to
-     *         cache size limits.
+     * @param histogramLimitSampleCount number of samples that were not recorded in {@code cache} to
+     *         stay within {@link MAX_HISTOGRAM_COUNT}.
+     * @param droppedSampleCount number of samples that were not recerded in {@code cache} to stay
+     *         within {@link Histogram.MAX_SAMPLE_COUNT}.
      */
     @GuardedBy("mRwLock")
-    private void flushHistogramsAlreadyLocked(
-            Map<String, Histogram> cache, int droppedHistogramSampleCount) {
+    private void flushCacheAlreadyLocked(
+            Map<String, Histogram> cache, int histogramLimitSampleCount, int droppedSampleCount) {
         assert mDelegate != null : "Unexpected: cache is flushed, but delegate is null";
         assert mRwLock.getReadHoldCount() > 0;
-        int flushedHistogramSampleCount = 0;
+        int flushedSampleCount = 0;
         final int flushedHistogramCount = cache.size();
+        int fullHistogramCount = 0;
+        int remainingSampleLimit = Histogram.MAX_SAMPLE_COUNT;
         for (Histogram histogram : cache.values()) {
-            flushedHistogramSampleCount += histogram.flushTo(mDelegate);
+            int flushed = histogram.flushTo(mDelegate);
+            flushedSampleCount += flushed;
+            if (flushed >= Histogram.MAX_SAMPLE_COUNT) {
+                fullHistogramCount++;
+            }
+            remainingSampleLimit =
+                    Math.min(remainingSampleLimit, Histogram.MAX_SAMPLE_COUNT - flushed);
         }
-        Log.i(TAG, "Flushed %d samples from %d histograms.", flushedHistogramSampleCount,
+        Log.i(TAG, "Flushed %d samples from %d histograms.", flushedSampleCount,
                 flushedHistogramCount);
-        // Using RecordHistogram here could cause an infinite recursion.
-        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.DroppedHistogramSampleCount",
-                droppedHistogramSampleCount, 1, 1_000_000, 50);
+        // Using RecordHistogram could cause an infinite recursion.
         mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.FlushedHistogramCount",
                 flushedHistogramCount, 1, 100_000, 50);
-        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.InputHistogramSampleCount",
-                flushedHistogramSampleCount + droppedHistogramSampleCount, 1, 1_000_000, 50);
+        mDelegate.recordExponentialHistogram(
+                "UMA.JavaCachingRecorder.FullHistogramCount", fullHistogramCount, 1, 100_000, 50);
+        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.InputSampleCount",
+                flushedSampleCount + droppedSampleCount, 1, 1_000_000, 50);
+        mDelegate.recordExponentialHistogram(
+                "UMA.JavaCachingRecorder.DroppedSampleCount", droppedSampleCount, 1, 1_000_000, 50);
+        mDelegate.recordExponentialHistogram(
+                "UMA.JavaCachingRecorder.HistogramLimitDroppedSampleCount",
+                histogramLimitSampleCount, 1, 1_000_000, 50);
+        mDelegate.recordExponentialHistogram(
+                "UMA.JavaCachingRecorder.RemainingSampleLimit", remainingSampleLimit, 1, 1_000, 50);
+        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.RemainingHistogramLimit",
+                MAX_HISTOGRAM_COUNT - flushedHistogramCount, 1, 1_000, 50);
     }
 
     /**
-     * Writes user actions from {@code cache} to the delegate. Assumes that a read lock is held by
-     * the current thread.
-     *
-     * @param cache the cache to be flushed.
-     * @param droppedUserActionCount number of user actions that were not recorded in {@code cache}
-     *         to stay within {@link MAX_USER_ACTION_COUNT}.
-     */
-    private void flushUserActionsAlreadyLocked(List<UserAction> cache, int droppedUserActionCount) {
-        assert mDelegate != null : "Unexpected: cache is flushed, but delegate is null";
-        assert mRwLock.getReadHoldCount() > 0;
-        for (UserAction userAction : cache) {
-            userAction.flushTo(mDelegate);
-        }
-        // Using RecordHistogram here could cause an infinite recursion.
-        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.DroppedUserActionCount",
-                droppedUserActionCount, 1, 1_000, 50);
-        mDelegate.recordExponentialHistogram("UMA.JavaCachingRecorder.InputUserActionCount",
-                cache.size() + droppedUserActionCount, 1, 10_000, 50);
-    }
-
-    /**
-     * Forwards or stores a histogram sample. Stores samples iff there is no delegate {@link
-     * UmaRecorder} set.
+     * Delegates or stores a sample. Stores samples iff there is no delegate {@link UmaRecorder}
+     * set.
      *
      * @param type histogram type.
      * @param name histogram name.
@@ -360,7 +319,7 @@ import javax.annotation.concurrent.GuardedBy;
      * @param max histogram max value.
      * @param numBuckets number of histogram buckets.
      */
-    private void cacheOrRecordHistogramSample(
+    private void cacheOrRecordSample(
             @Histogram.Type int type, String name, int sample, int min, int max, int numBuckets) {
         // Optimistic attempt without creating a Histogram.
         if (tryAppendOrRecordSample(type, name, sample, min, max, numBuckets)) {
@@ -370,27 +329,24 @@ import javax.annotation.concurrent.GuardedBy;
         mRwLock.writeLock().lock();
         try {
             if (mDelegate == null) {
-                cacheHistogramSampleAlreadyWriteLocked(type, name, sample, min, max, numBuckets);
+                appendSampleMaybeCreateHistogramAlreadyLocked(
+                        type, name, sample, min, max, numBuckets);
                 return; // Skip the lock downgrade.
             }
-            // Downgrade by acquiring read lock before releasing write lock
             mRwLock.readLock().lock();
         } finally {
             mRwLock.writeLock().unlock();
         }
-
         // Downgraded to read lock.
-        // See base/android/java/src/org/chromium/base/metrics/forwarding_synchronization.md
         try {
-            assert mDelegate != null;
-            recordHistogramSampleAlreadyLocked(type, name, sample, min, max, numBuckets);
+            recordSampleAlreadyLocked(type, name, sample, min, max, numBuckets);
         } finally {
             mRwLock.readLock().unlock();
         }
     }
 
     /**
-     * Tries to cache or record a histogram sample without creating a new {@link Histogram}.
+     * Tries to cache or record a sample without creating a new {@link Histogram}.
      *
      * @param type histogram type.
      * @param name histogram name.
@@ -405,7 +361,7 @@ import javax.annotation.concurrent.GuardedBy;
         mRwLock.readLock().lock();
         try {
             if (mDelegate != null) {
-                recordHistogramSampleAlreadyLocked(type, name, sample, min, max, numBuckets);
+                recordSampleAlreadyLocked(type, name, sample, min, max, numBuckets);
                 return true;
             }
             Histogram histogram = mHistogramByName.get(name);
@@ -413,7 +369,9 @@ import javax.annotation.concurrent.GuardedBy;
                 return false;
             }
             if (!histogram.addSample(type, name, sample, min, max, numBuckets)) {
-                mDroppedHistogramSampleCount.incrementAndGet();
+                synchronized (this) {
+                    mDroppedSampleCount++;
+                }
             }
             return true;
         } finally {
@@ -422,8 +380,8 @@ import javax.annotation.concurrent.GuardedBy;
     }
 
     /**
-     * Appends a histogram {@code sample} to a cached {@link Histogram}. Creates the {@code
-     * Histogram} if needed. Assumes that the <b>write lock</b> is held by the current thread.
+     * Appends a {@code sample} to a cached {@link Histogram}. Creates the {@code Histogram}
+     * if needed. Assumes that the <b>write lock</b> is held by the current thread.
      *
      * @param type histogram type.
      * @param name histogram name.
@@ -433,7 +391,7 @@ import javax.annotation.concurrent.GuardedBy;
      * @param numBuckets number of histogram buckets.
      */
     @GuardedBy("mRwLock")
-    private void cacheHistogramSampleAlreadyWriteLocked(
+    private void appendSampleMaybeCreateHistogramAlreadyLocked(
             @Histogram.Type int type, String name, int sample, int min, int max, int numBuckets) {
         assert mRwLock.isWriteLockedByCurrentThread();
         Histogram histogram = mHistogramByName.get(name);
@@ -441,20 +399,22 @@ import javax.annotation.concurrent.GuardedBy;
             if (mHistogramByName.size() >= MAX_HISTOGRAM_COUNT) {
                 // A cache filling up is most likely an indication of a bug.
                 assert false : "Too many histograms in cache";
-                mDroppedHistogramSampleCount.incrementAndGet();
+                mHistogramLimitSampleCount++;
                 return;
             }
             histogram = new Histogram(type, name, min, max, numBuckets);
             mHistogramByName.put(name, histogram);
         }
         if (!histogram.addSample(type, name, sample, min, max, numBuckets)) {
-            mDroppedHistogramSampleCount.incrementAndGet();
+            synchronized (this) {
+                mDroppedSampleCount++;
+            }
         }
     }
 
     /**
-     * Forwards a histogram sample to the delegate. Assumes that a read lock is held by the current
-     * thread. Shouldn't be called with a write lock held.
+     * Records a sample with delegate. Assumes that a read lock is held by the current thread.
+     * Shouldn't be called with a write lock held.
      *
      * @param type histogram type.
      * @param name histogram name.
@@ -464,7 +424,7 @@ import javax.annotation.concurrent.GuardedBy;
      * @param numBuckets number of histogram buckets.
      */
     @GuardedBy("mRwLock")
-    private void recordHistogramSampleAlreadyLocked(
+    private void recordSampleAlreadyLocked(
             @Histogram.Type int type, String name, int sample, int min, int max, int numBuckets) {
         assert mRwLock.getReadHoldCount() > 0;
         assert !mRwLock.isWriteLockedByCurrentThread();
@@ -493,19 +453,18 @@ import javax.annotation.concurrent.GuardedBy;
         final int min = 0;
         final int max = 0;
         final int numBuckets = 0;
-        cacheOrRecordHistogramSample(Histogram.Type.BOOLEAN, name, sample, min, max, numBuckets);
+        cacheOrRecordSample(Histogram.Type.BOOLEAN, name, sample, min, max, numBuckets);
     }
 
     @Override
     public void recordExponentialHistogram(
             String name, int sample, int min, int max, int numBuckets) {
-        cacheOrRecordHistogramSample(
-                Histogram.Type.EXPONENTIAL, name, sample, min, max, numBuckets);
+        cacheOrRecordSample(Histogram.Type.EXPONENTIAL, name, sample, min, max, numBuckets);
     }
 
     @Override
     public void recordLinearHistogram(String name, int sample, int min, int max, int numBuckets) {
-        cacheOrRecordHistogramSample(Histogram.Type.LINEAR, name, sample, min, max, numBuckets);
+        cacheOrRecordSample(Histogram.Type.LINEAR, name, sample, min, max, numBuckets);
     }
 
     @Override
@@ -513,45 +472,6 @@ import javax.annotation.concurrent.GuardedBy;
         final int min = 0;
         final int max = 0;
         final int numBuckets = 0;
-        cacheOrRecordHistogramSample(Histogram.Type.SPARSE, name, sample, min, max, numBuckets);
-    }
-
-    @Override
-    public void recordUserAction(String name, long elapsedRealtimeMillis) {
-        mRwLock.readLock().lock();
-        try {
-            if (mDelegate != null) {
-                mDelegate.recordUserAction(name, elapsedRealtimeMillis);
-                return;
-            }
-        } finally {
-            mRwLock.readLock().unlock();
-        }
-
-        mRwLock.writeLock().lock();
-        try {
-            if (mDelegate == null) {
-                if (mUserActions.size() < MAX_USER_ACTION_COUNT) {
-                    mUserActions.add(new UserAction(name, elapsedRealtimeMillis));
-                } else {
-                    assert false : "Too many user actions in cache";
-                    mDroppedUserActionCount++;
-                }
-                return; // Skip the lock downgrade.
-            }
-            // Downgrade by acquiring read lock before releasing write lock
-            mRwLock.readLock().lock();
-        } finally {
-            mRwLock.writeLock().unlock();
-        }
-
-        // Downgraded to read lock.
-        // See base/android/java/src/org/chromium/base/metrics/forwarding_synchronization.md
-        try {
-            assert mDelegate != null;
-            mDelegate.recordUserAction(name, elapsedRealtimeMillis);
-        } finally {
-            mRwLock.readLock().unlock();
-        }
+        cacheOrRecordSample(Histogram.Type.SPARSE, name, sample, min, max, numBuckets);
     }
 }

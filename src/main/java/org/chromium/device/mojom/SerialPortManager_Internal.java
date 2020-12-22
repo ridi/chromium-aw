@@ -47,11 +47,9 @@ class SerialPortManager_Internal {
     };
 
 
-    private static final int SET_CLIENT_ORDINAL = 0;
+    private static final int GET_DEVICES_ORDINAL = 0;
 
-    private static final int GET_DEVICES_ORDINAL = 1;
-
-    private static final int GET_PORT_ORDINAL = 2;
+    private static final int GET_PORT_ORDINAL = 1;
 
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements SerialPortManager.Proxy {
@@ -59,23 +57,6 @@ class SerialPortManager_Internal {
         Proxy(org.chromium.mojo.system.Core core,
               org.chromium.mojo.bindings.MessageReceiverWithResponder messageReceiver) {
             super(core, messageReceiver);
-        }
-
-
-        @Override
-        public void setClient(
-SerialPortManagerClient client) {
-
-            SerialPortManagerSetClientParams _message = new SerialPortManagerSetClientParams();
-
-            _message.client = client;
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(SET_CLIENT_ORDINAL)));
-
         }
 
 
@@ -101,13 +82,11 @@ GetDevicesResponse callback) {
 
         @Override
         public void getPort(
-org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, org.chromium.mojo.bindings.InterfaceRequest<SerialPort> portReceiver, SerialPortConnectionWatcher watcher) {
+org.chromium.mojo_base.mojom.UnguessableToken token, org.chromium.mojo.bindings.InterfaceRequest<SerialPort> portReceiver, SerialPortConnectionWatcher watcher) {
 
             SerialPortManagerGetPortParams _message = new SerialPortManagerGetPortParams();
 
             _message.token = token;
-
-            _message.useAlternatePath = useAlternatePath;
 
             _message.portReceiver = portReceiver;
 
@@ -149,19 +128,6 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
 
 
 
-                    case SET_CLIENT_ORDINAL: {
-
-                        SerialPortManagerSetClientParams data =
-                                SerialPortManagerSetClientParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().setClient(data.client);
-                        return true;
-                    }
-
-
-
-
-
 
 
                     case GET_PORT_ORDINAL: {
@@ -169,7 +135,7 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
                         SerialPortManagerGetPortParams data =
                                 SerialPortManagerGetPortParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().getPort(data.token, data.useAlternatePath, data.portReceiver, data.watcher);
+                        getImpl().getPort(data.token, data.portReceiver, data.watcher);
                         return true;
                     }
 
@@ -204,8 +170,6 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
 
 
 
-
-
                     case GET_DEVICES_ORDINAL: {
 
                         SerialPortManagerGetDevicesParams.deserialize(messageWithHeader.getPayload());
@@ -226,69 +190,6 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
             }
         }
     }
-
-
-    
-    static final class SerialPortManagerSetClientParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 16;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public SerialPortManagerClient client;
-
-        private SerialPortManagerSetClientParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public SerialPortManagerSetClientParams() {
-            this(0);
-        }
-
-        public static SerialPortManagerSetClientParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static SerialPortManagerSetClientParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static SerialPortManagerSetClientParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            SerialPortManagerSetClientParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new SerialPortManagerSetClientParams(elementsOrVersion);
-                    {
-                        
-                    result.client = decoder0.readServiceInterface(8, false, SerialPortManagerClient.MANAGER);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            encoder0.encode(this.client, 8, false, SerialPortManagerClient.MANAGER);
-        }
-    }
-
 
 
     
@@ -495,7 +396,6 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.mojo_base.mojom.UnguessableToken token;
-        public boolean useAlternatePath;
         public org.chromium.mojo.bindings.InterfaceRequest<SerialPort> portReceiver;
         public SerialPortConnectionWatcher watcher;
 
@@ -539,15 +439,11 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
                     }
                     {
                         
-                    result.useAlternatePath = decoder0.readBoolean(16, 0);
+                    result.portReceiver = decoder0.readInterfaceRequest(16, false);
                     }
                     {
                         
-                    result.portReceiver = decoder0.readInterfaceRequest(20, false);
-                    }
-                    {
-                        
-                    result.watcher = decoder0.readServiceInterface(24, true, SerialPortConnectionWatcher.MANAGER);
+                    result.watcher = decoder0.readServiceInterface(20, true, SerialPortConnectionWatcher.MANAGER);
                     }
 
             } finally {
@@ -563,11 +459,9 @@ org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, o
             
             encoder0.encode(this.token, 8, false);
             
-            encoder0.encode(this.useAlternatePath, 16, 0);
+            encoder0.encode(this.portReceiver, 16, false);
             
-            encoder0.encode(this.portReceiver, 20, false);
-            
-            encoder0.encode(this.watcher, 24, true, SerialPortConnectionWatcher.MANAGER);
+            encoder0.encode(this.watcher, 20, true, SerialPortConnectionWatcher.MANAGER);
         }
     }
 

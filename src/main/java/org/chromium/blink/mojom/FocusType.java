@@ -17,12 +17,12 @@ public final class FocusType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int FORWARD = 1;
-    public static final int BACKWARD = 2;
-    public static final int SPATIAL_NAVIGATION = 3;
-    public static final int MOUSE = 4;
-    public static final int ACCESS_KEY = 5;
-    public static final int PAGE = 6;
+    public static final int FORWARD = 1; // NONE + 1
+    public static final int BACKWARD = 2; // FORWARD + 1
+    public static final int SPATIAL_NAVIGATION = 3; // BACKWARD + 1
+    public static final int MOUSE = 4; // SPATIAL_NAVIGATION + 1
+    public static final int ACCESS_KEY = 5; // MOUSE + 1
+    public static final int PAGE = 6; // ACCESS_KEY + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

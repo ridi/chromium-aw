@@ -265,22 +265,16 @@ public class ChildProcessService {
                             keys, fileIds, fds, regionOffsets, regionSizes);
 
                     mDelegate.onBeforeMain();
-                } catch (Throwable e) {
+                    mDelegate.runMain();
                     try {
-                        mParentProcess.reportExceptionInInit(ChildProcessService.class.getName()
-                                + "\n" + android.util.Log.getStackTraceString(e));
-                    } catch (RemoteException re) {
-                        Log.e(TAG, "Failed to call reportExceptionInInit.", re);
+                        mParentProcess.reportCleanExit();
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "Failed to call clean exit callback.", e);
                     }
-                    throw new RuntimeException(e);
+                    ChildProcessServiceJni.get().exitChildProcess();
+                } catch (InterruptedException e) {
+                    Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
                 }
-                mDelegate.runMain();
-                try {
-                    mParentProcess.reportCleanExit();
-                } catch (RemoteException e) {
-                    Log.e(TAG, "Failed to call clean exit callback.", e);
-                }
-                ChildProcessServiceJni.get().exitChildProcess();
             }
         }, MAIN_THREAD_NAME);
         mMainThread.start();

@@ -5,10 +5,8 @@
 package org.chromium.content_public.browser;
 
 import androidx.annotation.IntDef;
-import androidx.annotation.Nullable;
 
 import org.chromium.blink.mojom.ViewportFit;
-import org.chromium.ui.base.WindowAndroid;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -152,6 +150,16 @@ public abstract class WebContentsObserver {
     public void navigationEntriesChanged() {}
 
     /**
+     * Called when an interstitial page gets attached to the tab content.
+     */
+    public void didAttachInterstitialPage() {}
+
+    /**
+     * Called when an interstitial page gets detached from the tab content.
+     */
+    public void didDetachInterstitialPage() {}
+
+    /**
      * Called when the theme color was changed.
      */
     public void didChangeThemeColor() {}
@@ -187,9 +195,6 @@ public abstract class WebContentsObserver {
      * RenderWidgetHosts within the same WebContents.
      */
     public void onWebContentsLostFocus() {}
-
-    /** Called when the top level WindowAndroid changes. */
-    public void onTopLevelNativeWindowChanged(@Nullable WindowAndroid windowAndroid) {}
 
     /**
      * Stop observing the web contents and clean up associated references.

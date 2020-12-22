@@ -17,10 +17,10 @@ public final class SelectionBoundType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int LEFT = 0;
-    public static final int RIGHT = 1;
-    public static final int CENTER = 2;
-    public static final int EMPTY = 3;
-    public static final int LAST = 3;
+    public static final int RIGHT = 1; // LEFT + 1
+    public static final int CENTER = 2; // RIGHT + 1
+    public static final int EMPTY = 3; // CENTER + 1
+    public static final int LAST = SelectionBoundType.EMPTY;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

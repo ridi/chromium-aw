@@ -4,11 +4,10 @@
 
 package org.chromium.ui.interpolators;
 
-import android.view.animation.Interpolator;
-
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+import android.view.animation.Interpolator;
 
 /**
  * A pre-baked bezier-curved interpolator for quantum-paper transitions.

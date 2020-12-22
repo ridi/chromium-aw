@@ -16,13 +16,13 @@ package org.chromium.autofill.mojom;
 
 public final class ParsingResult extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 40;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
+    private static final int STRUCT_SIZE = 24;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public FieldRendererId usernameRendererId;
-    public FieldRendererId passwordRendererId;
-    public FieldRendererId newPasswordRendererId;
-    public FieldRendererId confirmPasswordRendererId;
+    public int usernameRendererId;
+    public int passwordRendererId;
+    public int newPasswordRendererId;
+    public int confirmPasswordRendererId;
 
     private ParsingResult(int version) {
         super(STRUCT_SIZE, version);
@@ -59,23 +59,19 @@ public final class ParsingResult extends org.chromium.mojo.bindings.Struct {
             result = new ParsingResult(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.usernameRendererId = FieldRendererId.decode(decoder1);
+                result.usernameRendererId = decoder0.readInt(8);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                result.passwordRendererId = FieldRendererId.decode(decoder1);
+                result.passwordRendererId = decoder0.readInt(12);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
-                result.newPasswordRendererId = FieldRendererId.decode(decoder1);
+                result.newPasswordRendererId = decoder0.readInt(16);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
-                result.confirmPasswordRendererId = FieldRendererId.decode(decoder1);
+                result.confirmPasswordRendererId = decoder0.readInt(20);
                 }
 
         } finally {
@@ -89,12 +85,12 @@ public final class ParsingResult extends org.chromium.mojo.bindings.Struct {
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.usernameRendererId, 8, false);
+        encoder0.encode(this.usernameRendererId, 8);
         
-        encoder0.encode(this.passwordRendererId, 16, false);
+        encoder0.encode(this.passwordRendererId, 12);
         
-        encoder0.encode(this.newPasswordRendererId, 24, false);
+        encoder0.encode(this.newPasswordRendererId, 16);
         
-        encoder0.encode(this.confirmPasswordRendererId, 32, false);
+        encoder0.encode(this.confirmPasswordRendererId, 20);
     }
 }

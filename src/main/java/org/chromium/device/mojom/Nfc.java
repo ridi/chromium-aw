@@ -68,4 +68,14 @@ CancelAllWatchesResponse callback);
     interface CancelAllWatchesResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NdefError> { }
 
 
+
+    void suspendNfcOperations(
+);
+
+
+
+    void resumeNfcOperations(
+);
+
+
 }

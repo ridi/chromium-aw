@@ -387,12 +387,7 @@ class AndroidNetworkLibrary {
         if (network == null) {
             return null;
         }
-        LinkProperties linkProperties;
-        try {
-            linkProperties = connectivityManager.getLinkProperties(network);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
         if (linkProperties == null) {
             return null;
         }

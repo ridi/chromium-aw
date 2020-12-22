@@ -10,11 +10,11 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Build;
+import androidx.appcompat.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 
 import androidx.annotation.StyleRes;
-import androidx.appcompat.widget.AppCompatButton;
 
 import org.chromium.android_webview.R;
 

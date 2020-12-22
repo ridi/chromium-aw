@@ -17,17 +17,17 @@ public final class ColorSpaceMatrixId {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int INVALID = 0;
-    public static final int RGB = 1;
-    public static final int BT709 = 2;
-    public static final int FCC = 3;
-    public static final int BT470BG = 4;
-    public static final int SMPTE170M = 5;
-    public static final int SMPTE240M = 6;
-    public static final int YCOCG = 7;
-    public static final int BT2020_NCL = 8;
-    public static final int BT2020_CL = 9;
-    public static final int YDZDX = 10;
-    public static final int GBR = 11;
+    public static final int RGB = 1; // INVALID + 1
+    public static final int BT709 = 2; // RGB + 1
+    public static final int FCC = 3; // BT709 + 1
+    public static final int BT470BG = 4; // FCC + 1
+    public static final int SMPTE170M = 5; // BT470BG + 1
+    public static final int SMPTE240M = 6; // SMPTE170M + 1
+    public static final int YCOCG = 7; // SMPTE240M + 1
+    public static final int BT2020_NCL = 8; // YCOCG + 1
+    public static final int BT2020_CL = 9; // BT2020_NCL + 1
+    public static final int YDZDX = 10; // BT2020_CL + 1
+    public static final int GBR = 11; // YDZDX + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 11;

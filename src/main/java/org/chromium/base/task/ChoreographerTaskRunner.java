@@ -37,6 +37,16 @@ final class ChoreographerTaskRunner implements SingleThreadTaskRunner {
     }
 
     @Override
+    public void destroy() {
+        // NOP
+    }
+
+    @Override
+    public void disableLifetimeCheck() {
+        // NOP
+    }
+
+    @Override
     public void postDelayedTask(Runnable task, long delayMillis) {
         mChoreographer.postFrameCallbackDelayed(new Choreographer.FrameCallback() {
             @Override
@@ -44,5 +54,10 @@ final class ChoreographerTaskRunner implements SingleThreadTaskRunner {
                 task.run();
             }
         }, delayMillis);
+    }
+
+    @Override
+    public void initNativeTaskRunner() {
+        // NOP
     }
 }

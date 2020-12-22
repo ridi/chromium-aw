@@ -26,29 +26,26 @@ public @interface TaskPriority {
    */
   int LOWEST = 0;
   /**
-   * Best effort tasks will only start running when machine resources are available. The application
-   * may preempt best effort tasks if it expects that resources will soon be needed by work of
-   * higher priority. Dependending on the ThreadPolicy, best effort tasks may run on a thread that
-   * is likely to be descheduled when higher priority work arrives (in this process or another).
-   * Examples: - Reporting metrics. - Persisting data to disk. - Loading data that is required for a
-   * potential future user interaction (Note: Use CreateUpdateableSequencedTaskRunner() to increase
-   * the priority when that user interactions happens).
+   * This task will only start running when machine resources are available. The application may
+   * preempt the task if it expects that resources will soon be needed by work of higher priority.
+   * Dependending on the ThreadPolicy, the task may run on a thread that is likely to be descheduled
+   * when higher priority work arrives (in this process or another). Examples: - Reporting metrics.
+   * - Persisting data to disk. - Loading data that is required for a potential future user
+   * interaction (Note: Use CreateUpdateableSequencedTaskRunner() to increase the priority when that
+   * user interactions happens).
    */
   int BEST_EFFORT = 0;
   /**
-   * The result of user visible tasks is visible to the user (in the UI or as a side-effect on the
-   * system) but it is not an immediate response to a user interaction. Examples: - Updating the UI
-   * to reflect progress on a long task. - Downloading a file requested by the user. - Loading an
-   * image that is displayed in the UI but is non-critical.
+   * The result of this task is visible to the user (in the UI or as a side-effect on the system)
+   * but it is not an immediate response to a user interaction. Examples: - Updating the UI to
+   * reflect progress on a long task. - Downloading a file requested by the user. - Loading an image
+   * that is displayed in the UI but is non-critical.
    */
   int USER_VISIBLE = 1;
   /**
-   * User blocking tasks affects UI immediately after a user interaction. Example: - Loading and
-   * rendering a web page after the user clicks a link. - Sorting suggestions after the user types a
-   * character in the omnibox. This is the default TaskPriority in order for tasks to run in order
-   * by default and avoid unintended consequences. The only way to get a task to run at a higher
-   * priority than USER_BLOCKING is to coordinate with a higher-level scheduler (contact scheduler-
-   * dev@chromium.org for such use cases).
+   * This task affects UI immediately after a user interaction. Example: - Loading and rendering a
+   * web page after the user clicks a link. - Sorting suggestions after the user types a character
+   * in the omnibox.
    */
   int USER_BLOCKING = 2;
   /**

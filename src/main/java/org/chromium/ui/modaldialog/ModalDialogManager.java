@@ -37,19 +37,16 @@ public class ModalDialogManager {
      */
     public interface ModalDialogManagerObserver {
         /**
-         * A notification that the manager queues a dialog to be shown.
-         * @param model The model that describes the dialog that was added.
+         * A notification that the manager started showing a modal dialog.
+         * @param model The model that describes the dialog that was shown.
          */
-        default void onDialogAdded(PropertyModel model) {}
+        void onDialogShown(PropertyModel model);
 
         /**
-         * A notification that the manager dismisses a modal dialog.
-         * @param model The model that describes the dialog that was dismissed.
+         * A notification that the manager hid a modal dialog.
+         * @param model The model that describes the dialog that was hidden.
          */
-        default void onDialogDismissed(PropertyModel model) {}
-
-        /** A notification that the manager has dismissed all queued modal dialog. */
-        default void onLastDialogDismissed() {}
+        void onDialogHidden(PropertyModel model);
     }
 
     /**
@@ -227,13 +224,6 @@ public class ModalDialogManager {
     }
 
     /**
-     * @return The type of dialog showing, or last type that was shown.
-     */
-    public @ModalDialogType int getCurrentType() {
-        return mCurrentType;
-    }
-
-    /**
      * Show the specified dialog. If another dialog is currently showing, the specified dialog will
      * be added to the end of the pending dialog list of the specified type.
      * @param model The dialog model to be shown or added to pending list.
@@ -274,7 +264,7 @@ public class ModalDialogManager {
         mCurrentPresenter = mPresenters.get(dialogType, mDefaultPresenter);
         mCurrentPresenter.setDialogModel(
                 model, (dismissalCause) -> dismissDialog(model, dismissalCause));
-        for (ModalDialogManagerObserver o : mObserverList) o.onDialogAdded(model);
+        for (ModalDialogManagerObserver o : mObserverList) o.onDialogShown(model);
     }
 
     /**
@@ -295,15 +285,10 @@ public class ModalDialogManager {
                         dialogs.remove(j)
                                 .get(ModalDialogProperties.CONTROLLER)
                                 .onDismiss(model, dismissalCause);
-                        for (ModalDialogManagerObserver o : mObserverList) {
-                            o.onDialogDismissed(model);
-                        }
-                        dispatchOnLastDialogDismissed();
                         return;
                     }
                 }
             }
-            dispatchOnLastDialogDismissed();
             // If the specified dialog is not found, return without any callbacks.
             return;
         }
@@ -313,11 +298,10 @@ public class ModalDialogManager {
         if (mDismissingCurrentDialog) return;
         mDismissingCurrentDialog = true;
         model.get(ModalDialogProperties.CONTROLLER).onDismiss(model, dismissalCause);
-        for (ModalDialogManagerObserver o : mObserverList) o.onDialogDismissed(model);
+        for (ModalDialogManagerObserver o : mObserverList) o.onDialogHidden(model);
         mCurrentPresenter.setDialogModel(null, null);
         mCurrentPresenter = null;
         mDismissingCurrentDialog = false;
-        dispatchOnLastDialogDismissed();
         showNextDialog();
     }
 
@@ -342,26 +326,9 @@ public class ModalDialogManager {
     public void dismissDialogsOfType(
             @ModalDialogType int dialogType, @DialogDismissalCause int dismissalCause) {
         dismissPendingDialogsOfType(dialogType, dismissalCause);
-        dismissActiveDialogOfType(dialogType, dismissalCause);
-    }
-
-    /**
-     * Dismiss the dialog currently shown if it is of the specified type.
-     *
-     * Any pending dialogs will then be shown.
-     *
-     * @param dialogType The specified type of dialog.
-     * @param dismissalCause The {@link DialogDismissalCause} that describes why the dialogs are
-     *                       dismissed.
-     * @return true if a dialog was showing and was dismissed.
-     */
-    public boolean dismissActiveDialogOfType(
-            @ModalDialogType int dialogType, @DialogDismissalCause int dismissalCause) {
         if (isShowing() && dialogType == mCurrentType) {
             dismissDialog(mCurrentPresenter.getDialogModel(), dismissalCause);
-            return true;
         }
-        return false;
     }
 
     /** Helper method to dismiss pending dialogs of the specified type. */
@@ -369,14 +336,13 @@ public class ModalDialogManager {
             @ModalDialogType int dialogType, @DialogDismissalCause int dismissalCause) {
         List<PropertyModel> dialogs = mPendingDialogs.get(dialogType);
         if (dialogs == null) return;
+
         while (!dialogs.isEmpty()) {
             PropertyModel model = dialogs.remove(0);
             ModalDialogProperties.Controller controller =
                     model.get(ModalDialogProperties.CONTROLLER);
             controller.onDismiss(model, dismissalCause);
-            for (ModalDialogManagerObserver o : mObserverList) o.onDialogDismissed(model);
         }
-        dispatchOnLastDialogDismissed();
     }
 
     /**
@@ -437,23 +403,6 @@ public class ModalDialogManager {
             if (!dialogs.isEmpty()) {
                 showDialog(dialogs.remove(0), dialogType);
                 return;
-            }
-        }
-    }
-
-    /** Helper method for determining if there are any available dialogs */
-    private boolean isPendingDialogsEmpty() {
-        for (int i = 0; i < mPendingDialogs.size(); ++i) {
-            List<PropertyModel> dialogs = mPendingDialogs.valueAt(i);
-            if (!dialogs.isEmpty()) return false;
-        }
-        return true;
-    }
-
-    private void dispatchOnLastDialogDismissed() {
-        if (isPendingDialogsEmpty()) {
-            for (ModalDialogManagerObserver o : mObserverList) {
-                o.onLastDialogDismissed();
             }
         }
     }

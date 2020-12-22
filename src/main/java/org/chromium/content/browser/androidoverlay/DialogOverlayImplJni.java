@@ -1,12 +1,12 @@
 package org.chromium.content.browser.androidoverlay;
 
+import J.N;
 import android.view.Surface;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
-import org.chromium.base.natives.GEN_JNI;
 import org.chromium.gfx.mojom.Rect;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
@@ -18,7 +18,7 @@ final class DialogOverlayImplJni implements DialogOverlayImpl.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.content.browser.androidoverlay.DialogOverlayImpl.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -27,46 +27,46 @@ final class DialogOverlayImplJni implements DialogOverlayImpl.Natives {
 
   @Override
   public long init(DialogOverlayImpl caller, long high, long low, boolean isPowerEfficient) {
-    return (long)GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_init(caller, high, low, isPowerEfficient);
+    return (long)N.MqPi0d6D(caller, high, low, isPowerEfficient);
   }
 
   @Override
   public void completeInit(long nativeDialogOverlayImpl, DialogOverlayImpl caller) {
-    GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_completeInit(nativeDialogOverlayImpl, caller);
+    N.MQAm7B7f(nativeDialogOverlayImpl, caller);
   }
 
   @Override
   public void destroy(long nativeDialogOverlayImpl, DialogOverlayImpl caller) {
-    GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_destroy(nativeDialogOverlayImpl, caller);
+    N.MJj9v_ba(nativeDialogOverlayImpl, caller);
   }
 
   @Override
   public void getCompositorOffset(long nativeDialogOverlayImpl, DialogOverlayImpl caller,
       Rect rect) {
-    GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_getCompositorOffset(nativeDialogOverlayImpl, caller, rect);
+    N.MAd6qeVr(nativeDialogOverlayImpl, caller, rect);
   }
 
   @Override
   public int registerSurface(Surface surface) {
-    return (int)GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_registerSurface(surface);
+    return (int)N.MpcpmTlm(surface);
   }
 
   @Override
   public void unregisterSurface(int surfaceId) {
-    GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_unregisterSurface(surfaceId);
+    N.M1e4GdYZ(surfaceId);
   }
 
   @Override
   public Surface lookupSurfaceForTesting(int surfaceId) {
-    return (Surface)GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_lookupSurfaceForTesting(surfaceId);
+    return (Surface)N.MzUgOpRk(surfaceId);
   }
 
   public static DialogOverlayImpl.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.content.browser.androidoverlay.DialogOverlayImpl.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

@@ -4,8 +4,9 @@
 
 package org.chromium.ui.modelutil;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import androidx.annotation.Nullable;
 
 /**
  * A model change processor for use with a {@link ListObservable} model. The

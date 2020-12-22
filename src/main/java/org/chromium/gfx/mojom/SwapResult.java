@@ -17,8 +17,8 @@ public final class SwapResult {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int ACK = 0;
-    public static final int FAILED = 1;
-    public static final int NAK_RECREATE_BUFFERS = 2;
+    public static final int FAILED = 1; // ACK + 1
+    public static final int NAK_RECREATE_BUFFERS = 2; // FAILED + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

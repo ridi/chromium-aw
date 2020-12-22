@@ -16,15 +16,12 @@ package org.chromium.gfx.mojom;
 
 public final class PresentationFeedback extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 56;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
+    private static final int STRUCT_SIZE = 32;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public org.chromium.mojo_base.mojom.TimeTicks timestamp;
     public org.chromium.mojo_base.mojom.TimeDelta interval;
     public int flags;
-    public org.chromium.mojo_base.mojom.TimeTicks availableTimestamp;
-    public org.chromium.mojo_base.mojom.TimeTicks readyTimestamp;
-    public org.chromium.mojo_base.mojom.TimeTicks latchTimestamp;
 
     private PresentationFeedback(int version) {
         super(STRUCT_SIZE, version);
@@ -73,21 +70,6 @@ public final class PresentationFeedback extends org.chromium.mojo.bindings.Struc
                     
                 result.flags = decoder0.readInt(24);
                 }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
-                result.availableTimestamp = org.chromium.mojo_base.mojom.TimeTicks.decode(decoder1);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
-                result.readyTimestamp = org.chromium.mojo_base.mojom.TimeTicks.decode(decoder1);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, false);
-                result.latchTimestamp = org.chromium.mojo_base.mojom.TimeTicks.decode(decoder1);
-                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -105,11 +87,5 @@ public final class PresentationFeedback extends org.chromium.mojo.bindings.Struc
         encoder0.encode(this.interval, 16, false);
         
         encoder0.encode(this.flags, 24);
-        
-        encoder0.encode(this.availableTimestamp, 32, false);
-        
-        encoder0.encode(this.readyTimestamp, 40, false);
-        
-        encoder0.encode(this.latchTimestamp, 48, false);
     }
 }

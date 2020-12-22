@@ -24,8 +24,8 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int NOT_CONNECTED = 0;
-        public static final int CONNECTING = 1;
-        public static final int CONNECTED = 2;
+        public static final int CONNECTING = 1; // NOT_CONNECTED + 1
+        public static final int CONNECTED = 2; // CONNECTING + 1
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;
@@ -43,19 +43,19 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int UNKNOWN = 0;
-        public static final int COMPUTER = 1;
-        public static final int PHONE = 2;
-        public static final int MODEM = 3;
-        public static final int AUDIO = 4;
-        public static final int CAR_AUDIO = 5;
-        public static final int VIDEO = 6;
-        public static final int PERIPHERAL = 7;
-        public static final int JOYSTICK = 8;
-        public static final int GAMEPAD = 9;
-        public static final int KEYBOARD = 10;
-        public static final int MOUSE = 11;
-        public static final int TABLET = 12;
-        public static final int KEYBOARD_MOUSE_COMBO = 13;
+        public static final int COMPUTER = 1; // UNKNOWN + 1
+        public static final int PHONE = 2; // COMPUTER + 1
+        public static final int MODEM = 3; // PHONE + 1
+        public static final int AUDIO = 4; // MODEM + 1
+        public static final int CAR_AUDIO = 5; // AUDIO + 1
+        public static final int VIDEO = 6; // CAR_AUDIO + 1
+        public static final int PERIPHERAL = 7; // VIDEO + 1
+        public static final int JOYSTICK = 8; // PERIPHERAL + 1
+        public static final int GAMEPAD = 9; // JOYSTICK + 1
+        public static final int KEYBOARD = 10; // GAMEPAD + 1
+        public static final int MOUSE = 11; // KEYBOARD + 1
+        public static final int TABLET = 12; // MOUSE + 1
+        public static final int KEYBOARD_MOUSE_COMBO = 13; // TABLET + 1
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 13;

@@ -17,10 +17,10 @@ public final class SerializedHandleType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int MOJO_HANDLE = 0;
-    public static final int PLATFORM_FILE = 1;
-    public static final int WIN_HANDLE = 2;
-    public static final int MACH_PORT = 3;
-    public static final int FUCHSIA_HANDLE = 4;
+    public static final int PLATFORM_FILE = 1; // MOJO_HANDLE + 1
+    public static final int WIN_HANDLE = 2; // PLATFORM_FILE + 1
+    public static final int MACH_PORT = 3; // WIN_HANDLE + 1
+    public static final int FUCHSIA_HANDLE = 4; // MACH_PORT + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 4;

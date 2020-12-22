@@ -16,13 +16,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    BrowserTaskType.DEFAULT, BrowserTaskType.BOOTSTRAP, BrowserTaskType.PRECONNECT,
-    BrowserTaskType.BROWSER_TASK_TYPE_LAST
+    BrowserTaskType.DEFAULT, BrowserTaskType.BOOTSTRAP, BrowserTaskType.NAVIGATION,
+    BrowserTaskType.PRECONNECT, BrowserTaskType.BROWSER_TASK_TYPE_LAST
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface BrowserTaskType {
   /**
-   * A catch all for tasks that don't fit the types below.
+   * A catch all tasks that don't fit the types below.
    */
   int DEFAULT = 0;
   /**
@@ -30,11 +30,15 @@ public @interface BrowserTaskType {
    */
   int BOOTSTRAP = 1;
   /**
+   * Navigation related tasks.
+   */
+  int NAVIGATION = 2;
+  /**
    * A subset of network tasks related to preconnection.
    */
-  int PRECONNECT = 2;
+  int PRECONNECT = 3;
   /**
    * Used to validate values in Java
    */
-  int BROWSER_TASK_TYPE_LAST = 3;
+  int BROWSER_TASK_TYPE_LAST = 4;
 }

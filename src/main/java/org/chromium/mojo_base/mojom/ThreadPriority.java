@@ -17,9 +17,9 @@ public final class ThreadPriority {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int BACKGROUND = 0;
-    public static final int NORMAL = 1;
-    public static final int DISPLAY = 2;
-    public static final int REALTIME_AUDIO = 3;
+    public static final int NORMAL = 1; // BACKGROUND + 1
+    public static final int DISPLAY = 2; // NORMAL + 1
+    public static final int REALTIME_AUDIO = 3; // DISPLAY + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

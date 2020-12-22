@@ -14,21 +14,16 @@ import org.chromium.base.annotations.NativeMethods;
 public class AwPacProcessor {
     private long mNativePacProcessor;
 
+    private AwPacProcessor() {
+        this.mNativePacProcessor = AwPacProcessorJni.get().getDefaultPacProcessor();
+    }
+
     private static class LazyHolder {
         static final AwPacProcessor sInstance = new AwPacProcessor();
     }
 
     public static AwPacProcessor getInstance() {
         return LazyHolder.sInstance;
-    }
-
-    public AwPacProcessor() {
-        mNativePacProcessor = AwPacProcessorJni.get().createNativePacProcessor();
-    }
-
-    // The calling code must not call any methods after it called destroy().
-    public void destroy() {
-        AwPacProcessorJni.get().destroyNative(mNativePacProcessor, this);
     }
 
     public boolean setProxyScript(String script) {
@@ -39,16 +34,10 @@ public class AwPacProcessor {
         return AwPacProcessorJni.get().makeProxyRequest(mNativePacProcessor, this, url);
     }
 
-    public static void initializeEnvironment() {
-        AwPacProcessorJni.get().initializeEnvironment();
-    }
-
     @NativeMethods
     interface Natives {
-        void initializeEnvironment();
-        long createNativePacProcessor();
+        long getDefaultPacProcessor();
         boolean setProxyScript(long nativeAwPacProcessor, AwPacProcessor caller, String script);
         String makeProxyRequest(long nativeAwPacProcessor, AwPacProcessor caller, String url);
-        void destroyNative(long nativeAwPacProcessor, AwPacProcessor caller);
     }
 }

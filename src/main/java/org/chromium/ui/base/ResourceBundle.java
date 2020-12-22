@@ -72,14 +72,12 @@ public final class ResourceBundle {
      *                 false, return the path of the uncompressed WebView UI
      *                 strings instead. Note that APK .pak files are stored
      *                 compressed and handled differently.
-     * @param logError Logs if the file is not found.
      * @return Asset path to uncompressed .pak file, or null if the locale is
      *         not supported by this version of Chromium, or the file is
      *         missing.
      */
     @CalledByNative
-    private static String getLocalePakResourcePath(
-            String locale, boolean inBundle, boolean logError) {
+    private static String getLocalePakResourcePath(String locale, boolean inBundle) {
         if (sUncompressedLocales == null) {
             // Locales may be null in unit tests.
             return null;
@@ -105,10 +103,8 @@ public final class ResourceBundle {
         try (AssetFileDescriptor afd = manager.openNonAssetFd(assetPath)) {
             return assetPath;
         } catch (IOException e) {
-            if (logError) {
-                Log.e(TAG, "path=%s", assetPath, e);
-            }
-            return null;
+            Log.e(TAG, "Error while loading asset %s: %s", assetPath, e);
         }
+        return null;
     }
 }

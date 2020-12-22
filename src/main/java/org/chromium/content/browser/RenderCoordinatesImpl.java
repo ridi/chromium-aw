@@ -98,9 +98,13 @@ public class RenderCoordinatesImpl implements RenderCoordinates {
         mDeviceScaleFactor = dipScale;
     }
 
-    public void updateFrameInfo(float contentWidthCss, float contentHeightCss,
-            float viewportWidthCss, float viewportHeightCss, float minPageScaleFactor,
-            float maxPageScaleFactor, float contentOffsetYPix) {
+    public void updateFrameInfo(float scrollXCss, float scrollYCss, float contentWidthCss,
+            float contentHeightCss, float viewportWidthCss, float viewportHeightCss,
+            float pageScaleFactor, float minPageScaleFactor, float maxPageScaleFactor,
+            float contentOffsetYPix) {
+        mScrollXCss = scrollXCss;
+        mScrollYCss = scrollYCss;
+        mPageScaleFactor = pageScaleFactor;
         mMinPageScaleFactor = minPageScaleFactor;
         mMaxPageScaleFactor = maxPageScaleFactor;
         mTopContentOffsetYPix = contentOffsetYPix;
@@ -108,12 +112,6 @@ public class RenderCoordinatesImpl implements RenderCoordinates {
         updateContentSizeCss(contentWidthCss, contentHeightCss);
         mLastFrameViewportWidthCss = viewportWidthCss;
         mLastFrameViewportHeightCss = viewportHeightCss;
-    }
-
-    public void updateScrollInfo(float pageScaleFactor, float scrollXCss, float scrollYCss) {
-        mPageScaleFactor = pageScaleFactor;
-        mScrollXCss = scrollXCss;
-        mScrollYCss = scrollYCss;
     }
 
     /**

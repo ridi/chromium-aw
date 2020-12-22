@@ -17,8 +17,8 @@ public final class InstanceState {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int CREATED = 0;
-    public static final int STARTED = 1;
-    public static final int UNREACHABLE = 2;
+    public static final int STARTED = 1; // CREATED + 1
+    public static final int UNREACHABLE = 2; // STARTED + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

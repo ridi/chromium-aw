@@ -17,12 +17,12 @@ public final class SubmissionSource {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int SAME_DOCUMENT_NAVIGATION = 1;
-    public static final int XHR_SUCCEEDED = 2;
-    public static final int FRAME_DETACHED = 3;
-    public static final int DOM_MUTATION_AFTER_XHR = 4;
-    public static final int PROBABLY_FORM_SUBMITTED = 5;
-    public static final int FORM_SUBMISSION = 6;
+    public static final int SAME_DOCUMENT_NAVIGATION = 1; // NONE + 1
+    public static final int XHR_SUCCEEDED = 2; // SAME_DOCUMENT_NAVIGATION + 1
+    public static final int FRAME_DETACHED = 3; // XHR_SUCCEEDED + 1
+    public static final int DOM_MUTATION_AFTER_XHR = 4; // FRAME_DETACHED + 1
+    public static final int PROBABLY_FORM_SUBMITTED = 5; // DOM_MUTATION_AFTER_XHR + 1
+    public static final int FORM_SUBMISSION = 6; // PROBABLY_FORM_SUBMITTED + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

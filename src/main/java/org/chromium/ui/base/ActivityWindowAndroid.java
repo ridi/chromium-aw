@@ -26,9 +26,6 @@ public class ActivityWindowAndroid
         extends IntentWindowAndroid implements ApplicationStatus.ActivityStateListener {
     private boolean mListenToActivityState;
 
-    // Just create one ImmutableWeakReference object to avoid gc churn.
-    private ImmutableWeakReference<Activity> mActivityWeakRefHolder;
-
     /**
      * Creates an Activity-specific WindowAndroid with associated intent functionality.
      * TODO(jdduke): Remove this overload when all callsites have been updated to
@@ -100,11 +97,7 @@ public class ActivityWindowAndroid
 
     @Override
     public WeakReference<Activity> getActivity() {
-        if (mActivityWeakRefHolder == null) {
-            mActivityWeakRefHolder = new ImmutableWeakReference<>(
-                    ContextUtils.activityFromContext(getContext().get()));
-        }
-        return mActivityWeakRefHolder;
+        return new WeakReference<>(ContextUtils.activityFromContext(getContext().get()));
     }
 
     @Override

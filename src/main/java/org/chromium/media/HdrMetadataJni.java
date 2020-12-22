@@ -1,12 +1,12 @@
 package org.chromium.media;
 
+import J.N;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
@@ -17,7 +17,7 @@ final class HdrMetadataJni implements HdrMetadata.Natives {
   public static final JniStaticTestMocker<HdrMetadata.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.HdrMetadata.Natives>() {
     @java.lang.Override
     public void setInstanceForTesting(org.chromium.media.HdrMetadata.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -26,85 +26,85 @@ final class HdrMetadataJni implements HdrMetadata.Natives {
 
   @Override
   public int primaries(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (int)GEN_JNI.org_chromium_media_HdrMetadata_primaries(nativeJniHdrMetadata, caller);
+    return (int)N.M6EY_9Mw(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public int colorTransfer(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (int)GEN_JNI.org_chromium_media_HdrMetadata_colorTransfer(nativeJniHdrMetadata, caller);
+    return (int)N.Myx2EYmS(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public int range(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (int)GEN_JNI.org_chromium_media_HdrMetadata_range(nativeJniHdrMetadata, caller);
+    return (int)N.MGKRBsYQ(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryRChromaticityX(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryRChromaticityX(nativeJniHdrMetadata, caller);
+    return (float)N.Mc0wiJ8$(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryRChromaticityY(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryRChromaticityY(nativeJniHdrMetadata, caller);
+    return (float)N.MYP0SLZ2(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryGChromaticityX(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryGChromaticityX(nativeJniHdrMetadata, caller);
+    return (float)N.MRQrYl4t(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryGChromaticityY(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryGChromaticityY(nativeJniHdrMetadata, caller);
+    return (float)N.MtgfnGGz(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryBChromaticityX(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryBChromaticityX(nativeJniHdrMetadata, caller);
+    return (float)N.McEG$Qxu(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float primaryBChromaticityY(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_primaryBChromaticityY(nativeJniHdrMetadata, caller);
+    return (float)N.MU6WBitK(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float whitePointChromaticityX(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_whitePointChromaticityX(nativeJniHdrMetadata, caller);
+    return (float)N.M8pzdQ$h(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float whitePointChromaticityY(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_whitePointChromaticityY(nativeJniHdrMetadata, caller);
+    return (float)N.MXbY07SE(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float maxMasteringLuminance(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_maxMasteringLuminance(nativeJniHdrMetadata, caller);
+    return (float)N.MOL90CVq(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public float minMasteringLuminance(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (float)GEN_JNI.org_chromium_media_HdrMetadata_minMasteringLuminance(nativeJniHdrMetadata, caller);
+    return (float)N.MM07Xk18(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public int maxContentLuminance(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (int)GEN_JNI.org_chromium_media_HdrMetadata_maxContentLuminance(nativeJniHdrMetadata, caller);
+    return (int)N.MMmvZ$nS(nativeJniHdrMetadata, caller);
   }
 
   @Override
   public int maxFrameAverageLuminance(long nativeJniHdrMetadata, HdrMetadata caller) {
-    return (int)GEN_JNI.org_chromium_media_HdrMetadata_maxFrameAverageLuminance(nativeJniHdrMetadata, caller);
+    return (int)N.MzRCryEE(nativeJniHdrMetadata, caller);
   }
 
   public static HdrMetadata.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.media.HdrMetadata.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

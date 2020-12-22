@@ -19,19 +19,13 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
     private static final int STRUCT_SIZE = 40;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public java.util.Map<Integer, CspSourceList> directives;
-    public boolean upgradeInsecureRequests;
-    public boolean treatAsPublicAddress;
-    public int sandbox;
+    public CspDirective[] directives;
     public ContentSecurityPolicyHeader header;
     public boolean useReportingApi;
     public String[] reportEndpoints;
 
     private ContentSecurityPolicy(int version) {
         super(STRUCT_SIZE, version);
-        this.upgradeInsecureRequests = (boolean) false;
-        this.treatAsPublicAddress = (boolean) false;
-        this.sandbox = (int) WebSandboxFlags.ALL;
         this.useReportingApi = (boolean) false;
     }
 
@@ -68,58 +62,23 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
                 {
-                    decoder1.readDataHeaderForMap();
-                    int[] keys0;
-                    CspSourceList[] values0;
-                    {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.directives = new CspDirective[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
                         
-                        keys0 = decoder1.readInts(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                        {
-                            for (int i1 = 0; i1 < keys0.length; ++i1) {
-                                CspDirectiveName.validate(keys0[i1]);
-                            }
-                        }
-                    }
-                    {
-                        
-                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE, false);
-                        {
-                            org.chromium.mojo.bindings.DataHeader si2 = decoder2.readDataHeaderForPointerArray(keys0.length);
-                            values0 = new CspSourceList[si2.elementsOrVersion];
-                            for (int i2 = 0; i2 < si2.elementsOrVersion; ++i2) {
-                                
-                                org.chromium.mojo.bindings.Decoder decoder3 = decoder2.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i2, false);
-                                values0[i2] = CspSourceList.decode(decoder3);
-                            }
-                        }
-                    }
-                    result.directives = new java.util.HashMap<Integer, CspSourceList>();
-                    for (int index0 = 0; index0 < keys0.length; ++index0) {
-                        result.directives.put(keys0[index0],  values0[index0]);
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                        result.directives[i1] = CspDirective.decode(decoder2);
                     }
                 }
                 }
                 {
                     
-                result.upgradeInsecureRequests = decoder0.readBoolean(16, 0);
-                }
-                {
-                    
-                result.treatAsPublicAddress = decoder0.readBoolean(16, 1);
-                }
-                {
-                    
-                result.useReportingApi = decoder0.readBoolean(16, 2);
-                }
-                {
-                    
-                result.sandbox = decoder0.readInt(20);
-                    WebSandboxFlags.validate(result.sandbox);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
                 result.header = ContentSecurityPolicyHeader.decode(decoder1);
+                }
+                {
+                    
+                result.useReportingApi = decoder0.readBoolean(24, 0);
                 }
                 {
                     
@@ -148,37 +107,16 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
         if (this.directives == null) {
             encoder0.encodeNullPointer(8, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encoderForMap(8);
-            int size0 = this.directives.size();
-            int[] keys0 = new int[size0];
-            CspSourceList[] values0 = new CspSourceList[size0];
-            int index0 = 0;
-            for (java.util.Map.Entry<Integer, CspSourceList> entry0 : this.directives.entrySet()) {
-                keys0[index0] = entry0.getKey();
-                values0[index0] = entry0.getValue();
-                ++index0;
-            }
-            
-            encoder1.encode(keys0, org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-            
-            {
-                org.chromium.mojo.bindings.Encoder encoder2 = encoder1.encodePointerArray(values0.length, org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                for (int i1 = 0; i1 < values0.length; ++i1) {
-                    
-                    encoder2.encode(values0[i1], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
-                }
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.directives.length, 8, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.directives.length; ++i0) {
+                
+                encoder1.encode(this.directives[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
             }
         }
         
-        encoder0.encode(this.upgradeInsecureRequests, 16, 0);
+        encoder0.encode(this.header, 16, false);
         
-        encoder0.encode(this.treatAsPublicAddress, 16, 1);
-        
-        encoder0.encode(this.useReportingApi, 16, 2);
-        
-        encoder0.encode(this.sandbox, 20);
-        
-        encoder0.encode(this.header, 24, false);
+        encoder0.encode(this.useReportingApi, 24, 0);
         
         if (this.reportEndpoints == null) {
             encoder0.encodeNullPointer(32, false);

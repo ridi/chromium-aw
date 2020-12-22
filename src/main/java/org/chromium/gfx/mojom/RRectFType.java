@@ -17,11 +17,11 @@ public final class RRectFType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int EMPTY = 0;
-    public static final int RECT = 1;
-    public static final int SINGLE = 2;
-    public static final int SIMPLE = 3;
-    public static final int OVAL = 4;
-    public static final int COMPLEX = 5;
+    public static final int RECT = 1; // EMPTY + 1
+    public static final int SINGLE = 2; // RECT + 1
+    public static final int SIMPLE = 3; // SINGLE + 1
+    public static final int OVAL = 4; // SIMPLE + 1
+    public static final int COMPLEX = 5; // OVAL + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 5;

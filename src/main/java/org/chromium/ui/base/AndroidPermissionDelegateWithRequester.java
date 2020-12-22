@@ -30,18 +30,7 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
     private static final int REQUEST_CODE_PREFIX = 1000;
     private static final int REQUEST_CODE_RANGE_SIZE = 100;
 
-    /**
-     * Shared preference key prefix for remembering Android permissions denied by the user.
-     * <p>
-     * <b>NOTE:</b> As of M86 the semantics of shared prefs using this key prefix has changed:
-     * <ul>
-     *   <li>Previously: {@code true} if the user was ever asked for a permission, otherwise absent.
-     *   <li>M86+: {@code true} if the user most recently has denied permission access,
-     *     otherwise absent.
-     * </ul>
-     */
-    private static final String PERMISSION_WAS_DENIED_KEY_PREFIX =
-            "HasRequestedAndroidPermission::";
+    private static final String PERMISSION_QUERIED_KEY_PREFIX = "HasRequestedAndroidPermission::";
 
     public AndroidPermissionDelegateWithRequester() {
         mHandler = new Handler();
@@ -50,27 +39,9 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
 
     @Override
     public final boolean hasPermission(String permission) {
-        boolean isGranted =
-                ApiCompatibilityUtils.checkPermission(ContextUtils.getApplicationContext(),
-                        permission, Process.myPid(), Process.myUid())
+        return ApiCompatibilityUtils.checkPermission(ContextUtils.getApplicationContext(),
+                       permission, Process.myPid(), Process.myUid())
                 == PackageManager.PERMISSION_GRANTED;
-        if (isGranted) {
-            clearPermissionWasDenied(permission);
-        }
-        return isGranted;
-    }
-
-    /**
-     * Clear the shared pref indicating that {@code permission} was denied by the user.
-     */
-    private void clearPermissionWasDenied(String permission) {
-        String key = getPermissionWasDeniedKey(permission);
-        SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-        if (!prefs.contains(key)) return;
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(key);
-        editor.apply();
     }
 
     /** @see Activity.shouldShowRequestPermissionRationale */
@@ -80,30 +51,25 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
     public final boolean canRequestPermission(String permission) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
 
-        if (hasPermission(permission)) {
-            // There is no need to call clearPermissionWasDenied - hasPermission already cleared
-            // the shared pref if needed.
-            return true;
-        }
-
         if (isPermissionRevokedByPolicy(permission)) {
             return false;
         }
 
         if (shouldShowRequestPermissionRationale(permission)) {
-            // This information from Android suggests we should not assume the user will always deny
-            // the permission.
-            clearPermissionWasDenied(permission);
             return true;
         }
 
-        // Check whether we have been denied this permission by checking whether we saved
+        // Check whether we have ever asked for this permission by checking whether we saved
         // a preference associated with it before.
+        String permissionQueriedKey = getHasRequestedPermissionKey(permission);
         SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-        return !prefs.getBoolean(getPermissionWasDeniedKey(permission), false);
+        if (!prefs.getBoolean(permissionQueriedKey, false)) return true;
+
+        logUMAOnRequestPermissionDenied(permission);
+        return false;
     }
 
-    /** @see PackageManager#isPermissionRevokedByPolicy(String, String) */
+    /** @see PackageManager.isPermissionRevokedByPolicy */
     protected abstract boolean isPermissionRevokedByPolicyInternal(String permission);
 
     @Override
@@ -139,11 +105,7 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
             int requestCode, String[] permissions, int[] grantResults) {
         SharedPreferences.Editor editor = ContextUtils.getAppSharedPreferences().edit();
         for (int i = 0; i < permissions.length; i++) {
-            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                editor.remove(getPermissionWasDeniedKey(permissions[i]));
-            } else {
-                editor.putBoolean(getPermissionWasDeniedKey(permissions[i]), true);
-            }
+            editor.putBoolean(getHasRequestedPermissionKey(permissions[i]), true);
         }
         editor.apply();
 
@@ -153,6 +115,8 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
         callback.onRequestPermissionsResult(permissions, grantResults);
         return true;
     }
+
+    protected void logUMAOnRequestPermissionDenied(String permission) {}
 
     /** @see Activity.requestPermissions */
     protected abstract boolean requestPermissionsFromRequester(
@@ -174,7 +138,8 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
         return true;
     }
 
-    private String normalizePermissionName(String permission) {
+    private String getHasRequestedPermissionKey(String permission) {
+        String permissionQueriedKey = permission;
         // Prior to O, permissions were granted at the group level.  Post O, each permission is
         // granted individually.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -191,21 +156,13 @@ public abstract class AndroidPermissionDelegateWithRequester implements AndroidP
                                 permission, PackageManager.GET_META_DATA);
 
                 if (!TextUtils.isEmpty(permissionInfo.group)) {
-                    return permissionInfo.group;
+                    permissionQueriedKey = permissionInfo.group;
                 }
             } catch (NameNotFoundException e) {
                 // Unknown permission.  Default back to the permission name instead of the group.
             }
         }
 
-        return permission;
-    }
-
-    /**
-     * Returns the name of a shared preferences key used to store whether Chrome was denied
-     * {@code permission}.
-     */
-    private String getPermissionWasDeniedKey(String permission) {
-        return PERMISSION_WAS_DENIED_KEY_PREFIX + normalizePermissionName(permission);
+        return PERMISSION_QUERIED_KEY_PREFIX + permissionQueriedKey;
     }
 }

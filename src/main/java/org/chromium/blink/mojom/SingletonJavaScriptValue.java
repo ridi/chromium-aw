@@ -17,7 +17,7 @@ public final class SingletonJavaScriptValue {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NULL = 0;
-    public static final int UNDEFINED = 1;
+    public static final int UNDEFINED = 1; // NULL + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 1;

@@ -9,7 +9,7 @@ public final class AwVariationsSeedOuterClass {
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
   public interface AwVariationsSeedOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:android_webview.AwVariationsSeed)
+      // @@protoc_insertion_point(interface_extends:org.chromium.android_webview.proto.AwVariationsSeed)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -18,7 +18,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return Whether the signature field is set.
      */
     boolean hasSignature();
     /**
@@ -27,7 +26,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return The signature.
      */
     java.lang.String getSignature();
     /**
@@ -36,7 +34,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return The bytes for signature.
      */
     com.google.protobuf.ByteString
         getSignatureBytes();
@@ -47,7 +44,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return Whether the country field is set.
      */
     boolean hasCountry();
     /**
@@ -56,7 +52,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return The country.
      */
     java.lang.String getCountry();
     /**
@@ -65,7 +60,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return The bytes for country.
      */
     com.google.protobuf.ByteString
         getCountryBytes();
@@ -78,7 +72,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return Whether the dateHeader field is set.
      */
     @java.lang.Deprecated boolean hasDateHeader();
     /**
@@ -89,7 +82,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return The dateHeader.
      */
     @java.lang.Deprecated java.lang.String getDateHeader();
     /**
@@ -100,7 +92,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return The bytes for dateHeader.
      */
     @java.lang.Deprecated com.google.protobuf.ByteString
         getDateHeaderBytes();
@@ -111,7 +102,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bool is_gzip_compressed = 4;</code>
-     * @return Whether the isGzipCompressed field is set.
      */
     boolean hasIsGzipCompressed();
     /**
@@ -120,7 +110,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bool is_gzip_compressed = 4;</code>
-     * @return The isGzipCompressed.
      */
     boolean getIsGzipCompressed();
 
@@ -130,7 +119,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bytes seed_data = 5;</code>
-     * @return Whether the seedData field is set.
      */
     boolean hasSeedData();
     /**
@@ -139,7 +127,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bytes seed_data = 5;</code>
-     * @return The seedData.
      */
     com.google.protobuf.ByteString getSeedData();
 
@@ -150,7 +137,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional int64 date = 6;</code>
-     * @return Whether the date field is set.
      */
     boolean hasDate();
     /**
@@ -160,7 +146,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional int64 date = 6;</code>
-     * @return The date.
      */
     long getDate();
   }
@@ -173,12 +158,12 @@ public final class AwVariationsSeedOuterClass {
    * Next tag: 7
    * </pre>
    *
-   * Protobuf type {@code android_webview.AwVariationsSeed}
+   * Protobuf type {@code org.chromium.android_webview.proto.AwVariationsSeed}
    */
   public  static final class AwVariationsSeed extends
       com.google.protobuf.GeneratedMessageLite<
           AwVariationsSeed, AwVariationsSeed.Builder> implements
-      // @@protoc_insertion_point(message_implements:android_webview.AwVariationsSeed)
+      // @@protoc_insertion_point(message_implements:org.chromium.android_webview.proto.AwVariationsSeed)
       AwVariationsSeedOrBuilder {
     private AwVariationsSeed() {
       signature_ = "";
@@ -195,11 +180,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return Whether the signature field is set.
      */
-    @java.lang.Override
     public boolean hasSignature() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <pre>
@@ -207,9 +190,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return The signature.
      */
-    @java.lang.Override
     public java.lang.String getSignature() {
       return signature_;
     }
@@ -219,9 +200,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @return The bytes for signature.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getSignatureBytes() {
       return com.google.protobuf.ByteString.copyFromUtf8(signature_);
@@ -232,11 +211,12 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @param value The signature to set.
      */
     private void setSignature(
         java.lang.String value) {
-      value.getClass();
+      if (value == null) {
+    throw new NullPointerException();
+  }
   bitField0_ |= 0x00000001;
       signature_ = value;
     }
@@ -257,12 +237,14 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string signature = 1;</code>
-     * @param value The bytes for signature to set.
      */
     private void setSignatureBytes(
         com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
       signature_ = value.toStringUtf8();
-      bitField0_ |= 0x00000001;
     }
 
     public static final int COUNTRY_FIELD_NUMBER = 2;
@@ -273,11 +255,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return Whether the country field is set.
      */
-    @java.lang.Override
     public boolean hasCountry() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <pre>
@@ -285,9 +265,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return The country.
      */
-    @java.lang.Override
     public java.lang.String getCountry() {
       return country_;
     }
@@ -297,9 +275,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @return The bytes for country.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getCountryBytes() {
       return com.google.protobuf.ByteString.copyFromUtf8(country_);
@@ -310,11 +286,12 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @param value The country to set.
      */
     private void setCountry(
         java.lang.String value) {
-      value.getClass();
+      if (value == null) {
+    throw new NullPointerException();
+  }
   bitField0_ |= 0x00000002;
       country_ = value;
     }
@@ -335,12 +312,14 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string country = 2;</code>
-     * @param value The bytes for country to set.
      */
     private void setCountryBytes(
         com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
       country_ = value.toStringUtf8();
-      bitField0_ |= 0x00000002;
     }
 
     public static final int DATE_HEADER_FIELD_NUMBER = 3;
@@ -353,11 +332,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return Whether the dateHeader field is set.
      */
-    @java.lang.Override
     @java.lang.Deprecated public boolean hasDateHeader() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <pre>
@@ -367,9 +344,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return The dateHeader.
      */
-    @java.lang.Override
     @java.lang.Deprecated public java.lang.String getDateHeader() {
       return dateHeader_;
     }
@@ -381,9 +356,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @return The bytes for dateHeader.
      */
-    @java.lang.Override
     @java.lang.Deprecated public com.google.protobuf.ByteString
         getDateHeaderBytes() {
       return com.google.protobuf.ByteString.copyFromUtf8(dateHeader_);
@@ -396,11 +369,12 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @param value The dateHeader to set.
      */
     private void setDateHeader(
         java.lang.String value) {
-      value.getClass();
+      if (value == null) {
+    throw new NullPointerException();
+  }
   bitField0_ |= 0x00000004;
       dateHeader_ = value;
     }
@@ -425,12 +399,14 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional string date_header = 3 [deprecated = true];</code>
-     * @param value The bytes for dateHeader to set.
      */
     private void setDateHeaderBytes(
         com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
       dateHeader_ = value.toStringUtf8();
-      bitField0_ |= 0x00000004;
     }
 
     public static final int IS_GZIP_COMPRESSED_FIELD_NUMBER = 4;
@@ -441,11 +417,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bool is_gzip_compressed = 4;</code>
-     * @return Whether the isGzipCompressed field is set.
      */
-    @java.lang.Override
     public boolean hasIsGzipCompressed() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <pre>
@@ -453,9 +427,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bool is_gzip_compressed = 4;</code>
-     * @return The isGzipCompressed.
      */
-    @java.lang.Override
     public boolean getIsGzipCompressed() {
       return isGzipCompressed_;
     }
@@ -465,7 +437,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bool is_gzip_compressed = 4;</code>
-     * @param value The isGzipCompressed to set.
      */
     private void setIsGzipCompressed(boolean value) {
       bitField0_ |= 0x00000008;
@@ -491,11 +462,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bytes seed_data = 5;</code>
-     * @return Whether the seedData field is set.
      */
-    @java.lang.Override
     public boolean hasSeedData() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <pre>
@@ -503,9 +472,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bytes seed_data = 5;</code>
-     * @return The seedData.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getSeedData() {
       return seedData_;
     }
@@ -515,10 +482,11 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional bytes seed_data = 5;</code>
-     * @param value The seedData to set.
      */
     private void setSeedData(com.google.protobuf.ByteString value) {
-      value.getClass();
+      if (value == null) {
+    throw new NullPointerException();
+  }
   bitField0_ |= 0x00000010;
       seedData_ = value;
     }
@@ -543,11 +511,9 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional int64 date = 6;</code>
-     * @return Whether the date field is set.
      */
-    @java.lang.Override
     public boolean hasDate() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <pre>
@@ -556,9 +522,7 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional int64 date = 6;</code>
-     * @return The date.
      */
-    @java.lang.Override
     public long getDate() {
       return date_;
     }
@@ -569,7 +533,6 @@ public final class AwVariationsSeedOuterClass {
      * </pre>
      *
      * <code>optional int64 date = 6;</code>
-     * @param value The date to set.
      */
     private void setDate(long value) {
       bitField0_ |= 0x00000020;
@@ -588,19 +551,63 @@ public final class AwVariationsSeedOuterClass {
       date_ = 0L;
     }
 
-    public static org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeString(1, getSignature());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeString(2, getCountry());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeString(3, getDateHeader());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBool(4, isGzipCompressed_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, seedData_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt64(6, date_);
+      }
+      unknownFields.writeTo(output);
     }
-    public static org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getSignature());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getCountry());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getDateHeader());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, isGzipCompressed_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, seedData_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, date_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
     }
+
     public static org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -663,10 +670,10 @@ public final class AwVariationsSeedOuterClass {
     }
 
     public static Builder newBuilder() {
-      return (Builder) DEFAULT_INSTANCE.createBuilder();
+      return DEFAULT_INSTANCE.toBuilder();
     }
     public static Builder newBuilder(org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed prototype) {
-      return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
     /**
@@ -678,12 +685,12 @@ public final class AwVariationsSeedOuterClass {
      * Next tag: 7
      * </pre>
      *
-     * Protobuf type {@code android_webview.AwVariationsSeed}
+     * Protobuf type {@code org.chromium.android_webview.proto.AwVariationsSeed}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
           org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed, Builder> implements
-        // @@protoc_insertion_point(builder_implements:android_webview.AwVariationsSeed)
+        // @@protoc_insertion_point(builder_implements:org.chromium.android_webview.proto.AwVariationsSeed)
         org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeedOrBuilder {
       // Construct using org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed.newBuilder()
       private Builder() {
@@ -697,9 +704,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @return Whether the signature field is set.
        */
-      @java.lang.Override
       public boolean hasSignature() {
         return instance.hasSignature();
       }
@@ -709,9 +714,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @return The signature.
        */
-      @java.lang.Override
       public java.lang.String getSignature() {
         return instance.getSignature();
       }
@@ -721,9 +724,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @return The bytes for signature.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString
           getSignatureBytes() {
         return instance.getSignatureBytes();
@@ -734,8 +735,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @param value The signature to set.
-       * @return This builder for chaining.
        */
       public Builder setSignature(
           java.lang.String value) {
@@ -749,7 +748,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSignature() {
         copyOnWrite();
@@ -762,8 +760,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string signature = 1;</code>
-       * @param value The bytes for signature to set.
-       * @return This builder for chaining.
        */
       public Builder setSignatureBytes(
           com.google.protobuf.ByteString value) {
@@ -778,9 +774,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @return Whether the country field is set.
        */
-      @java.lang.Override
       public boolean hasCountry() {
         return instance.hasCountry();
       }
@@ -790,9 +784,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @return The country.
        */
-      @java.lang.Override
       public java.lang.String getCountry() {
         return instance.getCountry();
       }
@@ -802,9 +794,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @return The bytes for country.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString
           getCountryBytes() {
         return instance.getCountryBytes();
@@ -815,8 +805,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @param value The country to set.
-       * @return This builder for chaining.
        */
       public Builder setCountry(
           java.lang.String value) {
@@ -830,7 +818,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearCountry() {
         copyOnWrite();
@@ -843,8 +830,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string country = 2;</code>
-       * @param value The bytes for country to set.
-       * @return This builder for chaining.
        */
       public Builder setCountryBytes(
           com.google.protobuf.ByteString value) {
@@ -861,9 +846,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @return Whether the dateHeader field is set.
        */
-      @java.lang.Override
       @java.lang.Deprecated public boolean hasDateHeader() {
         return instance.hasDateHeader();
       }
@@ -875,9 +858,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @return The dateHeader.
        */
-      @java.lang.Override
       @java.lang.Deprecated public java.lang.String getDateHeader() {
         return instance.getDateHeader();
       }
@@ -889,9 +870,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @return The bytes for dateHeader.
        */
-      @java.lang.Override
       @java.lang.Deprecated public com.google.protobuf.ByteString
           getDateHeaderBytes() {
         return instance.getDateHeaderBytes();
@@ -904,8 +883,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @param value The dateHeader to set.
-       * @return This builder for chaining.
        */
       @java.lang.Deprecated public Builder setDateHeader(
           java.lang.String value) {
@@ -921,7 +898,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @return This builder for chaining.
        */
       @java.lang.Deprecated public Builder clearDateHeader() {
         copyOnWrite();
@@ -936,8 +912,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional string date_header = 3 [deprecated = true];</code>
-       * @param value The bytes for dateHeader to set.
-       * @return This builder for chaining.
        */
       @java.lang.Deprecated public Builder setDateHeaderBytes(
           com.google.protobuf.ByteString value) {
@@ -952,9 +926,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bool is_gzip_compressed = 4;</code>
-       * @return Whether the isGzipCompressed field is set.
        */
-      @java.lang.Override
       public boolean hasIsGzipCompressed() {
         return instance.hasIsGzipCompressed();
       }
@@ -964,9 +936,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bool is_gzip_compressed = 4;</code>
-       * @return The isGzipCompressed.
        */
-      @java.lang.Override
       public boolean getIsGzipCompressed() {
         return instance.getIsGzipCompressed();
       }
@@ -976,8 +946,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bool is_gzip_compressed = 4;</code>
-       * @param value The isGzipCompressed to set.
-       * @return This builder for chaining.
        */
       public Builder setIsGzipCompressed(boolean value) {
         copyOnWrite();
@@ -990,7 +958,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bool is_gzip_compressed = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearIsGzipCompressed() {
         copyOnWrite();
@@ -1004,9 +971,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bytes seed_data = 5;</code>
-       * @return Whether the seedData field is set.
        */
-      @java.lang.Override
       public boolean hasSeedData() {
         return instance.hasSeedData();
       }
@@ -1016,9 +981,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bytes seed_data = 5;</code>
-       * @return The seedData.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getSeedData() {
         return instance.getSeedData();
       }
@@ -1028,8 +991,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bytes seed_data = 5;</code>
-       * @param value The seedData to set.
-       * @return This builder for chaining.
        */
       public Builder setSeedData(com.google.protobuf.ByteString value) {
         copyOnWrite();
@@ -1042,7 +1003,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional bytes seed_data = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSeedData() {
         copyOnWrite();
@@ -1057,9 +1017,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional int64 date = 6;</code>
-       * @return Whether the date field is set.
        */
-      @java.lang.Override
       public boolean hasDate() {
         return instance.hasDate();
       }
@@ -1070,9 +1028,7 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional int64 date = 6;</code>
-       * @return The date.
        */
-      @java.lang.Override
       public long getDate() {
         return instance.getDate();
       }
@@ -1083,8 +1039,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional int64 date = 6;</code>
-       * @param value The date to set.
-       * @return This builder for chaining.
        */
       public Builder setDate(long value) {
         copyOnWrite();
@@ -1098,7 +1052,6 @@ public final class AwVariationsSeedOuterClass {
        * </pre>
        *
        * <code>optional int64 date = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearDate() {
         copyOnWrite();
@@ -1106,75 +1059,136 @@ public final class AwVariationsSeedOuterClass {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:android_webview.AwVariationsSeed)
+      // @@protoc_insertion_point(builder_scope:org.chromium.android_webview.proto.AwVariationsSeed)
     }
-    @java.lang.Override
-    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
-    protected final java.lang.Object dynamicMethod(
+    protected final Object dynamicMethod(
         com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        java.lang.Object arg0, java.lang.Object arg1) {
+        Object arg0, Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
           return new org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed();
         }
+        case IS_INITIALIZED: {
+          return DEFAULT_INSTANCE;
+        }
+        case MAKE_IMMUTABLE: {
+          return null;
+        }
         case NEW_BUILDER: {
           return new Builder();
         }
-        case BUILD_MESSAGE_INFO: {
-            java.lang.Object[] objects = new java.lang.Object[] {
-              "bitField0_",
-              "signature_",
-              "country_",
-              "dateHeader_",
-              "isGzipCompressed_",
-              "seedData_",
-              "date_",
-            };
-            java.lang.String info =
-                "\u0001\u0006\u0000\u0001\u0001\u0006\u0006\u0000\u0000\u0000\u0001\u1008\u0000\u0002" +
-                "\u1008\u0001\u0003\u1008\u0002\u0004\u1007\u0003\u0005\u100a\u0004\u0006\u1002\u0005" +
-                "";
-            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        case VISIT: {
+          Visitor visitor = (Visitor) arg0;
+          org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed other = (org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed) arg1;
+          signature_ = visitor.visitString(
+              hasSignature(), signature_,
+              other.hasSignature(), other.signature_);
+          country_ = visitor.visitString(
+              hasCountry(), country_,
+              other.hasCountry(), other.country_);
+          dateHeader_ = visitor.visitString(
+              hasDateHeader(), dateHeader_,
+              other.hasDateHeader(), other.dateHeader_);
+          isGzipCompressed_ = visitor.visitBoolean(
+              hasIsGzipCompressed(), isGzipCompressed_,
+              other.hasIsGzipCompressed(), other.isGzipCompressed_);
+          seedData_ = visitor.visitByteString(
+              hasSeedData(), seedData_,
+              other.hasSeedData(), other.seedData_);
+          date_ = visitor.visitLong(
+              hasDate(), date_,
+              other.hasDate(), other.date_);
+          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
+              .INSTANCE) {
+            bitField0_ |= other.bitField0_;
+          }
+          return this;
         }
-        // fall through
+        case MERGE_FROM_STREAM: {
+          com.google.protobuf.CodedInputStream input =
+              (com.google.protobuf.CodedInputStream) arg0;
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
+              (com.google.protobuf.ExtensionRegistryLite) arg1;
+          try {
+            boolean done = false;
+            while (!done) {
+              int tag = input.readTag();
+              switch (tag) {
+                case 0:
+                  done = true;
+                  break;
+                default: {
+                  if (!parseUnknownField(tag, input)) {
+                    done = true;
+                  }
+                  break;
+                }
+                case 10: {
+                  String s = input.readString();
+                  bitField0_ |= 0x00000001;
+                  signature_ = s;
+                  break;
+                }
+                case 18: {
+                  String s = input.readString();
+                  bitField0_ |= 0x00000002;
+                  country_ = s;
+                  break;
+                }
+                case 26: {
+                  String s = input.readString();
+                  bitField0_ |= 0x00000004;
+                  dateHeader_ = s;
+                  break;
+                }
+                case 32: {
+                  bitField0_ |= 0x00000008;
+                  isGzipCompressed_ = input.readBool();
+                  break;
+                }
+                case 42: {
+                  bitField0_ |= 0x00000010;
+                  seedData_ = input.readBytes();
+                  break;
+                }
+                case 48: {
+                  bitField0_ |= 0x00000020;
+                  date_ = input.readInt64();
+                  break;
+                }
+              }
+            }
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw new RuntimeException(e.setUnfinishedMessage(this));
+          } catch (java.io.IOException e) {
+            throw new RuntimeException(
+                new com.google.protobuf.InvalidProtocolBufferException(
+                    e.getMessage()).setUnfinishedMessage(this));
+          } finally {
+          }
+        }
         case GET_DEFAULT_INSTANCE: {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          com.google.protobuf.Parser<org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed> parser = PARSER;
-          if (parser == null) {
-            synchronized (org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed.class) {
-              parser = PARSER;
-              if (parser == null) {
-                parser =
-                    new DefaultInstanceBasedParser<org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed>(
-                        DEFAULT_INSTANCE);
-                PARSER = parser;
+          if (PARSER == null) {    synchronized (org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed.class) {
+              if (PARSER == null) {
+                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
             }
           }
-          return parser;
-      }
-      case GET_MEMOIZED_IS_INITIALIZED: {
-        return (byte) 1;
-      }
-      case SET_MEMOIZED_IS_INITIALIZED: {
-        return null;
-      }
+          return PARSER;
+        }
       }
       throw new UnsupportedOperationException();
     }
 
 
-    // @@protoc_insertion_point(class_scope:android_webview.AwVariationsSeed)
+    // @@protoc_insertion_point(class_scope:org.chromium.android_webview.proto.AwVariationsSeed)
     private static final org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed DEFAULT_INSTANCE;
     static {
-      AwVariationsSeed defaultInstance = new AwVariationsSeed();
-      // New instances are implicitly immutable so no need to make
-      // immutable.
-      DEFAULT_INSTANCE = defaultInstance;
-      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
-        AwVariationsSeed.class, defaultInstance);
+      DEFAULT_INSTANCE = new AwVariationsSeed();
+      DEFAULT_INSTANCE.makeImmutable();
     }
 
     public static org.chromium.android_webview.proto.AwVariationsSeedOuterClass.AwVariationsSeed getDefaultInstance() {

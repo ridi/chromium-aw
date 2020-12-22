@@ -17,10 +17,10 @@ public final class SubpixelRendering {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int RGB = 1;
-    public static final int BGR = 2;
-    public static final int VRGB = 3;
-    public static final int VBGR = 4;
+    public static final int RGB = 1; // NONE + 1
+    public static final int BGR = 2; // RGB + 1
+    public static final int VRGB = 3; // BGR + 1
+    public static final int VBGR = 4; // VRGB + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 4;

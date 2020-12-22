@@ -49,9 +49,9 @@ class SerialPort_Internal {
 
     private static final int OPEN_ORDINAL = 0;
 
-    private static final int START_WRITING_ORDINAL = 1;
+    private static final int CLEAR_SEND_ERROR_ORDINAL = 1;
 
-    private static final int START_READING_ORDINAL = 2;
+    private static final int CLEAR_READ_ERROR_ORDINAL = 2;
 
     private static final int FLUSH_ORDINAL = 3;
 
@@ -76,12 +76,16 @@ class SerialPort_Internal {
 
         @Override
         public void open(
-SerialConnectionOptions options, SerialPortClient client, 
+SerialConnectionOptions options, org.chromium.mojo.system.DataPipe.ConsumerHandle inStream, org.chromium.mojo.system.DataPipe.ProducerHandle outStream, SerialPortClient client, 
 OpenResponse callback) {
 
             SerialPortOpenParams _message = new SerialPortOpenParams();
 
             _message.options = options;
+
+            _message.inStream = inStream;
+
+            _message.outStream = outStream;
 
             _message.client = client;
 
@@ -99,10 +103,10 @@ OpenResponse callback) {
 
 
         @Override
-        public void startWriting(
+        public void clearSendError(
 org.chromium.mojo.system.DataPipe.ConsumerHandle consumer) {
 
-            SerialPortStartWritingParams _message = new SerialPortStartWritingParams();
+            SerialPortClearSendErrorParams _message = new SerialPortClearSendErrorParams();
 
             _message.consumer = consumer;
 
@@ -110,16 +114,16 @@ org.chromium.mojo.system.DataPipe.ConsumerHandle consumer) {
             getProxyHandler().getMessageReceiver().accept(
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(START_WRITING_ORDINAL)));
+                            new org.chromium.mojo.bindings.MessageHeader(CLEAR_SEND_ERROR_ORDINAL)));
 
         }
 
 
         @Override
-        public void startReading(
+        public void clearReadError(
 org.chromium.mojo.system.DataPipe.ProducerHandle producer) {
 
-            SerialPortStartReadingParams _message = new SerialPortStartReadingParams();
+            SerialPortClearReadErrorParams _message = new SerialPortClearReadErrorParams();
 
             _message.producer = producer;
 
@@ -127,7 +131,7 @@ org.chromium.mojo.system.DataPipe.ProducerHandle producer) {
             getProxyHandler().getMessageReceiver().accept(
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(START_READING_ORDINAL)));
+                            new org.chromium.mojo.bindings.MessageHeader(CLEAR_READ_ERROR_ORDINAL)));
 
         }
 
@@ -285,12 +289,12 @@ CloseResponse callback) {
 
 
 
-                    case START_WRITING_ORDINAL: {
+                    case CLEAR_SEND_ERROR_ORDINAL: {
 
-                        SerialPortStartWritingParams data =
-                                SerialPortStartWritingParams.deserialize(messageWithHeader.getPayload());
+                        SerialPortClearSendErrorParams data =
+                                SerialPortClearSendErrorParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().startWriting(data.consumer);
+                        getImpl().clearSendError(data.consumer);
                         return true;
                     }
 
@@ -298,12 +302,12 @@ CloseResponse callback) {
 
 
 
-                    case START_READING_ORDINAL: {
+                    case CLEAR_READ_ERROR_ORDINAL: {
 
-                        SerialPortStartReadingParams data =
-                                SerialPortStartReadingParams.deserialize(messageWithHeader.getPayload());
+                        SerialPortClearReadErrorParams data =
+                                SerialPortClearReadErrorParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().startReading(data.producer);
+                        getImpl().clearReadError(data.producer);
                         return true;
                     }
 
@@ -355,7 +359,7 @@ CloseResponse callback) {
                         SerialPortOpenParams data =
                                 SerialPortOpenParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().open(data.options, data.client, new SerialPortOpenResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
+                        getImpl().open(data.options, data.inStream, data.outStream, data.client, new SerialPortOpenResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
 
@@ -464,14 +468,18 @@ CloseResponse callback) {
     
     static final class SerialPortOpenParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 32;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public SerialConnectionOptions options;
+        public org.chromium.mojo.system.DataPipe.ConsumerHandle inStream;
+        public org.chromium.mojo.system.DataPipe.ProducerHandle outStream;
         public SerialPortClient client;
 
         private SerialPortOpenParams(int version) {
             super(STRUCT_SIZE, version);
+            this.inStream = org.chromium.mojo.system.InvalidHandle.INSTANCE;
+            this.outStream = org.chromium.mojo.system.InvalidHandle.INSTANCE;
         }
 
         public SerialPortOpenParams() {
@@ -510,7 +518,15 @@ CloseResponse callback) {
                     }
                     {
                         
-                    result.client = decoder0.readServiceInterface(16, false, SerialPortClient.MANAGER);
+                    result.inStream = decoder0.readConsumerHandle(16, false);
+                    }
+                    {
+                        
+                    result.outStream = decoder0.readProducerHandle(20, false);
+                    }
+                    {
+                        
+                    result.client = decoder0.readServiceInterface(24, false, SerialPortClient.MANAGER);
                     }
 
             } finally {
@@ -526,7 +542,11 @@ CloseResponse callback) {
             
             encoder0.encode(this.options, 8, false);
             
-            encoder0.encode(this.client, 16, false, SerialPortClient.MANAGER);
+            encoder0.encode(this.inStream, 16, false);
+            
+            encoder0.encode(this.outStream, 20, false);
+            
+            encoder0.encode(this.client, 24, false, SerialPortClient.MANAGER);
         }
     }
 
@@ -657,23 +677,23 @@ CloseResponse callback) {
 
 
     
-    static final class SerialPortStartWritingParams extends org.chromium.mojo.bindings.Struct {
+    static final class SerialPortClearSendErrorParams extends org.chromium.mojo.bindings.Struct {
 
         private static final int STRUCT_SIZE = 16;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.mojo.system.DataPipe.ConsumerHandle consumer;
 
-        private SerialPortStartWritingParams(int version) {
+        private SerialPortClearSendErrorParams(int version) {
             super(STRUCT_SIZE, version);
             this.consumer = org.chromium.mojo.system.InvalidHandle.INSTANCE;
         }
 
-        public SerialPortStartWritingParams() {
+        public SerialPortClearSendErrorParams() {
             this(0);
         }
 
-        public static SerialPortStartWritingParams deserialize(org.chromium.mojo.bindings.Message message) {
+        public static SerialPortClearSendErrorParams deserialize(org.chromium.mojo.bindings.Message message) {
             return decode(new org.chromium.mojo.bindings.Decoder(message));
         }
 
@@ -682,22 +702,22 @@ CloseResponse callback) {
          *
          * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
-        public static SerialPortStartWritingParams deserialize(java.nio.ByteBuffer data) {
+        public static SerialPortClearSendErrorParams deserialize(java.nio.ByteBuffer data) {
             return deserialize(new org.chromium.mojo.bindings.Message(
                     data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
         }
 
         @SuppressWarnings("unchecked")
-        public static SerialPortStartWritingParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+        public static SerialPortClearSendErrorParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
             if (decoder0 == null) {
                 return null;
             }
             decoder0.increaseStackDepth();
-            SerialPortStartWritingParams result;
+            SerialPortClearSendErrorParams result;
             try {
                 org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
                 final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new SerialPortStartWritingParams(elementsOrVersion);
+                result = new SerialPortClearSendErrorParams(elementsOrVersion);
                     {
                         
                     result.consumer = decoder0.readConsumerHandle(8, false);
@@ -721,23 +741,23 @@ CloseResponse callback) {
 
 
     
-    static final class SerialPortStartReadingParams extends org.chromium.mojo.bindings.Struct {
+    static final class SerialPortClearReadErrorParams extends org.chromium.mojo.bindings.Struct {
 
         private static final int STRUCT_SIZE = 16;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.mojo.system.DataPipe.ProducerHandle producer;
 
-        private SerialPortStartReadingParams(int version) {
+        private SerialPortClearReadErrorParams(int version) {
             super(STRUCT_SIZE, version);
             this.producer = org.chromium.mojo.system.InvalidHandle.INSTANCE;
         }
 
-        public SerialPortStartReadingParams() {
+        public SerialPortClearReadErrorParams() {
             this(0);
         }
 
-        public static SerialPortStartReadingParams deserialize(org.chromium.mojo.bindings.Message message) {
+        public static SerialPortClearReadErrorParams deserialize(org.chromium.mojo.bindings.Message message) {
             return decode(new org.chromium.mojo.bindings.Decoder(message));
         }
 
@@ -746,22 +766,22 @@ CloseResponse callback) {
          *
          * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
          */
-        public static SerialPortStartReadingParams deserialize(java.nio.ByteBuffer data) {
+        public static SerialPortClearReadErrorParams deserialize(java.nio.ByteBuffer data) {
             return deserialize(new org.chromium.mojo.bindings.Message(
                     data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
         }
 
         @SuppressWarnings("unchecked")
-        public static SerialPortStartReadingParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+        public static SerialPortClearReadErrorParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
             if (decoder0 == null) {
                 return null;
             }
             decoder0.increaseStackDepth();
-            SerialPortStartReadingParams result;
+            SerialPortClearReadErrorParams result;
             try {
                 org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
                 final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new SerialPortStartReadingParams(elementsOrVersion);
+                result = new SerialPortClearReadErrorParams(elementsOrVersion);
                     {
                         
                     result.producer = decoder0.readProducerHandle(8, false);

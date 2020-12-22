@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import androidx.core.view.MarginLayoutParamsCompat;
 import android.view.MotionEvent;
 import android.view.PointerIcon;
 import android.view.View;
@@ -18,13 +19,13 @@ import android.view.inputmethod.InputConnection;
 import android.widget.ImageView;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.core.view.MarginLayoutParamsCompat;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.compat.ApiHelperForN;
-import org.chromium.ui.mojom.CursorType;
+import org.chromium.ui.touchless.TouchlessEventHandler;
+import org.chromium.ui_base.web.CursorType;
 
 /**
  * Class to acquire, position, and remove anchor views from the implementing View.
@@ -110,7 +111,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     public View acquireView() {
-        ViewGroup containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         if (containerView == null || containerView.getParent() == null) return null;
         View anchorView = new View(containerView.getContext());
         containerView.addView(anchorView);
@@ -123,7 +124,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     public void removeView(View anchorView) {
-        ViewGroup containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         if (containerView == null) return;
         containerView.removeView(anchorView);
     }
@@ -140,7 +141,7 @@ public class ViewAndroidDelegate {
     @CalledByNative
     public void setViewPosition(View anchorView, float x, float y, float width, float height,
             int leftMargin, int topMargin) {
-        ViewGroup containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         if (containerView == null) return;
         assert anchorView.getParent() == containerView;
 
@@ -175,7 +176,7 @@ public class ViewAndroidDelegate {
     private boolean startDragAndDrop(String text, Bitmap shadowImage) {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) return false;
 
-        ViewGroup containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         if (containerView == null) return false;
 
         ImageView imageView = new ImageView(containerView.getContext());
@@ -192,7 +193,7 @@ public class ViewAndroidDelegate {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             PointerIcon icon =
                     ApiHelperForN.createPointerIcon(customCursorBitmap, hotspotX, hotspotY);
-            ApiHelperForN.setPointerIcon(getContainerViewGroup(), icon);
+            ApiHelperForN.setPointerIcon(getContainerView(), icon);
         }
     }
 
@@ -322,7 +323,7 @@ public class ViewAndroidDelegate {
                 assert false : "onCursorChangedToCustom must be called instead";
                 break;
         }
-        ViewGroup containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         PointerIcon icon = PointerIcon.getSystemIcon(containerView.getContext(), pointerIconType);
         ApiHelperForN.setPointerIcon(containerView, icon);
     }
@@ -347,12 +348,13 @@ public class ViewAndroidDelegate {
     /**
      * Notify the client of the position of the bottom controls.
      * @param bottomControlsOffsetY The Y offset of the bottom controls in physical pixels.
+     * @param bottomContentOffsetY The Y offset of the content in physical pixels.
      * @param bottomControlsMinHeightOffsetY The current bottom controls min-height in physical
      *                                       pixels.
      */
     @CalledByNative
-    public void onBottomControlsChanged(
-            int bottomControlsOffsetY, int bottomControlsMinHeightOffsetY) {}
+    public void onBottomControlsChanged(int bottomControlsOffsetY, int bottomContentOffsetY,
+            int bottomControlsMinHeightOffsetY) {}
 
     /**
      * @return The Visual Viewport bottom inset in pixels.
@@ -363,30 +365,10 @@ public class ViewAndroidDelegate {
     }
 
     /**
-     * Called when root scroll direction changes.
-     * @param directionUp whether the new scroll direction is up (true) or down (false).
-     * @param current_scroll_ratio the ratio of vertical scroll in [0, 1] range.
-     * Scroll at top of page is 0, and bottom of page is 1. It is defined as 0
-     * if page is not scrollable, though this should not be called in that case.
-     */
-    @CalledByNative
-    protected void onVerticalScrollDirectionChanged(boolean directionUp, float currentScrollRatio) {
-    }
-
-    /**
-     * While ViewAndroidDelegate takes a ViewGroup, and internally adds Views to it, all other
-     * consumers should *not* be manipulating child Views. This is particularly important as the
-     * container view is usually ContentView, and ContentView only supports children directly added
-     * by this class. See ContentView for details on this.
-     *
      * @return container view that the anchor views are added to. May be null.
      */
     @CalledByNative
-    public final View getContainerView() {
-        return mContainerView;
-    }
-
-    protected final ViewGroup getContainerViewGroup() {
+    public final ViewGroup getContainerView() {
         return mContainerView;
     }
 
@@ -395,7 +377,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     private int getXLocationOfContainerViewInWindow() {
-        View container = getContainerView();
+        ViewGroup container = getContainerView();
         if (container == null) return 0;
 
         container.getLocationInWindow(mTemporaryContainerLocation);
@@ -407,7 +389,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     private int getYLocationOfContainerViewInWindow() {
-        View container = getContainerView();
+        ViewGroup container = getContainerView();
         if (container == null) return 0;
 
         container.getLocationInWindow(mTemporaryContainerLocation);
@@ -419,7 +401,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     private int getXLocationOnScreen() {
-        View container = getContainerView();
+        ViewGroup container = getContainerView();
         if (container == null) return 0;
 
         container.getLocationOnScreen(mTemporaryContainerLocation);
@@ -431,7 +413,7 @@ public class ViewAndroidDelegate {
      */
     @CalledByNative
     private int getYLocationOnScreen() {
-        View container = getContainerView();
+        ViewGroup container = getContainerView();
         if (container == null) return 0;
 
         container.getLocationOnScreen(mTemporaryContainerLocation);
@@ -440,36 +422,48 @@ public class ViewAndroidDelegate {
 
     @CalledByNative
     private void requestDisallowInterceptTouchEvent() {
-        ViewGroup container = getContainerViewGroup();
+        ViewGroup container = getContainerView();
         if (container != null) container.requestDisallowInterceptTouchEvent(true);
     }
 
     @CalledByNative
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void requestUnbufferedDispatch(MotionEvent event) {
-        ViewGroup container = getContainerViewGroup();
-        if (container != null) {
-            for (int i = 0; i < event.getPointerCount(); i++) {
-                // This is a workaround for crbug.com/1064161.
-                // TODO(smaier) remove this if LG fixes the stylus bug.
-                if (event.getToolType(i) == MotionEvent.TOOL_TYPE_STYLUS) {
-                    return;
-                }
-            }
-            container.requestUnbufferedDispatch(event);
-        }
+        ViewGroup container = getContainerView();
+        if (container != null) container.requestUnbufferedDispatch(event);
     }
 
     @CalledByNative
     private boolean hasFocus() {
-        View containerView = getContainerView();
+        ViewGroup containerView = getContainerView();
         return containerView == null ? false : ViewUtils.hasFocus(containerView);
     }
 
     @CalledByNative
     private void requestFocus() {
-        View containerView = getContainerViewGroup();
+        ViewGroup containerView = getContainerView();
         if (containerView != null) ViewUtils.requestFocus(containerView);
+    }
+
+    @CalledByNative
+    private static boolean hasTouchlessEventHandler() {
+        return TouchlessEventHandler.hasTouchlessEventHandler();
+    }
+
+    @CalledByNative
+    private static boolean onUnconsumedKeyboardEventAck(int nativeCode) {
+        return TouchlessEventHandler.onUnconsumedKeyboardEventAck(nativeCode);
+    }
+
+    @CalledByNative
+    private static void fallbackCursorModeLockCursor(
+            boolean left, boolean right, boolean up, boolean down) {
+        TouchlessEventHandler.fallbackCursorModeLockCursor(left, right, up, down);
+    }
+
+    @CalledByNative
+    private static void fallbackCursorModeSetCursorVisibility(boolean visible) {
+        TouchlessEventHandler.fallbackCursorModeSetCursorVisibility(visible);
     }
 
     /**

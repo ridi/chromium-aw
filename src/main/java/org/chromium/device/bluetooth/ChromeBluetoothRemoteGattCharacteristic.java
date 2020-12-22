@@ -130,13 +130,10 @@ final class ChromeBluetoothRemoteGattCharacteristic {
 
     // Implements BluetoothRemoteGattCharacteristicAndroid::WriteRemoteCharacteristic.
     @CalledByNative
-    private boolean writeRemoteCharacteristic(byte[] value, int writeType) {
+    private boolean writeRemoteCharacteristic(byte[] value) {
         if (!mCharacteristic.setValue(value)) {
             Log.i(TAG, "writeRemoteCharacteristic setValue failed.");
             return false;
-        }
-        if (writeType != 0) {
-            mCharacteristic.setWriteType(writeType);
         }
         if (!mChromeDevice.mBluetoothGatt.writeCharacteristic(mCharacteristic)) {
             Log.i(TAG, "writeRemoteCharacteristic writeCharacteristic failed.");

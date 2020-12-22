@@ -123,19 +123,9 @@ public class AutofillManagerWrapper {
     public void destroy() {
         if (mDisabled || checkAndWarnIfDestroyed()) return;
         if (isLoggable()) log("destroy");
-        try {
-            // The binder in the autofill service side might already be dropped,
-            // unregisterCallback() will cause various exceptions in this
-            // scenario (see crbug.com/1078337), catching RuntimeException here prevents crash.
-            mAutofillManager.unregisterCallback(mMonitor);
-        } catch (RuntimeException e) {
-            // We are not logging anything here since some of the exceptions are raised as 'generic'
-            // RuntimeException which makes it difficult to catch and ignore separately; and the
-            // RuntimeException seemed only happen in Android O, therefore, isn't actionable.
-        } finally {
-            mAutofillManager = null;
-            mDestroyed = true;
-        }
+        mAutofillManager.unregisterCallback(mMonitor);
+        mAutofillManager = null;
+        mDestroyed = true;
     }
 
     public boolean isDisabled() {

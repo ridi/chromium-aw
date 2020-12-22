@@ -4,13 +4,10 @@
 
 package org.chromium.content.browser;
 
+import org.chromium.base.LifetimeAssert;
 import org.chromium.base.annotations.NativeMethods;
 import org.chromium.blink.mojom.MessagePortDescriptor;
-import org.chromium.mojo.bindings.ConnectionErrorHandler;
-import org.chromium.mojo.bindings.Connector;
-import org.chromium.mojo.system.Core;
 import org.chromium.mojo.system.MessagePipeHandle;
-import org.chromium.mojo.system.MojoException;
 import org.chromium.mojo.system.Pair;
 import org.chromium.mojo.system.impl.CoreImpl;
 import org.chromium.mojo_base.mojom.UnguessableToken;
@@ -31,31 +28,36 @@ import org.chromium.mojo_base.mojom.UnguessableToken;
  *   AppWebMessagePortDescriptor port = new AppWebMessagePortDescriptor(
  *           mojomSerializedMessagePortDescriptor);
  *
- *   // Entangle with a connector so the port can be used.
- *   Connector connector = port.entangleWithConnector();
+ *   // Take the handle for use.
+ *   MessagePipeHandle handle = port.takeHandleToEntangle();
  *
- *   // Do stuff with the connector, passing messages, etc.
+ *   // Do stuff with the handle.
  *
- *   // Takes the handle back from the connector that was vended out previously.
- *   port.disentangleFromConnector();
+ *   // Return the handle.
+ *   port.givenDisentangledHandle(handle);
  *
- *   // Close the port when we're done with it. This causes the native
- *   // counterpart to be destroyed.
+ *   // Close the port when we're done with it.
  *   port.close();
  */
-public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
+public class AppWebMessagePortDescriptor {
     private static final long NATIVE_NULL = 0;
     private static final int INVALID_NATIVE_MOJO_HANDLE = 0; // Mirrors CoreImpl.INVALID_HANDLE.
     private static final long INVALID_SEQUENCE_NUMBER = 0;
 
+    /** Used to ensure that the object is correctly torn down before being finalized. */
+    private final LifetimeAssert mLifetimeAssert = LifetimeAssert.create(this);
+
     /** Handle to the native blink::MessagePortDescriptor associated with this object. */
     private long mNativeMessagePortDescriptor = NATIVE_NULL;
     /**
-     * The connector to which the handle has been entangled. This is null if the
-     * descriptor owns the handle, otherwise it is set to the Connector.
+     * The underlying native handle. When a descriptor is bound to an AppWebMessagePort, handle
+     * ownership passes from the native blink::MessagePortDescriptor to a mojo Connector owned by
+     * the AppWebMessagePort. Before tearing down, the handle is returned to the native blink
+     * component and closed. This will be INVALID_NATIVE_MOJO_HANDLE if the handle is currently
+     * owned by the native counterpart, otherwise it is set to the value of the handle that was
+     * passed from the native counterpart.
      */
-    private Connector mConnector = null;
-    private boolean mConnectorErrored = false;
+    private int mNativeMojoHandle = INVALID_NATIVE_MOJO_HANDLE;
 
     /**
      * @return a newly created pair of connected AppWebMessagePortDescriptors.
@@ -68,14 +70,6 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
                 new Pair<>(new AppWebMessagePortDescriptor(nativeMessagePortDescriptors[0]),
                         new AppWebMessagePortDescriptor(nativeMessagePortDescriptors[1]));
         return pair;
-    }
-
-    /**
-     * Creates an AppWebMessagePortDescriptor from a pointer to a native object.
-     */
-    static AppWebMessagePortDescriptor createFromNativeBlinkMessagePortDescriptor(
-            long nativeMessagePortDescriptor) {
-        return new AppWebMessagePortDescriptor(nativeMessagePortDescriptor);
     }
 
     /**
@@ -104,50 +98,44 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
     }
 
     /**
-     * @return the Connector corresponding to this descriptors mojo endpoint. This must be
-     *         returned to the descriptor before it is closed. It is valid to take and return
-     *         the handle multiple times. This is only meant to be called by AppWebMessagePort.
+     * @return the MessagePipeHandle corresponding to this descriptors mojo endpoint. This must be
+     *         returned to the descriptor before it is closed, and before it is finalized. It is
+     *         valid to take and return the handle multiple times. This is meant to be called in
+     *         order to entangle the handle with a mojo.system.Connector.
      */
-    Connector entangleWithConnector() {
+    MessagePipeHandle takeHandleToEntangle() {
         ensureNativeMessagePortDescriptorExists();
-        assert mConnector == null : "handle already taken";
-        int nativeHandle = AppWebMessagePortDescriptorJni.get().takeHandleToEntangle(
+        assert mNativeMojoHandle == INVALID_NATIVE_MOJO_HANDLE : "handle already taken";
+        mNativeMojoHandle = AppWebMessagePortDescriptorJni.get().takeHandleToEntangle(
                 mNativeMessagePortDescriptor);
-        assert nativeHandle
+        assert mNativeMojoHandle
                 != INVALID_NATIVE_MOJO_HANDLE : "native object returned an invalid handle";
-        MessagePipeHandle handle = wrapNativeHandle(nativeHandle);
-        mConnector = new Connector(handle);
-        mConnector.setErrorHandler(this);
-        return mConnector;
+        return wrapNativeHandle(mNativeMojoHandle);
     }
 
     /**
      * @return true if the port is currently entangled, false otherwise. Safe to call anytime.
      */
     boolean isEntangled() {
-        return mNativeMessagePortDescriptor != NATIVE_NULL && mConnector != null;
+        return mNativeMessagePortDescriptor != NATIVE_NULL
+                && mNativeMojoHandle != INVALID_NATIVE_MOJO_HANDLE;
     }
 
     /**
      * Returns the mojo endpoint to this descriptor, previously vended out by
-     * "entangleWithConnector". If vended out the connector must be returned prior to closing this
-     * object. It is valid to entangle and disentangle the descriptor multiple times.
+     * "takeHandleToEntangle". If vended out the handle must be returned prior to closing this
+     * object, which must be done prior to the object being destroyed. It is valid to take and
+     * return the handle multiple times.
      */
-    void disentangleFromConnector() {
+    void giveDisentangledHandle(MessagePipeHandle handle) {
         ensureNativeMessagePortDescriptorExists();
-        assert mConnector != null : "handle not currently taken";
-        disentangleImpl();
-    }
-
-    /**
-     * Releases the native blink::MessagePortDescriptor object associated with
-     * this AppWebMessagePort.
-     */
-    long releaseNativeMessagePortDescriptor() {
-        assert mConnector == null : "releasing a descriptor whose handle is taken";
-        long nativeMessagePortDescriptor = mNativeMessagePortDescriptor;
-        reset();
-        return nativeMessagePortDescriptor;
+        assert mNativeMojoHandle != INVALID_NATIVE_MOJO_HANDLE : "handle not currently taken";
+        int nativeHandle = handle.releaseNativeHandle();
+        assert nativeHandle
+                == mNativeMojoHandle : "returned handle does not match the taken handle";
+        AppWebMessagePortDescriptorJni.get().giveDisentangledHandle(
+                mNativeMessagePortDescriptor, mNativeMojoHandle);
+        mNativeMojoHandle = INVALID_NATIVE_MOJO_HANDLE;
     }
 
     /**
@@ -158,7 +146,8 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
      */
     void close() {
         if (mNativeMessagePortDescriptor == NATIVE_NULL) return;
-        assert mConnector == null : "closing a descriptor whose handle is taken";
+        assert mNativeMojoHandle
+                == INVALID_NATIVE_MOJO_HANDLE : "closing a descriptor whose handle is taken";
         AppWebMessagePortDescriptorJni.get().closeAndDestroy(mNativeMessagePortDescriptor);
         reset();
     }
@@ -170,7 +159,8 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
      */
     MessagePortDescriptor passAsBlinkMojomMessagePortDescriptor() {
         ensureNativeMessagePortDescriptorExists();
-        assert mConnector == null : "passing a descriptor whose handle is taken";
+        assert mNativeMojoHandle
+                == INVALID_NATIVE_MOJO_HANDLE : "passing a descriptor whose handle is taken";
 
         // This is in the format [nativeHandle, idLow, idHigh, sequenceNumber].
         long[] serialized =
@@ -214,8 +204,8 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
      */
     private void reset() {
         mNativeMessagePortDescriptor = NATIVE_NULL;
-        mConnector = null;
-        mConnectorErrored = false;
+        mNativeMojoHandle = INVALID_NATIVE_MOJO_HANDLE;
+        LifetimeAssert.setSafeToGc(mLifetimeAssert, true);
     }
 
     /**
@@ -258,91 +248,15 @@ public class AppWebMessagePortDescriptor implements ConnectionErrorHandler {
         return CoreImpl.getInstance().acquireNativeHandle(nativeHandle).toMessagePipeHandle();
     }
 
-    /**
-     * Returns the mojo.Core object.
-     */
-    Core getCore() {
-        return CoreImpl.getInstance();
-    }
-
-    /**
-     * The error handler for the connector. This lets the instrumentation be aware of the message
-     * pipe closing itself due to error, which happens unconditionally. Note that a subsequent call
-     * to Connector#passHandle should always return an invalid handle at that point.
-     * TODO(chrisha): Make this an immediate notification that the channel has been torn down
-     * rather than waiting for the owning MessagePort to be cleaned up.
-     *
-     * @see org.chromium.mojo.bindings.ConnectionErrorHandler#onConnectionError.
-     * @see org.chromium.mojo.bindings.Connector#setErrorHandler.
-     */
-    @Override
-    public void onConnectionError(MojoException e) {
-        mConnectorErrored = true;
-    }
-
-    private void disentangleImpl() {
-        MessagePipeHandle handle = mConnector.passHandle();
-        int nativeHandle = handle.releaseNativeHandle();
-        // An invalid handle should be returned iff the connection errored.
-        if (mConnectorErrored) {
-            assert nativeHandle
-                    == INVALID_NATIVE_MOJO_HANDLE : "errored connector returned a valid handle";
-            AppWebMessagePortDescriptorJni.get().onConnectionError(mNativeMessagePortDescriptor);
-        } else {
-            assert nativeHandle
-                    != INVALID_NATIVE_MOJO_HANDLE : "connector returned an invalid handle";
-            AppWebMessagePortDescriptorJni.get().giveDisentangledHandle(
-                    mNativeMessagePortDescriptor, nativeHandle);
-        }
-        mConnector = null;
-    }
-
-    /**
-     * A finalizer is required to ensure that the native object associated with
-     * this descriptor gets torn down, otherwise there would be a memory leak.
-     *
-     * This is safe because it makes a simple call into C++ code that is both
-     * thread-safe and very fast.
-     *
-     * TODO(chrisha): Chase down the existing offenders that don't call close,
-     * and flip this to use LifetimeAssert.
-     *
-     * @see java.lang.Object#finalize()
-     */
-    @Override
-    protected final void finalize() throws Throwable {
-        try {
-            if (mNativeMessagePortDescriptor != NATIVE_NULL) {
-                AppWebMessagePortDescriptorJni.get().disentangleCloseAndDestroy(
-                        mNativeMessagePortDescriptor);
-            }
-        } finally {
-            super.finalize();
-        }
-    }
-
     @NativeMethods
     interface Native {
         long[] createPair();
         long create(int nativeHandle, long idLow, long idHigh, long sequenceNumber);
         // Deliberately do not use nativeObjectType naming to avoid automatic typecasting and
         // member function dispatch; these need to be routed to static functions.
-
-        // Takes the handle from the native object for entangling with a mojo.Connector.
         int takeHandleToEntangle(long blinkMessagePortDescriptor);
-        // Returns the handle previously taken via "takeHandleToEntangle".
         void giveDisentangledHandle(long blinkMessagePortDescriptor, int nativeHandle);
-        // Indicates that the entangled error experienced a connection error. The descriptor must be
-        // entangled at this point.
-        void onConnectionError(long blinkMessagePortDescriptor);
-        // Frees the native object, returning its full state in serialized form to Java. The
-        // descriptor must not be entangled.
         long[] passSerialized(long blinkMessagePortDescriptor);
-        // Closes the open handle, and frees the native object. The descriptor must not be
-        // entangled.
         void closeAndDestroy(long blinkMessagePortDescriptor);
-        // Fully tears down the native object, disentangling if necessary, closing the handle and
-        // freeing the object.
-        void disentangleCloseAndDestroy(long blinkMessagePortDescriptor);
     }
 }

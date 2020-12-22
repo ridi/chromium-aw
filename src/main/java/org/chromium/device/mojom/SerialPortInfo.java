@@ -16,11 +16,10 @@ package org.chromium.device.mojom;
 
 public final class SerialPortInfo extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 48;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(48, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public org.chromium.mojo_base.mojom.UnguessableToken token;
-    public String persistentId;
     public org.chromium.mojo_base.mojom.FilePath path;
     public short vendorId;
     public boolean hasVendorId;
@@ -70,32 +69,28 @@ public final class SerialPortInfo extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.persistentId = decoder0.readString(16, true);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
                 result.path = org.chromium.mojo_base.mojom.FilePath.decode(decoder1);
                 }
                 {
                     
-                result.vendorId = decoder0.readShort(32);
+                result.vendorId = decoder0.readShort(24);
                 }
                 {
                     
-                result.hasVendorId = decoder0.readBoolean(34, 0);
+                result.hasVendorId = decoder0.readBoolean(26, 0);
                 }
                 {
                     
-                result.hasProductId = decoder0.readBoolean(34, 1);
+                result.hasProductId = decoder0.readBoolean(26, 1);
                 }
                 {
                     
-                result.productId = decoder0.readShort(36);
+                result.productId = decoder0.readShort(28);
                 }
                 {
                     
-                result.displayName = decoder0.readString(40, true);
+                result.displayName = decoder0.readString(32, true);
                 }
 
         } finally {
@@ -111,18 +106,16 @@ public final class SerialPortInfo extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.token, 8, false);
         
-        encoder0.encode(this.persistentId, 16, true);
+        encoder0.encode(this.path, 16, false);
         
-        encoder0.encode(this.path, 24, false);
+        encoder0.encode(this.vendorId, 24);
         
-        encoder0.encode(this.vendorId, 32);
+        encoder0.encode(this.hasVendorId, 26, 0);
         
-        encoder0.encode(this.hasVendorId, 34, 0);
+        encoder0.encode(this.hasProductId, 26, 1);
         
-        encoder0.encode(this.hasProductId, 34, 1);
+        encoder0.encode(this.productId, 28);
         
-        encoder0.encode(this.productId, 36);
-        
-        encoder0.encode(this.displayName, 40, true);
+        encoder0.encode(this.displayName, 32, true);
     }
 }

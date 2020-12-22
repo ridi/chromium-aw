@@ -25,18 +25,26 @@ public final class FeaturePolicyFeature {
     public static final int MICROPHONE = 6;
     public static final int MIDI_FEATURE = 7;
     public static final int PAYMENT = 8;
+    public static final int DOCUMENT_COOKIE = 10;
     public static final int DOCUMENT_DOMAIN = 11;
     public static final int SYNC_SCRIPT = 12;
     public static final int SYNC_XHR = 13;
     public static final int USB = 14;
+    public static final int ACCESSIBILITY_EVENTS = 15;
+    public static final int WEB_VR = 16;
     public static final int ACCELEROMETER = 17;
     public static final int AMBIENT_LIGHT_SENSOR = 18;
     public static final int GYROSCOPE = 19;
     public static final int MAGNETOMETER = 20;
+    public static final int UNSIZED_MEDIA = 21;
+    public static final int OVERSIZED_IMAGES = 25;
     public static final int PICTURE_IN_PICTURE = 26;
     public static final int VERTICAL_SCROLL = 27;
     public static final int DOCUMENT_WRITE = 28;
-    public static final int SCREEN_WAKE_LOCK = 31;
+    public static final int LAZY_LOAD = 29;
+    public static final int LAYOUT_ANIMATIONS = 30;
+    public static final int WAKE_LOCK = 31;
+    public static final int FONT_DISPLAY = 32;
     public static final int TOP_NAVIGATION = 33;
     public static final int FORM_SUBMISSION = 34;
     public static final int SCRIPT = 35;
@@ -49,6 +57,10 @@ public final class FeaturePolicyFeature {
     public static final int SERIAL = 42;
     public static final int HID = 43;
     public static final int IDLE_DETECTION = 44;
+    public static final int UNOPTIMIZED_LOSSY_IMAGES = 45;
+    public static final int UNOPTIMIZED_LOSSLESS_IMAGES = 46;
+    public static final int UNOPTIMIZED_LOSSLESS_IMAGES_STRICT = 47;
+    public static final int LOADING_FRAME_DEFAULT_EAGER = 48;
     public static final int DOWNLOADS = 49;
     public static final int EXECUTION_WHILE_OUT_OF_VIEWPORT = 50;
     public static final int EXECUTION_WHILE_NOT_RENDERED = 51;
@@ -66,15 +78,9 @@ public final class FeaturePolicyFeature {
     public static final int CLIENT_HINT_VIEWPORT_WIDTH = 63;
     public static final int CLIENT_HINT_WIDTH = 64;
     public static final int WEB_XR = 66;
-    public static final int PUBLIC_KEY_CREDENTIALS_GET = 67;
+    public static final int PUBLIC_KEY_CREDENTIALS = 67;
+    public static final int CLIPBOARD = 68;
     public static final int CLIENT_HINT_UA_MOBILE = 69;
-    public static final int STORAGE_ACCESS_API = 70;
-    public static final int CLIENT_HINT_UA_FULL_VERSION = 71;
-    public static final int TRUST_TOKEN_REDEMPTION = 72;
-    public static final int CONVERSION_MEASUREMENT = 73;
-    public static final int CLIENT_HINT_UA_PLATFORM_VERSION = 74;
-    public static final int CLIPBOARD_READ = 76;
-    public static final int CLIPBOARD_WRITE = 77;
 
     public static boolean isKnownValue(int value) {
         switch (value) {
@@ -87,18 +93,26 @@ public final class FeaturePolicyFeature {
             case 6:
             case 7:
             case 8:
+            case 10:
             case 11:
             case 12:
             case 13:
             case 14:
+            case 15:
+            case 16:
             case 17:
             case 18:
             case 19:
             case 20:
+            case 21:
+            case 25:
             case 26:
             case 27:
             case 28:
+            case 29:
+            case 30:
             case 31:
+            case 32:
             case 33:
             case 34:
             case 35:
@@ -111,6 +125,10 @@ public final class FeaturePolicyFeature {
             case 42:
             case 43:
             case 44:
+            case 45:
+            case 46:
+            case 47:
+            case 48:
             case 49:
             case 50:
             case 51:
@@ -129,14 +147,8 @@ public final class FeaturePolicyFeature {
             case 64:
             case 66:
             case 67:
+            case 68:
             case 69:
-            case 70:
-            case 71:
-            case 72:
-            case 73:
-            case 74:
-            case 76:
-            case 77:
                 return true;
         }
         return false;

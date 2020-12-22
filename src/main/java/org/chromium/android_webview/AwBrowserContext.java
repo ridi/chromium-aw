@@ -148,11 +148,6 @@ public class AwBrowserContext {
         return sInstance;
     }
 
-    // See comments in WebViewChromiumFactoryProvider for details.
-    public void setWebLayerRunningInSameProcess() {
-        AwBrowserContextJni.get().setWebLayerRunningInSameProcess(mNativeAwBrowserContext);
-    }
-
     @CalledByNative
     public static AwBrowserContext create(long nativeAwBrowserContext, boolean isDefault) {
         SharedPreferences sharedPreferences;
@@ -169,6 +164,5 @@ public class AwBrowserContext {
     interface Natives {
         AwBrowserContext getDefaultJava();
         long getQuotaManagerBridge(long nativeAwBrowserContext);
-        void setWebLayerRunningInSameProcess(long nativeAwBrowserContext);
     }
 }

@@ -17,7 +17,7 @@ public final class ContentSecurityPolicyType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int REPORT = 0;
-    public static final int ENFORCE = 1;
+    public static final int ENFORCE = 1; // REPORT + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 1;

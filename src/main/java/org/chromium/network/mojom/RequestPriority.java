@@ -17,11 +17,11 @@ public final class RequestPriority {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int THROTTLED = 0;
-    public static final int IDLE = 1;
-    public static final int LOWEST = 2;
-    public static final int LOW = 3;
-    public static final int MEDIUM = 4;
-    public static final int HIGHEST = 5;
+    public static final int IDLE = 1; // THROTTLED + 1
+    public static final int LOWEST = 2; // IDLE + 1
+    public static final int LOW = 3; // LOWEST + 1
+    public static final int MEDIUM = 4; // LOW + 1
+    public static final int HIGHEST = 5; // MEDIUM + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 5;

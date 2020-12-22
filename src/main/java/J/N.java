@@ -9,1927 +9,1405 @@ package J;
 // Please do not change its content.
 
 public class N {
+  public static final boolean TESTING_ENABLED = false;
+  public static final boolean REQUIRE_MOCK = false;
 
+  public static native String Myi_XSsy();
 
-    public static native String Myi_XSsy();
+  public static native String MZEbjzws();
+  public static native void M2z_jbiy(long nativeAwAutofillClient, Object caller);
 
-    public static native String MZEbjzws();
-    public static native void M2z_jbiy(long nativeAwAutofillClient, Object caller);
+  public static native void Mg2XGOMM(long nativeAwAutofillClient, Object caller, int position);
+  public static native Object MCLx2xtg();
 
-    public static native void Mg2XGOMM(long nativeAwAutofillClient, Object caller, int position);
-    public static native Object MCLx2xtg();
+  public static native long MyGX0Tx3(long nativeAwBrowserContext);
+  public static native long MFiR_zHY(long browserContextPointer);
 
-    public static native long MyGX0Tx3(long nativeAwBrowserContext);
+  public static native void MQGusfGb(long nativeAwContents);
 
-    public static native void Mzi6ndOk(long nativeAwBrowserContext);
-    public static native void MgHPT6uL(String processName);
-    public static native long MFiR_zHY(long browserContextPointer);
+  public static native boolean MmfcaMzE();
 
-    public static native void MQGusfGb(long nativeAwContents);
+  public static native void M1aUwTSB(long functionTablePointer);
 
-    public static native boolean MmfcaMzE();
+  public static native void MHELqQxx(long functionTablePointer);
 
-    public static native void M1aUwTSB(long functionTablePointer);
+  public static native int MpyFb$bm();
 
-    public static native void MHELqQxx(long functionTablePointer);
+  public static native void Mbm7UXr0();
 
-    public static native int MpyFb$bm();
+  public static native void Mer1B1Jd(String locale, String localeList);
 
-    public static native void Mbm7UXr0();
+  public static native String M8bzablT();
 
-    public static native void Mer1B1Jd(String locale, String localeList);
+  public static native void MpysRKyN(long nativeAwContents, Object caller, String script, Object jsCallback);
 
-    public static native String M8bzablT();
+  public static native void MaOp$2xn(long nativeAwContents, Object caller, Object awContents, Object webViewWebContentsDelegate, Object contentsClientBridge, Object ioThreadClient, Object navigationInterceptionDelegate, Object autofillProvider);
 
-    public static native void MaOp$2xn(long nativeAwContents, Object caller, Object awContents, Object webViewWebContentsDelegate, Object contentsClientBridge, Object ioThreadClient, Object navigationInterceptionDelegate, Object autofillProvider);
+  public static native Object MybAxcKt(long nativeAwContents, Object caller);
 
-    public static native Object MybAxcKt(long nativeAwContents, Object caller);
+  public static native Object Mg88vWvb(long nativeAwContents, Object caller);
 
-    public static native Object Mg88vWvb(long nativeAwContents, Object caller);
+  public static native void MzAVKSgA(long nativeAwContents, Object caller, long nativeCompositorFrameConsumer);
 
-    public static native void MzAVKSgA(long nativeAwContents, Object caller, long nativeCompositorFrameConsumer);
+  public static native void M74pgHWN(long nativeAwContents, Object caller, Object message);
 
-    public static native void M74pgHWN(long nativeAwContents, Object caller, Object message);
+  public static native void MfwgZRb_(long nativeAwContents, Object caller, String path, Object callback);
 
-    public static native void MfwgZRb_(long nativeAwContents, Object caller, String path, Object callback);
+  public static native void MGEWt61o(long nativeAwContents, Object caller, String[] visitedLinks);
 
-    public static native void MGEWt61o(long nativeAwContents, Object caller, String[] visitedLinks);
+  public static native void MuRWIe$h(long nativeAwContents, Object caller, float delta);
 
-    public static native void MuRWIe$h(long nativeAwContents, Object caller, float delta);
+  public static native void MkR1ETvU(long nativeAwContents, Object caller, long currentAnimationTimeMillis);
 
-    public static native void MkR1ETvU(long nativeAwContents, Object caller, long currentAnimationTimeMillis);
+  public static native boolean MTXp4fn_(long nativeAwContents, Object caller, Object canvas, boolean isHardwareAccelerated, int scrollX, int scrollY, int visibleLeft, int visibleTop, int visibleRight, int visibleBottom, boolean forceAuxiliaryBitmapRendering);
 
-    public static native boolean MTXp4fn_(long nativeAwContents, Object caller, Object canvas, boolean isHardwareAccelerated, int scrollX, int scrollY, int visibleLeft, int visibleTop, int visibleRight, int visibleBottom, boolean forceAuxiliaryBitmapRendering);
+  public static native boolean Mcwwaem4(long nativeAwContents, Object caller);
 
-    public static native boolean Mcwwaem4(long nativeAwContents, Object caller);
+  public static native void MkkpS1L9(long nativeAwContents, Object caller, String searchString);
 
-    public static native void MkkpS1L9(long nativeAwContents, Object caller, String searchString);
+  public static native void M21lr0OA(long nativeAwContents, Object caller, boolean forward);
 
-    public static native void M21lr0OA(long nativeAwContents, Object caller, boolean forward);
+  public static native void MFtcGkhm(long nativeAwContents, Object caller);
 
-    public static native void MFtcGkhm(long nativeAwContents, Object caller);
+  public static native void MhT$Vsgm(long nativeAwContents, Object caller, boolean includeDiskFiles);
 
-    public static native void MhT$Vsgm(long nativeAwContents, Object caller, boolean includeDiskFiles);
+  public static native void M6HE38c5(long nativeAwContents, Object caller);
 
-    public static native void M6HE38c5(long nativeAwContents, Object caller);
+  public static native byte[] MJl6bbdC(long nativeAwContents, Object caller);
 
-    public static native byte[] MJl6bbdC(long nativeAwContents, Object caller);
+  public static native void MbVTYFDu(long nativeAwContents, Object caller, float x, float y, float touchMajor);
 
-    public static native void MbVTYFDu(long nativeAwContents, Object caller, float x, float y, float touchMajor);
+  public static native void MHBuiDmd(long nativeAwContents, Object caller);
 
-    public static native void MHBuiDmd(long nativeAwContents, Object caller);
+  public static native void MNxSIAOu(long nativeAwContents, Object caller, int w, int h, int ow, int oh);
 
-    public static native void MNxSIAOu(long nativeAwContents, Object caller, int w, int h, int ow, int oh);
+  public static native void Mnc0PDKE(long nativeAwContents, Object caller, int x, int y);
 
-    public static native void Mnc0PDKE(long nativeAwContents, Object caller, int x, int y);
+  public static native void MFKs48sP(long nativeAwContents, Object caller, int x, int y);
 
-    public static native void MFKs48sP(long nativeAwContents, Object caller, int x, int y);
+  public static native void MgUWjwjs(long nativeAwContents, Object caller, int targetX, int targetY, long durationMs);
 
-    public static native void MgUWjwjs(long nativeAwContents, Object caller, int targetX, int targetY, long durationMs);
+  public static native void MJqblGS2(long nativeAwContents, Object caller, boolean visible);
 
-    public static native void MJqblGS2(long nativeAwContents, Object caller, boolean visible);
+  public static native void MkfSbdDV(long nativeAwContents, Object caller, boolean visible);
 
-    public static native void MkfSbdDV(long nativeAwContents, Object caller, boolean visible);
+  public static native void M11ykFVM(long nativeAwContents, Object caller, boolean paused);
 
-    public static native void M11ykFVM(long nativeAwContents, Object caller, boolean paused);
+  public static native void MtQhJq6u(long nativeAwContents, Object caller, int w, int h);
 
-    public static native void MtQhJq6u(long nativeAwContents, Object caller, int w, int h);
+  public static native void MqVX7tnS(long nativeAwContents, Object caller);
 
-    public static native void MqVX7tnS(long nativeAwContents, Object caller);
+  public static native boolean M5$3H1S$(long nativeAwContents, Object caller);
 
-    public static native boolean M5$3H1S$(long nativeAwContents, Object caller);
+  public static native boolean MYvj_j$8(long nativeAwContents, Object caller);
 
-    public static native boolean MYvj_j$8(long nativeAwContents, Object caller);
+  public static native void MYYge55A(long nativeAwContents, Object caller, float dipScale);
 
-    public static native void MYYge55A(long nativeAwContents, Object caller, float dipScale);
+  public static native void MQn4UPnT(long nativeAwContents, Object caller);
 
-    public static native void MQn4UPnT(long nativeAwContents, Object caller);
+  public static native byte[] MtUUIkJC(long nativeAwContents, Object caller);
 
-    public static native byte[] MtUUIkJC(long nativeAwContents, Object caller);
+  public static native boolean M$ugXLRy(long nativeAwContents, Object caller, byte[] state);
 
-    public static native boolean M$ugXLRy(long nativeAwContents, Object caller, byte[] state);
+  public static native long MOttaOmZ(long nativeAwContents, Object caller);
 
-    public static native long MOttaOmZ(long nativeAwContents, Object caller);
+  public static native void MunvchpP(long nativeAwContents, Object caller);
 
-    public static native void MunvchpP(long nativeAwContents, Object caller);
+  public static native void MLVoXr_n(long nativeAwContents, Object caller, int color);
 
-    public static native void MLVoXr_n(long nativeAwContents, Object caller, int color);
+  public static native long MpPu_UgV(long nativeAwContents, Object caller, int width, int height);
 
-    public static native long MpPu_UgV(long nativeAwContents, Object caller, int width, int height);
+  public static native void MjvLhcRF(long nativeAwContents, Object caller, boolean enabled);
 
-    public static native void MjvLhcRF(long nativeAwContents, Object caller, boolean enabled);
+  public static native void ME4bwr8X(long nativeAwContents, Object caller, long requestId, Object callback);
 
-    public static native void ME4bwr8X(long nativeAwContents, Object caller, long requestId, Object callback);
+  public static native void MsURZ4Xi(long nativeAwContents, Object caller);
 
-    public static native void MsURZ4Xi(long nativeAwContents, Object caller);
+  public static native void Me4$sHFE(long nativeAwContents, Object caller, String url, String extraHeaders);
 
-    public static native void Me4$sHFE(long nativeAwContents, Object caller, String url, String extraHeaders);
+  public static native void M0cKB_Do(long nativeAwContents, Object caller, boolean value, String requestingFrame);
 
-    public static native void M0cKB_Do(long nativeAwContents, Object caller, boolean value, String requestingFrame);
+  public static native int MmkSmonh(long nativeAwContents, Object caller);
 
-    public static native int MmkSmonh(long nativeAwContents, Object caller);
+  public static native void MSO7DbfT(long nativeAwContents, Object caller, boolean networkUp);
 
-    public static native void MSO7DbfT(long nativeAwContents, Object caller, boolean networkUp);
+  public static native void MxV2T4AB(long nativeAwContents, Object caller, int level, boolean visible);
 
-    public static native void MxV2T4AB(long nativeAwContents, Object caller, int level, boolean visible);
+  public static native void MND9REwd(long nativeAwContents, Object caller, Object awPdfExporter);
 
-    public static native void MND9REwd(long nativeAwContents, Object caller, Object awPdfExporter);
+  public static native void MZm6NYk2(long nativeAwContents, Object caller, String origin, long resources);
 
-    public static native void MZm6NYk2(long nativeAwContents, Object caller, String origin, long resources);
+  public static native void Mt543z$z(long nativeAwContents, Object caller);
 
-    public static native void Mt543z$z(long nativeAwContents, Object caller);
+  public static native void MlAm1rvf(long nativeAwContents, Object caller);
 
-    public static native void MlAm1rvf(long nativeAwContents, Object caller);
+  public static native Object Mj2HEglc(long nativeAwContents, Object caller);
 
-    public static native Object Mj2HEglc(long nativeAwContents, Object caller);
+  public static native String MxPw2eDG(long nativeAwContents, Object caller, Object listener, String jsObjectName, String[] allowedOrigins);
 
-    public static native int MrxnMTWN(long nativeAwContents, Object caller, String script, String[] allowedOriginRules);
+  public static native void MJJ_9Fzq(long nativeAwContents, Object caller, String jsObjectName);
+  public static native void MXMPzQYm(long nativeAwContentsClientBridge, Object caller, int action, boolean reporting, int requestId);
 
-    public static native void MHUaOxdC(long nativeAwContents, Object caller, int scriptId);
+  public static native void MgWlsTs7(long nativeAwContentsClientBridge, Object caller, boolean proceed, int id);
 
-    public static native String MxPw2eDG(long nativeAwContents, Object caller, Object listener, String jsObjectName, String[] allowedOrigins);
+  public static native void MZT_Y79r(long nativeAwContentsClientBridge, Object caller, int id, byte[][] certChain, Object androidKey);
 
-    public static native void MJJ_9Fzq(long nativeAwContents, Object caller, String jsObjectName);
+  public static native void MNISBPG1(long nativeAwContentsClientBridge, Object caller, int id, String prompt);
 
-    public static native Object[] MM3s1PPD(long nativeAwContents, Object caller, Class clazz);
-    public static native void MXMPzQYm(long nativeAwContentsClientBridge, Object caller, int action, boolean reporting, int requestId);
+  public static native void MXWyhv9x(long nativeAwContentsClientBridge, Object caller, int id);
+  public static native void MjT_gThK();
 
-    public static native void MgWlsTs7(long nativeAwContentsClientBridge, Object caller, boolean proceed, int id);
+  public static native String Mdfl4F0j();
 
-    public static native void MZT_Y79r(long nativeAwContentsClientBridge, Object caller, int id, byte[][] certChain, Object androidKey);
+  public static native void Ml71D$Ud(Object callback);
 
-    public static native void MNISBPG1(long nativeAwContentsClientBridge, Object caller, int id, String prompt);
+  public static native String M0AyjO$E();
 
-    public static native void MXWyhv9x(long nativeAwContentsClientBridge, Object caller, int id);
-    public static native void MjT_gThK();
+  public static native String MhBmyxCD();
 
-    public static native void MQi$Ykmj(String[] switches, String[] features);
+  public static native void MhYNFMfv(Object ioThreadClient, Object browserContext);
 
-    public static native String Mdfl4F0j();
+  public static native void MlIL02rX(String[] urls, Object callback);
 
-    public static native void Ml71D$Ud(Object callback);
+  public static native void Mu0fMVv8(boolean permitted);
 
-    public static native String M0AyjO$E();
+  public static native boolean M04mALrd();
+  public static native long M2x3bkF7();
 
-    public static native String MhBmyxCD();
+  public static native void MxGz1CMI(long nativeCookieManager, Object caller, boolean accept);
 
-    public static native void MhYNFMfv(Object ioThreadClient, Object browserContext);
+  public static native boolean MIaWBQxt(long nativeCookieManager, Object caller);
 
-    public static native void MlIL02rX(String[] urls, Object callback);
+  public static native void MqWxZVFj(long nativeCookieManager, Object caller, String url, String value, Object callback);
 
-    public static native void Mu0fMVv8(boolean permitted);
+  public static native void M521ruQI(long nativeCookieManager, Object caller, String url, String value);
 
-    public static native boolean M04mALrd();
-    public static native long M2x3bkF7();
+  public static native String MwtyXc6D(long nativeCookieManager, Object caller, String url);
 
-    public static native void MxGz1CMI(long nativeCookieManager, Object caller, boolean accept);
+  public static native void MPH4p3lP(long nativeCookieManager, Object caller, Object callback);
 
-    public static native boolean MIaWBQxt(long nativeCookieManager, Object caller);
+  public static native void MCvO0Hcd(long nativeCookieManager, Object caller);
 
-    public static native void MqWxZVFj(long nativeCookieManager, Object caller, String url, String value, Object callback);
+  public static native void MYNMnyIh(long nativeCookieManager, Object caller, Object callback);
 
-    public static native void M521ruQI(long nativeCookieManager, Object caller, String url, String value);
+  public static native void M8tXWfBc(long nativeCookieManager, Object caller);
 
-    public static native String MwtyXc6D(long nativeCookieManager, Object caller, String url);
+  public static native void MtpZW_Jk(long nativeCookieManager, Object caller);
 
-    public static native void MPH4p3lP(long nativeCookieManager, Object caller, Object callback);
+  public static native void MgWRfeHz(long nativeCookieManager, Object caller);
 
-    public static native void MCvO0Hcd(long nativeCookieManager, Object caller);
+  public static native boolean MLEl9vQp(long nativeCookieManager, Object caller);
 
-    public static native void MYNMnyIh(long nativeCookieManager, Object caller, Object callback);
+  public static native boolean MjZje8ZY(long nativeCookieManager, Object caller);
 
-    public static native void M8tXWfBc(long nativeCookieManager, Object caller);
+  public static native void Mfo4YHeg(long nativeCookieManager, Object caller, boolean allow);
+  public static native boolean MmSf62mU(String dumpPath);
 
-    public static native void MtpZW_Jk(long nativeCookieManager, Object caller);
+  public static native void MDJuylSA();
 
-    public static native void MgWRfeHz(long nativeCookieManager, Object caller);
+  public static native void M7oEM7wa();
 
-    public static native boolean MLEl9vQp(long nativeCookieManager, Object caller);
+  public static native void MNM504jU();
 
-    public static native boolean MjZje8ZY(long nativeCookieManager, Object caller);
+  public static native void M06DsVuS(String version);
+  public static native long MavwYLrk(Object caller);
 
-    public static native void Mfo4YHeg(long nativeCookieManager, Object caller, boolean allow);
+  public static native void MQr9muLU(Object caller, long devToolsServer);
 
-    public static native void MEu0P4_Z(long nativeCookieManager, Object caller, boolean allow);
-    public static native void M06DsVuS(String version);
-    public static native long MavwYLrk(Object caller);
+  public static native void MQE$FZ2u(Object caller, long devToolsServer, boolean enabled);
+  public static native boolean MA_KcuN3(String featureName);
+  public static native boolean MxzPtFuv();
 
-    public static native void MQr9muLU(Object caller, long devToolsServer);
+  public static native void MonDM6EC();
+  public static native void MWR2vWXA(long nativeAwHttpAuthHandler, Object caller, String username, String password);
 
-    public static native void MQE$FZ2u(Object caller, long devToolsServer, boolean enabled);
-    public static native boolean MA_KcuN3(String featureName);
-    public static native boolean MxzPtFuv();
+  public static native void MylO8zte(long nativeAwHttpAuthHandler, Object caller);
+  public static native long Mf2TcTCl();
 
-    public static native void MonDM6EC();
-    public static native void MWR2vWXA(long nativeAwHttpAuthHandler, Object caller, String username, String password);
+  public static native boolean MEjwJwuS(long nativeAwPacProcessor, Object caller, String script);
 
-    public static native void MylO8zte(long nativeAwHttpAuthHandler, Object caller);
-    public static native void MNlWqe6a();
+  public static native String ME9i0MKK(long nativeAwPacProcessor, Object caller, String url);
+  public static native void Mp2j15Oh(long nativeAwPdfExporter, Object caller, int fd, int[] pages, Object cancellationSignal);
+  public static native String M8RBhX3H(Object caller, String[] urlSchemes, String[] proxyUrls, String[] bypassRules, Object listener, Object executor);
 
-    public static native long M1XOiRvG();
+  public static native void Mx5cEreM(Object caller, Object listener, Object executor);
+  public static native void MIrzsg_q(long nativeAwQuotaManagerBridge, Object caller);
 
-    public static native boolean MEjwJwuS(long nativeAwPacProcessor, Object caller, String script);
+  public static native void MMBD8oze(long nativeAwQuotaManagerBridge, Object caller);
 
-    public static native String ME9i0MKK(long nativeAwPacProcessor, Object caller, String url);
+  public static native void MVmZoL1a(long nativeAwQuotaManagerBridge, Object caller, String origin);
 
-    public static native void M_7y1FCn(long nativeAwPacProcessor, Object caller);
-    public static native void Mp2j15Oh(long nativeAwPdfExporter, Object caller, int fd, int[] pages, Object cancellationSignal);
-    public static native String M8RBhX3H(Object caller, String[] urlSchemes, String[] proxyUrls, String[] bypassRules, Object listener, Object executor);
+  public static native void MBqEItUo(long nativeAwQuotaManagerBridge, Object caller, int callbackId);
 
-    public static native void Mx5cEreM(Object caller, Object listener, Object executor);
-    public static native void MIrzsg_q(long nativeAwQuotaManagerBridge, Object caller);
+  public static native void MJn4yzAu(long nativeAwQuotaManagerBridge, Object caller, String origin, int callbackId, boolean isQuota);
+  public static native boolean MjS72mtS(long nativeAwRenderProcess, Object caller);
+  public static native long M4GPw_sx(Object caller, Object webContents);
 
-    public static native void MMBD8oze(long nativeAwQuotaManagerBridge, Object caller);
+  public static native void MtdU4vpL(long nativeAwSettings, Object caller);
 
-    public static native void MVmZoL1a(long nativeAwQuotaManagerBridge, Object caller, String origin);
+  public static native void MrAp8rc4(long nativeAwSettings, Object caller, long webPrefsPtr);
 
-    public static native void MBqEItUo(long nativeAwQuotaManagerBridge, Object caller, int callbackId);
+  public static native void MYBohkOD(long nativeAwSettings, Object caller);
 
-    public static native void MJn4yzAu(long nativeAwQuotaManagerBridge, Object caller, String origin, int callbackId, boolean isQuota);
-    public static native boolean MjS72mtS(long nativeAwRenderProcess, Object caller);
+  public static native void Mq8l4Aae(long nativeAwSettings, Object caller);
 
-    public static native boolean MQgfVFcv(long nativeAwRenderProcess, Object caller);
-    public static native long M4GPw_sx(Object caller, Object webContents);
+  public static native void ManPyeB5(long nativeAwSettings, Object caller);
 
-    public static native void MtdU4vpL(long nativeAwSettings, Object caller);
+  public static native void MShmU87b(long nativeAwSettings, Object caller);
 
-    public static native void MrAp8rc4(long nativeAwSettings, Object caller, long webPrefsPtr);
+  public static native void MuI9Jt0j(long nativeAwSettings, Object caller);
 
-    public static native void MYBohkOD(long nativeAwSettings, Object caller);
+  public static native String MEzAefkM();
 
-    public static native void Mq8l4Aae(long nativeAwSettings, Object caller);
+  public static native void Mt45ai_h(long nativeAwSettings, Object caller);
 
-    public static native void ManPyeB5(long nativeAwSettings, Object caller);
+  public static native void MbLkcpTV(long nativeAwSettings, Object caller);
 
-    public static native void MShmU87b(long nativeAwSettings, Object caller);
+  public static native void ML5KB9Yq(long nativeAwSettings, Object caller);
 
-    public static native void MuI9Jt0j(long nativeAwSettings, Object caller);
+  public static native void MVXG782O(long nativeAwSettings, Object caller);
 
-    public static native String MEzAefkM();
+  public static native void M2EmJ2$z(long nativeAwSettings, Object caller);
 
-    public static native void Mt45ai_h(long nativeAwSettings, Object caller);
+  public static native void M_GO18v7(long nativeAwSettings, Object caller);
+  public static native long MJiQrQ3Z(Object caller);
 
-    public static native void MbLkcpTV(long nativeAwSettings, Object caller);
+  public static native boolean MDhATp5G(long nativeAwTracingController, Object caller, String categories, int traceMode);
 
-    public static native void ML5KB9Yq(long nativeAwSettings, Object caller);
+  public static native boolean MVnr_0Jw(long nativeAwTracingController, Object caller);
 
-    public static native void MVXG782O(long nativeAwSettings, Object caller);
+  public static native boolean MI9fwsnY(long nativeAwTracingController, Object caller);
+  public static native void MB5V$olG(int processId, int renderId, int modeFlags, String[] filePath, String[] displayName);
+  public static native void MayS5i9E(long nativeJsReplyProxy, String message);
+  public static native long MQ7e2Y0w(Object caller, float horizontalPaddingRatio);
+  public static native int MVv$dooB(long nativeAwDrawFnImpl, Object caller);
 
-    public static native void M2EmJ2$z(long nativeAwSettings, Object caller);
+  public static native long MyqeD0HT(long nativeAwDrawFnImpl, Object caller);
 
-    public static native void M_GO18v7(long nativeAwSettings, Object caller);
-    public static native long MJiQrQ3Z(Object caller);
+  public static native void MTNG5d$d(long nativeAwDrawFnImpl, Object caller);
 
-    public static native boolean MDhATp5G(long nativeAwTracingController, Object caller, String categories, int traceMode);
+  public static native void Muf_UBRy(long functionTablePointer);
 
-    public static native boolean MVnr_0Jw(long nativeAwTracingController, Object caller);
+  public static native long M_e6WGre();
+  public static native void MsCe5UVl(long nativeAwGLFunctor, Object caller);
 
-    public static native boolean MI9fwsnY(long nativeAwTracingController, Object caller);
-    public static native void MB5V$olG(int processId, int renderId, int modeFlags, String[] filePath, String[] displayName);
-    public static native void MayS5i9E(long nativeJsReplyProxy, String message);
-    public static native long MQ7e2Y0w(Object caller, float horizontalPaddingRatio);
-    public static native boolean Mu0ImTHn(String path);
+  public static native void MOiMYd0I(long nativeAwGLFunctor, Object caller);
 
-    public static native long MuVvIGuJ();
-    public static native int MVv$dooB(long nativeAwDrawFnImpl, Object caller);
+  public static native long MfRoRhka(long nativeAwGLFunctor, Object caller);
 
-    public static native long MyqeD0HT(long nativeAwDrawFnImpl, Object caller);
+  public static native long Mq4IKpgt();
 
-    public static native void MTNG5d$d(long nativeAwDrawFnImpl, Object caller);
+  public static native void Ms3_fBgF(long nativeAwGLFunctor);
 
-    public static native void Muf_UBRy(long functionTablePointer);
+  public static native long Me9QwrxV(Object javaProxy);
 
-    public static native long M_e6WGre();
-    public static native void MsCe5UVl(long nativeAwGLFunctor, Object caller);
+  public static native int MW0m24ct();
+  public static native void Mt$FsvYN(long nativeAwPicture);
 
-    public static native void MOiMYd0I(long nativeAwGLFunctor, Object caller);
+  public static native int MxvjfQIM(long nativeAwPicture, Object caller);
 
-    public static native long MfRoRhka(long nativeAwGLFunctor, Object caller);
+  public static native int MAAuagRx(long nativeAwPicture, Object caller);
 
-    public static native long Mq4IKpgt();
+  public static native void MU5yPjvq(long nativeAwPicture, Object caller, Object canvas);
+  public static native void MsBIPWH$(long nativeRootBeginFrameSourceWebView, Object caller, float refreshRate);
+  public static native void Mdl6A1eo(boolean userConsent, boolean appConsent);
 
-    public static native void Ms3_fBgF(long nativeAwGLFunctor);
+  public static native void M3qPS3Ay(boolean fastStartupForTesting);
 
-    public static native long Me9QwrxV(Object javaProxy);
+  public static native void Mo7ROkjk(long uploadIntervalMs);
+  public static native void MMMvkQsN();
+  public static native void Mk3Msvx7(long nativeAwPermissionRequest, Object caller, boolean allowed);
 
-    public static native int MW0m24ct();
-    public static native void Mt$FsvYN(long nativeAwPicture);
+  public static native void MhKumtZE(long nativeAwPermissionRequest);
+  public static native boolean MESZdotC();
+  public static native void M7xB0tc0(String histogramName, long[] frameTimesMs, int count);
+  public static native void MiAkQ_SU(int newState);
+  public static native void MDkrKi31(String[] args);
 
-    public static native int MxvjfQIM(long nativeAwPicture, Object caller);
+  public static native boolean MsCvypjU(String switchString);
 
-    public static native int MAAuagRx(long nativeAwPicture, Object caller);
+  public static native String MZJ2lrZY(String switchString);
 
-    public static native void MU5yPjvq(long nativeAwPicture, Object caller, Object canvas);
-    public static native void MsBIPWH$(long nativeRootBeginFrameSourceWebView, Object caller, float refreshRate);
-    public static native void Mdl6A1eo(boolean userConsent, boolean appConsent);
+  public static native void M5K_ewhl(String switchString);
 
-    public static native void M3qPS3Ay(boolean fastStartupForTesting);
+  public static native void MUoYiNbY(String switchString, String value);
 
-    public static native void Mo7ROkjk(long uploadIntervalMs);
-    public static native void MMMvkQsN();
-    public static native void Mk3Msvx7(long nativeAwPermissionRequest, Object caller, boolean allowed);
+  public static native void MPquHBNa(String[] array);
 
-    public static native void MhKumtZE(long nativeAwPermissionRequest);
-    public static native boolean MESZdotC();
-    public static native void MEJdC_Ny();
-    public static native void MiAkQ_SU(int newState);
-    public static native void MDkrKi31(String[] args);
+  public static native void M1cMYXGO(String switchString);
+  public static native int MOiBJ1qS();
 
-    public static native boolean MsCvypjU(String switchString);
+  public static native long ML0T8q1U();
+  public static native void MDy_VEWN(String name, long beginTimNanos, long endTimeNanos, int threadId, long threadDurationMillis);
 
-    public static native String MZJ2lrZY(String switchString);
+  public static native void M8HhsiE6(String name, long id, long timestamp);
 
-    public static native String[] MHzche6O();
+  public static native void MCm4GHjn(String name, long id, long timestamp);
+  public static native String MdC43qwX(String trialName);
 
-    public static native void M5K_ewhl(String switchString);
+  public static native boolean Mmqqda9c(String trialName);
 
-    public static native void MUoYiNbY(String switchString, String value);
+  public static native String MZWMOP4I(String trialName, String parameterKey);
 
-    public static native void MPquHBNa(String[] array);
+  public static native void MHz6Fn06();
+  public static native boolean MsOKBrZ5(String fileName, byte[] data);
+  public static native void MLlibBXh(boolean crashAfterReport, Throwable e);
 
-    public static native void M1cMYXGO(String switchString);
-    public static native int MOiBJ1qS();
+  public static native void MmS4zlEt(String stackTrace);
+  public static native void MJcct7gJ(long nativeJavaHandlerThread, long nativeEvent);
 
-    public static native long ML0T8q1U();
-    public static native void MrWG2uUW(String name, long timeNanos, int threadId, long threadMillis);
+  public static native void MYwg$x8E(long nativeJavaHandlerThread);
+  public static native void MZJzyjAa(int pressure);
+  public static native void M6H_IiaF(int what, String path);
+  public static native void MCImhGql();
+  public static native void MOXOasS5();
+  public static native long MklbOJun();
+  public static native void MFFzPOVw();
 
-    public static native void MmyrhqXB(String name, long timeNanos, int threadId, long threadMillis);
+  public static native void MRN$Vid3();
 
-    public static native void M7UXCmoq(String name, long timeNanos, int threadId, long threadMillis);
+  public static native void MOgCa3d$();
 
-    public static native void MRlw2LEn(String name, long timeNanos, int threadId, long threadMillis);
+  public static native void ML40H8ed(String name, String arg);
 
-    public static native void M_Gv8TwM(String name, long id, long timestamp);
+  public static native void M9XfPu17(String name, String arg);
 
-    public static native void MrKsqeCD(String name, long id, long timestamp);
-    public static native boolean MFTJCvBh();
-    public static native String MdC43qwX(String trialName);
+  public static native void Mw73xTww(String name, String arg);
 
-    public static native boolean Mmqqda9c(String trialName);
+  public static native void M_y76mct(String target);
 
-    public static native String MZWMOP4I(String trialName, String parameterKey);
+  public static native void MLJecZJ9(String target);
 
-    public static native void MHz6Fn06();
-    public static native boolean MsOKBrZ5(String fileName, byte[] data);
-    public static native void MLlibBXh(boolean crashAfterReport, Throwable e);
+  public static native void MHopMqLX(String name, long id);
 
-    public static native void MmS4zlEt(String stackTrace);
-    public static native void MJcct7gJ(long nativeJavaHandlerThread, long nativeEvent);
+  public static native void MffNhCLU(String name, long id);
+  public static native boolean M81WqFvs(int processType);
 
-    public static native void MYwg$x8E(long nativeJavaHandlerThread);
-    public static native void MZJzyjAa(int pressure);
-    public static native void M6H_IiaF(int what, String path);
-    public static native void MCImhGql();
-    public static native void MOXOasS5();
-    public static native long MklbOJun();
-    public static native void MFFzPOVw();
+  public static native void MIOj213u();
 
-    public static native void MRN$Vid3();
+  public static native void MiAWbgCC(long libraryLoadTime);
 
-    public static native void MOgCa3d$();
+  public static native String M$HdV9JM();
+  public static native void MUjpxN8d();
 
-    public static native void ML40H8ed(String name, String arg);
+  public static native int MdFgVRJJ();
 
-    public static native void M9XfPu17(String name, String arg);
+  public static native void MLXZo1U6();
+  public static native long MtKTTHie(String name, long nativeHint, boolean sample);
 
-    public static native void Mw73xTww(String name, String arg);
+  public static native long MILRV9Ch(String name, long nativeHint, int sample, int min, int max, int numBuckets);
 
-    public static native void M_y76mct(String target);
+  public static native long M$oMD214(String name, long nativeHint, int sample, int min, int max, int numBuckets);
 
-    public static native void MLJecZJ9(String target);
+  public static native long Mk1ai9mx(String name, long nativeHint, int sample);
+  public static native int M1gJHszj(String name, int sample);
 
-    public static native void MHopMqLX(String name, long id);
+  public static native int M4mrObfZ(String name);
+  public static native void MlFl3ytt(String action);
 
-    public static native void MffNhCLU(String name, long id);
-    public static native boolean M81WqFvs(int processType);
+  public static native long MH0bOwlk(Object callback);
 
-    public static native void MIOj213u();
+  public static native void MJl0LdjQ(long callbackId);
+  public static native String MvO$oy3r(int verbosityLevel);
+  public static native void Ma6rsNQO(String[] keys, int[] id, int[] fd, long[] offset, long[] size);
 
-    public static native void MiAWbgCC(long libraryLoadTime);
+  public static native void McvJWQ0j();
 
-    public static native String M$HdV9JM();
-    public static native void MUjpxN8d();
+  public static native void M6Y7Jzgj();
+  public static native void MTILOhAQ(boolean prioritySetExplicitly, int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData, Object task, long delay);
+  public static native long M5_IQXaH(int taskRunnerType, boolean prioritySetExplicitly, int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData);
 
-    public static native int MdFgVRJJ();
+  public static native void MERCiIV8(long nativeTaskRunnerAndroid);
 
-    public static native void MLXZo1U6();
-    public static native long MtKTTHie(String name, long nativeHint, boolean sample);
+  public static native void MGnQU$47(long nativeTaskRunnerAndroid, Object task, long delay);
 
-    public static native long MILRV9Ch(String name, long nativeHint, int sample, int min, int max, int numBuckets);
+  public static native boolean MdFi6sVQ(long nativeTaskRunnerAndroid);
+  public static native boolean MAvd5yDU();
 
-    public static native long M$oMD214(String name, long nativeHint, int sample, int min, int max, int numBuckets);
+  public static native boolean MbYaLxm7();
+  public static native void Mf8BmU2z();
 
-    public static native long Mk1ai9mx(String name, long nativeHint, int sample);
+  public static native void MBDE8BZX();
+  public static native void MjdhoRtd(int fd);
+  public static native void MxVH2h8w(long nativeAutofillProviderAndroid, Object caller, Object formData);
+  public static native Object MPHorj3A(long nativeFormDataAndroid, Object caller);
+  public static native long MM$06MFa(Object contentCaptureController);
 
-    public static native void MTDsfZGe(String name, long millisSinceEvent);
-    public static native int M1gJHszj(String name, int sample);
+  public static native void MMJ$SEno(long nativeContentCaptureController, Object caller, String[] whitelist, boolean[] isRegex);
+  public static native boolean MRrWU$ia();
+  public static native Object MxegY8Dy(Object webContents);
+  public static native void Mk$gnuuz(Object caller, int key, String value);
+  public static native void MT6tcXz3(String[] argv);
+  public static native int M7rZ5uJE();
+  public static native void M2zph6xH(long nativeColorChooserAndroid, Object caller, int color);
+  public static native long MW6nK$q1(Object caller, Object webContents);
 
-    public static native int M4mrObfZ(String name);
-    public static native long MH0bOwlk(Object callback);
+  public static native void MlPioXlo(long nativeFindInPageBridge, Object caller);
 
-    public static native void MJl0LdjQ(long callbackId);
-    public static native String MvO$oy3r(int verbosityLevel);
-    public static native void Ma6rsNQO(String[] keys, int[] id, int[] fd, long[] offset, long[] size);
+  public static native void MiKuFRTN(long nativeFindInPageBridge, Object caller, String searchString, boolean forwardDirection, boolean caseSensitive);
 
-    public static native void McvJWQ0j();
+  public static native void MWOuMqhA(long nativeFindInPageBridge, Object caller, boolean clearSelection);
 
-    public static native void M6Y7Jzgj();
-    public static native void MTILOhAQ(int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData, Object task, long delay);
-    public static native long M5_IQXaH(int taskRunnerType, int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData);
+  public static native String M3t_h9OB(long nativeFindInPageBridge, Object caller);
 
-    public static native void MERCiIV8(long nativeTaskRunnerAndroid);
+  public static native void M4m8QCn$(long nativeFindInPageBridge, Object caller, int currentVersion);
 
-    public static native void MGnQU$47(long nativeTaskRunnerAndroid, Object task, long delay);
+  public static native void MqpwqIAC(long nativeFindInPageBridge, Object caller, float x, float y);
 
-    public static native boolean MdFi6sVQ(long nativeTaskRunnerAndroid);
-    public static native boolean MAvd5yDU();
+  public static native void MNC06_Rq(long nativeFindInPageBridge, Object caller);
+  public static native void MjZjkDM7(String srcDir, String destDir);
 
-    public static native boolean MbYaLxm7();
-    public static native void Mf8BmU2z();
+  public static native String[] MdQEl6jg(String srcDir, String destDir);
+  public static native boolean Mrgx57nB();
 
-    public static native void MBDE8BZX();
-    public static native void MjdhoRtd(int fd);
-    public static native void MxVH2h8w(long nativeAutofillProviderAndroid, Object caller, Object formData);
+  public static native void M3tDaVsh(long callbackId, int resultStatus, String metadata, long checkDelta);
+  public static native void M3JV9hBl(long nativeSpellCheckerSessionBridge, Object caller, int[] offsets, int[] lengths, String[][] suggestions);
+  public static native String MOVY9QtZ(String trialName, String paramName);
 
-    public static native void MMueBMxQ(long nativeAutofillProviderAndroid, Object caller, String value);
+  public static native String Mkq2qJev();
+  public static native void Mhc_M_H$(long nativeExternalBeginFrameSourceAndroid, Object caller, long vsyncTimeMicros, long vsyncPeriodMicros);
+  public static native void MBlO3kR9(Object caller, int cpuCount, long cpuFeatures);
 
-    public static native void M3yksvyh(long nativeAutofillProviderAndroid, Object caller, Object anchorView, float x, float y, float width, float height);
-    public static native Object MPHorj3A(long nativeFormDataAndroid);
-    public static native void MvoPqjlg();
+  public static native void M0zXFFiu(Object caller);
+  public static native int M1Y_XVCN(boolean startServiceManagerOnly);
+  public static native String MWL_OG7s(byte[] encodedData);
 
-    public static native void M8LmNuWo(long requestPtr, byte[][] certChain, Object privateKey);
-    public static native boolean ManEQDnV(String featureName);
-    public static native void M3gWp2U5(Object browserContextHandle, Object list);
+  public static native byte[] Mk6SEKCp(String message);
+  public static native long[] MZ2WfWkn();
 
-    public static native void MuKkCbPW(Object browserContextHandle, Object list, boolean managedOnly);
+  public static native long MsjrrfZt(int nativeHandle, long idLow, long idHigh, long sequenceNumber);
 
-    public static native void MUKDTTb3(Object browserContextHandle, Object list);
+  public static native int MbOQIpGw(long blinkMessagePortDescriptor);
 
-    public static native void MHCiIj4S(Object browserContextHandle, Object list, boolean managedOnly);
+  public static native void MylsTJ$B(long blinkMessagePortDescriptor, int nativeHandle);
 
-    public static native void MNrUBUYF(Object browserContextHandle, Object list, boolean managedOnly);
+  public static native long[] MJJP$CQY(long blinkMessagePortDescriptor);
 
-    public static native void MfJ$nlQp(Object browserContextHandle, Object list);
+  public static native void MWkkqfl2(long blinkMessagePortDescriptor);
+  public static native void MUFA7yj7(long nativeAudioFocusDelegateAndroid, Object caller);
 
-    public static native void MMiVrSYO(Object browserContextHandle, Object list);
+  public static native void MqbF3KiE(long nativeAudioFocusDelegateAndroid, Object caller);
 
-    public static native void M0e6bpwX(Object browserContextHandle, Object list);
+  public static native void My_SIOp6(long nativeAudioFocusDelegateAndroid, Object caller);
 
-    public static native void MuIkhA3z(Object browserContextHandle, Object list);
+  public static native void MeoE5HbI(long nativeAudioFocusDelegateAndroid, Object caller);
 
-    public static native boolean M2uj_WtG(Object browserContextHandle);
+  public static native void Mn3dG6eh(long nativeAudioFocusDelegateAndroid, Object caller);
+  public static native void MJIG3QvD(long nativePtr, Object caller, int newConnectionType);
+  public static native void MwoPtAzD(boolean singleProcess);
 
-    public static native void MMBAxjVV(Object browserContextHandle, Object list);
+  public static native boolean MT$iIjxT();
 
-    public static native void MVO1KmQ2(Object browserContextHandle, Object list);
+  public static native void M9iLjy6T();
+  public static native void MXR$KaDS(long nativeChildProcessLauncherHelper, int pid);
 
-    public static native int Mc26fker(Object browserContextHandle, String origin, String embedder);
+  public static native void MJcoZ9pW(long termiantionInfoPtr, int bindingState, boolean killedByUs, boolean cleanExit, int remainingStrong, int remainingModerate, int remainingWaived, int reverseRank);
+  public static native void MS9BZrW0(long nativeContactsProviderAndroid, String[] names, String[] emails, String[] tel, Object[] addresses, Object[] icons);
 
-    public static native int MjZD1Axe(Object browserContextHandle, String origin, String embedder);
+  public static native void MwwTaBAE(long nativeContactsProviderAndroid, int percentageShared, int propertiesRequested);
 
-    public static native int MlkhzZDY(Object browserContextHandle, String origin);
+  public static native void MOM50EIZ(long nativeContactsProviderAndroid);
+  public static native boolean Mudil8Bg(String featureName);
+  public static native long MXL6itCa(Object caller, Object webContents);
 
-    public static native int MP1CHtBD(Object browserContextHandle, String origin, String embedder);
+  public static native void MifdK0lh(long nativeContentUiEventHandler, Object caller, long timeMs, float x, float y, float ticksX, float ticksY);
 
-    public static native int MTbaHdPj(Object browserContextHandle, String origin, String embedder);
+  public static native void MjyjK8Gd(long nativeContentUiEventHandler, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
 
-    public static native int MfjtPi80(Object browserContextHandle, String origin, String embedder);
+  public static native void M_1sgTVt(long nativeContentUiEventHandler, Object caller, long timeMs, float deltaX, float deltaY);
 
-    public static native int MwXp4AlR(Object browserContextHandle, String origin, String embedder);
+  public static native void MW$k83qi(long nativeContentUiEventHandler, Object caller, long timeMs);
+  public static native void M556jcRe(boolean suspend);
+  public static native long MefCIE9S(Object caller, Object webContents);
 
-    public static native int MhPpwrcf(Object browserContextHandle, String origin);
+  public static native void MMR0DKoy(long nativeGestureListenerManager, Object caller);
 
-    public static native boolean Mi9B_Rpt(Object browserContextHandle, String origin);
+  public static native void MrZmTSS9(long nativeGestureListenerManager, Object caller, boolean enabled);
 
-    public static native int M_JO5pZs(Object browserContextHandle, String origin, String embedder);
+  public static native void M6a5zchR(long nativeGestureListenerManager, Object caller, boolean enabled);
+  public static native void M$O7xE3y(Object requestToken, Object surface);
 
-    public static native int MjC_SZXq(Object browserContextHandle, String origin, String embedder);
+  public static native Object Mm9rCM0m(int surfaceId);
+  public static native long MaMB25XA(Object caller, Object webContents, Object retainedObjects);
 
-    public static native int MRro_PrQ(Object browserContextHandle, String origin, String embedder);
+  public static native void M9VsdpoI(long nativeJavascriptInjector, Object caller, boolean allow);
 
-    public static native void M2LdNIcn(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void Mpa5DCUY(long nativeJavascriptInjector, Object caller, Object object, String name, Class requiredAnnotation);
 
-    public static native void MuUl3YRu(Object browserContextHandle, String origin, int value);
+  public static native void M5J62vXh(long nativeJavascriptInjector, Object caller, String name);
+  public static native void MlezJYnz(long nativeMediaSessionAndroid, Object caller);
 
-    public static native void MGxx4XkL(Object browserContextHandle, String origin, int value);
+  public static native void M5LC9gX$(long nativeMediaSessionAndroid, Object caller);
 
-    public static native void MHV13Gei(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void MW5s36cs(long nativeMediaSessionAndroid, Object caller);
 
-    public static native void MkSXHVQz(Object browserContextHandle, String origin, int value);
+  public static native void My_T5ZML(long nativeMediaSessionAndroid, Object caller, long millis);
 
-    public static native void MKEWfuiw(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void MK7btVfc(long nativeMediaSessionAndroid, Object caller, long millis);
 
-    public static native void M83pILoR(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void MAqRqyJa(long nativeMediaSessionAndroid, Object caller, int action);
 
-    public static native void MdgC2P4d(Object browserContextHandle, String origin, int value);
+  public static native void MdnoDrDw(long nativeMediaSessionAndroid, Object caller);
 
-    public static native void M$1c3w6w(Object browserContextHandle, String origin, int newSettingValue);
+  public static native Object Mtun$qW8(Object contents);
+  public static native boolean MZn2HluM(long nativeRenderWidgetHostViewAndroid, Object caller);
 
-    public static native void M1KwSJbo(Object browserContextHandle, String origin, String embedder, int value);
+  public static native int MRWsmoin(long nativeRenderWidgetHostViewAndroid, Object caller);
 
-    public static native void MJ0l8PGy(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void MQWja$xA(long nativeRenderWidgetHostViewAndroid, Object caller);
 
-    public static native void MAE37EdA(Object browserContextHandle, String origin, String embedder, int value);
+  public static native void McU85DFE(long nativeRenderWidgetHostViewAndroid, Object caller, int x, int y);
 
-    public static native void MyQGLOqU(Object browserContextHandle, String origin);
+  public static native void Myd8R_Wn(long nativeRenderWidgetHostViewAndroid, Object caller);
 
-    public static native void MSoF8bn2(Object browserContextHandle, String origin);
+  public static native void Mjmv7RJS(long nativeRenderWidgetHostViewAndroid, Object caller, int width, int height, String path, Object callback);
+  public static native void MdhaXGcn(long nativeSpeechRecognizerImplAndroid, Object caller);
 
-    public static native void Mks53EZS(Object browserContextHandle, String path);
+  public static native void M2Nl8ID9(long nativeSpeechRecognizerImplAndroid, Object caller);
 
-    public static native void M101q5hN(Object browserContextHandle, String path, Object callback);
+  public static native void MFB2QCbe(long nativeSpeechRecognizerImplAndroid, Object caller);
 
-    public static native void MykycHKg(Object browserContextHandle, String origin, int type, Object callback);
+  public static native void M2TRi32V(long nativeSpeechRecognizerImplAndroid, Object caller);
 
-    public static native void MA5QWuba(Object browserContextHandle, int type, Object list);
+  public static native void MnkvkoGY(long nativeSpeechRecognizerImplAndroid, Object caller, String[] results, float[] scores, boolean provisional);
 
-    public static native void MOHgUpop(Object browserContextHandle);
+  public static native void MUf_fHKN(long nativeSpeechRecognizerImplAndroid, Object caller, int error);
 
-    public static native void Mw9TjMNp(Object browserContextHandle, int type, String origin, String embedder, String object);
+  public static native void MmgQYR9M(long nativeSpeechRecognizerImplAndroid, Object caller);
+  public static native long MWlLnA$6(Object caller);
 
-    public static native boolean Mo$6Pn$c(String pattern);
+  public static native void MLYQdwUF(long nativeTracingControllerAndroid, Object caller);
 
-    public static native boolean MDL$4rLc(String url, String pattern);
+  public static native boolean MZYMIGWv(long nativeTracingControllerAndroid, Object caller, String categories, String traceOptions);
 
-    public static native void MlZM1XeP(Object browserContextHandle, Object callback);
+  public static native void M$HKWu8q(long nativeTracingControllerAndroid, Object caller, String filename, boolean compressFile, Object callback);
 
-    public static native void MvKW9dxN(Object browserContextHandle, Object callback, boolean includeImportant);
+  public static native boolean MdRNuqnW(long nativeTracingControllerAndroid, Object caller, Object callback);
 
-    public static native boolean Mno5HIHV(Object browserContextHandle, int contentSettingsType, String origin);
+  public static native String My9pNx9O(Object caller);
 
-    public static native boolean Mq9o4NGp(Object browserContextHandle, String origin);
+  public static native boolean MkLMghix(long nativeTracingControllerAndroid, Object caller, Object callback);
+  public static native void M0BAvNEw(long nativeTtsPlatformImplAndroid, Object caller);
 
-    public static native boolean MJSt3Ocq(Object browserContextHandle, int contentSettingType);
+  public static native void MpJkwIUo(long nativeTtsPlatformImplAndroid, Object caller);
 
-    public static native boolean MnAiqOhu(Object browserContextHandle, int contentSettingType);
+  public static native void M47GdBO5(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
 
-    public static native boolean M9l6T3Dg(Object browserContextHandle, String origin);
+  public static native void M2$X0reE(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
 
-    public static native void MM1KTgoi(Object browserContextHandle, int contentSettingType, boolean allow);
+  public static native void M1Kw17GB(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
+  public static native void MAa7bxOG();
+  public static native long MjYAnP1s(Object caller, Object webContents);
 
-    public static native void MI$w5f76(Object browserContextHandle, int contentSettingsType, Object list);
+  public static native void MxGfnb$m(long nativeWebContentsAccessibilityAndroid);
 
-    public static native void Mxr_KJ0u(Object browserContextHandle, int contentSettingType, String primaryPattern, String secondaryPattern, int setting);
+  public static native void MMiqVowe(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native int MFhlM$PH(Object browserContextHandle, int contentSettingType);
+  public static native void MdET073e(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native void MWm6GHwj(Object browserContextHandle, int contentSettingType, int setting);
+  public static native int Mk31b3DX(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native boolean MVMkKBZD(Object browserContextHandle);
+  public static native int MI8pU34f(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native boolean MvzV6M16(Object browserContextHandle);
+  public static native boolean MTBNGzHX(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MjfpyoaO(Object browserContextHandle);
+  public static native boolean M5uHFthk(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MuwNpL_U(Object browserContextHandle);
+  public static native boolean MCMbXu4W(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean M95fqYM3(Object browserContextHandle);
+  public static native boolean M8UuMlLD(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MiqtXdKG(Object browserContextHandle);
+  public static native int MnVi6Frs(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MrFJFeqp(Object browserContextHandle);
+  public static native int Mxt_kc4Q(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean M__mL5j3(Object browserContextHandle);
+  public static native boolean MJGtghd9(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
 
-    public static native boolean MVx_E06O(Object browserContextHandle);
+  public static native boolean M2E1dEU9(long nativeWebContentsAccessibilityAndroid, Object caller, Object event, int id, int eventType);
 
-    public static native boolean M$C$mTIZ(Object browserContextHandle);
+  public static native void MM4OAOXm(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void MV74KKwi(Object browserContextHandle, boolean enabled);
+  public static native void MG_OiJKg(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MwAQ6Zwy(Object browserContextHandle);
+  public static native void MNm00fYN(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native boolean MVTtuAPI(Object browserContextHandle);
+  public static native void MB302_MP(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native boolean MUVpJIVs(Object browserContextHandle);
+  public static native int MavOU0SM(long nativeWebContentsAccessibilityAndroid, Object caller, int startId, String elementType, boolean forwards);
 
-    public static native void MtCU02Jz(Object browserContextHandle, boolean enabled);
+  public static native void MEJD7Boi(long nativeWebContentsAccessibilityAndroid, Object caller, int id, String newValue);
 
-    public static native boolean MyK3dqcd(Object browserContextHandle);
+  public static native void MVuu0R4P(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int end);
 
-    public static native boolean MWniL_PR(Object browserContextHandle);
+  public static native boolean McKjfBnu(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
 
-    public static native boolean MtJTJM0O(Object browserContextHandle);
+  public static native boolean M3suD0ji(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
 
-    public static native boolean M7gUC2dc(Object browserContextHandle);
+  public static native boolean MLjXc4lw(long nativeWebContentsAccessibilityAndroid, Object caller, int id, boolean increment);
 
-    public static native boolean M8JWKOET(Object browserContextHandle);
+  public static native void MPQKLw45(long nativeWebContentsAccessibilityAndroid, Object caller, int oldId, int newId);
 
-    public static native void MWLmlHUX(Object browserContextHandle, boolean enabled);
+  public static native boolean MkaakTGI(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void MhtGZv6G(Object browserContextHandle, boolean enabled);
+  public static native boolean MNch0m9c(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int direction);
 
-    public static native void M5mL0MX9(Object browserContextHandle, boolean enabled);
+  public static native String MPyIoFYC(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native void M$rFWgTw(Object browserContextHandle, boolean enabled);
+  public static native void MOikWIf9(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void M4Dg1X33(Object browserContextHandle, boolean enabled);
+  public static native boolean Mr9fGid2(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native boolean M5AYoEJK(Object browserContextHandle);
+  public static native void Mg$cuhZc(long nativeWebContentsAccessibilityAndroid, Object caller);
 
-    public static native boolean MkNZSiLB(Object browserContextHandle);
+  public static native boolean MZcfOSQW(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void M0gfVfLM(Object browserContextHandle, boolean enabled);
+  public static native void M2WbOJ7$(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void MNqjhLYw(Object browserContextHandle, boolean enabled);
+  public static native int[] MVBiMGvZ(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int len);
 
-    public static native void MheScU7M(Object browserContextHandle, boolean enabled);
+  public static native int MhMiVz6m(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
 
-    public static native void MNKP4_AC(Object browserContextHandle, boolean enabled);
+  public static native void MzygGmQh(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int startOffset, int endOffset);
+  public static native long MX95jWaj(Object caller, Object webContents);
 
-    public static native void MMXfC2ra(Object browserContextHandle, boolean enabled);
+  public static native void MM3_AH7F(long nativeCaptioningController, Object caller, boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily, String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor, String textTrackTextShadow, String textTrackTextSize);
+  public static native long MqPi0d6D(Object caller, long high, long low, boolean isPowerEfficient);
 
-    public static native void MjNvvzOU(Object browserContextHandle, boolean enabled);
-    public static native long MM$06MFa(Object contentCaptureController);
+  public static native void MQAm7B7f(long nativeDialogOverlayImpl, Object caller);
 
-    public static native void MMJ$SEno(long nativeContentCaptureController, Object caller, String[] whitelist, boolean[] isRegex);
-    public static native boolean MRrWU$ia();
-    public static native Object MxegY8Dy(Object webContents);
-    public static native boolean MDxiPbPU(String featureName);
-    public static native long Ma648rK8(Object caller, Object webContents, Object originalContextHandle);
+  public static native void MJj9v_ba(long nativeDialogOverlayImpl, Object caller);
 
-    public static native void MupWWV0Q(long nativeCookieControlsBridge, Object caller);
+  public static native void MAd6qeVr(long nativeDialogOverlayImpl, Object caller, Object rect);
 
-    public static native void MTF7msU_(long nativeCookieControlsBridge, boolean blockCookies);
+  public static native int MpcpmTlm(Object surface);
 
-    public static native void MGYjAHK4(long nativeCookieControlsBridge);
+  public static native void M1e4GdYZ(int surfaceId);
 
-    public static native boolean Mvm8S6US(Object browserContextHandle);
-    public static native void Mk$gnuuz(Object caller, int key, String value);
-    public static native void MT6tcXz3(String[] argv);
-    public static native long MazIrxOm(Object caller, long distilledPagePrefPtr);
+  public static native Object MzUgOpRk(int surfaceId);
+  public static native boolean MgAw5sIR(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void MfkxLC88(long nativeDistilledPagePrefsAndroid, Object caller, int fontFamily);
+  public static native boolean MCUxt83x(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native int MSGVGQGo(long nativeDistilledPagePrefsAndroid, Object caller);
+  public static native boolean MEOFE6aD(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void MJBehZGI(long nativeDistilledPagePrefsAndroid, Object caller, int theme);
+  public static native void MWJb9aa$(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native int Mi1cN$gk(long nativeDistilledPagePrefsAndroid, Object caller);
+  public static native boolean MsUTH_HQ(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void MaB$bTgz(long nativeDistilledPagePrefsAndroid, Object caller, float scaling);
+  public static native void MQgIP2q9(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native float MGNXZIUg(long nativeDistilledPagePrefsAndroid, Object caller);
+  public static native boolean M4jjW0jG(long nativeNavigationControllerAndroid, Object caller, int offset);
 
-    public static native void MznRD745(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
+  public static native void Mdhd0AR3(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void M_HmEv0F(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
+  public static native void MEEEhNfT(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native long MxAdC41V(Object caller);
+  public static native void ML_uBbdi(long nativeNavigationControllerAndroid, Object caller, int offset);
 
-    public static native void MGXAfNxO(long nativeDistilledPagePrefsObserverAndroid);
-    public static native long MzVEzhvu(long nativeDomDistillerServiceAndroid);
-    public static native String MhGk9eKu(String scheme, String url, String title);
+  public static native void MuxwAbEo(long nativeNavigationControllerAndroid, Object caller, int index);
 
-    public static native String M1WDPiaY(String viewerUrl);
+  public static native void MNF4lMMb(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native boolean Me1sexxj(String url);
+  public static native void Mp5SLq_N(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native String MaYR73PH(String url, String key);
-    public static native int M7rZ5uJE();
-    public static native void M2zph6xH(long nativeColorChooserAndroid, Object caller, int color);
-    public static native boolean Mjv_BekT(String url);
+  public static native void M81h$w2r(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
 
-    public static native boolean MI2LJ$ny(String url);
+  public static native void My0bMgld(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
 
-    public static native boolean MR0YZiDd(String url);
+  public static native void MAqmDh4t(long nativeNavigationControllerAndroid, Object caller, String url, int loadUrlType, int transitionType, String referrerUrl, int referrerPolicy, int uaOverrideOption, String extraHeaders, Object postData, String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString, boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry);
 
-    public static native boolean MM5WUf_F(String primaryUrl, String secondaryUrl, boolean includePrivateRegistries);
+  public static native void MK2ttcH1(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native String M3l9sLoY(String url, boolean includePrivateRegistries);
+  public static native int MUZRDUOx(long nativeNavigationControllerAndroid, Object caller, Object history);
 
-    public static native boolean MnXKAgH9(String url, boolean allowNonStandardPort);
+  public static native void Mx5VuK3_(long nativeNavigationControllerAndroid, Object caller, Object history, boolean isForward, int itemLimit);
 
-    public static native boolean Mn0fHwI$(String url);
+  public static native void MpKIKzer(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native boolean M$l72hrq(String url);
+  public static native boolean MCIN9$qH(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native boolean Mj1SQ9S8(String url);
+  public static native void MrilyCK6(long nativeNavigationControllerAndroid, Object caller, boolean override, boolean reloadOnChange);
 
-    public static native boolean MLKUC6KA(String url, String scopeUrl);
+  public static native Object MLcS2$Fy(long nativeNavigationControllerAndroid, Object caller, int index);
 
-    public static native boolean Ml0jhLAz(String url, String url2);
+  public static native Object MHqMy8sY(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native boolean MMsz$c1t(String url, String url2);
-    public static native boolean MZOzKX8c(String featureName);
-    public static native void Mjjyc5BV(Object nativeInterceptNavigationDelegateImpl, Object webContents);
-    public static native long MW6nK$q1(Object caller, Object webContents);
+  public static native Object Mgxh2WfC(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void MlPioXlo(long nativeFindInPageBridge, Object caller);
+  public static native int Mil0WqAo(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native void MiKuFRTN(long nativeFindInPageBridge, Object caller, String searchString, boolean forwardDirection, boolean caseSensitive);
+  public static native boolean MVbDeBRx(long nativeNavigationControllerAndroid, Object caller, int index);
 
-    public static native void MWOuMqhA(long nativeFindInPageBridge, Object caller, boolean clearSelection);
+  public static native void M2mQucXv(long nativeNavigationControllerAndroid, Object caller);
 
-    public static native String M3t_h9OB(long nativeFindInPageBridge, Object caller);
+  public static native String McQE1GI8(long nativeNavigationControllerAndroid, Object caller, int index, String key);
 
-    public static native void M4m8QCn$(long nativeFindInPageBridge, Object caller, int currentVersion);
+  public static native void Mw19wBW8(long nativeNavigationControllerAndroid, Object caller, int index, String key, String value);
 
-    public static native void MqpwqIAC(long nativeFindInPageBridge, Object caller, float x, float y);
+  public static native boolean MVjP87pN(long nativeNavigationControllerAndroid, Object caller, int index);
+  public static native String MBg$jIAu(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native void MNC06_Rq(long nativeFindInPageBridge, Object caller);
-    public static native void Mo6rag0q(long nativeAppModalDialogViewAndroid, Object caller, String prompt, boolean suppress);
+  public static native Object Mcdslkop(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native void MOSW2s7O(long nativeAppModalDialogViewAndroid, Object caller, boolean suppress);
+  public static native void MUV0o0vB(long nativeRenderFrameHostAndroid, Object caller, Object callback);
 
-    public static native Object MpmiqdtU();
-    public static native void M9yPJzg8(long nativeTabModalDialogViewAndroid, Object caller, String prompt);
+  public static native boolean MfPH28_F(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native void M0YaeICP(long nativeTabModalDialogViewAndroid, Object caller, boolean buttonClicked);
-    public static native void MeFOXp9F(long callback, int result);
-    public static native void MjZjkDM7(String srcDir, String destDir);
+  public static native Object MJDViTxW(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native String[] MdQEl6jg(String srcDir, String destDir);
-    public static native int[] M8aH4n_l(String text, Object autocompleteSchemeClassifier);
-    public static native byte[][] MW74qHgy(Object webContents);
-    public static native String MVBnBWgu();
+  public static native void M$j92GA1(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native String M61$9xnN();
+  public static native boolean MhaRMzRy(long nativeRenderFrameHostAndroid, Object caller);
 
-    public static native String M3Q$lPl0();
+  public static native boolean M6cbowZq(long nativeRenderFrameHostAndroid, Object caller);
+  public static native void MgUhdCLo(long nativeDateTimeChooserAndroid, Object caller, double dialogValue);
 
-    public static native String M2rGgvRp();
+  public static native void MCtaZNwj(long nativeDateTimeChooserAndroid, Object caller);
+  public static native long MhbsQh1H(Object caller, Object webContents);
 
-    public static native String MtQn_hO9();
+  public static native boolean M1qwlrOP(long nativeImeAdapterAndroid, Object caller, Object event, int type, int modifiers, long timestampMs, int keyCode, int scanCode, boolean isSystemKey, int unicodeChar);
 
-    public static native String MsQpEHij();
+  public static native void MFfRzF$Z(long spanPtr, int start, int end);
 
-    public static native String MdXOhLT3();
+  public static native void MqqhDONa(long spanPtr, int start, int end, int backgroundColor);
 
-    public static native String MnsPVX7Z();
+  public static native void M$b45Vvn(long spanPtr, int start, int end, boolean isMisspelling, boolean removeOnFinishComposing, int underlineColor, int suggestionHighlightColor, String[] suggestions);
 
-    public static native String Mrqn7ZPZ();
+  public static native void Mlslst_P(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
 
-    public static native String Mj6CXcHR();
+  public static native void Mb6t43di(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
 
-    public static native String MGc5t$JX();
+  public static native void M_V5g5ie(long nativeImeAdapterAndroid, Object caller);
 
-    public static native String M3Qp55TF();
+  public static native void MmtjCblb(long nativeImeAdapterAndroid, Object caller, int start, int end);
 
-    public static native String MRBlj4Pf();
+  public static native void M8ty0WHb(long nativeImeAdapterAndroid, Object caller, int start, int end);
 
-    public static native String M_b6sZk8();
-    public static native long MQBWmAkR(Object popup, Object webContents);
+  public static native void M26GCjn5(long nativeImeAdapterAndroid, Object caller, int before, int after);
 
-    public static native void MGoSBFnh(long nativeConnectionInfoPopupAndroid, Object caller);
+  public static native void Mvb046o_(long nativeImeAdapterAndroid, Object caller, int before, int after);
 
-    public static native void MaQsvTiF(long nativeConnectionInfoPopupAndroid, Object caller, Object webContents);
-    public static native long MuLM_ayx(Object controller, Object webContents);
+  public static native boolean M7o5Xhhi(long nativeImeAdapterAndroid, Object caller);
 
-    public static native void Mz6XBRgf(long nativePageInfoControllerAndroid, Object caller);
+  public static native void MdwW1P2L(long nativeImeAdapterAndroid, Object caller, boolean immediateRequest, boolean monitorRequest);
 
-    public static native void M5DCRkGK(long nativePageInfoControllerAndroid, Object caller, int action);
-    public static native boolean MJ8X0ZQd(String featureName);
-    public static native void MoC5mife(long nativePermissionDialogDelegate, Object caller);
+  public static native void Mm_z91JF(long nativeImeAdapterAndroid, Object caller, int focusType);
+  public static native void ME0LgXse(long nativeSelectPopup, Object caller, long nativeSelectPopupSourceFrame, int[] indices);
+  public static native void M7RnYR2r(long nativeTextSuggestionHostAndroid, Object caller, String suggestion);
 
-    public static native void MG2fhXvZ(long nativePermissionDialogDelegate, Object caller);
+  public static native void MIADbBhq(long nativeTextSuggestionHostAndroid, Object caller, int markerTag, int suggestionIndex);
 
-    public static native void My1ZBTOK(long nativePermissionDialogDelegate, Object caller);
+  public static native void MCBTtv2g(long nativeTextSuggestionHostAndroid, Object caller);
 
-    public static native void MLMIuACo(long nativePermissionDialogDelegate, Object caller);
-    public static native void M4qSX4lZ(long callback);
-    public static native void MRGBEdxZ(long nativePrefServiceAndroid, String preference);
+  public static native void MpJ8AQhr(long nativeTextSuggestionHostAndroid, Object caller, String word);
 
-    public static native boolean MzIXnlkD(long nativePrefServiceAndroid, String preference);
+  public static native void MnvYa0QF(long nativeTextSuggestionHostAndroid, Object caller);
+  public static native long MJHXNa8U(Object caller, Object webContents);
 
-    public static native void Mf2ABpoH(long nativePrefServiceAndroid, String preference, boolean value);
+  public static native void M01adZlM(long nativeSelectionPopupController, Object caller, boolean hidden);
+  public static native long MFA_dMJC(Object caller, Object webContents);
 
-    public static native int MzGf81GW(long nativePrefServiceAndroid, String preference);
+  public static native void M2GZ6ZNR(long nativeSmartSelectionClient, Object caller, int numExtraCharacters, int callbackData);
 
-    public static native void MPBZLcVx(long nativePrefServiceAndroid, String preference, int value);
+  public static native void MVHq2mA2(long nativeSmartSelectionClient, Object caller);
+  public static native void McAbc1cO(long nativeSmsProviderAndroid, String sms);
 
-    public static native String Ma80fvz5(long nativePrefServiceAndroid, String preference);
+  public static native void MW3td7Xy(long nativeSmsProviderAndroid);
+  public static native void MxxzO9Pe(long webContentsAndroidPtr);
 
-    public static native void MY13p7Sp(long nativePrefServiceAndroid, String preference, String value);
+  public static native Object M$eaBDjM(long webContentsAndroidPtr);
 
-    public static native boolean MrEgF7hX(long nativePrefServiceAndroid, String preference);
-    public static native void M3tDaVsh(long callbackId, int resultStatus, String metadata, long checkDelta);
-    public static native void MZW64TXU(String spkiHash);
+  public static native void M0iG1Oc2(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MVYBH9Mh(boolean osReportsCaptivePortal);
-    public static native int MYsxmQ1h(Object webContents);
+  public static native Object MunY3e38(long nativeWebContentsAndroid, Object caller);
 
-    public static native boolean MGIcGdNm();
-    public static native void M3JV9hBl(long nativeSpellCheckerSessionBridge, Object caller, int[] offsets, int[] lengths, String[][] suggestions);
-    public static native boolean MK7GTxrW(String featureName);
-    public static native Object Ml2KxI$W(String url);
+  public static native void MOKG_Wbb(long nativeWebContentsAndroid, Object caller, Object windowAndroid);
 
-    public static native String M25QTkfm(String url);
+  public static native Object MjidYpBx(long nativeWebContentsAndroid, Object caller);
 
-    public static native String MWAcU8Kr(String url);
+  public static native Object MT2cFaRc(long nativeWebContentsAndroid, Object caller);
 
-    public static native String MeroQv$e(String url);
+  public static native Object Mj9slq6o(long nativeWebContentsAndroid, Object caller);
 
-    public static native String M52RypMk(String url);
+  public static native Object[] MJSe_z5C(long nativeWebContentsAndroid, Object caller);
 
-    public static native String MWcP3rTG(String url);
+  public static native String M7OgjMU8(long nativeWebContentsAndroid, Object caller);
 
-    public static native String MN7bz_Mm(Object url, int schemeDisplay);
+  public static native String M8927Uaf(long nativeWebContentsAndroid, Object caller);
 
-    public static native String MR6Af3ZS(String url, int schemeDisplay);
-    public static native Object MeUSzoBw(Object browserContextHandle);
-    public static native String MOVY9QtZ(String trialName, String paramName);
+  public static native String M4pZ82rG(long nativeWebContentsAndroid, Object caller);
 
-    public static native String Mkq2qJev();
+  public static native boolean MtSTkEp2(long nativeWebContentsAndroid, Object caller);
 
-    public static native String M_cRNcHs();
-    public static native void Mhc_M_H$(long nativeExternalBeginFrameSourceAndroid, Object caller, long vsyncTimeMicros, long vsyncPeriodMicros);
-    public static native void MBlO3kR9(Object caller, int cpuCount, long cpuFeatures);
+  public static native boolean M93b11tE(long nativeWebContentsAndroid, Object caller);
 
-    public static native void M0zXFFiu(Object caller);
-    public static native int M1Y_XVCN(boolean startServiceManagerOnly);
-    public static native String MWL_OG7s(byte[] encodedData);
+  public static native void M$$25N5$(long nativeWebContentsAndroid, Object caller);
 
-    public static native byte[] Mk6SEKCp(String message);
-    public static native long[] MZ2WfWkn();
+  public static native void MhIiCaN7(long nativeWebContentsAndroid, Object caller);
 
-    public static native long MsjrrfZt(int nativeHandle, long idLow, long idHigh, long sequenceNumber);
+  public static native void MpfMxfut(long nativeWebContentsAndroid, Object caller);
 
-    public static native int MbOQIpGw(long blinkMessagePortDescriptor);
+  public static native void MYRJ_nNk(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MylsTJ$B(long blinkMessagePortDescriptor, int nativeHandle);
+  public static native void MdSkKRWg(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MpISG4bN(long blinkMessagePortDescriptor);
+  public static native void MevqfbP8(long nativeWebContentsAndroid, Object caller, String word);
 
-    public static native long[] MJJP$CQY(long blinkMessagePortDescriptor);
+  public static native void MNvj1u1S(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MWkkqfl2(long blinkMessagePortDescriptor);
+  public static native void MDK_KK0z(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MgnCh9Wp(long blinkMessagePortDescriptor);
-    public static native void MUFA7yj7(long nativeAudioFocusDelegateAndroid, Object caller);
+  public static native void MHNkuuGQ(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MqbF3KiE(long nativeAudioFocusDelegateAndroid, Object caller);
+  public static native void MtakfqIH(long nativeWebContentsAndroid, Object caller);
 
-    public static native void My_SIOp6(long nativeAudioFocusDelegateAndroid, Object caller);
+  public static native void MkBVGSRs(long nativeWebContentsAndroid, Object caller, int importance);
 
-    public static native void MeoE5HbI(long nativeAudioFocusDelegateAndroid, Object caller);
+  public static native void MSOsA4Ii(long nativeWebContentsAndroid, Object caller);
 
-    public static native void Mn3dG6eh(long nativeAudioFocusDelegateAndroid, Object caller);
-    public static native void MJIG3QvD(long nativePtr, Object caller, int newConnectionType);
-    public static native void MwoPtAzD(boolean singleProcess);
+  public static native void M4fkbrQM(long nativeWebContentsAndroid, Object caller, boolean mute);
 
-    public static native void M9iLjy6T();
-    public static native void MXR$KaDS(long nativeChildProcessLauncherHelper, int pid);
+  public static native boolean MPePqASo(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MJcoZ9pW(long termiantionInfoPtr, int bindingState, boolean killedByUs, boolean cleanExit, boolean exceptionDuringInit, int remainingStrong, int remainingModerate, int remainingWaived, int reverseRank);
-    public static native void MS9BZrW0(long nativeContactsProviderAndroid, String[] names, String[] emails, String[] tel, Object[] addresses, Object[] icons);
+  public static native boolean MkIL2bW9(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MwwTaBAE(long nativeContactsProviderAndroid, int percentageShared, int propertiesRequested);
+  public static native void M6c69Eq5(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MOM50EIZ(long nativeContactsProviderAndroid);
-    public static native boolean Mudil8Bg(String featureName);
-    public static native long MXL6itCa(Object caller, Object webContents);
+  public static native void MgbVQff0(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MifdK0lh(long nativeContentUiEventHandler, Object caller, long timeMs, float x, float y, float ticksX, float ticksY);
+  public static native void MlfwWHGJ(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MjyjK8Gd(long nativeContentUiEventHandler, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
+  public static native void MjgOFo_o(long nativeWebContentsAndroid, Object caller, int startAdjust, int endAdjust, boolean showSelectionMenu);
 
-    public static native void M_1sgTVt(long nativeContentUiEventHandler, Object caller, long timeMs, float deltaX, float deltaY);
+  public static native String MrqMRJsG(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MW$k83qi(long nativeContentUiEventHandler, Object caller, long timeMs);
-    public static native void M556jcRe(boolean suspend);
-    public static native long MefCIE9S(Object caller, Object webContents);
+  public static native boolean MZbfAARG(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MMR0DKoy(long nativeGestureListenerManager, Object caller);
+  public static native void MQnLkNkP(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MrZmTSS9(long nativeGestureListenerManager, Object caller, boolean enabled);
+  public static native void M0uS2SDH(long nativeWebContentsAndroid, Object caller, String script, Object callback);
 
-    public static native void M6a5zchR(long nativeGestureListenerManager, Object caller, boolean enabled);
+  public static native void MPoHZQTR(long nativeWebContentsAndroid, Object caller, String script, Object callback);
 
-    public static native void M9FEGIKH(long nativeGestureListenerManager, boolean hasListeners);
-    public static native void M$O7xE3y(Object requestToken, Object surface);
+  public static native void MseJ7A4a(long nativeWebContentsAndroid, Object caller, int level, String message);
 
-    public static native Object Mm9rCM0m(int surfaceId);
-    public static native long MaMB25XA(Object caller, Object webContents, Object retainedObjects);
+  public static native void MZFXk0el(long nativeWebContentsAndroid, Object caller, String message, String sourceOrigin, String targetOrigin, Object[] ports);
 
-    public static native void M9VsdpoI(long nativeJavascriptInjector, Object caller, boolean allow);
+  public static native boolean M6It8dra(long nativeWebContentsAndroid, Object caller);
 
-    public static native void Mpa5DCUY(long nativeJavascriptInjector, Object caller, Object object, String name, Class requiredAnnotation);
+  public static native int MGZCJ6jO(long nativeWebContentsAndroid, Object caller);
 
-    public static native void M5J62vXh(long nativeJavascriptInjector, Object caller, String name);
-    public static native void MlezJYnz(long nativeMediaSessionAndroid, Object caller);
+  public static native float MoQgY_pw(long nativeWebContentsAndroid, Object caller);
 
-    public static native void M5LC9gX$(long nativeMediaSessionAndroid, Object caller);
+  public static native void MHF1rPTW(long nativeWebContentsAndroid, Object caller, Object callback, int x, int y, int width, int height);
 
-    public static native void MW5s36cs(long nativeMediaSessionAndroid, Object caller);
+  public static native void M16eLpU9(long nativeWebContentsAndroid, Object caller, Object callback);
 
-    public static native void My_T5ZML(long nativeMediaSessionAndroid, Object caller, long millis);
+  public static native void MTTB8znA(long nativeWebContentsAndroid, Object caller, Object nativeOverscrollRefreshHandler);
 
-    public static native void MK7btVfc(long nativeMediaSessionAndroid, Object caller, long millis);
+  public static native void MjBPqNgx(long nativeWebContentsAndroid, Object caller, boolean disabled);
 
-    public static native void MAqRqyJa(long nativeMediaSessionAndroid, Object caller, int action);
+  public static native int Mi3V1mlO(long nativeWebContentsAndroid, Object caller, String url, boolean isFavicon, int maxBitmapSize, boolean bypassCache, Object callback);
 
-    public static native void MdnoDrDw(long nativeMediaSessionAndroid, Object caller);
+  public static native void M12SiBFk(long nativeWebContentsAndroid, Object caller, boolean value);
 
-    public static native Object Mtun$qW8(Object contents);
-    public static native boolean MZn2HluM(long nativeRenderWidgetHostViewAndroid, Object caller);
+  public static native boolean MZao1OQG(long nativeWebContentsAndroid, Object caller);
 
-    public static native int MRWsmoin(long nativeRenderWidgetHostViewAndroid, Object caller);
+  public static native boolean MS0xMYL9(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MQWja$xA(long nativeRenderWidgetHostViewAndroid, Object caller);
+  public static native Object MN9JdEk5(long nativeWebContentsAndroid, Object caller);
 
-    public static native void McU85DFE(long nativeRenderWidgetHostViewAndroid, Object caller, int x, int y);
+  public static native void M7tTrJ_X(long nativeWebContentsAndroid, Object caller, int width, int height);
 
-    public static native void Myd8R_Wn(long nativeRenderWidgetHostViewAndroid, Object caller);
+  public static native int MB0i5_ri(long nativeWebContentsAndroid, Object caller);
 
-    public static native void Mjmv7RJS(long nativeRenderWidgetHostViewAndroid, Object caller, int width, int height, String path, Object callback);
-    public static native void MdhaXGcn(long nativeSpeechRecognizerImplAndroid, Object caller);
+  public static native int MRVeP4Wk(long nativeWebContentsAndroid, Object caller);
 
-    public static native void M2Nl8ID9(long nativeSpeechRecognizerImplAndroid, Object caller);
+  public static native Object MJJFrmZs(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MFB2QCbe(long nativeSpeechRecognizerImplAndroid, Object caller);
+  public static native void MgyWdCWB(long nativeWebContentsAndroid, Object caller, Object viewDelegate);
 
-    public static native void M2TRi32V(long nativeSpeechRecognizerImplAndroid, Object caller);
+  public static native void MlztHl3v(long nativeWebContentsAndroid, Object caller, int orientation);
 
-    public static native void MnkvkoGY(long nativeSpeechRecognizerImplAndroid, Object caller, String[] results, float[] scores, boolean provisional);
+  public static native void MqhGkzSt(long nativeWebContentsAndroid, Object caller);
 
-    public static native void MUf_fHKN(long nativeSpeechRecognizerImplAndroid, Object caller, int error);
+  public static native void M9QxNoTJ(long nativeWebContentsAndroid, Object caller, boolean focused);
 
-    public static native void MmgQYR9M(long nativeSpeechRecognizerImplAndroid, Object caller);
-    public static native long MWlLnA$6(Object caller);
+  public static native void MtjP03pj(long nativeWebContentsAndroid, Object caller, int top, int left, int bottom, int right);
 
-    public static native void MLYQdwUF(long nativeTracingControllerAndroid, Object caller);
+  public static native void Mzsx8Sk2(long nativeWebContentsAndroid, Object caller);
 
-    public static native boolean MZYMIGWv(long nativeTracingControllerAndroid, Object caller, String categories, String traceOptions);
+  public static native void MgcGzQax(long nativeWebContentsAndroid, Object caller);
 
-    public static native void M$HKWu8q(long nativeTracingControllerAndroid, Object caller, String filename, boolean compressFile, Object callback);
+  public static native boolean M5A4vDoy(long nativeWebContentsAndroid, Object caller);
+  public static native long MTpUzW91(Object caller, Object webContents);
 
-    public static native boolean MdRNuqnW(long nativeTracingControllerAndroid, Object caller, Object callback);
+  public static native void M7giG0Ri(long nativeWebContentsObserverProxy, Object caller);
+  public static native int M6vzcDUp();
+  public static native boolean MWH2gOYe(String url);
+  public static native void MACALLtV(long nativeNavigationHandleProxy, String headerName, String headerValue);
 
-    public static native String My9pNx9O(Object caller);
+  public static native void Mo7byNs$(long nativeNavigationHandleProxy, String headerName);
+  public static native byte[] MugoAW_d(byte[] httpBody);
+  public static native boolean MbmAQ8fm();
+  public static native void Mq3WoOFf(long nativeBluetoothAdapterAndroid, Object caller);
 
-    public static native boolean MkLMghix(long nativeTracingControllerAndroid, Object caller, Object callback);
-    public static native void M0BAvNEw(long nativeTtsPlatformImplAndroid, Object caller);
+  public static native void MOuw3NGo(long nativeBluetoothAdapterAndroid, Object caller, String address, Object deviceWrapper, String localName, int rssi, String[] advertisedUuids, int txPower, String[] serviceDataKeys, Object[] serviceDataValues, int[] manufacturerDataKeys, Object[] manufacturerDataValues);
 
-    public static native void MpJkwIUo(long nativeTtsPlatformImplAndroid, Object caller);
+  public static native void MGGbKqrZ(long nativeBluetoothAdapterAndroid, Object caller, boolean powered);
+  public static native void MmnW7gQC(long nativeBluetoothDeviceAndroid, Object caller, int status, boolean connected);
 
-    public static native void M47GdBO5(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
+  public static native void MAoRk69U(long nativeBluetoothDeviceAndroid, Object caller, String instanceId, Object serviceWrapper);
 
-    public static native void M2$X0reE(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
+  public static native void M9HSgyay(long nativeBluetoothDeviceAndroid, Object caller);
+  public static native void MZCKcdTH(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, byte[] value);
 
-    public static native void M1Kw17GB(long nativeTtsPlatformImplAndroid, Object caller, int utteranceId);
-    public static native void MAa7bxOG();
-    public static native long MjYAnP1s(Object caller, Object webContents);
+  public static native void Mn9Gzi$d(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status, byte[] value);
 
-    public static native void MxGfnb$m(long nativeWebContentsAccessibilityAndroid);
+  public static native void M3TCxDs5(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status);
 
-    public static native void MMiqVowe(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void MkqvrLoV(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, String instanceId, Object descriptorWrapper, Object chromeBluetoothDevice);
+  public static native void MaKNZo8k(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status, byte[] value);
 
-    public static native void MdET073e(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void M4SmPJiR(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status);
+  public static native void MM2CqKoK(long nativeBluetoothRemoteGattServiceAndroid, Object caller, String instanceId, Object characteristicWrapper, Object chromeBluetoothDevice);
+  public static native void MOkngxPY(Object caller, long webGamepadsPtr, int index, boolean mapping, boolean connected, String devicename, long timestamp, float[] axes, float[] buttons);
+  public static native void MvJnRjJi(double latitude, double longitude, double timeStamp, boolean hasAltitude, double altitude, boolean hasAccuracy, double accuracy, boolean hasHeading, double heading, boolean hasSpeed, double speed);
 
-    public static native int Mk31b3DX(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void M8Iz7Ptw(String message);
+  public static native void MrHXg7he(long nativePlatformSensorAndroid, Object caller);
 
-    public static native int MI8pU34f(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void Mb4JvlL7(long nativePlatformSensorAndroid, Object caller, double timestamp, double value1, double value2, double value3, double value4);
+  public static native void MjxIGcDd(long nativeTimeZoneMonitorAndroid, Object caller);
+  public static native void MNmyS$Xi(long nativeUsbServiceAndroid, Object caller, Object device);
 
-    public static native boolean MTBNGzHX(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void MrBuy2sN(long nativeUsbServiceAndroid, Object caller, int deviceId);
 
-    public static native boolean M5uHFthk(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void MDvFAfgT(long nativeUsbServiceAndroid, Object caller, int deviceId, boolean granted);
+  public static native void MCgftn_d(long nativeAudioManagerAndroid, Object caller, boolean muted);
+  public static native Object MEPH2V3G(long nativeAudioTrackOutputStream, Object caller, Object audioData, long delayInFrames);
 
-    public static native boolean MCMbXu4W(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void Mr6$Ko2f(long nativeAudioTrackOutputStream, Object caller);
 
-    public static native boolean M8UuMlLD(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native long MMQ1O_vA(long nativeAudioTrackOutputStream, Object caller, Object byteBuffer);
+  public static native int M6EY_9Mw(long nativeJniHdrMetadata, Object caller);
 
-    public static native int MnVi6Frs(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native int Myx2EYmS(long nativeJniHdrMetadata, Object caller);
 
-    public static native int Mxt_kc4Q(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native int MGKRBsYQ(long nativeJniHdrMetadata, Object caller);
 
-    public static native boolean MZ7sDynr(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
+  public static native float Mc0wiJ8$(long nativeJniHdrMetadata, Object caller);
 
-    public static native boolean MJGtghd9(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
+  public static native float MYP0SLZ2(long nativeJniHdrMetadata, Object caller);
 
-    public static native boolean M2E1dEU9(long nativeWebContentsAccessibilityAndroid, Object caller, Object event, int id, int eventType);
+  public static native float MRQrYl4t(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MM4OAOXm(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native float MtgfnGGz(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MG_OiJKg(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native float McEG$Qxu(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MNm00fYN(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native float MU6WBitK(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MB302_MP(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native float M8pzdQ$h(long nativeJniHdrMetadata, Object caller);
 
-    public static native int MavOU0SM(long nativeWebContentsAccessibilityAndroid, Object caller, int startId, String elementType, boolean forwards);
+  public static native float MXbY07SE(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MEJD7Boi(long nativeWebContentsAccessibilityAndroid, Object caller, int id, String newValue);
+  public static native float MOL90CVq(long nativeJniHdrMetadata, Object caller);
 
-    public static native void MVuu0R4P(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int end);
+  public static native float MM07Xk18(long nativeJniHdrMetadata, Object caller);
 
-    public static native boolean McKjfBnu(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
+  public static native int MMmvZ$nS(long nativeJniHdrMetadata, Object caller);
 
-    public static native boolean M3suD0ji(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
+  public static native int MzRCryEE(long nativeJniHdrMetadata, Object caller);
+  public static native void MNqjfk23(long nativeMediaCodecBridge, Object caller);
+  public static native void MV9yuwVC(long nativeMediaDrmBridge, Object caller, Object mediaCrypto);
 
-    public static native boolean MLjXc4lw(long nativeWebContentsAccessibilityAndroid, Object caller, int id, boolean increment);
+  public static native void MmhSkOYV(long nativeMediaDrmBridge, Object caller, String defaultUrl, byte[] requestData);
 
-    public static native void MPQKLw45(long nativeWebContentsAccessibilityAndroid, Object caller, int oldId, int newId);
+  public static native void MAaklmRW(long nativeMediaDrmBridge, Object caller, boolean success);
 
-    public static native boolean MkaakTGI(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void MOzXytse(long nativeMediaDrmBridge, Object caller, long promiseId);
 
-    public static native boolean MNch0m9c(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int direction, boolean pageScroll);
+  public static native void MtWWjNjU(long nativeMediaDrmBridge, Object caller, long promiseId, byte[] emeSessionId);
 
-    public static native boolean MfTAAcu8(long nativeWebContentsAccessibilityAndroid, Object caller, int id, float value);
+  public static native void M2P7BQ98(long nativeMediaDrmBridge, Object caller, long promiseId, String errorMessage);
 
-    public static native String MPyIoFYC(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void Mf7HZHqV(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, int requestType, byte[] message);
 
-    public static native void MOikWIf9(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void MulYy5b7(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId);
 
-    public static native boolean Mr9fGid2(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void Mk8V79M2(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, Object[] keysInfo, boolean hasAdditionalUsableKey, boolean isKeyRelease);
 
-    public static native void Mg$cuhZc(long nativeWebContentsAccessibilityAndroid, Object caller);
+  public static native void MFLUFEZc(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, long expirationTime);
+  public static native void ME6vNmlv(long nativeMediaDrmStorageBridge, Object caller, Object cb);
 
-    public static native boolean MZcfOSQW(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void Mmi_qOX8(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
 
-    public static native void M2WbOJ7$(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void MeALR1v2(long nativeMediaDrmStorageBridge, Object caller, Object info, Object cb);
 
-    public static native int[] MVBiMGvZ(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int len);
+  public static native void MYa_y6Dg(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
+  public static native void Mo4Rd8TE(long nativeMediaPlayerBridge, Object caller, boolean success);
+  public static native void Myj2LnkZ(long nativeMediaPlayerListener, Object caller, int errorType);
 
-    public static native int MhMiVz6m(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+  public static native void Mfq$ZJpW(long nativeMediaPlayerListener, Object caller, int width, int height);
 
-    public static native void MzygGmQh(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int startOffset, int endOffset);
-    public static native long MX95jWaj(Object caller, Object webContents);
+  public static native void MQTompEl(long nativeMediaPlayerListener, Object caller);
 
-    public static native void MM3_AH7F(long nativeCaptioningController, Object caller, boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily, String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor, String textTrackTextShadow, String textTrackTextSize);
-    public static native long MqPi0d6D(Object caller, long high, long low, boolean isPowerEfficient);
+  public static native void MX$D6jYE(long nativeMediaPlayerListener, Object caller);
+  public static native void Mm$QSrAo(long nativeMediaServerCrashListener, Object caller, boolean watchdogNeedsRelease);
+  public static native void MjDBp6op(long nativeScreenCaptureMachineAndroid, Object caller, Object buf, int rowStride, int left, int top, int width, int height, long timestamp);
 
-    public static native void MQAm7B7f(long nativeDialogOverlayImpl, Object caller);
+  public static native void MgLL$kUF(long nativeScreenCaptureMachineAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int left, int top, int width, int height, long timestamp);
 
-    public static native void MJj9v_ba(long nativeDialogOverlayImpl, Object caller);
+  public static native void M2auslLM(long nativeScreenCaptureMachineAndroid, Object caller, boolean result);
 
-    public static native void MAd6qeVr(long nativeDialogOverlayImpl, Object caller, Object rect);
+  public static native void Ml8UDaFX(long nativeScreenCaptureMachineAndroid, Object caller, int rotation);
+  public static native void Mq5gIPzl(long nativeVideoCaptureDeviceAndroid, Object caller, byte[] data, int length, int rotation);
 
-    public static native int MpcpmTlm(Object surface);
+  public static native void MlTacwJQ(long nativeVideoCaptureDeviceAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int width, int height, int rotation, long timestamp);
 
-    public static native void M1e4GdYZ(int surfaceId);
+  public static native void MhmwjISE(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureError, String message);
 
-    public static native Object MzUgOpRk(int surfaceId);
-    public static native boolean MgAw5sIR(long nativeNavigationControllerAndroid, Object caller);
+  public static native void M651cEC1(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureFrameDropReason);
 
-    public static native boolean MCUxt83x(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MumkJZ3e(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, Object result);
 
-    public static native boolean MEOFE6aD(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MdZBZ$ST(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, byte[] data);
 
-    public static native void MWJb9aa$(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MPaf3s5k(long nativeVideoCaptureDeviceAndroid, Object caller);
 
-    public static native boolean MsUTH_HQ(long nativeNavigationControllerAndroid, Object caller);
+  public static native void Mqw5545M(long nativeVideoCaptureDeviceAndroid, Object caller);
+  public static native void MzDIdqgH(long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
+  public static native void M3znzcE9(long nativeMidiManagerAndroid, Object[] devices);
 
-    public static native void MQgIP2q9(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MfmZ2$zu(long nativeMidiManagerAndroid);
 
-    public static native boolean M4jjW0jG(long nativeNavigationControllerAndroid, Object caller, int offset);
+  public static native void MEOWUhL5(long nativeMidiManagerAndroid, Object device);
 
-    public static native void Mdhd0AR3(long nativeNavigationControllerAndroid, Object caller);
+  public static native void Md3XPFG5(long nativeMidiManagerAndroid, Object device);
+  public static native void MNGB4bj1(long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
+  public static native void MrVQrlMA(long nativeUsbMidiDeviceFactoryAndroid, Object[] devices);
 
-    public static native void MEEEhNfT(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MGbhHafy(long nativeUsbMidiDeviceFactoryAndroid, Object device);
 
-    public static native void ML_uBbdi(long nativeNavigationControllerAndroid, Object caller, int offset);
+  public static native void MQPqHj_p(long nativeUsbMidiDeviceFactoryAndroid, int index);
+  public static native long MOJ55i7J(Object caller);
 
-    public static native void MuxwAbEo(long nativeNavigationControllerAndroid, Object caller, int index);
+  public static native void MWXT8JHC(Object caller);
 
-    public static native void MNF4lMMb(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MeWGVAnX(Object caller);
 
-    public static native void Mp5SLq_N(long nativeNavigationControllerAndroid, Object caller);
+  public static native void MvPYY0Pk(Object caller);
 
-    public static native void M81h$w2r(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
+  public static native void Mg$AGbqU(Object caller, long runLoopID, Object runnable, long delay);
 
-    public static native void My0bMgld(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
+  public static native void MEexSuCr(Object caller, long runLoopID);
+  public static native long M48BvrvK(Object caller);
 
-    public static native void MAqmDh4t(long nativeNavigationControllerAndroid, Object caller, String url, int loadUrlType, int transitionType, String referrerUrl, int referrerPolicy, int uaOverrideOption, String extraHeaders, Object postData, String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString, boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry);
+  public static native Object MZhgS7uU(Object caller, Object optionsBuffer);
 
-    public static native void MK2ttcH1(long nativeNavigationControllerAndroid, Object caller);
+  public static native Object MhNaf1lV(Object caller, Object optionsBuffer);
 
-    public static native int MUZRDUOx(long nativeNavigationControllerAndroid, Object caller, Object history);
+  public static native Object MZ0nRPS0(Object caller, Object optionsBuffer, long numBytes);
 
-    public static native void Mx5VuK3_(long nativeNavigationControllerAndroid, Object caller, Object history, boolean isForward, int itemLimit);
+  public static native int MLQe1QEw(Object caller, int mojoHandle);
 
-    public static native void MpKIKzer(long nativeNavigationControllerAndroid, Object caller);
+  public static native int MJr0GcyT(Object caller, int mojoHandle, Object signalsStateBuffer);
 
-    public static native boolean MCIN9$qH(long nativeNavigationControllerAndroid, Object caller);
+  public static native int Mkun8eIV(Object caller, int mojoHandle, Object bytes, int numBytes, Object handlesBuffer, int flags);
 
-    public static native void MrilyCK6(long nativeNavigationControllerAndroid, Object caller, boolean override, boolean reloadOnChange);
+  public static native Object MEHdfwD0(Object caller, int mojoHandle, int flags);
 
-    public static native Object MLcS2$Fy(long nativeNavigationControllerAndroid, Object caller, int index);
+  public static native Object MBDORBtR(Object caller, int mojoHandle, Object elements, int elementsSize, int flags);
 
-    public static native Object MHqMy8sY(long nativeNavigationControllerAndroid, Object caller);
+  public static native Object M_DxS0Vi(Object caller, int mojoHandle, int numBytes, int flags);
 
-    public static native Object Mgxh2WfC(long nativeNavigationControllerAndroid, Object caller);
+  public static native int MC3EsLAG(Object caller, int mojoHandle, int numBytesRead);
 
-    public static native int Mil0WqAo(long nativeNavigationControllerAndroid, Object caller);
+  public static native Object Mra2dnT9(Object caller, int mojoHandle, Object elements, int limit, int flags);
 
-    public static native boolean MVbDeBRx(long nativeNavigationControllerAndroid, Object caller, int index);
+  public static native Object M100xOXT(Object caller, int mojoHandle, int numBytes, int flags);
 
-    public static native void M2mQucXv(long nativeNavigationControllerAndroid, Object caller);
+  public static native int MBed1sI2(Object caller, int mojoHandle, int numBytesWritten);
 
-    public static native String McQE1GI8(long nativeNavigationControllerAndroid, Object caller, int index, String key);
+  public static native Object M6nJbV6M(Object caller, int mojoHandle, Object optionsBuffer);
 
-    public static native void Mw19wBW8(long nativeNavigationControllerAndroid, Object caller, int index, String key, String value);
+  public static native Object Mm6zKFIo(Object caller, int mojoHandle, long offset, long numBytes, int flags);
 
-    public static native boolean MVjP87pN(long nativeNavigationControllerAndroid, Object caller, int index);
-    public static native String MBg$jIAu(long nativeRenderFrameHostAndroid, Object caller);
+  public static native int MC_p8PYl(Object caller, Object buffer);
 
-    public static native Object Mcdslkop(long nativeRenderFrameHostAndroid, Object caller);
+  public static native int MBIRtXF8(Object caller, Object buffer, int alignment);
+  public static native long MXGgOw9k(Object caller);
 
-    public static native void MUV0o0vB(long nativeRenderFrameHostAndroid, Object caller, Object callback);
+  public static native int MOmBVeTt(Object caller, long implPtr, int mojoHandle, int flags);
 
-    public static native boolean MfPH28_F(long nativeRenderFrameHostAndroid, Object caller);
+  public static native void MPTT407x(Object caller, long implPtr);
 
-    public static native Object MJDViTxW(long nativeRenderFrameHostAndroid, Object caller);
+  public static native void Mi32vqDA(Object caller, long implPtr);
+  public static native String MpCt7siL(String url);
 
-    public static native void M$j92GA1(long nativeRenderFrameHostAndroid, Object caller);
+  public static native String M$mITdbo(String url);
+  public static native void M0s8NeYn(long nativeJavaNegotiateResultWrapper, Object caller, int status, String authToken);
+  public static native boolean MorcXgQd(String headerName, String headerValue);
+  public static native void MbPIImnU(long nativePtr, Object caller, int newConnectionType, long defaultNetId);
 
-    public static native boolean MhaRMzRy(long nativeRenderFrameHostAndroid, Object caller);
+  public static native void Mt26m31j(long nativePtr, Object caller, int subType);
 
-    public static native boolean M6cbowZq(long nativeRenderFrameHostAndroid, Object caller);
+  public static native void MBT1i5cd(long nativePtr, Object caller, long netId, int connectionType);
 
-    public static native int M5dgGNo$(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
+  public static native void MiJIMrTb(long nativePtr, Object caller, long netId);
 
-    public static native int M2ouq_qG(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
-    public static native void MgUhdCLo(long nativeDateTimeChooserAndroid, Object caller, double dialogValue);
+  public static native void MDpuHJTB(long nativePtr, Object caller, long netId);
 
-    public static native void MCtaZNwj(long nativeDateTimeChooserAndroid, Object caller);
-    public static native long MhbsQh1H(Object caller, Object webContents);
+  public static native void MpF$179U(long nativePtr, Object caller, long[] activeNetIds);
+  public static native void MyoFZt$2(long nativePtr, Object caller, String host, int port, String pacUrl, String[] exclusionList);
 
-    public static native boolean M1qwlrOP(long nativeImeAdapterAndroid, Object caller, Object event, int type, int modifiers, long timestampMs, int keyCode, int scanCode, boolean isSystemKey, int unicodeChar);
+  public static native void MCIk73GZ(long nativePtr, Object caller);
+  public static native void MGVAvp19();
+  public static native void M4QXUjg3(long nativeAndroidCombinedPolicyProvider, Object caller);
+  public static native void MpCbKnQi(long nativePolicyConverter, Object caller, String policyKey, boolean value);
 
-    public static native void MFfRzF$Z(long spanPtr, int start, int end);
+  public static native void MTuFp9B7(long nativePolicyConverter, Object caller, String policyKey, int value);
 
-    public static native void MqqhDONa(long spanPtr, int start, int end, int backgroundColor);
+  public static native void MeuOZAup(long nativePolicyConverter, Object caller, String policyKey, String value);
 
-    public static native void M$b45Vvn(long spanPtr, int start, int end, boolean isMisspelling, boolean removeOnFinishComposing, int underlineColor, int suggestionHighlightColor, String[] suggestions);
+  public static native void MGY2QXB9(long nativePolicyConverter, Object caller, String policyKey, String[] value);
+  public static native void M3YqItLq(long nativeClipboardAndroid, Object caller);
 
-    public static native void Mlslst_P(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
+  public static native void MWrNP8sy(long nativeClipboardAndroid, Object caller, long timestamp);
 
-    public static native void Mb6t43di(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
+  public static native long MN49cYVC(long nativeClipboardAndroid);
+  public static native Object M4_mlka_(long nativeEventForwarder, Object caller);
 
-    public static native void M_V5g5ie(long nativeImeAdapterAndroid, Object caller);
+  public static native boolean Mcw1yi1C(long nativeEventForwarder, Object caller, Object event, long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0, float y0, float x1, float y1, int pointerId0, int pointerId1, float touchMajor0, float touchMajor1, float touchMinor0, float touchMinor1, float orientation0, float orientation1, float tilt0, float tilt1, float rawX, float rawY, int androidToolType0, int androidToolType1, int androidButtonState, int androidMetaState, boolean isTouchHandleEvent);
 
-    public static native void MmtjCblb(long nativeImeAdapterAndroid, Object caller, int start, int end);
+  public static native void M$2oj6EQ(long nativeEventForwarder, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
 
-    public static native void M8ty0WHb(long nativeImeAdapterAndroid, Object caller, int start, int end);
+  public static native void MZ1ZkPta(long nativeEventForwarder, Object caller, int action, int x, int y, int screenX, int screenY, String[] mimeTypes, String content);
 
-    public static native void M26GCjn5(long nativeImeAdapterAndroid, Object caller, int before, int after);
+  public static native boolean MtyC4Bd2(long nativeEventForwarder, Object caller, int type, long timeMs, float delta);
 
-    public static native void Mvb046o_(long nativeImeAdapterAndroid, Object caller, int before, int after);
+  public static native boolean MvdB06Zi(long nativeEventForwarder, Object caller, Object event, long timeMs);
 
-    public static native boolean M7o5Xhhi(long nativeImeAdapterAndroid, Object caller);
+  public static native boolean MRbfSEI1(long nativeEventForwarder, Object caller, Object event, int keyCode);
 
-    public static native void MdwW1P2L(long nativeImeAdapterAndroid, Object caller, boolean immediateRequest, boolean monitorRequest);
+  public static native boolean MZE$0qqv(long nativeEventForwarder, Object caller, Object event);
 
-    public static native void Mm_z91JF(long nativeImeAdapterAndroid, Object caller, int focusType);
-    public static native void ME0LgXse(long nativeSelectPopup, Object caller, long nativeSelectPopupSourceFrame, int[] indices);
-    public static native void M7RnYR2r(long nativeTextSuggestionHostAndroid, Object caller, String suggestion);
+  public static native void MMwH$VBb(long nativeEventForwarder, Object caller, float deltaX, float deltaY);
 
-    public static native void MIADbBhq(long nativeTextSuggestionHostAndroid, Object caller, int markerTag, int suggestionIndex);
+  public static native void M6lTZ5w8(long nativeEventForwarder, Object caller, float x, float y);
 
-    public static native void MCBTtv2g(long nativeTextSuggestionHostAndroid, Object caller);
+  public static native void MNnWXapV(long nativeEventForwarder, Object caller, long timeMs, int x, int y);
 
-    public static native void MpJ8AQhr(long nativeTextSuggestionHostAndroid, Object caller, String word);
+  public static native void MT1C98PL(long nativeEventForwarder, Object caller, long timeMs, float velocityX, float velocityY, boolean syntheticScroll, boolean preventBoosting);
 
-    public static native void MnvYa0QF(long nativeTextSuggestionHostAndroid, Object caller);
-    public static native long MJHXNa8U(Object caller, Object webContents);
+  public static native void MSvJWvYj(long nativeEventForwarder, Object caller, long timeMs, boolean preventBoosting);
+  public static native int MKiziH$q(String string);
+  public static native void MBeWYy2V(long nativeSelectFileDialogImpl, Object caller, String filePath, String displayName);
 
-    public static native void M01adZlM(long nativeSelectionPopupController, Object caller, boolean hidden);
-    public static native long MFA_dMJC(Object caller, Object webContents);
+  public static native void Mx1807vz(long nativeSelectFileDialogImpl, Object caller, String[] filePathArray, String[] displayNameArray);
 
-    public static native void M2GZ6ZNR(long nativeSmartSelectionClient, Object caller, int numExtraCharacters, int callbackData);
+  public static native void MGVJOCWv(long nativeSelectFileDialogImpl, Object caller);
 
-    public static native void MVHq2mA2(long nativeSmartSelectionClient, Object caller);
-    public static native void MZyp7uap(long nativeSmsProviderGmsUserConsent, String sms);
+  public static native void MXucAq1Y(long nativeSelectFileDialogImpl, Object caller, String contacts);
+  public static native long MFjTMMS_(Object caller, int displayId, float scrollFactor, boolean windowIsWideColorGamut);
 
-    public static native void MgxlMMg$(long nativeSmsProviderGmsUserConsent);
-    public static native void MMIjHDTs(long nativeSmsProviderGmsVerification, String sms);
+  public static native void MrnNdVRa(long nativeWindowAndroid, Object caller, boolean visible);
 
-    public static native void MDhulaC0(long nativeSmsProviderGmsVerification);
-    public static native void MxxzO9Pe(long webContentsAndroidPtr);
+  public static native void MMLuxHp6(long nativeWindowAndroid, Object caller);
 
-    public static native Object M$eaBDjM(long webContentsAndroidPtr);
+  public static native void MbyUPhMo(long nativeWindowAndroid, Object caller);
 
-    public static native void M0iG1Oc2(long nativeWebContentsAndroid, Object caller);
+  public static native void MotttR54(long nativeWindowAndroid, Object caller, boolean paused);
 
-    public static native Object MunY3e38(long nativeWebContentsAndroid, Object caller);
+  public static native void MWNjxKcW(long nativeWindowAndroid, Object caller, float refreshRate);
 
-    public static native void MOKG_Wbb(long nativeWebContentsAndroid, Object caller, Object windowAndroid);
+  public static native void MV00Qksi(long nativeWindowAndroid, Object caller);
 
-    public static native Object MjidYpBx(long nativeWebContentsAndroid, Object caller);
+  public static native void ML$dVqbX(long nativeWindowAndroid, Object caller, boolean visible);
 
-    public static native Object MT2cFaRc(long nativeWebContentsAndroid, Object caller);
+  public static native void Mpksm6S7(long nativeWindowAndroid, Object caller, boolean isOn);
 
-    public static native Object Mj9slq6o(long nativeWebContentsAndroid, Object caller);
+  public static native void MTDQeb$o(long nativeWindowAndroid, Object caller, float[] supportedRefreshRates);
+  public static native void M2$ANfTC(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId, int width, int height, float dipScale, int rotationDegrees, int bitsPerPixel, int bitsPerComponent, boolean isWideColorGamut);
 
-    public static native Object[] MJSe_z5C(long nativeWebContentsAndroid, Object caller);
+  public static native void MyzQIqd_(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
 
-    public static native int MOzDgqoz(long nativeWebContentsAndroid);
+  public static native void MdOwtyr6(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
+  public static native void MGCvz8lp(Object caller);
+  public static native void MtrEpb2R(Object caller, float maximumFlingVelocity, float minimumFlingVelocity, float touchSlop, float doubleTapSlop, float minScalingSpan);
+  public static native void MRbPfCZQ(long nativeSurfaceTextureListener, Object caller);
 
-    public static native String M7OgjMU8(long nativeWebContentsAndroid, Object caller);
+  public static native void MUH2vhAN(long nativeSurfaceTextureListener, Object caller);
+  public static native long MKzrMxwv();
 
-    public static native Object M8927Uaf(long nativeWebContentsAndroid, Object caller);
+  public static native long MNZCYawX(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom, int apertureLeft, int apertureTop, int apertureRight, int apertureBottom);
+  public static native void MM7E4tBk(long nativeResourceManagerImpl, Object caller, int resType, int resId, Object bitmap, int width, int height, long nativeResource);
 
-    public static native String M4pZ82rG(long nativeWebContentsAndroid, Object caller);
+  public static native void MxwZmAzJ(long nativeResourceManagerImpl, Object caller, int resType, int resId);
 
-    public static native boolean MtSTkEp2(long nativeWebContentsAndroid, Object caller);
+  public static native void MnAVuP1v(long nativeResourceManagerImpl, Object caller);
+  public static native long MChsAOfs(long profile, String persistenceId, byte[] persistenceCryptoKey, Object caller);
 
-    public static native boolean M93b11tE(long nativeWebContentsAndroid, Object caller);
+  public static native void MaMrnX9h(long browser);
 
-    public static native void M6R_ShZs(long nativeWebContentsAndroid, Object caller, boolean autoCancel);
+  public static native void MJ$RHdW5(long nativeBrowserImpl, Object browser, long nativeTab);
 
-    public static native void M$$25N5$(long nativeWebContentsAndroid, Object caller);
+  public static native void M2kEkJ8E(long nativeBrowserImpl, Object browser, long nativeTab);
 
-    public static native void MhIiCaN7(long nativeWebContentsAndroid, Object caller);
+  public static native Object[] MGDfuPeL(long nativeBrowserImpl, Object browser);
 
-    public static native void MpfMxfut(long nativeWebContentsAndroid, Object caller);
+  public static native void MBT5EbFP(long nativeBrowserImpl, Object browser, long nativeTab);
 
-    public static native void MYRJ_nNk(long nativeWebContentsAndroid, Object caller);
+  public static native Object Ms4h$LOA(long nativeBrowserImpl, Object browser);
 
-    public static native void MdSkKRWg(long nativeWebContentsAndroid, Object caller);
+  public static native void MM5Y8Vdi(long nativeBrowserImpl, Object browser);
 
-    public static native void MevqfbP8(long nativeWebContentsAndroid, Object caller, String word);
+  public static native String Mtk__Xyp(long nativeBrowserImpl, Object browser);
 
-    public static native void MNvj1u1S(long nativeWebContentsAndroid, Object caller);
+  public static native void MzXbCRNG(long nativeBrowserImpl, Object browser);
 
-    public static native void MDK_KK0z(long nativeWebContentsAndroid, Object caller);
+  public static native byte[] M6R$gymF(long nativeBrowserImpl, Object browser);
 
-    public static native void MHNkuuGQ(long nativeWebContentsAndroid, Object caller);
+  public static native byte[] MtZQkZrN(long nativeBrowserImpl, Object browser);
+  public static native long MuuxVGQm(Object caller, Object rootWindow);
 
-    public static native void MtakfqIH(long nativeWebContentsAndroid, Object caller);
+  public static native void MAIaE0OG(long nativeContentViewRenderView);
 
-    public static native void MkBVGSRs(long nativeWebContentsAndroid, Object caller, int importance);
+  public static native void MYMjn0mf(long nativeContentViewRenderView, Object webContents);
 
-    public static native void MSOsA4Ii(long nativeWebContentsAndroid, Object caller);
+  public static native void MQtCkWmJ(long nativeContentViewRenderView, Object webContents, int width, int height);
 
-    public static native void M4fkbrQM(long nativeWebContentsAndroid, Object caller, boolean mute);
+  public static native void MUdnoeZS(long nativeContentViewRenderView);
 
-    public static native boolean MkIL2bW9(long nativeWebContentsAndroid, Object caller);
+  public static native void MfxYKOP7(long nativeContentViewRenderView, boolean cacheBackBuffer);
 
-    public static native boolean M2hIwGoV(long nativeWebContentsAndroid, Object caller);
+  public static native void M4g6Q4ab(long nativeContentViewRenderView, boolean canBeUsedWithSurfaceControl, int format, int width, int height, Object surface);
 
-    public static native void M6c69Eq5(long nativeWebContentsAndroid, Object caller);
+  public static native void M9bR5p1w(long nativeContentViewRenderView);
 
-    public static native void MgbVQff0(long nativeWebContentsAndroid, Object caller);
+  public static native Object M7ewD88L(long nativeContentViewRenderView);
+  public static native long McPAi5G9(Object proxy, long tab);
 
-    public static native void MlfwWHGJ(long nativeWebContentsAndroid, Object caller);
+  public static native void Mq3U77nO(long proxy);
 
-    public static native void MjgOFo_o(long nativeWebContentsAndroid, Object caller, int startAdjust, int endAdjust, boolean showSelectionMenu);
+  public static native void MYOOvdZV(long callbackId, boolean allow);
+  public static native void MCQjxfAX(long nativeDownloadImpl, Object caller);
 
-    public static native String MrqMRJsG(long nativeWebContentsAndroid, Object caller);
+  public static native int Mg9vWlA3(long nativeDownloadImpl, Object caller);
 
-    public static native boolean MZbfAARG(long nativeWebContentsAndroid, Object caller);
+  public static native long MLQnpV49(long nativeDownloadImpl, Object caller);
 
-    public static native void MQnLkNkP(long nativeWebContentsAndroid, Object caller);
+  public static native long MLPJbQwI(long nativeDownloadImpl, Object caller);
 
-    public static native void M0uS2SDH(long nativeWebContentsAndroid, Object caller, String script, Object callback);
+  public static native void Mmh9t8Wp(long nativeDownloadImpl, Object caller);
 
-    public static native void MPoHZQTR(long nativeWebContentsAndroid, Object caller, String script, Object callback);
+  public static native void MBdFHh_o(long nativeDownloadImpl, Object caller);
 
-    public static native void MseJ7A4a(long nativeWebContentsAndroid, Object caller, int level, String message);
+  public static native void M7ycbCea(long nativeDownloadImpl, Object caller);
 
-    public static native void MZFXk0el(long nativeWebContentsAndroid, Object caller, String message, String sourceOrigin, String targetOrigin, Object[] ports);
+  public static native String MBNW0Bg1(long nativeDownloadImpl, Object caller);
 
-    public static native boolean M6It8dra(long nativeWebContentsAndroid, Object caller);
+  public static native String MiYZ62wR(long nativeDownloadImpl, Object caller);
 
-    public static native int MGZCJ6jO(long nativeWebContentsAndroid, Object caller);
+  public static native int MMo$maOT(long nativeDownloadImpl, Object caller);
+  public static native long M0JND2JE(Object proxy, long tab);
 
-    public static native float MoQgY_pw(long nativeWebContentsAndroid, Object caller);
+  public static native void MRiF9eNE(long proxy);
+  public static native long MGmykU1g(Object proxy, long tab);
 
-    public static native void MHF1rPTW(long nativeWebContentsAndroid, Object caller, Object callback, int x, int y, int width, int height);
+  public static native void MeleUM$n(long proxy);
 
-    public static native void M16eLpU9(long nativeWebContentsAndroid, Object caller, Object callback);
+  public static native void MSOA10zg(long nativeFullscreenCallbackProxy, Object proxy);
+  public static native void MNVsdYhF();
+  public static native void MpejyhKI(long nativeNavigationControllerImpl, Object caller);
 
-    public static native void MTTB8znA(long nativeWebContentsAndroid, Object caller, Object nativeOverscrollRefreshHandler);
+  public static native long MuaFsixb(long tab);
 
-    public static native void MjBPqNgx(long nativeWebContentsAndroid, Object caller, boolean disabled);
+  public static native void MdNsGAMH(long nativeNavigationControllerImpl, Object caller, String uri);
 
-    public static native int Mi3V1mlO(long nativeWebContentsAndroid, Object caller, String url, boolean isFavicon, int maxBitmapSize, boolean bypassCache, Object callback);
+  public static native void MZrOkH8X(long nativeNavigationControllerImpl, Object caller);
 
-    public static native void M12SiBFk(long nativeWebContentsAndroid, Object caller, boolean value);
+  public static native void MDkifRYV(long nativeNavigationControllerImpl, Object caller);
 
-    public static native boolean MZao1OQG(long nativeWebContentsAndroid, Object caller);
+  public static native boolean Mk5Op77A(long nativeNavigationControllerImpl, Object caller);
 
-    public static native boolean MS0xMYL9(long nativeWebContentsAndroid, Object caller);
+  public static native boolean Myt080DX(long nativeNavigationControllerImpl, Object caller);
 
-    public static native Object MN9JdEk5(long nativeWebContentsAndroid, Object caller);
+  public static native void M0Oi$rdJ(long nativeNavigationControllerImpl, Object caller, int index);
 
-    public static native void M7tTrJ_X(long nativeWebContentsAndroid, Object caller, int width, int height);
+  public static native void MgCpZ61D(long nativeNavigationControllerImpl, Object caller);
 
-    public static native int MB0i5_ri(long nativeWebContentsAndroid, Object caller);
+  public static native void Mcpd2RLR(long nativeNavigationControllerImpl, Object caller);
 
-    public static native int MRVeP4Wk(long nativeWebContentsAndroid, Object caller);
+  public static native int MTQXD9PA(long nativeNavigationControllerImpl, Object caller);
 
-    public static native Object MJJFrmZs(long nativeWebContentsAndroid, Object caller);
+  public static native int MYvsya1k(long nativeNavigationControllerImpl, Object caller);
 
-    public static native void MgyWdCWB(long nativeWebContentsAndroid, Object caller, Object viewDelegate);
+  public static native String MdarrSGz(long nativeNavigationControllerImpl, Object caller, int index);
 
-    public static native void MlztHl3v(long nativeWebContentsAndroid, Object caller, int orientation);
+  public static native String ME_QUEJm(long nativeNavigationControllerImpl, Object caller, int index);
+  public static native void MAxzZ9OU(long nativeNavigationImpl, Object caller);
 
-    public static native void MqhGkzSt(long nativeWebContentsAndroid, Object caller);
+  public static native int MOjYwlCQ(long nativeNavigationImpl, Object caller);
 
-    public static native void M9QxNoTJ(long nativeWebContentsAndroid, Object caller, boolean focused);
+  public static native String MLe5UH8x(long nativeNavigationImpl, Object caller);
 
-    public static native void MtjP03pj(long nativeWebContentsAndroid, Object caller, int top, int left, int bottom, int right);
+  public static native String[] M4$r2b34(long nativeNavigationImpl, Object caller);
 
-    public static native void Mzsx8Sk2(long nativeWebContentsAndroid, Object caller);
+  public static native int MavL_hzo(long nativeNavigationImpl, Object caller);
 
-    public static native void MgcGzQax(long nativeWebContentsAndroid, Object caller);
+  public static native boolean MNvdMHI6(long nativeNavigationImpl, Object caller);
 
-    public static native boolean M5A4vDoy(long nativeWebContentsAndroid, Object caller);
-    public static native long MTpUzW91(Object caller, Object webContents);
+  public static native boolean MIFgE7DZ(long nativeNavigationImpl, Object caller);
 
-    public static native void M7giG0Ri(long nativeWebContentsObserverProxy, Object caller);
-    public static native int M6vzcDUp();
-    public static native boolean MWH2gOYe(String url);
-    public static native void MACALLtV(long nativeNavigationHandleProxy, String headerName, String headerValue);
+  public static native int Mu3sbx92(long nativeNavigationImpl, Object caller);
+  public static native long Mm1ByG3d(Object proxy, long tab);
 
-    public static native void Mo7byNs$(long nativeNavigationHandleProxy, String headerName);
-    public static native byte[] MugoAW_d(byte[] httpBody);
-    public static native boolean MbmAQ8fm();
-    public static native boolean MVi$blz$(String featureName);
-    public static native void Mq3WoOFf(long nativeBluetoothAdapterAndroid, Object caller);
+  public static native void MxkBiJzp(long proxy);
+  public static native long MKGVVWNd(String name);
 
-    public static native void MOuw3NGo(long nativeBluetoothAdapterAndroid, Object caller, String address, Object deviceWrapper, String localName, int rssi, String[] advertisedUuids, int txPower, String[] serviceDataKeys, Object[] serviceDataValues, int[] manufacturerDataKeys, Object[] manufacturerDataValues, int advertiseFlags);
+  public static native void M_1y2G80(long profile);
 
-    public static native void MGGbKqrZ(long nativeBluetoothAdapterAndroid, Object caller, boolean powered);
-    public static native void MmnW7gQC(long nativeBluetoothDeviceAndroid, Object caller, int status, boolean connected);
+  public static native void MTR7prkl(long nativeProfileImpl, int[] dataTypes, long fromMillis, long toMillis, Object callback);
 
-    public static native void MAoRk69U(long nativeBluetoothDeviceAndroid, Object caller, String instanceId, Object serviceWrapper);
+  public static native void Mq7GFTAG(long nativeProfileImpl, String directory);
+  public static native long MOUs9Qy6(Object proxy, long tab);
 
-    public static native void M9HSgyay(long nativeBluetoothDeviceAndroid, Object caller);
-    public static native void MZCKcdTH(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, byte[] value);
+  public static native void Mpl66Ope(long proxy);
+  public static native long M0NNPeB3(long profile, Object caller);
 
-    public static native void Mn9Gzi$d(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status, byte[] value);
+  public static native void MKSJ4vB6(long nativeTabImpl, Object impl);
 
-    public static native void M3TCxDs5(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status);
+  public static native void Myi236il(long nativeTabImpl, Object autofillProvider);
 
-    public static native void MkqvrLoV(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, String instanceId, Object descriptorWrapper, Object chromeBluetoothDevice);
-    public static native void MaKNZo8k(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status, byte[] value);
+  public static native void Mdvft$Wr(long nativeTabImpl, Object caller, long nativeTopControlsContainerView);
 
-    public static native void M4SmPJiR(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status);
-    public static native void MM2CqKoK(long nativeBluetoothRemoteGattServiceAndroid, Object caller, String instanceId, Object characteristicWrapper, Object chromeBluetoothDevice);
-    public static native void MOkngxPY(Object caller, long webGamepadsPtr, int index, boolean mapping, boolean connected, String devicename, long timestamp, float[] axes, float[] buttons);
-    public static native void MvJnRjJi(double latitude, double longitude, double timeStamp, boolean hasAltitude, double altitude, boolean hasAccuracy, double accuracy, boolean hasHeading, double heading, boolean hasSpeed, double speed);
+  public static native void MD18T2Ck(long tab);
 
-    public static native void M8Iz7Ptw(String message);
-    public static native void MrHXg7he(long nativePlatformSensorAndroid, Object caller);
+  public static native Object MV_K4t5p(long nativeTabImpl, Object caller);
 
-    public static native void Mb4JvlL7(long nativePlatformSensorAndroid, Object caller, double timestamp, double value1, double value2, double value3, double value4);
-    public static native void MjxIGcDd(long nativeTimeZoneMonitorAndroid, Object caller);
-    public static native void MNmyS$Xi(long nativeUsbServiceAndroid, Object caller, Object device);
+  public static native void M9gymlSj(long nativeTabImpl, String script, boolean useSeparateIsolate, Object callback);
+  public static native long MxBee$83(Object view, long nativeContentViewRenderView);
 
-    public static native void MrBuy2sN(long nativeUsbServiceAndroid, Object caller, int deviceId);
+  public static native void MDsa1RkB(long nativeTopControlsContainerView, Object caller);
 
-    public static native void MDvFAfgT(long nativeUsbServiceAndroid, Object caller, int deviceId, boolean granted);
-    public static native void MCgftn_d(long nativeAudioManagerAndroid, Object caller, boolean muted);
-    public static native Object MEPH2V3G(long nativeAudioTrackOutputStream, Object caller, Object audioData, long delayInFrames);
+  public static native void M_eicmWU(long nativeTopControlsContainerView, Object caller, int id);
 
-    public static native void Mr6$Ko2f(long nativeAudioTrackOutputStream, Object caller);
+  public static native void M0ErzYW_(long nativeTopControlsContainerView, Object caller);
 
-    public static native long MMQ1O_vA(long nativeAudioTrackOutputStream, Object caller, Object byteBuffer);
-    public static native int M6EY_9Mw(long nativeJniHdrMetadata, Object caller);
+  public static native void MSVvJOat(long nativeTopControlsContainerView, Object caller, int topControlsOffsetY, int topContentOffsetY);
 
-    public static native int Myx2EYmS(long nativeJniHdrMetadata, Object caller);
+  public static native void M6kNhy4_(long nativeTopControlsContainerView, Object caller, int width, int height);
 
-    public static native int MGKRBsYQ(long nativeJniHdrMetadata, Object caller);
+  public static native void Mxe_p5sj(long nativeTopControlsContainerView, Object caller);
 
-    public static native float Mc0wiJ8$(long nativeJniHdrMetadata, Object caller);
+  public static native void MAiLwgGG(long nativeTopControlsContainerView, Object caller, Object webContents);
+  public static native void M1lGn20V(boolean enabled);
 
-    public static native float MYP0SLZ2(long nativeJniHdrMetadata, Object caller);
+  public static native boolean MdEjk1wX();
 
-    public static native float MRQrYl4t(long nativeJniHdrMetadata, Object caller);
+  public static native void MVSxAa8H(boolean value);
+  public static native void Mar1tTQP(boolean userConsent, boolean appConsent);
 
-    public static native float MtgfnGGz(long nativeJniHdrMetadata, Object caller);
-
-    public static native float McEG$Qxu(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MU6WBitK(long nativeJniHdrMetadata, Object caller);
-
-    public static native float M8pzdQ$h(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MXbY07SE(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MOL90CVq(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MM07Xk18(long nativeJniHdrMetadata, Object caller);
-
-    public static native int MMmvZ$nS(long nativeJniHdrMetadata, Object caller);
-
-    public static native int MzRCryEE(long nativeJniHdrMetadata, Object caller);
-    public static native void MNqjfk23(long nativeMediaCodecBridge, Object caller);
-    public static native void MV9yuwVC(long nativeMediaDrmBridge, Object caller, Object mediaCrypto);
-
-    public static native void MmhSkOYV(long nativeMediaDrmBridge, Object caller, String defaultUrl, byte[] requestData);
-
-    public static native void MAaklmRW(long nativeMediaDrmBridge, Object caller, boolean success);
-
-    public static native void MOzXytse(long nativeMediaDrmBridge, Object caller, long promiseId);
-
-    public static native void MtWWjNjU(long nativeMediaDrmBridge, Object caller, long promiseId, byte[] emeSessionId);
-
-    public static native void M2P7BQ98(long nativeMediaDrmBridge, Object caller, long promiseId, String errorMessage);
-
-    public static native void Mf7HZHqV(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, int requestType, byte[] message);
-
-    public static native void MulYy5b7(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId);
-
-    public static native void Mk8V79M2(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, Object[] keysInfo, boolean hasAdditionalUsableKey, boolean isKeyRelease);
-
-    public static native void MFLUFEZc(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, long expirationTime);
-    public static native void ME6vNmlv(long nativeMediaDrmStorageBridge, Object caller, Object cb);
-
-    public static native void Mmi_qOX8(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
-
-    public static native void MeALR1v2(long nativeMediaDrmStorageBridge, Object caller, Object info, Object cb);
-
-    public static native void MYa_y6Dg(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
-    public static native void Mo4Rd8TE(long nativeMediaPlayerBridge, Object caller, boolean success);
-    public static native void Myj2LnkZ(long nativeMediaPlayerListener, Object caller, int errorType);
-
-    public static native void Mfq$ZJpW(long nativeMediaPlayerListener, Object caller, int width, int height);
-
-    public static native void MQTompEl(long nativeMediaPlayerListener, Object caller);
-
-    public static native void MX$D6jYE(long nativeMediaPlayerListener, Object caller);
-    public static native void Mm$QSrAo(long nativeMediaServerCrashListener, Object caller, boolean watchdogNeedsRelease);
-    public static native void MjDBp6op(long nativeScreenCaptureMachineAndroid, Object caller, Object buf, int rowStride, int left, int top, int width, int height, long timestamp);
-
-    public static native void MgLL$kUF(long nativeScreenCaptureMachineAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int left, int top, int width, int height, long timestamp);
-
-    public static native void M2auslLM(long nativeScreenCaptureMachineAndroid, Object caller, boolean result);
-
-    public static native void Ml8UDaFX(long nativeScreenCaptureMachineAndroid, Object caller, int rotation);
-    public static native void Mq5gIPzl(long nativeVideoCaptureDeviceAndroid, Object caller, byte[] data, int length, int rotation);
-
-    public static native void MlTacwJQ(long nativeVideoCaptureDeviceAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int width, int height, int rotation, long timestamp);
-
-    public static native void MhmwjISE(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureError, String message);
-
-    public static native void M651cEC1(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureFrameDropReason);
-
-    public static native void MumkJZ3e(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, Object result);
-
-    public static native void MdZBZ$ST(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, byte[] data);
-
-    public static native void MPaf3s5k(long nativeVideoCaptureDeviceAndroid, Object caller);
-
-    public static native void Mqw5545M(long nativeVideoCaptureDeviceAndroid, Object caller);
-    public static native void MzDIdqgH(long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
-    public static native void M3znzcE9(long nativeMidiManagerAndroid, Object[] devices);
-
-    public static native void MfmZ2$zu(long nativeMidiManagerAndroid);
-
-    public static native void MEOWUhL5(long nativeMidiManagerAndroid, Object device);
-
-    public static native void Md3XPFG5(long nativeMidiManagerAndroid, Object device);
-    public static native void MNGB4bj1(long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
-    public static native void MrVQrlMA(long nativeUsbMidiDeviceFactoryAndroid, Object[] devices);
-
-    public static native void MGbhHafy(long nativeUsbMidiDeviceFactoryAndroid, Object device);
-
-    public static native void MQPqHj_p(long nativeUsbMidiDeviceFactoryAndroid, int index);
-    public static native long MOJ55i7J(Object caller);
-
-    public static native void MWXT8JHC(Object caller);
-
-    public static native void MeWGVAnX(Object caller);
-
-    public static native void MvPYY0Pk(Object caller);
-
-    public static native void Mg$AGbqU(Object caller, long runLoopID, Object runnable, long delay);
-
-    public static native void MEexSuCr(Object caller, long runLoopID);
-    public static native long M48BvrvK(Object caller);
-
-    public static native Object MZhgS7uU(Object caller, Object optionsBuffer);
-
-    public static native Object MhNaf1lV(Object caller, Object optionsBuffer);
-
-    public static native Object MZ0nRPS0(Object caller, Object optionsBuffer, long numBytes);
-
-    public static native int MLQe1QEw(Object caller, int mojoHandle);
-
-    public static native int MJr0GcyT(Object caller, int mojoHandle, Object signalsStateBuffer);
-
-    public static native int Mkun8eIV(Object caller, int mojoHandle, Object bytes, int numBytes, Object handlesBuffer, int flags);
-
-    public static native Object MEHdfwD0(Object caller, int mojoHandle, int flags);
-
-    public static native Object MBDORBtR(Object caller, int mojoHandle, Object elements, int elementsSize, int flags);
-
-    public static native Object M_DxS0Vi(Object caller, int mojoHandle, int numBytes, int flags);
-
-    public static native int MC3EsLAG(Object caller, int mojoHandle, int numBytesRead);
-
-    public static native Object Mra2dnT9(Object caller, int mojoHandle, Object elements, int limit, int flags);
-
-    public static native Object M100xOXT(Object caller, int mojoHandle, int numBytes, int flags);
-
-    public static native int MBed1sI2(Object caller, int mojoHandle, int numBytesWritten);
-
-    public static native Object M6nJbV6M(Object caller, int mojoHandle, Object optionsBuffer);
-
-    public static native Object Mm6zKFIo(Object caller, int mojoHandle, long offset, long numBytes, int flags);
-
-    public static native int MC_p8PYl(Object caller, Object buffer);
-
-    public static native int MBIRtXF8(Object caller, Object buffer, int alignment);
-    public static native long MXGgOw9k(Object caller);
-
-    public static native int MOmBVeTt(Object caller, long implPtr, int mojoHandle, int flags);
-
-    public static native void MPTT407x(Object caller, long implPtr);
-
-    public static native void Mi32vqDA(Object caller, long implPtr);
-    public static native String MpCt7siL(String url);
-
-    public static native String M$mITdbo(String url);
-    public static native void M0s8NeYn(long nativeJavaNegotiateResultWrapper, Object caller, int status, String authToken);
-    public static native boolean MorcXgQd(String headerName, String headerValue);
-    public static native void MbPIImnU(long nativePtr, Object caller, int newConnectionType, long defaultNetId);
-
-    public static native void Mt26m31j(long nativePtr, Object caller, int subType);
-
-    public static native void MBT1i5cd(long nativePtr, Object caller, long netId, int connectionType);
-
-    public static native void MiJIMrTb(long nativePtr, Object caller, long netId);
-
-    public static native void MDpuHJTB(long nativePtr, Object caller, long netId);
-
-    public static native void MpF$179U(long nativePtr, Object caller, long[] activeNetIds);
-    public static native void MyoFZt$2(long nativePtr, Object caller, String host, int port, String pacUrl, String[] exclusionList);
-
-    public static native void MCIk73GZ(long nativePtr, Object caller);
-    public static native void MGVAvp19();
-    public static native void M4QXUjg3(long nativeAndroidCombinedPolicyProvider, Object caller);
-    public static native void MpCbKnQi(long nativePolicyConverter, Object caller, String policyKey, boolean value);
-
-    public static native void MTuFp9B7(long nativePolicyConverter, Object caller, String policyKey, int value);
-
-    public static native void MeuOZAup(long nativePolicyConverter, Object caller, String policyKey, String value);
-
-    public static native void MGY2QXB9(long nativePolicyConverter, Object caller, String policyKey, String[] value);
-    public static native void M3YqItLq(long nativeClipboardAndroid, Object caller);
-
-    public static native void MWrNP8sy(long nativeClipboardAndroid, Object caller, long timestamp);
-
-    public static native long MN49cYVC(long nativeClipboardAndroid);
-    public static native Object M4_mlka_(long nativeEventForwarder, Object caller);
-
-    public static native boolean Mcw1yi1C(long nativeEventForwarder, Object caller, Object event, long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0, float y0, float x1, float y1, int pointerId0, int pointerId1, float touchMajor0, float touchMajor1, float touchMinor0, float touchMinor1, float orientation0, float orientation1, float tilt0, float tilt1, float rawX, float rawY, int androidToolType0, int androidToolType1, int gestureClassification, int androidButtonState, int androidMetaState, boolean isTouchHandleEvent);
-
-    public static native void M$2oj6EQ(long nativeEventForwarder, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
-
-    public static native void MZ1ZkPta(long nativeEventForwarder, Object caller, int action, int x, int y, int screenX, int screenY, String[] mimeTypes, String content);
-
-    public static native boolean MtyC4Bd2(long nativeEventForwarder, Object caller, int type, long timeMs, float delta);
-
-    public static native boolean MvdB06Zi(long nativeEventForwarder, Object caller, Object event, long timeMs);
-
-    public static native boolean MRbfSEI1(long nativeEventForwarder, Object caller, Object event, int keyCode);
-
-    public static native boolean MZE$0qqv(long nativeEventForwarder, Object caller, Object event);
-
-    public static native void MMwH$VBb(long nativeEventForwarder, Object caller, float deltaX, float deltaY);
-
-    public static native void M6lTZ5w8(long nativeEventForwarder, Object caller, float x, float y);
-
-    public static native void MNnWXapV(long nativeEventForwarder, Object caller, long timeMs, int x, int y);
-
-    public static native void MT1C98PL(long nativeEventForwarder, Object caller, long timeMs, float velocityX, float velocityY, boolean syntheticScroll, boolean preventBoosting);
-
-    public static native void MSvJWvYj(long nativeEventForwarder, Object caller, long timeMs, boolean preventBoosting);
-    public static native int MKiziH$q(String string);
-    public static native void MBeWYy2V(long nativeSelectFileDialogImpl, Object caller, String filePath, String displayName);
-
-    public static native void Mx1807vz(long nativeSelectFileDialogImpl, Object caller, String[] filePathArray, String[] displayNameArray);
-
-    public static native void MGVJOCWv(long nativeSelectFileDialogImpl, Object caller);
-
-    public static native void MXucAq1Y(long nativeSelectFileDialogImpl, Object caller, String contacts);
-    public static native long MFjTMMS_(Object caller, int displayId, float scrollFactor, boolean windowIsWideColorGamut);
-
-    public static native void MrnNdVRa(long nativeWindowAndroid, Object caller, boolean visible);
-
-    public static native void MMLuxHp6(long nativeWindowAndroid, Object caller);
-
-    public static native void MbyUPhMo(long nativeWindowAndroid, Object caller);
-
-    public static native void MotttR54(long nativeWindowAndroid, Object caller, boolean paused);
-
-    public static native void MWNjxKcW(long nativeWindowAndroid, Object caller, float refreshRate);
-
-    public static native void MV00Qksi(long nativeWindowAndroid, Object caller);
-
-    public static native void MTDQeb$o(long nativeWindowAndroid, Object caller, float[] supportedRefreshRates);
-    public static native void M2$ANfTC(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId, int width, int height, float dipScale, int rotationDegrees, int bitsPerPixel, int bitsPerComponent, boolean isWideColorGamut);
-
-    public static native void MyzQIqd_(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
-
-    public static native void MdOwtyr6(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
-    public static native void MGCvz8lp(Object caller);
-    public static native void MtrEpb2R(Object caller, float maximumFlingVelocity, float minimumFlingVelocity, float touchSlop, float doubleTapSlop, float minScalingSpan);
-    public static native void MRbPfCZQ(long nativeSurfaceTextureListener, Object caller);
-
-    public static native void MUH2vhAN(long nativeSurfaceTextureListener, Object caller);
-    public static native long MKzrMxwv();
-
-    public static native long MNZCYawX(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom, int apertureLeft, int apertureTop, int apertureRight, int apertureBottom);
-    public static native void MM7E4tBk(long nativeResourceManagerImpl, Object caller, int resType, int resId, Object bitmap, int width, int height, long nativeResource);
-
-    public static native void MxwZmAzJ(long nativeResourceManagerImpl, Object caller, int resType, int resId);
-
-    public static native void MnAVuP1v(long nativeResourceManagerImpl, Object caller);
-    public static native void MWBVWQ0I(String uri, Object target);
-
-    public static native void MNBd3mFA(String spec, boolean isValid, long nativeParsed, Object target);
-
-    public static native long MnPIH$$1(String spec, boolean isValid, long nativeParsed);
-    public static native long MsTyiXfW(int schemeBegin, int schemeLength, int usernameBegin, int usernameLength, int passwordBegin, int passwordLength, int hostBegin, int hostLength, int portBegin, int portLength, int pathBegin, int pathLength, int queryBegin, int queryLength, int refBegin, int refLength, boolean potentiallyDanglingMarkup, long innerUrl);
-    public static native long MdSMvPKd();
-
-    public static native void MlYZDcUq(long weblayerAutocompleteSchemeClassifier);
-    public static native long Me394HRR(Object view, long nativeContentViewRenderView, boolean isTop);
-
-    public static native void M8jqrC_w(long nativeBrowserControlsContainerView);
-
-    public static native void MlXpxEY_(long nativeBrowserControlsContainerView, int id);
-
-    public static native void M$BOyYG7(long nativeBrowserControlsContainerView);
-
-    public static native void M6ePJPUh(long nativeBrowserControlsContainerView, int contentOffsetY);
-
-    public static native void MY2oZhd3(long nativeBrowserControlsContainerView);
-
-    public static native void Mi5Me0JY(long nativeBrowserControlsContainerView, int width, int height);
-
-    public static native void McAxkPDo(long nativeBrowserControlsContainerView);
-
-    public static native void MfdDvIeb(long nativeBrowserControlsContainerView, Object webContents);
-
-    public static native boolean MXZ_n0Vr();
-    public static native long MChsAOfs(long profile, Object caller);
-
-    public static native void MaMrnX9h(long browser);
-
-    public static native void MJ$RHdW5(long nativeBrowserImpl, long nativeTab);
-
-    public static native void M2kEkJ8E(long nativeBrowserImpl, long nativeTab);
-
-    public static native Object[] MGDfuPeL(long nativeBrowserImpl);
-
-    public static native void MBT5EbFP(long nativeBrowserImpl, long nativeTab);
-
-    public static native Object Ms4h$LOA(long nativeBrowserImpl);
-
-    public static native void MM5Y8Vdi(long nativeBrowserImpl);
-
-    public static native String Mtk__Xyp(long nativeBrowserImpl);
-
-    public static native void MaKl4w3e(long nativeBrowserImpl);
-
-    public static native byte[] MxJsteK0(long nativeBrowserImpl);
-
-    public static native byte[] MtZQkZrN(long nativeBrowserImpl);
-
-    public static native void MF3mfzBs(long nativeBrowserImpl, String persistenceId, byte[] persistenceCryptoKey, byte[] minimalPersistenceState);
-
-    public static native void MCP8kZaA(long nativeBrowserImpl);
-
-    public static native void MJ3WqXoC(long nativeBrowserImpl);
-
-    public static native void M9jlcLN8(long nativeBrowserImpl);
-
-    public static native void Mu08S5Q_(long nativeBrowserImpl);
-    public static native long MuuxVGQm(Object caller, Object rootWindow);
-
-    public static native void MAIaE0OG(long nativeContentViewRenderView);
-
-    public static native void MYMjn0mf(long nativeContentViewRenderView, Object webContents);
-
-    public static native void MQtCkWmJ(long nativeContentViewRenderView, Object webContents, int width, int height);
-
-    public static native void MUdnoeZS(long nativeContentViewRenderView);
-
-    public static native void MfxYKOP7(long nativeContentViewRenderView, boolean cacheBackBuffer);
-
-    public static native void M4g6Q4ab(long nativeContentViewRenderView, boolean canBeUsedWithSurfaceControl, int format, int width, int height, Object surface);
-
-    public static native void MRC2ueBe(long nativeContentViewRenderView);
-
-    public static native void M9bR5p1w(long nativeContentViewRenderView);
-
-    public static native Object M7ewD88L(long nativeContentViewRenderView);
-    public static native boolean MHaZNm_6(long nativeCookieManagerImpl, String url, String value, Object callback);
-
-    public static native void M55lJVED(long nativeCookieManagerImpl, String url, Object callback);
-
-    public static native int M9VhfsIF(long nativeCookieManagerImpl, String url, String name, Object callback);
-
-    public static native void MGwEaaJt(long nativeCookieManagerImpl, int id);
-    public static native long McPAi5G9(Object proxy, long tab);
-
-    public static native void Mq3U77nO(long proxy);
-
-    public static native void MYOOvdZV(long callbackId, boolean allow);
-    public static native void MCQjxfAX(long nativeDownloadImpl, Object caller);
-
-    public static native int Mg9vWlA3(long nativeDownloadImpl);
-
-    public static native long MLQnpV49(long nativeDownloadImpl);
-
-    public static native long MLPJbQwI(long nativeDownloadImpl);
-
-    public static native void Mmh9t8Wp(long nativeDownloadImpl);
-
-    public static native void MBdFHh_o(long nativeDownloadImpl);
-
-    public static native void M7ycbCea(long nativeDownloadImpl);
-
-    public static native String MBNW0Bg1(long nativeDownloadImpl);
-
-    public static native String MI7IhsRn(long nativeDownloadImpl);
-
-    public static native String MiYZ62wR(long nativeDownloadImpl);
-
-    public static native int MMo$maOT(long nativeDownloadImpl);
-    public static native long M0JND2JE(Object proxy, long tab);
-
-    public static native void MRiF9eNE(long proxy);
-    public static native long MGmykU1g(Object proxy, long tab);
-
-    public static native void MeleUM$n(long proxy);
-
-    public static native void MSOA10zg(long nativeFullscreenCallbackProxy);
-    public static native int M_0hXOpZ(long nativeInfoBarAndroid, Object caller);
-
-    public static native void MeLX12si(long nativeInfoBarAndroid, Object caller);
-
-    public static native void McZ46go$(long nativeInfoBarAndroid, Object caller, int action);
-
-    public static native void Md8l8tVe(long nativeInfoBarAndroid, Object caller);
-    public static native long MvmrRAzz(Object caller);
-
-    public static native void MIDu$Gd$(long nativeInfoBarContainerAndroid, Object caller, Object webContents);
-
-    public static native void MtgOM66q(long nativeInfoBarContainerAndroid, Object caller);
-    public static native void MNVsdYhF();
-    public static native long Mk$VWV9$(Object caller, Object webContents);
-
-    public static native void M2oqcfI6(long manager);
-
-    public static native void MBd6Z55T(long nativeMediaStreamManager, int requestId, boolean allow);
-
-    public static native void Mk5$_4lo(long nativeMediaStreamManager);
-    public static native void MpejyhKI(long nativeNavigationControllerImpl, Object caller);
-
-    public static native long MuaFsixb(long tab);
-
-    public static native void MdNsGAMH(long nativeNavigationControllerImpl, String uri);
-
-    public static native void MRMbFqUg(long nativeNavigationControllerImpl, String uri, boolean shouldReplaceCurrentEntry);
-
-    public static native void MZrOkH8X(long nativeNavigationControllerImpl);
-
-    public static native void MDkifRYV(long nativeNavigationControllerImpl);
-
-    public static native boolean Mk5Op77A(long nativeNavigationControllerImpl);
-
-    public static native boolean Myt080DX(long nativeNavigationControllerImpl);
-
-    public static native void M0Oi$rdJ(long nativeNavigationControllerImpl, int index);
-
-    public static native void MgCpZ61D(long nativeNavigationControllerImpl);
-
-    public static native void Mcpd2RLR(long nativeNavigationControllerImpl);
-
-    public static native int MTQXD9PA(long nativeNavigationControllerImpl);
-
-    public static native int MYvsya1k(long nativeNavigationControllerImpl);
-
-    public static native String MdarrSGz(long nativeNavigationControllerImpl, int index);
-
-    public static native String ME_QUEJm(long nativeNavigationControllerImpl, int index);
-
-    public static native boolean M1cVni5H(long nativeNavigationControllerImpl, int index);
-    public static native void MAxzZ9OU(long nativeNavigationImpl, Object caller);
-
-    public static native int MOjYwlCQ(long nativeNavigationImpl);
-
-    public static native String MLe5UH8x(long nativeNavigationImpl);
-
-    public static native String[] M4$r2b34(long nativeNavigationImpl);
-
-    public static native int MavL_hzo(long nativeNavigationImpl);
-
-    public static native boolean MNvdMHI6(long nativeNavigationImpl);
-
-    public static native boolean MIFgE7DZ(long nativeNavigationImpl);
-
-    public static native boolean MN_nBiKo(long nativeNavigationImpl);
-
-    public static native boolean MiBmbu2p(long nativeNavigationImpl);
-
-    public static native int Mu3sbx92(long nativeNavigationImpl);
-
-    public static native boolean MDotswwA(long nativeNavigationImpl, String name, String value);
-
-    public static native boolean MFHuFkAr(String name);
-
-    public static native boolean MDc77mDW(String value);
-
-    public static native boolean MylM4DA1(long nativeNavigationImpl, String value);
-    public static native long Mm1ByG3d(Object proxy, long tab);
-
-    public static native void MxkBiJzp(long proxy);
-    public static native void Ms_xftcU(Object callback);
-
-    public static native long MKGVVWNd(String name, Object caller);
-
-    public static native void M_1y2G80(long profile);
-
-    public static native long MOV1crQP(long nativeProfileImpl);
-
-    public static native int MExAIK1i(long nativeProfileImpl);
-
-    public static native void Mxdeo3Gx(long nativeProfileImpl, Object completionCallback);
-
-    public static native void MTR7prkl(long nativeProfileImpl, int[] dataTypes, long fromMillis, long toMillis, Object callback);
-
-    public static native void Mq7GFTAG(long nativeProfileImpl, String directory);
-
-    public static native long MxyNOHnU(long nativeProfileImpl);
-
-    public static native void M1$JPkux(long nativeProfileImpl);
-
-    public static native void MfdyKPni(long nativeProfileImpl, int type, boolean value);
-
-    public static native boolean MbEhNBrP(long nativeProfileImpl, int type);
-
-    public static native void MaK4GRyf(long nativeProfileImpl, Object callback);
-
-    public static native void M6_S2Eto(long nativeProfileImpl, String[] ids, Object callback);
-
-    public static native void MAa5N2Fy(long nativeProfileImpl);
-    public static native long MOUs9Qy6(Object proxy, long tab);
-
-    public static native void Mpl66Ope(long proxy);
-    public static native Object Mbc7Xl0E(Object webContents);
-
-    public static native long M0NNPeB3(long profile, Object caller);
-
-    public static native void MKSJ4vB6(long nativeTabImpl, Object impl);
-
-    public static native void Myi236il(long nativeTabImpl, Object autofillProvider);
-
-    public static native void M7aoqPkm(long nativeTabImpl, long nativeTopBrowserControlsContainerView, long nativeBottomBrowserControlsContainerView);
-
-    public static native void MD18T2Ck(long tab);
-
-    public static native Object MV_K4t5p(long nativeTabImpl);
-
-    public static native void M9gymlSj(long nativeTabImpl, String script, boolean useSeparateIsolate, Object callback);
-
-    public static native void M$Jahyw2(long nativeTabImpl, int newConstraint, boolean animate);
-
-    public static native String MDUS1J6g(long nativeTabImpl);
-
-    public static native void MMWkDQW5(long nativeTabImpl, float scale, Object valueCallback);
-
-    public static native boolean MgVMsAds(long nativeTabImpl, String[] data);
-
-    public static native String[] MrvOtvmO(long nativeTabImpl);
-
-    public static native boolean MbX5H7T6(long nativeTabImpl);
-
-    public static native void MRHB7F4D(long nativeTabImpl, String username, String password);
-
-    public static native void MVs2U_x4(long nativeTabImpl);
-
-    public static native String MPKxPeqc(long nativeTabImpl, String jsObjectName, String[] allowedOrigins, Object client);
-
-    public static native void MajFds73(long nativeTabImpl, String jsObjectName);
-
-    public static native boolean MQH8tyfT(long nativeTabImpl);
-
-    public static native void M5P364$X(long nativeTabImpl);
-    public static native void MMWKyuFU(long nativeTranslateCompactInfoBar, Object caller, int option, String value);
-
-    public static native void Mc1zGvz5(long nativeTranslateCompactInfoBar, Object caller, int option, boolean value);
-
-    public static native boolean MG9EGT5b(long nativeTranslateCompactInfoBar, Object caller, boolean menuExpanded);
-
-    public static native boolean MziN4Wi7(long nativeTranslateCompactInfoBar, Object caller);
-    public static native long MBXTos2n(long browserPtr);
-
-    public static native void MZ0OGKWB(long urlBarControllerImplPtr);
-
-    public static native String M7Zzb0z2(long nativeUrlBarControllerImpl);
-
-    public static native int MgfY0koX(long nativeUrlBarControllerImpl);
-
-    public static native boolean MX_pL9hY(long nativeUrlBarControllerImpl);
-    public static native void M1lGn20V(boolean enabled);
-
-    public static native boolean MdEjk1wX();
-
-    public static native void MVSxAa8H(boolean value);
-
-    public static native String M3A3spS7();
-
-    public static native void MHioz7v6(String trialName, int[] experimentIDs);
-    public static native void M$B6$KVY(long nativeWebMessageReplyProxyImpl, String message);
-    public static native void Mar1tTQP(boolean userConsent, boolean appConsent);
-    public static native void Ms$UzmXN(long callback, boolean result);
 }

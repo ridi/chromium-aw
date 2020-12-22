@@ -17,8 +17,8 @@ public final class SerialStopBits {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int ONE = 1;
-    public static final int TWO = 2;
+    public static final int ONE = 1; // NONE + 1
+    public static final int TWO = 2; // ONE + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

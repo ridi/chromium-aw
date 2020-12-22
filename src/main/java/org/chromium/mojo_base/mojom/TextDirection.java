@@ -17,8 +17,8 @@ public final class TextDirection {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int UNKNOWN_DIRECTION = 0;
-    public static final int RIGHT_TO_LEFT = 1;
-    public static final int LEFT_TO_RIGHT = 2;
+    public static final int RIGHT_TO_LEFT = 1; // UNKNOWN_DIRECTION + 1
+    public static final int LEFT_TO_RIGHT = 2; // RIGHT_TO_LEFT + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

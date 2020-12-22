@@ -17,9 +17,9 @@ public final class PasswordFormFieldPredictionType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int USERNAME = 0;
-    public static final int CURRENT_PASSWORD = 1;
-    public static final int NEW_PASSWORD = 2;
-    public static final int NOT_PASSWORD = 3;
+    public static final int CURRENT_PASSWORD = 1; // USERNAME + 1
+    public static final int NEW_PASSWORD = 2; // CURRENT_PASSWORD + 1
+    public static final int NOT_PASSWORD = 3; // NEW_PASSWORD + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

@@ -40,8 +40,11 @@ public abstract class MediaSwitches {
     // Set number of threads to use for video decoding.
     public static final String VIDEO_THREADS = "video-threads";
 
-    // Do not immediately suspend media in background tabs.
-    public static final String DISABLE_BACKGROUND_MEDIA_SUSPEND = "disable-background-media-suspend";
+    // Suspend media pipeline on background tabs.
+    public static final String ENABLE_MEDIA_SUSPEND = "enable-media-suspend";
+
+
+    public static final String DISABLE_MEDIA_SUSPEND = "disable-media-suspend";
 
     // Force to report VP9 as an unsupported MIME type.
     public static final String REPORT_VP9_AS_AN_UNSUPPORTED_MIME_TYPE = "report-vp9-as-an-unsupported-mime-type";
@@ -79,6 +82,9 @@ public abstract class MediaSwitches {
     // FuchsiaVideoDecoder, including unencrypted streams. Ignored unless
     // --enable-protected-video-buffers is also specified.
     public static final String FORCE_PROTECTED_VIDEO_OUTPUT_BUFFERS = "force-protected-video-output-buffers";
+
+    // Enables fuchsia.media.AudioConsumer to be used to render audio streams.
+    public static final String ENABLE_FUCHSIA_AUDIO_CONSUMER = "enable-fuchsia-audio-consumer";
 
     // Use CRAS, the ChromeOS audio server.
     public static final String USE_CRAS = "use-cras";
@@ -175,9 +181,6 @@ public abstract class MediaSwitches {
     // can be used to disable hardware secure codecs support:
     //  --override-hardware-secure-codecs-for-testing
     public static final String OVERRIDE_HARDWARE_SECURE_CODECS_FOR_TESTING = "override-hardware-secure-codecs-for-testing";
-
-    // Force to disable kChromeosVideoDecoder feature, used for unsupported boards.
-    public static final String FORCE_DISABLE_NEW_ACCELERATED_VIDEO_DECODER = "force-disable-new-accelerated-video-decoder";
 
     // Autoplay policy that requires a document user activation.
     public static final String DOCUMENT_USER_ACTIVATION_REQUIRED_POLICY = "document-user-activation-required";

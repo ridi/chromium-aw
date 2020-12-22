@@ -17,13 +17,13 @@ public final class OverlayTransform {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int OVERLAY_TRANSFORM_INVALID = 0;
-    public static final int OVERLAY_TRANSFORM_NONE = 1;
-    public static final int OVERLAY_TRANSFORM_FLIP_HORIZONTAL = 2;
-    public static final int OVERLAY_TRANSFORM_FLIP_VERTICAL = 3;
-    public static final int OVERLAY_TRANSFORM_ROTATE_90 = 4;
-    public static final int OVERLAY_TRANSFORM_ROTATE_180 = 5;
-    public static final int OVERLAY_TRANSFORM_ROTATE_270 = 6;
-    public static final int OVERLAY_TRANSFORM_LAST = 6;
+    public static final int OVERLAY_TRANSFORM_NONE = 1; // OVERLAY_TRANSFORM_INVALID + 1
+    public static final int OVERLAY_TRANSFORM_FLIP_HORIZONTAL = 2; // OVERLAY_TRANSFORM_NONE + 1
+    public static final int OVERLAY_TRANSFORM_FLIP_VERTICAL = 3; // OVERLAY_TRANSFORM_FLIP_HORIZONTAL + 1
+    public static final int OVERLAY_TRANSFORM_ROTATE_90 = 4; // OVERLAY_TRANSFORM_FLIP_VERTICAL + 1
+    public static final int OVERLAY_TRANSFORM_ROTATE_180 = 5; // OVERLAY_TRANSFORM_ROTATE_90 + 1
+    public static final int OVERLAY_TRANSFORM_ROTATE_270 = 6; // OVERLAY_TRANSFORM_ROTATE_180 + 1
+    public static final int OVERLAY_TRANSFORM_LAST = OverlayTransform.OVERLAY_TRANSFORM_ROTATE_270;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

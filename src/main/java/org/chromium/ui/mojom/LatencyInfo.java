@@ -19,6 +19,7 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
     private static final int STRUCT_SIZE = 56;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    public String traceName;
     public java.util.Map<Integer, org.chromium.mojo_base.mojom.TimeTicks> latencyComponents;
     public long traceId;
     public long ukmSourceId;
@@ -28,7 +29,6 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
     public int sourceEventType;
     public float scrollUpdateDelta;
     public float predictedScrollUpdateDelta;
-    public long gestureScrollId;
 
     private LatencyInfo(int version) {
         super(STRUCT_SIZE, version);
@@ -65,7 +65,11 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
             result = new LatencyInfo(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
+                result.traceName = decoder0.readString(8, false);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
                 {
                     decoder1.readDataHeaderForMap();
                     int[] keys0;
@@ -100,40 +104,36 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.traceId = decoder0.readLong(16);
+                result.traceId = decoder0.readLong(24);
                 }
                 {
                     
-                result.ukmSourceId = decoder0.readLong(24);
+                result.ukmSourceId = decoder0.readLong(32);
                 }
                 {
                     
-                result.coalesced = decoder0.readBoolean(32, 0);
+                result.coalesced = decoder0.readBoolean(40, 0);
                 }
                 {
                     
-                result.began = decoder0.readBoolean(32, 1);
+                result.began = decoder0.readBoolean(40, 1);
                 }
                 {
                     
-                result.terminated = decoder0.readBoolean(32, 2);
+                result.terminated = decoder0.readBoolean(40, 2);
                 }
                 {
                     
-                result.sourceEventType = decoder0.readInt(36);
+                result.sourceEventType = decoder0.readInt(44);
                     SourceEventType.validate(result.sourceEventType);
                 }
                 {
                     
-                result.scrollUpdateDelta = decoder0.readFloat(40);
+                result.scrollUpdateDelta = decoder0.readFloat(48);
                 }
                 {
                     
-                result.predictedScrollUpdateDelta = decoder0.readFloat(44);
-                }
-                {
-                    
-                result.gestureScrollId = decoder0.readLong(48);
+                result.predictedScrollUpdateDelta = decoder0.readFloat(52);
                 }
 
         } finally {
@@ -147,10 +147,12 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
+        encoder0.encode(this.traceName, 8, false);
+        
         if (this.latencyComponents == null) {
-            encoder0.encodeNullPointer(8, false);
+            encoder0.encodeNullPointer(16, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encoderForMap(8);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encoderForMap(16);
             int size0 = this.latencyComponents.size();
             int[] keys0 = new int[size0];
             org.chromium.mojo_base.mojom.TimeTicks[] values0 = new org.chromium.mojo_base.mojom.TimeTicks[size0];
@@ -172,22 +174,20 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
             }
         }
         
-        encoder0.encode(this.traceId, 16);
+        encoder0.encode(this.traceId, 24);
         
-        encoder0.encode(this.ukmSourceId, 24);
+        encoder0.encode(this.ukmSourceId, 32);
         
-        encoder0.encode(this.coalesced, 32, 0);
+        encoder0.encode(this.coalesced, 40, 0);
         
-        encoder0.encode(this.began, 32, 1);
+        encoder0.encode(this.began, 40, 1);
         
-        encoder0.encode(this.terminated, 32, 2);
+        encoder0.encode(this.terminated, 40, 2);
         
-        encoder0.encode(this.sourceEventType, 36);
+        encoder0.encode(this.sourceEventType, 44);
         
-        encoder0.encode(this.scrollUpdateDelta, 40);
+        encoder0.encode(this.scrollUpdateDelta, 48);
         
-        encoder0.encode(this.predictedScrollUpdateDelta, 44);
-        
-        encoder0.encode(this.gestureScrollId, 48);
+        encoder0.encode(this.predictedScrollUpdateDelta, 52);
     }
 }

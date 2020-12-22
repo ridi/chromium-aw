@@ -4,7 +4,6 @@
 
 package org.chromium.base.process_launcher;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -63,7 +62,6 @@ final class BindService {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    @SuppressLint("DiscouragedPrivateApi")
     private static boolean bindServiceByReflection(Context context, Intent intent,
             ServiceConnection connection, int flags, Handler handler)
             throws ReflectiveOperationException {

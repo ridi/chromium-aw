@@ -71,17 +71,8 @@ public class ListModelBase<T, P> extends ListObservableImpl<P> implements Simple
      * @param items The items to be stored.
      */
     public void addAll(Collection<T> items) {
-        addAll(items, mItems.size());
-    }
-
-    /**
-     * Adds all given {@code items} to the {@link List} at specific position.
-     * Notifies observers about the inserted items.
-     * @param items The items to be stored.
-     * @param insertionIndex Position where items should be inserted.
-     */
-    public void addAll(Collection<? extends T> items, int insertionIndex) {
-        mItems.addAll(insertionIndex, items);
+        int insertionIndex = mItems.size();
+        mItems.addAll(items);
         notifyItemRangeInserted(insertionIndex, items.size());
     }
 

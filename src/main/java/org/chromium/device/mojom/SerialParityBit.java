@@ -17,9 +17,9 @@ public final class SerialParityBit {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int NO_PARITY = 1;
-    public static final int ODD = 2;
-    public static final int EVEN = 3;
+    public static final int NO_PARITY = 1; // NONE + 1
+    public static final int ODD = 2; // NO_PARITY + 1
+    public static final int EVEN = 3; // ODD + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

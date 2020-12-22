@@ -24,11 +24,6 @@ public interface SerialPortManager extends org.chromium.mojo.bindings.Interface 
     Manager<SerialPortManager, SerialPortManager.Proxy> MANAGER = SerialPortManager_Internal.MANAGER;
 
 
-    void setClient(
-SerialPortManagerClient client);
-
-
-
     void getDevices(
 
 GetDevicesResponse callback);
@@ -38,7 +33,7 @@ GetDevicesResponse callback);
 
 
     void getPort(
-org.chromium.mojo_base.mojom.UnguessableToken token, boolean useAlternatePath, org.chromium.mojo.bindings.InterfaceRequest<SerialPort> portReceiver, SerialPortConnectionWatcher watcher);
+org.chromium.mojo_base.mojom.UnguessableToken token, org.chromium.mojo.bindings.InterfaceRequest<SerialPort> portReceiver, SerialPortConnectionWatcher watcher);
 
 
 }

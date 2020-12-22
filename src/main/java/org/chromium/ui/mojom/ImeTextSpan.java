@@ -29,7 +29,6 @@ public final class ImeTextSpan extends org.chromium.mojo.bindings.Struct {
     public int backgroundColor;
     public int suggestionHighlightColor;
     public boolean removeOnFinishComposing;
-    public boolean interimCharSelection;
     public String[] suggestions;
 
     private ImeTextSpan(int version) {
@@ -110,10 +109,6 @@ public final class ImeTextSpan extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.interimCharSelection = decoder0.readBoolean(44, 1);
-                }
-                {
-                    
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
@@ -155,8 +150,6 @@ public final class ImeTextSpan extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.suggestionHighlightColor, 40);
         
         encoder0.encode(this.removeOnFinishComposing, 44, 0);
-        
-        encoder0.encode(this.interimCharSelection, 44, 1);
         
         if (this.suggestions == null) {
             encoder0.encodeNullPointer(48, false);

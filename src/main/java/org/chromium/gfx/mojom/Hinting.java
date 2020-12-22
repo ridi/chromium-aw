@@ -17,9 +17,9 @@ public final class Hinting {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int SLIGHT = 1;
-    public static final int MEDIUM = 2;
-    public static final int FULL = 3;
+    public static final int SLIGHT = 1; // NONE + 1
+    public static final int MEDIUM = 2; // SLIGHT + 1
+    public static final int FULL = 3; // MEDIUM + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

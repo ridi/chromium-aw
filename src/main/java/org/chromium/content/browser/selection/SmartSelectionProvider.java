@@ -18,10 +18,7 @@ import android.view.textclassifier.TextSelection;
 import androidx.annotation.IntDef;
 
 import org.chromium.base.task.AsyncTask;
-import org.chromium.content.browser.WindowEventObserver;
-import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content_public.browser.SelectionClient;
-import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
 import java.lang.annotation.Retention;
@@ -49,19 +46,9 @@ public class SmartSelectionProvider {
     private Runnable mFailureResponseRunnable;
 
     public SmartSelectionProvider(
-            SelectionClient.ResultCallback callback, WebContents webContents) {
+            SelectionClient.ResultCallback callback, WindowAndroid windowAndroid) {
         mResultCallback = callback;
-        mWindowAndroid = webContents.getTopLevelNativeWindow();
-        WindowEventObserverManager manager = WindowEventObserverManager.from(webContents);
-        if (manager != null) {
-            manager.addObserver(new WindowEventObserver() {
-                @Override
-                public void onWindowAndroidChanged(WindowAndroid newWindowAndroid) {
-                    mWindowAndroid = newWindowAndroid;
-                }
-            });
-        }
-
+        mWindowAndroid = windowAndroid;
         mHandler = new Handler();
         mFailureResponseRunnable = new Runnable() {
             @Override

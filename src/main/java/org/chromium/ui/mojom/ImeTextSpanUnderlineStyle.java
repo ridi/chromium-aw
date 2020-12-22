@@ -17,13 +17,12 @@ public final class ImeTextSpanUnderlineStyle {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int SOLID = 1;
-    public static final int DOT = 2;
-    public static final int DASH = 3;
-    public static final int SQUIGGLE = 4;
+    public static final int SOLID = 1; // NONE + 1
+    public static final int DOT = 2; // SOLID + 1
+    public static final int DASH = 3; // DOT + 1
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 4;
+        return value >= 0 && value <= 3;
     }
 
     public static void validate(int value) {

@@ -88,10 +88,7 @@ class TtsPlatformImpl implements ActivityStateListener {
         });
         addOnUtteranceProgressListener();
 
-        // WebView and WebLayer don't use ApplicationStatus.
-        if (ApplicationStatus.isInitialized()) {
-            ApplicationStatus.registerStateListenerForAllActivities(this);
-        }
+        ApplicationStatus.registerStateListenerForAllActivities(this);
     }
 
     /**
@@ -115,10 +112,7 @@ class TtsPlatformImpl implements ActivityStateListener {
      */
     @CalledByNative
     private void destroy() {
-        // WebView and WebLayer don't use ApplicationStatus.
-        if (ApplicationStatus.isInitialized()) {
-            ApplicationStatus.unregisterActivityStateListener(this);
-        }
+        ApplicationStatus.unregisterActivityStateListener(this);
         mNativeTtsPlatformImplAndroid = 0;
     }
 
@@ -174,11 +168,9 @@ class TtsPlatformImpl implements ActivityStateListener {
     @CalledByNative
     private boolean speak(
             int utteranceId, String text, String lang, float rate, float pitch, float volume) {
-        // WebView and WebLayer don't use ApplicationStatus.
         // Don't speak when in the background.
-        if (ApplicationStatus.isInitialized() && !ApplicationStatus.hasVisibleActivities()) {
-            return false;
-        }
+        if (!ApplicationStatus.hasVisibleActivities()) return false;
+
         if (!mInitialized) {
             mPendingUtterance =
                     new PendingUtterance(this, utteranceId, text, lang, rate, pitch, volume);
@@ -287,7 +279,7 @@ class TtsPlatformImpl implements ActivityStateListener {
      * we can call TtsPlatformImplJni.get().voicesChanged directly.
      */
     private void initialize() {
-        TraceEvent.startAsync("TtsPlatformImpl:initialize", hashCode());
+        TraceEvent.begin("TtsPlatformImpl:initialize");
 
         new AsyncTask<List<TtsVoice>>() {
             @Override
@@ -331,8 +323,7 @@ class TtsPlatformImpl implements ActivityStateListener {
 
                 if (mPendingUtterance != null) mPendingUtterance.speak();
 
-                TraceEvent.finishAsync(
-                        "TtsPlatformImpl:initialize", TtsPlatformImpl.this.hashCode());
+                TraceEvent.end("TtsPlatformImpl:initialize");
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

@@ -17,10 +17,10 @@ public final class MessagePumpType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int DEFAULT = 0;
-    public static final int UI = 1;
-    public static final int CUSTOM = 2;
-    public static final int IO = 3;
-    public static final int JAVA = 4;
+    public static final int UI = 1; // DEFAULT + 1
+    public static final int CUSTOM = 2; // UI + 1
+    public static final int IO = 3; // CUSTOM + 1
+    public static final int JAVA = 4; // IO + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 4;

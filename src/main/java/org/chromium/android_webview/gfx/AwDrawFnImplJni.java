@@ -1,11 +1,11 @@
 package org.chromium.android_webview.gfx;
 
+import J.N;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
-import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -16,7 +16,7 @@ final class AwDrawFnImplJni implements AwDrawFnImpl.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.android_webview.gfx.AwDrawFnImpl.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -25,35 +25,35 @@ final class AwDrawFnImplJni implements AwDrawFnImpl.Natives {
 
   @Override
   public int getFunctorHandle(long nativeAwDrawFnImpl, AwDrawFnImpl caller) {
-    return (int)GEN_JNI.org_chromium_android_1webview_gfx_AwDrawFnImpl_getFunctorHandle(nativeAwDrawFnImpl, caller);
+    return (int)N.MVv$dooB(nativeAwDrawFnImpl, caller);
   }
 
   @Override
   public long getCompositorFrameConsumer(long nativeAwDrawFnImpl, AwDrawFnImpl caller) {
-    return (long)GEN_JNI.org_chromium_android_1webview_gfx_AwDrawFnImpl_getCompositorFrameConsumer(nativeAwDrawFnImpl, caller);
+    return (long)N.MyqeD0HT(nativeAwDrawFnImpl, caller);
   }
 
   @Override
   public void releaseHandle(long nativeAwDrawFnImpl, AwDrawFnImpl caller) {
-    GEN_JNI.org_chromium_android_1webview_gfx_AwDrawFnImpl_releaseHandle(nativeAwDrawFnImpl, caller);
+    N.MTNG5d$d(nativeAwDrawFnImpl, caller);
   }
 
   @Override
   public void setDrawFnFunctionTable(long functionTablePointer) {
-    GEN_JNI.org_chromium_android_1webview_gfx_AwDrawFnImpl_setDrawFnFunctionTable(functionTablePointer);
+    N.Muf_UBRy(functionTablePointer);
   }
 
   @Override
   public long create() {
-    return (long)GEN_JNI.org_chromium_android_1webview_gfx_AwDrawFnImpl_create();
+    return (long)N.M_e6WGre();
   }
 
   public static AwDrawFnImpl.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.android_webview.gfx.AwDrawFnImpl.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

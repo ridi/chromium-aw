@@ -12,7 +12,6 @@ import android.view.ViewConfiguration;
 
 import org.chromium.android_webview.R;
 import org.chromium.base.ContextUtils;
-import org.chromium.base.StrictModeContext;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeMethods;
@@ -33,11 +32,7 @@ public class ViewConfigurationHelper {
     private float mDensity;
 
     private ViewConfigurationHelper() {
-        // ViewConfiguration internally accesses WindowManager which triggers vm violations
-        // with the Application context.
-        try (StrictModeContext ignored = StrictModeContext.allowAllVmPolicies()) {
-            mViewConfiguration = ViewConfiguration.get(ContextUtils.getApplicationContext());
-        }
+        mViewConfiguration = ViewConfiguration.get(ContextUtils.getApplicationContext());
         mDensity = ContextUtils.getApplicationContext().getResources().getDisplayMetrics().density;
         assert mDensity > 0;
     }

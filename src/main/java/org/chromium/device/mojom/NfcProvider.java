@@ -25,17 +25,7 @@ public interface NfcProvider extends org.chromium.mojo.bindings.Interface {
 
 
     void getNfcForHost(
-int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver);
-
-
-
-    void suspendNfcOperations(
-);
-
-
-
-    void resumeNfcOperations(
-);
+int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc);
 
 
 }

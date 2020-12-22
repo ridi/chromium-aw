@@ -53,30 +53,15 @@ android {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation("androidx.multidex:multidex:2.0.1")
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.gms:play-services-gcm:10.2.0'
     implementation 'com.google.android.gms:play-services-location:10.2.0'
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'com.google.protobuf:protobuf-javalite:3.8.0'
+    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
     implementation 'org.glassfish:javax.annotation:10.0-b28'
-}
-
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.8.0'
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java {
-                    option "lite"
-                }
-            }
-        }
-    }
 }
 
 task sourcesJar(type: Jar) {

@@ -163,6 +163,13 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     // Return a Linker instance. If testing, the Linker needs special setup.
     private Linker getLinker() {
+        if (LibraryLoader.getInstance().areTestsEnabled()) {
+            // For testing, set the Linker implementation and the test runner
+            // class name to match those used by the parent.
+            assert mLinkerParams != null;
+            Linker.setupForTesting(mLinkerParams.mLinkerImplementationForTesting,
+                    mLinkerParams.mTestRunnerClassNameForTesting);
+        }
         return Linker.getInstance();
     }
 

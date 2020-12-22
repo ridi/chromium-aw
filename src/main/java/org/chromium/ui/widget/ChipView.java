@@ -6,12 +6,10 @@ package org.chromium.ui.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,31 +17,20 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.Px;
 import androidx.annotation.StyleRes;
-import androidx.core.view.ViewCompat;
 
-import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.android_webview.R;
+import org.chromium.base.ApiCompatibilityUtils;
 
-/**
- * The view responsible for displaying a material chip. The chip has the following components :
- * - A primary text to be shown.
- * - An optional start icon that can be rounded as well.
- * - An optional secondary text view that is shown to the right of the primary text view.
- * - An optional remove icon at the end, intended for use with input chips.
- */
+/** The view responsible for displaying a material chip. */
 public class ChipView extends LinearLayout {
     /** An id to use for {@link #setIcon(int, boolean)} when there is no icon on the chip. */
     public static final int INVALID_ICON_ID = -1;
 
     private final RippleBackgroundHelper mRippleBackgroundHelper;
     private final TextView mPrimaryText;
-    private final ChromeImageView mStartIcon;
-    private final boolean mUseRoundedStartIcon;
+    private final ChromeImageView mIcon;
     private final @IdRes int mSecondaryTextAppearanceId;
-    private final int mEndIconWidth;
-    private final int mEndIconHeight;
 
-    private ViewGroup mEndIconWrapper;
     private TextView mSecondaryText;
 
     /**
@@ -63,11 +50,9 @@ public class ChipView extends LinearLayout {
     private ChipView(Context context, AttributeSet attrs, @StyleRes int themeOverlay) {
         super(new ContextThemeWrapper(context, themeOverlay), attrs, R.attr.chipStyle);
 
-        @Px
-        int leadingElementPadding =
+        final @Px int leadingElementPadding =
                 getResources().getDimensionPixelSize(R.dimen.chip_element_leading_padding);
-        @Px
-        int endPadding = getResources().getDimensionPixelSize(R.dimen.chip_end_padding);
+        final @Px int endPadding = getResources().getDimensionPixelSize(R.dimen.chip_end_padding);
 
         TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.ChipView, R.attr.chipStyle, 0);
@@ -81,28 +66,17 @@ public class ChipView extends LinearLayout {
                 getResources().getDimensionPixelSize(R.dimen.chip_icon_size));
         int iconHeight = a.getDimensionPixelSize(R.styleable.ChipView_iconHeight,
                 getResources().getDimensionPixelSize(R.dimen.chip_icon_size));
-        mUseRoundedStartIcon = a.getBoolean(R.styleable.ChipView_useRoundedIcon, false);
         int primaryTextAppearance = a.getResourceId(
                 R.styleable.ChipView_primaryTextAppearance, R.style.TextAppearance_ChipText);
-
-        mEndIconWidth = a.getDimensionPixelSize(R.styleable.ChipView_endIconWidth,
-                getResources().getDimensionPixelSize(R.dimen.chip_icon_size));
-        mEndIconHeight = a.getDimensionPixelSize(R.styleable.ChipView_endIconHeight,
-                getResources().getDimensionPixelSize(R.dimen.chip_icon_size));
         mSecondaryTextAppearanceId = a.getResourceId(
                 R.styleable.ChipView_secondaryTextAppearance, R.style.TextAppearance_ChipText);
         int verticalInset = a.getDimensionPixelSize(R.styleable.ChipView_verticalInset,
                 getResources().getDimensionPixelSize(R.dimen.chip_bg_vertical_inset));
         a.recycle();
 
-        mStartIcon = new ChromeImageView(getContext());
-        mStartIcon.setLayoutParams(new LayoutParams(iconWidth, iconHeight));
-        addView(mStartIcon);
-
-        if (mUseRoundedStartIcon) {
-            int chipHeight = getResources().getDimensionPixelOffset(R.dimen.chip_default_height);
-            leadingElementPadding = (chipHeight - iconHeight) / 2;
-        }
+        mIcon = new ChromeImageView(getContext());
+        mIcon.setLayoutParams(new LayoutParams(iconWidth, iconHeight));
+        addView(mIcon);
 
         // Setting this enforces 16dp padding at the end and 8dp at the start. For text, the start
         // padding needs to be 16dp which is why a ChipTextView contributes the remaining 8dp.
@@ -144,12 +118,12 @@ public class ChipView extends LinearLayout {
      */
     public void setIcon(@DrawableRes int icon, boolean tintWithTextColor) {
         if (icon == INVALID_ICON_ID) {
-            mStartIcon.setVisibility(ViewGroup.GONE);
+            mIcon.setVisibility(ViewGroup.GONE);
             return;
         }
 
-        mStartIcon.setVisibility(ViewGroup.VISIBLE);
-        mStartIcon.setImageResource(icon);
+        mIcon.setVisibility(ViewGroup.VISIBLE);
+        mIcon.setImageResource(icon);
         setTint(tintWithTextColor);
     }
 
@@ -158,55 +132,9 @@ public class ChipView extends LinearLayout {
      * @param drawable Drawable to display.
      */
     public void setIcon(Drawable drawable, boolean tintWithTextColor) {
-        mStartIcon.setVisibility(ViewGroup.VISIBLE);
-        mStartIcon.setImageDrawable(drawable);
+        mIcon.setVisibility(ViewGroup.VISIBLE);
+        mIcon.setImageDrawable(drawable);
         setTint(tintWithTextColor);
-    }
-
-    /**
-     * Adds a remove icon (X button) at the trailing end of the chip next to the primary text.
-     */
-    public void addRemoveIcon() {
-        if (mEndIconWrapper != null) return;
-
-        ChromeImageView endIcon = new ChromeImageView(getContext());
-        endIcon.setImageResource(R.drawable.btn_close);
-        ApiCompatibilityUtils.setImageTintList(endIcon, mPrimaryText.getTextColors());
-
-        // Adding a wrapper view around the X icon to make the touch target larger, which would
-        // cover the start and end margin for the X icon, and full height of the chip.
-        mEndIconWrapper = new FrameLayout(getContext());
-        mEndIconWrapper.setId(R.id.chip_cancel_btn);
-
-        FrameLayout.LayoutParams layoutParams =
-                new FrameLayout.LayoutParams(mEndIconWidth, mEndIconHeight);
-        layoutParams.setMarginStart(
-                getResources().getDimensionPixelSize(R.dimen.chip_end_icon_margin_start));
-        layoutParams.setMarginEnd(
-                getResources().getDimensionPixelSize(R.dimen.chip_end_padding_with_end_icon));
-        layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        mEndIconWrapper.addView(endIcon, layoutParams);
-        addView(mEndIconWrapper,
-                new LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        // Remove the end padding from the chip to make X icon touch target extend till the end of
-        // the chip.
-        ViewCompat.setPaddingRelative(
-                this, getPaddingStart(), getPaddingTop(), 0, getPaddingBottom());
-    }
-
-    /**
-     * Sets a {@link android.view.View.OnClickListener} for the remove icon.
-     * {@link ChipView#addRemoveIcon()} must be called prior to this method.
-     * @param listener The listener to be invoked on click events.
-     */
-    public void setRemoveIconClickListener(OnClickListener listener) {
-        mEndIconWrapper.setOnClickListener(listener);
-        String chipText = mPrimaryText.getText().toString();
-        assert !TextUtils.isEmpty(chipText);
-        mEndIconWrapper.setContentDescription(mPrimaryText.getContext().getString(
-                R.string.chip_remove_icon_content_description, chipText));
     }
 
     /**
@@ -243,9 +171,9 @@ public class ChipView extends LinearLayout {
      */
     private void setTint(boolean tintWithTextColor) {
         if (mPrimaryText.getTextColors() != null && tintWithTextColor) {
-            ApiCompatibilityUtils.setImageTintList(mStartIcon, mPrimaryText.getTextColors());
+            ApiCompatibilityUtils.setImageTintList(mIcon, mPrimaryText.getTextColors());
         } else {
-            ApiCompatibilityUtils.setImageTintList(mStartIcon, null);
+            ApiCompatibilityUtils.setImageTintList(mIcon, null);
         }
     }
 }

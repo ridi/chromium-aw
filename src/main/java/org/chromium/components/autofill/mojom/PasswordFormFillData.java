@@ -16,18 +16,18 @@ package org.chromium.autofill.mojom;
 
 public final class PasswordFormFillData extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 72;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(72, 0)};
+    private static final int STRUCT_SIZE = 64;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(64, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public FormRendererId formRendererId;
-    public org.chromium.url.mojom.Url url;
+    public int formRendererId;
+    public org.chromium.url.mojom.Url origin;
     public org.chromium.url.mojom.Url action;
     public FormFieldData usernameField;
     public FormFieldData passwordField;
     public boolean usernameMayUsePrefilledPlaceholder;
     public String preferredRealm;
     public boolean usesAccountStore;
-    public PasswordAndMetadata[] additionalLogins;
+    public java.util.Map<org.chromium.mojo_base.mojom.String16, PasswordAndMetadata> additionalLogins;
     public boolean waitForUsername;
     public boolean hasRendererIds;
 
@@ -66,13 +66,28 @@ public final class PasswordFormFillData extends org.chromium.mojo.bindings.Struc
             result = new PasswordFormFillData(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.formRendererId = FormRendererId.decode(decoder1);
+                result.formRendererId = decoder0.readInt(8);
+                }
+                {
+                    
+                result.usernameMayUsePrefilledPlaceholder = decoder0.readBoolean(12, 0);
+                }
+                {
+                    
+                result.usesAccountStore = decoder0.readBoolean(12, 1);
+                }
+                {
+                    
+                result.waitForUsername = decoder0.readBoolean(12, 2);
+                }
+                {
+                    
+                result.hasRendererIds = decoder0.readBoolean(12, 3);
                 }
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                result.url = org.chromium.url.mojom.Url.decode(decoder1);
+                result.origin = org.chromium.url.mojom.Url.decode(decoder1);
                 }
                 {
                     
@@ -91,34 +106,44 @@ public final class PasswordFormFillData extends org.chromium.mojo.bindings.Struc
                 }
                 {
                     
-                result.usernameMayUsePrefilledPlaceholder = decoder0.readBoolean(48, 0);
+                result.preferredRealm = decoder0.readString(48, false);
                 }
                 {
                     
-                result.usesAccountStore = decoder0.readBoolean(48, 1);
-                }
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(56, false);
                 {
-                    
-                result.waitForUsername = decoder0.readBoolean(48, 2);
-                }
-                {
-                    
-                result.hasRendererIds = decoder0.readBoolean(48, 3);
-                }
-                {
-                    
-                result.preferredRealm = decoder0.readString(56, false);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
-                {
-                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                    result.additionalLogins = new PasswordAndMetadata[si1.elementsOrVersion];
-                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                    decoder1.readDataHeaderForMap();
+                    org.chromium.mojo_base.mojom.String16[] keys0;
+                    PasswordAndMetadata[] values0;
+                    {
                         
-                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
-                        result.additionalLogins[i1] = PasswordAndMetadata.decode(decoder2);
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
+                        {
+                            org.chromium.mojo.bindings.DataHeader si2 = decoder2.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                            keys0 = new org.chromium.mojo_base.mojom.String16[si2.elementsOrVersion];
+                            for (int i2 = 0; i2 < si2.elementsOrVersion; ++i2) {
+                                
+                                org.chromium.mojo.bindings.Decoder decoder3 = decoder2.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i2, false);
+                                keys0[i2] = org.chromium.mojo_base.mojom.String16.decode(decoder3);
+                            }
+                        }
+                    }
+                    {
+                        
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE, false);
+                        {
+                            org.chromium.mojo.bindings.DataHeader si2 = decoder2.readDataHeaderForPointerArray(keys0.length);
+                            values0 = new PasswordAndMetadata[si2.elementsOrVersion];
+                            for (int i2 = 0; i2 < si2.elementsOrVersion; ++i2) {
+                                
+                                org.chromium.mojo.bindings.Decoder decoder3 = decoder2.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i2, false);
+                                values0[i2] = PasswordAndMetadata.decode(decoder3);
+                            }
+                        }
+                    }
+                    result.additionalLogins = new java.util.HashMap<org.chromium.mojo_base.mojom.String16, PasswordAndMetadata>();
+                    for (int index0 = 0; index0 < keys0.length; ++index0) {
+                        result.additionalLogins.put(keys0[index0],  values0[index0]);
                     }
                 }
                 }
@@ -134,9 +159,17 @@ public final class PasswordFormFillData extends org.chromium.mojo.bindings.Struc
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.formRendererId, 8, false);
+        encoder0.encode(this.formRendererId, 8);
         
-        encoder0.encode(this.url, 16, false);
+        encoder0.encode(this.usernameMayUsePrefilledPlaceholder, 12, 0);
+        
+        encoder0.encode(this.usesAccountStore, 12, 1);
+        
+        encoder0.encode(this.waitForUsername, 12, 2);
+        
+        encoder0.encode(this.hasRendererIds, 12, 3);
+        
+        encoder0.encode(this.origin, 16, false);
         
         encoder0.encode(this.action, 24, false);
         
@@ -144,23 +177,36 @@ public final class PasswordFormFillData extends org.chromium.mojo.bindings.Struc
         
         encoder0.encode(this.passwordField, 40, false);
         
-        encoder0.encode(this.usernameMayUsePrefilledPlaceholder, 48, 0);
-        
-        encoder0.encode(this.usesAccountStore, 48, 1);
-        
-        encoder0.encode(this.waitForUsername, 48, 2);
-        
-        encoder0.encode(this.hasRendererIds, 48, 3);
-        
-        encoder0.encode(this.preferredRealm, 56, false);
+        encoder0.encode(this.preferredRealm, 48, false);
         
         if (this.additionalLogins == null) {
-            encoder0.encodeNullPointer(64, false);
+            encoder0.encodeNullPointer(56, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.additionalLogins.length, 64, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-            for (int i0 = 0; i0 < this.additionalLogins.length; ++i0) {
-                
-                encoder1.encode(this.additionalLogins[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encoderForMap(56);
+            int size0 = this.additionalLogins.size();
+            org.chromium.mojo_base.mojom.String16[] keys0 = new org.chromium.mojo_base.mojom.String16[size0];
+            PasswordAndMetadata[] values0 = new PasswordAndMetadata[size0];
+            int index0 = 0;
+            for (java.util.Map.Entry<org.chromium.mojo_base.mojom.String16, PasswordAndMetadata> entry0 : this.additionalLogins.entrySet()) {
+                keys0[index0] = entry0.getKey();
+                values0[index0] = entry0.getValue();
+                ++index0;
+            }
+            
+            {
+                org.chromium.mojo.bindings.Encoder encoder2 = encoder1.encodePointerArray(keys0.length, org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                for (int i1 = 0; i1 < keys0.length; ++i1) {
+                    
+                    encoder2.encode(keys0[i1], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                }
+            }
+            
+            {
+                org.chromium.mojo.bindings.Encoder encoder2 = encoder1.encodePointerArray(values0.length, org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                for (int i1 = 0; i1 < values0.length; ++i1) {
+                    
+                    encoder2.encode(values0[i1], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                }
             }
         }
     }

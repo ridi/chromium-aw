@@ -51,7 +51,7 @@ public class SmartSelectionClient implements SelectionClient {
     private long mNativeSmartSelectionClient;
     private SmartSelectionProvider mProvider;
     private ResultCallback mCallback;
-    private SmartSelectionMetricsLogger mSmartSelectionMetricsLogger;
+    private SmartSelectionMetricsLogger mSmartSelectionMetricLogger;
 
     /**
      * Creates the SmartSelectionClient. Returns null in case SmartSelectionProvider does not exist
@@ -66,15 +66,17 @@ public class SmartSelectionClient implements SelectionClient {
             return null;
         }
 
-        return new SmartSelectionClient(callback, webContents);
+        return new SmartSelectionClient(callback, webContents, windowAndroid);
     }
 
-    private SmartSelectionClient(ResultCallback callback, WebContents webContents) {
+    private SmartSelectionClient(
+            ResultCallback callback, WebContents webContents, WindowAndroid windowAndroid) {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        mProvider = new SmartSelectionProvider(callback, webContents);
+        mProvider = new SmartSelectionProvider(callback, windowAndroid);
         mCallback = callback;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            mSmartSelectionMetricsLogger = SmartSelectionMetricsLogger.create(webContents);
+            mSmartSelectionMetricLogger =
+                    SmartSelectionMetricsLogger.create(windowAndroid.getContext().get());
         }
         mNativeSmartSelectionClient =
                 SmartSelectionClientJni.get().init(SmartSelectionClient.this, webContents);
@@ -116,7 +118,7 @@ public class SmartSelectionClient implements SelectionClient {
 
     @Override
     public SelectionMetricsLogger getSelectionMetricsLogger() {
-        return mSmartSelectionMetricsLogger;
+        return mSmartSelectionMetricLogger;
     }
 
     @Override

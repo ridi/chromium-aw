@@ -49,10 +49,6 @@ class NfcProvider_Internal {
 
     private static final int GET_NFC_FOR_HOST_ORDINAL = 0;
 
-    private static final int SUSPEND_NFC_OPERATIONS_ORDINAL = 1;
-
-    private static final int RESUME_NFC_OPERATIONS_ORDINAL = 2;
-
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements NfcProvider.Proxy {
 
@@ -64,49 +60,19 @@ class NfcProvider_Internal {
 
         @Override
         public void getNfcForHost(
-int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
+int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc) {
 
             NfcProviderGetNfcForHostParams _message = new NfcProviderGetNfcForHostParams();
 
             _message.hostId = hostId;
 
-            _message.receiver = receiver;
+            _message.nfc = nfc;
 
 
             getProxyHandler().getMessageReceiver().accept(
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
                             new org.chromium.mojo.bindings.MessageHeader(GET_NFC_FOR_HOST_ORDINAL)));
-
-        }
-
-
-        @Override
-        public void suspendNfcOperations(
-) {
-
-            NfcProviderSuspendNfcOperationsParams _message = new NfcProviderSuspendNfcOperationsParams();
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(SUSPEND_NFC_OPERATIONS_ORDINAL)));
-
-        }
-
-
-        @Override
-        public void resumeNfcOperations(
-) {
-
-            NfcProviderResumeNfcOperationsParams _message = new NfcProviderResumeNfcOperationsParams();
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(RESUME_NFC_OPERATIONS_ORDINAL)));
 
         }
 
@@ -143,31 +109,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
                         NfcProviderGetNfcForHostParams data =
                                 NfcProviderGetNfcForHostParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().getNfcForHost(data.hostId, data.receiver);
-                        return true;
-                    }
-
-
-
-
-
-                    case SUSPEND_NFC_OPERATIONS_ORDINAL: {
-
-                        NfcProviderSuspendNfcOperationsParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().suspendNfcOperations();
-                        return true;
-                    }
-
-
-
-
-
-                    case RESUME_NFC_OPERATIONS_ORDINAL: {
-
-                        NfcProviderResumeNfcOperationsParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().resumeNfcOperations();
+                        getImpl().getNfcForHost(data.hostId, data.nfc);
                         return true;
                     }
 
@@ -199,10 +141,6 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
 
 
 
-
-
-
-
                     default:
                         return false;
                 }
@@ -221,7 +159,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public int hostId;
-        public org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver;
+        public org.chromium.mojo.bindings.InterfaceRequest<Nfc> nfc;
 
         private NfcProviderGetNfcForHostParams(int version) {
             super(STRUCT_SIZE, version);
@@ -262,7 +200,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
                     }
                     {
                         
-                    result.receiver = decoder0.readInterfaceRequest(12, false);
+                    result.nfc = decoder0.readInterfaceRequest(12, false);
                     }
 
             } finally {
@@ -278,119 +216,7 @@ int hostId, org.chromium.mojo.bindings.InterfaceRequest<Nfc> receiver) {
             
             encoder0.encode(this.hostId, 8);
             
-            encoder0.encode(this.receiver, 12, false);
-        }
-    }
-
-
-
-    
-    static final class NfcProviderSuspendNfcOperationsParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 8;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-
-        private NfcProviderSuspendNfcOperationsParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public NfcProviderSuspendNfcOperationsParams() {
-            this(0);
-        }
-
-        public static NfcProviderSuspendNfcOperationsParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static NfcProviderSuspendNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static NfcProviderSuspendNfcOperationsParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            NfcProviderSuspendNfcOperationsParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new NfcProviderSuspendNfcOperationsParams(elementsOrVersion);
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-        }
-    }
-
-
-
-    
-    static final class NfcProviderResumeNfcOperationsParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 8;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-
-        private NfcProviderResumeNfcOperationsParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public NfcProviderResumeNfcOperationsParams() {
-            this(0);
-        }
-
-        public static NfcProviderResumeNfcOperationsParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static NfcProviderResumeNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static NfcProviderResumeNfcOperationsParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            NfcProviderResumeNfcOperationsParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new NfcProviderResumeNfcOperationsParams(elementsOrVersion);
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+            encoder0.encode(this.nfc, 12, false);
         }
     }
 

@@ -6,7 +6,6 @@ package org.chromium.ui.gfx;
 
 import android.graphics.Bitmap;
 
-import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
@@ -15,19 +14,12 @@ import org.chromium.base.annotations.JNINamespace;
  */
 @JNINamespace("gfx")
 public class BitmapHelper {
-    private static final String TAG = "BitmapHelper";
-
     @CalledByNative
-    private static Bitmap createBitmap(
-            int width, int height, int bitmapFormatValue, boolean catchOom) {
+    private static Bitmap createBitmap(int width,
+                                      int height,
+                                      int bitmapFormatValue) {
         Bitmap.Config bitmapConfig = getBitmapConfigForFormat(bitmapFormatValue);
-        try {
-            return Bitmap.createBitmap(width, height, bitmapConfig);
-        } catch (OutOfMemoryError oom) {
-            if (!catchOom) throw oom;
-            Log.w(TAG, "createBitmap OOM-ed", oom);
-            return null;
-        }
+        return Bitmap.createBitmap(width, height, bitmapConfig);
     }
 
     /**

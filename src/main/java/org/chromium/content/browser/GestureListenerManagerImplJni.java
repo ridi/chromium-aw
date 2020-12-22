@@ -1,11 +1,11 @@
 package org.chromium.content.browser;
 
+import J.N;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
-import org.chromium.base.natives.GEN_JNI;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
@@ -17,7 +17,7 @@ final class GestureListenerManagerImplJni implements GestureListenerManagerImpl.
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.content.browser.GestureListenerManagerImpl.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -26,38 +26,33 @@ final class GestureListenerManagerImplJni implements GestureListenerManagerImpl.
 
   @Override
   public long init(GestureListenerManagerImpl caller, WebContentsImpl webContents) {
-    return (long)GEN_JNI.org_chromium_content_browser_GestureListenerManagerImpl_init(caller, webContents);
+    return (long)N.MefCIE9S(caller, webContents);
   }
 
   @Override
   public void resetGestureDetection(long nativeGestureListenerManager,
       GestureListenerManagerImpl caller) {
-    GEN_JNI.org_chromium_content_browser_GestureListenerManagerImpl_resetGestureDetection(nativeGestureListenerManager, caller);
+    N.MMR0DKoy(nativeGestureListenerManager, caller);
   }
 
   @Override
   public void setDoubleTapSupportEnabled(long nativeGestureListenerManager,
       GestureListenerManagerImpl caller, boolean enabled) {
-    GEN_JNI.org_chromium_content_browser_GestureListenerManagerImpl_setDoubleTapSupportEnabled(nativeGestureListenerManager, caller, enabled);
+    N.MrZmTSS9(nativeGestureListenerManager, caller, enabled);
   }
 
   @Override
   public void setMultiTouchZoomSupportEnabled(long nativeGestureListenerManager,
       GestureListenerManagerImpl caller, boolean enabled) {
-    GEN_JNI.org_chromium_content_browser_GestureListenerManagerImpl_setMultiTouchZoomSupportEnabled(nativeGestureListenerManager, caller, enabled);
-  }
-
-  @Override
-  public void setHasListenersAttached(long nativeGestureListenerManager, boolean hasListeners) {
-    GEN_JNI.org_chromium_content_browser_GestureListenerManagerImpl_setHasListenersAttached(nativeGestureListenerManager, hasListeners);
+    N.M6a5zchR(nativeGestureListenerManager, caller, enabled);
   }
 
   public static GestureListenerManagerImpl.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.content.browser.GestureListenerManagerImpl.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

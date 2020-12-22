@@ -4,6 +4,9 @@
 
 package org.chromium.net;
 
+import androidx.annotation.VisibleForTesting;
+
+import org.chromium.base.ApplicationState;
 import org.chromium.base.ApplicationStatus;
 
 /**
@@ -18,7 +21,7 @@ public class RegistrationPolicyApplicationStatus
     protected void init(NetworkChangeNotifierAutoDetect notifier) {
         super.init(notifier);
         ApplicationStatus.registerApplicationStateListener(this);
-        onApplicationStateChange(0 /* unused */);
+        onApplicationStateChange(getApplicationState());
     }
 
     @Override
@@ -31,13 +34,19 @@ public class RegistrationPolicyApplicationStatus
     // ApplicationStatus.ApplicationStateListener
     @Override
     public void onApplicationStateChange(int newState) {
-        // Use hasVisibleActivities() to determine if one of Chrome's activities
-        // is visible. Using |newState| causes spurious unregister then register
-        // events when flipping between Chrome's Activities, crbug.com/1030229.
-        if (ApplicationStatus.hasVisibleActivities()) {
+        if (newState == ApplicationState.HAS_RUNNING_ACTIVITIES) {
             register();
-        } else {
+        } else if (newState == ApplicationState.HAS_PAUSED_ACTIVITIES) {
             unregister();
         }
+    }
+
+    /**
+     * Returns the activity's status.
+     * @return an {@code int} that is one of {@code ApplicationState.HAS_*_ACTIVITIES}.
+     */
+    @VisibleForTesting
+    int getApplicationState() {
+        return ApplicationStatus.getStateForApplication();
     }
 }

@@ -64,13 +64,11 @@ class GeolocationContext_Internal {
 
         @Override
         public void bindGeolocation(
-org.chromium.mojo.bindings.InterfaceRequest<Geolocation> receiver, org.chromium.url.mojom.Url origin) {
+org.chromium.mojo.bindings.InterfaceRequest<Geolocation> receiver) {
 
             GeolocationContextBindGeolocationParams _message = new GeolocationContextBindGeolocationParams();
 
             _message.receiver = receiver;
-
-            _message.origin = origin;
 
 
             getProxyHandler().getMessageReceiver().accept(
@@ -145,7 +143,7 @@ Geoposition geoposition) {
                         GeolocationContextBindGeolocationParams data =
                                 GeolocationContextBindGeolocationParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().bindGeolocation(data.receiver, data.origin);
+                        getImpl().bindGeolocation(data.receiver);
                         return true;
                     }
 
@@ -220,11 +218,10 @@ Geoposition geoposition) {
     
     static final class GeolocationContextBindGeolocationParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 16;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.mojo.bindings.InterfaceRequest<Geolocation> receiver;
-        public org.chromium.url.mojom.Url origin;
 
         private GeolocationContextBindGeolocationParams(int version) {
             super(STRUCT_SIZE, version);
@@ -263,11 +260,6 @@ Geoposition geoposition) {
                         
                     result.receiver = decoder0.readInterfaceRequest(8, false);
                     }
-                    {
-                        
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                    result.origin = org.chromium.url.mojom.Url.decode(decoder1);
-                    }
 
             } finally {
                 decoder0.decreaseStackDepth();
@@ -281,8 +273,6 @@ Geoposition geoposition) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
             encoder0.encode(this.receiver, 8, false);
-            
-            encoder0.encode(this.origin, 16, false);
         }
     }
 

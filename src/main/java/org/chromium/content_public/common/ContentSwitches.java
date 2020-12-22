@@ -64,9 +64,6 @@ public final class ContentSwitches {
     // Native switch value kNetworkSandbox
     public static final String NETWORK_SANDBOX_TYPE = "network";
 
-    // Native switch kNoneSandbox, only honored on non-public Chromecast builds.
-    public static final String NONE_SANDBOX_TYPE = "none";
-
 
     // This following string constants were inserted by
     //     java_cpp_strings.py
@@ -74,6 +71,10 @@ public final class ContentSwitches {
     //     ../../content/public/common/content_switches.cc
     // Into
     //     ../../content/common/android/java_templates/ContentSwitches.java.tmpl
+
+    // The number of MSAA samples for canvas2D. Requires MSAA support by GPU to
+    // have an effect. 0 disables MSAA.
+    public static final String ACCELERATED_CANVAS2D_MSAA_SAMPLE_COUNT = "canvas-msaa-sample-count";
 
     // Allows processing of input before a frame has been committed.
     // TODO(schenney): crbug.com/987626. Used by headless. Look for a way not
@@ -104,10 +105,6 @@ public final class ContentSwitches {
     // This is used in blimp to emulate android fonts on linux.
     public static final String ANDROID_FONTS_PATH = "android-fonts-path";
 
-    // Allows app cache to be forced on, even when gated by an origin trial.
-    // TODO(enne): remove this once app cache has been removed.
-    public static final String APP_CACHE_FORCE_ENABLED = "app-cache-force-enabled";
-
     // Set blink settings. Format is <name>[=<value],<name>[=<value>],...
     // The names are declared in Settings.json5. For boolean type, use "true",
     // "false", or omit '=<value>' part to set to true. For enum type, use the int
@@ -128,8 +125,14 @@ public final class ContentSwitches {
     // flaky [like monitoring of memory pressure]).
     public static final String BROWSER_TEST = "browser-test";
 
-    // Causes the Conversion Measurement API to run without delays or noise.
-    public static final String CONVERSIONS_DEBUG_MODE = "conversions-debug-mode";
+    // Sets the tile size used by composited layers.
+    public static final String DEFAULT_TILE_WIDTH = "default-tile-width";
+
+
+    public static final String DEFAULT_TILE_HEIGHT = "default-tile-height";
+
+    // Sets the min tile height for GPU raster.
+    public static final String MIN_HEIGHT_FOR_GPU_RASTER_TILE = "min-height-for-gpu-raster-tile";
 
     // Disable antialiasing on 2d canvas.
     public static final String DISABLE2D_CANVAS_ANTIALIASING = "disable-canvas-aa";
@@ -145,9 +148,6 @@ public final class ContentSwitches {
 
     // Disable gpu-accelerated 2d canvas.
     public static final String DISABLE_ACCELERATED2D_CANVAS = "disable-accelerated-2d-canvas";
-
-    // Enable in-progress canvas 2d API features.
-    public static final String ENABLE_NEW_CANVAS2DAPI = "new-canvas-2d-api";
 
     // Disables hardware acceleration of video decode, where available.
     public static final String DISABLE_ACCELERATED_VIDEO_DECODE = "disable-accelerated-video-decode";
@@ -221,9 +221,18 @@ public final class ContentSwitches {
     // has crashed, and reached the GPU Process crash limit.
     public static final String DISABLE_SOFTWARE_COMPOSITING_FALLBACK = "disable-software-compositing-fallback";
 
+    // When using CPU rasterizing disable low resolution tiling. This uses
+    // less power, particularly during animations, but more white may be seen
+    // during fast scrolling especially on slower devices.
+    public static final String DISABLE_LOW_RES_TILING = "disable-low-res-tiling";
+
     // Disable the thread that crashes the GPU process if it stops responding to
     // messages.
     public static final String DISABLE_GPU_WATCHDOG = "disable-gpu-watchdog";
+
+    // Disallow image animations to be reset to the beginning to avoid skipping
+    // many frames. Only effective if compositor image animations are enabled.
+    public static final String DISABLE_IMAGE_ANIMATION_RESYNC = "disable-image-animation-resync";
 
     // Disables the IPC flooding protection.
     // It is activated by default. Some javascript functions can be used to flood
@@ -264,6 +273,10 @@ public final class ContentSwitches {
     // Disables the Web Notification and the Push APIs.
     public static final String DISABLE_NOTIFICATIONS = "disable-notifications";
 
+    // Disable partial raster in the renderer. Disabling this switch also disables
+    // the use of persistent gpu memory buffers.
+    public static final String DISABLE_PARTIAL_RASTER = "disable-partial-raster";
+
     // Disable Pepper3D.
     public static final String DISABLE_PEPPER3D = "disable-pepper-3d";
 
@@ -284,6 +297,9 @@ public final class ContentSwitches {
 
     // Disables throttling of history.pushState/replaceState calls.
     public static final String DISABLE_PUSH_STATE_THROTTLE = "disable-pushstate-throttle";
+
+    // Disables RGBA_4444 textures.
+    public static final String DISABLE_RGBA4444_TEXTURES = "disable-rgba-4444-textures";
 
     // Taints all <canvas> elements, regardless of origin.
     public static final String DISABLE_READING_FROM_CANVAS = "disable-reading-from-canvas";
@@ -342,6 +358,9 @@ public final class ContentSwitches {
     // Don't enforce the same-origin policy. (Used by people testing their sites.)
     public static final String DISABLE_WEB_SECURITY = "disable-web-security";
 
+    // Disable rasterizer that writes directly to GPU memory associated with tiles.
+    public static final String DISABLE_ZERO_COPY = "disable-zero-copy";
+
     // Disable the video decoder from drawing directly to a texture.
     public static final String DISABLE_ZERO_COPY_DXGI_VIDEO = "disable-zero-copy-dxgi-video";
 
@@ -379,16 +398,6 @@ public final class ContentSwitches {
     // just a keyboard. See https://crbug.com/977390 for links to i2i.
     public static final String ENABLE_CARET_BROWSING = "enable-caret-browsing";
 
-    // At present this turns on:
-    //   net::features::kCookiesWithoutSameSiteMustBeSecure
-    //   net::features::kSameSiteByDefaultCookies
-    //   net::features::kSameSiteDefaultChecksMethodRigorously
-    // It will soon also turn on:
-    //   content_settings::kImprovedCookieControls
-    //   content_settings::kImprovedCookieControlsForThirdPartyCookieBlocking
-    //   net::features::kSchemefulSameSite
-    public static final String ENABLE_EXPERIMENTAL_COOKIE_FEATURES = "enable-experimental-cookie-features";
-
     // Enables experimental WebAssembly features.
     public static final String ENABLE_EXPERIMENTAL_WEB_ASSEMBLY_FEATURES = "enable-experimental-webassembly-features";
 
@@ -401,8 +410,15 @@ public final class ContentSwitches {
     // Disables all RuntimeEnabledFeatures that can be enabled via OriginTrials.
     public static final String DISABLE_ORIGIN_TRIAL_CONTROLLED_BLINK_FEATURES = "disable-origin-trial-controlled-blink-features";
 
+    // Specify that all compositor resources should be backed by GPU memory buffers.
+    public static final String ENABLE_GPU_MEMORY_BUFFER_COMPOSITOR_RESOURCES = "enable-gpu-memory-buffer-compositor-resources";
+
     // Enable GpuMemoryBuffer backed VideoFrames.
     public static final String ENABLE_GPU_MEMORY_BUFFER_VIDEO_FRAMES = "enable-gpu-memory-buffer-video-frames";
+
+    // When using CPU rasterizing generate low resolution tiling. Low res
+    // tiles may be displayed during fast scrolls especially on slower devices.
+    public static final String ENABLE_LOW_RES_TILING = "enable-low-res-tiling";
 
     // Force logging to be enabled.  Logging is disabled by default in release
     // builds.
@@ -424,6 +440,12 @@ public final class ContentSwitches {
     // still available, but it is bucketized and updated less frequently. This flag
     // also applys to workers.
     public static final String ENABLE_PRECISE_MEMORY_INFO = "enable-precise-memory-info";
+
+    // Enables PrintBrowser mode, in which everything renders as though printed.
+    public static final String ENABLE_PRINT_BROWSER = "enable-print-browser";
+
+    // Enables RGBA_4444 textures.
+    public static final String ENABLE_RGBA4444_TEXTURES = "enable-rgba-4444-textures";
 
     // Set options to cache V8 data. (off, preparse data, or code)
     public static final String V8_CACHE_OPTIONS = "v8-cache-options";
@@ -473,11 +495,9 @@ public final class ContentSwitches {
     // Enable the Vtune profiler support.
     public static final String ENABLE_VTUNE = "enable-vtune-support";
 
-    // Enable the WebAuthn Mojo Testing API. This is a way to interact with the
-    // virtual authenticator environment through a mojo interface and is supported
-    // only to run web-platform-tests on content shell.
-    // Removal of this deprecated API is blocked on crbug.com/937369.
-    public static final String ENABLE_WEB_AUTH_DEPRECATED_MOJO_TESTING_API = "enable-web-auth-deprecated-mojo-testing-api";
+    // Enable the Web Authentication Testing API.
+    // https://w3c.github.io/webauthn
+    public static final String ENABLE_WEB_AUTH_TESTING_API = "enable-web-authentication-testing-api";
 
     // Enable WebGL2 Compute context.
     public static final String ENABLE_WEB_GL2_COMPUTE_CONTEXT = "enable-webgl2-compute-context";
@@ -487,6 +507,9 @@ public final class ContentSwitches {
 
     // Enables WebGL rendering into a scanout buffer for overlay support.
     public static final String ENABLE_WEB_GL_IMAGE_CHROMIUM = "enable-webgl-image-chromium";
+
+    // Enable rasterizer that writes directly to GPU memory associated with tiles.
+    public static final String ENABLE_ZERO_COPY = "enable-zero-copy";
 
     // Handle to the shared memory segment containing field trial state that is to
     // be shared between processes. The argument to this switch is the handle id
@@ -499,6 +522,11 @@ public final class ContentSwitches {
     // file:///alias/some/path.html into file:///replacement/some/path.html.
     public static final String FILE_URL_PATH_ALIAS = "file-url-path-alias";
 
+    // Always use the Skia GPU backend for drawing layer tiles. Only valid with GPU
+    // accelerated compositing + impl-side painting. Overrides the
+    // kEnableGpuRasterization flag.
+    public static final String FORCE_GPU_RASTERIZATION = "force-gpu-rasterization";
+
     // Disables OOP rasterization.  Takes precedence over the enable flag.
     public static final String DISABLE_OOP_RASTERIZATION = "disable-oop-rasterization";
 
@@ -506,11 +534,18 @@ public final class ContentSwitches {
     // would have been used.  Enables the chromium_raster_transport extension.
     public static final String ENABLE_OOP_RASTERIZATION = "enable-oop-rasterization";
 
+    // Turns on skia deferred display list for out of process raster.
+    public static final String ENABLE_OOP_RASTERIZATION_DDL = "enable-oop-rasterization-ddl";
+
     // Pins the default referrer policy to the pre-M80 value of
     // no-referrer-when-downgrade.
     // TODO(crbug.com/1016541): After M82, remove when the corresponding
     // enterprise policy has been deleted.
     public static final String FORCE_LEGACY_DEFAULT_REFERRER_POLICY = "force-legacy-default-referrer-policy";
+
+    // The number of multisample antialiasing samples for GPU rasterization.
+    // Requires MSAA support on GPU to have an effect. 0 disables MSAA.
+    public static final String GPU_RASTERIZATION_MSAA_SAMPLE_COUNT = "gpu-rasterization-msaa-sample-count";
 
     // Forces use of hardware overlay for fullscreen video playback. Useful for
     // testing the Android overlay fullscreen functionality on other platforms.
@@ -594,15 +629,17 @@ public final class ContentSwitches {
     // Sets the maximium decoded image size limitation.
     public static final String MAX_DECODED_IMAGE_SIZE_MB = "max-decoded-image-size-mb";
 
+    // Sets the width and height above which a composited layer will get tiled.
+    public static final String MAX_UNTILED_LAYER_HEIGHT = "max-untiled-layer-height";
+
+
+    public static final String MAX_UNTILED_LAYER_WIDTH = "max-untiled-layer-width";
+
     // Indicates the utility process should run with a message loop type of UI.
     public static final String MESSAGE_LOOP_TYPE_UI = "message-loop-type-ui";
 
     // Set the default result for MockCertVerifier. This only works in test code.
     public static final String MOCK_CERT_VERIFIER_DEFAULT_RESULT_FOR_TESTING = "mock-cert-verifier-default-result-for-testing";
-
-    // Initializes Mojo Core from a shared library at the specified path, rather
-    // than using the version of Mojo Core embedded within the Content executable.
-    public static final String MOJO_CORE_LIBRARY_PATH = "mojo-core-library-path";
 
     // Use a Mojo-based LocalStorage implementation.
     public static final String MOJO_LOCAL_STORAGE = "mojo-local-storage";
@@ -732,6 +769,14 @@ public final class ContentSwitches {
     // Causes the process to run as a sandbox IPC subprocess.
     public static final String SANDBOX_IPC_PROCESS = "sandbox-ipc";
 
+    // Visibly render a border around layout shift rects in the web page to help
+    // debug and study layout shifts.
+    public static final String SHOW_LAYOUT_SHIFT_REGIONS = "show-layout-shift-regions";
+
+    // Visibly render a border around paint rects in the web page to help debug
+    // and study painting behavior.
+    public static final String SHOW_PAINT_RECTS = "show-paint-rects";
+
     // Runs the renderer and plugins in the same process as the browser
     public static final String SINGLE_PROCESS = "single-process";
 
@@ -817,10 +862,6 @@ public final class ContentSwitches {
     // Causes the utility process to display a dialog on launch.
     public static final String UTILITY_STARTUP_DIALOG = "utility-startup-dialog";
 
-    // This switch indicates the type of a utility process. It is not used by Chrome
-    // but is added to the command line for debugging and profiling purposes.
-    public static final String UTILITY_SUB_TYPE = "utility-sub-type";
-
     // In debug builds, asserts that the stream of input events is valid.
     public static final String VALIDATE_INPUT_EVENT_STREAM = "validate-input-event-stream";
 
@@ -837,19 +878,6 @@ public final class ContentSwitches {
 
     // Set a default sample count for webgl if msaa is enabled.
     public static final String WEBGL_MSAA_SAMPLE_COUNT = "webgl-msaa-sample-count";
-
-    // The prefix used when starting the zygote process. (i.e. 'gdb --args')
-    public static final String ZYGOTE_CMD_PREFIX = "zygote-cmd-prefix";
-
-    // Enables specified backend for the Web OTP API.
-    public static final String WEB_OTP_BACKEND = "web-otp-backend";
-
-    // Enables Sms Verification backend for Web OTP API which requires app hash in
-    // SMS body.
-    public static final String WEB_OTP_BACKEND_SMS_VERIFICATION = "web-otp-backend-sms-verification";
-
-    // Enables User Consent backend for Web OTP API.
-    public static final String WEB_OTP_BACKEND_USER_CONSENT = "web-otp-backend-user-consent";
 
     // Disables encryption of RTP Media for WebRTC. When Chrome embeds Content, it
     // ignores this switch on its stable and beta channels.
@@ -925,8 +953,10 @@ public final class ContentSwitches {
 
     public static final String WEB_XR_RUNTIME_WMR = "windows-mixed-reality";
 
-    // This switch disables the ScrollToTextFragment feature.
-    public static final String DISABLE_SCROLL_TO_TEXT_FRAGMENT = "disable-scroll-to-text-fragment";
+    // This switch allows the Web Components v0 APIs to be re-enabled temporarily
+    // from M80 through M84.
+    // TODO(937746): Remove this after M84.
+    public static final String WEB_COMPONENTS_V0_ENABLED = "web-components-v0-enabled";
 
     // Disable Media Session API
     public static final String DISABLE_MEDIA_SESSION_API = "disable-media-session-api";

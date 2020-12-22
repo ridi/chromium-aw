@@ -17,15 +17,15 @@ public final class ReferrerPolicy {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int ALWAYS = 0;
-    public static final int DEFAULT = 1;
-    public static final int NO_REFERRER_WHEN_DOWNGRADE = 2;
-    public static final int NEVER = 3;
-    public static final int ORIGIN = 4;
-    public static final int ORIGIN_WHEN_CROSS_ORIGIN = 5;
-    public static final int STRICT_ORIGIN_WHEN_CROSS_ORIGIN = 6;
-    public static final int SAME_ORIGIN = 7;
-    public static final int STRICT_ORIGIN = 8;
-    public static final int LAST = 8;
+    public static final int DEFAULT = 1; // ALWAYS + 1
+    public static final int NO_REFERRER_WHEN_DOWNGRADE = 2; // DEFAULT + 1
+    public static final int NEVER = 3; // NO_REFERRER_WHEN_DOWNGRADE + 1
+    public static final int ORIGIN = 4; // NEVER + 1
+    public static final int ORIGIN_WHEN_CROSS_ORIGIN = 5; // ORIGIN + 1
+    public static final int NO_REFERRER_WHEN_DOWNGRADE_ORIGIN_WHEN_CROSS_ORIGIN = 6; // ORIGIN_WHEN_CROSS_ORIGIN + 1
+    public static final int SAME_ORIGIN = 7; // NO_REFERRER_WHEN_DOWNGRADE_ORIGIN_WHEN_CROSS_ORIGIN + 1
+    public static final int STRICT_ORIGIN = 8; // SAME_ORIGIN + 1
+    public static final int LAST = ReferrerPolicy.STRICT_ORIGIN;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 8;

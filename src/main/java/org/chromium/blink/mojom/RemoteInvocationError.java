@@ -17,9 +17,9 @@ public final class RemoteInvocationError {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int OK = 0;
-    public static final int METHOD_NOT_FOUND = 1;
-    public static final int OBJECT_GET_CLASS_BLOCKED = 2;
-    public static final int EXCEPTION_THROWN = 3;
+    public static final int METHOD_NOT_FOUND = 1; // OK + 1
+    public static final int OBJECT_GET_CLASS_BLOCKED = 2; // METHOD_NOT_FOUND + 1
+    public static final int EXCEPTION_THROWN = 3; // OBJECT_GET_CLASS_BLOCKED + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

@@ -19,6 +19,10 @@ public final class NdefMessage extends org.chromium.mojo.bindings.Struct {
     private static final int STRUCT_SIZE = 16;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+
+    
+    public static final int MAX_SIZE = (int) 32768;
+
     public NdefRecord[] data;
 
     private NdefMessage(int version) {

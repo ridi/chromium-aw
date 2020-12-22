@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import org.chromium.base.Callback;
 import org.chromium.base.annotations.JNINamespace;
@@ -178,16 +177,6 @@ public final class AwCookieManager {
     }
 
     /**
-     * Sets whether cookies for insecure schemes (http:) are permitted to include the "Secure"
-     * directive.
-     */
-    @VisibleForTesting
-    public void setWorkaroundHttpSecureCookiesForTesting(boolean allow) {
-        AwCookieManagerJni.get().setWorkaroundHttpSecureCookiesForTesting(
-                mNativeCookieManager, AwCookieManager.this, allow);
-    }
-
-    /**
      * CookieCallback is a bridge that knows how to call a Callback on its original thread.
      * We need to arrange for the users Callback#onResult to be called on the original
      * thread after the work is done. When the API is called we construct a CookieCallback which
@@ -216,7 +205,7 @@ public final class AwCookieManager {
         public void onResult(final Boolean result) {
             if (mHandler == null) return;
             assert mCallback != null;
-            mHandler.post(mCallback.bind(result));
+            mHandler.post(() -> mCallback.onResult(result));
         }
     }
 
@@ -279,8 +268,6 @@ public final class AwCookieManager {
         boolean hasCookies(long nativeCookieManager, AwCookieManager caller);
         boolean getAllowFileSchemeCookies(long nativeCookieManager, AwCookieManager caller);
         void setAllowFileSchemeCookies(
-                long nativeCookieManager, AwCookieManager caller, boolean allow);
-        void setWorkaroundHttpSecureCookiesForTesting(
                 long nativeCookieManager, AwCookieManager caller, boolean allow);
     }
 }

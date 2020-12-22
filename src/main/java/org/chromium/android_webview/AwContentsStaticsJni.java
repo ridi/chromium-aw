@@ -1,5 +1,6 @@
 package org.chromium.android_webview;
 
+import J.N;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.Runnable;
@@ -9,7 +10,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
-import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -20,7 +20,7 @@ final class AwContentsStaticsJni implements AwContentsStatics.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.android_webview.AwContentsStatics.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -29,61 +29,56 @@ final class AwContentsStaticsJni implements AwContentsStatics.Natives {
 
   @Override
   public void logCommandLineForDebugging() {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_logCommandLineForDebugging();
-  }
-
-  @Override
-  public void logFlagMetrics(String[] switches, String[] features) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_logFlagMetrics(switches, features);
+    N.MjT_gThK();
   }
 
   @Override
   public String getSafeBrowsingPrivacyPolicyUrl() {
-    return (String)GEN_JNI.org_chromium_android_1webview_AwContentsStatics_getSafeBrowsingPrivacyPolicyUrl();
+    return (String)N.Mdfl4F0j();
   }
 
   @Override
   public void clearClientCertPreferences(Runnable callback) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_clearClientCertPreferences(callback);
+    N.Ml71D$Ud(callback);
   }
 
   @Override
   public String getUnreachableWebDataUrl() {
-    return (String)GEN_JNI.org_chromium_android_1webview_AwContentsStatics_getUnreachableWebDataUrl();
+    return (String)N.M0AyjO$E();
   }
 
   @Override
   public String getProductVersion() {
-    return (String)GEN_JNI.org_chromium_android_1webview_AwContentsStatics_getProductVersion();
+    return (String)N.MhBmyxCD();
   }
 
   @Override
   public void setServiceWorkerIoThreadClient(AwContentsIoThreadClient ioThreadClient,
       AwBrowserContext browserContext) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_setServiceWorkerIoThreadClient(ioThreadClient, browserContext);
+    N.MhYNFMfv(ioThreadClient, browserContext);
   }
 
   @Override
   public void setSafeBrowsingWhitelist(String[] urls, Callback<Boolean> callback) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_setSafeBrowsingWhitelist(urls, callback);
+    N.MlIL02rX(urls, callback);
   }
 
   @Override
   public void setCheckClearTextPermitted(boolean permitted) {
-    GEN_JNI.org_chromium_android_1webview_AwContentsStatics_setCheckClearTextPermitted(permitted);
+    N.Mu0fMVv8(permitted);
   }
 
   @Override
   public boolean isMultiProcessEnabled() {
-    return (boolean)GEN_JNI.org_chromium_android_1webview_AwContentsStatics_isMultiProcessEnabled();
+    return (boolean)N.M04mALrd();
   }
 
   public static AwContentsStatics.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.android_webview.AwContentsStatics.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

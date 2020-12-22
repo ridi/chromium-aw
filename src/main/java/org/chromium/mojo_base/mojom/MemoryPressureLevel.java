@@ -17,8 +17,8 @@ public final class MemoryPressureLevel {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int MODERATE = 1;
-    public static final int CRITICAL = 2;
+    public static final int MODERATE = 1; // NONE + 1
+    public static final int CRITICAL = 2; // MODERATE + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

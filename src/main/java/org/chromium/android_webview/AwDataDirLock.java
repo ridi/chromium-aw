@@ -15,10 +15,8 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.PathUtils;
 import org.chromium.base.StrictModeContext;
-import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.base.metrics.CachedMetrics.LinearCountHistogramSample;
 import org.chromium.base.metrics.ScopedSysTraceEvent;
-import org.chromium.components.version_info.Channel;
-import org.chromium.components.version_info.VersionConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,10 +31,10 @@ abstract class AwDataDirLock {
     private static final String TAG = "AwDataDirLock";
 
     private static final String EXCLUSIVE_LOCK_FILE = "webview_data.lock";
-
-    // This results in a maximum wait time of 1.5s
-    private static final int LOCK_RETRIES = 16;
+    private static final int LOCK_RETRIES = 5;
     private static final int LOCK_SLEEP_MS = 100;
+    private static final String LOCK_ATTEMPTS_HISTOGRAM_NAME =
+            "Android.WebView.Startup.DataDirLockAttempts";
 
     private static RandomAccessFile sLockFile;
     private static FileLock sExclusiveFileLock;
@@ -44,27 +42,6 @@ abstract class AwDataDirLock {
     static void lock(final Context appContext) {
         try (ScopedSysTraceEvent e1 = ScopedSysTraceEvent.scoped("AwDataDirLock.lock");
                 StrictModeContext ignored = StrictModeContext.allowDiskWrites()) {
-            if (sExclusiveFileLock != null) {
-                // We have already called lock() and successfully acquired the lock in this process.
-                // This shouldn't happen, but may be the result of an app catching an exception
-                // thrown during initialization and discarding it, causing us to later attempt to
-                // initialize WebView again. By continuing, we are racing with the file being closed
-                // by the finalizer (releasing the lock), and so we may or may not crash with
-                // OverlappingFileLockException. Ideally we'd explicitly crash here but we don't
-                // want to make this problem worse until we fully understand it, so on stable we
-                // just log and then let execution continue; the app will either be lucky or not
-                // with roughly the same chance/conditions as before these checks were implemented.
-                throwIfNotStableChannel("Data directory already locked by current process - "
-                        + "https://crbug.com/1054774");
-            } else if (sLockFile != null) {
-                // We have already called lock() but didn't succeed in getting the lock. As above
-                // this shouldn't happen, but this won't lead to OverlappingFileLockException.
-                // Again, we just log and then let execution continue on stable; if the app fails to
-                // acquire the lock again we'll crash from that anyway.
-                throwIfNotStableChannel("Previous data directory lock attempt in current process - "
-                        + "https://crbug.com/1054744");
-            }
-
             String dataPath = PathUtils.getDataDirectory();
             File lockFile = new File(dataPath, EXCLUSIVE_LOCK_FILE);
 
@@ -77,7 +54,7 @@ abstract class AwDataDirLock {
                 throw new RuntimeException("Failed to create lock file " + lockFile, e);
             }
 
-            // Android versions before 11 have edge cases where a new instance of an app process can
+            // Some Android versions may have a race where a new instance of an app process can
             // be started while an existing one is still in the process of being killed. Retry
             // the lock a few times to give the old process time to fully go away.
             for (int attempts = 1; attempts <= LOCK_RETRIES; ++attempts) {
@@ -134,20 +111,18 @@ abstract class AwDataDirLock {
         // We log values from [0, LOCK_RETRIES]. Histogram samples are expected to be [0, max).
         // 0 just goes to the underflow bucket, so min=1 and max=LOCK_RETRIES+1.
         // To get bucket width 1, buckets must be max-min+2
-        RecordHistogram.recordLinearCountHistogram("Android.WebView.Startup.DataDirLockAttempts",
-                attempts, 1, LOCK_RETRIES + 1, LOCK_RETRIES + 2);
+        LinearCountHistogramSample histogram = new LinearCountHistogramSample(
+                LOCK_ATTEMPTS_HISTOGRAM_NAME, 1, LOCK_RETRIES + 1, LOCK_RETRIES + 2);
+        histogram.record(attempts);
     }
 
     private static String getLockFailureReason(final RandomAccessFile file) {
-        final StringBuilder error = new StringBuilder("Using WebView from more than one process at "
-                + "once with the same data directory is not supported. https://crbug.com/558377 "
-                + ": Current process ");
-        error.append(ContextUtils.getProcessName());
-        error.append(" (pid ").append(Process.myPid()).append("), lock owner ");
+        final String baseError = "Using WebView from more than one process at once with the "
+                + "same data directory is not supported. https://crbug.com/558377 : Lock owner ";
         try {
             int pid = file.readInt();
             String processName = file.readUTF();
-            error.append(processName).append(" (pid ").append(pid).append(")");
+            String lockOwner = processName + " (pid " + pid + ")";
 
             // Check the status of the pid holding the lock by sending it a null signal.
             // This doesn't actually send a signal, just runs the kernel access checks.
@@ -155,35 +130,27 @@ abstract class AwDataDirLock {
                 Os.kill(pid, 0);
 
                 // No exception means the process exists and has the same uid as us, so is
-                // probably an instance of the same app. Leave the message alone.
+                // probably an instance of the same app.
+                return baseError + lockOwner;
             } catch (ErrnoException e) {
                 if (e.errno == OsConstants.ESRCH) {
                     // pid did not exist - the lock should have been released by the kernel,
                     // so this process info is probably wrong.
-                    error.append(" doesn't exist!");
+                    return baseError + lockOwner + " doesn't exist!";
                 } else if (e.errno == OsConstants.EPERM) {
                     // pid existed but didn't have the same uid as us.
                     // Most likely the pid has just been recycled for a new process
-                    error.append(" pid has been reused!");
+                    return baseError + lockOwner + " pid has been reused!";
                 } else {
                     // EINVAL is the only other documented return value for kill(2) and should never
                     // happen for signal 0, so just complain generally.
-                    error.append(" status unknown!");
+                    return baseError + lockOwner + " status unknown!";
                 }
             }
         } catch (IOException e) {
             // We'll get IOException if we failed to read the pid and process name; e.g. if the
             // lockfile is from an old version of WebView or an IO error occurred somewhere.
-            error.append(" unknown");
-        }
-        return error.toString();
-    }
-
-    private static void throwIfNotStableChannel(String error) {
-        if (VersionConstants.CHANNEL == Channel.STABLE) {
-            Log.e(TAG, error);
-        } else {
-            throw new RuntimeException(error);
+            return baseError + "unknown";
         }
     }
 }

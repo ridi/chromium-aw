@@ -27,7 +27,7 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
         public static final int PERMISSION_DENIED = 1;
         public static final int POSITION_UNAVAILABLE = 2;
         public static final int TIMEOUT = 3;
-        public static final int LAST = 3;
+        public static final int LAST = Geoposition.ErrorCode.TIMEOUT;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 3;

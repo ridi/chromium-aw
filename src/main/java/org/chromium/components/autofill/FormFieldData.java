@@ -4,10 +4,7 @@
 
 package org.chromium.components.autofill;
 
-import android.graphics.RectF;
-
 import androidx.annotation.IntDef;
-import androidx.annotation.VisibleForTesting;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -22,17 +19,13 @@ import java.lang.annotation.RetentionPolicy;
 public class FormFieldData {
     /**
      * Define the control types supported by android.view.autofill.AutofillValue.
-     *
-     * Android doesn't have DATALIST control, it is sent to the Autofill service as
-     * View.AUTOFILL_TYPE_TEXT with AutofillOptions.
      */
-    @IntDef({ControlType.TEXT, ControlType.TOGGLE, ControlType.LIST, ControlType.DATALIST})
+    @IntDef({ControlType.TEXT, ControlType.TOGGLE, ControlType.LIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ControlType {
         int TEXT = 0;
         int TOGGLE = 1;
         int LIST = 2;
-        int DATALIST = 3;
     }
 
     public final String mLabel;
@@ -47,13 +40,6 @@ public class FormFieldData {
     public final @ControlType int mControlType;
     public final int mMaxLength;
     public final String mHeuristicType;
-    public final String[] mDatalistValues;
-    public final String[] mDatalistLabels;
-
-    // The bounds in the viewport's coordinates
-    private final RectF mBounds;
-    // The bounds in the container view's coordinates.
-    private RectF mBoundsInContainerViewCoordinates;
 
     private boolean mIsChecked;
     private String mValue;
@@ -65,8 +51,7 @@ public class FormFieldData {
     private FormFieldData(String name, String label, String value, String autocompleteAttr,
             boolean shouldAutocomplete, String placeholder, String type, String id,
             String[] optionValues, String[] optionContents, boolean isCheckField, boolean isChecked,
-            int maxLength, String heuristicType, float left, float top, float right, float bottom,
-            String[] datalistValues, String[] datalistLabels) {
+            int maxLength, String heuristicType) {
         mName = name;
         mLabel = label;
         mValue = value;
@@ -78,12 +63,8 @@ public class FormFieldData {
         mOptionValues = optionValues;
         mOptionContents = optionContents;
         mIsChecked = isChecked;
-        mDatalistLabels = datalistLabels;
-        mDatalistValues = datalistValues;
         if (mOptionValues != null && mOptionValues.length != 0) {
             mControlType = ControlType.LIST;
-        } else if (mDatalistValues != null && mDatalistValues.length != 0) {
-            mControlType = ControlType.DATALIST;
         } else if (isCheckField) {
             mControlType = ControlType.TOGGLE;
         } else {
@@ -91,23 +72,10 @@ public class FormFieldData {
         }
         mMaxLength = maxLength;
         mHeuristicType = heuristicType;
-        mBounds = new RectF(left, top, right, bottom);
     }
 
     public @ControlType int getControlType() {
         return mControlType;
-    }
-
-    public RectF getBounds() {
-        return mBounds;
-    }
-
-    public void setBoundsInContainerViewCoordinates(RectF bounds) {
-        mBoundsInContainerViewCoordinates = bounds;
-    }
-
-    public RectF getBoundsInContainerViewCoordinates() {
-        return mBoundsInContainerViewCoordinates;
     }
 
     /**
@@ -149,14 +117,12 @@ public class FormFieldData {
     }
 
     @CalledByNative
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    public static FormFieldData createFormFieldData(String name, String label, String value,
+    private static FormFieldData createFormFieldData(String name, String label, String value,
             String autocompleteAttr, boolean shouldAutocomplete, String placeholder, String type,
             String id, String[] optionValues, String[] optionContents, boolean isCheckField,
-            boolean isChecked, int maxLength, String heuristicType, float left, float top,
-            float right, float bottom, String[] datalistValues, String[] datalistLabels) {
+            boolean isChecked, int maxLength, String heuristicType) {
         return new FormFieldData(name, label, value, autocompleteAttr, shouldAutocomplete,
                 placeholder, type, id, optionValues, optionContents, isCheckField, isChecked,
-                maxLength, heuristicType, left, top, right, bottom, datalistValues, datalistLabels);
+                maxLength, heuristicType);
     }
 }

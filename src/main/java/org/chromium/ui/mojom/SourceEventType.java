@@ -17,14 +17,14 @@ public final class SourceEventType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int UNKNOWN = 0;
-    public static final int WHEEL = 1;
-    public static final int MOUSE = 2;
-    public static final int TOUCH = 3;
-    public static final int INERTIAL = 4;
-    public static final int KEY_PRESS = 5;
-    public static final int TOUCHPAD = 6;
-    public static final int SCROLLBAR = 7;
-    public static final int OTHER = 8;
+    public static final int WHEEL = 1; // UNKNOWN + 1
+    public static final int MOUSE = 2; // WHEEL + 1
+    public static final int TOUCH = 3; // MOUSE + 1
+    public static final int INERTIAL = 4; // TOUCH + 1
+    public static final int KEY_PRESS = 5; // INERTIAL + 1
+    public static final int TOUCHPAD = 6; // KEY_PRESS + 1
+    public static final int SCROLLBAR = 7; // TOUCHPAD + 1
+    public static final int OTHER = 8; // SCROLLBAR + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 8;

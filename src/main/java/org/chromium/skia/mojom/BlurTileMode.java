@@ -17,9 +17,9 @@ public final class BlurTileMode {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int CLAMP = 0;
-    public static final int REPEAT = 1;
-    public static final int CLAMP_TO_BLACK = 2;
-    public static final int BLUR_TILE_MODE_LAST = 2;
+    public static final int REPEAT = 1; // CLAMP + 1
+    public static final int CLAMP_TO_BLACK = 2; // REPEAT + 1
+    public static final int BLUR_TILE_MODE_LAST = BlurTileMode.CLAMP_TO_BLACK;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

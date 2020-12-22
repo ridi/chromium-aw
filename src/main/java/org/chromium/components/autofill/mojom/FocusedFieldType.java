@@ -17,12 +17,12 @@ public final class FocusedFieldType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int UNKNOWN = 0;
-    public static final int UNFILLABLE_ELEMENT = 1;
-    public static final int FILLABLE_TEXT_AREA = 2;
-    public static final int FILLABLE_SEARCH_FIELD = 3;
-    public static final int FILLABLE_NON_SEARCH_FIELD = 4;
-    public static final int FILLABLE_USERNAME_FIELD = 5;
-    public static final int FILLABLE_PASSWORD_FIELD = 6;
+    public static final int UNFILLABLE_ELEMENT = 1; // UNKNOWN + 1
+    public static final int FILLABLE_TEXT_AREA = 2; // UNFILLABLE_ELEMENT + 1
+    public static final int FILLABLE_SEARCH_FIELD = 3; // FILLABLE_TEXT_AREA + 1
+    public static final int FILLABLE_NON_SEARCH_FIELD = 4; // FILLABLE_SEARCH_FIELD + 1
+    public static final int FILLABLE_USERNAME_FIELD = 5; // FILLABLE_NON_SEARCH_FIELD + 1
+    public static final int FILLABLE_PASSWORD_FIELD = 6; // FILLABLE_USERNAME_FIELD + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

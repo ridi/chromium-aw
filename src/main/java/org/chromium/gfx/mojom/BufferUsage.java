@@ -17,13 +17,13 @@ public final class BufferUsage {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int GPU_READ = 0;
-    public static final int SCANOUT = 1;
-    public static final int SCANOUT_CAMERA_READ_WRITE = 2;
-    public static final int CAMERA_AND_CPU_READ_WRITE = 3;
-    public static final int SCANOUT_CPU_READ_WRITE = 4;
-    public static final int SCANOUT_VDA_WRITE = 5;
-    public static final int GPU_READ_CPU_READ_WRITE = 6;
-    public static final int SCANOUT_VEA_READ_CAMERA_AND_CPU_READ_WRITE = 7;
+    public static final int SCANOUT = 1; // GPU_READ + 1
+    public static final int SCANOUT_CAMERA_READ_WRITE = 2; // SCANOUT + 1
+    public static final int CAMERA_AND_CPU_READ_WRITE = 3; // SCANOUT_CAMERA_READ_WRITE + 1
+    public static final int SCANOUT_CPU_READ_WRITE = 4; // CAMERA_AND_CPU_READ_WRITE + 1
+    public static final int SCANOUT_VDA_WRITE = 5; // SCANOUT_CPU_READ_WRITE + 1
+    public static final int GPU_READ_CPU_READ_WRITE = 6; // SCANOUT_VDA_WRITE + 1
+    public static final int SCANOUT_VEA_READ_CAMERA_AND_CPU_READ_WRITE = 7; // GPU_READ_CPU_READ_WRITE + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 7;

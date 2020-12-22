@@ -575,9 +575,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 }
             }
             try {
-                Boolean ae_lock_available =
-                        cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_LOCK_AVAILABLE);
-                if (ae_lock_available != null && ae_lock_available.booleanValue()) {
+                if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_LOCK_AVAILABLE)) {
                     exposureModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
                 }
             } catch (NoSuchFieldError e) {
@@ -624,9 +622,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 }
             }
             try {
-                Boolean awb_lock_available =
-                        cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_LOCK_AVAILABLE);
-                if (awb_lock_available != null && awb_lock_available.booleanValue()) {
+                if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_LOCK_AVAILABLE)) {
                     whiteBalanceModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
                 }
             } catch (NoSuchFieldError e) {

@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -57,11 +56,6 @@ public abstract class CommandLine {
         String value = getSwitchValue(switchString);
         return TextUtils.isEmpty(value) ? defaultValue : value;
     }
-
-    /**
-     * Return a copy of all switches, along with their values.
-     */
-    public abstract Map getSwitches();
 
     /**
      * Append a switch to the command line.  There is no guarantee
@@ -126,6 +120,7 @@ public abstract class CommandLine {
     }
 
     // Equivalent to CommandLine::ForCurrentProcess in C++.
+    @VisibleForTesting
     public static CommandLine getInstance() {
         CommandLine commandLine = sCommandLine.get();
         assert commandLine != null;
@@ -303,11 +298,6 @@ public abstract class CommandLine {
         }
 
         @Override
-        public Map<String, String> getSwitches() {
-            return new HashMap<>(mSwitches);
-        }
-
-        @Override
         public void appendSwitch(String switchString) {
             appendSwitchWithValue(switchString, null);
         }
@@ -391,30 +381,13 @@ public abstract class CommandLine {
         }
 
         @Override
-        public Map<String, String> getSwitches() {
-            HashMap<String, String> switches = new HashMap<String, String>();
-
-            // Iterate 2 array members at a time. JNI doesn't support returning Maps, but because
-            // key & value are both Strings, we can join them into a flattened String array:
-            // [ key1, value1, key2, value2, ... ]
-            String[] keysAndValues = CommandLineJni.get().getSwitchesFlattened();
-            assert keysAndValues.length % 2 == 0 : "must have same number of keys and values";
-            for (int i = 0; i < keysAndValues.length; i += 2) {
-                String key = keysAndValues[i];
-                String value = keysAndValues[i + 1];
-                switches.put(key, value);
-            }
-            return switches;
-        }
-
-        @Override
         public void appendSwitch(String switchString) {
             CommandLineJni.get().appendSwitch(switchString);
         }
 
         @Override
         public void appendSwitchWithValue(String switchString, String value) {
-            CommandLineJni.get().appendSwitchWithValue(switchString, value == null ? "" : value);
+            CommandLineJni.get().appendSwitchWithValue(switchString, value);
         }
 
         @Override
@@ -451,7 +424,6 @@ public abstract class CommandLine {
         void init(String[] args);
         boolean hasSwitch(String switchString);
         String getSwitchValue(String switchString);
-        String[] getSwitchesFlattened();
         void appendSwitch(String switchString);
         void appendSwitchWithValue(String switchString, String value);
         void appendSwitchesAndArguments(String[] array);

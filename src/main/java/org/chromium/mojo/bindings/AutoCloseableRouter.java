@@ -10,9 +10,7 @@ import org.chromium.mojo.system.MessagePipeHandle;
 import java.util.concurrent.Executor;
 
 /**
- * Wrapper around {@link Router}. Unlike the class name suggested, it doesn't auto-close the
- * connection without a try-with-resources statement. If the callsite isn't using try-with-resources
- * mechanism, it needs to call close() explicitly.
+ * Wrapper around {@link Router} that will close the connection when not referenced anymore.
  */
 class AutoCloseableRouter implements Router {
     /**

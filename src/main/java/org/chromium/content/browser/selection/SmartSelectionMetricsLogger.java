@@ -14,12 +14,8 @@ import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.VerifiesOnP;
-import org.chromium.content.browser.WindowEventObserver;
-import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.SelectionMetricsLogger;
-import org.chromium.content_public.browser.WebContents;
-import org.chromium.ui.base.WindowAndroid;
 
 /**
  * Smart Selection logger, wrapper of Android logger methods.
@@ -37,37 +33,25 @@ public class SmartSelectionMetricsLogger implements SelectionMetricsLogger {
     private static final String TAG = "SmartSelectionLogger";
     private static final boolean DEBUG = false;
 
-    private WindowAndroid mWindowAndroid;
+    private Context mContext;
 
     private TextClassifier mSession;
 
     private SelectionIndicesConverter mConverter;
 
-    public static SmartSelectionMetricsLogger create(WebContents webContents) {
-        if (webContents.getTopLevelNativeWindow().getContext().get() == null) {
+    public static SmartSelectionMetricsLogger create(Context context) {
+        if (context == null) {
             return null;
         }
-        return new SmartSelectionMetricsLogger(webContents);
+        return new SmartSelectionMetricsLogger(context);
     }
 
-    private SmartSelectionMetricsLogger(WebContents webContents) {
-        mWindowAndroid = webContents.getTopLevelNativeWindow();
-        WindowEventObserverManager manager = WindowEventObserverManager.from(webContents);
-        if (manager != null) {
-            manager.addObserver(new WindowEventObserver() {
-                @Override
-                public void onWindowAndroidChanged(WindowAndroid newWindowAndroid) {
-                    mWindowAndroid = newWindowAndroid;
-                }
-            });
-        }
+    private SmartSelectionMetricsLogger(Context context) {
+        mContext = context;
     }
 
     public void logSelectionStarted(String selectionText, int startOffset, boolean editable) {
-        Context context = mWindowAndroid.getContext().get();
-        if (context == null) return;
-
-        mSession = createSession(context, editable);
+        mSession = createSession(mContext, editable);
         mConverter = new SelectionIndicesConverter();
         mConverter.updateSelectionState(selectionText, startOffset);
         mConverter.setInitialStartOffset(startOffset);
@@ -141,10 +125,10 @@ public class SmartSelectionMetricsLogger implements SelectionMetricsLogger {
         }
     }
 
-    private TextClassifier createSession(Context context, boolean editable) {
+    public TextClassifier createSession(Context context, boolean editable) {
         TextClassificationContext textClassificationContext =
                 new TextClassificationContext
-                        .Builder(context.getPackageName(),
+                        .Builder(mContext.getPackageName(),
                                 editable ? TextClassifier.WIDGET_TYPE_EDIT_WEBVIEW
                                          : TextClassifier.WIDGET_TYPE_WEBVIEW)
                         .build();

@@ -24,10 +24,10 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int HTML = 0;
-        public static final int BASIC = 1;
-        public static final int DIGEST = 2;
-        public static final int OTHER = 3;
-        public static final int USERNAME_ONLY = 4;
+        public static final int BASIC = 1; // HTML + 1
+        public static final int DIGEST = 2; // BASIC + 1
+        public static final int OTHER = 3; // DIGEST + 1
+        public static final int USERNAME_ONLY = 4; // OTHER + 1
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 4;
@@ -45,8 +45,8 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int MANUAL = 0;
-        public static final int GENERATED = 1;
-        public static final int API = 2;
+        public static final int GENERATED = 1; // MANUAL + 1
+        public static final int API = 2; // GENERATED + 1
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;
@@ -64,8 +64,8 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int NO_SIGNAL_SENT = 0;
-        public static final int POSITIVE_SIGNAL_SENT = 1;
-        public static final int NEGATIVE_SIGNAL_SENT = 2;
+        public static final int POSITIVE_SIGNAL_SENT = 1; // NO_SIGNAL_SENT + 1
+        public static final int NEGATIVE_SIGNAL_SENT = 2; // POSITIVE_SIGNAL_SENT + 1
         public static final int UNKNOWN_STATUS = 10;
 
         public static boolean isKnownValue(int value) {
@@ -88,7 +88,7 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
     }
     public int scheme;
     public String signonRealm;
-    public org.chromium.url.mojom.Url url;
+    public org.chromium.url.mojom.Url originWithPath;
     public org.chromium.url.mojom.Url action;
     public String affiliatedWebRealm;
     public org.chromium.mojo_base.mojom.String16 submitElement;
@@ -202,7 +202,7 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
-                result.url = org.chromium.url.mojom.Url.decode(decoder1);
+                result.originWithPath = org.chromium.url.mojom.Url.decode(decoder1);
                 }
                 {
                     
@@ -362,7 +362,7 @@ public final class PasswordForm extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.signonRealm, 16, false);
         
-        encoder0.encode(this.url, 24, false);
+        encoder0.encode(this.originWithPath, 24, false);
         
         encoder0.encode(this.action, 32, false);
         

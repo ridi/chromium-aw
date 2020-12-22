@@ -293,23 +293,6 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
         getPopupController().registerPopup(this);
     }
 
-    private void reset() {
-        dropFocus();
-        mContext = null;
-        mWindowAndroid = null;
-    }
-
-    private void dropFocus() {
-        // Hide popups and clear selection.
-        destroyActionModeAndUnselect();
-        dismissTextHandles();
-        PopupController.hideAll(mWebContents);
-        // Clear the selection. The selection is cleared on destroying IME
-        // and also here since we may receive destroy first, for example
-        // when focus is lost in webview.
-        clearSelection();
-    }
-
     public static String sanitizeQuery(String query, int maxLength) {
         if (TextUtils.isEmpty(query) || query.length() < maxLength) return query;
         Log.w(TAG, "Truncating oversized query (" + query.length() + ").");
@@ -369,8 +352,7 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
     }
 
     // True if action mode is initialized to a working (not a no-op) mode.
-    @VisibleForTesting
-    public boolean isActionModeSupported() {
+    private boolean isActionModeSupported() {
         return mCallback != EMPTY_CALLBACK;
     }
 
@@ -627,11 +609,6 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
 
     @Override
     public void onWindowAndroidChanged(WindowAndroid newWindowAndroid) {
-        if (newWindowAndroid == null) {
-            reset();
-            return;
-        }
-
         mWindowAndroid = newWindowAndroid;
         mContext = mWebContents.getContext();
         initHandleObserver();
@@ -660,7 +637,14 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
                 setPreserveSelectionOnNextLossOfFocus(false);
                 hidePopupsAndPreserveSelection();
             } else {
-                dropFocus();
+                // Hide popups and clear selection.
+                destroyActionModeAndUnselect();
+                dismissTextHandles();
+                PopupController.hideAll(mWebContents);
+                // Clear the selection. The selection is cleared on destroying IME
+                // and also here since we may receive destroy first, for example
+                // when focus is lost in webview.
+                clearSelection();
             }
         }
     }
@@ -1139,8 +1123,7 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
         RecordUserAction.record("MobileActionMode.ProcessTextIntent");
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
-        // Use MAX_SHARE_QUERY_LENGTH for the Intent 100k limitation.
-        String query = sanitizeQuery(getSelectedText(), MAX_SHARE_QUERY_LENGTH);
+        String query = sanitizeQuery(getSelectedText(), MAX_SEARCH_QUERY_LENGTH);
         if (TextUtils.isEmpty(query)) return;
 
         intent.putExtra(Intent.EXTRA_PROCESS_TEXT, query);
@@ -1460,9 +1443,10 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
     @Override
     public void setSelectionClient(@Nullable SelectionClient selectionClient) {
         mSelectionClient = selectionClient;
-        mSelectionMetricsLogger = mSelectionClient == null
-                ? null
-                : (SmartSelectionMetricsLogger) mSelectionClient.getSelectionMetricsLogger();
+        if (mSelectionClient != null) {
+            mSelectionMetricsLogger =
+                    (SmartSelectionMetricsLogger) mSelectionClient.getSelectionMetricsLogger();
+        }
 
         mClassificationResult = null;
 

@@ -17,9 +17,9 @@ public final class ColorSpaceRangeId {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int INVALID = 0;
-    public static final int LIMITED = 1;
-    public static final int FULL = 2;
-    public static final int DERIVED = 3;
+    public static final int LIMITED = 1; // INVALID + 1
+    public static final int FULL = 2; // LIMITED + 1
+    public static final int DERIVED = 3; // FULL + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 3;

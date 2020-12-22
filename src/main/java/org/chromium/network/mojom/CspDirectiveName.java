@@ -16,23 +16,17 @@ package org.chromium.network.mojom;
 public final class CspDirectiveName {
     private static final boolean IS_EXTENSIBLE = false;
 
-    public static final int UNKNOWN = 0;
-    public static final int DEFAULT_SRC = 1;
-    public static final int CHILD_SRC = 2;
-    public static final int FRAME_SRC = 3;
-    public static final int FORM_ACTION = 4;
-    public static final int NAVIGATE_TO = 5;
-    public static final int FRAME_ANCESTORS = 6;
-    public static final int IMG_SRC = 7;
-    public static final int MEDIA_SRC = 8;
-    public static final int OBJECT_SRC = 9;
-    public static final int SCRIPT_SRC = 10;
-    public static final int STYLE_SRC = 11;
-    public static final int WORKER_SRC = 12;
-    public static final int CONNECT_SRC = 13;
+    public static final int DEFAULT_SRC = 0;
+    public static final int CHILD_SRC = 1; // DEFAULT_SRC + 1
+    public static final int FRAME_SRC = 2; // CHILD_SRC + 1
+    public static final int FORM_ACTION = 3; // FRAME_SRC + 1
+    public static final int UPGRADE_INSECURE_REQUESTS = 4; // FORM_ACTION + 1
+    public static final int NAVIGATE_TO = 5; // UPGRADE_INSECURE_REQUESTS + 1
+    public static final int FRAME_ANCESTORS = 6; // NAVIGATE_TO + 1
+    public static final int UNKNOWN = 7; // FRAME_ANCESTORS + 1
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 13;
+        return value >= 0 && value <= 7;
     }
 
     public static void validate(int value) {

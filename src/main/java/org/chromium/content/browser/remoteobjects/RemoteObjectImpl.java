@@ -400,8 +400,6 @@ class RemoteObjectImpl implements RemoteObject {
             } else {
                 resultValue.setStringValue(javaStringToMojoString((String) result));
             }
-        } else if (result == null) {
-            resultValue.setSingletonValue(SingletonJavaScriptValue.NULL);
         } else {
             int objectId = objectIdAllocator.getObjectId(result);
             resultValue.setObjectId(objectId);

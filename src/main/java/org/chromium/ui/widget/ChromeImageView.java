@@ -7,9 +7,8 @@ package org.chromium.ui.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.util.AttributeSet;
-
 import androidx.appcompat.widget.AppCompatImageView;
+import android.util.AttributeSet;
 
 /**
  * A subclass of AppCompatImageView to add workarounds for bugs in Android Framework and Support

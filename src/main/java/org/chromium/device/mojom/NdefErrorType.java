@@ -17,13 +17,13 @@ public final class NdefErrorType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NOT_ALLOWED = 0;
-    public static final int NOT_SUPPORTED = 1;
-    public static final int NOT_READABLE = 2;
-    public static final int NOT_FOUND = 3;
-    public static final int INVALID_MESSAGE = 4;
-    public static final int OPERATION_CANCELLED = 5;
-    public static final int CANNOT_CANCEL = 6;
-    public static final int IO_ERROR = 7;
+    public static final int NOT_SUPPORTED = 1; // NOT_ALLOWED + 1
+    public static final int NOT_READABLE = 2; // NOT_SUPPORTED + 1
+    public static final int NOT_FOUND = 3; // NOT_READABLE + 1
+    public static final int INVALID_MESSAGE = 4; // NOT_FOUND + 1
+    public static final int OPERATION_CANCELLED = 5; // INVALID_MESSAGE + 1
+    public static final int CANNOT_CANCEL = 6; // OPERATION_CANCELLED + 1
+    public static final int IO_ERROR = 7; // CANNOT_CANCEL + 1
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 7;

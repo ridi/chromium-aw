@@ -1,11 +1,11 @@
 package org.chromium.base;
 
+import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
@@ -16,7 +16,7 @@ final class FieldTrialListJni implements FieldTrialList.Natives {
   public static final JniStaticTestMocker<FieldTrialList.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.FieldTrialList.Natives>() {
     @java.lang.Override
     public void setInstanceForTesting(org.chromium.base.FieldTrialList.Natives instance) {
-      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
+      if (!J.N.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -25,30 +25,30 @@ final class FieldTrialListJni implements FieldTrialList.Natives {
 
   @Override
   public String findFullName(String trialName) {
-    return (String)GEN_JNI.org_chromium_base_FieldTrialList_findFullName(trialName);
+    return (String)N.MdC43qwX(trialName);
   }
 
   @Override
   public boolean trialExists(String trialName) {
-    return (boolean)GEN_JNI.org_chromium_base_FieldTrialList_trialExists(trialName);
+    return (boolean)N.Mmqqda9c(trialName);
   }
 
   @Override
   public String getVariationParameter(String trialName, String parameterKey) {
-    return (String)GEN_JNI.org_chromium_base_FieldTrialList_getVariationParameter(trialName, parameterKey);
+    return (String)N.MZWMOP4I(trialName, parameterKey);
   }
 
   @Override
   public void logActiveTrials() {
-    GEN_JNI.org_chromium_base_FieldTrialList_logActiveTrials();
+    N.MHz6Fn06();
   }
 
   public static FieldTrialList.Natives get() {
-    if (GEN_JNI.TESTING_ENABLED) {
+    if (N.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (GEN_JNI.REQUIRE_MOCK) {
+      if (N.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.base.FieldTrialList.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

@@ -25,19 +25,19 @@ public interface SerialPort extends org.chromium.mojo.bindings.Interface {
 
 
     void open(
-SerialConnectionOptions options, SerialPortClient client, 
+SerialConnectionOptions options, org.chromium.mojo.system.DataPipe.ConsumerHandle inStream, org.chromium.mojo.system.DataPipe.ProducerHandle outStream, SerialPortClient client, 
 OpenResponse callback);
 
     interface OpenResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Boolean> { }
 
 
 
-    void startWriting(
+    void clearSendError(
 org.chromium.mojo.system.DataPipe.ConsumerHandle consumer);
 
 
 
-    void startReading(
+    void clearReadError(
 org.chromium.mojo.system.DataPipe.ProducerHandle producer);
 
 
