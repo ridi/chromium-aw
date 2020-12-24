@@ -8,9 +8,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 import android.os.Process;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.chromium.base.BuildConfig;
+import org.chromium.base.VisibleForTesting;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

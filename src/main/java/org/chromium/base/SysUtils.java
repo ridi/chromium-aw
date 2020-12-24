@@ -14,12 +14,8 @@ import android.os.StatFs;
 import android.os.StrictMode;
 import android.util.Log;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.metrics.CachedMetrics;
 
 import java.io.BufferedReader;
@@ -31,7 +27,6 @@ import java.util.regex.Pattern;
  * Exposes system related information about the current device.
  */
 @JNINamespace("base::android")
-@MainDex
 public class SysUtils {
     // A device reporting strictly more total memory in megabytes cannot be considered 'low-end'.
     private static final int ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB = 512;
@@ -177,7 +172,6 @@ public class SysUtils {
             return false;
         }
 
-        // If this logic changes, update the comments above base::SysUtils::IsLowEndDevice.
         sAmountOfPhysicalMemoryKB = detectAmountOfPhysicalMemoryKB();
         boolean isLowEnd = true;
         if (sAmountOfPhysicalMemoryKB <= 0) {
@@ -206,8 +200,10 @@ public class SysUtils {
      * enabled.
      */
     public static void logPageFaultCountToTracing() {
-        SysUtilsJni.get().logPageFaultCountToTracing();
+        nativeLogPageFaultCountToTracing();
     }
+
+    private static native void nativeLogPageFaultCountToTracing();
 
     /**
      * @return Whether or not this device should be considered a high end device from a disk
@@ -229,15 +225,5 @@ public class SysUtils {
             Log.v(TAG, "Cannot get disk data capacity", e);
         }
         return false;
-    }
-
-    @VisibleForTesting
-    public static void setAmountOfPhysicalMemoryKBForTesting(int physicalMemoryKB) {
-        sAmountOfPhysicalMemoryKB = physicalMemoryKB;
-    }
-
-    @NativeMethods
-    interface Natives {
-        void logPageFaultCountToTracing();
     }
 }

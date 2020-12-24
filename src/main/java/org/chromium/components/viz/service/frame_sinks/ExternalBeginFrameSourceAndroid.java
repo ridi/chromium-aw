@@ -8,7 +8,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.ui.VSyncMonitor;
 
 /**
@@ -26,8 +25,7 @@ public class ExternalBeginFrameSourceAndroid {
             if (!mVSyncNotificationsEnabled) {
                 return;
             }
-            ExternalBeginFrameSourceAndroidJni.get().onVSync(mNativeExternalBeginFrameSourceAndroid,
-                    ExternalBeginFrameSourceAndroid.this, vsyncTimeMicros,
+            nativeOnVSync(mNativeExternalBeginFrameSourceAndroid, vsyncTimeMicros,
                     mVSyncMonitor.getVSyncPeriodInMicroseconds());
             mVSyncMonitor.requestUpdate();
         }
@@ -58,10 +56,6 @@ public class ExternalBeginFrameSourceAndroid {
         mVSyncMonitor.updateRefreshRate(refreshRate);
     }
 
-    @NativeMethods
-    interface Natives {
-        void onVSync(long nativeExternalBeginFrameSourceAndroid,
-                ExternalBeginFrameSourceAndroid caller, long vsyncTimeMicros,
-                long vsyncPeriodMicros);
-    }
+    private native void nativeOnVSync(long nativeExternalBeginFrameSourceAndroid,
+            long vsyncTimeMicros, long vsyncPeriodMicros);
 };

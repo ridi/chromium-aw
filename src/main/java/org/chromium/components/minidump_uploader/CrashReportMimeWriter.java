@@ -5,7 +5,6 @@
 package org.chromium.components.minidump_uploader;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,8 +27,7 @@ public class CrashReportMimeWriter {
      * @param destDir The directory in which to write the MIME files.
      */
     public static void rewriteMinidumpsAsMIMEs(File srcDir, File destDir) {
-        CrashReportMimeWriterJni.get().rewriteMinidumpsAsMIMEs(
-                srcDir.getAbsolutePath(), destDir.getAbsolutePath());
+        nativeRewriteMinidumpsAsMIMEs(srcDir.getAbsolutePath(), destDir.getAbsolutePath());
     }
 
     /*
@@ -43,9 +41,8 @@ public class CrashReportMimeWriter {
      */
     public static Map<String, Map<String, String>> rewriteMinidumpsAsMIMEsAndGetCrashKeys(
             File srcDir, File destDir) {
-        String[] crashesKeyValueArr =
-                CrashReportMimeWriterJni.get().rewriteMinidumpsAsMIMEsAndGetCrashKeys(
-                        srcDir.getAbsolutePath(), destDir.getAbsolutePath());
+        String[] crashesKeyValueArr = nativeRewriteMinidumpsAsMIMEsAndGetCrashKeys(
+                srcDir.getAbsolutePath(), destDir.getAbsolutePath());
         Map<String, Map<String, String>> crashesInfoMap = new HashMap<>();
         Map<String, String> lastCrashInfo = new HashMap<>();
         // Keys and values for all crash files are flattened in a String array. Each key is followed
@@ -68,9 +65,7 @@ public class CrashReportMimeWriter {
         return crashesInfoMap;
     }
 
-    @NativeMethods
-    interface Natives {
-        void rewriteMinidumpsAsMIMEs(String srcDir, String destDir);
-        String[] rewriteMinidumpsAsMIMEsAndGetCrashKeys(String srcDir, String destDir);
-    }
+    private static native void nativeRewriteMinidumpsAsMIMEs(String srcDir, String destDir);
+    private static native String[] nativeRewriteMinidumpsAsMIMEsAndGetCrashKeys(
+            String srcDir, String destDir);
 }

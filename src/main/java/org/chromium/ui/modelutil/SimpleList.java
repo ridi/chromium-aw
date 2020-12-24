@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 package org.chromium.ui.modelutil;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import java.util.AbstractList;
 import java.util.Iterator;

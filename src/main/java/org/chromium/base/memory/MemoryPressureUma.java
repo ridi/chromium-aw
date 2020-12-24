@@ -6,8 +6,7 @@ package org.chromium.base.memory;
 
 import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
-
-import androidx.annotation.IntDef;
+import android.support.annotation.IntDef;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;

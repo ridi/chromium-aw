@@ -10,13 +10,10 @@ import android.net.http.SslError;
 import android.os.Handler;
 import android.util.Log;
 
-import org.chromium.android_webview.safe_browsing.AwSafeBrowsingConversionHelper;
-import org.chromium.android_webview.safe_browsing.AwSafeBrowsingResponse;
 import org.chromium.base.Callback;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.CalledByNativeUnchecked;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.task.PostTask;
 import org.chromium.content_public.browser.UiThreadTaskTraits;
@@ -137,9 +134,8 @@ public class AwContentsClientBridge {
 
         private void provideResponse(PrivateKey privateKey, byte[][] certChain) {
             if (mNativeContentsClientBridge == 0) return;
-            AwContentsClientBridgeJni.get().provideClientCertificateResponse(
-                    mNativeContentsClientBridge, AwContentsClientBridge.this, mId, certChain,
-                    privateKey);
+            nativeProvideClientCertificateResponse(mNativeContentsClientBridge, mId,
+                    certChain, privateKey);
         }
     }
 
@@ -182,8 +178,7 @@ public class AwContentsClientBridge {
 
     private void proceedSslError(boolean proceed, int id) {
         if (mNativeContentsClientBridge == 0) return;
-        AwContentsClientBridgeJni.get().proceedSslError(
-                mNativeContentsClientBridge, AwContentsClientBridge.this, proceed, id);
+        nativeProceedSslError(mNativeContentsClientBridge, proceed, id);
     }
 
     // Intentionally not private for testing the native peer of this class.
@@ -193,14 +188,13 @@ public class AwContentsClientBridge {
         assert mNativeContentsClientBridge != 0;
         ClientCertLookupTable.Cert cert = mLookupTable.getCertData(host, port);
         if (mLookupTable.isDenied(host, port)) {
-            AwContentsClientBridgeJni.get().provideClientCertificateResponse(
-                    mNativeContentsClientBridge, AwContentsClientBridge.this, id, null, null);
+            nativeProvideClientCertificateResponse(mNativeContentsClientBridge, id,
+                    null, null);
             return;
         }
         if (cert != null) {
-            AwContentsClientBridgeJni.get().provideClientCertificateResponse(
-                    mNativeContentsClientBridge, AwContentsClientBridge.this, id, cert.mCertChain,
-                    cert.mPrivateKey);
+            nativeProvideClientCertificateResponse(mNativeContentsClientBridge, id,
+                    cert.mCertChain, cert.mPrivateKey);
             return;
         }
         // Build the list of principals from encoded versions.
@@ -212,9 +206,8 @@ public class AwContentsClientBridge {
                     principals[n] = new X500Principal(encodedPrincipals[n]);
                 } catch (IllegalArgumentException e) {
                     Log.w(TAG, "Exception while decoding issuers list: " + e);
-                    AwContentsClientBridgeJni.get().provideClientCertificateResponse(
-                            mNativeContentsClientBridge, AwContentsClientBridge.this, id, null,
-                            null);
+                    nativeProvideClientCertificateResponse(mNativeContentsClientBridge, id,
+                            null, null);
                     return;
                 }
             }
@@ -305,8 +298,7 @@ public class AwContentsClientBridge {
             String url, boolean isMainFrame, boolean hasUserGesture, boolean isRendererInitiated,
             String method, String[] requestHeaderNames, String[] requestHeaderValues,
             // WebResourceError
-            @NetError int errorCode, String description, boolean safebrowsingHit,
-            boolean shouldOmitNotificationsForSafeBrowsingHit) {
+            @NetError int errorCode, String description, boolean safebrowsingHit) {
         AwContentsClient.AwWebResourceRequest request = new AwContentsClient.AwWebResourceRequest(
                 url, isMainFrame, hasUserGesture, method, requestHeaderNames, requestHeaderValues);
         AwContentsClient.AwWebResourceError error = new AwContentsClient.AwWebResourceError();
@@ -326,16 +318,7 @@ public class AwContentsClientBridge {
             // Android WebView does not notify the embedder of these situations using
             // this error code with the WebViewClient.onReceivedError callback.
             if (safebrowsingHit) {
-                if (shouldOmitNotificationsForSafeBrowsingHit
-                        && AwFeatureList.isEnabled(
-                                AwFeatures.SAFE_BROWSING_COMMITTED_INTERSTITIALS)) {
-                    // With committed interstitials we don't fire these notifications when the
-                    // interstitial shows, we instead handle them once the interstitial is
-                    // dismissed.
-                    return;
-                } else {
-                    error.errorCode = ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE;
-                }
+                error.errorCode = ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE;
             } else {
                 error.errorCode = ErrorCodeConversionHelper.convertErrorCode(error.errorCode);
             }
@@ -366,8 +349,7 @@ public class AwContentsClientBridge {
         // clang-format off
         Callback<AwSafeBrowsingResponse> callback =
                 response -> PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT,
-                        () -> AwContentsClientBridgeJni.get().takeSafeBrowsingAction(
-                                mNativeContentsClientBridge, AwContentsClientBridge.this,
+                        () -> nativeTakeSafeBrowsingAction(mNativeContentsClientBridge,
                                 response.action(), response.reporting(), requestId));
         // clang-format on
 
@@ -422,28 +404,25 @@ public class AwContentsClientBridge {
 
     void confirmJsResult(int id, String prompt) {
         if (mNativeContentsClientBridge == 0) return;
-        AwContentsClientBridgeJni.get().confirmJsResult(
-                mNativeContentsClientBridge, AwContentsClientBridge.this, id, prompt);
+        nativeConfirmJsResult(mNativeContentsClientBridge, id, prompt);
     }
 
     void cancelJsResult(int id) {
         if (mNativeContentsClientBridge == 0) return;
-        AwContentsClientBridgeJni.get().cancelJsResult(
-                mNativeContentsClientBridge, AwContentsClientBridge.this, id);
+        nativeCancelJsResult(mNativeContentsClientBridge, id);
     }
 
-    @NativeMethods
-    interface Natives {
-        void takeSafeBrowsingAction(long nativeAwContentsClientBridge,
-                AwContentsClientBridge caller, int action, boolean reporting, int requestId);
+    //--------------------------------------------------------------------------------------------
+    //  Native methods
+    //--------------------------------------------------------------------------------------------
+    private native void nativeTakeSafeBrowsingAction(
+            long nativeAwContentsClientBridge, int action, boolean reporting, int requestId);
+    private native void nativeProceedSslError(long nativeAwContentsClientBridge, boolean proceed,
+            int id);
+    private native void nativeProvideClientCertificateResponse(long nativeAwContentsClientBridge,
+            int id, byte[][] certChain, PrivateKey androidKey);
 
-        void proceedSslError(long nativeAwContentsClientBridge, AwContentsClientBridge caller,
-                boolean proceed, int id);
-        void provideClientCertificateResponse(long nativeAwContentsClientBridge,
-                AwContentsClientBridge caller, int id, byte[][] certChain, PrivateKey androidKey);
-        void confirmJsResult(long nativeAwContentsClientBridge, AwContentsClientBridge caller,
-                int id, String prompt);
-        void cancelJsResult(
-                long nativeAwContentsClientBridge, AwContentsClientBridge caller, int id);
-    }
+    private native void nativeConfirmJsResult(long nativeAwContentsClientBridge, int id,
+            String prompt);
+    private native void nativeCancelJsResult(long nativeAwContentsClientBridge, int id);
 }

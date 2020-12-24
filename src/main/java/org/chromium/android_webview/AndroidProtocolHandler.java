@@ -12,7 +12,6 @@ import android.util.TypedValue;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,10 +60,9 @@ public class AndroidProtocolHandler {
         try {
             if (uri.getScheme().equals(FILE_SCHEME)) {
                 String path = uri.getPath();
-                if (path.startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath())) {
+                if (path.startsWith(nativeGetAndroidAssetPath())) {
                     return openAsset(uri);
-                } else if (path.startsWith(
-                                   AndroidProtocolHandlerJni.get().getAndroidResourcePath())) {
+                } else if (path.startsWith(nativeGetAndroidResourcePath())) {
                     return openResource(uri);
                 }
             } else if (uri.getScheme().equals(CONTENT_SCHEME)) {
@@ -126,7 +124,7 @@ public class AndroidProtocolHandler {
     private static InputStream openResource(Uri uri) {
         assert uri.getScheme().equals(FILE_SCHEME);
         assert uri.getPath() != null;
-        assert uri.getPath().startsWith(AndroidProtocolHandlerJni.get().getAndroidResourcePath());
+        assert uri.getPath().startsWith(nativeGetAndroidResourcePath());
         // The path must be of the form "/android_res/asset_type/asset_name.ext".
         List<String> pathSegments = uri.getPathSegments();
         if (pathSegments.size() != 3) {
@@ -136,12 +134,9 @@ public class AndroidProtocolHandler {
         String assetPath = pathSegments.get(0);
         String assetType = pathSegments.get(1);
         String assetName = pathSegments.get(2);
-        if (!("/" + assetPath + "/")
-                        .equals(AndroidProtocolHandlerJni.get().getAndroidResourcePath())) {
-            Log.e(TAG,
-                    "Resource path does not start with "
-                            + AndroidProtocolHandlerJni.get().getAndroidResourcePath() + ": "
-                            + uri);
+        if (!("/" + assetPath + "/").equals(nativeGetAndroidResourcePath())) {
+            Log.e(TAG, "Resource path does not start with " + nativeGetAndroidResourcePath()
+                    + ": " + uri);
             return null;
         }
         // Drop the file extension.
@@ -170,9 +165,8 @@ public class AndroidProtocolHandler {
     private static InputStream openAsset(Uri uri) {
         assert uri.getScheme().equals(FILE_SCHEME);
         assert uri.getPath() != null;
-        assert uri.getPath().startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath());
-        String path = uri.getPath().replaceFirst(
-                AndroidProtocolHandlerJni.get().getAndroidAssetPath(), "");
+        assert uri.getPath().startsWith(nativeGetAndroidAssetPath());
+        String path = uri.getPath().replaceFirst(nativeGetAndroidAssetPath(), "");
         try {
             AssetManager assets = ContextUtils.getApplicationContext().getAssets();
             return assets.open(path, AssetManager.ACCESS_STREAMING);
@@ -221,7 +215,7 @@ public class AndroidProtocolHandler {
                 return mimeType;
                 // Asset files may have a known extension.
             } else if (uri.getScheme().equals(FILE_SCHEME)
-                    && path.startsWith(AndroidProtocolHandlerJni.get().getAndroidAssetPath())) {
+                    && path.startsWith(nativeGetAndroidAssetPath())) {
                 String mimeType = URLConnection.guessContentTypeFromName(path);
                 if (mimeType == null) {
                     AwHistogramRecorder.recordMimeType(
@@ -274,9 +268,7 @@ public class AndroidProtocolHandler {
         return uri;
     }
 
-    @NativeMethods
-    interface Natives {
-        String getAndroidAssetPath();
-        String getAndroidResourcePath();
-    }
+    private static native String nativeGetAndroidAssetPath();
+
+    private static native String nativeGetAndroidResourcePath();
 }

@@ -6,7 +6,6 @@ package org.chromium.content.common;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.mojo.system.Core;
 import org.chromium.mojo.system.MessagePipeHandle;
 import org.chromium.mojo.system.impl.CoreImpl;
@@ -18,13 +17,10 @@ import org.chromium.mojo.system.impl.CoreImpl;
 public class ServiceManagerConnectionImpl {
     public static MessagePipeHandle getConnectorMessagePipeHandle() {
         ThreadUtils.assertOnUiThread();
-        int handle = ServiceManagerConnectionImplJni.get().getConnectorMessagePipeHandle();
+        int handle = nativeGetConnectorMessagePipeHandle();
         Core core = CoreImpl.getInstance();
         return core.acquireNativeHandle(handle).toMessagePipeHandle();
     }
 
-    @NativeMethods
-    interface Natives {
-        int getConnectorMessagePipeHandle();
-    }
+    private static native int nativeGetConnectorMessagePipeHandle();
 }

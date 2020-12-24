@@ -6,8 +6,6 @@ package org.chromium.android_webview;
 
 import android.content.Context;
 
-import org.chromium.android_webview.safe_browsing.AwSafeBrowsingConfigHelper;
-
 /**
  * Manages clients and settings for Service Workers.
  */
@@ -38,8 +36,8 @@ public class AwServiceWorkerController {
         if (client != null) {
             mServiceWorkerBackgroundThreadClient = new ServiceWorkerBackgroundThreadClientImpl();
             mServiceWorkerIoThreadClient = new ServiceWorkerIoThreadClientImpl();
-            AwContentsStatics.setServiceWorkerIoThreadClient(
-                    mServiceWorkerIoThreadClient, mBrowserContext);
+            AwContentsStatics.setServiceWorkerIoThreadClient(mServiceWorkerIoThreadClient,
+                    mBrowserContext);
         } else {
             mServiceWorkerBackgroundThreadClient = null;
             mServiceWorkerIoThreadClient = null;

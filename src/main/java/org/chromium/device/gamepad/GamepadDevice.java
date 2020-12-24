@@ -10,7 +10,7 @@ import android.view.InputDevice.MotionRange;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import androidx.annotation.VisibleForTesting;
+import org.chromium.base.VisibleForTesting;
 
 import java.util.Arrays;
 import java.util.List;

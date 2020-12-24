@@ -5,7 +5,6 @@
 package org.chromium.android_webview;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Exposes a subset of Chromium form database to Webview database for managing autocomplete
@@ -15,16 +14,17 @@ import org.chromium.base.annotations.NativeMethods;
 public class AwFormDatabase {
 
     public static boolean hasFormData() {
-        return AwFormDatabaseJni.get().hasFormData();
+        return nativeHasFormData();
     }
 
     public static void clearFormData() {
-        AwFormDatabaseJni.get().clearFormData();
+        nativeClearFormData();
     }
 
-    @NativeMethods
-    interface Natives {
-        boolean hasFormData();
-        void clearFormData();
-    }
+    //--------------------------------------------------------------------------------------------
+    //  Native methods
+    //--------------------------------------------------------------------------------------------
+    private static native boolean nativeHasFormData();
+
+    private static native void nativeClearFormData();
 }

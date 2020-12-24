@@ -7,7 +7,7 @@ package org.chromium.content.browser;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
-import androidx.collection.ArraySet;
+import android.support.v4.util.ArraySet;
 
 import org.chromium.base.Log;
 import org.chromium.base.library_loader.LibraryLoader;
@@ -22,7 +22,7 @@ import java.util.Set;
  * This object must only be accessed from the launcher thread.
  */
 class BindingManager implements ComponentCallbacks2 {
-    private static final String TAG = "BindingManager";
+    private static final String TAG = "cr_BindingManager";
 
     // Low reduce ratio of moderate binding.
     private static final float MODERATE_BINDING_LOW_REDUCE_RATIO = 0.25f;

@@ -12,7 +12,6 @@ import android.os.Looper;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -55,7 +54,7 @@ public class JavaHandlerThread {
         new Handler(mThread.getLooper()).post(new Runnable() {
             @Override
             public void run() {
-                JavaHandlerThreadJni.get().initializeThread(nativeThread, nativeEvent);
+                nativeInitializeThread(nativeThread, nativeEvent);
             }
         });
     }
@@ -67,7 +66,7 @@ public class JavaHandlerThread {
             @Override
             public void run() {
                 mThread.quit();
-                JavaHandlerThreadJni.get().onLooperStopped(nativeThread);
+                nativeOnLooperStopped(nativeThread);
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -115,9 +114,6 @@ public class JavaHandlerThread {
         return mUnhandledException;
     }
 
-    @NativeMethods
-    interface Natives {
-        void initializeThread(long nativeJavaHandlerThread, long nativeEvent);
-        void onLooperStopped(long nativeJavaHandlerThread);
-    }
+    private native void nativeInitializeThread(long nativeJavaHandlerThread, long nativeEvent);
+    private native void nativeOnLooperStopped(long nativeJavaHandlerThread);
 }

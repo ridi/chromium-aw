@@ -13,7 +13,6 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.UserData;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.blink_public.web.WebInputEventType;
 import org.chromium.content.browser.input.ImeAdapterImpl;
 import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
@@ -79,14 +78,12 @@ public class GestureListenerManagerImpl
         mIterator = mListeners.rewindableIterator();
         mViewDelegate = mWebContents.getViewAndroidDelegate();
         WindowEventObserverManager.from(mWebContents).addObserver(this);
-        mNativeGestureListenerManager = GestureListenerManagerImplJni.get().init(
-                GestureListenerManagerImpl.this, mWebContents);
+        mNativeGestureListenerManager = nativeInit(mWebContents);
     }
 
     private void resetGestureDetection() {
         if (mNativeGestureListenerManager != 0) {
-            GestureListenerManagerImplJni.get().resetGestureDetection(
-                    mNativeGestureListenerManager, GestureListenerManagerImpl.this);
+            nativeResetGestureDetection(mNativeGestureListenerManager);
         }
     }
 
@@ -107,16 +104,14 @@ public class GestureListenerManagerImpl
     @Override
     public void updateMultiTouchZoomSupport(boolean supportsMultiTouchZoom) {
         if (mNativeGestureListenerManager == 0) return;
-        GestureListenerManagerImplJni.get().setMultiTouchZoomSupportEnabled(
-                mNativeGestureListenerManager, GestureListenerManagerImpl.this,
-                supportsMultiTouchZoom);
+        nativeSetMultiTouchZoomSupportEnabled(
+                mNativeGestureListenerManager, supportsMultiTouchZoom);
     }
 
     @Override
     public void updateDoubleTapSupport(boolean supportsDoubleTap) {
         if (mNativeGestureListenerManager == 0) return;
-        GestureListenerManagerImplJni.get().setDoubleTapSupportEnabled(
-                mNativeGestureListenerManager, GestureListenerManagerImpl.this, supportsDoubleTap);
+        nativeSetDoubleTapSupportEnabled(mNativeGestureListenerManager, supportsDoubleTap);
     }
 
     /** Update all the listeners after touch down event occurred. */
@@ -373,14 +368,10 @@ public class GestureListenerManagerImpl
         return mWebContents.getRenderCoordinates().getLastFrameViewportHeightPixInt();
     }
 
-    @NativeMethods
-    interface Natives {
-        long init(GestureListenerManagerImpl caller, WebContentsImpl webContents);
-        void resetGestureDetection(
-                long nativeGestureListenerManager, GestureListenerManagerImpl caller);
-        void setDoubleTapSupportEnabled(long nativeGestureListenerManager,
-                GestureListenerManagerImpl caller, boolean enabled);
-        void setMultiTouchZoomSupportEnabled(long nativeGestureListenerManager,
-                GestureListenerManagerImpl caller, boolean enabled);
-    }
+    private native long nativeInit(WebContentsImpl webContents);
+    private native void nativeResetGestureDetection(long nativeGestureListenerManager);
+    private native void nativeSetDoubleTapSupportEnabled(
+            long nativeGestureListenerManager, boolean enabled);
+    private native void nativeSetMultiTouchZoomSupportEnabled(
+            long nativeGestureListenerManager, boolean enabled);
 }

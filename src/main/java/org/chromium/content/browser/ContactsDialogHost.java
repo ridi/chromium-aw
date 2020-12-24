@@ -10,12 +10,10 @@ import android.text.TextUtils;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.ui.ContactsPickerListener;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.WindowAndroid;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 /**
@@ -45,24 +43,22 @@ public class ContactsDialogHost implements ContactsPickerListener {
 
     @CalledByNative
     private void showDialog(boolean multiple, boolean includeNames, boolean includeEmails,
-            boolean includeTel, boolean includeAddresses, boolean includeIcons,
-            String formattedOrigin) {
+            boolean includeTel, String formattedOrigin) {
         if (mWindowAndroid.getActivity().get() == null) {
-            ContactsDialogHostJni.get().endWithPermissionDenied(mNativeContactsProviderAndroid);
+            nativeEndWithPermissionDenied(mNativeContactsProviderAndroid);
             return;
         }
 
         if (mWindowAndroid.hasPermission(Manifest.permission.READ_CONTACTS)) {
             if (!UiUtils.showContactsPicker(mWindowAndroid.getActivity().get(), this, multiple,
-                        includeNames, includeEmails, includeTel, includeAddresses, includeIcons,
-                        formattedOrigin)) {
-                ContactsDialogHostJni.get().endWithPermissionDenied(mNativeContactsProviderAndroid);
+                        includeNames, includeEmails, includeTel, formattedOrigin)) {
+                nativeEndWithPermissionDenied(mNativeContactsProviderAndroid);
             }
             return;
         }
 
         if (!mWindowAndroid.canRequestPermission(Manifest.permission.READ_CONTACTS)) {
-            ContactsDialogHostJni.get().endWithPermissionDenied(mNativeContactsProviderAndroid);
+            nativeEndWithPermissionDenied(mNativeContactsProviderAndroid);
             return;
         }
 
@@ -73,31 +69,27 @@ public class ContactsDialogHost implements ContactsPickerListener {
                             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         if (!UiUtils.showContactsPicker(mWindowAndroid.getActivity().get(), this,
                                     multiple, includeNames, includeEmails, includeTel,
-                                    includeAddresses, includeIcons, formattedOrigin)) {
-                            ContactsDialogHostJni.get().endWithPermissionDenied(
-                                    mNativeContactsProviderAndroid);
+                                    formattedOrigin)) {
+                            nativeEndWithPermissionDenied(mNativeContactsProviderAndroid);
                         }
                     } else {
-                        ContactsDialogHostJni.get().endWithPermissionDenied(
-                                mNativeContactsProviderAndroid);
+                        nativeEndWithPermissionDenied(mNativeContactsProviderAndroid);
                     }
                 });
     }
 
     @Override
-    public void onContactsPickerUserAction(@ContactsPickerAction int action, List<Contact> contacts,
-            int percentageShared, int propertiesRequested) {
-        if (mNativeContactsProviderAndroid == 0) return;
-
+    public void onContactsPickerUserAction(
+            @ContactsPickerAction int action, List<Contact> contacts) {
         switch (action) {
             case ContactsPickerAction.CANCEL:
-                ContactsDialogHostJni.get().endContactsList(
-                        mNativeContactsProviderAndroid, 0, propertiesRequested);
+                nativeEndContactsList(mNativeContactsProviderAndroid);
                 break;
 
             case ContactsPickerAction.CONTACTS_SELECTED:
                 for (Contact contact : contacts) {
-                    ContactsDialogHostJni.get().addContact(mNativeContactsProviderAndroid,
+                    nativeAddContact(mNativeContactsProviderAndroid, contact.names != null,
+                            contact.emails != null, contact.tel != null,
                             contact.names != null
                                     ? contact.names.toArray(new String[contact.names.size()])
                                     : null,
@@ -106,17 +98,9 @@ public class ContactsDialogHost implements ContactsPickerListener {
                                     : null,
                             contact.tel != null
                                     ? contact.tel.toArray(new String[contact.tel.size()])
-                                    : null,
-                            contact.serializedAddresses != null
-                                    ? contact.serializedAddresses.toArray(
-                                            new ByteBuffer[contact.serializedAddresses.size()])
-                                    : null,
-                            contact.serializedIcons != null ? contact.serializedIcons.toArray(
-                                    new ByteBuffer[contact.serializedIcons.size()])
-                                                            : null);
+                                    : null);
                 }
-                ContactsDialogHostJni.get().endContactsList(
-                        mNativeContactsProviderAndroid, percentageShared, propertiesRequested);
+                nativeEndContactsList(mNativeContactsProviderAndroid);
                 break;
 
             case ContactsPickerAction.SELECT_ALL:
@@ -125,12 +109,9 @@ public class ContactsDialogHost implements ContactsPickerListener {
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        void addContact(long nativeContactsProviderAndroid, String[] names, String[] emails,
-                String[] tel, ByteBuffer[] addresses, ByteBuffer[] icons);
-        void endContactsList(
-                long nativeContactsProviderAndroid, int percentageShared, int propertiesRequested);
-        void endWithPermissionDenied(long nativeContactsProviderAndroid);
-    }
+    private static native void nativeAddContact(long nativeContactsProviderAndroid,
+            boolean includeNames, boolean includeEmails, boolean includeTel, String[] names,
+            String[] emails, String[] tel);
+    private static native void nativeEndContactsList(long nativeContactsProviderAndroid);
+    private static native void nativeEndWithPermissionDenied(long nativeContactsProviderAndroid);
 }

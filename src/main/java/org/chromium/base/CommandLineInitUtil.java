@@ -8,10 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
-
-import androidx.annotation.Nullable;
-
-import org.chromium.base.supplier.Supplier;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 

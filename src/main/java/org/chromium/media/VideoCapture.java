@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -65,11 +64,11 @@ public abstract class VideoCapture {
             int width, int height, int frameRate, boolean enableFaceDetection);
 
     // Success is indicated by returning true and a callback to
-    // VideoCaptureJni.get().onStarted(,  VideoCapture.this), which may occur synchronously or
-    // asynchronously. Failure can be indicated by one of the following:
-    // * Returning false. In this case no callback to VideoCaptureJni.get().onStarted() is made.
-    // * Returning true, and asynchronously invoking VideoCaptureJni.get().onError. In this case
-    //   also no callback to VideoCaptureJni.get().onStarted() is made.
+    // nativeOnStarted(), which may occur synchronously or asynchronously.
+    // Failure can be indicated by one of the following:
+    // * Returning false. In this case no callback to nativeOnStarted() is made.
+    // * Returning true, and asynchronously invoking nativeOnError. In this case
+    //   also no callback to nativeOnStarted() is made.
     @CalledByNative
     public abstract boolean startCaptureMaybeAsync();
 
@@ -77,7 +76,7 @@ public abstract class VideoCapture {
     @CalledByNative
     public abstract boolean stopCaptureAndBlockUntilStopped();
 
-    // Replies by calling VideoCaptureJni.get().onGetPhotoCapabilitiesReply(). Will pass |null|
+    // Replies by calling nativeOnGetPhotoCapabilitiesReply(). Will pass |null|
     // for parameter |result| to indicate failure.
     @CalledByNative
     public abstract void getPhotoCapabilitiesAsync(long callbackId);
@@ -108,7 +107,7 @@ public abstract class VideoCapture {
             int whiteBalanceMode, double iso, boolean hasRedEyeReduction, boolean redEyeReduction,
             int fillLightMode, boolean hasTorch, boolean torch, double colorTemperature);
 
-    // Replies by calling VideoCaptureJni.get().onPhotoTaken().
+    // Replies by calling nativeOnPhotoTaken().
     @CalledByNative
     public abstract void takePhotoAsync(long callbackId);
 
@@ -178,11 +177,10 @@ public abstract class VideoCapture {
         return orientation;
     }
 
-    // {@link VideoCaptureJni.get().onPhotoTaken()} needs to be called back if there's any
+    // {@link nativeOnPhotoTaken()} needs to be called back if there's any
     // problem after {@link takePhotoAsync()} has returned true.
     protected void notifyTakePhotoError(long callbackId) {
-        VideoCaptureJni.get().onPhotoTaken(
-                mNativeVideoCaptureDeviceAndroid, VideoCapture.this, callbackId, null);
+        nativeOnPhotoTaken(mNativeVideoCaptureDeviceAndroid, callbackId, null);
     }
 
     /**
@@ -239,35 +237,34 @@ public abstract class VideoCapture {
         return intArray;
     }
 
-    @NativeMethods
-    interface Natives {
-        // Method for VideoCapture implementations to call back native code.
-        void onFrameAvailable(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                byte[] data, int length, int rotation);
+    // Method for VideoCapture implementations to call back native code.
+    public native void nativeOnFrameAvailable(
+            long nativeVideoCaptureDeviceAndroid, byte[] data, int length, int rotation);
 
-        void onI420FrameAvailable(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                ByteBuffer yBuffer, int yStride, ByteBuffer uBuffer, ByteBuffer vBuffer,
-                int uvRowStride, int uvPixelStride, int width, int height, int rotation,
-                long timestamp);
-        // Method for VideoCapture implementations to signal an asynchronous error.
-        void onError(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                int androidVideoCaptureError, String message);
+    public native void nativeOnI420FrameAvailable(long nativeVideoCaptureDeviceAndroid,
+            ByteBuffer yBuffer, int yStride, ByteBuffer uBuffer, ByteBuffer vBuffer,
+            int uvRowStride, int uvPixelStride, int width, int height, int rotation,
+            long timestamp);
 
-        // Method for VideoCapture implementations to signal that a frame was dropped.
-        void onFrameDropped(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                int androidVideoCaptureFrameDropReason);
+    // Method for VideoCapture implementations to signal an asynchronous error.
+    public native void nativeOnError(
+            long nativeVideoCaptureDeviceAndroid, int androidVideoCaptureError, String message);
 
-        void onGetPhotoCapabilitiesReply(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                long callbackId, PhotoCapabilities result);
-        // Callback for calls to takePhoto(). This can indicate both success and
-        // failure. Failure is indicated by |data| being null.
-        void onPhotoTaken(long nativeVideoCaptureDeviceAndroid, VideoCapture caller,
-                long callbackId, byte[] data);
+    // Method for VideoCapture implementations to signal that a frame was dropped.
+    public native void nativeOnFrameDropped(
+            long nativeVideoCaptureDeviceAndroid, int androidVideoCaptureFrameDropReason);
 
-        // Method for VideoCapture implementations to report device started event.
-        void onStarted(long nativeVideoCaptureDeviceAndroid, VideoCapture caller);
+    public native void nativeOnGetPhotoCapabilitiesReply(
+            long nativeVideoCaptureDeviceAndroid, long callbackId, PhotoCapabilities result);
 
-        void dCheckCurrentlyOnIncomingTaskRunner(
-                long nativeVideoCaptureDeviceAndroid, VideoCapture caller);
-    }
+    // Callback for calls to takePhoto(). This can indicate both success and
+    // failure. Failure is indicated by |data| being null.
+    public native void nativeOnPhotoTaken(
+            long nativeVideoCaptureDeviceAndroid, long callbackId, byte[] data);
+
+    // Method for VideoCapture implementations to report device started event.
+    public native void nativeOnStarted(long nativeVideoCaptureDeviceAndroid);
+
+    public native void nativeDCheckCurrentlyOnIncomingTaskRunner(
+            long nativeVideoCaptureDeviceAndroid);
 }

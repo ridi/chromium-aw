@@ -23,7 +23,6 @@ import android.widget.PopupWindow;
 import org.chromium.base.ObserverList;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.WebContents;
@@ -174,8 +173,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
             }
         };
         GestureListenerManager.fromWebContents(mWebContents).addListener(mGestureStateListener);
-        mNativeDrawable = PopupTouchHandleDrawableJni.get().init(PopupTouchHandleDrawable.this,
-                HandleViewResources.getHandleHorizontalPaddingRatio());
+        mNativeDrawable = nativeInit(HandleViewResources.getHandleHorizontalPaddingRatio());
     }
 
     public static PopupTouchHandleDrawable create(
@@ -634,8 +632,5 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         mContainerView = newContainerView;
     }
 
-    @NativeMethods
-    interface Natives {
-        long init(PopupTouchHandleDrawable caller, float horizontalPaddingRatio);
-    }
+    private native long nativeInit(float horizontalPaddingRatio);
 }

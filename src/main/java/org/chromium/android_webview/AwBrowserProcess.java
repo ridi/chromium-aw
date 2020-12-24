@@ -8,18 +8,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.StrictMode;
 
-import org.chromium.android_webview.common.AwSwitches;
-import org.chromium.android_webview.common.PlatformServiceBridge;
-import org.chromium.android_webview.common.services.ICrashReceiverService;
-import org.chromium.android_webview.common.services.ServiceNames;
-import org.chromium.android_webview.metrics.AwMetricsServiceClient;
+import org.chromium.android_webview.command_line.CommandLineUtil;
 import org.chromium.android_webview.policy.AwPolicyProvider;
-import org.chromium.android_webview.safe_browsing.AwSafeBrowsingConfigHelper;
+import org.chromium.android_webview.services.CrashReceiverService;
+import org.chromium.android_webview.services.ICrashReceiverService;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -29,7 +27,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
-import org.chromium.base.metrics.ScopedSysTraceEvent;
+import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.task.PostTask;
 import org.chromium.base.task.TaskRunner;
 import org.chromium.base.task.TaskTraits;
@@ -42,6 +40,8 @@ import org.chromium.policy.CombinedPolicyProvider;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +54,15 @@ public final class AwBrowserProcess {
     private static final String TAG = "AwBrowserProcess";
 
     private static final String WEBVIEW_DIR_BASENAME = "webview";
+    private static final String EXCLUSIVE_LOCK_FILE = "webview_data.lock";
 
     // To avoid any potential synchronization issues we post all minidump-copying actions to
     // the same sequence to be run serially.
     private static final TaskRunner sSequencedTaskRunner =
             PostTask.createSequencedTaskRunner(TaskTraits.BEST_EFFORT_MAY_BLOCK);
 
+    private static RandomAccessFile sLockFile;
+    private static FileLock sExclusiveFileLock;
     private static String sWebViewPackageName;
 
     /**
@@ -71,9 +74,8 @@ public final class AwBrowserProcess {
      *                             process; null to use no suffix.
      */
     public static void loadLibrary(String processDataDirSuffix) {
-        LibraryLoader.getInstance().setLibraryProcessType(LibraryProcessType.PROCESS_WEBVIEW);
         if (processDataDirSuffix == null) {
-            PathUtils.setPrivateDataDirectorySuffix(WEBVIEW_DIR_BASENAME, "WebView");
+            PathUtils.setPrivateDataDirectorySuffix(WEBVIEW_DIR_BASENAME, null);
         } else {
             String processDataDirName = WEBVIEW_DIR_BASENAME + "_" + processDataDirSuffix;
             PathUtils.setPrivateDataDirectorySuffix(processDataDirName, processDataDirName);
@@ -85,6 +87,8 @@ public final class AwBrowserProcess {
             // It's okay for the WebView to do this before initialization because we have
             // setup the JNI bindings by this point.
             LibraryLoader.getInstance().switchCommandLineForWebView();
+        } catch (ProcessInitException e) {
+            throw new RuntimeException("Cannot load WebView", e);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -98,8 +102,7 @@ public final class AwBrowserProcess {
         final boolean isExternalService = true;
         final boolean bindToCaller = true;
         final boolean ignoreVisibilityForImportance = true;
-        ChildProcessCreationParams.set(getWebViewPackageName(), null /* privilegedServicesName */,
-                getWebViewPackageName(), null /* sandboxedServicesName */, isExternalService,
+        ChildProcessCreationParams.set(getWebViewPackageName(), isExternalService,
                 LibraryProcessType.PROCESS_WEBVIEW_CHILD, bindToCaller,
                 ignoreVisibilityForImportance);
     }
@@ -112,7 +115,7 @@ public final class AwBrowserProcess {
     public static void start() {
         try (ScopedSysTraceEvent e1 = ScopedSysTraceEvent.scoped("AwBrowserProcess.start")) {
             final Context appContext = ContextUtils.getApplicationContext();
-            AwDataDirLock.lock(appContext);
+            tryObtainingDataDirLock(appContext);
             // We must post to the UI thread to cover the case that the user
             // has invoked Chromium startup by using the (thread-safe)
             // CookieManager rather than creating a WebView.
@@ -137,8 +140,47 @@ public final class AwBrowserProcess {
                              "AwBrowserProcess.startBrowserProcessesSync")) {
                     BrowserStartupController.get(LibraryProcessType.PROCESS_WEBVIEW)
                             .startBrowserProcessesSync(!multiProcess);
+                } catch (ProcessInitException e) {
+                    throw new RuntimeException("Cannot initialize WebView", e);
                 }
             });
+        }
+    }
+
+    private static void tryObtainingDataDirLock(final Context appContext) {
+        try (ScopedSysTraceEvent e1 =
+                        ScopedSysTraceEvent.scoped("AwBrowserProcess.tryObtainingDataDirLock")) {
+            // Many existing apps rely on this even though it's known to be unsafe.
+            // Make it fatal when on P for apps that target P or higher
+            boolean dieOnFailure = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+                    && appContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.P;
+
+            StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+            try {
+                String dataPath = PathUtils.getDataDirectory();
+                File lockFile = new File(dataPath, EXCLUSIVE_LOCK_FILE);
+                boolean success = false;
+                try {
+                    // Note that the file is kept open intentionally.
+                    sLockFile = new RandomAccessFile(lockFile, "rw");
+                    sExclusiveFileLock = sLockFile.getChannel().tryLock();
+                    success = sExclusiveFileLock != null;
+                } catch (IOException e) {
+                    Log.w(TAG, "Failed to create lock file " + lockFile, e);
+                }
+                if (!success) {
+                    final String error =
+                            "Using WebView from more than one process at once with the "
+                            + "same data directory is not supported. https://crbug.com/558377";
+                    if (dieOnFailure) {
+                        throw new RuntimeException(error);
+                    } else {
+                        Log.w(TAG, error);
+                    }
+                }
+            } finally {
+                StrictMode.setThreadPolicy(oldPolicy);
+            }
         }
     }
 
@@ -170,7 +212,7 @@ public final class AwBrowserProcess {
         try (ScopedSysTraceEvent e1 = ScopedSysTraceEvent.scoped(
                      "AwBrowserProcess.handleMinidumpsAndSetMetricsConsent")) {
             final boolean enableMinidumpUploadingForTesting = CommandLine.getInstance().hasSwitch(
-                    AwSwitches.CRASH_UPLOADS_ENABLED_FOR_TESTING_SWITCH);
+                    CommandLineUtil.CRASH_UPLOADS_ENABLED_FOR_TESTING_SWITCH);
             if (enableMinidumpUploadingForTesting) {
                 handleMinidumps(true /* enabled */);
             }
@@ -220,55 +262,6 @@ public final class AwBrowserProcess {
         return crashesInfoList;
     }
 
-    private static void deleteMinidumps(final File[] minidumpFiles) {
-        for (File minidump : minidumpFiles) {
-            if (!minidump.delete()) {
-                Log.w(TAG, "Couldn't delete file " + minidump.getAbsolutePath());
-            }
-        }
-    }
-
-    private static void transmitMinidumps(final File[] minidumpFiles,
-            final Map<String, Map<String, String>> crashesInfoMap,
-            final ICrashReceiverService service) {
-        // Pass file descriptors pointing to our minidumps to the
-        // minidump-copying service, allowing it to copy contents of the
-        // minidumps to WebView's data directory.
-        // Delete the app filesystem references to the minidumps after passing
-        // the file descriptors so that we avoid trying to copy the minidumps
-        // again if anything goes wrong. This makes sense given that a failure
-        // to copy a file usually means that retrying won't succeed either,
-        // because e.g. the disk is full, or the file system is corrupted.
-        final ParcelFileDescriptor[] minidumpFds = new ParcelFileDescriptor[minidumpFiles.length];
-        try {
-            for (int i = 0; i < minidumpFiles.length; ++i) {
-                try {
-                    minidumpFds[i] = ParcelFileDescriptor.open(
-                            minidumpFiles[i], ParcelFileDescriptor.MODE_READ_ONLY);
-                } catch (FileNotFoundException e) {
-                    minidumpFds[i] = null; // This is slightly ugly :)
-                }
-            }
-            try {
-                List<Map<String, String>> crashesInfoList =
-                        getCrashKeysForCrashFiles(minidumpFiles, crashesInfoMap);
-                service.transmitCrashes(minidumpFds, crashesInfoList);
-            } catch (RemoteException e) {
-                // TODO(gsennton): add a UMA metric here to ensure we aren't losing
-                // too many minidumps because of this.
-            }
-        } finally {
-            deleteMinidumps(minidumpFiles);
-            // Close FDs
-            for (int i = 0; i < minidumpFds.length; ++i) {
-                try {
-                    if (minidumpFds[i] != null) minidumpFds[i].close();
-                } catch (IOException e) {
-                }
-            }
-        }
-    }
-
     /**
      * Pass Minidumps to a separate Service declared in the WebView provider package.
      * That Service will copy the Minidumps to its own data directory - at which point we can delete
@@ -293,23 +286,62 @@ public final class AwBrowserProcess {
 
             // Delete the minidumps if the user doesn't allow crash data uploading.
             if (!userApproved) {
-                deleteMinidumps(minidumpFiles);
+                for (File minidump : minidumpFiles) {
+                    if (!minidump.delete()) {
+                        Log.w(TAG, "Couldn't delete file " + minidump.getAbsolutePath());
+                    }
+                }
                 return;
             }
 
             final Intent intent = new Intent();
-            intent.setClassName(getWebViewPackageName(), ServiceNames.CRASH_RECEIVER_SERVICE);
+            intent.setClassName(getWebViewPackageName(), CrashReceiverService.class.getName());
 
             ServiceConnection connection = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName className, IBinder service) {
-                    // onServiceConnected is called on the UI thread, so punt this back to the
-                    // background thread.
-                    sSequencedTaskRunner.postTask(() -> {
-                        transmitMinidumps(minidumpFiles, crashesInfoMap,
-                                ICrashReceiverService.Stub.asInterface(service));
+                    // Pass file descriptors, pointing to our minidumps, to the minidump-copying
+                    // service so that the contents of the minidumps will be copied to WebView's
+                    // data directory. Delete our direct File-references to the minidumps after
+                    // creating the file-descriptors to resign from retrying to copy the
+                    // minidumps if anything goes wrong - this makes sense given that a failure
+                    // to copy a file usually means that retrying won't succeed either, e.g. the
+                    // disk being full, or the file system being corrupted.
+                    final ParcelFileDescriptor[] minidumpFds =
+                            new ParcelFileDescriptor[minidumpFiles.length];
+                    try {
+                        for (int i = 0; i < minidumpFiles.length; ++i) {
+                            try {
+                                minidumpFds[i] = ParcelFileDescriptor.open(
+                                        minidumpFiles[i], ParcelFileDescriptor.MODE_READ_ONLY);
+                            } catch (FileNotFoundException e) {
+                                minidumpFds[i] = null; // This is slightly ugly :)
+                            }
+                            if (!minidumpFiles[i].delete()) {
+                                Log.w(TAG,
+                                        "Couldn't delete file "
+                                                + minidumpFiles[i].getAbsolutePath());
+                            }
+                        }
+                        try {
+                            List<Map<String, String>> crashesInfoList =
+                                    getCrashKeysForCrashFiles(minidumpFiles, crashesInfoMap);
+                            ICrashReceiverService.Stub.asInterface(service).transmitCrashes(
+                                    minidumpFds, crashesInfoList);
+                        } catch (RemoteException e) {
+                            // TODO(gsennton): add a UMA metric here to ensure we aren't losing
+                            // too many minidumps because of this.
+                        }
+                    } finally {
+                        // Close FDs
+                        for (int i = 0; i < minidumpFds.length; ++i) {
+                            try {
+                                if (minidumpFds[i] != null) minidumpFds[i].close();
+                            } catch (IOException e) {
+                            }
+                        }
                         appContext.unbindService(this);
-                    });
+                    }
                 }
 
                 @Override

@@ -69,14 +69,8 @@ public class AwWebContentsObserver extends WebContentsObserver {
     }
 
     @Override
-    public void loadProgressChanged(float progress) {
-        AwContentsClient client = mAwContentsClient.get();
-        if (client == null) return;
-        client.getCallbackHelper().postOnProgressChanged(Math.round(progress * 100));
-    }
-
-    @Override
-    public void didFailLoad(boolean isMainFrame, @NetError int errorCode, String failingUrl) {
+    public void didFailLoad(
+            boolean isMainFrame, @NetError int errorCode, String description, String failingUrl) {
         AwContentsClient client = mAwContentsClient.get();
         if (client == null) return;
         String unreachableWebDataUrl = AwContentsStatics.getUnreachableWebDataUrl();
@@ -100,7 +94,8 @@ public class AwWebContentsObserver extends WebContentsObserver {
     public void didFinishNavigation(NavigationHandle navigation) {
         String url = navigation.getUrl();
         if (navigation.errorCode() != 0 && !navigation.isDownload()) {
-            didFailLoad(navigation.isInMainFrame(), navigation.errorCode(), url);
+            didFailLoad(navigation.isInMainFrame(), navigation.errorCode(),
+                    navigation.errorDescription(), url);
         }
 
         if (!navigation.hasCommitted()) return;

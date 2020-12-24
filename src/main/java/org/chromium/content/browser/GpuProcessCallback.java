@@ -8,7 +8,6 @@ import android.view.Surface;
 
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content.common.IGpuProcessCallback;
 import org.chromium.content.common.SurfaceWrapper;
 
@@ -18,17 +17,15 @@ class GpuProcessCallback extends IGpuProcessCallback.Stub {
 
     @Override
     public void forwardSurfaceForSurfaceRequest(UnguessableToken requestToken, Surface surface) {
-        GpuProcessCallbackJni.get().completeScopedSurfaceRequest(requestToken, surface);
+        nativeCompleteScopedSurfaceRequest(requestToken, surface);
     }
 
     @Override
     public SurfaceWrapper getViewSurface(int surfaceId) {
-        return GpuProcessCallbackJni.get().getViewSurface(surfaceId);
+        return nativeGetViewSurface(surfaceId);
     }
 
-    @NativeMethods
-    interface Natives {
-        void completeScopedSurfaceRequest(UnguessableToken requestToken, Surface surface);
-        SurfaceWrapper getViewSurface(int surfaceId);
-    }
+    private static native void nativeCompleteScopedSurfaceRequest(
+            UnguessableToken requestToken, Surface surface);
+    private static native SurfaceWrapper nativeGetViewSurface(int surfaceId);
 };

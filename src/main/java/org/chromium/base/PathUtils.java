@@ -12,14 +12,13 @@ import android.os.Environment;
 import android.system.Os;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.task.AsyncTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -47,13 +46,15 @@ public abstract class PathUtils {
     // Prevent instantiation.
     private PathUtils() {}
 
-    // Resetting is useful in Robolectric tests, where each test is run with a different
-    // data directory.
-    public static void resetForTesting() {
-        sInitializationStarted.set(false);
-        sDirPathFetchTask = null;
-        sDataDirectorySuffix = null;
-        sCacheSubDirectory = null;
+    /**
+     * Initialization-on-demand holder. This exists for thread-safe lazy initialization. It will
+     * cause getOrComputeDirectoryPaths() to be called (safely) the first time DIRECTORY_PATHS is
+     * accessed.
+     *
+     * <p>See https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom.
+     */
+    private static class Holder {
+        private static final String[] DIRECTORY_PATHS = getOrComputeDirectoryPaths();
     }
 
     /**
@@ -62,17 +63,28 @@ public abstract class PathUtils {
      * above to guarantee thread-safety as part of the initialization-on-demand holder idiom.
      */
     private static String[] getOrComputeDirectoryPaths() {
-        if (!sDirPathFetchTask.isDone()) {
-            try (StrictModeContext ignored = StrictModeContext.allowDiskWrites()) {
-                // No-op if already ran.
-                sDirPathFetchTask.run();
-            }
-        }
         try {
-            return sDirPathFetchTask.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            // We need to call sDirPathFetchTask.cancel() here to prevent races. If it returns
+            // true, that means that the task got canceled successfully (and thus, it did not
+            // finish running its task). Otherwise, it failed to cancel, meaning that it was
+            // already finished.
+            if (sDirPathFetchTask.cancel(false)) {
+                // Allow disk access here because we have no other choice.
+                try (StrictModeContext ignored = StrictModeContext.allowDiskWrites()) {
+                    // sDirPathFetchTask did not complete. We have to run the code it was supposed
+                    // to be responsible for synchronously on the UI thread.
+                    return PathUtils.setPrivateDataDirectorySuffixInternal();
+                }
+            } else {
+                // sDirPathFetchTask succeeded, and the values we need should be ready to access
+                // synchronously in its internal future.
+                return sDirPathFetchTask.get();
+            }
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
         }
+
+        return null;
     }
 
     @SuppressLint("NewApi")
@@ -158,8 +170,7 @@ public abstract class PathUtils {
      * @return The directory path requested.
      */
     private static String getDirectoryPath(int index) {
-        String[] paths = getOrComputeDirectoryPaths();
-        return paths[index];
+        return Holder.DIRECTORY_PATHS[index];
     }
 
     /**
@@ -187,14 +198,11 @@ public abstract class PathUtils {
     }
 
     /**
-     * Returns the downloads directory. Before Android Q, this returns the public download directory
-     * for Chrome app. On Q+, this returns the first private download directory for the app, since Q
-     * will block public directory access. May return null when there is no external storage volumes
-     * mounted.
+     * @return the public downloads directory.
      */
     @SuppressWarnings("unused")
     @CalledByNative
-    private static @NonNull String getDownloadsDirectory() {
+    private static String getDownloadsDirectory() {
         // TODO(crbug.com/508615): Temporarily allowing disk access until more permanent fix is in.
         try (StrictModeContext ignored = StrictModeContext.allowDiskReads()) {
             if (BuildInfo.isAtLeastQ()) {
@@ -203,8 +211,7 @@ public abstract class PathUtils {
                 // permission to write to Environment.getExternalStoragePublicDirectory(). Instead
                 // using Context.getExternalFilesDir() will return a path to sandboxed external
                 // storage for which no additional permissions are required.
-                String[] dirs = getAllPrivateDownloadsDirectories();
-                return getAllPrivateDownloadsDirectories().length == 0 ? "" : dirs[0];
+                return getAllPrivateDownloadsDirectories()[0];
             }
             return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                     .getPath();

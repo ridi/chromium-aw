@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
-import org.chromium.base.Callback;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.WebContents;
@@ -22,15 +21,15 @@ import java.util.List;
  * Handles the dropdown popup for the <select> HTML tag support.
  */
 public class SelectPopupDropdown implements SelectPopup.Ui {
-    private final Callback<int[]> mSelectionChangedCallback;
+    private final SelectPopup mSelectPopup;
     private final DropdownPopupWindow mDropdownPopupWindow;
 
     private boolean mSelectionNotified;
 
-    public SelectPopupDropdown(Context context, Callback<int[]> selectionChangedCallback,
-            View anchorView, List<SelectPopupItem> items, int[] selected, boolean rightAligned,
+    public SelectPopupDropdown(SelectPopup selectPopup, Context context, View anchorView,
+            List<SelectPopupItem> items, int[] selected, boolean rightAligned,
             WebContents webContents) {
-        mSelectionChangedCallback = selectionChangedCallback;
+        mSelectPopup = selectPopup;
         mDropdownPopupWindow = new DropdownPopupWindow(context, anchorView);
         mDropdownPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,7 +63,7 @@ public class SelectPopupDropdown implements SelectPopup.Ui {
 
     private void notifySelection(int[] indicies) {
         if (mSelectionNotified) return;
-        mSelectionChangedCallback.onResult(indicies);
+        mSelectPopup.selectMenuItems(indicies);
         mSelectionNotified = true;
     }
 

@@ -16,7 +16,6 @@ import android.util.SparseArray;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -188,7 +187,7 @@ class UsbMidiDeviceAndroid {
                 if (mIsClosed) {
                     return;
                 }
-                UsbMidiDeviceAndroidJni.get().onData(mNativePointer, endpointNumber, bs);
+                nativeOnData(mNativePointer, endpointNumber, bs);
             }
         });
     }
@@ -319,8 +318,6 @@ class UsbMidiDeviceAndroid {
         return position;
     }
 
-    @NativeMethods
-    interface Natives {
-        void onData(long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
-    }
+    private static native void nativeOnData(
+            long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
 }

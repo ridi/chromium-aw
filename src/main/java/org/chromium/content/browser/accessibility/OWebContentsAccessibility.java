@@ -42,10 +42,10 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
     protected void setAccessibilityNodeInfoKitKatAttributes(AccessibilityNodeInfo node,
             boolean isRoot, boolean isEditableText, String role, String roleDescription,
             String hint, int selectionStartIndex, int selectionEndIndex, boolean hasImage,
-            boolean contentInvalid, String targetUrl) {
+            boolean contentInvalid) {
         super.setAccessibilityNodeInfoKitKatAttributes(node, isRoot, isEditableText, role,
                 roleDescription, hint, selectionStartIndex, selectionEndIndex, hasImage,
-                contentInvalid, targetUrl);
+                contentInvalid);
         node.setHintText(hint);
     }
 
@@ -54,10 +54,8 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
             int virtualViewId, AccessibilityNodeInfo info, String extraDataKey, Bundle arguments) {
         if (!extraDataKey.equals(EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY)) return;
 
-        if (!WebContentsAccessibilityImplJni.get().areInlineTextBoxesLoaded(
-                    mNativeObj, OWebContentsAccessibility.this, virtualViewId)) {
-            WebContentsAccessibilityImplJni.get().loadInlineTextBoxes(
-                    mNativeObj, OWebContentsAccessibility.this, virtualViewId);
+        if (!nativeAreInlineTextBoxesLoaded(mNativeObj, virtualViewId)) {
+            nativeLoadInlineTextBoxes(mNativeObj, virtualViewId);
         }
 
         int positionInfoStartIndex =
@@ -66,9 +64,8 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
                 arguments.getInt(EXTRA_DATA_TEXT_CHARACTER_LOCATION_ARG_LENGTH, -1);
         if (positionInfoLength <= 0 || positionInfoStartIndex < 0) return;
 
-        int[] coords = WebContentsAccessibilityImplJni.get().getCharacterBoundingBoxes(mNativeObj,
-                OWebContentsAccessibility.this, virtualViewId, positionInfoStartIndex,
-                positionInfoLength);
+        int[] coords = nativeGetCharacterBoundingBoxes(
+                mNativeObj, virtualViewId, positionInfoStartIndex, positionInfoLength);
         if (coords == null) return;
         assert coords.length == positionInfoLength * 4;
 

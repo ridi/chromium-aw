@@ -5,7 +5,6 @@
 package org.chromium.components.variations;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.HashMap;
 
@@ -25,18 +24,15 @@ public final class VariationsAssociatedData {
      *     parameter does not exist.
      */
     public static String getVariationParamValue(String trialName, String paramName) {
-        return VariationsAssociatedDataJni.get().getVariationParamValue(trialName, paramName);
+        return nativeGetVariationParamValue(trialName, paramName);
     }
 
     public static HashMap<String, String> getFeedbackMap() {
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("Chrome Variations", VariationsAssociatedDataJni.get().getFeedbackVariations());
+        map.put("Chrome Variations", nativeGetFeedbackVariations());
         return map;
     }
 
-    @NativeMethods
-    interface Natives {
-        String getVariationParamValue(String trialName, String paramName);
-        String getFeedbackVariations();
-    }
+    private static native String nativeGetVariationParamValue(String trialName, String paramName);
+    private static native String nativeGetFeedbackVariations();
 }

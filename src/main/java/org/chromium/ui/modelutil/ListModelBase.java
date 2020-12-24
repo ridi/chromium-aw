@@ -4,7 +4,7 @@
 
 package org.chromium.ui.modelutil;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,10 +168,5 @@ public class ListModelBase<T, P> extends ListObservableImpl<P> implements Simple
             mItems.add(newIndex, item);
         }
         notifyItemMoved(curIndex, newIndex);
-    }
-
-    /** Clear all items from the list. */
-    public void clear() {
-        if (size() > 0) removeRange(0, size());
     }
 }

@@ -8,7 +8,6 @@ import android.graphics.SurfaceTexture;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Listener to an android SurfaceTexture object for frame availability.
@@ -26,23 +25,18 @@ class SurfaceTextureListener implements SurfaceTexture.OnFrameAvailableListener 
 
     @Override
     public void onFrameAvailable(SurfaceTexture surfaceTexture) {
-        SurfaceTextureListenerJni.get().frameAvailable(
-                mNativeSurfaceTextureListener, SurfaceTextureListener.this);
+        nativeFrameAvailable(mNativeSurfaceTextureListener);
     }
 
     @Override
     protected void finalize() throws Throwable {
         try {
-            SurfaceTextureListenerJni.get().destroy(
-                    mNativeSurfaceTextureListener, SurfaceTextureListener.this);
+            nativeDestroy(mNativeSurfaceTextureListener);
         } finally {
             super.finalize();
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        void frameAvailable(long nativeSurfaceTextureListener, SurfaceTextureListener caller);
-        void destroy(long nativeSurfaceTextureListener, SurfaceTextureListener caller);
-    }
+    private native void nativeFrameAvailable(long nativeSurfaceTextureListener);
+    private native void nativeDestroy(long nativeSurfaceTextureListener);
 }

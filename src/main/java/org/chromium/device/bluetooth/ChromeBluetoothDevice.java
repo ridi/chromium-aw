@@ -13,7 +13,6 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNIAdditionalImport;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.metrics.RecordHistogram;
 
 import java.util.HashMap;
@@ -150,8 +149,7 @@ final class ChromeBluetoothDevice {
                                 status);
                     }
                     if (mNativeBluetoothDeviceAndroid != 0) {
-                        ChromeBluetoothDeviceJni.get().onConnectionStateChange(
-                                mNativeBluetoothDeviceAndroid, ChromeBluetoothDevice.this, status,
+                        nativeOnConnectionStateChange(mNativeBluetoothDeviceAndroid, status,
                                 newState == android.bluetooth.BluetoothProfile.STATE_CONNECTED);
                     }
                 }
@@ -187,12 +185,10 @@ final class ChromeBluetoothDevice {
                             // between service instances with the same UUID on this device.
                             String serviceInstanceId = getAddress() + "/"
                                     + service.getUuid().toString() + "," + service.getInstanceId();
-                            ChromeBluetoothDeviceJni.get().createGattRemoteService(
-                                    mNativeBluetoothDeviceAndroid, ChromeBluetoothDevice.this,
-                                    serviceInstanceId, service);
+                            nativeCreateGattRemoteService(
+                                    mNativeBluetoothDeviceAndroid, serviceInstanceId, service);
                         }
-                        ChromeBluetoothDeviceJni.get().onGattServicesDiscovered(
-                                mNativeBluetoothDeviceAndroid, ChromeBluetoothDevice.this);
+                        nativeOnGattServicesDiscovered(mNativeBluetoothDeviceAndroid);
                     }
                 }
             });
@@ -308,19 +304,17 @@ final class ChromeBluetoothDevice {
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        // Binds to BluetoothDeviceAndroid::OnConnectionStateChange.
-        void onConnectionStateChange(long nativeBluetoothDeviceAndroid,
-                ChromeBluetoothDevice caller, int status, boolean connected);
+    // ---------------------------------------------------------------------------------------------
+    // BluetoothAdapterDevice C++ methods declared for access from java:
 
-        // Binds to BluetoothDeviceAndroid::CreateGattRemoteService.
-        void createGattRemoteService(long nativeBluetoothDeviceAndroid,
-                ChromeBluetoothDevice caller, String instanceId,
-                Wrappers.BluetoothGattServiceWrapper serviceWrapper);
+    // Binds to BluetoothDeviceAndroid::OnConnectionStateChange.
+    private native void nativeOnConnectionStateChange(
+            long nativeBluetoothDeviceAndroid, int status, boolean connected);
 
-        // Binds to BluetoothDeviceAndroid::GattServicesDiscovered.
-        void onGattServicesDiscovered(
-                long nativeBluetoothDeviceAndroid, ChromeBluetoothDevice caller);
-    }
+    // Binds to BluetoothDeviceAndroid::CreateGattRemoteService.
+    private native void nativeCreateGattRemoteService(long nativeBluetoothDeviceAndroid,
+            String instanceId, Wrappers.BluetoothGattServiceWrapper serviceWrapper);
+
+    // Binds to BluetoothDeviceAndroid::GattServicesDiscovered.
+    private native void nativeOnGattServicesDiscovered(long nativeBluetoothDeviceAndroid);
 }

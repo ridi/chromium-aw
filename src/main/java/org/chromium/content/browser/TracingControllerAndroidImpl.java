@@ -15,10 +15,8 @@ import android.util.Pair;
 import org.chromium.android_webview.R;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
-import org.chromium.base.StrictModeContext;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.TracingControllerAndroid;
 import org.chromium.ui.widget.Toast;
 
@@ -46,7 +44,7 @@ import java.util.TimeZone;
  */
 @JNINamespace("content")
 public class TracingControllerAndroidImpl implements TracingControllerAndroid {
-    private static final String TAG = "TracingController";
+    private static final String TAG = "cr.TracingController";
 
     private static final String ACTION_START = "GPU_PROFILER_START";
     private static final String ACTION_STOP = "GPU_PROFILER_STOP";
@@ -124,21 +122,21 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
      */
     @CalledByNative
     private static String generateTracingFilePath() {
-        try (StrictModeContext ignored = StrictModeContext.allowDiskWrites()) {
-            String state = Environment.getExternalStorageState();
-            if (!Environment.MEDIA_MOUNTED.equals(state)) {
-                return null;
-            }
-
-            // Generate a hopefully-unique filename using the UTC timestamp.
-            // (Not a huge problem if it isn't unique, we'll just append more data.)
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HHmmss", Locale.US);
-            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-            File dir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File file = new File(dir, "chrome-profile-results-" + formatter.format(new Date()));
-            return file.getPath();
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            return null;
         }
+
+        // Generate a hopefully-unique filename using the UTC timestamp.
+        // (Not a huge problem if it isn't unique, we'll just append more data.)
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                "yyyy-MM-dd-HHmmss", Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        File dir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(
+                dir, "chrome-profile-results-" + formatter.format(new Date()));
+        return file.getPath();
     }
 
     /**
@@ -155,8 +153,7 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
 
     private void initializeNativeControllerIfNeeded() {
         if (mNativeTracingControllerAndroid == 0) {
-            mNativeTracingControllerAndroid =
-                    TracingControllerAndroidImplJni.get().init(TracingControllerAndroidImpl.this);
+            mNativeTracingControllerAndroid = nativeInit();
         }
     }
 
@@ -181,8 +178,7 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
 
         // Lazy initialize the native side, to allow construction before the library is loaded.
         initializeNativeControllerIfNeeded();
-        if (!TracingControllerAndroidImplJni.get().startTracing(mNativeTracingControllerAndroid,
-                    TracingControllerAndroidImpl.this, categories, traceOptions)) {
+        if (!nativeStartTracing(mNativeTracingControllerAndroid, categories, traceOptions)) {
             logAndToastError(mContext.getString(R.string.profiler_error_toast));
             return false;
         }
@@ -198,8 +194,7 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
     @Override
     public void stopTracing(Callback<Void> callback) {
         if (isTracing()) {
-            TracingControllerAndroidImplJni.get().stopTracing(mNativeTracingControllerAndroid,
-                    TracingControllerAndroidImpl.this, mFilename, mCompressFile, callback);
+            nativeStopTracing(mNativeTracingControllerAndroid, mFilename, mCompressFile, callback);
         }
     }
 
@@ -237,16 +232,14 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
     public boolean getKnownCategories(Callback<String[]> callback) {
         // Lazy initialize the native side, to allow construction before the library is loaded.
         initializeNativeControllerIfNeeded();
-        return TracingControllerAndroidImplJni.get().getKnownCategoriesAsync(
-                mNativeTracingControllerAndroid, TracingControllerAndroidImpl.this, callback);
+        return nativeGetKnownCategoriesAsync(mNativeTracingControllerAndroid, callback);
     }
 
     /**
      * Called by native when the categories requested by getKnownCategories were obtained.
      *
      * @param categories The set of category names.
-     * @param callback The callback that was provided to
-     *         TracingControllerAndroidImplJni.get().getKnownCategoriesAsync.
+     * @param callback The callback that was provided to nativeGetKnownCategoriesAsync.
      */
     @CalledByNative
     @SuppressWarnings("unchecked")
@@ -261,8 +254,7 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
         assert callback != null;
         // Lazy initialize the native side, to allow construction before the library is loaded.
         initializeNativeControllerIfNeeded();
-        return TracingControllerAndroidImplJni.get().getTraceBufferUsageAsync(
-                mNativeTracingControllerAndroid, TracingControllerAndroidImpl.this, callback);
+        return nativeGetTraceBufferUsageAsync(mNativeTracingControllerAndroid, callback);
     }
 
     @CalledByNative
@@ -276,8 +268,7 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
     @Override
     public void destroy() {
         if (mNativeTracingControllerAndroid != 0) {
-            TracingControllerAndroidImplJni.get().destroy(
-                    mNativeTracingControllerAndroid, TracingControllerAndroidImpl.this);
+            nativeDestroy(mNativeTracingControllerAndroid);
             mNativeTracingControllerAndroid = 0;
         }
     }
@@ -312,12 +303,10 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
             if (intent.getAction().endsWith(ACTION_START)) {
                 String categories = intent.getStringExtra(CATEGORIES_EXTRA);
                 if (TextUtils.isEmpty(categories)) {
-                    categories = TracingControllerAndroidImplJni.get().getDefaultCategories(
-                            TracingControllerAndroidImpl.this);
+                    categories = nativeGetDefaultCategories();
                 } else {
-                    categories = categories.replaceFirst(DEFAULT_CHROME_CATEGORIES_PLACE_HOLDER,
-                            TracingControllerAndroidImplJni.get().getDefaultCategories(
-                                    TracingControllerAndroidImpl.this));
+                    categories = categories.replaceFirst(
+                            DEFAULT_CHROME_CATEGORIES_PLACE_HOLDER, nativeGetDefaultCategories());
                 }
                 String traceOptions = intent.getStringExtra(RECORD_CONTINUOUSLY_EXTRA) == null
                         ? "record-until-full" : "record-continuously";
@@ -338,19 +327,15 @@ public class TracingControllerAndroidImpl implements TracingControllerAndroid {
     }
 
     private long mNativeTracingControllerAndroid;
-
-    @NativeMethods
-    interface Natives {
-        long init(TracingControllerAndroidImpl caller);
-        void destroy(long nativeTracingControllerAndroid, TracingControllerAndroidImpl caller);
-        boolean startTracing(long nativeTracingControllerAndroid,
-                TracingControllerAndroidImpl caller, String categories, String traceOptions);
-        void stopTracing(long nativeTracingControllerAndroid, TracingControllerAndroidImpl caller,
-                String filename, boolean compressFile, Callback<Void> callback);
-        boolean getKnownCategoriesAsync(long nativeTracingControllerAndroid,
-                TracingControllerAndroidImpl caller, Callback<String[]> callback);
-        String getDefaultCategories(TracingControllerAndroidImpl caller);
-        boolean getTraceBufferUsageAsync(long nativeTracingControllerAndroid,
-                TracingControllerAndroidImpl caller, Callback<Pair<Float, Long>> callback);
-    }
+    private native long nativeInit();
+    private native void nativeDestroy(long nativeTracingControllerAndroid);
+    private native boolean nativeStartTracing(
+            long nativeTracingControllerAndroid, String categories, String traceOptions);
+    private native void nativeStopTracing(long nativeTracingControllerAndroid, String filename,
+            boolean compressFile, Callback<Void> callback);
+    private native boolean nativeGetKnownCategoriesAsync(
+            long nativeTracingControllerAndroid, Callback<String[]> callback);
+    private native String nativeGetDefaultCategories();
+    private native boolean nativeGetTraceBufferUsageAsync(
+            long nativeTracingControllerAndroid, Callback<Pair<Float, Long>> callback);
 }

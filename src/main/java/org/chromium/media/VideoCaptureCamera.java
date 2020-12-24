@@ -142,7 +142,7 @@ public class VideoCaptureCamera
     private class CrErrorCallback implements android.hardware.Camera.ErrorCallback {
         @Override
         public void onError(int error, android.hardware.Camera camera) {
-            VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera.this,
+            nativeOnError(mNativeVideoCaptureDeviceAndroid,
                     AndroidVideoCaptureError.ANDROID_API_1_CAMERA_ERROR_CALLBACK_RECEIVED,
                     "Error id: " + error);
 
@@ -170,8 +170,8 @@ public class VideoCaptureCamera
             }
             synchronized (mPhotoTakenCallbackLock) {
                 if (mPhotoTakenCallbackId != 0) {
-                    VideoCaptureJni.get().onPhotoTaken(mNativeVideoCaptureDeviceAndroid,
-                            VideoCaptureCamera.this, mPhotoTakenCallbackId, data);
+                    nativeOnPhotoTaken(
+                            mNativeVideoCaptureDeviceAndroid, mPhotoTakenCallbackId, data);
                 }
                 mPhotoTakenCallbackId = 0;
             }
@@ -451,8 +451,7 @@ public class VideoCaptureCamera
 
         mPreviewBufferLock.lock();
         try {
-            VideoCaptureJni.get().onStarted(
-                    mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera.this);
+            nativeOnStarted(mNativeVideoCaptureDeviceAndroid);
             mIsRunning = true;
         } finally {
             mPreviewBufferLock.unlock();
@@ -486,8 +485,7 @@ public class VideoCaptureCamera
     public void getPhotoCapabilitiesAsync(long callbackId) {
         final android.hardware.Camera.Parameters parameters = getCameraParameters(mCamera);
         if (parameters == null) {
-            VideoCaptureJni.get().onGetPhotoCapabilitiesReply(
-                    mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera.this, callbackId, null);
+            nativeOnGetPhotoCapabilitiesReply(mNativeVideoCaptureDeviceAndroid, callbackId, null);
             return;
         }
         PhotoCapabilities.Builder builder = new PhotoCapabilities.Builder();
@@ -630,10 +628,9 @@ public class VideoCaptureCamera
                 .setInt(PhotoCapabilityInt.STEP_COLOR_TEMPERATURE, 50);
         if (jniWhiteBalanceMode == AndroidMeteringMode.FIXED) {
             final int index = COLOR_TEMPERATURES_MAP.indexOfValue(parameters.getWhiteBalance());
-            if (index >= 0) {
+            if (index >= 0)
                 builder.setInt(PhotoCapabilityInt.CURRENT_COLOR_TEMPERATURE,
                         COLOR_TEMPERATURES_MAP.keyAt(index));
-            }
         }
 
         final List<String> flashModes = parameters.getSupportedFlashModes();
@@ -660,8 +657,8 @@ public class VideoCaptureCamera
             builder.setFillLightModeArray(integerArrayListToArray(modes));
         }
 
-        VideoCaptureJni.get().onGetPhotoCapabilitiesReply(mNativeVideoCaptureDeviceAndroid,
-                VideoCaptureCamera.this, callbackId, builder.build());
+        nativeOnGetPhotoCapabilitiesReply(
+                mNativeVideoCaptureDeviceAndroid, callbackId, builder.build());
     }
 
     @Override
@@ -895,11 +892,10 @@ public class VideoCaptureCamera
                 return;
             }
             if (data.length == mExpectedFrameSize) {
-                VideoCaptureJni.get().onFrameAvailable(mNativeVideoCaptureDeviceAndroid,
-                        VideoCaptureCamera.this, data, mExpectedFrameSize, getCameraRotation());
+                nativeOnFrameAvailable(mNativeVideoCaptureDeviceAndroid, data, mExpectedFrameSize,
+                        getCameraRotation());
             } else {
-                VideoCaptureJni.get().onFrameDropped(mNativeVideoCaptureDeviceAndroid,
-                        VideoCaptureCamera.this,
+                nativeOnFrameDropped(mNativeVideoCaptureDeviceAndroid,
                         AndroidVideoCaptureFrameDropReason.ANDROID_API_1_UNEXPECTED_DATA_LENGTH);
             }
         } finally {

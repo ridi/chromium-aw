@@ -26,12 +26,11 @@ import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.support.annotation.IntDef;
 import android.util.Range;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
-
-import androidx.annotation.IntDef;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -87,8 +86,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             cameraDevice.close();
             mCameraDevice = null;
             changeCameraStateAndNotify(CameraState.STOPPED);
-            VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid,
-                    VideoCaptureCamera2.this,
+            nativeOnError(mNativeVideoCaptureDeviceAndroid,
                     AndroidVideoCaptureError.ANDROID_API_2_CAMERA_DEVICE_ERROR_RECEIVED,
                     "Camera device error " + Integer.toString(error));
         }
@@ -147,8 +145,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             }
 
             changeCameraStateAndNotify(CameraState.STARTED);
-            VideoCaptureJni.get().onStarted(
-                    mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+            nativeOnStarted(mNativeVideoCaptureDeviceAndroid);
 
             // Frames will be arriving at CrPreviewReaderListener.onImageAvailable();
         }
@@ -162,8 +159,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             // cleanup?
             changeCameraStateAndNotify(CameraState.STOPPED);
             mPreviewSession = null;
-            VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid,
-                    VideoCaptureCamera2.this,
+            nativeOnError(mNativeVideoCaptureDeviceAndroid,
                     AndroidVideoCaptureError.ANDROID_API_2_CAPTURE_SESSION_CONFIGURE_FAILED,
                     "Camera session configuration error");
         }
@@ -189,16 +185,14 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
             try (Image image = reader.acquireLatestImage()) {
                 if (image == null) {
-                    VideoCaptureJni.get().onFrameDropped(mNativeVideoCaptureDeviceAndroid,
-                            VideoCaptureCamera2.this,
+                    nativeOnFrameDropped(mNativeVideoCaptureDeviceAndroid,
                             AndroidVideoCaptureFrameDropReason
                                     .ANDROID_API_2_ACQUIRED_IMAGE_IS_NULL);
                     return;
                 }
 
                 if (image.getFormat() != ImageFormat.YUV_420_888 || image.getPlanes().length != 3) {
-                    VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid,
-                            VideoCaptureCamera2.this,
+                    nativeOnError(mNativeVideoCaptureDeviceAndroid,
                             AndroidVideoCaptureError
                                     .ANDROID_API_2_IMAGE_READER_UNEXPECTED_IMAGE_FORMAT,
                             "Unexpected image format: " + image.getFormat()
@@ -208,8 +202,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
                 if (reader.getWidth() != image.getWidth()
                         || reader.getHeight() != image.getHeight()) {
-                    VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid,
-                            VideoCaptureCamera2.this,
+                    nativeOnError(mNativeVideoCaptureDeviceAndroid,
                             AndroidVideoCaptureError
                                     .ANDROID_API_2_IMAGE_READER_SIZE_DID_NOT_MATCH_IMAGE_SIZE,
                             "ImageReader size (" + reader.getWidth() + "x" + reader.getHeight()
@@ -218,12 +211,12 @@ public class VideoCaptureCamera2 extends VideoCapture {
                     throw new IllegalStateException();
                 }
 
-                VideoCaptureJni.get().onI420FrameAvailable(mNativeVideoCaptureDeviceAndroid,
-                        VideoCaptureCamera2.this, image.getPlanes()[0].getBuffer(),
-                        image.getPlanes()[0].getRowStride(), image.getPlanes()[1].getBuffer(),
-                        image.getPlanes()[2].getBuffer(), image.getPlanes()[1].getRowStride(),
-                        image.getPlanes()[1].getPixelStride(), image.getWidth(), image.getHeight(),
-                        getCameraRotation(), image.getTimestamp());
+                nativeOnI420FrameAvailable(mNativeVideoCaptureDeviceAndroid,
+                        image.getPlanes()[0].getBuffer(), image.getPlanes()[0].getRowStride(),
+                        image.getPlanes()[1].getBuffer(), image.getPlanes()[2].getBuffer(),
+                        image.getPlanes()[1].getRowStride(), image.getPlanes()[1].getPixelStride(),
+                        image.getWidth(), image.getHeight(), getCameraRotation(),
+                        image.getTimestamp());
             } catch (IllegalStateException ex) {
                 Log.e(TAG, "acquireLatestImage():", ex);
             }
@@ -321,8 +314,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 }
 
                 final byte[] capturedData = readCapturedData(image);
-                VideoCaptureJni.get().onPhotoTaken(mNativeVideoCaptureDeviceAndroid,
-                        VideoCaptureCamera2.this, mCallbackId, capturedData);
+                nativeOnPhotoTaken(mNativeVideoCaptureDeviceAndroid, mCallbackId, capturedData);
 
             } catch (IllegalStateException ex) {
                 notifyTakePhotoError(mCallbackId);
@@ -471,10 +463,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 if (mCurrentFocusDistance == 0) {
                     Log.d(TAG, "infinity focus.");
                     mCurrentFocusDistance = (long) Double.POSITIVE_INFINITY;
-                } else if (mCurrentFocusDistance > 0) {
+                } else if (mCurrentFocusDistance > 0)
                     builder.setDouble(PhotoCapabilityDouble.CURRENT_FOCUS_DISTANCE,
                             1 / mCurrentFocusDistance);
-                }
             } else { //  null value
                 Log.d(TAG, "LENS_FOCUS_DISTANCE is null");
             }
@@ -518,10 +509,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 } else if (focusMode == CameraMetadata.CONTROL_AF_MODE_OFF) {
                     jniFocusMode = AndroidMeteringMode.FIXED;
                     // Set focus distance here.
-                    if (mCurrentFocusDistance > 0) {
+                    if (mCurrentFocusDistance > 0)
                         builder.setDouble(PhotoCapabilityDouble.CURRENT_FOCUS_DISTANCE,
                                 1 / mCurrentFocusDistance);
-                    }
                 } else {
                     assert jniFocusMode == CameraMetadata.CONTROL_AF_MODE_EDOF;
                 }
@@ -590,8 +580,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                             == CameraMetadata.CONTROL_AE_MODE_OFF) {
                 jniExposureMode = AndroidMeteringMode.NONE;
             }
-            if (mPreviewRequest.get(CaptureRequest.CONTROL_AE_LOCK) != null
-                    && mPreviewRequest.get(CaptureRequest.CONTROL_AE_LOCK)) {
+            if (mPreviewRequest.get(CaptureRequest.CONTROL_AE_LOCK)) {
                 jniExposureMode = AndroidMeteringMode.FIXED;
             }
             builder.setMeteringMode(MeteringModeType.EXPOSURE, jniExposureMode);
@@ -685,8 +674,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 builder.setFillLightModeArray(integerArrayListToArray(modes));
             }
 
-            VideoCaptureJni.get().onGetPhotoCapabilitiesReply(mNativeVideoCaptureDeviceAndroid,
-                    VideoCaptureCamera2.this, mCallbackId, builder.build());
+            nativeOnGetPhotoCapabilitiesReply(
+                    mNativeVideoCaptureDeviceAndroid, mCallbackId, builder.build());
         }
     }
 
@@ -765,16 +754,14 @@ public class VideoCaptureCamera2 extends VideoCapture {
             }
 
             if (mOptions.focusMode != AndroidMeteringMode.NOT_SET) mFocusMode = mOptions.focusMode;
-            if (mOptions.currentFocusDistance != 0) {
+            if (mOptions.currentFocusDistance != 0)
                 mCurrentFocusDistance = (float) mOptions.currentFocusDistance;
-            }
-            if (mOptions.exposureMode != AndroidMeteringMode.NOT_SET) {
+            if (mOptions.exposureMode != AndroidMeteringMode.NOT_SET)
                 mExposureMode = mOptions.exposureMode;
-            }
             if (mOptions.exposureTime != 0) mLastExposureTimeNs = (long) mOptions.exposureTime;
-            if (mOptions.whiteBalanceMode != AndroidMeteringMode.NOT_SET) {
+            if (mOptions.whiteBalanceMode != AndroidMeteringMode.NOT_SET)
                 mWhiteBalanceMode = mOptions.whiteBalanceMode;
-            }
+
             if (mOptions.width > 0) mPhotoWidth = (int) Math.round(mOptions.width);
             if (mOptions.height > 0) mPhotoHeight = (int) Math.round(mOptions.height);
 
@@ -831,13 +818,12 @@ public class VideoCaptureCamera2 extends VideoCapture {
                                   .floatValue());
             }
             if (mOptions.iso > 0) mIso = (int) Math.round(mOptions.iso);
-            if (mOptions.colorTemperature > 0) {
+            if (mOptions.colorTemperature > 0)
                 mColorTemperature = (int) Math.round(mOptions.colorTemperature);
-            }
+
             if (mOptions.hasRedEyeReduction) mRedEyeReduction = mOptions.redEyeReduction;
-            if (mOptions.fillLightMode != AndroidFillLightMode.NOT_SET) {
+            if (mOptions.fillLightMode != AndroidFillLightMode.NOT_SET)
                 mFillLightMode = mOptions.fillLightMode;
-            }
             if (mOptions.hasTorch) mTorch = mOptions.torch;
 
             if (mPreviewSession != null) {
@@ -1016,12 +1002,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 (CameraManager) ContextUtils.getApplicationContext().getSystemService(
                         Context.CAMERA_SERVICE);
         try {
-            final String[] cameraIdList = manager.getCameraIdList();
-            if (id >= cameraIdList.length) {
-                Log.e(TAG, "Invalid camera Id: ", id);
-                return null;
-            }
-            return manager.getCameraCharacteristics(cameraIdList[id]);
+            return manager.getCameraCharacteristics(Integer.toString(id));
         } catch (CameraAccessException | IllegalArgumentException | AssertionError ex) {
             Log.e(TAG, "getCameraCharacteristics: ", ex);
         }
@@ -1034,8 +1015,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
         if (createPreviewObjectsAndStartPreview()) return;
 
         changeCameraStateAndNotify(CameraState.STOPPED);
-        VideoCaptureJni.get().onError(mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this,
-                androidVideoCaptureError, "Error starting or restarting preview");
+        nativeOnError(mNativeVideoCaptureDeviceAndroid, androidVideoCaptureError,
+                "Error starting or restarting preview");
     }
 
     private boolean createPreviewObjectsAndStartPreview() {
@@ -1378,18 +1359,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(id);
         if (cameraCharacteristics == null) return null;
         final int facing = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING);
-
-        boolean isInfrared = false;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            final Integer infoColor = cameraCharacteristics.get(
-                    CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
-            isInfrared = infoColor != null
-                    && infoColor.equals(
-                            CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT_NIR);
-        }
         return "camera2 " + id + ", facing "
-                + ((facing == CameraCharacteristics.LENS_FACING_FRONT) ? "front" : "back")
-                + (isInfrared ? " infrared" : "");
+                + ((facing == CameraCharacteristics.LENS_FACING_FRONT) ? "front" : "back");
     }
 
     public static VideoCaptureFormat[] getDeviceSupportedFormats(int id) {
@@ -1438,8 +1409,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
     VideoCaptureCamera2(int id, long nativeVideoCaptureDeviceAndroid) {
         super(id, nativeVideoCaptureDeviceAndroid);
 
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
 
         HandlerThread thread = new HandlerThread("VideoCaptureCamera2_CameraThread");
         thread.start();
@@ -1460,8 +1430,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
     @Override
     public boolean allocate(int width, int height, int frameRate, boolean enableFaceDetection) {
         Log.d(TAG, "allocate: requested (%d x %d) @%dfps", width, height, frameRate);
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
         synchronized (mCameraStateLock) {
             if (mCameraState == CameraState.OPENING || mCameraState == CameraState.CONFIGURING) {
                 Log.e(TAG, "allocate() invoked while Camera is busy opening/configuring.");
@@ -1472,29 +1441,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
         final StreamConfigurationMap streamMap =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
-        mCameraNativeOrientation =
-                cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-
-        // Update the capture width and height based on the camera orientation.
-        // With device's native orientation being Portrait for Android devices,
-        // for cameras that are mounted 0 or 180 degrees in respect to device's
-        // native orientation, we will need to swap the width and height in
-        // order to capture upright frames in respect to device's current
-        // orientation.
-        int capture_width = width;
-        int capture_height = height;
-        if (mCameraNativeOrientation == 0 || mCameraNativeOrientation == 180) {
-            Log.d(TAG,
-                    "Flipping capture width and height to match device's "
-                            + "natural orientation");
-            capture_width = height;
-            capture_height = width;
-        }
-
         // Find closest supported size.
         final Size[] supportedSizes = streamMap.getOutputSizes(ImageFormat.YUV_420_888);
-        final Size closestSupportedSize =
-                findClosestSizeInArray(supportedSizes, capture_width, capture_height);
+        final Size closestSupportedSize = findClosestSizeInArray(supportedSizes, width, height);
         if (closestSupportedSize == null) {
             Log.e(TAG, "No supported resolutions.");
             return false;
@@ -1525,7 +1474,8 @@ public class VideoCaptureCamera2 extends VideoCapture {
         // |mCaptureFormat| is also used to configure the ImageReader.
         mCaptureFormat = new VideoCaptureFormat(closestSupportedSize.getWidth(),
                 closestSupportedSize.getHeight(), frameRate, ImageFormat.YUV_420_888);
-
+        mCameraNativeOrientation =
+                cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
         // TODO(mcasas): The following line is correct for N5 with prerelease Build,
         // but NOT for N7 with a dev Build. Figure out which one to support.
         mInvertDeviceOrientationReadings =
@@ -1538,8 +1488,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     @Override
     public boolean startCaptureMaybeAsync() {
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
 
         changeCameraStateAndNotify(CameraState.OPENING);
         final CameraManager manager =
@@ -1548,14 +1497,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
         final CrStateListener stateListener = new CrStateListener();
         try {
-            final String[] cameraIdList = manager.getCameraIdList();
-            if (mId >= cameraIdList.length) {
-                Log.e(TAG, "Invalid camera Id: ", mId);
-                return false;
-            }
             TraceEvent.instant("VideoCaptureCamera2.java",
                     "VideoCaptureCamera2.startCaptureMaybeAsync calling manager.openCamera");
-            manager.openCamera(cameraIdList[mId], stateListener, mCameraThreadHandler);
+            manager.openCamera(Integer.toString(mId), stateListener, mCameraThreadHandler);
         } catch (CameraAccessException | IllegalArgumentException | SecurityException ex) {
             Log.e(TAG, "allocate: manager.openCamera: ", ex);
             return false;
@@ -1566,8 +1510,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     @Override
     public boolean stopCaptureAndBlockUntilStopped() {
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
         try (TraceEvent trace_event =
                         TraceEvent.scoped("VideoCaptureCamera2.stopCaptureAndBlockUntilStopped")) {
             // With Camera2 API, the capture is started asynchronously, which will cause problem if
@@ -1594,8 +1537,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     @Override
     public void getPhotoCapabilitiesAsync(long callbackId) {
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
         mCameraThreadHandler.post(new GetPhotoCapabilitiesTask(callbackId));
     }
 
@@ -1605,8 +1547,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             boolean hasExposureCompensation, double exposureCompensation, double exposureTime,
             int whiteBalanceMode, double iso, boolean hasRedEyeReduction, boolean redEyeReduction,
             int fillLightMode, boolean hasTorch, boolean torch, double colorTemperature) {
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
         mCameraThreadHandler.post(new SetPhotoOptionsTask(
                 new PhotoOptions(zoom, focusMode, currentFocusDistance, exposureMode, width, height,
                         pointsOfInterest2D, hasExposureCompensation, exposureCompensation,
@@ -1616,8 +1557,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     @Override
     public void takePhotoAsync(long callbackId) {
-        VideoCaptureJni.get().dCheckCurrentlyOnIncomingTaskRunner(
-                mNativeVideoCaptureDeviceAndroid, VideoCaptureCamera2.this);
+        nativeDCheckCurrentlyOnIncomingTaskRunner(mNativeVideoCaptureDeviceAndroid);
         TraceEvent.instant("VideoCaptureCamera2.java", "takePhotoAsync");
 
         mCameraThreadHandler.post(new TakePhotoTask(callbackId));

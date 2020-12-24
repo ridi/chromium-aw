@@ -17,7 +17,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -107,7 +106,7 @@ class MidiManagerAndroid {
                         if (mStopped) {
                             return;
                         }
-                        MidiManagerAndroidJni.get().onInitializationFailed(mNativeManagerPointer);
+                        nativeOnInitializationFailed(mNativeManagerPointer);
                     }
                 }
             });
@@ -138,7 +137,7 @@ class MidiManagerAndroid {
                         return;
                     }
                     if (mPendingDevices.isEmpty() && !mIsInitialized) {
-                        MidiManagerAndroidJni.get().onInitialized(
+                        nativeOnInitialized(
                                 mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
                         mIsInitialized = true;
                     }
@@ -186,7 +185,7 @@ class MidiManagerAndroid {
         for (MidiDeviceAndroid device : mDevices) {
             if (device.isOpen() && device.getInfo().getId() == info.getId()) {
                 device.close();
-                MidiManagerAndroidJni.get().onDetached(mNativeManagerPointer, device);
+                nativeOnDetached(mNativeManagerPointer, device);
             }
         }
     }
@@ -200,21 +199,18 @@ class MidiManagerAndroid {
             MidiDeviceAndroid xdevice = new MidiDeviceAndroid(device);
             mDevices.add(xdevice);
             if (mIsInitialized) {
-                MidiManagerAndroidJni.get().onAttached(mNativeManagerPointer, xdevice);
+                nativeOnAttached(mNativeManagerPointer, xdevice);
             }
         }
         if (!mIsInitialized && mPendingDevices.isEmpty()) {
-            MidiManagerAndroidJni.get().onInitialized(
-                    mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
+            nativeOnInitialized(mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
             mIsInitialized = true;
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        void onInitialized(long nativeMidiManagerAndroid, MidiDeviceAndroid[] devices);
-        void onInitializationFailed(long nativeMidiManagerAndroid);
-        void onAttached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
-        void onDetached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
-    }
+    static native void nativeOnInitialized(
+            long nativeMidiManagerAndroid, MidiDeviceAndroid[] devices);
+    static native void nativeOnInitializationFailed(long nativeMidiManagerAndroid);
+    static native void nativeOnAttached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
+    static native void nativeOnDetached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
 }

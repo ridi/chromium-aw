@@ -5,10 +5,9 @@
 package org.chromium.base.task;
 
 import android.os.Binder;
-
-import androidx.annotation.IntDef;
-import androidx.annotation.MainThread;
-import androidx.annotation.WorkerThread;
+import android.support.annotation.IntDef;
+import android.support.annotation.MainThread;
+import android.support.annotation.WorkerThread;
 
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;

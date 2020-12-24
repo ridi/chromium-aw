@@ -10,12 +10,10 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Build;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.chromium.base.Log;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.nio.ByteBuffer;
 
@@ -124,20 +122,17 @@ class AudioTrackOutputStream {
 
             @Override
             public AudioBufferInfo onMoreData(ByteBuffer audioData, long delayInFrames) {
-                return AudioTrackOutputStreamJni.get().onMoreData(mNativeAudioTrackOutputStream,
-                        AudioTrackOutputStream.this, audioData, delayInFrames);
+                return nativeOnMoreData(mNativeAudioTrackOutputStream, audioData, delayInFrames);
             }
 
             @Override
             public long getAddress(ByteBuffer byteBuffer) {
-                return AudioTrackOutputStreamJni.get().getAddress(
-                        mNativeAudioTrackOutputStream, AudioTrackOutputStream.this, byteBuffer);
+                return nativeGetAddress(mNativeAudioTrackOutputStream, byteBuffer);
             }
 
             @Override
             public void onError() {
-                AudioTrackOutputStreamJni.get().onError(
-                        mNativeAudioTrackOutputStream, AudioTrackOutputStream.this);
+                nativeOnError(mNativeAudioTrackOutputStream);
             }
         };
     }
@@ -318,12 +313,8 @@ class AudioTrackOutputStream {
         return mAudioTrack.write(mWriteBuffer, mLeftSize, AudioTrack.WRITE_BLOCKING);
     }
 
-    @NativeMethods
-    interface Natives {
-        AudioBufferInfo onMoreData(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller,
-                ByteBuffer audioData, long delayInFrames);
-        void onError(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller);
-        long getAddress(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller,
-                ByteBuffer byteBuffer);
-    }
+    private native AudioBufferInfo nativeOnMoreData(
+            long nativeAudioTrackOutputStream, ByteBuffer audioData, long delayInFrames);
+    private native void nativeOnError(long nativeAudioTrackOutputStream);
+    private native long nativeGetAddress(long nativeAudioTrackOutputStream, ByteBuffer byteBuffer);
 }

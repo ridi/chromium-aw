@@ -6,7 +6,6 @@ package org.chromium.android_webview;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  */
@@ -19,8 +18,7 @@ public final class AwRenderProcess extends AwSupportLibIsomorphic {
     public boolean terminate() {
         if (mNativeRenderProcess == 0) return false;
 
-        return AwRenderProcessJni.get().terminateChildProcess(
-                mNativeRenderProcess, AwRenderProcess.this);
+        return nativeTerminateChildProcess(mNativeRenderProcess);
     }
 
     @CalledByNative
@@ -33,8 +31,5 @@ public final class AwRenderProcess extends AwSupportLibIsomorphic {
         mNativeRenderProcess = nativeRenderProcess;
     }
 
-    @NativeMethods
-    interface Natives {
-        boolean terminateChildProcess(long nativeAwRenderProcess, AwRenderProcess caller);
-    }
+    private native boolean nativeTerminateChildProcess(long nativeAwRenderProcess);
 }

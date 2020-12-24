@@ -6,7 +6,6 @@ package org.chromium.android_webview;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * See {@link android.webkit.HttpAuthHandler}.
@@ -19,15 +18,14 @@ public class AwHttpAuthHandler {
 
     public void proceed(String username, String password) {
         if (mNativeAwHttpAuthHandler != 0) {
-            AwHttpAuthHandlerJni.get().proceed(
-                    mNativeAwHttpAuthHandler, AwHttpAuthHandler.this, username, password);
+            nativeProceed(mNativeAwHttpAuthHandler, username, password);
             mNativeAwHttpAuthHandler = 0;
         }
     }
 
     public void cancel() {
         if (mNativeAwHttpAuthHandler != 0) {
-            AwHttpAuthHandlerJni.get().cancel(mNativeAwHttpAuthHandler, AwHttpAuthHandler.this);
+            nativeCancel(mNativeAwHttpAuthHandler);
             mNativeAwHttpAuthHandler = 0;
         }
     }
@@ -51,10 +49,7 @@ public class AwHttpAuthHandler {
         mNativeAwHttpAuthHandler = 0;
     }
 
-    @NativeMethods
-    interface Natives {
-        void proceed(long nativeAwHttpAuthHandler, AwHttpAuthHandler caller, String username,
-                String password);
-        void cancel(long nativeAwHttpAuthHandler, AwHttpAuthHandler caller);
-    }
+    private native void nativeProceed(long nativeAwHttpAuthHandler,
+            String username, String password);
+    private native void nativeCancel(long nativeAwHttpAuthHandler);
 }

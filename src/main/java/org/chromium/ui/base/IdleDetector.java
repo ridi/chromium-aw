@@ -46,7 +46,7 @@ public class IdleDetector extends BroadcastReceiver {
     }
 
     @CalledByNative
-    private static IdleDetector create() {
+    static private IdleDetector create() {
         return new IdleDetector();
     }
 
@@ -83,6 +83,7 @@ public class IdleDetector extends BroadcastReceiver {
     private boolean isScreenLocked() {
         Context context = ContextUtils.getApplicationContext();
         KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        return myKM.inKeyguardRestrictedInputMode() || !ApiCompatibilityUtils.isInteractive();
+        return myKM.inKeyguardRestrictedInputMode()
+                || !ApiCompatibilityUtils.isInteractive(context);
     }
 }

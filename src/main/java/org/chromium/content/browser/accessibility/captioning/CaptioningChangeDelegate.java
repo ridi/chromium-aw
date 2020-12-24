@@ -8,8 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.accessibility.CaptioningManager.CaptionStyle;
 
-import androidx.annotation.VisibleForTesting;
-
+import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBridge.SystemCaptioningBridgeListener;
 
 import java.text.DecimalFormat;

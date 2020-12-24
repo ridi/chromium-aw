@@ -9,7 +9,6 @@ import android.content.Context;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content.browser.picker.DateTimeSuggestion;
 import org.chromium.content.browser.picker.InputDialogContainer;
 import org.chromium.ui.base.WindowAndroid;
@@ -31,14 +30,12 @@ class DateTimeChooserAndroid {
 
                     @Override
                     public void replaceDateTime(double value) {
-                        DateTimeChooserAndroidJni.get().replaceDateTime(
-                                mNativeDateTimeChooserAndroid, DateTimeChooserAndroid.this, value);
+                        nativeReplaceDateTime(mNativeDateTimeChooserAndroid, value);
                     }
 
                     @Override
                     public void cancelDateTimeDialog() {
-                        DateTimeChooserAndroidJni.get().cancelDialog(
-                                mNativeDateTimeChooserAndroid, DateTimeChooserAndroid.this);
+                        nativeCancelDialog(mNativeDateTimeChooserAndroid);
                     }
                 });
     }
@@ -82,10 +79,8 @@ class DateTimeChooserAndroid {
         array[index] = new DateTimeSuggestion(value, localizedValue, label);
     }
 
-    @NativeMethods
-    interface Natives {
-        void replaceDateTime(long nativeDateTimeChooserAndroid, DateTimeChooserAndroid caller,
-                double dialogValue);
-        void cancelDialog(long nativeDateTimeChooserAndroid, DateTimeChooserAndroid caller);
-    }
+    private native void nativeReplaceDateTime(long nativeDateTimeChooserAndroid,
+                                              double dialogValue);
+
+    private native void nativeCancelDialog(long nativeDateTimeChooserAndroid);
 }

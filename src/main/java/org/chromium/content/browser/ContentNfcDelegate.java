@@ -23,15 +23,16 @@ public class ContentNfcDelegate implements NfcDelegate {
     @Override
     public void trackActivityForHost(int hostId, Callback<Activity> callback) {
         NfcHost host = NfcHost.fromContextId(hostId);
-        assert host != null : "The corresponding host should have been ready before NfcImpl starts";
+        if (host == null) return;
         host.trackActivityChanges(callback);
     }
 
     @Override
     public void stopTrackingActivityForHost(int hostId) {
         NfcHost host = NfcHost.fromContextId(hostId);
-        assert host != null : "Unexpected stop request to an already stopped host";
-        // |host| will destroy itself.
+        if (host == null) {
+            return;
+        }
         host.stopTrackingActivityChanges();
     }
 }

@@ -7,7 +7,7 @@ package org.chromium.ui.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.appcompat.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 /**

@@ -4,12 +4,11 @@
 
 package org.chromium.base;
 
-import androidx.annotation.UiThread;
+import android.support.annotation.UiThread;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * This UncaughtExceptionHandler will create a breakpad minidump when there is an uncaught
@@ -35,7 +34,7 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread t, Throwable e) {
         if (!mHandlingException) {
             mHandlingException = true;
-            JavaExceptionReporterJni.get().reportJavaException(mCrashAfterReport, e);
+            nativeReportJavaException(mCrashAfterReport, e);
         }
         if (mParent != null) {
             mParent.uncaughtException(t, e);
@@ -52,8 +51,7 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
     @UiThread
     public static void reportStackTrace(String stackTrace) {
         assert ThreadUtils.runningOnUiThread();
-        JavaExceptionReporterJni.get().reportJavaStackTrace(
-                PiiElider.sanitizeStacktrace(stackTrace));
+        nativeReportJavaStackTrace(PiiElider.sanitizeStacktrace(stackTrace));
     }
 
     @CalledByNative
@@ -62,9 +60,6 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
                 Thread.getDefaultUncaughtExceptionHandler(), crashAfterReport));
     }
 
-    @NativeMethods
-    interface Natives {
-        void reportJavaException(boolean crashAfterReport, Throwable e);
-        void reportJavaStackTrace(String stackTrace);
-    }
+    private static native void nativeReportJavaException(boolean crashAfterReport, Throwable e);
+    private static native void nativeReportJavaStackTrace(String stackTrace);
 }

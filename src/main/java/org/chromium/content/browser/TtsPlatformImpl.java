@@ -4,19 +4,14 @@
 
 package org.chromium.content.browser;
 
-import android.app.Activity;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
-import org.chromium.base.ActivityState;
-import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.task.AsyncTask;
 import org.chromium.base.task.PostTask;
 import org.chromium.content_public.browser.UiThreadTaskTraits;
@@ -36,7 +31,7 @@ import java.util.Locale;
  * use PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, ...)  when calling back to C++.
  */
 @JNINamespace("content")
-class TtsPlatformImpl implements ActivityStateListener {
+class TtsPlatformImpl {
     private static class TtsVoice {
         private TtsVoice(String name, String language) {
             mName = name;
@@ -87,8 +82,6 @@ class TtsPlatformImpl implements ActivityStateListener {
             }
         });
         addOnUtteranceProgressListener();
-
-        ApplicationStatus.registerStateListenerForAllActivities(this);
     }
 
     /**
@@ -112,7 +105,6 @@ class TtsPlatformImpl implements ActivityStateListener {
      */
     @CalledByNative
     private void destroy() {
-        ApplicationStatus.unregisterActivityStateListener(this);
         mNativeTtsPlatformImplAndroid = 0;
     }
 
@@ -168,9 +160,6 @@ class TtsPlatformImpl implements ActivityStateListener {
     @CalledByNative
     private boolean speak(
             int utteranceId, String text, String lang, float rate, float pitch, float volume) {
-        // Don't speak when in the background.
-        if (!ApplicationStatus.hasVisibleActivities()) return false;
-
         if (!mInitialized) {
             mPendingUtterance =
                     new PendingUtterance(this, utteranceId, text, lang, rate, pitch, volume);
@@ -205,8 +194,7 @@ class TtsPlatformImpl implements ActivityStateListener {
     protected void sendEndEventOnUiThread(final String utteranceId) {
         PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, () -> {
             if (mNativeTtsPlatformImplAndroid != 0) {
-                TtsPlatformImplJni.get().onEndEvent(mNativeTtsPlatformImplAndroid,
-                        TtsPlatformImpl.this, Integer.parseInt(utteranceId));
+                nativeOnEndEvent(mNativeTtsPlatformImplAndroid, Integer.parseInt(utteranceId));
             }
         });
     }
@@ -217,8 +205,7 @@ class TtsPlatformImpl implements ActivityStateListener {
     protected void sendErrorEventOnUiThread(final String utteranceId) {
         PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, () -> {
             if (mNativeTtsPlatformImplAndroid != 0) {
-                TtsPlatformImplJni.get().onErrorEvent(mNativeTtsPlatformImplAndroid,
-                        TtsPlatformImpl.this, Integer.parseInt(utteranceId));
+                nativeOnErrorEvent(mNativeTtsPlatformImplAndroid, Integer.parseInt(utteranceId));
             }
         });
     }
@@ -229,8 +216,7 @@ class TtsPlatformImpl implements ActivityStateListener {
     protected void sendStartEventOnUiThread(final String utteranceId) {
         PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, () -> {
             if (mNativeTtsPlatformImplAndroid != 0) {
-                TtsPlatformImplJni.get().onStartEvent(mNativeTtsPlatformImplAndroid,
-                        TtsPlatformImpl.this, Integer.parseInt(utteranceId));
+                nativeOnStartEvent(mNativeTtsPlatformImplAndroid, Integer.parseInt(utteranceId));
             }
         });
     }
@@ -276,7 +262,7 @@ class TtsPlatformImpl implements ActivityStateListener {
 
     /**
      * Note: we enforce that this method is called on the UI thread, so
-     * we can call TtsPlatformImplJni.get().voicesChanged directly.
+     * we can call nativeVoicesChanged directly.
      */
     private void initialize() {
         TraceEvent.begin("TtsPlatformImpl:initialize");
@@ -318,8 +304,7 @@ class TtsPlatformImpl implements ActivityStateListener {
                 mVoices = voices;
                 mInitialized = true;
 
-                TtsPlatformImplJni.get().voicesChanged(
-                        mNativeTtsPlatformImplAndroid, TtsPlatformImpl.this);
+                nativeVoicesChanged(mNativeTtsPlatformImplAndroid);
 
                 if (mPendingUtterance != null) mPendingUtterance.speak();
 
@@ -328,23 +313,8 @@ class TtsPlatformImpl implements ActivityStateListener {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    @Override
-    public void onActivityStateChange(Activity activity, @ActivityState int newState) {
-        // Stop speech if all browser windows are no longer visible.
-        if (!ApplicationStatus.hasVisibleActivities()) {
-            TtsPlatformImplJni.get().requestTtsStop(
-                    mNativeTtsPlatformImplAndroid, TtsPlatformImpl.this);
-        }
-    }
-
-    @NativeMethods
-    interface Natives {
-        void requestTtsStop(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller);
-        void voicesChanged(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller);
-        void onEndEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller, int utteranceId);
-        void onStartEvent(
-                long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller, int utteranceId);
-        void onErrorEvent(
-                long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller, int utteranceId);
-    }
+    private native void nativeVoicesChanged(long nativeTtsPlatformImplAndroid);
+    private native void nativeOnEndEvent(long nativeTtsPlatformImplAndroid, int utteranceId);
+    private native void nativeOnStartEvent(long nativeTtsPlatformImplAndroid, int utteranceId);
+    private native void nativeOnErrorEvent(long nativeTtsPlatformImplAndroid, int utteranceId);
 }

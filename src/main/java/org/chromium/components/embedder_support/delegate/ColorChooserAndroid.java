@@ -6,10 +6,8 @@ package org.chromium.components.embedder_support.delegate;
 
 import android.content.Context;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
@@ -27,8 +25,7 @@ public class ColorChooserAndroid {
             @Override
             public void onColorChanged(int color) {
                 mDialog.dismiss();
-                ColorChooserAndroidJni.get().onColorChosen(
-                        mNativeColorChooserAndroid, ColorChooserAndroid.this, color);
+                nativeOnColorChosen(mNativeColorChooserAndroid, color);
             }
         };
 
@@ -50,7 +47,7 @@ public class ColorChooserAndroid {
             WindowAndroid windowAndroid, int initialColor, ColorSuggestion[] suggestions) {
         if (windowAndroid == null) return null;
         Context windowContext = windowAndroid.getContext().get();
-        if (ContextUtils.activityFromContext(windowContext) == null) return null;
+        if (WindowAndroid.activityFromContext(windowContext) == null) return null;
         ColorChooserAndroid chooser = new ColorChooserAndroid(
                 nativeColorChooserAndroid, windowContext, initialColor, suggestions);
         chooser.openColorChooser();
@@ -74,9 +71,6 @@ public class ColorChooserAndroid {
         array[index] = new ColorSuggestion(color, label);
     }
 
-    @NativeMethods
-    interface Natives {
-        // Implemented in color_chooser_android.cc
-        void onColorChosen(long nativeColorChooserAndroid, ColorChooserAndroid caller, int color);
-    }
+    // Implemented in color_chooser_android.cc
+    private native void nativeOnColorChosen(long nativeColorChooserAndroid, int color);
 }

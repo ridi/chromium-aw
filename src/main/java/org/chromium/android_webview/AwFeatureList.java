@@ -10,14 +10,13 @@ import android.content.pm.PackageManager;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Java accessor for base/feature_list.h state.
  */
 @JNINamespace("android_webview")
 @MainDex
-public final class AwFeatureList {
+final public class AwFeatureList {
     // Do not instantiate this class.
     private AwFeatureList() {}
 
@@ -26,6 +25,7 @@ public final class AwFeatureList {
     private static Boolean sPageStartedOnCommitForBrowserNavigations;
 
     private static boolean computePageStartedOnCommitForBrowserNavigations() {
+        if (!nativeIsEnabled(WEBVIEW_PAGE_STARTED_ON_COMMIT)) return false;
         if (GMS_PACKAGE.equals(ContextUtils.getApplicationContext().getPackageName())) {
             try {
                 PackageInfo gmsPackage =
@@ -60,17 +60,13 @@ public final class AwFeatureList {
      * @return Whether the feature is enabled or not.
      */
     public static boolean isEnabled(String featureName) {
-        return AwFeatureListJni.get().isEnabled(featureName);
+        return nativeIsEnabled(featureName);
     }
 
-    // Deprecated: Use AwFeatures.*
-    // This constant is here temporarily to avoid breaking Clank.
-    @Deprecated
+    // Alphabetical:
     public static final String WEBVIEW_CONNECTIONLESS_SAFE_BROWSING =
             "WebViewConnectionlessSafeBrowsing";
+    public static final String WEBVIEW_PAGE_STARTED_ON_COMMIT = "WebViewPageStartedOnCommit";
 
-    @NativeMethods
-    interface Natives {
-        boolean isEnabled(String featureName);
-    }
+    private static native boolean nativeIsEnabled(String featureName);
 }

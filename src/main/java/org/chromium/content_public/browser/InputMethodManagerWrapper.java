@@ -11,18 +11,10 @@ import android.os.ResultReceiver;
 import android.view.View;
 import android.view.inputmethod.CursorAnchorInfo;
 
-import org.chromium.ui.base.WindowAndroid;
-
 /**
  * Wrapper around Android's InputMethodManager so that the implementation can be swapped out.
  */
 public interface InputMethodManagerWrapper {
-    /** An embedder may implement this for multi-display support. */
-    public interface Delegate {
-        /** Whether the delegate has established an input connection. */
-        boolean hasInputConnection();
-    }
-
     /**
      * @see android.view.inputmethod.InputMethodManager#restartInput(View)
      */
@@ -68,15 +60,4 @@ public interface InputMethodManagerWrapper {
      * an input method app may wait longer when the user switches methods within the app.
      */
     void notifyUserAction();
-
-    /**
-     * Call this when WindowAndroid object has changed.
-     * @param newWindowAndroid The new WindowAndroid object.
-     */
-    void onWindowAndroidChanged(WindowAndroid newWindowAndroid);
-
-    /**
-     * Call this when non-null InputConnection has been created.
-     */
-    void onInputConnectionCreated();
 }

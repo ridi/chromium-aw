@@ -5,8 +5,7 @@
 package org.chromium.ui.base;
 
 import android.content.Context;
-
-import androidx.annotation.UiThread;
+import android.support.annotation.UiThread;
 
 import org.chromium.android_webview.R;
 import org.chromium.base.ContextUtils;

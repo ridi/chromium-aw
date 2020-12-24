@@ -11,17 +11,12 @@ import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInf
  * AwVariationsSeedBridge stores the seed loaded in Java for use in native. Native should clear the
  * stored seed after retrieving it, since the seed isn't needed in Java.
  */
-public final class AwVariationsSeedBridge {
+public class AwVariationsSeedBridge {
     private static SeedInfo sSeed;
-    private static boolean sIsLoadedSeedFresh;
 
     public static void setSeed(SeedInfo seed) {
         assert sSeed == null; // The seed should only be loaded once.
         sSeed = seed;
-    }
-
-    public static void setLoadedSeedFresh(boolean isLoadedSeedFresh) {
-        sIsLoadedSeedFresh = isLoadedSeedFresh;
     }
 
     @CalledByNative
@@ -45,7 +40,7 @@ public final class AwVariationsSeedBridge {
     }
 
     @CalledByNative
-    private static long getDate() {
+    private static String getDate() {
         return sSeed.date;
     }
 
@@ -58,11 +53,4 @@ public final class AwVariationsSeedBridge {
     private static byte[] getData() {
         return sSeed.seedData;
     }
-
-    @CalledByNative
-    private static boolean isLoadedSeedFresh() {
-        return sIsLoadedSeedFresh;
-    }
-
-    private AwVariationsSeedBridge() {}
 }

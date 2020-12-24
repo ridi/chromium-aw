@@ -4,18 +4,32 @@
 
 package org.chromium.components.minidump_uploader;
 
-import androidx.annotation.IntDef;
+import android.content.SharedPreferences;
+import android.support.annotation.IntDef;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.StreamUtil;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.components.minidump_uploader.util.CrashReportingPermissionManager;
+import org.chromium.components.minidump_uploader.util.HttpURLConnectionFactory;
+import org.chromium.components.minidump_uploader.util.HttpURLConnectionFactoryImpl;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.concurrent.Callable;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * This class tries to upload a minidump to the crash server.
@@ -26,9 +40,17 @@ import java.util.concurrent.Callable;
 public class MinidumpUploadCallable implements Callable<Integer> {
     private static final String TAG = "MDUploadCallable";
 
-    // "crash_day_dump_upload_count", "crash_dump_last_upload_day", "crash_dump_last_upload_week",
-    // "crash_dump_week_upload_size" - Deprecated prefs used for limiting crash report uploads over
-    // cellular network. Last used in M47, removed in M78.
+    // These preferences are obsolete and are kept only for removing from user preferences.
+    protected static final String PREF_DAY_UPLOAD_COUNT = "crash_day_dump_upload_count";
+    protected static final String PREF_LAST_UPLOAD_DAY = "crash_dump_last_upload_day";
+    protected static final String PREF_LAST_UPLOAD_WEEK = "crash_dump_last_upload_week";
+    protected static final String PREF_WEEK_UPLOAD_SIZE = "crash_dump_week_upload_size";
+
+    @VisibleForTesting
+    protected static final String CRASH_URL_STRING = "https://clients2.google.com/cr/report";
+
+    @VisibleForTesting
+    protected static final String CONTENT_TYPE_TMPL = "multipart/form-data; boundary=%s";
 
     @IntDef({MinidumpUploadStatus.SUCCESS, MinidumpUploadStatus.FAILURE,
             MinidumpUploadStatus.USER_DISABLED, MinidumpUploadStatus.DISABLED_BY_SAMPLING})
@@ -42,19 +64,21 @@ public class MinidumpUploadCallable implements Callable<Integer> {
 
     private final File mFileToUpload;
     private final File mLogfile;
+    private final HttpURLConnectionFactory mHttpURLConnectionFactory;
     private final CrashReportingPermissionManager mPermManager;
-    private final MinidumpUploader mMinidumpUploader;
 
     public MinidumpUploadCallable(
             File fileToUpload, File logfile, CrashReportingPermissionManager permissionManager) {
-        this(fileToUpload, logfile, new MinidumpUploader(), permissionManager);
+        this(fileToUpload, logfile, new HttpURLConnectionFactoryImpl(), permissionManager);
+        removeOutdatedPrefs(ContextUtils.getAppSharedPreferences());
     }
 
     public MinidumpUploadCallable(File fileToUpload, File logfile,
-            MinidumpUploader minidumpUploader, CrashReportingPermissionManager permissionManager) {
+            HttpURLConnectionFactory httpURLConnectionFactory,
+            CrashReportingPermissionManager permissionManager) {
         mFileToUpload = fileToUpload;
         mLogfile = logfile;
-        mMinidumpUploader = minidumpUploader;
+        mHttpURLConnectionFactory = httpURLConnectionFactory;
         mPermManager = permissionManager;
     }
 
@@ -83,9 +107,74 @@ public class MinidumpUploadCallable implements Callable<Integer> {
             }
         }
 
-        MinidumpUploader.Result result = mMinidumpUploader.upload(mFileToUpload);
-        if (result.isSuccess()) {
-            String uploadId = result.message();
+        HttpURLConnection connection =
+                mHttpURLConnectionFactory.createHttpURLConnection(CRASH_URL_STRING);
+        if (connection == null) {
+            return MinidumpUploadStatus.FAILURE;
+        }
+
+        FileInputStream minidumpInputStream = null;
+        try {
+            if (!configureConnectionForHttpPost(connection)) {
+                return MinidumpUploadStatus.FAILURE;
+            }
+            minidumpInputStream = new FileInputStream(mFileToUpload);
+            streamCopy(minidumpInputStream, new GZIPOutputStream(connection.getOutputStream()));
+            boolean success = handleExecutionResponse(connection);
+
+            return success ? MinidumpUploadStatus.SUCCESS : MinidumpUploadStatus.FAILURE;
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            // ArrayIndexOutOfBoundsException due to bad GZIPOutputStream implementation on some
+            // old sony devices.
+            // For now just log the stack trace.
+            Log.w(TAG, "Error while uploading " + mFileToUpload.getName(), e);
+            return MinidumpUploadStatus.FAILURE;
+        } finally {
+            connection.disconnect();
+
+            if (minidumpInputStream != null) {
+                StreamUtil.closeQuietly(minidumpInputStream);
+            }
+        }
+    }
+
+    /**
+     * Configures a HttpURLConnection to send a HTTP POST request for uploading the minidump.
+     *
+     * This also reads the content-type from the minidump file.
+     *
+     * @param connection the HttpURLConnection to configure
+     * @return true if successful.
+     * @throws IOException
+     */
+    private boolean configureConnectionForHttpPost(HttpURLConnection connection)
+            throws IOException {
+        // Read the boundary which we need for the content type.
+        String boundary = readBoundary();
+        if (boundary == null) {
+            return false;
+        }
+
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Connection", "Keep-Alive");
+        connection.setRequestProperty("Content-Encoding", "gzip");
+        connection.setRequestProperty("Content-Type", String.format(CONTENT_TYPE_TMPL, boundary));
+        return true;
+    }
+
+    /**
+     * Reads the HTTP response and cleans up successful uploads.
+     *
+     * @param connection the connection to read the response from
+     * @return true if the upload was successful, false otherwise.
+     * @throws IOException
+     */
+    private Boolean handleExecutionResponse(HttpURLConnection connection) throws IOException {
+        int responseCode = connection.getResponseCode();
+        if (isSuccessful(responseCode)) {
+            String responseContent = getResponseContentAsString(connection);
+            // The crash server returns the crash ID.
+            String uploadId = responseContent != null ? responseContent : "unknown";
             String crashFileName = mFileToUpload.getName();
             Log.i(TAG, "Minidump " + crashFileName + " uploaded successfully, id: " + uploadId);
 
@@ -100,25 +189,18 @@ public class MinidumpUploadCallable implements Callable<Integer> {
             } catch (IOException ioe) {
                 Log.e(TAG, "Fail to write uploaded entry to log file");
             }
-
-            return MinidumpUploadStatus.SUCCESS;
-        }
-
-        if (result.isUploadError()) {
+            return true;
+        } else {
             // Log the results of the upload. Note that periodic upload failures aren't bad
             // because we will need to throttle uploads in the future anyway.
             String msg = String.format(Locale.US, "Failed to upload %s with code: %d (%s).",
-                    mFileToUpload.getName(), result.errorCode(), result.message());
+                    mFileToUpload.getName(), responseCode, connection.getResponseMessage());
             Log.i(TAG, msg);
 
             // TODO(acleung): The return status informs us about why an upload might be
             // rejected. The next logical step is to put the reasons in an UMA histogram.
-        } else {
-            Log.e(TAG,
-                    "Local error while uploading " + mFileToUpload.getName() + ": "
-                            + result.message());
+            return false;
         }
-        return MinidumpUploadStatus.FAILURE;
     }
 
     /**
@@ -151,4 +233,93 @@ public class MinidumpUploadCallable implements Callable<Integer> {
         }
     }
 
+    /**
+     * Get the boundary from the file, we need it for the content-type.
+     *
+     * @return the boundary if found, else null.
+     * @throws IOException
+     */
+    private String readBoundary() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(mFileToUpload));
+        String boundary = reader.readLine();
+        reader.close();
+        if (boundary == null || boundary.trim().isEmpty()) {
+            Log.e(TAG, "Ignoring invalid crash dump: '" + mFileToUpload + "'");
+            return null;
+        }
+        boundary = boundary.trim();
+        if (!boundary.startsWith("--") || boundary.length() < 10) {
+            Log.e(TAG, "Ignoring invalidly bound crash dump: '" + mFileToUpload + "'");
+            return null;
+        }
+        // Note: The regex allows all alphanumeric characters, as well as dashes.
+        // This matches the code that generates minidumps boundaries:
+        // https://chromium.googlesource.com/crashpad/crashpad/+/0c322ecc3f711c34fbf85b2cbe69f38b8dbccf05/util/net/http_multipart_builder.cc#36
+        if (!boundary.matches("^[a-zA-Z0-9-]*$")) {
+            Log.e(TAG,
+                    "Ignoring invalidly bound crash dump '" + mFileToUpload
+                            + "' due to invalid boundary characters: '" + boundary + "'");
+            return null;
+        }
+        boundary = boundary.substring(2);  // Remove the initial --
+        return boundary;
+    }
+
+    /**
+     * Returns whether the response code indicates a successful HTTP request.
+     *
+     * @param responseCode the response code
+     * @return true if response code indicates success, false otherwise.
+     */
+    private static boolean isSuccessful(int responseCode) {
+        return responseCode == 200 || responseCode == 201 || responseCode == 202;
+    }
+
+    /**
+     * Reads the response from |connection| as a String.
+     *
+     * @param connection the connection to read the response from.
+     * @return the content of the response.
+     * @throws IOException
+     */
+    private static String getResponseContentAsString(HttpURLConnection connection)
+            throws IOException {
+        String responseContent = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        streamCopy(connection.getInputStream(), baos);
+        if (baos.size() > 0) {
+            responseContent = baos.toString();
+        }
+        return responseContent;
+    }
+
+    /**
+     * Copies all available data from |inStream| to |outStream|. Closes both
+     * streams when done.
+     *
+     * @param inStream the stream to read
+     * @param outStream the stream to write to
+     * @throws IOException
+     */
+    private static void streamCopy(InputStream inStream, OutputStream outStream)
+            throws IOException {
+        byte[] temp = new byte[4096];
+        int bytesRead = inStream.read(temp);
+        while (bytesRead >= 0) {
+            outStream.write(temp, 0, bytesRead);
+            bytesRead = inStream.read(temp);
+        }
+        inStream.close();
+        outStream.close();
+    }
+
+    // TODO(gayane): Remove this function and unused prefs in M51. crbug.com/555022
+    private void removeOutdatedPrefs(SharedPreferences sharedPreferences) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(PREF_DAY_UPLOAD_COUNT)
+                .remove(PREF_LAST_UPLOAD_DAY)
+                .remove(PREF_LAST_UPLOAD_WEEK)
+                .remove(PREF_WEEK_UPLOAD_SIZE)
+                .apply();
+    }
 }

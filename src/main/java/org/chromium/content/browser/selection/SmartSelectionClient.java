@@ -7,19 +7,16 @@ package org.chromium.content.browser.selection;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.view.textclassifier.TextClassifier;
 
-import androidx.annotation.IntDef;
-
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
-import org.chromium.ui.touch_selection.SelectionEventType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -62,9 +59,8 @@ public class SmartSelectionClient implements SelectionClient {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || windowAndroid == null) return null;
 
         // Don't do Smart Selection when device is not provisioned or in incognito mode.
-        if (!isDeviceProvisioned(windowAndroid.getContext().get()) || webContents.isIncognito()) {
+        if (!isDeviceProvisioned(windowAndroid.getContext().get()) || webContents.isIncognito())
             return null;
-        }
 
         return new SmartSelectionClient(callback, webContents, windowAndroid);
     }
@@ -74,12 +70,9 @@ public class SmartSelectionClient implements SelectionClient {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         mProvider = new SmartSelectionProvider(callback, windowAndroid);
         mCallback = callback;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            mSmartSelectionMetricLogger =
-                    SmartSelectionMetricsLogger.create(windowAndroid.getContext().get());
-        }
-        mNativeSmartSelectionClient =
-                SmartSelectionClientJni.get().init(SmartSelectionClient.this, webContents);
+        mSmartSelectionMetricLogger =
+                SmartSelectionMetricsLogger.create(windowAndroid.getContext().get());
+        mNativeSmartSelectionClient = nativeInit(webContents);
     }
 
     @CalledByNative
@@ -94,7 +87,7 @@ public class SmartSelectionClient implements SelectionClient {
     public void onSelectionChanged(String selection) {}
 
     @Override
-    public void onSelectionEvent(@SelectionEventType int eventType, float posXPix, float posYPix) {}
+    public void onSelectionEvent(int eventType, float posXPix, float posYPix) {}
 
     @Override
     public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {}
@@ -109,8 +102,7 @@ public class SmartSelectionClient implements SelectionClient {
     @Override
     public void cancelAllRequests() {
         if (mNativeSmartSelectionClient != 0) {
-            SmartSelectionClientJni.get().cancelAllRequests(
-                    mNativeSmartSelectionClient, SmartSelectionClient.this);
+            nativeCancelAllRequests(mNativeSmartSelectionClient);
         }
 
         mProvider.cancelAllRequests();
@@ -142,8 +134,7 @@ public class SmartSelectionClient implements SelectionClient {
             return;
         }
 
-        SmartSelectionClientJni.get().requestSurroundingText(mNativeSmartSelectionClient,
-                SmartSelectionClient.this, NUM_EXTRA_CHARS, callbackData);
+        nativeRequestSurroundingText(mNativeSmartSelectionClient, NUM_EXTRA_CHARS, callbackData);
     }
 
     @CalledByNative
@@ -182,11 +173,8 @@ public class SmartSelectionClient implements SelectionClient {
         return !TextUtils.isEmpty(text) && 0 <= start && start < end && end <= text.length();
     }
 
-    @NativeMethods
-    interface Natives {
-        long init(SmartSelectionClient caller, WebContents webContents);
-        void requestSurroundingText(long nativeSmartSelectionClient, SmartSelectionClient caller,
-                int numExtraCharacters, int callbackData);
-        void cancelAllRequests(long nativeSmartSelectionClient, SmartSelectionClient caller);
-    }
+    private native long nativeInit(WebContents webContents);
+    private native void nativeRequestSurroundingText(
+            long nativeSmartSelectionClient, int numExtraCharacters, int callbackData);
+    private native void nativeCancelAllRequests(long nativeSmartSelectionClient);
 }

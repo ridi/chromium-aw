@@ -7,7 +7,6 @@ package org.chromium.android_webview.gfx;
 import android.graphics.Canvas;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Implementation of draw_fn.h.
@@ -23,27 +22,26 @@ public class AwDrawFnImpl implements AwFunctor {
 
     public AwDrawFnImpl(DrawFnAccess access) {
         mAccess = access;
-        mNativeAwDrawFnImpl = AwDrawFnImplJni.get().create();
-        mHandle = AwDrawFnImplJni.get().getFunctorHandle(mNativeAwDrawFnImpl, AwDrawFnImpl.this);
+        mNativeAwDrawFnImpl = nativeCreate();
+        mHandle = nativeGetFunctorHandle(mNativeAwDrawFnImpl);
     }
 
     @Override
     public void destroy() {
         assert mNativeAwDrawFnImpl != 0;
-        AwDrawFnImplJni.get().releaseHandle(mNativeAwDrawFnImpl, AwDrawFnImpl.this);
+        nativeReleaseHandle(mNativeAwDrawFnImpl);
         // Native side is free to destroy itself after ReleaseHandle.
         mNativeAwDrawFnImpl = 0;
     }
 
     public static void setDrawFnFunctionTable(long functionTablePointer) {
-        AwDrawFnImplJni.get().setDrawFnFunctionTable(functionTablePointer);
+        nativeSetDrawFnFunctionTable(functionTablePointer);
     }
 
     @Override
     public long getNativeCompositorFrameConsumer() {
         assert mNativeAwDrawFnImpl != 0;
-        return AwDrawFnImplJni.get().getCompositorFrameConsumer(
-                mNativeAwDrawFnImpl, AwDrawFnImpl.this);
+        return nativeGetCompositorFrameConsumer(mNativeAwDrawFnImpl);
     }
 
     @Override
@@ -56,12 +54,10 @@ public class AwDrawFnImpl implements AwFunctor {
     @Override
     public void trimMemory() {}
 
-    @NativeMethods
-    interface Natives {
-        int getFunctorHandle(long nativeAwDrawFnImpl, AwDrawFnImpl caller);
-        long getCompositorFrameConsumer(long nativeAwDrawFnImpl, AwDrawFnImpl caller);
-        void releaseHandle(long nativeAwDrawFnImpl, AwDrawFnImpl caller);
-        void setDrawFnFunctionTable(long functionTablePointer);
-        long create();
-    }
+    private native int nativeGetFunctorHandle(long nativeAwDrawFnImpl);
+    private native long nativeGetCompositorFrameConsumer(long nativeAwDrawFnImpl);
+    private native void nativeReleaseHandle(long nativeAwDrawFnImpl);
+
+    private static native void nativeSetDrawFnFunctionTable(long functionTablePointer);
+    private static native long nativeCreate();
 }

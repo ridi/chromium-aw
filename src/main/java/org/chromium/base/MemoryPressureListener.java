@@ -9,7 +9,6 @@ import android.content.ComponentCallbacks2;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.memory.MemoryPressureCallback;
 
 /**
@@ -60,7 +59,7 @@ public class MemoryPressureListener {
      */
     @CalledByNative
     private static void addNativeCallback() {
-        addCallback((pressure) -> MemoryPressureListenerJni.get().onMemoryPressure(pressure));
+        addCallback(MemoryPressureListener::nativeOnMemoryPressure);
     }
 
     /**
@@ -127,8 +126,5 @@ public class MemoryPressureListener {
         activity.onTrimMemory(level);
     }
 
-    @NativeMethods
-    interface Natives {
-        void onMemoryPressure(@MemoryPressureLevel int pressure);
-    }
+    private static native void nativeOnMemoryPressure(@MemoryPressureLevel int pressure);
 }

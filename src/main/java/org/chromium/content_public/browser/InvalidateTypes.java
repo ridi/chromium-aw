@@ -10,14 +10,14 @@
 
 package org.chromium.content_public.browser;
 
-import androidx.annotation.IntDef;
+import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
     InvalidateTypes.URL, InvalidateTypes.TAB, InvalidateTypes.LOAD, InvalidateTypes.TITLE,
-    InvalidateTypes.AUDIO, InvalidateTypes.ALL
+    InvalidateTypes.ALL
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface InvalidateTypes {
@@ -28,9 +28,5 @@ public @interface InvalidateTypes {
    */
   int LOAD = 1 << 2;
   int TITLE = 1 << 3;
-  int AUDIO = 1 << 4;
-  /**
-   * inaudible. TODO(crbug.com/846374): remove this.
-   */
-  int ALL = (1 << 5) - 1;
+  int ALL = (1 << 4) - 1;
 }

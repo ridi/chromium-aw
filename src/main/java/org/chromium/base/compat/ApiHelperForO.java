@@ -5,21 +5,20 @@
 package org.chromium.base.compat;
 
 import android.annotation.TargetApi;
-import android.content.ClipDescription;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.view.Display;
 import android.view.View;
 
-import org.chromium.base.annotations.VerifiesOnO;
+import org.chromium.base.annotations.DoNotInline;
 
 /**
  * Utility class to use new APIs that were added in O (API level 26). These need to exist in a
  * separate class so that Android framework can successfully verify classes without
  * encountering the new APIs.
  */
-@VerifiesOnO
+@DoNotInline
 @TargetApi(Build.VERSION_CODES.O)
 public final class ApiHelperForO {
     private ApiHelperForO() {}
@@ -42,10 +41,5 @@ public final class ApiHelperForO {
     /** See {@link View#setDefaultFocusHighlightEnabled(boolean) }. */
     public static void setDefaultFocusHighlightEnabled(View view, boolean enabled) {
         view.setDefaultFocusHighlightEnabled(enabled);
-    }
-
-    /** See {@link ClipDescription#getTimestamp()}. */
-    public static long getTimestamp(ClipDescription clipDescription) {
-        return clipDescription.getTimestamp();
     }
 }

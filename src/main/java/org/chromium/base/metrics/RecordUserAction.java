@@ -4,12 +4,10 @@
 
 package org.chromium.base.metrics;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Java API for recording UMA actions.
@@ -40,14 +38,14 @@ public class RecordUserAction {
         if (sDisabledBy != null) return;
 
         if (ThreadUtils.runningOnUiThread()) {
-            RecordUserActionJni.get().recordUserAction(action);
+            nativeRecordUserAction(action);
             return;
         }
 
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                RecordUserActionJni.get().recordUserAction(action);
+                nativeRecordUserAction(action);
             }
         });
     }
@@ -69,7 +67,7 @@ public class RecordUserAction {
      */
     public static void setActionCallbackForTesting(UserActionCallback callback) {
         assert sNativeActionCallback == 0;
-        sNativeActionCallback = RecordUserActionJni.get().addActionCallbackForTesting(callback);
+        sNativeActionCallback = nativeAddActionCallbackForTesting(callback);
     }
 
     /**
@@ -77,14 +75,11 @@ public class RecordUserAction {
      */
     public static void removeActionCallbackForTesting() {
         assert sNativeActionCallback != 0;
-        RecordUserActionJni.get().removeActionCallbackForTesting(sNativeActionCallback);
+        nativeRemoveActionCallbackForTesting(sNativeActionCallback);
         sNativeActionCallback = 0;
     }
 
-    @NativeMethods
-    interface Natives {
-        void recordUserAction(String action);
-        long addActionCallbackForTesting(UserActionCallback callback);
-        void removeActionCallbackForTesting(long callbackId);
-    }
+    private static native void nativeRecordUserAction(String action);
+    private static native long nativeAddActionCallbackForTesting(UserActionCallback callback);
+    private static native void nativeRemoveActionCallbackForTesting(long callbackId);
 }

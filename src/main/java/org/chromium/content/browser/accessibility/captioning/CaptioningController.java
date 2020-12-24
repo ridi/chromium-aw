@@ -9,7 +9,6 @@ import android.os.Build;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -22,8 +21,7 @@ public class CaptioningController implements SystemCaptioningBridge.SystemCaptio
 
     public CaptioningController(WebContents webContents) {
         mSystemCaptioningBridge = CaptioningBridgeFactory.getSystemCaptioningBridge();
-        mNativeCaptioningController =
-                CaptioningControllerJni.get().init(CaptioningController.this, webContents);
+        mNativeCaptioningController = nativeInit(webContents);
     }
 
     @SuppressWarnings("unused")
@@ -43,8 +41,7 @@ public class CaptioningController implements SystemCaptioningBridge.SystemCaptio
     @Override
     public void onSystemCaptioningChanged(TextTrackSettings settings) {
         if (mNativeCaptioningController == 0) return;
-        CaptioningControllerJni.get().setTextTrackSettings(mNativeCaptioningController,
-                CaptioningController.this, settings.getTextTracksEnabled(),
+        nativeSetTextTrackSettings(mNativeCaptioningController, settings.getTextTracksEnabled(),
                 settings.getTextTrackBackgroundColor(), settings.getTextTrackFontFamily(),
                 settings.getTextTrackFontStyle(), settings.getTextTrackFontVariant(),
                 settings.getTextTrackTextColor(), settings.getTextTrackTextShadow(),
@@ -59,12 +56,9 @@ public class CaptioningController implements SystemCaptioningBridge.SystemCaptio
         mSystemCaptioningBridge.removeListener(this);
     }
 
-    @NativeMethods
-    interface Natives {
-        long init(CaptioningController caller, WebContents webContents);
-        void setTextTrackSettings(long nativeCaptioningController, CaptioningController caller,
-                boolean textTracksEnabled, String textTrackBackgroundColor,
-                String textTrackFontFamily, String textTrackFontStyle, String textTrackFontVariant,
-                String textTrackTextColor, String textTrackTextShadow, String textTrackTextSize);
-    }
+    private native long nativeInit(WebContents webContents);
+    private native void nativeSetTextTrackSettings(long nativeCaptioningController,
+            boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily,
+            String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor,
+            String textTrackTextShadow, String textTrackTextSize);
 }

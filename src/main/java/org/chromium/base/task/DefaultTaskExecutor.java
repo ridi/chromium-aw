@@ -30,9 +30,8 @@ class DefaultTaskExecutor implements TaskExecutor {
     }
 
     /**
-     * If CurrentThread is not specified, or we are being called from within a threadpool task
-     * this maps to a single thread within the native thread pool. If so we can't run tasks
-     * posted on it until native has started.
+     * This maps to a single thread within the native thread pool. Due to that contract we
+     * can't run tasks posted on it until native has started.
      */
     @Override
     public SingleThreadTaskRunner createSingleThreadTaskRunner(TaskTraits taskTraits) {

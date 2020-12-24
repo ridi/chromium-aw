@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import androidx.annotation.VisibleForTesting;
+import org.chromium.base.VisibleForTesting;
 
 /**
  * An interface to help switch between AdapterInputConnection and ChromiumInputConnection.

@@ -6,18 +6,17 @@ package org.chromium.base.compat;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageInfo;
-import android.location.LocationManager;
 import android.net.LinkProperties;
 import android.os.Build;
 
-import org.chromium.base.annotations.VerifiesOnP;
+import org.chromium.base.annotations.DoNotInline;
 
 /**
  * Utility class to use new APIs that were added in P (API level 28). These need to exist in a
  * separate class so that Android framework can successfully verify classes without
  * encountering the new APIs.
  */
-@VerifiesOnP
+@DoNotInline
 @TargetApi(Build.VERSION_CODES.P)
 public final class ApiHelperForP {
     private ApiHelperForP() {}
@@ -35,10 +34,5 @@ public final class ApiHelperForP {
     /** See {@link PackageInfo#getLongVersionCode() }. */
     public static long getLongVersionCode(PackageInfo packageInfo) {
         return packageInfo.getLongVersionCode();
-    }
-
-    /** See {@link LocationManager#isLocationEnabled() }. */
-    public static boolean isLocationEnabled(LocationManager locationManager) {
-        return locationManager.isLocationEnabled();
     }
 }

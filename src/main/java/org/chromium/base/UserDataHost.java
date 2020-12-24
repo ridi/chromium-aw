@@ -57,20 +57,9 @@ public final class UserDataHost {
 
     private HashMap<Class<? extends UserData>, UserData> mUserDataMap = new HashMap<>();
 
-    private static void checkArgument(boolean condition) {
-        if (!condition) {
-            throw new IllegalArgumentException(
-                    "Neither key nor object of UserDataHost can be null.");
-        }
-    }
-
     private void checkThreadAndState() {
-        if (mThreadId != Process.myTid()) {
-            throw new IllegalStateException("UserData must only be used on a single thread.");
-        }
-        if (mUserDataMap == null) {
-            throw new IllegalStateException("Operation is not allowed after destroy().");
-        }
+        assert mThreadId == Process.myTid() : "UserData must only be used on a single thread.";
+        assert mUserDataMap != null : "Operation is not allowed after destroy()";
     }
 
     /**
@@ -81,7 +70,7 @@ public final class UserDataHost {
      */
     public <T extends UserData> T setUserData(Class<T> key, T object) {
         checkThreadAndState();
-        checkArgument(key != null && object != null);
+        assert key != null && object != null : "Neither key nor object of UserDataHost can be null";
 
         mUserDataMap.put(key, object);
         return getUserData(key);
@@ -96,24 +85,22 @@ public final class UserDataHost {
      */
     public <T extends UserData> T getUserData(Class<T> key) {
         checkThreadAndState();
-        checkArgument(key != null);
+        assert key != null : "UserDataHost key cannot be null";
 
         return key.cast(mUserDataMap.get(key));
     }
 
     /**
-     * Removes the mapping for a key from this map. Exception will be thrown if
+     * Removes the mapping for a key from this map. Assertion will be thrown if
      * the given key has no mapping.
      * @param key Type token for which the specified object is to be removed.
      * @return The previous value associated with {@code key}.
      */
     public <T extends UserData> T removeUserData(Class<T> key) {
         checkThreadAndState();
-        checkArgument(key != null);
+        assert key != null : "UserDataHost key cannot be null";
 
-        if (!mUserDataMap.containsKey(key)) {
-            throw new IllegalStateException("UserData for the key is not present.");
-        }
+        assert mUserDataMap.containsKey(key) : "UserData for the key is not present";
         return key.cast(mUserDataMap.remove(key));
     }
 

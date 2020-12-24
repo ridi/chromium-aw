@@ -4,7 +4,7 @@
 
 package org.chromium.android_webview;
 
-import androidx.annotation.IntDef;
+import android.support.annotation.IntDef;
 
 import org.chromium.base.metrics.RecordHistogram;
 

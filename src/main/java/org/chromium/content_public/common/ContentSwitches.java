@@ -76,11 +76,6 @@ public final class ContentSwitches {
     // have an effect. 0 disables MSAA.
     public static final String ACCELERATED_CANVAS2D_MSAA_SAMPLE_COUNT = "canvas-msaa-sample-count";
 
-    // Allows processing of input before a frame has been committed.
-    // TODO(schenney): crbug.com/987626. Used by headless. Look for a way not
-    // involving a command line switch.
-    public static final String ALLOW_PRE_COMMIT_INPUT = "allow-pre-commit-input";
-
     // By default, file:// URIs cannot read other file:// URIs. This is an
     // override for developers who need the old behavior for testing.
     public static final String ALLOW_FILE_ACCESS_FROM_FILES = "allow-file-access-from-files";
@@ -93,12 +88,8 @@ public final class ContentSwitches {
     public static final String ALLOW_LOOPBACK_IN_PEER_CONNECTION = "allow-loopback-in-peer-connection";
 
     // Allow a page to show popups during its unloading.
-    // TODO(https://crbug.com/937569): Remove this in Chrome 88.
+    // TODO(https://crbug.com/937569): Remove this in Chrome 82.
     public static final String ALLOW_POPUPS_DURING_PAGE_UNLOAD = "allow-popups-during-page-unload";
-
-    // Allow a page to send synchronus XHR during its unloading.
-    // TODO(https://crbug.com/1003101): Remove this in Chrome 88.
-    public static final String ALLOW_SYNC_XHR_IN_PAGE_DISMISSAL = "allow-sync-xhr-in-page-dimissal";
 
     // Uses the android SkFontManager on linux. The specified directory should
     // include the configuration xml file with the name "fonts.xml".
@@ -130,9 +121,6 @@ public final class ContentSwitches {
 
 
     public static final String DEFAULT_TILE_HEIGHT = "default-tile-height";
-
-    // Sets the min tile height for GPU raster.
-    public static final String MIN_HEIGHT_FOR_GPU_RASTER_TILE = "min-height-for-gpu-raster-tile";
 
     // Disable antialiasing on 2d canvas.
     public static final String DISABLE2D_CANVAS_ANTIALIASING = "disable-canvas-aa";
@@ -171,6 +159,11 @@ public final class ContentSwitches {
     // Applied after kEnableBlinkFeatures, and after other flags that change these
     // features.
     public static final String DISABLE_BLINK_FEATURES = "disable-blink-features";
+
+    // Enable Web Bluetooth Scanning
+    // This switch enables Web Bluetooth Scanning without any
+    // permission prompt for testing.
+    public static final String ENABLE_WEB_BLUETOOTH_SCANNING = "enable-web-bluetooth-scanning";
 
     // Disables HTML5 DB support.
     public static final String DISABLE_DATABASES = "disable-databases";
@@ -277,6 +270,9 @@ public final class ContentSwitches {
     // the use of persistent gpu memory buffers.
     public static final String DISABLE_PARTIAL_RASTER = "disable-partial-raster";
 
+    // Enable partial raster in the renderer.
+    public static final String ENABLE_PARTIAL_RASTER = "enable-partial-raster";
+
     // Disable Pepper3D.
     public static final String DISABLE_PEPPER3D = "disable-pepper-3d";
 
@@ -358,6 +354,9 @@ public final class ContentSwitches {
     // Don't enforce the same-origin policy. (Used by people testing their sites.)
     public static final String DISABLE_WEB_SECURITY = "disable-web-security";
 
+    // Disables Blink's XSSAuditor. The XSSAuditor mitigates reflective XSS.
+    public static final String DISABLE_XSS_AUDITOR = "disable-xss-auditor";
+
     // Disable rasterizer that writes directly to GPU memory associated with tiles.
     public static final String DISABLE_ZERO_COPY = "disable-zero-copy";
 
@@ -398,14 +397,8 @@ public final class ContentSwitches {
     // just a keyboard. See https://crbug.com/977390 for links to i2i.
     public static final String ENABLE_CARET_BROWSING = "enable-caret-browsing";
 
-    // Enables experimental WebAssembly features.
-    public static final String ENABLE_EXPERIMENTAL_WEB_ASSEMBLY_FEATURES = "enable-experimental-webassembly-features";
-
     // Enables Web Platform features that are in development.
     public static final String ENABLE_EXPERIMENTAL_WEB_PLATFORM_FEATURES = "enable-experimental-web-platform-features";
-
-    // Enables support for FTP URLs. See https://crbug.com/333943.
-    public static final String ENABLE_FTP = "enable-ftp";
 
     // Disables all RuntimeEnabledFeatures that can be enabled via OriginTrials.
     public static final String DISABLE_ORIGIN_TRIAL_CONTROLLED_BLINK_FEATURES = "disable-origin-trial-controlled-blink-features";
@@ -455,7 +448,7 @@ public final class ContentSwitches {
     // is only useful for tests.
     public static final String ENABLE_SERVICE_BINARY_LAUNCHER = "enable-service-binary-launcher";
 
-    // Enables the Skia benchmarking extension.
+    // Enables the Skia benchmarking extension
     public static final String ENABLE_SKIA_BENCHMARKING = "enable-skia-benchmarking";
 
     // On platforms that support it, enables smooth scroll animation.
@@ -471,6 +464,10 @@ public final class ContentSwitches {
     // Blocks insecure usage of a number of powerful features (device orientation,
     // for example) that we haven't yet deprecated for the web at large.
     public static final String ENABLE_STRICT_POWERFUL_FEATURE_RESTRICTIONS = "enable-strict-powerful-feature-restrictions";
+
+    // Feature flag to enable HTTPS subresource internal redirects to compressed
+    // versions.
+    public static final String ENABLE_SUBRESOURCE_REDIRECT = "enable-subresource-redirect";
 
     // Enabled threaded compositing for web tests.
     public static final String ENABLE_THREADED_COMPOSITING = "enable-threaded-compositing";
@@ -508,6 +505,9 @@ public final class ContentSwitches {
     // Enables WebGL rendering into a scanout buffer for overlay support.
     public static final String ENABLE_WEB_GL_IMAGE_CHROMIUM = "enable-webgl-image-chromium";
 
+    // Enables interaction with virtual reality devices.
+    public static final String ENABLE_WEB_VR = "enable-webvr";
+
     // Enable rasterizer that writes directly to GPU memory associated with tiles.
     public static final String ENABLE_ZERO_COPY = "enable-zero-copy";
 
@@ -536,12 +536,6 @@ public final class ContentSwitches {
 
     // Turns on skia deferred display list for out of process raster.
     public static final String ENABLE_OOP_RASTERIZATION_DDL = "enable-oop-rasterization-ddl";
-
-    // Pins the default referrer policy to the pre-M80 value of
-    // no-referrer-when-downgrade.
-    // TODO(crbug.com/1016541): After M82, remove when the corresponding
-    // enterprise policy has been deleted.
-    public static final String FORCE_LEGACY_DEFAULT_REFERRER_POLICY = "force-legacy-default-referrer-policy";
 
     // The number of multisample antialiasing samples for GPU rasterization.
     // Requires MSAA support on GPU to have an effect. 0 disables MSAA.
@@ -601,11 +595,11 @@ public final class ContentSwitches {
     // Enables experimental Harmony (ECMAScript 6) features.
     public static final String JAVA_SCRIPT_HARMONY = "javascript-harmony";
 
-    // Specifies the flags passed to JS engine.
+    // Specifies the flags passed to JS engine
     public static final String JAVA_SCRIPT_FLAGS = "js-flags";
 
-    // Flag to launch tests in the browser process.
-    public static final String LAUNCH_AS_BROWSER = "as-browser";
+    // Overrides the Lite Page Subresource host.
+    public static final String LITE_PAGES_SERVER_SUBRESOURCE_HOST = "litepage-server-subresource-host";
 
     // Logs GPU control list decisions when enforcing blacklist rules.
     public static final String LOG_GPU_CONTROL_LIST_DECISIONS = "log-gpu-control-list-decisions";
@@ -760,12 +754,6 @@ public final class ContentSwitches {
     // that's needed to show a dialog.
     public static final String RENDERER_STARTUP_DIALOG = "renderer-startup-dialog";
 
-    // Manual tests only run when --run-manual is specified. This allows writing
-    // tests that don't run automatically but are still in the same test binary.
-    // This is useful so that a team that wants to run a few tests doesn't have to
-    // add a new binary that must be compiled on all builds.
-    public static final String RUN_MANUAL_TESTS_FLAG = "run-manual";
-
     // Causes the process to run as a sandbox IPC subprocess.
     public static final String SANDBOX_IPC_PROCESS = "sandbox-ipc";
 
@@ -831,9 +819,9 @@ public final class ContentSwitches {
     // the platform default is used.
     public static final String TOUCH_TEXT_SELECTION_STRATEGY = "touch-selection-strategy";
 
-    // Accepts specified file URL of a trustable WebBundle file. This flag
-    // should be used only for testing purpose.
-    public static final String TRUSTABLE_WEB_BUNDLE_FILE_URL = "trustable-web-bundles-file-url";
+    // Accepts specified file as a trustable BundledExchanges file. This flag should
+    // be used only for testing purpose.
+    public static final String TRUSTABLE_BUNDLED_EXCHANGES_FILE = "trustable-bundled-exchanges-file";
 
     // Replaces the existing codecs supported in peer connection with a single fake
     // codec entry that create a fake video encoder and decoder.
@@ -870,10 +858,8 @@ public final class ContentSwitches {
     // kWaitForDebugger flag passed on or not.
     public static final String WAIT_FOR_DEBUGGER_CHILDREN = "wait-for-debugger-children";
 
-    // Flag used by WebUI test runners to wait for debugger to be attached.
-    public static final String WAIT_FOR_DEBUGGER_WEB_UI = "wait-for-debugger-webui";
-
-    // Set the antialiasing method used for webgl. (none, explicit, implicit)
+    // Set the antialiasing method used for webgl. (none, explicit, implicit, or
+    // screenspace)
     public static final String WEBGL_ANTIALIASING_MODE = "webgl-antialiasing-mode";
 
     // Set a default sample count for webgl if msaa is enabled.
@@ -930,34 +916,6 @@ public final class ContentSwitches {
     // without restarting the browser and relaunching without this flag.
     public static final String WEB_RTC_LOCAL_EVENT_LOGGING = "webrtc-event-logging";
 
-    // Forcibly enable and select the specified runtime for webxr.
-    // Note that this provides an alternative means of enabling a runtime, and will
-    // also functionally disable all other runtimes.
-    public static final String WEB_XR_FORCE_RUNTIME = "force-webxr-runtime";
-
-    // Tell WebXr to assume that it does not support any runtimes.
-    public static final String WEB_XR_RUNTIME_NONE = "no-vr-runtime";
-
-
-    public static final String WEB_XR_RUNTIME_ORIENTATION_SENSORS = "orientation-sensors";
-
-    // The following are the runtimes that WebXr supports.
-    public static final String WEB_XR_RUNTIME_OCULUS = "oculus";
-
-
-    public static final String WEB_XR_RUNTIME_OPEN_VR = "openvr";
-
-
-    public static final String WEB_XR_RUNTIME_OPEN_XR = "openxr";
-
-
-    public static final String WEB_XR_RUNTIME_WMR = "windows-mixed-reality";
-
-    // This switch allows the Web Components v0 APIs to be re-enabled temporarily
-    // from M80 through M84.
-    // TODO(937746): Remove this after M84.
-    public static final String WEB_COMPONENTS_V0_ENABLED = "web-components-v0-enabled";
-
     // Disable Media Session API
     public static final String DISABLE_MEDIA_SESSION_API = "disable-media-session-api";
 
@@ -1008,6 +966,12 @@ public final class ContentSwitches {
     // Linux speech service. Because it's buggy, the user must explicitly
     // enable it so that visiting a random webpage can't cause instability.
     public static final String ENABLE_SPEECH_DISPATCHER = "enable-speech-dispatcher";
+
+    // A time_t. Passed by session_manager into the Chrome user session, indicating
+    // that if Chrome crashes before the indicated time, session_manager will
+    // consider this to be a crash-loop situation and log the user out. Chrome
+    // mostly just passes this to crash_reporter if it crashes.
+    public static final String CRASH_LOOP_BEFORE = "crash-loop-before";
 
     // /prefetch:# arguments to use when launching various process types. It has
     // been observed that when file reads are consistent for 3 process launches with

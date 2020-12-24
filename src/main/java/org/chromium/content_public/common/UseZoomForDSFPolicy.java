@@ -5,7 +5,6 @@
 package org.chromium.content_public.common;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * This is a utility class to wrap use_zoom_for_dsf_policy.cc.
@@ -13,14 +12,11 @@ import org.chromium.base.annotations.NativeMethods;
 @JNINamespace("content")
 public final class UseZoomForDSFPolicy {
     public static boolean isUseZoomForDSFEnabled() {
-        return UseZoomForDSFPolicyJni.get().isUseZoomForDSFEnabled();
+        return nativeIsUseZoomForDSFEnabled();
     }
+
+    private static native boolean nativeIsUseZoomForDSFEnabled();
 
     // Do not instantiate this class.
     private UseZoomForDSFPolicy() {}
-
-    @NativeMethods
-    interface Natives {
-        boolean isUseZoomForDSFEnabled();
-    }
 }

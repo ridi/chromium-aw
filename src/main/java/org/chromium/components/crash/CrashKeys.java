@@ -4,11 +4,10 @@
 
 package org.chromium.components.crash;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
@@ -75,7 +74,7 @@ public class CrashKeys {
     public void set(@CrashKeyIndex int keyIndex, @Nullable String value) {
         ThreadUtils.assertOnUiThread();
         if (mFlushed) {
-            CrashKeysJni.get().set(CrashKeys.this, keyIndex, value);
+            nativeSet(keyIndex, value);
             return;
         }
         mValues.set(keyIndex, value);
@@ -91,13 +90,10 @@ public class CrashKeys {
 
         assert !mFlushed;
         for (@CrashKeyIndex int i = 0; i < mValues.length(); i++) {
-            CrashKeysJni.get().set(CrashKeys.this, i, mValues.getAndSet(i, null));
+            nativeSet(i, mValues.getAndSet(i, null));
         }
         mFlushed = true;
     }
 
-    @NativeMethods
-    interface Natives {
-        void set(CrashKeys caller, int key, String value);
-    }
+    private native void nativeSet(int key, String value);
 }

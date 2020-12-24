@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.chromium.android_webview.R;
-import org.chromium.base.PackageManagerUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.SelectionPopupController;
@@ -62,8 +61,8 @@ public class AwActionModeCallback implements ActionMode.Callback {
     private boolean isWebSearchAvailable() {
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
         intent.putExtra(SearchManager.EXTRA_NEW_SEARCH, true);
-        return !PackageManagerUtils.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-                        .isEmpty();
+        return mContext.getPackageManager().queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
     @Override

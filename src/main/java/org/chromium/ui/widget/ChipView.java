@@ -6,17 +6,16 @@ package org.chromium.ui.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import androidx.core.view.ViewCompat;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
+import android.support.annotation.Px;
+import android.support.annotation.StyleRes;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.Px;
-import androidx.annotation.StyleRes;
 
 import org.chromium.android_webview.R;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -101,18 +100,6 @@ public class ChipView extends LinearLayout {
     }
 
     /**
-     * Unlike setSelected, setEnabled doesn't properly propagate the new state to its subcomponents.
-     * Enforce this so ColorStateLists used for the text appearance apply as intended.
-     * @param enabled The new enabled state for the chip view and the TextViews owned by it.
-     */
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        getPrimaryTextView().setEnabled(enabled);
-        if (mSecondaryText != null) mSecondaryText.setEnabled(enabled);
-    }
-
-    /**
      * Sets the icon at the start of the chip view.
      * @param icon The resource id pointing to the icon.
      */
@@ -155,10 +142,6 @@ public class ChipView extends LinearLayout {
             mSecondaryText =
                     new TextView(new ContextThemeWrapper(getContext(), R.style.ChipTextView));
             ApiCompatibilityUtils.setTextAppearance(mSecondaryText, mSecondaryTextAppearanceId);
-            // Ensure that basic state changes are aligned with the ChipView. They update
-            // automatically once the view is part of the hierarchy.
-            mSecondaryText.setSelected(isSelected());
-            mSecondaryText.setEnabled(isEnabled());
             addView(mSecondaryText);
         }
         return mSecondaryText;

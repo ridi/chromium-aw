@@ -5,8 +5,7 @@
 package org.chromium.ui.resources.dynamics;
 
 import android.graphics.Bitmap;
-
-import androidx.annotation.CallSuper;
+import android.support.annotation.CallSuper;
 
 import org.chromium.ui.resources.Resource;
 import org.chromium.ui.resources.ResourceLoader.ResourceLoaderCallback;

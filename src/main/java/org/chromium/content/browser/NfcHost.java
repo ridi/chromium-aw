@@ -10,12 +10,13 @@ import android.util.SparseArray;
 import org.chromium.base.Callback;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.ui.base.WindowAndroid;
 
 /** Tracks the Activiy for a given WebContents on behalf of a NFC instance that cannot talk
  * directly to WebContents.
  */
-class NfcHost implements WindowEventObserver {
+class NfcHost extends WebContentsObserver implements WindowEventObserver {
     private static final SparseArray<NfcHost> sContextHostsMap = new SparseArray<NfcHost>();
 
     // The WebContents with which this host is associated.
@@ -36,12 +37,13 @@ class NfcHost implements WindowEventObserver {
     }
 
     @CalledByNative
-    private static void create(WebContents webContents, int contextId) {
-        // The ctor will put the instance into sContextHostsMap.
-        new NfcHost(webContents, contextId);
+    private static NfcHost create(WebContents webContents, int contextId) {
+        return new NfcHost(webContents, contextId);
     }
 
     NfcHost(WebContents webContents, int contextId) {
+        super(webContents);
+
         mWebContents = webContents;
 
         // NFC will not work if there is no WindowEventObserverManager associated with the
@@ -78,7 +80,16 @@ class NfcHost implements WindowEventObserver {
     public void stopTrackingActivityChanges() {
         mCallback = null;
         WindowEventObserverManager.from(mWebContents).removeObserver(this);
+    }
+
+    /**
+     * Tears down current and future Activity tracking.
+     */
+    @Override
+    public void destroy() {
+        stopTrackingActivityChanges();
         sContextHostsMap.remove(mContextId);
+        super.destroy();
     }
 
     /**

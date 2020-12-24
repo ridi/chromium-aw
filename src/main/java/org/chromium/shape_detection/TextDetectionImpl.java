@@ -19,6 +19,7 @@ import org.chromium.base.Log;
 import org.chromium.gfx.mojom.PointF;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
+import org.chromium.services.service_manager.InterfaceFactory;
 import org.chromium.shape_detection.mojom.TextDetection;
 import org.chromium.shape_detection.mojom.TextDetectionResult;
 
@@ -88,13 +89,21 @@ public class TextDetectionImpl implements TextDetection {
         close();
     }
 
-    public static TextDetection create() {
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                    ContextUtils.getApplicationContext())
-                != ConnectionResult.SUCCESS) {
-            Log.e(TAG, "Google Play Services not available");
-            return null;
+    /**
+     * A factory class to register TextDetection interface.
+     */
+    public static class Factory implements InterfaceFactory<TextDetection> {
+        public Factory() {}
+
+        @Override
+        public TextDetection createImpl() {
+            if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
+                        ContextUtils.getApplicationContext())
+                    != ConnectionResult.SUCCESS) {
+                Log.e(TAG, "Google Play Services not available");
+                return null;
+            }
+            return new TextDetectionImpl();
         }
-        return new TextDetectionImpl();
     }
 }

@@ -12,7 +12,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Class for listening to Android MediaServer crashes to throttle media decoding
@@ -85,8 +84,7 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
                 || (currentTime - mLastReportedWatchdogCreationFailure)
                         > APPROX_MEDIA_SERVER_RESTART_TIME_IN_MS) {
             Log.e(TAG, "Unable to create watchdog player, treating it as server crash.");
-            MediaServerCrashListenerJni.get().onMediaServerCrashDetected(
-                    mNativeMediaServerCrashListener, MediaServerCrashListener.this, false);
+            nativeOnMediaServerCrashDetected(mNativeMediaServerCrashListener, false);
             mLastReportedWatchdogCreationFailure = currentTime;
         }
         return false;
@@ -95,16 +93,12 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-            MediaServerCrashListenerJni.get().onMediaServerCrashDetected(
-                    mNativeMediaServerCrashListener, MediaServerCrashListener.this, true);
+            nativeOnMediaServerCrashDetected(mNativeMediaServerCrashListener, true);
             releaseWatchdog();
         }
         return true;
     }
 
-    @NativeMethods
-    interface Natives {
-        void onMediaServerCrashDetected(long nativeMediaServerCrashListener,
-                MediaServerCrashListener caller, boolean watchdogNeedsRelease);
-    }
+    private native void nativeOnMediaServerCrashDetected(
+            long nativeMediaServerCrashListener, boolean watchdogNeedsRelease);
 }

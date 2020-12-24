@@ -8,7 +8,6 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNIAdditionalImport;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Exposes android.bluetooth.BluetoothGattDescriptor as necessary
@@ -51,9 +50,8 @@ final class ChromeBluetoothRemoteGattDescriptor {
         Log.i(TAG, "onDescriptorRead status:%d==%s", status,
                 status == android.bluetooth.BluetoothGatt.GATT_SUCCESS ? "OK" : "Error");
         if (mNativeBluetoothRemoteGattDescriptorAndroid != 0) {
-            ChromeBluetoothRemoteGattDescriptorJni.get().onRead(
-                    mNativeBluetoothRemoteGattDescriptorAndroid,
-                    ChromeBluetoothRemoteGattDescriptor.this, status, mDescriptor.getValue());
+            nativeOnRead(
+                    mNativeBluetoothRemoteGattDescriptorAndroid, status, mDescriptor.getValue());
         }
     }
 
@@ -61,9 +59,7 @@ final class ChromeBluetoothRemoteGattDescriptor {
         Log.i(TAG, "onDescriptorWrite status:%d==%s", status,
                 status == android.bluetooth.BluetoothGatt.GATT_SUCCESS ? "OK" : "Error");
         if (mNativeBluetoothRemoteGattDescriptorAndroid != 0) {
-            ChromeBluetoothRemoteGattDescriptorJni.get().onWrite(
-                    mNativeBluetoothRemoteGattDescriptorAndroid,
-                    ChromeBluetoothRemoteGattDescriptor.this, status);
+            nativeOnWrite(mNativeBluetoothRemoteGattDescriptorAndroid, status);
         }
     }
 
@@ -110,14 +106,13 @@ final class ChromeBluetoothRemoteGattDescriptor {
         return true;
     }
 
-    @NativeMethods
-    interface Natives {
-        // Binds to BluetoothRemoteGattDescriptorAndroid::OnRead.
-        void onRead(long nativeBluetoothRemoteGattDescriptorAndroid,
-                ChromeBluetoothRemoteGattDescriptor caller, int status, byte[] value);
+    // ---------------------------------------------------------------------------------------------
+    // BluetoothAdapterDevice C++ methods declared for access from java:
 
-        // Binds to BluetoothRemoteGattDescriptorAndroid::OnWrite.
-        void onWrite(long nativeBluetoothRemoteGattDescriptorAndroid,
-                ChromeBluetoothRemoteGattDescriptor caller, int status);
-    }
+    // Binds to BluetoothRemoteGattDescriptorAndroid::OnRead.
+    native void nativeOnRead(
+            long nativeBluetoothRemoteGattDescriptorAndroid, int status, byte[] value);
+
+    // Binds to BluetoothRemoteGattDescriptorAndroid::OnWrite.
+    native void nativeOnWrite(long nativeBluetoothRemoteGattDescriptorAndroid, int status);
 }

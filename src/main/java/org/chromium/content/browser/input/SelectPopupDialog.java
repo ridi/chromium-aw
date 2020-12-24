@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import org.chromium.android_webview.R;
-import org.chromium.base.Callback;
 import org.chromium.ui.widget.UiWidgetFactory;
 
 import java.util.List;
@@ -32,13 +31,13 @@ public class SelectPopupDialog implements SelectPopup.Ui {
 
     // The dialog hosting the popup list view.
     private final AlertDialog mListBoxPopup;
-    private final Callback<int[]> mSelectionChangedCallback;
+    private final SelectPopup mSelectPopup;
 
     private boolean mSelectionNotified;
 
-    public SelectPopupDialog(Context windowContext, Callback<int[]> selectionChangedCallback,
+    public SelectPopupDialog(SelectPopup selectPopup, Context windowContext,
             List<SelectPopupItem> items, boolean multiple, int[] selected) {
-        mSelectionChangedCallback = selectionChangedCallback;
+        mSelectPopup = selectPopup;
 
         final ListView listView = new ListView(windowContext);
         // setCacheColorHint(0) is required to prevent a black background in WebView on Lollipop:
@@ -137,7 +136,7 @@ public class SelectPopupDialog implements SelectPopup.Ui {
 
     private void notifySelection(int[] indicies) {
         if (mSelectionNotified) return;
-        mSelectionChangedCallback.onResult(indicies);
+        mSelectPopup.selectMenuItems(indicies);
         mSelectionNotified = true;
     }
 

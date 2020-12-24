@@ -16,39 +16,20 @@ import org.chromium.services.service_manager.InterfaceFactory;
 public class NfcProviderImpl implements NfcProvider {
     private static final String TAG = "NfcProviderImpl";
     private NfcDelegate mDelegate;
-    private NfcImpl mNfcImpl;
 
     public NfcProviderImpl(NfcDelegate delegate) {
         mDelegate = delegate;
     }
 
     @Override
-    public void close() {
-        // The connection to this object is owned by the browser process, but connections to the
-        // NfcImpl are passed directly to a render process. If the connection is closed by the
-        // browser process, also close the connection to the render process as this indicates that
-        // the render process should no longer have access to the NFC feature.
-        if (mNfcImpl != null) {
-            mNfcImpl.closeMojoConnection();
-            mNfcImpl = null;
-        }
-    }
+    public void close() {}
 
     @Override
-    public void onConnectionError(MojoException e) {
-        // We do nothing here since close() is always called no matter the connection gets closed
-        // normally or abnormally.
-    }
+    public void onConnectionError(MojoException e) {}
 
     @Override
     public void getNfcForHost(int hostId, InterfaceRequest<Nfc> request) {
-        // Blink's NfcProxy class makes a single request for the NFC interface per document.
-        // If a new request is received, close the old connection. This can happen on navigation
-        // when the RenderFrameHost is not swapped out.
-        if (mNfcImpl != null) {
-            mNfcImpl.closeMojoConnection();
-        }
-        mNfcImpl = new NfcImpl(hostId, mDelegate, request);
+        Nfc.MANAGER.bind(new NfcImpl(hostId, mDelegate), request);
     }
 
     /**

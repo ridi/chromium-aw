@@ -6,7 +6,6 @@ package org.chromium.base.task;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.Collections;
 import java.util.Set;
@@ -86,10 +85,9 @@ public class PostTask {
             if (sPreNativeTaskRunners != null || taskTraits.mIsChoreographerFrame) {
                 getTaskExecutorForTraits(taskTraits).postDelayedTask(taskTraits, task, delay);
             } else {
-                TaskTraits postedTraits = taskTraits.withExplicitDestination();
-                PostTaskJni.get().postDelayedTask(postedTraits.mPrioritySetExplicitly,
-                        postedTraits.mPriority, postedTraits.mMayBlock, postedTraits.mUseThreadPool,
-                        postedTraits.mExtensionId, postedTraits.mExtensionData, task, delay);
+                nativePostDelayedTask(taskTraits.mPrioritySetExplicitly, taskTraits.mPriority,
+                        taskTraits.mMayBlock, taskTraits.mUseThreadPool, taskTraits.mExtensionId,
+                        taskTraits.mExtensionData, task, delay);
             }
         }
     }
@@ -211,9 +209,8 @@ public class PostTask {
      */
     static Executor getPrenativeThreadPoolExecutor() {
         synchronized (sLock) {
-            if (sPrenativeThreadPoolExecutorOverride != null) {
+            if (sPrenativeThreadPoolExecutorOverride != null)
                 return sPrenativeThreadPoolExecutorOverride;
-            }
             return sPrenativeThreadPoolExecutor;
         }
     }
@@ -259,10 +256,7 @@ public class PostTask {
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        void postDelayedTask(boolean prioritySetExplicitly, int priority, boolean mayBlock,
-                boolean useThreadPool, byte extensionId, byte[] extensionData, Runnable task,
-                long delay);
-    }
+    private static native void nativePostDelayedTask(boolean prioritySetExplicitly, int priority,
+            boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData,
+            Runnable task, long delay);
 }

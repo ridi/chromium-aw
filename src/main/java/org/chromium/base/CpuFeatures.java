@@ -5,7 +5,6 @@
 package org.chromium.base;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 // The only purpose of this class is to allow sending CPU properties
 // from the browser process to sandboxed renderer processes. This is
@@ -26,7 +25,7 @@ public abstract class CpuFeatures {
      * Return the number of CPU Cores on the device.
      */
     public static int getCount() {
-        return CpuFeaturesJni.get().getCoreCount();
+        return nativeGetCoreCount();
     }
 
     /**
@@ -35,12 +34,9 @@ public abstract class CpuFeatures {
      * The value comes directly from android_getCpuFeatures().
      */
     public static long getMask() {
-        return CpuFeaturesJni.get().getCpuFeatures();
+        return nativeGetCpuFeatures();
     }
 
-    @NativeMethods
-    interface Natives {
-        int getCoreCount();
-        long getCpuFeatures();
-    }
+    private static native int nativeGetCoreCount();
+    private static native long nativeGetCpuFeatures();
 }

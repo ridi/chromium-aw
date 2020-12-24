@@ -6,12 +6,10 @@ package org.chromium.policy;
 
 import android.os.Bundle;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +92,7 @@ public class CombinedPolicyProvider {
                 mPolicyConverter.setPolicy(key, settings.get(key));
             }
         }
-        CombinedPolicyProviderJni.get().flushPolicies(mNativeCombinedPolicyProvider, get());
+        nativeFlushPolicies(mNativeCombinedPolicyProvider);
     }
 
     void terminateIncognitoSession() {
@@ -134,12 +132,14 @@ public class CombinedPolicyProvider {
         void terminateIncognitoSession();
     }
 
-    static void setForTesting(CombinedPolicyProvider p) {
+    @VisibleForTesting
+    public static void set(CombinedPolicyProvider p) {
         sInstance = p;
     }
 
-    @NativeMethods
-    interface Natives {
-        void flushPolicies(long nativeAndroidCombinedPolicyProvider, CombinedPolicyProvider caller);
-    }
+    @VisibleForTesting
+    CombinedPolicyProvider() {}
+
+    @VisibleForTesting
+    protected native void nativeFlushPolicies(long nativeAndroidCombinedPolicyProvider);
 }
