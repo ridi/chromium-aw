@@ -7,9 +7,8 @@ package org.chromium.android_webview;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import org.chromium.base.task.PostTask;
-import org.chromium.base.task.TaskTraits;
-import org.chromium.content_public.browser.UiThreadTaskTraits;
+import org.chromium.base.AsyncTask;
+import org.chromium.base.ThreadUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,13 +33,13 @@ public class DefaultVideoPosterRequestHandler {
         // Send the request to UI thread to callback to the client, and if it provides a
         // valid bitmap bounce on to the worker thread pool to compress it into the piped
         // input/output stream.
-        PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, () -> {
+        ThreadUtils.runOnUiThread(() -> {
             final Bitmap defaultVideoPoster = contentClient.getDefaultVideoPoster();
             if (defaultVideoPoster == null) {
                 closeOutputStream(outputStream);
                 return;
             }
-            PostTask.postTask(TaskTraits.BEST_EFFORT_MAY_BLOCK, () -> {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
                 try {
                     defaultVideoPoster.compress(Bitmap.CompressFormat.PNG, 100,
                             outputStream);

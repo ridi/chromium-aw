@@ -14,21 +14,37 @@ package org.chromium.mojo_base.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class ThreadPriority {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int BACKGROUND = 0;
-    public static final int NORMAL = 1; // BACKGROUND + 1
-    public static final int DISPLAY = 2; // NORMAL + 1
-    public static final int REALTIME_AUDIO = 3; // DISPLAY + 1
+
+    public static final int NORMAL = BACKGROUND + 1;
+
+    public static final int DISPLAY = NORMAL + 1;
+
+    public static final int REALTIME_AUDIO = DISPLAY + 1;
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 3;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private ThreadPriority() {}
+
 }

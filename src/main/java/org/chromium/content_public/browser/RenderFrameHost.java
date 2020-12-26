@@ -45,11 +45,4 @@ public interface RenderFrameHost {
      * @return {@code true} if we're in incoginto mode.
      */
     boolean isIncognito();
-
-    /**
-     * See native RenderFrameHost::IsRenderFrameCreated().
-     *
-     * @return {@code true} if render frame is created.
-     */
-    boolean isRenderFrameCreated();
 }

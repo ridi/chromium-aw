@@ -9,7 +9,6 @@ import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content_public.browser.NavigationHandle;
 import org.chromium.content_public.browser.WebContentsObserver;
 
 /**
@@ -78,23 +77,23 @@ class WebContentsObserverProxy extends WebContentsObserver {
 
     @Override
     @CalledByNative
-    public void didStartNavigation(NavigationHandle navigation) {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();)
-            mObserversIterator.next().didStartNavigation(navigation);
-    }
-
-    @Override
-    @CalledByNative
-    public void didRedirectNavigation(NavigationHandle navigation) {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();)
-            mObserversIterator.next().didRedirectNavigation(navigation);
-    }
-
-    @Override
-    @CalledByNative
-    public void didFinishNavigation(NavigationHandle navigation) {
+    public void didStartNavigation(
+            String url, boolean isInMainFrame, boolean isSameDocument, boolean isErrorPage) {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().didFinishNavigation(navigation);
+            mObserversIterator.next().didStartNavigation(
+                    url, isInMainFrame, isSameDocument, isErrorPage);
+        }
+    }
+
+    @CalledByNative
+    public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
+            boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
+            int transition, int errorCode, String errorDescription, int httpStatusCode) {
+        Integer pageTransition = transition == -1 ? null : transition;
+        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
+            mObserversIterator.next().didFinishNavigation(url, isInMainFrame, isErrorPage,
+                    hasCommitted, isSameDocument, isFragmentNavigation, pageTransition, errorCode,
+                    errorDescription, httpStatusCode);
         }
     }
 
@@ -197,14 +196,6 @@ class WebContentsObserverProxy extends WebContentsObserver {
 
     @Override
     @CalledByNative
-    public void navigationEntriesChanged() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().navigationEntriesChanged();
-        }
-    }
-
-    @Override
-    @CalledByNative
     public void didAttachInterstitialPage() {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
             mObserversIterator.next().didAttachInterstitialPage();
@@ -240,30 +231,6 @@ class WebContentsObserverProxy extends WebContentsObserver {
     public void viewportFitChanged(@WebContentsObserver.ViewportFitType int value) {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
             mObserversIterator.next().viewportFitChanged(value);
-        }
-    }
-
-    @Override
-    @CalledByNative
-    public void didReloadLoFiImages() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().didReloadLoFiImages();
-        }
-    }
-
-    @Override
-    @CalledByNative
-    public void onWebContentsFocused() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().onWebContentsFocused();
-        }
-    }
-
-    @Override
-    @CalledByNative
-    public void onWebContentsLostFocus() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().onWebContentsLostFocus();
         }
     }
 

@@ -19,6 +19,45 @@ public final class SerializedHandle extends org.chromium.mojo.bindings.Struct {
     private static final int STRUCT_SIZE = 16;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+
+    public static final class Type {
+
+
+        public static final int MOJO_HANDLE = 0;
+
+        public static final int PLATFORM_FILE = MOJO_HANDLE + 1;
+
+        public static final int WIN_HANDLE = PLATFORM_FILE + 1;
+
+        public static final int MACH_PORT = WIN_HANDLE + 1;
+
+        public static final int FUCHSIA_HANDLE = MACH_PORT + 1;
+
+
+        private static final boolean IS_EXTENSIBLE = false;
+
+        public static boolean isKnownValue(int value) {
+            switch (value) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    return true;
+            }
+            return false;
+        }
+
+        public static void validate(int value) {
+            if (IS_EXTENSIBLE || isKnownValue(value))
+                return;
+
+            throw new DeserializationException("Invalid enum value.");
+        }
+
+        private Type() {}
+
+    }
     public org.chromium.mojo.system.UntypedHandle theHandle;
     public int type;
 
@@ -63,7 +102,7 @@ public final class SerializedHandle extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 result.type = decoder0.readInt(12);
-                    SerializedHandleType.validate(result.type);
+                    SerializedHandle.Type.validate(result.type);
                 }
 
         } finally {

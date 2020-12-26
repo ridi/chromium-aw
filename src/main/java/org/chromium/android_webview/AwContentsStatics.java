@@ -11,8 +11,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.task.PostTask;
-import org.chromium.content_public.browser.UiThreadTaskTraits;
 
 import java.util.List;
 
@@ -101,18 +99,17 @@ public class AwContentsStatics {
         nativeSetSafeBrowsingWhitelist(urlArray, callback);
     }
 
-    @SuppressWarnings("NoContextGetApplicationContext")
     public static void initSafeBrowsing(Context context, final Callback<Boolean> callback) {
         // Wrap the callback to make sure we always invoke it on the UI thread, as guaranteed by the
         // API.
+        final Context appContext = context.getApplicationContext();
         Callback<Boolean> wrapperCallback = b -> {
             if (callback != null) {
-                PostTask.runOrPostTask(UiThreadTaskTraits.DEFAULT, () -> callback.onResult(b));
+                ThreadUtils.runOnUiThread(() -> callback.onResult(b));
             }
         };
 
-        PlatformServiceBridge.getInstance().warmUpSafeBrowsing(
-                context.getApplicationContext(), wrapperCallback);
+        PlatformServiceBridge.getInstance().warmUpSafeBrowsing(appContext, wrapperCallback);
     }
 
     public static Uri getSafeBrowsingPrivacyPolicyUrl() {
@@ -123,8 +120,12 @@ public class AwContentsStatics {
         nativeSetCheckClearTextPermitted(permitted);
     }
 
-    public static void logCommandLineForDebugging() {
-        nativeLogCommandLineForDebugging();
+    public static void setProxyOverride(String host, int port, String[] exclusionList) {
+        nativeSetProxyOverride(host, port, exclusionList);
+    }
+
+    public static void clearProxyOverride() {
+        nativeClearProxyOverride();
     }
 
     /**
@@ -141,17 +142,9 @@ public class AwContentsStatics {
         return FindAddress.findAddress(addr);
     }
 
-    /**
-     * Returns true if WebView is running in multi process mode.
-     */
-    public static boolean isMultiProcessEnabled() {
-        return nativeIsMultiProcessEnabled();
-    }
-
     //--------------------------------------------------------------------------------------------
     //  Native methods
     //--------------------------------------------------------------------------------------------
-    private static native void nativeLogCommandLineForDebugging();
     private static native String nativeGetSafeBrowsingPrivacyPolicyUrl();
     private static native void nativeClearClientCertPreferences(Runnable callback);
     private static native String nativeGetUnreachableWebDataUrl();
@@ -161,5 +154,7 @@ public class AwContentsStatics {
     private static native void nativeSetSafeBrowsingWhitelist(
             String[] urls, Callback<Boolean> callback);
     private static native void nativeSetCheckClearTextPermitted(boolean permitted);
-    private static native boolean nativeIsMultiProcessEnabled();
+    private static native void nativeSetProxyOverride(
+            String host, int port, String[] exclusionList);
+    private static native void nativeClearProxyOverride();
 }

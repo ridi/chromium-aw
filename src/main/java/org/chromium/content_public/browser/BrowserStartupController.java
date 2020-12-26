@@ -67,25 +67,9 @@ public interface BrowserStartupController {
     void startBrowserProcessesSync(boolean singleProcess) throws ProcessInitException;
 
     /**
-     * @return Whether the browser process has been started in "Full Browser" mode successfully. See
-     *         {@link #isRunningInServiceManagerMode} for information about the other mode of native
-     *         startup.
+     * @return Whether the browser process completed successfully.
      */
-    boolean isFullBrowserStarted();
-
-    /**
-     * @return Whether the browser is currently running in "service manager only" mode. "Service
-     *         Manager Only" mode is a state of native where only the minimum required
-     *         initialization is done (eg: no Profile and minimal content/ initialization).
-     */
-    boolean isRunningInServiceManagerMode();
-
-    /**
-     * @return Whether native is loaded successfully and running in any mode. See {@link
-     *         #isRunningInServiceManagerMode} and {@link #isFullBrowserStarted} for more
-     * information about the two modes.
-     */
-    boolean isNativeStarted();
+    boolean isStartupSuccessfullyCompleted();
 
     /**
      * Add startup callback.
@@ -94,15 +78,7 @@ public interface BrowserStartupController {
     void addStartupCompletedObserver(StartupCallback callback);
 
     /**
-     * Set a callback that will be run in place of calling ContentMain(). For tests to
-     * define their own way of initializing the C++ system.
+     * Initialization needed for tests. Mainly used by content browsertests.
      */
-    void setContentMainCallbackForTests(Runnable r);
-
-    /**
-     * @return how Chrome is launched, either in ServiceManager only mode or as full browser, as
-     * well as either cold start or warm start.
-     * See {@link org.chromium.content.browser.ServicificationStartupUma} for more details.
-     */
-    int getStartupMode(boolean startServiceManagerOnly);
+    void initChromiumBrowserProcessForTests();
 }

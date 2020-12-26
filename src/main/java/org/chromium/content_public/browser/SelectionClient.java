@@ -119,6 +119,9 @@ public interface SelectionClient {
      */
     void cancelAllRequests();
 
+    // The clang-format tool is confused by the java 8 usage of default in an interface.
+    // TODO(donnd): remove this once it's supported.  See b/67428051.
+    // clang-format off
     /**
      * Returns a SelectionMetricsLogger associated with the SelectionClient or null.
      */
@@ -149,6 +152,7 @@ public interface SelectionClient {
     default TextClassifier getCustomTextClassifier() {
         return null;
     }
+    // clang-format on
 
     /** Creates a {@link SelectionClient} instance. */
     public static SelectionClient createSmartSelectionClient(WebContents webContents) {

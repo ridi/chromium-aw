@@ -106,14 +106,12 @@ GetDevicesResponse callback) {
 
         @Override
         public void connect(
-String deviceGuid, HidConnectionClient connectionClient, 
+String deviceGuid, 
 ConnectResponse callback) {
 
             HidManagerConnectParams _message = new HidManagerConnectParams();
 
             _message.deviceGuid = deviceGuid;
-
-            _message.connectionClient = connectionClient;
 
 
             getProxyHandler().getMessageReceiver().acceptWithResponder(
@@ -222,7 +220,7 @@ ConnectResponse callback) {
                         HidManagerConnectParams data =
                                 HidManagerConnectParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().connect(data.deviceGuid, data.connectionClient, new HidManagerConnectResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
+                        getImpl().connect(data.deviceGuid, new HidManagerConnectResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
 
@@ -642,11 +640,10 @@ ConnectResponse callback) {
     
     static final class HidManagerConnectParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 16;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public String deviceGuid;
-        public HidConnectionClient connectionClient;
 
         private HidManagerConnectParams(int version) {
             super(STRUCT_SIZE, version);
@@ -685,10 +682,6 @@ ConnectResponse callback) {
                         
                     result.deviceGuid = decoder0.readString(8, false);
                     }
-                    {
-                        
-                    result.connectionClient = decoder0.readServiceInterface(16, true, HidConnectionClient.MANAGER);
-                    }
 
             } finally {
                 decoder0.decreaseStackDepth();
@@ -702,8 +695,6 @@ ConnectResponse callback) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
             encoder0.encode(this.deviceGuid, 8, false);
-            
-            encoder0.encode(this.connectionClient, 16, true, HidConnectionClient.MANAGER);
         }
     }
 

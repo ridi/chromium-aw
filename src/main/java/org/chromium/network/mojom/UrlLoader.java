@@ -18,7 +18,7 @@ public interface UrlLoader extends org.chromium.mojo.bindings.Interface {
 
 
     
-    public static final int CLIENT_DISCONNECT_REASON = (int) 1;
+    public static final int CLIENT_DISCONNECT_REASON = (int) 1L;
 
 
 
@@ -30,7 +30,7 @@ public interface UrlLoader extends org.chromium.mojo.bindings.Interface {
 
 
     void followRedirect(
-String[] removedHeaders, HttpRequestHeaders modifiedHeaders, org.chromium.url.mojom.Url newUrl);
+String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders);
 
 
 

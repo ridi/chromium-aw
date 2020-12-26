@@ -14,24 +14,51 @@ package org.chromium.gfx.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class BufferUsage {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int GPU_READ = 0;
-    public static final int SCANOUT = 1; // GPU_READ + 1
-    public static final int SCANOUT_CAMERA_READ_WRITE = 2; // SCANOUT + 1
-    public static final int CAMERA_AND_CPU_READ_WRITE = 3; // SCANOUT_CAMERA_READ_WRITE + 1
-    public static final int SCANOUT_CPU_READ_WRITE = 4; // CAMERA_AND_CPU_READ_WRITE + 1
-    public static final int SCANOUT_VDA_WRITE = 5; // SCANOUT_CPU_READ_WRITE + 1
-    public static final int GPU_READ_CPU_READ_WRITE = 6; // SCANOUT_VDA_WRITE + 1
+
+    public static final int SCANOUT = GPU_READ + 1;
+
+    public static final int SCANOUT_CAMERA_READ_WRITE = SCANOUT + 1;
+
+    public static final int CAMERA_AND_CPU_READ_WRITE = SCANOUT_CAMERA_READ_WRITE + 1;
+
+    public static final int SCANOUT_CPU_READ_WRITE = CAMERA_AND_CPU_READ_WRITE + 1;
+
+    public static final int SCANOUT_VDA_WRITE = SCANOUT_CPU_READ_WRITE + 1;
+
+    public static final int GPU_READ_CPU_READ_WRITE = SCANOUT_VDA_WRITE + 1;
+
+    public static final int GPU_READ_CPU_READ_WRITE_PERSISTENT = GPU_READ_CPU_READ_WRITE + 1;
+
+    public static final int LAST = (int) (BufferUsage.GPU_READ_CPU_READ_WRITE_PERSISTENT);
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 6;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private BufferUsage() {}
+
 }

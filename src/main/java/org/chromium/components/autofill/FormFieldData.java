@@ -20,13 +20,12 @@ public class FormFieldData {
     /**
      * Define the control types supported by android.view.autofill.AutofillValue.
      */
-    @IntDef({ControlType.TEXT, ControlType.TOGGLE, ControlType.LIST})
+    @IntDef({TYPE_TEXT, TYPE_TOGGLE, TYPE_LIST})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ControlType {
-        int TEXT = 0;
-        int TOGGLE = 1;
-        int LIST = 2;
-    }
+    public @interface ControlType {}
+    public static final int TYPE_TEXT = 0;
+    public static final int TYPE_TOGGLE = 1;
+    public static final int TYPE_LIST = 2;
 
     public final String mLabel;
     public final String mName;
@@ -64,11 +63,11 @@ public class FormFieldData {
         mOptionContents = optionContents;
         mIsChecked = isChecked;
         if (mOptionValues != null && mOptionValues.length != 0) {
-            mControlType = ControlType.LIST;
+            mControlType = TYPE_LIST;
         } else if (isCheckField) {
-            mControlType = ControlType.TOGGLE;
+            mControlType = TYPE_TOGGLE;
         } else {
-            mControlType = ControlType.TEXT;
+            mControlType = TYPE_TEXT;
         }
         mMaxLength = maxLength;
         mHeuristicType = heuristicType;

@@ -369,4 +369,8 @@
         <item name="android:importantForAccessibility">no</item>
     </style>
 
+    <style name="SuggestionPrefixOrSuffix">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
 </resources>

@@ -10,7 +10,6 @@ import android.view.View;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.UserData;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.blink_public.web.WebInputEventType;
@@ -18,6 +17,7 @@ import org.chromium.content.browser.input.ImeAdapterImpl;
 import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ViewEventSink.InternalAccessDelegate;
@@ -29,11 +29,11 @@ import org.chromium.ui.base.ViewAndroidDelegate;
  * Implementation of the interface {@link GestureListenerManager}. Manages
  * the {@link GestureStateListener} instances, and invokes them upon
  * notification of various events.
- * Instantiated object is held inside {@link UserDataHost} that is managed by {@link WebContents}.
+ * Instantiated object is held inside {@link WebContentsUserData} that is
+ * managed by {@link WebContents}.
  */
 @JNINamespace("content")
-public class GestureListenerManagerImpl
-        implements GestureListenerManager, WindowEventObserver, UserData {
+public class GestureListenerManagerImpl implements GestureListenerManager, WindowEventObserver {
     private static final class UserDataFactoryLazyHolder {
         private static final UserDataFactory<GestureListenerManagerImpl> INSTANCE =
                 GestureListenerManagerImpl::new;
@@ -67,9 +67,8 @@ public class GestureListenerManagerImpl
      *         Creates one if not present.
      */
     public static GestureListenerManagerImpl fromWebContents(WebContents webContents) {
-        return ((WebContentsImpl) webContents)
-                .getOrSetUserData(
-                        GestureListenerManagerImpl.class, UserDataFactoryLazyHolder.INSTANCE);
+        return WebContentsUserData.fromWebContents(
+                webContents, GestureListenerManagerImpl.class, UserDataFactoryLazyHolder.INSTANCE);
     }
 
     public GestureListenerManagerImpl(WebContents webContents) {
@@ -259,7 +258,7 @@ public class GestureListenerManagerImpl
     }
 
     @CalledByNative
-    private void onNativeDestroyed() {
+    private void onDestroy() {
         for (mIterator.rewind(); mIterator.hasNext();) mIterator.next().onDestroyed();
         mListeners.clear();
         mNativeGestureListenerManager = 0;
@@ -328,10 +327,9 @@ public class GestureListenerManagerImpl
     private void setTouchScrollInProgress(boolean touchScrollInProgress) {
         mIsTouchScrollInProgress = touchScrollInProgress;
 
-        // Use the active touch scroll and fling scroll signal for hiding.
-        // The animation movement by fling will naturally hide the ActionMode
-        // by invalidating its content rect.
-        getSelectionPopupController().setScrollInProgress(isScrollInProgress());
+        // Use the active touch scroll signal for hiding. The animation movement
+        // by fling will naturally hide the ActionMode by invalidating its content rect.
+        getSelectionPopupController().setScrollInProgress(touchScrollInProgress);
     }
 
     /**

@@ -51,8 +51,6 @@ class Service_Internal {
 
     private static final int ON_BIND_INTERFACE_ORDINAL = 1;
 
-    private static final int CREATE_PACKAGED_SERVICE_INSTANCE_ORDINAL = 2;
-
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements Service.Proxy {
 
@@ -110,27 +108,6 @@ OnBindInterfaceResponse callback) {
         }
 
 
-        @Override
-        public void createPackagedServiceInstance(
-Identity identity, org.chromium.mojo.bindings.InterfaceRequest<Service> receiver, ProcessMetadata metadata) {
-
-            ServiceCreatePackagedServiceInstanceParams _message = new ServiceCreatePackagedServiceInstanceParams();
-
-            _message.identity = identity;
-
-            _message.receiver = receiver;
-
-            _message.metadata = metadata;
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(CREATE_PACKAGED_SERVICE_INSTANCE_ORDINAL)));
-
-        }
-
-
     }
 
     static final class Stub extends org.chromium.mojo.bindings.Interface.Stub<Service> {
@@ -157,19 +134,6 @@ Identity identity, org.chromium.mojo.bindings.InterfaceRequest<Service> receiver
 
 
 
-
-
-
-
-
-                    case CREATE_PACKAGED_SERVICE_INSTANCE_ORDINAL: {
-
-                        ServiceCreatePackagedServiceInstanceParams data =
-                                ServiceCreatePackagedServiceInstanceParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().createPackagedServiceInstance(data.identity, data.receiver, data.metadata);
-                        return true;
-                    }
 
 
                     default:
@@ -225,8 +189,6 @@ Identity identity, org.chromium.mojo.bindings.InterfaceRequest<Service> receiver
                         getImpl().onBindInterface(data.source, data.interfaceName, data.interfacePipe, new ServiceOnBindInterfaceResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
-
-
 
 
                     default:
@@ -624,84 +586,6 @@ Identity identity, org.chromium.mojo.bindings.InterfaceRequest<Service> receiver
                                     org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
                                     mRequestId));
             mMessageReceiver.accept(_message);
-        }
-    }
-
-
-
-    
-    static final class ServiceCreatePackagedServiceInstanceParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 32;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public Identity identity;
-        public org.chromium.mojo.bindings.InterfaceRequest<Service> receiver;
-        public ProcessMetadata metadata;
-
-        private ServiceCreatePackagedServiceInstanceParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public ServiceCreatePackagedServiceInstanceParams() {
-            this(0);
-        }
-
-        public static ServiceCreatePackagedServiceInstanceParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static ServiceCreatePackagedServiceInstanceParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static ServiceCreatePackagedServiceInstanceParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            ServiceCreatePackagedServiceInstanceParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new ServiceCreatePackagedServiceInstanceParams(elementsOrVersion);
-                    {
-                        
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.identity = Identity.decode(decoder1);
-                    }
-                    {
-                        
-                    result.receiver = decoder0.readInterfaceRequest(16, false);
-                    }
-                    {
-                        
-                    result.metadata = decoder0.readServiceInterface(20, false, ProcessMetadata.MANAGER);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            encoder0.encode(this.identity, 8, false);
-            
-            encoder0.encode(this.receiver, 16, false);
-            
-            encoder0.encode(this.metadata, 20, false, ProcessMetadata.MANAGER);
         }
     }
 

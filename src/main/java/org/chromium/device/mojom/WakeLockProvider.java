@@ -33,17 +33,4 @@ int contextId, org.chromium.mojo.bindings.InterfaceRequest<WakeLockContext> cont
 int type, int reason, String description, org.chromium.mojo.bindings.InterfaceRequest<WakeLock> wakeLock);
 
 
-
-    void notifyOnWakeLockDeactivation(
-int type, WakeLockObserver observer);
-
-
-
-    void getActiveWakeLocksForTests(
-int type, 
-GetActiveWakeLocksForTestsResponse callback);
-
-    interface GetActiveWakeLocksForTestsResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Integer> { }
-
-
 }

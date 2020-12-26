@@ -14,26 +14,52 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class ScreenOrientationLockType {
+
+
+    public static final int DEFAULT = (int) (0L);
+
+    public static final int PORTRAIT_PRIMARY = DEFAULT + 1;
+
+    public static final int PORTRAIT_SECONDARY = PORTRAIT_PRIMARY + 1;
+
+    public static final int LANDSCAPE_PRIMARY = PORTRAIT_SECONDARY + 1;
+
+    public static final int LANDSCAPE_SECONDARY = LANDSCAPE_PRIMARY + 1;
+
+    public static final int ANY = LANDSCAPE_SECONDARY + 1;
+
+    public static final int LANDSCAPE = ANY + 1;
+
+    public static final int PORTRAIT = LANDSCAPE + 1;
+
+    public static final int NATURAL = PORTRAIT + 1;
+
+
     private static final boolean IS_EXTENSIBLE = false;
 
-    public static final int DEFAULT = 0;
-    public static final int PORTRAIT_PRIMARY = 1; // DEFAULT + 1
-    public static final int PORTRAIT_SECONDARY = 2; // PORTRAIT_PRIMARY + 1
-    public static final int LANDSCAPE_PRIMARY = 3; // PORTRAIT_SECONDARY + 1
-    public static final int LANDSCAPE_SECONDARY = 4; // LANDSCAPE_PRIMARY + 1
-    public static final int ANY = 5; // LANDSCAPE_SECONDARY + 1
-    public static final int LANDSCAPE = 6; // ANY + 1
-    public static final int PORTRAIT = 7; // LANDSCAPE + 1
-    public static final int NATURAL = 8; // PORTRAIT + 1
-
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 8;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private ScreenOrientationLockType() {}
+
 }

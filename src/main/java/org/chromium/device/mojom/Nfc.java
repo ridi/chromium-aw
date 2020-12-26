@@ -30,7 +30,7 @@ NfcClient client);
 
 
     void push(
-NdefMessage message, NfcPushOptions options, 
+NfcMessage message, NfcPushOptions options, 
 PushResponse callback);
 
     interface PushResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NfcError> { }
@@ -46,7 +46,7 @@ CancelPushResponse callback);
 
 
     void watch(
-NfcReaderOptions options, 
+NfcWatchOptions options, 
 WatchResponse callback);
 
     interface WatchResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, NfcError> { }

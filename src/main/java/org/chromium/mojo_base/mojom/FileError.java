@@ -14,34 +14,76 @@ package org.chromium.mojo_base.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class FileError {
+
+
+    public static final int OK = (int) (0L);
+
+    public static final int FAILED = (int) (-1L);
+
+    public static final int IN_USE = (int) (-2L);
+
+    public static final int EXISTS = (int) (-3L);
+
+    public static final int NOT_FOUND = (int) (-4L);
+
+    public static final int ACCESS_DENIED = (int) (-5L);
+
+    public static final int TOO_MANY_OPENED = (int) (-6L);
+
+    public static final int NO_MEMORY = (int) (-7L);
+
+    public static final int NO_SPACE = (int) (-8L);
+
+    public static final int NOT_A_DIRECTORY = (int) (-9L);
+
+    public static final int INVALID_OPERATION = (int) (-10L);
+
+    public static final int SECURITY = (int) (-11L);
+
+    public static final int ABORT = (int) (-12L);
+
+    public static final int NOT_A_FILE = (int) (-13L);
+
+    public static final int NOT_EMPTY = (int) (-14L);
+
+    public static final int INVALID_URL = (int) (-15L);
+
+    public static final int IO = (int) (-16L);
+
+
     private static final boolean IS_EXTENSIBLE = false;
 
-    public static final int OK = 0;
-    public static final int FAILED = -1;
-    public static final int IN_USE = -2;
-    public static final int EXISTS = -3;
-    public static final int NOT_FOUND = -4;
-    public static final int ACCESS_DENIED = -5;
-    public static final int TOO_MANY_OPENED = -6;
-    public static final int NO_MEMORY = -7;
-    public static final int NO_SPACE = -8;
-    public static final int NOT_A_DIRECTORY = -9;
-    public static final int INVALID_OPERATION = -10;
-    public static final int SECURITY = -11;
-    public static final int ABORT = -12;
-    public static final int NOT_A_FILE = -13;
-    public static final int NOT_EMPTY = -14;
-    public static final int INVALID_URL = -15;
-    public static final int IO = -16;
-
     public static boolean isKnownValue(int value) {
-        return value >= -16 && value <= 0;
+        switch (value) {
+            case -16:
+            case -15:
+            case -14:
+            case -13:
+            case -12:
+            case -11:
+            case -10:
+            case -9:
+            case -8:
+            case -7:
+            case -6:
+            case -5:
+            case -4:
+            case -3:
+            case -2:
+            case -1:
+            case 0:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private FileError() {}
+
 }

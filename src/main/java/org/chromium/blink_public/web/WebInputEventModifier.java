@@ -27,8 +27,8 @@ import java.lang.annotation.RetentionPolicy;
     WebInputEventModifier.SYMBOL_KEY, WebInputEventModifier.SCROLL_LOCK_ON,
     WebInputEventModifier.IS_COMPATIBILITY_EVENT_FOR_TOUCH, WebInputEventModifier.BACK_BUTTON_DOWN,
     WebInputEventModifier.FORWARD_BUTTON_DOWN, WebInputEventModifier.RELATIVE_MOTION_EVENT,
-    WebInputEventModifier.FROM_DEBUGGER, WebInputEventModifier.TARGET_FRAME_MOVED_RECENTLY,
-    WebInputEventModifier.KEY_MODIFIERS, WebInputEventModifier.NO_MODIFIERS
+    WebInputEventModifier.FROM_DEBUGGER, WebInputEventModifier.KEY_MODIFIERS,
+    WebInputEventModifier.NO_MODIFIERS
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface WebInputEventModifier {
@@ -85,11 +85,6 @@ public @interface WebInputEventModifier {
    * are able to bind callbacks in event sending.
    */
   int FROM_DEBUGGER = 1 << 23;
-  /**
-   * Indicates this event is targeting an OOPIF, and the iframe or one of its ancestor frames moved
-   * within its embedding page's viewport recently.
-   */
-  int TARGET_FRAME_MOVED_RECENTLY = 1 << 24;
   /**
    * The set of non-stateful modifiers that specifically change the interpretation of the key being
    * pressed. For example; IsLeft, IsRight, IsComposing don't change the meaning of the key being

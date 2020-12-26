@@ -6,20 +6,17 @@ package org.chromium.components.variations.firstrun;
 
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.support.annotation.IntDef;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
 import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -30,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Fetches the variations seed before the actual first run of Chrome.
@@ -37,16 +35,12 @@ import java.util.Locale;
 public class VariationsSeedFetcher {
     private static final String TAG = "VariationsSeedFetch";
 
-    @IntDef({VariationsPlatform.ANDROID, VariationsPlatform.ANDROID_WEBVIEW})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface VariationsPlatform {
-        int ANDROID = 0;
-        int ANDROID_WEBVIEW = 1;
-    }
+    public enum VariationsPlatform { ANDROID, ANDROID_WEBVIEW }
 
     private static final String VARIATIONS_SERVER_URL =
             "https://clientservices.googleapis.com/chrome-variations/seed?osname=";
 
+    private static final int BUFFER_SIZE = 4096;
     private static final int READ_TIMEOUT = 3000; // time in ms
     private static final int REQUEST_TIMEOUT = 1000; // time in ms
 
@@ -91,7 +85,7 @@ public class VariationsSeedFetcher {
 
     @VisibleForTesting
     protected HttpURLConnection getServerConnection(
-            @VariationsPlatform int platform, String restrictMode, String milestone, String channel)
+            VariationsPlatform platform, String restrictMode, String milestone, String channel)
             throws MalformedURLException, IOException {
         String urlString = getConnectionString(platform, restrictMode, milestone, channel);
         URL url = new URL(urlString);
@@ -99,14 +93,14 @@ public class VariationsSeedFetcher {
     }
 
     @VisibleForTesting
-    protected String getConnectionString(@VariationsPlatform int platform, String restrictMode,
-            String milestone, String channel) {
+    protected String getConnectionString(
+            VariationsPlatform platform, String restrictMode, String milestone, String channel) {
         String urlString = VARIATIONS_SERVER_URL;
         switch (platform) {
-            case VariationsPlatform.ANDROID:
+            case ANDROID:
                 urlString += "android";
                 break;
-            case VariationsPlatform.ANDROID_WEBVIEW:
+            case ANDROID_WEBVIEW:
                 urlString += "android_webview";
                 break;
             default:
@@ -198,14 +192,14 @@ public class VariationsSeedFetcher {
 
     private void recordSeedFetchTime(long timeDeltaMillis) {
         Log.i(TAG, "Fetched first run seed in " + timeDeltaMillis + " ms");
-        TimesHistogramSample histogram =
-                new TimesHistogramSample("Variations.FirstRun.SeedFetchTime");
+        TimesHistogramSample histogram = new TimesHistogramSample(
+                "Variations.FirstRun.SeedFetchTime", TimeUnit.MILLISECONDS);
         histogram.record(timeDeltaMillis);
     }
 
     private void recordSeedConnectTime(long timeDeltaMillis) {
-        TimesHistogramSample histogram =
-                new TimesHistogramSample("Variations.FirstRun.SeedConnectTime");
+        TimesHistogramSample histogram = new TimesHistogramSample(
+                "Variations.FirstRun.SeedConnectTime", TimeUnit.MILLISECONDS);
         histogram.record(timeDeltaMillis);
     }
 
@@ -223,7 +217,7 @@ public class VariationsSeedFetcher {
      * connection.
      */
     public SeedInfo downloadContent(
-            @VariationsPlatform int platform, String restrictMode, String milestone, String channel)
+            VariationsPlatform platform, String restrictMode, String milestone, String channel)
             throws SocketTimeoutException, UnknownHostException, IOException {
         HttpURLConnection connection = null;
         try {
@@ -271,6 +265,22 @@ public class VariationsSeedFetcher {
         }
     }
 
+    /**
+     * Convert a input stream into a byte array.
+     * @param inputStream the input stream
+     * @return the byte array which holds the data from the input stream
+     * @throws IOException if I/O error occurs when reading data from the input stream
+     */
+    public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        byte[] buffer = new byte[BUFFER_SIZE];
+        int charactersReadCount = 0;
+        while ((charactersReadCount = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, charactersReadCount);
+        }
+        return byteBuffer.toByteArray();
+    }
+
     private String getHeaderFieldOrEmpty(HttpURLConnection connection, String name) {
         String headerField = connection.getHeaderField(name);
         if (headerField == null) {
@@ -283,7 +293,7 @@ public class VariationsSeedFetcher {
         InputStream inputStream = null;
         try {
             inputStream = connection.getInputStream();
-            return FileUtils.readStream(inputStream);
+            return convertInputStreamToByteArray(inputStream);
         } finally {
             if (inputStream != null) {
                 inputStream.close();

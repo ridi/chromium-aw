@@ -14,21 +14,37 @@ package org.chromium.skia.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class AlphaType {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int UNKNOWN = 0;
-    public static final int ALPHA_TYPE_OPAQUE = 1; // UNKNOWN + 1
-    public static final int PREMUL = 2; // ALPHA_TYPE_OPAQUE + 1
-    public static final int UNPREMUL = 3; // PREMUL + 1
+
+    public static final int ALPHA_TYPE_OPAQUE = UNKNOWN + 1;
+
+    public static final int PREMUL = ALPHA_TYPE_OPAQUE + 1;
+
+    public static final int UNPREMUL = PREMUL + 1;
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 3;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private AlphaType() {}
+
 }

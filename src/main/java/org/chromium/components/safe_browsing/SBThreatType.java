@@ -22,9 +22,8 @@ import java.lang.annotation.RetentionPolicy;
     SBThreatType.URL_CLIENT_SIDE_MALWARE, SBThreatType.BLACKLISTED_RESOURCE, SBThreatType.API_ABUSE,
     SBThreatType.SUBRESOURCE_FILTER, SBThreatType.CSD_WHITELIST,
     SBThreatType.DEPRECATED_URL_PASSWORD_PROTECTION_PHISHING, SBThreatType.SIGN_IN_PASSWORD_REUSE,
-    SBThreatType.BLOCKED_AD_REDIRECT, SBThreatType.AD_SAMPLE, SBThreatType.BLOCKED_AD_POPUP,
-    SBThreatType.SUSPICIOUS_SITE, SBThreatType.ENTERPRISE_PASSWORD_REUSE, SBThreatType.BILLING,
-    SBThreatType.APK_DOWNLOAD, SBThreatType.HIGH_CONFIDENCE_ALLOWLIST
+    SBThreatType.AD_SAMPLE, SBThreatType.SUSPICIOUS_SITE, SBThreatType.ENTERPRISE_PASSWORD_REUSE,
+    SBThreatType.BILLING
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SBThreatType {
@@ -93,35 +92,19 @@ public @interface SBThreatType {
    */
   int SIGN_IN_PASSWORD_REUSE = 14;
   /**
-   * A Google ad that caused a blocked autoredirect was collected
-   */
-  int BLOCKED_AD_REDIRECT = 15;
-  /**
    * A sample of an ad was collected
    */
-  int AD_SAMPLE = 16;
-  /**
-   * A report of Google ad that caused a blocked popup was collected.
-   */
-  int BLOCKED_AD_POPUP = 17;
+  int AD_SAMPLE = 15;
   /**
    * The page loaded a resource from the Suspicious Site list.
    */
-  int SUSPICIOUS_SITE = 18;
+  int SUSPICIOUS_SITE = 16;
   /**
-   * Enterprise password reuse detected on low reputation page.
+   * Enterprise password reuse detected on low reputation page,
    */
-  int ENTERPRISE_PASSWORD_REUSE = 19;
+  int ENTERPRISE_PASSWORD_REUSE = 17;
   /**
    * Potential billing detected.
    */
-  int BILLING = 20;
-  /**
-   * Off-market APK file downloaded, which could be potentially dangerous.
-   */
-  int APK_DOWNLOAD = 21;
-  /**
-   * Match found in the local high-confidence allowlist.
-   */
-  int HIGH_CONFIDENCE_ALLOWLIST = 22;
+  int BILLING = 18;
 }

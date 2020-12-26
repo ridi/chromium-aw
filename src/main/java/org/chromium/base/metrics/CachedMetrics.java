@@ -8,13 +8,12 @@ import org.chromium.base.library_loader.LibraryLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Utility classes for recording UMA metrics before the native library
  * may have been loaded.  Metrics are cached until the library is known
  * to be loaded, then committed to the MetricsService all at once.
- *
- * NOTE: Currently supports recording metrics only in Browser/Webview/Renderer processes.
  */
 public class CachedMetrics {
     /**
@@ -110,7 +109,7 @@ public class CachedMetrics {
         }
 
         private void recordWithNative(int sample) {
-            RecordHistogram.recordSparseHistogram(mName, sample);
+            RecordHistogram.recordSparseSlowlyHistogram(mName, sample);
         }
 
         @Override
@@ -159,9 +158,12 @@ public class CachedMetrics {
     /** Caches a set of times histogram samples. */
     public static class TimesHistogramSample extends CachedMetric {
         private final List<Long> mSamples = new ArrayList<Long>();
+        private final TimeUnit mTimeUnit;
 
-        public TimesHistogramSample(String histogramName) {
+        public TimesHistogramSample(String histogramName, TimeUnit timeUnit) {
             super(histogramName);
+            RecordHistogram.assertTimesHistogramSupportsUnit(timeUnit);
+            mTimeUnit = timeUnit;
         }
 
         public void record(long sample) {
@@ -175,8 +177,8 @@ public class CachedMetrics {
             }
         }
 
-        protected void recordWithNative(long sample) {
-            RecordHistogram.recordTimesHistogram(mName, sample);
+        private void recordWithNative(long sample) {
+            RecordHistogram.recordTimesHistogram(mName, sample, mTimeUnit);
         }
 
         @Override
@@ -185,21 +187,6 @@ public class CachedMetrics {
                 recordWithNative(sample);
             }
             mSamples.clear();
-        }
-    }
-
-    /**
-     * Caches a set of times histogram samples, calls
-     * {@link RecordHistogram#recordMediumTimesHistogram(String, long)}.
-     */
-    public static class MediumTimesHistogramSample extends TimesHistogramSample {
-        public MediumTimesHistogramSample(String histogramName) {
-            super(histogramName);
-        }
-
-        @Override
-        protected void recordWithNative(long sample) {
-            RecordHistogram.recordMediumTimesHistogram(mName, sample);
         }
     }
 
@@ -308,7 +295,7 @@ public class CachedMetrics {
 
     /**
      * Calls out to native code to commit any cached histograms and events.
-     * Should be called once the native library has been initialized.
+     * Should be called once the native library has been loaded.
      */
     public static void commitCachedMetrics() {
         synchronized (CachedMetric.sMetrics) {

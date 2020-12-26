@@ -24,6 +24,16 @@ public interface ScreenOrientationListener extends org.chromium.mojo.bindings.In
     Manager<ScreenOrientationListener, ScreenOrientationListener.Proxy> MANAGER = ScreenOrientationListener_Internal.MANAGER;
 
 
+    void start(
+);
+
+
+
+    void stop(
+);
+
+
+
     void isAutoRotateEnabledByUser(
 
 IsAutoRotateEnabledByUserResponse callback);

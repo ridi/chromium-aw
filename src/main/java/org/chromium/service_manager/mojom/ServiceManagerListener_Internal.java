@@ -104,13 +104,13 @@ RunningServiceInfo service) {
 
         @Override
         public void onServiceStarted(
-Identity identity, int pidDeprecated) {
+Identity identity, int pid) {
 
             ServiceManagerListenerOnServiceStartedParams _message = new ServiceManagerListenerOnServiceStartedParams();
 
             _message.identity = identity;
 
-            _message.pidDeprecated = pidDeprecated;
+            _message.pid = pid;
 
 
             getProxyHandler().getMessageReceiver().accept(
@@ -232,7 +232,7 @@ Identity identity) {
                         ServiceManagerListenerOnServiceStartedParams data =
                                 ServiceManagerListenerOnServiceStartedParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().onServiceStarted(data.identity, data.pidDeprecated);
+                        getImpl().onServiceStarted(data.identity, data.pid);
                         return true;
                     }
 
@@ -475,7 +475,7 @@ Identity identity) {
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public Identity identity;
-        public int pidDeprecated;
+        public int pid;
 
         private ServiceManagerListenerOnServiceStartedParams(int version) {
             super(STRUCT_SIZE, version);
@@ -517,7 +517,7 @@ Identity identity) {
                     }
                     {
                         
-                    result.pidDeprecated = decoder0.readInt(16);
+                    result.pid = decoder0.readInt(16);
                     }
 
             } finally {
@@ -533,7 +533,7 @@ Identity identity) {
             
             encoder0.encode(this.identity, 8, false);
             
-            encoder0.encode(this.pidDeprecated, 16);
+            encoder0.encode(this.pid, 16);
         }
     }
 

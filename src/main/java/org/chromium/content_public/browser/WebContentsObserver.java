@@ -5,6 +5,7 @@
 package org.chromium.content_public.browser;
 
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 
 import org.chromium.blink.mojom.ViewportFit;
 
@@ -37,31 +38,39 @@ public abstract class WebContentsObserver {
 
     /**
      * Called when the browser process starts a navigation.
-     * @param navigationHandle
-     *        NavigationHandle are provided to several WebContentsObserver methods to allow
-     *        observers to track specific navigations. Observers should clear any references to a
-     *        NavigationHandle at didFinishNavigation();
+     * @param url The validated URL for the loading page.
+     * @param isInMainFrame Whether the navigation is for the main frame.
+     * @param isSameDocument Whether the main frame navigation did not cause changes to the
+     *                   document (for example scrolling to a named anchor or PopState).
+     * @param isErrorPage Whether the navigation shows an error page.
      */
-    public void didStartNavigation(NavigationHandle navigationHandle) {}
-
-    /**
-     * Called when the browser process redirect a navigation.
-     * @param navigationHandle
-     *        NavigationHandle are provided to several WebContentsObserver methods to allow
-     *        observers to track specific navigations. Observers should clear any references to a
-     *        NavigationHandle at didFinishNavigation();
-     */
-    public void didRedirectNavigation(NavigationHandle navigationHandle) {}
+    public void didStartNavigation(
+            String url, boolean isInMainFrame, boolean isSameDocument, boolean isErrorPage) {}
 
     /**
      * Called when the current navigation is finished. This happens when a navigation is committed,
      * aborted or replaced by a new one.
-     * @param navigationHandle
-     *        NavigationHandle are provided to several WebContentsObserver methods to allow
-     *        observers to track specific navigations. Observers should clear any references to a
-     *        NavigationHandle at the end of this function.
+     * @param url The validated URL for the loading page.
+     * @param isInMainFrame Whether the navigation is for the main frame.
+     * @param isErrorPage Whether the navigation shows an error page.
+     * @param hasCommitted Whether the navigation has committed. This returns true for either
+     *                     successful commits or error pages that replace the previous page
+     *                     (distinguished by |isErrorPage|), and false for errors that leave the
+     *                     user on the previous page. When false, |isSameDocument|,
+     *                     |isFragmentNavigation|, |pageTransition| and |httpStatusCode| will have
+     *                     default values.
+     * @param isSameDocument Whether the main frame navigation did not cause changes to the
+     *                   document (for example scrolling to a named anchor or PopState).
+     * @param isFragmentNavigation Whether the navigation was to a different fragment.
+     * @param pageTransition The page transition type associated with this navigation.
+     * @param errorCode The net error code if an error occurred prior to commit, otherwise net::OK.
+     * @param errorDescription The description for the net error code.
+     * @param httpStatusCode The HTTP status code of the navigation.
      */
-    public void didFinishNavigation(NavigationHandle navigationHandle) {}
+    public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
+            boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
+            @Nullable Integer pageTransition, int errorCode, String errorDescription,
+            int httpStatusCode) {}
 
     /**
      * Called when the a page starts loading.
@@ -136,11 +145,6 @@ public abstract class WebContentsObserver {
     public void navigationEntriesDeleted() {}
 
     /**
-     * Called when navigation entries were changed.
-     */
-    public void navigationEntriesChanged() {}
-
-    /**
      * Called when an interstitial page gets attached to the tab content.
      */
     public void didAttachInterstitialPage() {}
@@ -175,23 +179,6 @@ public abstract class WebContentsObserver {
      * @param value the new viewport fit value.
      */
     public void viewportFitChanged(@ViewportFitType int value) {}
-
-    /**
-     * This method is invoked when the WebContents reloads the LoFi images on the page.
-     */
-    public void didReloadLoFiImages() {}
-
-    /**
-     * This method is invoked when a RenderWidgetHost for a WebContents gains focus.
-     */
-    public void onWebContentsFocused() {}
-
-    /**
-     * This method is invoked when a RenderWidgetHost for a WebContents loses focus. This may
-     * be immediately followed by onWebContentsFocused if focus was moving between two
-     * RenderWidgetHosts within the same WebContents.
-     */
-    public void onWebContentsLostFocus() {}
 
     /**
      * Stop observing the web contents and clean up associated references.

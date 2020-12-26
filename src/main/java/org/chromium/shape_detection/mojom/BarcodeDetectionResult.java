@@ -16,12 +16,11 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class BarcodeDetectionResult extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 40;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
+    private static final int STRUCT_SIZE = 32;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public String rawValue;
     public org.chromium.gfx.mojom.RectF boundingBox;
-    public int format;
     public org.chromium.gfx.mojom.PointF[] cornerPoints;
 
     private BarcodeDetectionResult(int version) {
@@ -68,12 +67,7 @@ public final class BarcodeDetectionResult extends org.chromium.mojo.bindings.Str
                 }
                 {
                     
-                result.format = decoder0.readInt(24);
-                    BarcodeFormat.validate(result.format);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.cornerPoints = new org.chromium.gfx.mojom.PointF[si1.elementsOrVersion];
@@ -100,12 +94,10 @@ public final class BarcodeDetectionResult extends org.chromium.mojo.bindings.Str
         
         encoder0.encode(this.boundingBox, 16, false);
         
-        encoder0.encode(this.format, 24);
-        
         if (this.cornerPoints == null) {
-            encoder0.encodeNullPointer(32, false);
+            encoder0.encodeNullPointer(24, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.cornerPoints.length, 32, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.cornerPoints.length, 24, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.cornerPoints.length; ++i0) {
                 
                 encoder1.encode(this.cornerPoints[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);

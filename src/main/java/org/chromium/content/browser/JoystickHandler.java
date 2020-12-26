@@ -7,10 +7,9 @@ package org.chromium.content.browser;
 import android.view.InputDevice;
 import android.view.MotionEvent;
 
-import org.chromium.base.UserData;
 import org.chromium.content.browser.input.ImeAdapterImpl;
-import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.EventForwarder;
@@ -18,7 +17,7 @@ import org.chromium.ui.base.EventForwarder;
 /**
  * Bridges content and joystick device event conversion and forwarding.
  */
-public class JoystickHandler implements ImeEventObserver, UserData {
+public class JoystickHandler implements ImeEventObserver {
     private final EventForwarder mEventForwarder;
 
     // Whether joystick scroll is enabled.  It's disabled when an editable field is focused.
@@ -29,8 +28,8 @@ public class JoystickHandler implements ImeEventObserver, UserData {
     }
 
     public static JoystickHandler fromWebContents(WebContents webContents) {
-        return ((WebContentsImpl) webContents)
-                .getOrSetUserData(JoystickHandler.class, UserDataFactoryLazyHolder.INSTANCE);
+        return WebContentsUserData.fromWebContents(
+                webContents, JoystickHandler.class, UserDataFactoryLazyHolder.INSTANCE);
     }
 
     /**

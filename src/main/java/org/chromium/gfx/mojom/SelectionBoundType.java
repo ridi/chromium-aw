@@ -14,22 +14,39 @@ package org.chromium.gfx.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SelectionBoundType {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int LEFT = 0;
-    public static final int RIGHT = 1; // LEFT + 1
-    public static final int CENTER = 2; // RIGHT + 1
-    public static final int EMPTY = 3; // CENTER + 1
-    public static final int LAST = SelectionBoundType.EMPTY;
+
+    public static final int RIGHT = LEFT + 1;
+
+    public static final int CENTER = RIGHT + 1;
+
+    public static final int EMPTY = CENTER + 1;
+
+    public static final int LAST = (int) (SelectionBoundType.EMPTY);
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 3;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SelectionBoundType() {}
+
 }

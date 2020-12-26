@@ -91,7 +91,7 @@ NfcClient client) {
 
         @Override
         public void push(
-NdefMessage message, NfcPushOptions options, 
+NfcMessage message, NfcPushOptions options, 
 PushResponse callback) {
 
             NfcPushParams _message = new NfcPushParams();
@@ -137,7 +137,7 @@ CancelPushResponse callback) {
 
         @Override
         public void watch(
-NfcReaderOptions options, 
+NfcWatchOptions options, 
 WatchResponse callback) {
 
             NfcWatchParams _message = new NfcWatchParams();
@@ -485,7 +485,7 @@ CancelAllWatchesResponse callback) {
         private static final int STRUCT_SIZE = 24;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public NdefMessage message;
+        public NfcMessage message;
         public NfcPushOptions options;
 
         private NfcPushParams(int version) {
@@ -524,7 +524,7 @@ CancelAllWatchesResponse callback) {
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.message = NdefMessage.decode(decoder1);
+                    result.message = NfcMessage.decode(decoder1);
                     }
                     {
                         
@@ -871,7 +871,7 @@ CancelAllWatchesResponse callback) {
         private static final int STRUCT_SIZE = 16;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public NfcReaderOptions options;
+        public NfcWatchOptions options;
 
         private NfcWatchParams(int version) {
             super(STRUCT_SIZE, version);
@@ -909,7 +909,7 @@ CancelAllWatchesResponse callback) {
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.options = NfcReaderOptions.decode(decoder1);
+                    result.options = NfcWatchOptions.decode(decoder1);
                     }
 
             } finally {

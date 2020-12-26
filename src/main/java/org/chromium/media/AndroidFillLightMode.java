@@ -25,5 +25,4 @@ public @interface AndroidFillLightMode {
   int OFF = 1;
   int AUTO = 2;
   int FLASH = 3;
-  int NUM_ENTRIES = 4;
 }

@@ -12,25 +12,17 @@ import org.chromium.base.annotations.CalledByNative;
 public interface OverscrollRefreshHandler {
     /**
      * Signals the start of an overscrolling pull.
-     * @param type Type of the overscroll action.
-     * @param startX X position of touch event at the beginning of overscroll.
-     * @param startY Y position of touch event at the beginning of overscroll.
-     * @param navigateForward {@code true} for forward navigation, {@code false} for back.
-     *        Used only for {@link OverscrollAction.HISTORY_NAVIGATION}.
      * @return Whether the handler will consume the overscroll sequence.
      */
     @CalledByNative
-    public boolean start(
-            @OverscrollAction int type, float startX, float startY, boolean navigateForward);
+    public boolean start();
 
     /**
      * Signals a pull update.
-     * @param xDelta The change in horizontal pull distance (positive if pulling down, negative if
-     *         up).
-     * @param yDelta The change in vertical pull distance.
+     * @param delta The change in pull distance (positive if pulling down, negative if up).
      */
     @CalledByNative
-    public void pull(float xDelta, float yDelta);
+    public void pull(float delta);
 
     /**
      * Signals the release of the pull.

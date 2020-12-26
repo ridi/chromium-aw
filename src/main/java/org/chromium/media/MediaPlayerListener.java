@@ -14,6 +14,8 @@ import org.chromium.base.annotations.JNINamespace;
 @JNINamespace("media")
 class MediaPlayerListener implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnBufferingUpdateListener,
+        MediaPlayer.OnSeekCompleteListener,
         MediaPlayer.OnVideoSizeChangedListener,
         MediaPlayer.OnErrorListener {
     // These values are mirrored as enums in media/base/android/media_player_android.h.
@@ -76,6 +78,16 @@ class MediaPlayerListener implements MediaPlayer.OnPreparedListener,
     }
 
     @Override
+    public void onSeekComplete(MediaPlayer mp) {
+        nativeOnSeekComplete(mNativeMediaPlayerListener);
+    }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        nativeOnBufferingUpdate(mNativeMediaPlayerListener, percent);
+    }
+
+    @Override
     public void onCompletion(MediaPlayer mp) {
         nativeOnPlaybackComplete(mNativeMediaPlayerListener);
     }
@@ -90,9 +102,11 @@ class MediaPlayerListener implements MediaPlayer.OnPreparedListener,
             long nativeMediaPlayerListener, MediaPlayerBridge mediaPlayerBridge) {
         final MediaPlayerListener listener = new MediaPlayerListener(nativeMediaPlayerListener);
         if (mediaPlayerBridge != null) {
+            mediaPlayerBridge.setOnBufferingUpdateListener(listener);
             mediaPlayerBridge.setOnCompletionListener(listener);
             mediaPlayerBridge.setOnErrorListener(listener);
             mediaPlayerBridge.setOnPreparedListener(listener);
+            mediaPlayerBridge.setOnSeekCompleteListener(listener);
             mediaPlayerBridge.setOnVideoSizeChangedListener(listener);
         }
         return listener;
@@ -109,7 +123,15 @@ class MediaPlayerListener implements MediaPlayer.OnPreparedListener,
             long nativeMediaPlayerListener,
             int width, int height);
 
+    private native void nativeOnBufferingUpdate(
+            long nativeMediaPlayerListener,
+            int percent);
+
     private native void nativeOnMediaPrepared(long nativeMediaPlayerListener);
 
     private native void nativeOnPlaybackComplete(long nativeMediaPlayerListener);
+
+    private native void nativeOnSeekComplete(long nativeMediaPlayerListener);
+
+    private native void nativeOnMediaInterrupted(long nativeMediaPlayerListener);
 }

@@ -8,23 +8,20 @@ import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.view.MarginLayoutParamsCompat;
 import android.view.MotionEvent;
 import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.compat.ApiHelperForN;
-import org.chromium.ui.touchless.TouchlessEventHandler;
-import org.chromium.ui_base.web.CursorType;
+import org.chromium.blink_public.web.WebCursorInfoType;
 
 /**
  * Class to acquire, position, and remove anchor views from the implementing View.
@@ -146,7 +143,7 @@ public class ViewAndroidDelegate {
         int heightInt = Math.round(height);
         int startMargin;
 
-        if (containerView.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+        if (ApiCompatibilityUtils.isLayoutRtl(containerView)) {
             startMargin = containerView.getMeasuredWidth() - Math.round(width + x);
         } else {
             startMargin = leftMargin;
@@ -178,7 +175,7 @@ public class ViewAndroidDelegate {
         imageView.setImageBitmap(shadowImage);
         imageView.layout(0, 0, shadowImage.getWidth(), shadowImage.getHeight());
 
-        return ApiHelperForN.startDragAndDrop(containerView, ClipData.newPlainText(null, text),
+        return containerView.startDragAndDrop(ClipData.newPlainText(null, text),
                 new View.DragShadowBuilder(imageView), null, View.DRAG_FLAG_GLOBAL);
     }
 
@@ -186,9 +183,8 @@ public class ViewAndroidDelegate {
     @CalledByNative
     public void onCursorChangedToCustom(Bitmap customCursorBitmap, int hotspotX, int hotspotY) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            PointerIcon icon =
-                    ApiHelperForN.createPointerIcon(customCursorBitmap, hotspotX, hotspotY);
-            ApiHelperForN.setPointerIcon(getContainerView(), icon);
+            PointerIcon icon = PointerIcon.create(customCursorBitmap, hotspotX, hotspotY);
+            getContainerView().setPointerIcon(icon);
         }
     }
 
@@ -199,128 +195,128 @@ public class ViewAndroidDelegate {
 
         int pointerIconType = PointerIcon.TYPE_ARROW;
         switch (cursorType) {
-            case CursorType.NONE:
+            case WebCursorInfoType.NONE:
                 pointerIconType = PointerIcon.TYPE_NULL;
                 break;
-            case CursorType.POINTER:
+            case WebCursorInfoType.POINTER:
                 pointerIconType = PointerIcon.TYPE_ARROW;
                 break;
-            case CursorType.CONTEXT_MENU:
+            case WebCursorInfoType.CONTEXT_MENU:
                 pointerIconType = PointerIcon.TYPE_CONTEXT_MENU;
                 break;
-            case CursorType.HAND:
+            case WebCursorInfoType.HAND:
                 pointerIconType = PointerIcon.TYPE_HAND;
                 break;
-            case CursorType.HELP:
+            case WebCursorInfoType.HELP:
                 pointerIconType = PointerIcon.TYPE_HELP;
                 break;
-            case CursorType.WAIT:
+            case WebCursorInfoType.WAIT:
                 pointerIconType = PointerIcon.TYPE_WAIT;
                 break;
-            case CursorType.CELL:
+            case WebCursorInfoType.CELL:
                 pointerIconType = PointerIcon.TYPE_CELL;
                 break;
-            case CursorType.CROSS:
+            case WebCursorInfoType.CROSS:
                 pointerIconType = PointerIcon.TYPE_CROSSHAIR;
                 break;
-            case CursorType.I_BEAM:
+            case WebCursorInfoType.I_BEAM:
                 pointerIconType = PointerIcon.TYPE_TEXT;
                 break;
-            case CursorType.VERTICAL_TEXT:
+            case WebCursorInfoType.VERTICAL_TEXT:
                 pointerIconType = PointerIcon.TYPE_VERTICAL_TEXT;
                 break;
-            case CursorType.ALIAS:
+            case WebCursorInfoType.ALIAS:
                 pointerIconType = PointerIcon.TYPE_ALIAS;
                 break;
-            case CursorType.COPY:
+            case WebCursorInfoType.COPY:
                 pointerIconType = PointerIcon.TYPE_COPY;
                 break;
-            case CursorType.NO_DROP:
+            case WebCursorInfoType.NO_DROP:
                 pointerIconType = PointerIcon.TYPE_NO_DROP;
                 break;
-            case CursorType.COLUMN_RESIZE:
+            case WebCursorInfoType.COLUMN_RESIZE:
                 pointerIconType = PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW;
                 break;
-            case CursorType.ROW_RESIZE:
+            case WebCursorInfoType.ROW_RESIZE:
                 pointerIconType = PointerIcon.TYPE_VERTICAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_EAST_SOUTH_WEST_RESIZE:
+            case WebCursorInfoType.NORTH_EAST_SOUTH_WEST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_WEST_SOUTH_EAST_RESIZE:
+            case WebCursorInfoType.NORTH_WEST_SOUTH_EAST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.ZOOM_IN:
+            case WebCursorInfoType.ZOOM_IN:
                 pointerIconType = PointerIcon.TYPE_ZOOM_IN;
                 break;
-            case CursorType.ZOOM_OUT:
+            case WebCursorInfoType.ZOOM_OUT:
                 pointerIconType = PointerIcon.TYPE_ZOOM_OUT;
                 break;
-            case CursorType.GRAB:
+            case WebCursorInfoType.GRAB:
                 pointerIconType = PointerIcon.TYPE_GRAB;
                 break;
-            case CursorType.GRABBING:
+            case WebCursorInfoType.GRABBING:
                 pointerIconType = PointerIcon.TYPE_GRABBING;
                 break;
             // TODO(jaebaek): set types correctly
             // after fixing http://crbug.com/584424.
-            case CursorType.EAST_WEST_RESIZE:
+            case WebCursorInfoType.EAST_WEST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_SOUTH_RESIZE:
+            case WebCursorInfoType.NORTH_SOUTH_RESIZE:
                 pointerIconType = PointerIcon.TYPE_VERTICAL_DOUBLE_ARROW;
                 break;
-            case CursorType.EAST_RESIZE:
+            case WebCursorInfoType.EAST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_RESIZE:
+            case WebCursorInfoType.NORTH_RESIZE:
                 pointerIconType = PointerIcon.TYPE_VERTICAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_EAST_RESIZE:
+            case WebCursorInfoType.NORTH_EAST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.NORTH_WEST_RESIZE:
+            case WebCursorInfoType.NORTH_WEST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.SOUTH_RESIZE:
+            case WebCursorInfoType.SOUTH_RESIZE:
                 pointerIconType = PointerIcon.TYPE_VERTICAL_DOUBLE_ARROW;
                 break;
-            case CursorType.SOUTH_EAST_RESIZE:
+            case WebCursorInfoType.SOUTH_EAST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.SOUTH_WEST_RESIZE:
+            case WebCursorInfoType.SOUTH_WEST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW;
                 break;
-            case CursorType.WEST_RESIZE:
+            case WebCursorInfoType.WEST_RESIZE:
                 pointerIconType = PointerIcon.TYPE_HORIZONTAL_DOUBLE_ARROW;
                 break;
-            case CursorType.PROGRESS:
+            case WebCursorInfoType.PROGRESS:
                 pointerIconType = PointerIcon.TYPE_WAIT;
                 break;
-            case CursorType.NOT_ALLOWED:
+            case WebCursorInfoType.NOT_ALLOWED:
                 pointerIconType = PointerIcon.TYPE_NO_DROP;
                 break;
-            case CursorType.MOVE:
-            case CursorType.MIDDLE_PANNING:
+            case WebCursorInfoType.MOVE:
+            case WebCursorInfoType.MIDDLE_PANNING:
                 pointerIconType = PointerIcon.TYPE_ALL_SCROLL;
                 break;
-            case CursorType.EAST_PANNING:
-            case CursorType.NORTH_PANNING:
-            case CursorType.NORTH_EAST_PANNING:
-            case CursorType.NORTH_WEST_PANNING:
-            case CursorType.SOUTH_PANNING:
-            case CursorType.SOUTH_EAST_PANNING:
-            case CursorType.SOUTH_WEST_PANNING:
-            case CursorType.WEST_PANNING:
+            case WebCursorInfoType.EAST_PANNING:
+            case WebCursorInfoType.NORTH_PANNING:
+            case WebCursorInfoType.NORTH_EAST_PANNING:
+            case WebCursorInfoType.NORTH_WEST_PANNING:
+            case WebCursorInfoType.SOUTH_PANNING:
+            case WebCursorInfoType.SOUTH_EAST_PANNING:
+            case WebCursorInfoType.SOUTH_WEST_PANNING:
+            case WebCursorInfoType.WEST_PANNING:
                 assert false : "These pointer icon types are not supported";
                 break;
-            case CursorType.CUSTOM:
+            case WebCursorInfoType.CUSTOM:
                 assert false : "onCursorChangedToCustom must be called instead";
                 break;
         }
         ViewGroup containerView = getContainerView();
         PointerIcon icon = PointerIcon.getSystemIcon(containerView.getContext(), pointerIconType);
-        ApiHelperForN.setPointerIcon(containerView, icon);
+        containerView.setPointerIcon(icon);
     }
 
     /**
@@ -336,7 +332,7 @@ public class ViewAndroidDelegate {
      * @param topContentOffsetY The Y offset of the content in physical pixels.
      */
     @CalledByNative
-    public void onTopControlsChanged(int topControlsOffsetY, int topContentOffsetY) {}
+    public void onTopControlsChanged(float topControlsOffsetY, float topContentOffsetY) {}
 
     /**
      * Notify the client of the position of the bottom controls.
@@ -344,7 +340,7 @@ public class ViewAndroidDelegate {
      * @param bottomContentOffsetY The Y offset of the content in physical pixels.
      */
     @CalledByNative
-    public void onBottomControlsChanged(int bottomControlsOffsetY, int bottomContentOffsetY) {}
+    public void onBottomControlsChanged(float bottomControlsOffsetY, float bottomContentOffsetY) {}
 
     /**
      * Returns the bottom system window inset in pixels. The system window inset represents the area
@@ -437,30 +433,4 @@ public class ViewAndroidDelegate {
         ViewGroup containerView = getContainerView();
         if (containerView != null) ViewUtils.requestFocus(containerView);
     }
-
-    @CalledByNative
-    private static boolean hasTouchlessEventHandler() {
-        return TouchlessEventHandler.hasTouchlessEventHandler();
-    }
-
-    @CalledByNative
-    private static boolean onUnconsumedKeyboardEventAck(int nativeCode) {
-        return TouchlessEventHandler.onUnconsumedKeyboardEventAck(nativeCode);
-    }
-
-    @CalledByNative
-    private static void fallbackCursorModeLockCursor(
-            boolean left, boolean right, boolean up, boolean down) {
-        TouchlessEventHandler.fallbackCursorModeLockCursor(left, right, up, down);
-    }
-
-    @CalledByNative
-    private static void fallbackCursorModeSetCursorVisibility(boolean visible) {
-        TouchlessEventHandler.fallbackCursorModeSetCursorVisibility(visible);
-    }
-
-    /**
-     * @see InputConnection#performPrivateCommand(java.lang.String, android.os.Bundle)
-     */
-    public void performPrivateImeCommand(String action, Bundle data) {}
 }

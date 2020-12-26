@@ -4,9 +4,7 @@
 
 package org.chromium.content.browser.selection;
 
-import android.content.Context;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.view.textclassifier.TextClassifier;
@@ -29,17 +27,17 @@ import java.lang.annotation.RetentionPolicy;
  */
 @JNINamespace("content")
 public class SmartSelectionClient implements SelectionClient {
-    @IntDef({RequestType.CLASSIFY, RequestType.SUGGEST_AND_CLASSIFY})
+    @IntDef({CLASSIFY, SUGGEST_AND_CLASSIFY})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface RequestType {
-        // Request to obtain the type (e.g. phone number, e-mail address) and the most
-        // appropriate operation for the selected text.
-        int CLASSIFY = 0;
+    private @interface RequestType {}
 
-        // Request to obtain the type (e.g. phone number, e-mail address), the most
-        // appropriate operation for the selected text and a better selection boundaries.
-        int SUGGEST_AND_CLASSIFY = 1;
-    }
+    // Request to obtain the type (e.g. phone number, e-mail address) and the most
+    // appropriate operation for the selected text.
+    private static final int CLASSIFY = 0;
+
+    // Request to obtain the type (e.g. phone number, e-mail address), the most
+    // appropriate operation for the selected text and a better selection boundaries.
+    private static final int SUGGEST_AND_CLASSIFY = 1;
 
     // The maximal number of characters on the left and on the right from the current selection.
     // Used for surrounding text request.
@@ -57,10 +55,6 @@ public class SmartSelectionClient implements SelectionClient {
     public static SmartSelectionClient create(ResultCallback callback, WebContents webContents) {
         WindowAndroid windowAndroid = webContents.getTopLevelNativeWindow();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || windowAndroid == null) return null;
-
-        // Don't do Smart Selection when device is not provisioned or in incognito mode.
-        if (!isDeviceProvisioned(windowAndroid.getContext().get()) || webContents.isIncognito())
-            return null;
 
         return new SmartSelectionClient(callback, webContents, windowAndroid);
     }
@@ -94,8 +88,7 @@ public class SmartSelectionClient implements SelectionClient {
 
     @Override
     public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
-        requestSurroundingText(
-                shouldSuggest ? RequestType.SUGGEST_AND_CLASSIFY : RequestType.CLASSIFY);
+        requestSurroundingText(shouldSuggest ? SUGGEST_AND_CLASSIFY : CLASSIFY);
         return true;
     }
 
@@ -146,27 +139,18 @@ public class SmartSelectionClient implements SelectionClient {
         }
 
         switch (callbackData) {
-            case RequestType.SUGGEST_AND_CLASSIFY:
-                mProvider.sendSuggestAndClassifyRequest(text, start, end);
+            case SUGGEST_AND_CLASSIFY:
+                mProvider.sendSuggestAndClassifyRequest(text, start, end, null);
                 break;
 
-            case RequestType.CLASSIFY:
-                mProvider.sendClassifyRequest(text, start, end);
+            case CLASSIFY:
+                mProvider.sendClassifyRequest(text, start, end, null);
                 break;
 
             default:
                 assert false : "Unexpected callback data";
                 break;
         }
-    }
-
-    private static boolean isDeviceProvisioned(Context context) {
-        if (context == null || context.getContentResolver() == null) return true;
-        // Returns false when device is not provisioned, i.e. before a new device went through
-        // signup process.
-        return Settings.Global.getInt(
-                       context.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0)
-                != 0;
     }
 
     private boolean textHasValidSelection(String text, int start, int end) {

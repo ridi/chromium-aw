@@ -12,8 +12,10 @@ import android.os.RemoteException;
 import android.util.SparseArray;
 import android.view.Surface;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.JNIUtils;
 import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -23,13 +25,12 @@ import org.chromium.base.library_loader.Linker;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.memory.MemoryPressureUma;
 import org.chromium.base.process_launcher.ChildProcessServiceDelegate;
-import org.chromium.base.task.PostTask;
 import org.chromium.content.browser.ChildProcessCreationParamsImpl;
 import org.chromium.content.browser.ContentChildProcessConstants;
 import org.chromium.content.common.IGpuProcessCallback;
 import org.chromium.content.common.SurfaceWrapper;
-import org.chromium.content_public.browser.UiThreadTaskTraits;
 import org.chromium.content_public.common.ContentProcessInfo;
+import org.chromium.content_public.common.ContentSwitches;
 
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
         mCpuFeatures = connectionBundle.getLong(ContentChildProcessConstants.EXTRA_CPU_FEATURES);
         assert mCpuCount > 0;
 
-        if (LibraryLoader.useCrazyLinker() && !LibraryLoader.getInstance().isLoadedByZygote()) {
+        if (LibraryLoader.useCrazyLinker()) {
             Bundle sharedRelros = connectionBundle.getBundle(Linker.EXTRA_LINKER_SHARED_RELROS);
             if (sharedRelros != null) {
                 getLinker().useSharedRelros(sharedRelros);
@@ -99,11 +100,12 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public boolean loadNativeLibrary(Context hostContext) {
-        if (LibraryLoader.getInstance().isLoadedByZygote()) {
-            return initializeLibrary();
+        String processType =
+                CommandLine.getInstance().getSwitchValue(ContentSwitches.SWITCH_PROCESS_TYPE);
+        // Enable selective JNI registration when the process is not the browser process.
+        if (processType != null) {
+            JNIUtils.enableSelectiveJniRegistration();
         }
-
-        JNIUtils.enableSelectiveJniRegistration();
 
         Linker linker = null;
         boolean requestedSharedRelro = false;
@@ -118,6 +120,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
             }
         }
         boolean isLoaded = false;
+        boolean loadAtFixedAddressFailed = false;
         try {
             LibraryLoader.getInstance().loadNowOverrideApplicationContext(hostContext);
             isLoaded = true;
@@ -126,6 +129,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
                 Log.w(TAG,
                         "Failed to load native library with shared RELRO, "
                                 + "retrying without");
+                loadAtFixedAddressFailed = true;
             } else {
                 Log.e(TAG, "Failed to load native library", e);
             }
@@ -142,12 +146,8 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
         if (!isLoaded) {
             return false;
         }
-        LibraryLoader.getInstance().registerRendererProcessHistogram();
-
-        return initializeLibrary();
-    }
-
-    private boolean initializeLibrary() {
+        LibraryLoader.getInstance().registerRendererProcessHistogram(
+                requestedSharedRelro, loadAtFixedAddressFailed);
         try {
             LibraryLoader.getInstance().initialize(mLibraryProcessType);
         } catch (ProcessInitException e) {
@@ -172,8 +172,14 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
     @Override
     public void onBeforeMain() {
         nativeInitChildProcess(mCpuCount, mCpuFeatures);
-        PostTask.postTask(
-                UiThreadTaskTraits.DEFAULT, () -> MemoryPressureUma.initializeForChildService());
+        ThreadUtils.postOnUiThread(() -> MemoryPressureUma.initializeForChildService());
+    }
+
+    @Override
+    public void onDestroy() {
+        // Try to shutdown the MainThread gracefully, but it might not have a
+        // chance to exit normally.
+        nativeShutdownMainThread();
     }
 
     @Override
@@ -222,7 +228,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @SuppressWarnings("unused")
     @CalledByNative
-    private SurfaceWrapper getViewSurface(int surfaceId) {
+    private Surface getViewSurface(int surfaceId) {
         if (mGpuCallback == null) {
             Log.e(TAG, "No callback interface has been provided.");
             return null;
@@ -230,7 +236,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
         try {
             SurfaceWrapper wrapper = mGpuCallback.getViewSurface(surfaceId);
-            return wrapper;
+            return wrapper != null ? wrapper.getSurface() : null;
         } catch (RemoteException e) {
             Log.e(TAG, "Unable to call getViewSurface: %s", e);
             return null;
@@ -240,10 +246,13 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
     /**
      * Initializes the native parts of the service.
      *
+     * @param serviceImpl This ChildProcessService object.
      * @param cpuCount The number of CPUs.
      * @param cpuFeatures The CPU features.
      */
     private native void nativeInitChildProcess(int cpuCount, long cpuFeatures);
+
+    private native void nativeShutdownMainThread();
 
     // Retrieves the FD IDs to keys map and set it by calling setFileDescriptorsIdsToKeys().
     private native void nativeRetrieveFileDescriptorsIdsToKeys();

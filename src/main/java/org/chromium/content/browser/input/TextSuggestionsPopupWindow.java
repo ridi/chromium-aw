@@ -32,10 +32,8 @@ public class TextSuggestionsPopupWindow extends SuggestionsPopupWindow {
             WindowAndroid windowAndroid, View parentView) {
         super(context, textSuggestionHost, windowAndroid, parentView);
 
-        mPrefixSpan =
-                new TextAppearanceSpan(context, R.style.TextAppearance_SuggestionPrefixOrSuffix);
-        mSuffixSpan =
-                new TextAppearanceSpan(context, R.style.TextAppearance_SuggestionPrefixOrSuffix);
+        mPrefixSpan = new TextAppearanceSpan(context, R.style.SuggestionPrefixOrSuffix);
+        mSuffixSpan = new TextAppearanceSpan(context, R.style.SuggestionPrefixOrSuffix);
     }
 
     /**

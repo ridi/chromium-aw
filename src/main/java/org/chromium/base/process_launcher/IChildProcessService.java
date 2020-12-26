@@ -60,8 +60,8 @@ _arg0 = android.os.Bundle.CREATOR.createFromParcel(data);
 else {
 _arg0 = null;
 }
-org.chromium.base.process_launcher.IParentProcess _arg1;
-_arg1 = org.chromium.base.process_launcher.IParentProcess.Stub.asInterface(data.readStrongBinder());
+org.chromium.base.process_launcher.ICallbackInt _arg1;
+_arg1 = org.chromium.base.process_launcher.ICallbackInt.Stub.asInterface(data.readStrongBinder());
 java.util.List<android.os.IBinder> _arg2;
 _arg2 = data.createBinderArrayList();
 this.setupConnection(_arg0, _arg1, _arg2);
@@ -79,12 +79,6 @@ data.enforceInterface(DESCRIPTOR);
 int _arg0;
 _arg0 = data.readInt();
 this.onMemoryPressure(_arg0);
-return true;
-}
-case TRANSACTION_dumpProcessStack:
-{
-data.enforceInterface(DESCRIPTOR);
-this.dumpProcessStack();
 return true;
 }
 }
@@ -128,7 +122,7 @@ return _result;
 }
 // Sets up the initial IPC channel.
 
-@Override public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.IParentProcess parentProcess, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException
+@Override public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.ICallbackInt pidCallback, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 try {
@@ -140,7 +134,7 @@ args.writeToParcel(_data, 0);
 else {
 _data.writeInt(0);
 }
-_data.writeStrongBinder((((parentProcess!=null))?(parentProcess.asBinder()):(null)));
+_data.writeStrongBinder((((pidCallback!=null))?(pidCallback.asBinder()):(null)));
 _data.writeBinderList(clientInterfaces);
 mRemote.transact(Stub.TRANSACTION_setupConnection, _data, null, android.os.IBinder.FLAG_ONEWAY);
 }
@@ -175,25 +169,11 @@ finally {
 _data.recycle();
 }
 }
-// Dumps the stack for the child process without crashing it.
-
-@Override public void dumpProcessStack() throws android.os.RemoteException
-{
-android.os.Parcel _data = android.os.Parcel.obtain();
-try {
-_data.writeInterfaceToken(DESCRIPTOR);
-mRemote.transact(Stub.TRANSACTION_dumpProcessStack, _data, null, android.os.IBinder.FLAG_ONEWAY);
-}
-finally {
-_data.recycle();
-}
-}
 }
 static final int TRANSACTION_bindToCaller = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 static final int TRANSACTION_setupConnection = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
 static final int TRANSACTION_forceKill = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
 static final int TRANSACTION_onMemoryPressure = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
-static final int TRANSACTION_dumpProcessStack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
 }
 // On the first call to this method, the service will record the calling PID
 // and return true. Subsequent calls will only return true if the calling PID
@@ -202,14 +182,11 @@ static final int TRANSACTION_dumpProcessStack = (android.os.IBinder.FIRST_CALL_T
 public boolean bindToCaller() throws android.os.RemoteException;
 // Sets up the initial IPC channel.
 
-public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.IParentProcess parentProcess, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException;
+public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.ICallbackInt pidCallback, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException;
 // Forcefully kills the child process.
 
 public void forceKill() throws android.os.RemoteException;
 // Notifies about memory pressure. The argument is MemoryPressureLevel enum.
 
 public void onMemoryPressure(int pressure) throws android.os.RemoteException;
-// Dumps the stack for the child process without crashing it.
-
-public void dumpProcessStack() throws android.os.RemoteException;
 }

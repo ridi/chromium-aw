@@ -14,26 +14,55 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SerialReceiveError {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int NONE = 0;
-    public static final int DISCONNECTED = 1; // NONE + 1
-    public static final int DEVICE_LOST = 2; // DISCONNECTED + 1
-    public static final int BREAK = 3; // DEVICE_LOST + 1
-    public static final int FRAME_ERROR = 4; // BREAK + 1
-    public static final int OVERRUN = 5; // FRAME_ERROR + 1
-    public static final int BUFFER_OVERFLOW = 6; // OVERRUN + 1
-    public static final int PARITY_ERROR = 7; // BUFFER_OVERFLOW + 1
-    public static final int SYSTEM_ERROR = 8; // PARITY_ERROR + 1
+
+    public static final int DISCONNECTED = NONE + 1;
+
+    public static final int TIMEOUT = DISCONNECTED + 1;
+
+    public static final int DEVICE_LOST = TIMEOUT + 1;
+
+    public static final int BREAK = DEVICE_LOST + 1;
+
+    public static final int FRAME_ERROR = BREAK + 1;
+
+    public static final int OVERRUN = FRAME_ERROR + 1;
+
+    public static final int BUFFER_OVERFLOW = OVERRUN + 1;
+
+    public static final int PARITY_ERROR = BUFFER_OVERFLOW + 1;
+
+    public static final int SYSTEM_ERROR = PARITY_ERROR + 1;
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 8;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SerialReceiveError() {}
+
 }

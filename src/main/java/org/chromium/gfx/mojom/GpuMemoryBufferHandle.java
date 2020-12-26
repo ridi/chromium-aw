@@ -16,16 +16,22 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class GpuMemoryBufferHandle extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 40;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
+    private static final int STRUCT_SIZE = 56;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    public int type;
     public GpuMemoryBufferId id;
+    public org.chromium.mojo.system.SharedBufferHandle sharedMemoryHandle;
     public int offset;
     public int stride;
-    public GpuMemoryBufferPlatformHandle platformHandle;
+    public NativePixmapHandle nativePixmapHandle;
+    public org.chromium.mojo.system.UntypedHandle machPort;
+    public AHardwareBufferHandle androidHardwareBufferHandle;
 
     private GpuMemoryBufferHandle(int version) {
         super(STRUCT_SIZE, version);
+        this.sharedMemoryHandle = org.chromium.mojo.system.InvalidHandle.INSTANCE;
+        this.machPort = org.chromium.mojo.system.InvalidHandle.INSTANCE;
     }
 
     public GpuMemoryBufferHandle() {
@@ -59,20 +65,39 @@ public final class GpuMemoryBufferHandle extends org.chromium.mojo.bindings.Stru
             result = new GpuMemoryBufferHandle(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
+                result.type = decoder0.readInt(8);
+                    GpuMemoryBufferType.validate(result.type);
+                }
+                {
+                    
+                result.sharedMemoryHandle = decoder0.readSharedBufferHandle(12, true);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
                 result.id = GpuMemoryBufferId.decode(decoder1);
                 }
                 {
                     
-                result.offset = decoder0.readInt(16);
+                result.offset = decoder0.readInt(24);
                 }
                 {
                     
-                result.stride = decoder0.readInt(20);
+                result.stride = decoder0.readInt(28);
                 }
                 {
                     
-                result.platformHandle = GpuMemoryBufferPlatformHandle.decode(decoder0, 24);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, true);
+                result.nativePixmapHandle = NativePixmapHandle.decode(decoder1);
+                }
+                {
+                    
+                result.machPort = decoder0.readUntypedHandle(40, true);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, true);
+                result.androidHardwareBufferHandle = AHardwareBufferHandle.decode(decoder1);
                 }
 
         } finally {
@@ -86,12 +111,20 @@ public final class GpuMemoryBufferHandle extends org.chromium.mojo.bindings.Stru
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.id, 8, false);
+        encoder0.encode(this.type, 8);
         
-        encoder0.encode(this.offset, 16);
+        encoder0.encode(this.sharedMemoryHandle, 12, true);
         
-        encoder0.encode(this.stride, 20);
+        encoder0.encode(this.id, 16, false);
         
-        encoder0.encode(this.platformHandle, 24, true);
+        encoder0.encode(this.offset, 24);
+        
+        encoder0.encode(this.stride, 28);
+        
+        encoder0.encode(this.nativePixmapHandle, 32, true);
+        
+        encoder0.encode(this.machPort, 40, true);
+        
+        encoder0.encode(this.androidHardwareBufferHandle, 48, true);
     }
 }

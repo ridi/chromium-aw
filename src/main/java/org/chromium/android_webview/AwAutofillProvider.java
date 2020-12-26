@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.ViewStructure;
 import android.view.autofill.AutofillValue;
 
+import org.chromium.base.BuildInfo;
 import org.chromium.base.ThreadUtils;
 import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.components.autofill.FormData;
@@ -90,7 +91,7 @@ public class AwAutofillProvider extends AutofillProvider {
                                 .addAttribute("id", field.mId);
 
                 switch (field.getControlType()) {
-                    case FormFieldData.ControlType.LIST:
+                    case FormFieldData.TYPE_LIST:
                         child.setAutofillType(View.AUTOFILL_TYPE_LIST);
                         child.setAutofillOptions(field.mOptionContents);
                         int i = findIndex(field.mOptionValues, field.getValue());
@@ -98,11 +99,11 @@ public class AwAutofillProvider extends AutofillProvider {
                             child.setAutofillValue(AutofillValue.forList(i));
                         }
                         break;
-                    case FormFieldData.ControlType.TOGGLE:
+                    case FormFieldData.TYPE_TOGGLE:
                         child.setAutofillType(View.AUTOFILL_TYPE_TOGGLE);
                         child.setAutofillValue(AutofillValue.forToggle(field.isChecked()));
                         break;
-                    case FormFieldData.ControlType.TEXT:
+                    case FormFieldData.TYPE_TEXT:
                         child.setAutofillType(View.AUTOFILL_TYPE_TEXT);
                         child.setAutofillValue(AutofillValue.forText(field.getValue()));
                         if (field.mMaxLength != 0) {
@@ -127,15 +128,15 @@ public class AwAutofillProvider extends AutofillProvider {
                 FormFieldData field = mFormData.mFields.get(index);
                 if (field == null) return false;
                 switch (field.getControlType()) {
-                    case FormFieldData.ControlType.LIST:
+                    case FormFieldData.TYPE_LIST:
                         int j = value.getListValue();
                         if (j < 0 && j >= field.mOptionValues.length) continue;
                         field.setAutofillValue(field.mOptionValues[j]);
                         break;
-                    case FormFieldData.ControlType.TOGGLE:
+                    case FormFieldData.TYPE_TOGGLE:
                         field.setChecked(value.getToggleValue());
                         break;
-                    case FormFieldData.ControlType.TEXT:
+                    case FormFieldData.TYPE_TEXT:
                         field.setAutofillValue((String) value.getTextValue());
                         break;
                     default:
@@ -161,13 +162,13 @@ public class AwAutofillProvider extends AutofillProvider {
             FormFieldData field = mFormData.mFields.get(index);
             if (field == null) return null;
             switch (field.getControlType()) {
-                case FormFieldData.ControlType.LIST:
+                case FormFieldData.TYPE_LIST:
                     int i = findIndex(field.mOptionValues, field.getValue());
                     if (i == -1) return null;
                     return AutofillValue.forList(i);
-                case FormFieldData.ControlType.TOGGLE:
+                case FormFieldData.TYPE_TOGGLE:
                     return AutofillValue.forToggle(field.isChecked());
-                case FormFieldData.ControlType.TEXT:
+                case FormFieldData.TYPE_TEXT:
                     return AutofillValue.forText(field.getValue());
                 default:
                     return null;
@@ -296,7 +297,7 @@ public class AwAutofillProvider extends AutofillProvider {
         // Check focusField inside short value?
         // Autofill Manager might have session that wasn't started by WebView,
         // we just always cancel existing session here.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+        if (!BuildInfo.isAtLeastP()) {
             mAutofillManager.cancel();
         }
         mAutofillManager.notifyNewSessionStarted();
@@ -337,7 +338,7 @@ public class AwAutofillProvider extends AutofillProvider {
     public void onTextFieldDidScroll(int index, float x, float y, float width, float height) {
         // crbug.com/730764 - from P and above, Android framework listens to the onScrollChanged()
         // and repositions the autofill UI automatically.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) return;
+        if (BuildInfo.isAtLeastP()) return;
         if (mRequest == null) return;
 
         short sIndex = (short) index;

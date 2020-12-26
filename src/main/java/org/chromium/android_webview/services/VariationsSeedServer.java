@@ -15,15 +15,24 @@ import android.os.ParcelFileDescriptor;
  * service should write the seed.
  */
 public class VariationsSeedServer extends Service {
+    private VariationsSeedHolder mSeedHolder;
+
     private final IVariationsSeedServer.Stub mBinder = new IVariationsSeedServer.Stub() {
         @Override
         public void getSeed(ParcelFileDescriptor newSeedFile, long oldSeedDate) {
-            VariationsSeedHolder.getInstance().writeSeedIfNewer(newSeedFile, oldSeedDate);
+            mSeedHolder.writeSeedIfNewer(newSeedFile, oldSeedDate);
         }
     };
 
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ServiceInit.init(getApplicationContext());
+        mSeedHolder = VariationsSeedHolder.getInstance();
     }
 }

@@ -47,10 +47,7 @@ case TRANSACTION_transmitCrashes:
 data.enforceInterface(DESCRIPTOR);
 android.os.ParcelFileDescriptor[] _arg0;
 _arg0 = data.createTypedArray(android.os.ParcelFileDescriptor.CREATOR);
-java.util.List _arg1;
-java.lang.ClassLoader cl = (java.lang.ClassLoader)this.getClass().getClassLoader();
-_arg1 = data.readArrayList(cl);
-this.transmitCrashes(_arg0, _arg1);
+this.transmitCrashes(_arg0);
 reply.writeNoException();
 return true;
 }
@@ -72,14 +69,13 @@ public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
 }
-@Override public void transmitCrashes(android.os.ParcelFileDescriptor[] fileDescriptors, java.util.List crashInfo) throws android.os.RemoteException
+@Override public void transmitCrashes(android.os.ParcelFileDescriptor[] fileDescriptors) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
 try {
 _data.writeInterfaceToken(DESCRIPTOR);
 _data.writeTypedArray(fileDescriptors, 0);
-_data.writeList(crashInfo);
 mRemote.transact(Stub.TRANSACTION_transmitCrashes, _data, _reply, 0);
 _reply.readException();
 }
@@ -91,5 +87,5 @@ _data.recycle();
 }
 static final int TRANSACTION_transmitCrashes = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 }
-public void transmitCrashes(android.os.ParcelFileDescriptor[] fileDescriptors, java.util.List crashInfo) throws android.os.RemoteException;
+public void transmitCrashes(android.os.ParcelFileDescriptor[] fileDescriptors) throws android.os.RemoteException;
 }

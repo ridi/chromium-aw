@@ -5,7 +5,11 @@
 package org.chromium.ui.resources;
 
 import android.content.res.AssetManager;
+import android.os.Handler;
+import android.os.Looper;
 
+import org.chromium.base.AsyncTask;
+import org.chromium.base.BuildConfig;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FileUtils;
@@ -14,10 +18,7 @@ import org.chromium.base.Log;
 import org.chromium.base.PathUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.task.PostTask;
-import org.chromium.base.task.TaskTraits;
 import org.chromium.ui.base.LocalizationUtils;
-import org.chromium.ui.base.ResourceBundle;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Handles extracting the necessary resources bundled in an APK and moving them to a location on
@@ -39,39 +39,14 @@ public class ResourceExtractor {
     private static final String V8_SNAPSHOT_DATA_FILENAME = "snapshot_blob.bin";
     private static final String FALLBACK_LOCALE = "en-US";
     private static final String COMPRESSED_LOCALES_DIR = "locales";
-    private static final String COMPRESSED_LOCALES_FALLBACK_DIR = "fallback-locales";
+    private static final int BUFFER_SIZE = 16 * 1024;
 
-    private class ExtractTask implements Runnable {
+    private class ExtractTask extends AsyncTask<Void> {
         private final List<Runnable> mCompletionCallbacks = new ArrayList<Runnable>();
-        private final String mUiLanguage;
-        private final CountDownLatch mLatch = new CountDownLatch(1);
-        private boolean mDone;
-
-        public ExtractTask(String uiLanguage) {
-            mUiLanguage = uiLanguage;
-        }
-
-        @Override
-        public void run() {
-            try (TraceEvent e = TraceEvent.scoped("ResourceExtractor.ExtractTask.doInBackground")) {
-                doInBackgroundImpl();
-            }
-            synchronized (this) {
-                mDone = true;
-            }
-            mLatch.countDown();
-
-            PostTask.postTask(mResultTaskTraits, () -> {
-                try (TraceEvent e =
-                                TraceEvent.scoped("ResourceExtractor.ExtractTask.onPostExecute")) {
-                    onPostExecuteImpl();
-                }
-            });
-        }
 
         private void doInBackgroundImpl() {
             final File outputDir = getOutputDir();
-            String[] assetPaths = detectFilesToExtract(mUiLanguage);
+            String[] assetPaths = detectFilesToExtract();
 
             // Use a suffix for extracted files in order to guarantee that the version of the file
             // on disk matches up with the version of the APK.
@@ -104,36 +79,53 @@ public class ResourceExtractor {
                 throw new RuntimeException();
             }
 
+            AssetManager assetManager = ContextUtils.getApplicationAssets();
+            byte[] buffer = new byte[BUFFER_SIZE];
             for (int n = 0; n < assetPaths.length; ++n) {
                 String assetPath = assetPaths[n];
                 File output = new File(outputDir, outputNames[n]);
-                if (!FileUtils.extractAsset(
-                            ContextUtils.getApplicationContext(), assetPath, output)) {
+                TraceEvent.begin("ExtractResource");
+                try (InputStream inputStream = assetManager.open(assetPath)) {
+                    FileUtils.copyFileStreamAtomicWithBuffer(inputStream, output, buffer);
+                } catch (IOException e) {
                     // The app would just crash later if files are missing.
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
+                } finally {
+                    TraceEvent.end("ExtractResource");
                 }
             }
         }
 
+        @Override
+        protected Void doInBackground() {
+            TraceEvent.begin("ResourceExtractor.ExtractTask.doInBackground");
+            try {
+                doInBackgroundImpl();
+            } finally {
+                TraceEvent.end("ResourceExtractor.ExtractTask.doInBackground");
+            }
+            return null;
+        }
+
         private void onPostExecuteImpl() {
-            ThreadUtils.assertOnUiThread();
             for (int i = 0; i < mCompletionCallbacks.size(); i++) {
                 mCompletionCallbacks.get(i).run();
             }
             mCompletionCallbacks.clear();
         }
 
-        public void await() throws Exception {
-            mLatch.await();
-        }
-
-        public synchronized boolean isDone() {
-            return mDone;
+        @Override
+        protected void onPostExecute(Void result) {
+            TraceEvent.begin("ResourceExtractor.ExtractTask.onPostExecute");
+            try {
+                onPostExecuteImpl();
+            } finally {
+                TraceEvent.end("ResourceExtractor.ExtractTask.onPostExecute");
+            }
         }
     }
 
     private ExtractTask mExtractTask;
-    private TaskTraits mResultTaskTraits;
 
     private static ResourceExtractor sInstance;
 
@@ -144,7 +136,7 @@ public class ResourceExtractor {
         return sInstance;
     }
 
-    private static String[] detectFilesToExtract(String uiLanguage) {
+    private static String[] detectFilesToExtract() {
         Locale defaultLocale = Locale.getDefault();
         String androidLanguage = defaultLocale.getLanguage();
         String chromiumLanguage = LocaleUtils.getUpdatedLanguageForChromium(androidLanguage);
@@ -152,21 +144,21 @@ public class ResourceExtractor {
         // NOTE: The UI language will differ from the application's language
         // when the system locale is not directly supported by Chrome's
         // resources.
+        String uiLanguage = LocalizationUtils.getUiLanguageStringForCompressedPak();
         Log.i(TAG, "Using UI locale %s, system locale: %s (Android name: %s)", uiLanguage,
                 chromiumLanguage, androidLanguage);
 
         // Currenty (Apr 2018), this array can be as big as 6 entries, so using a capacity
         // that allows a bit of growth, but is still in the right ballpark..
         ArrayList<String> activeLocales = new ArrayList<String>(6);
-        String[] compressedLocales = ResourceBundle.getAvailableCompressedPakLocales();
-        for (String locale : compressedLocales) {
-            if (LocalizationUtils.chromiumLocaleMatchesLanguage(locale, uiLanguage)) {
+        for (String locale : BuildConfig.COMPRESSED_LOCALES) {
+            if (locale.startsWith(uiLanguage)) {
                 activeLocales.add(locale);
             }
         }
         if (activeLocales.isEmpty()) {
-            assert compressedLocales.length > 0;
-            assert Arrays.asList(compressedLocales).contains(FALLBACK_LOCALE);
+            assert BuildConfig.COMPRESSED_LOCALES.length > 0;
+            assert Arrays.asList(BuildConfig.COMPRESSED_LOCALES).contains(FALLBACK_LOCALE);
             activeLocales.add(FALLBACK_LOCALE);
         }
 
@@ -181,10 +173,6 @@ public class ResourceExtractor {
         //
         //   Where <lang> is an Android-specific ISO-639-1 language identifier.
         //
-        // * With the exception of the fallback (English) pak files which are stored
-        //   in the base module under:
-        //       assets/locales-fallback/<locale>.pak
-        //
         //   Moreover, when the bundle uses APK splits, there is no guarantee that the split
         //   corresponding to the current device locale is installed yet, but the one matching
         //   uiLanguage should be there, since the value is determined by loading a resource string
@@ -192,8 +180,7 @@ public class ResourceExtractor {
         //
         AssetManager assetManager = ContextUtils.getApplicationAssets();
         String localesSrcDir;
-        String androidSplitLanguage = LocalizationUtils.getSplitLanguageForAndroid(uiLanguage);
-        String langSpecificPath = COMPRESSED_LOCALES_DIR + "#lang_" + androidSplitLanguage;
+        String langSpecificPath = COMPRESSED_LOCALES_DIR + "#lang_" + uiLanguage;
         String defaultLocalePakName =
                 LocalizationUtils.getDefaultCompressedPakLocaleForLanguage(uiLanguage) + ".pak";
 
@@ -205,10 +192,6 @@ public class ResourceExtractor {
                            assetManager, COMPRESSED_LOCALES_DIR, activeLocales.get(0) + ".pak")) {
             // This is a regular APK, and all pak files are available.
             localesSrcDir = COMPRESSED_LOCALES_DIR;
-        } else if (assetPathHasFile(assetManager, COMPRESSED_LOCALES_FALLBACK_DIR,
-                           activeLocales.get(0) + ".pak")) {
-            // This is a fallback language pak file.
-            localesSrcDir = COMPRESSED_LOCALES_FALLBACK_DIR;
         } else {
             // This is an app bundle, but the split containing the pak files for the current UI
             // locale is *not* installed yet. This should never happen in theory, and there is
@@ -267,17 +250,10 @@ public class ResourceExtractor {
         }
 
         try {
-            mExtractTask.await();
+            mExtractTask.get();
         } catch (Exception e) {
             assert false;
         }
-    }
-
-    /**
-     * Sets the traits to use for the reply task.
-     */
-    public void setResultTraits(TaskTraits traits) {
-        mResultTaskTraits = traits;
     }
 
     /**
@@ -294,14 +270,16 @@ public class ResourceExtractor {
     public void addCompletionCallback(Runnable callback) {
         ThreadUtils.assertOnUiThread();
 
+        Handler handler = new Handler(Looper.getMainLooper());
         if (shouldSkipPakExtraction()) {
-            PostTask.postTask(mResultTaskTraits, callback);
+            handler.post(callback);
             return;
         }
 
         assert mExtractTask != null;
-        if (mExtractTask.isDone()) {
-            PostTask.postTask(mResultTaskTraits, callback);
+        assert !mExtractTask.isCancelled();
+        if (mExtractTask.getStatus() == AsyncTask.Status.FINISHED) {
+            handler.post(callback);
         } else {
             mExtractTask.mCompletionCallbacks.add(callback);
         }
@@ -311,10 +289,8 @@ public class ResourceExtractor {
      * This will extract the application pak resources in an
      * AsyncTask. Call waitForCompletion() at the point resources
      * are needed to block until the task completes.
-     *
-     * @param uiLanguage The language to extract.
      */
-    public void startExtractingResources(String uiLanguage) {
+    public void startExtractingResources() {
         if (mExtractTask != null) {
             return;
         }
@@ -327,8 +303,8 @@ public class ResourceExtractor {
             return;
         }
 
-        mExtractTask = new ExtractTask(uiLanguage);
-        PostTask.postTask(TaskTraits.USER_BLOCKING, mExtractTask);
+        mExtractTask = new ExtractTask();
+        mExtractTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private File getAppDataDir() {
@@ -339,15 +315,21 @@ public class ResourceExtractor {
         return new File(getAppDataDir(), "paks");
     }
 
+    private static void deleteFile(File file) {
+        if (file.exists() && !file.delete()) {
+            Log.w(TAG, "Unable to remove %s", file.getName());
+        }
+    }
+
     private void deleteFiles(String[] existingFileNames) {
         // These used to be extracted, but no longer are, so just clean them up.
-        FileUtils.recursivelyDeleteFile(new File(getAppDataDir(), ICU_DATA_FILENAME));
-        FileUtils.recursivelyDeleteFile(new File(getAppDataDir(), V8_NATIVES_DATA_FILENAME));
-        FileUtils.recursivelyDeleteFile(new File(getAppDataDir(), V8_SNAPSHOT_DATA_FILENAME));
+        deleteFile(new File(getAppDataDir(), ICU_DATA_FILENAME));
+        deleteFile(new File(getAppDataDir(), V8_NATIVES_DATA_FILENAME));
+        deleteFile(new File(getAppDataDir(), V8_SNAPSHOT_DATA_FILENAME));
 
         if (existingFileNames != null) {
             for (String fileName : existingFileNames) {
-                FileUtils.recursivelyDeleteFile(new File(getOutputDir(), fileName));
+                deleteFile(new File(getOutputDir(), fileName));
             }
         }
     }
@@ -358,6 +340,6 @@ public class ResourceExtractor {
     private static boolean shouldSkipPakExtraction() {
         // Certain apks like ContentShell.apk don't have any compressed locale
         // assets however, so skip extraction entirely for them.
-        return ResourceBundle.getAvailableCompressedPakLocales().length == 0;
+        return BuildConfig.COMPRESSED_LOCALES.length == 0;
     }
 }

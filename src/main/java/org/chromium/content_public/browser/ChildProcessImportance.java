@@ -16,7 +16,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    ChildProcessImportance.NORMAL, ChildProcessImportance.MODERATE, ChildProcessImportance.IMPORTANT
+    ChildProcessImportance.NORMAL, ChildProcessImportance.MODERATE,
+    ChildProcessImportance.IMPORTANT, ChildProcessImportance.COUNT
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface ChildProcessImportance {
@@ -26,4 +27,8 @@ public @interface ChildProcessImportance {
   int NORMAL = 0;
   int MODERATE = 1;
   int IMPORTANT = 2;
+  /**
+   * Place holder to represent number of values.
+   */
+  int COUNT = 3;
 }

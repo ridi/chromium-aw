@@ -8,54 +8,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.Nullable;
-import android.util.Pair;
 import android.view.Surface;
 
-import org.chromium.base.ActivityState;
-import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content_public.browser.ScreenOrientationDelegate;
-import org.chromium.content_public.browser.ScreenOrientationProvider;
 import org.chromium.content_public.common.ScreenOrientationConstants;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid;
 
-import java.util.Map;
-import java.util.WeakHashMap;
+import javax.annotation.Nullable;
 
 /**
  * This is the implementation of the C++ counterpart ScreenOrientationProvider.
  */
 @JNINamespace("content")
-public class ScreenOrientationProviderImpl
-        implements ActivityStateListener, ScreenOrientationProvider {
-    private static class Holder {
-        private static ScreenOrientationProviderImpl sInstance =
-                new ScreenOrientationProviderImpl();
-    }
-
+public class ScreenOrientationProviderImpl {
     private static final String TAG = "cr.ScreenOrientation";
-
-    private ScreenOrientationDelegate mDelegate;
-
-    /**
-     * The keys of the map are the activities for which screen orientation requests are
-     * delayed.
-     * The values of the map are the most recent screen orientation request for each activity.
-     * The map will contain an entry with a null value if screen orientation requests are delayed
-     * for an activity but no screen orientation requests have been made for the activity.
-     */
-    private Map<Activity, Pair<Boolean, Integer>> mDelayedRequests = new WeakHashMap<>();
-
-    @CalledByNative
-    public static ScreenOrientationProviderImpl getInstance() {
-        return Holder.sInstance;
-    }
+    private static ScreenOrientationDelegate sDelegate;
 
     private static int getOrientationFromWebScreenOrientations(byte orientation,
             @Nullable WindowAndroid window, Context context) {
@@ -99,16 +71,10 @@ public class ScreenOrientationProviderImpl
         }
     }
 
-    @Override
-    public void onActivityStateChange(Activity activity, @ActivityState int newState) {
-        if (newState == ActivityState.DESTROYED) {
-            mDelayedRequests.remove(activity);
-        }
-    }
-
     @CalledByNative
-    @Override
-    public void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
+    public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
+        if (sDelegate != null && !sDelegate.canLockOrientation()) return;
+
         // WindowAndroid may be null if the tab is being reparented.
         if (window == null) return;
         Activity activity = window.getActivity().get();
@@ -124,12 +90,11 @@ public class ScreenOrientationProviderImpl
             return;
         }
 
-        setMaybeDelayedRequestedOrientation(activity, true /* lock */, orientation);
+        activity.setRequestedOrientation(orientation);
     }
 
     @CalledByNative
-    @Override
-    public void unlockOrientation(@Nullable WindowAndroid window) {
+    public static void unlockOrientation(@Nullable WindowAndroid window) {
         // WindowAndroid may be null if the tab is being reparented.
         if (window == null) return;
         Activity activity = window.getActivity().get();
@@ -158,71 +123,20 @@ public class ScreenOrientationProviderImpl
         } catch (PackageManager.NameNotFoundException e) {
             // Do nothing, defaultOrientation should be SCREEN_ORIENTATION_UNSPECIFIED.
         } finally {
-            setMaybeDelayedRequestedOrientation(activity, false /* lock */, defaultOrientation);
-        }
-    }
-
-    @Override
-    public void delayOrientationRequests(WindowAndroid window) {
-        Activity activity = window.getActivity().get();
-        if ((activity == null || areRequestsDelayedForActivity(activity))) {
-            return;
-        }
-
-        mDelayedRequests.put(activity, null);
-        ApplicationStatus.registerStateListenerForActivity(this, activity);
-    }
-
-    @Override
-    public void runDelayedOrientationRequests(WindowAndroid window) {
-        Activity activity = window.getActivity().get();
-        if ((activity == null || !areRequestsDelayedForActivity(activity))) {
-            return;
-        }
-
-        Pair<Boolean, Integer> delayedRequest = mDelayedRequests.remove(activity);
-        if (delayedRequest != null) {
-            setRequestedOrientationNow(activity, delayedRequest.first, delayedRequest.second);
-        }
-        if (mDelayedRequests.isEmpty()) {
-            ApplicationStatus.unregisterActivityStateListener(this);
+            if (sDelegate == null || sDelegate.canUnlockOrientation(activity, defaultOrientation)) {
+                activity.setRequestedOrientation(defaultOrientation);
+            }
         }
     }
 
     @CalledByNative
-    public boolean isOrientationLockEnabled() {
-        return mDelegate == null || mDelegate.canLockOrientation();
+    private static boolean isOrientationLockEnabled() {
+        return sDelegate == null || sDelegate.canLockOrientation();
     }
 
-    @Override
-    public void setOrientationDelegate(ScreenOrientationDelegate delegate) {
-        mDelegate = delegate;
+    public static void setOrientationDelegate(ScreenOrientationDelegate delegate) {
+        sDelegate = delegate;
     }
 
-    /** Returns whether screen orientation requests are delayed for the passed-in activity. */
-    private boolean areRequestsDelayedForActivity(Activity activity) {
-        return mDelayedRequests.containsKey(activity);
-    }
-
-    /** Sets the requested orientation for the activity delaying the request if needed. */
-    private void setMaybeDelayedRequestedOrientation(
-            Activity activity, boolean lock, int orientation) {
-        if (areRequestsDelayedForActivity(activity)) {
-            mDelayedRequests.put(activity, Pair.create(lock, orientation));
-        } else {
-            setRequestedOrientationNow(activity, lock, orientation);
-        }
-    }
-
-    /** Sets the requested orientation for the activity. */
-    private void setRequestedOrientationNow(Activity activity, boolean lock, int orientation) {
-        if (mDelegate != null) {
-            if ((lock && !mDelegate.canLockOrientation())
-                    || (!lock && !mDelegate.canUnlockOrientation(activity, orientation))) {
-                return;
-            }
-        }
-
-        activity.setRequestedOrientation(orientation);
-    }
+    private ScreenOrientationProviderImpl() {}
 }

@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
-import org.chromium.content_public.browser.GestureListenerManager;
-import org.chromium.content_public.browser.GestureStateListener;
-import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.DropdownAdapter;
 import org.chromium.ui.DropdownPopupWindow;
 
@@ -27,8 +24,7 @@ public class SelectPopupDropdown implements SelectPopup.Ui {
     private boolean mSelectionNotified;
 
     public SelectPopupDropdown(SelectPopup selectPopup, Context context, View anchorView,
-            List<SelectPopupItem> items, int[] selected, boolean rightAligned,
-            WebContents webContents) {
+            List<SelectPopupItem> items, int[] selected, boolean rightAligned) {
         mSelectPopup = selectPopup;
         mDropdownPopupWindow = new DropdownPopupWindow(context, anchorView);
         mDropdownPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,12 +49,6 @@ public class SelectPopupDropdown implements SelectPopup.Ui {
                         notifySelection(null);
                     }
                 });
-        GestureListenerManager.fromWebContents(webContents).addListener(new GestureStateListener() {
-            @Override
-            public void onScrollStarted(int scrollOffsetY, int scrollExtentY) {
-                hide(true);
-            }
-        });
     }
 
     private void notifySelection(int[] indicies) {

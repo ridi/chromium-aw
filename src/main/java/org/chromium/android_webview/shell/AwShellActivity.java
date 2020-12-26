@@ -37,6 +37,7 @@ import org.chromium.android_webview.R;
 import org.chromium.android_webview.test.AwTestContainerView;
 import org.chromium.android_webview.test.NullContentsClient;
 import org.chromium.base.CommandLine;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
 import org.chromium.content_public.browser.NavigationController;
@@ -70,6 +71,9 @@ public class AwShellActivity extends Activity {
 
         AwShellResourceProvider.registerResources(this);
 
+        ((AwShellApplication) getApplication()).initCommandLine();
+
+        ContextUtils.initApplicationContext(getApplicationContext());
         AwBrowserProcess.loadLibrary(null);
 
         if (CommandLine.getInstance().hasSwitch(AwShellSwitches.ENABLE_ATRACE)) {
@@ -216,7 +220,7 @@ public class AwShellActivity extends Activity {
 
         testContainerView.initialize(new AwContents(mBrowserContext, testContainerView,
                 testContainerView.getContext(), testContainerView.getInternalAccessDelegate(),
-                testContainerView.getNativeDrawFunctorFactory(), awContentsClient, awSettings));
+                testContainerView.getNativeDrawGLFunctorFactory(), awContentsClient, awSettings));
         testContainerView.getAwContents().getSettings().setJavaScriptEnabled(true);
         if (mDevToolsServer == null) {
             mDevToolsServer = new AwDevToolsServer();

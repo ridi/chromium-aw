@@ -61,13 +61,7 @@ final class ChromeUsbService {
     }
 
     @CalledByNative
-    private boolean hasDevicePermission(ChromeUsbDevice wrapper) {
-        UsbDevice device = wrapper.getDevice();
-        return mUsbManager.hasPermission(device);
-    }
-
-    @CalledByNative
-    private void requestDevicePermission(ChromeUsbDevice wrapper) {
+    private void requestDevicePermission(ChromeUsbDevice wrapper, long nativeCallback) {
         UsbDevice device = wrapper.getDevice();
         if (mUsbManager.hasPermission(device)) {
             nativeDevicePermissionRequestComplete(mUsbServiceAndroid, device.getDeviceId(), true);

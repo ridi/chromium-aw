@@ -166,11 +166,6 @@ public class AppWebMessagePort implements MessagePort {
         return ports;
     }
 
-    // Called to create a port from handle.
-    public static AppWebMessagePort create(MessagePipeHandle handle) {
-        return new AppWebMessagePort(handle);
-    }
-
     private MessagePipeHandle passHandle() {
         mTransferred = true;
         MessagePipeHandle handle = mConnector.passHandle();
@@ -261,7 +256,6 @@ public class AppWebMessagePort implements MessagePort {
         msg.arrayBufferContentsArray = new SerializedArrayBufferContents[0];
         msg.imageBitmapContentsArray = new Bitmap[0];
         msg.ports = ports;
-        msg.streamChannels = new MessagePipeHandle[0];
         mConnector.accept(msg.serializeWithHeader(mMojoCore, MESSAGE_HEADER));
     }
 

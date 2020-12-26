@@ -6,8 +6,8 @@ package org.chromium.ui.resources.async;
 
 import android.util.SparseArray;
 
+import org.chromium.base.AsyncTask;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.task.AsyncTask;
 import org.chromium.ui.resources.Resource;
 import org.chromium.ui.resources.ResourceLoader;
 
@@ -99,6 +99,7 @@ public class AsyncPreloadResourceLoader extends ResourceLoader {
 
     private void registerResource(Resource resource, int resourceId) {
         notifyLoadFinished(resourceId, resource);
+        if (resource != null) resource.getBitmap().recycle();
         mOutstandingLoads.remove(resourceId);
     }
 

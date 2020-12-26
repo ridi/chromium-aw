@@ -41,7 +41,7 @@ GetDevicesResponse callback);
 
 
     void connect(
-String deviceGuid, HidConnectionClient connectionClient, 
+String deviceGuid, 
 ConnectResponse callback);
 
     interface ConnectResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<HidConnection> { }

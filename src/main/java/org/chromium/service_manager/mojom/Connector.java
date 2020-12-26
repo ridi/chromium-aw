@@ -25,7 +25,7 @@ public interface Connector extends org.chromium.mojo.bindings.Interface {
 
 
     void bindInterface(
-ServiceFilter filter, String interfaceName, org.chromium.mojo.system.MessagePipeHandle interfacePipe, int priority, 
+Identity target, String interfaceName, org.chromium.mojo.system.MessagePipeHandle interfacePipe, 
 BindInterfaceResponse callback);
 
     interface BindInterfaceResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, Identity> { }
@@ -33,26 +33,26 @@ BindInterfaceResponse callback);
 
 
     void queryService(
-String serviceName, 
+Identity target, 
 QueryServiceResponse callback);
 
-    interface QueryServiceResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<ServiceInfo> { }
+    interface QueryServiceResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, String> { }
 
 
 
-    void warmService(
-ServiceFilter filter, 
-WarmServiceResponse callback);
+    void startService(
+Identity target, 
+StartServiceResponse callback);
 
-    interface WarmServiceResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, Identity> { }
+    interface StartServiceResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, Identity> { }
 
 
 
-    void registerServiceInstance(
-Identity identity, org.chromium.mojo.system.MessagePipeHandle service, org.chromium.mojo.bindings.InterfaceRequest<ProcessMetadata> metadataReceiver, 
-RegisterServiceInstanceResponse callback);
+    void startServiceWithProcess(
+Identity target, org.chromium.mojo.system.MessagePipeHandle service, org.chromium.mojo.bindings.InterfaceRequest<PidReceiver> pidReceiverRequest, 
+StartServiceWithProcessResponse callback);
 
-    interface RegisterServiceInstanceResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Integer> { }
+    interface StartServiceWithProcessResponse extends org.chromium.mojo.bindings.Callbacks.Callback2<Integer, Identity> { }
 
 
 

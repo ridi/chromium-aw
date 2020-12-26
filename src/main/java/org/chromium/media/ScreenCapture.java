@@ -22,7 +22,6 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.IntDef;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Surface;
@@ -34,8 +33,6 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
 
 /**
@@ -50,29 +47,13 @@ public class ScreenCapture extends Fragment {
 
     private static final int REQUEST_MEDIA_PROJECTION = 1;
 
-    @IntDef({CaptureState.ATTACHED, CaptureState.ALLOWED, CaptureState.STARTED,
-            CaptureState.STOPPING, CaptureState.STOPPED})
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface CaptureState {
-        int ATTACHED = 0;
-        int ALLOWED = 1;
-        int STARTED = 2;
-        int STOPPING = 3;
-        int STOPPED = 4;
-    }
-
-    @IntDef({DeviceOrientation.PORTRAIT, DeviceOrientation.LANDSCAPE})
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface DeviceOrientation {
-        int PORTRAIT = 0;
-        int LANDSCAPE = 1;
-    }
-
     // Native callback context variable.
     private final long mNativeScreenCaptureMachineAndroid;
 
+    private static enum CaptureState { ATTACHED, ALLOWED, STARTED, STOPPING, STOPPED }
+    private static enum DeviceOrientation { PORTRAIT, LANDSCAPE }
     private final Object mCaptureStateLock = new Object();
-    private @CaptureState int mCaptureState = CaptureState.STOPPED;
+    private CaptureState mCaptureState = CaptureState.STOPPED;
 
     private MediaProjection mMediaProjection;
     private MediaProjectionManager mMediaProjectionManager;
@@ -82,7 +63,7 @@ public class ScreenCapture extends Fragment {
     private HandlerThread mThread;
     private Handler mBackgroundHandler;
     private Display mDisplay;
-    private @DeviceOrientation int mCurrentOrientation;
+    private DeviceOrientation mCurrentOrientation;
     private Intent mResultData;
 
     private int mScreenDensity;
@@ -374,7 +355,7 @@ public class ScreenCapture extends Fragment {
                 null);
     }
 
-    private void changeCaptureStateAndNotify(@CaptureState int state) {
+    private void changeCaptureStateAndNotify(CaptureState state) {
         synchronized (mCaptureStateLock) {
             mCaptureState = state;
             mCaptureStateLock.notifyAll();
@@ -398,7 +379,7 @@ public class ScreenCapture extends Fragment {
         }
     }
 
-    private @DeviceOrientation int getDeviceOrientation(int rotation) {
+    private DeviceOrientation getDeviceOrientation(int rotation) {
         switch (rotation) {
             case 0:
             case 180:
@@ -415,7 +396,7 @@ public class ScreenCapture extends Fragment {
 
     private boolean maybeDoRotation() {
         final int rotation = getDeviceRotation();
-        final @DeviceOrientation int orientation = getDeviceOrientation(rotation);
+        final DeviceOrientation orientation = getDeviceOrientation(rotation);
         if (orientation == mCurrentOrientation) {
             return false;
         }
@@ -426,7 +407,7 @@ public class ScreenCapture extends Fragment {
         return true;
     }
 
-    private void rotateCaptureOrientation(@DeviceOrientation int orientation) {
+    private void rotateCaptureOrientation(DeviceOrientation orientation) {
         if ((orientation == DeviceOrientation.LANDSCAPE && mWidth < mHeight)
                 || (orientation == DeviceOrientation.PORTRAIT && mHeight < mWidth)) {
             mWidth += mHeight - (mHeight = mWidth);

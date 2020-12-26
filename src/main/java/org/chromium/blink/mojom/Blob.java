@@ -48,7 +48,7 @@ long offset, long length, org.chromium.mojo.system.DataPipe.ProducerHandle pipe,
 
 ReadSideDataResponse callback);
 
-    interface ReadSideDataResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<org.chromium.mojo_base.mojom.BigBuffer> { }
+    interface ReadSideDataResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<byte[]> { }
 
 
 

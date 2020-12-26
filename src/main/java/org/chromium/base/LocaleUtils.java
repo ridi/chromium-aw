@@ -172,21 +172,8 @@ public class LocaleUtils {
     }
 
     /**
-     * Extracts language from a language tag.
-     * @param languageTag language tag of the form xx-XX or xx.
-     * @return the xx part of the language tag.
-     */
-    public static String toLanguage(String languageTag) {
-        int pos = languageTag.indexOf('-');
-        if (pos < 0) {
-            return languageTag;
-        }
-        return languageTag.substring(0, pos);
-    }
-
-    /**
-     * @return a language tag string that represents the default locale.
-     *         The language tag is well-formed IETF BCP 47 language tag with language and country
+     * @return a comma separated language tags string that represents a default locale.
+     *         Each language tag is well-formed IETF BCP 47 language tag with language and country
      *         code.
      */
     @CalledByNative

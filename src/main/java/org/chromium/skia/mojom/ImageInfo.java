@@ -21,7 +21,7 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int colorType;
     public int alphaType;
-    public byte[] serializedColorSpace;
+    public int profileType;
     public int width;
     public int height;
 
@@ -70,15 +70,16 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.serializedColorSpace = decoder0.readBytes(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                result.profileType = decoder0.readInt(16);
+                    ColorProfileType.validate(result.profileType);
                 }
                 {
                     
-                result.width = decoder0.readInt(24);
+                result.width = decoder0.readInt(20);
                 }
                 {
                     
-                result.height = decoder0.readInt(28);
+                result.height = decoder0.readInt(24);
                 }
 
         } finally {
@@ -96,10 +97,10 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.alphaType, 12);
         
-        encoder0.encode(this.serializedColorSpace, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        encoder0.encode(this.profileType, 16);
         
-        encoder0.encode(this.width, 24);
+        encoder0.encode(this.width, 20);
         
-        encoder0.encode(this.height, 28);
+        encoder0.encode(this.height, 24);
     }
 }

@@ -6,7 +6,6 @@ package org.chromium.content.browser.input;
 
 import android.content.Context;
 
-import org.chromium.base.UserData;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -16,6 +15,7 @@ import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
@@ -26,7 +26,7 @@ import org.chromium.ui.base.WindowAndroid;
  * the commands in that menu (by calling back to the C++ class).
  */
 @JNINamespace("content")
-public class TextSuggestionHost implements WindowEventObserver, HideablePopup, UserData {
+public class TextSuggestionHost implements WindowEventObserver, HideablePopup {
     private long mNativeTextSuggestionHost;
     private final WebContentsImpl mWebContents;
     private final Context mContext;
@@ -48,17 +48,9 @@ public class TextSuggestionHost implements WindowEventObserver, HideablePopup, U
      * @param webContents {@link WebContents} object.
      * @return {@link TextSuggestionHost} object.
      */
-    @VisibleForTesting
-    static TextSuggestionHost fromWebContents(WebContents webContents) {
-        return ((WebContentsImpl) webContents)
-                .getOrSetUserData(TextSuggestionHost.class, UserDataFactoryLazyHolder.INSTANCE);
-    }
-
-    @CalledByNative
-    private static TextSuggestionHost create(WebContents webContents, long nativePtr) {
-        TextSuggestionHost host = fromWebContents(webContents);
-        host.setNativePtr(nativePtr);
-        return host;
+    public static TextSuggestionHost fromWebContents(WebContents webContents) {
+        return WebContentsUserData.fromWebContents(
+                webContents, TextSuggestionHost.class, UserDataFactoryLazyHolder.INSTANCE);
     }
 
     /**
@@ -71,12 +63,9 @@ public class TextSuggestionHost implements WindowEventObserver, HideablePopup, U
         mWindowAndroid = mWebContents.getTopLevelNativeWindow();
         mViewDelegate = mWebContents.getViewAndroidDelegate();
         assert mViewDelegate != null;
+        mNativeTextSuggestionHost = nativeInit(mWebContents);
         PopupController.register(mWebContents, this);
         WindowEventObserverManager.from(mWebContents).addObserver(this);
-    }
-
-    private void setNativePtr(long nativePtr) {
-        mNativeTextSuggestionHost = nativePtr;
     }
 
     private float getContentOffsetYPix() {
@@ -211,7 +200,7 @@ public class TextSuggestionHost implements WindowEventObserver, HideablePopup, U
     }
 
     @CalledByNative
-    private void onNativeDestroyed() {
+    private void destroy() {
         hidePopups();
         mNativeTextSuggestionHost = 0;
     }
@@ -232,6 +221,7 @@ public class TextSuggestionHost implements WindowEventObserver, HideablePopup, U
         return mSpellCheckPopupWindow;
     }
 
+    private native long nativeInit(WebContents webContents);
     private native void nativeApplySpellCheckSuggestion(
             long nativeTextSuggestionHostAndroid, String suggestion);
     private native void nativeApplyTextSuggestion(

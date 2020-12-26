@@ -42,12 +42,9 @@ public class NavigationParams {
     /** True if the navigation was originated from the main frame. */
     public final boolean isMainFrame;
 
-    /** True if navigation is renderer initiated. Eg clicking on a link. */
-    public final boolean isRendererInitiated;
-
     public NavigationParams(String url, String referrer, boolean isPost, boolean hasUserGesture,
             int pageTransitionType, boolean isRedirect, boolean isExternalProtocol,
-            boolean isMainFrame, boolean isRendererInitiated, boolean hasUserGestureCarryover) {
+            boolean isMainFrame, boolean hasUserGestureCarryover) {
         this.url = url;
         this.referrer = TextUtils.isEmpty(referrer) ? null : referrer;
         this.isPost = isPost;
@@ -56,17 +53,14 @@ public class NavigationParams {
         this.isRedirect = isRedirect;
         this.isExternalProtocol = isExternalProtocol;
         this.isMainFrame = isMainFrame;
-        this.isRendererInitiated = isRendererInitiated;
         this.hasUserGestureCarryover = hasUserGestureCarryover;
     }
 
     @CalledByNative
     public static NavigationParams create(String url, String referrer, boolean isPost,
             boolean hasUserGesture, int pageTransitionType, boolean isRedirect,
-            boolean isExternalProtocol, boolean isMainFrame, boolean isRendererInitiated,
-            boolean hasUserGestureCarryover) {
+            boolean isExternalProtocol, boolean isMainFrame, boolean hasUserGestureCarryover) {
         return new NavigationParams(url, referrer, isPost, hasUserGesture, pageTransitionType,
-                isRedirect, isExternalProtocol, isMainFrame, isRendererInitiated,
-                hasUserGestureCarryover);
+                isRedirect, isExternalProtocol, isMainFrame, hasUserGestureCarryover);
     }
 }

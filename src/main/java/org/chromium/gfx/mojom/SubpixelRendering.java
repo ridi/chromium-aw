@@ -14,22 +14,40 @@ package org.chromium.gfx.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SubpixelRendering {
-    private static final boolean IS_EXTENSIBLE = false;
+
 
     public static final int NONE = 0;
-    public static final int RGB = 1; // NONE + 1
-    public static final int BGR = 2; // RGB + 1
-    public static final int VRGB = 3; // BGR + 1
-    public static final int VBGR = 4; // VRGB + 1
+
+    public static final int RGB = NONE + 1;
+
+    public static final int BGR = RGB + 1;
+
+    public static final int VRGB = BGR + 1;
+
+    public static final int VBGR = VRGB + 1;
+
+
+    private static final boolean IS_EXTENSIBLE = false;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 4;
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                return true;
+        }
+        return false;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value)) return;
+        if (IS_EXTENSIBLE || isKnownValue(value))
+            return;
+
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SubpixelRendering() {}
+
 }

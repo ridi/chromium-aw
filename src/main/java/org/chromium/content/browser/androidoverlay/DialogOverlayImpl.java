@@ -13,8 +13,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.task.PostTask;
-import org.chromium.content_public.browser.UiThreadTaskTraits;
 import org.chromium.gfx.mojom.Rect;
 import org.chromium.media.mojom.AndroidOverlay;
 import org.chromium.media.mojom.AndroidOverlayClient;
@@ -93,7 +91,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
             public void run() {
                 dialogCore.initialize(context, config, mHoppingHost, asPanel);
                 // Now that |mDialogCore| has been initialized, we are ready for token callbacks.
-                PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
+                ThreadUtils.postOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (mNativeHandle != 0) {

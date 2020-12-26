@@ -23,9 +23,6 @@ import org.chromium.base.annotations.MainDex;
  * }
  * }</pre>
  *
- * The event name of the trace events must be a string literal or a |static final String| class
- * member. Otherwise NoDynamicStringsInTraceEventCheck error will be thrown.
- *
  * It is OK to use tracing before the native library has loaded, in a slightly restricted fashion.
  * @see EarlyTraceEvent for details.
  */
@@ -36,9 +33,7 @@ public class TraceEvent implements AutoCloseable {
     private static volatile boolean sATraceEnabled; // True when taking an Android systrace.
 
     private static class BasicLooperMonitor implements Printer {
-        private static final String LOOPER_TASK_PREFIX = "Looper.dispatch: ";
-        private static final int SHORTEST_LOG_PREFIX_LENGTH = "<<<<< Finished to ".length();
-        private String mCurrentTarget;
+        private static final String EARLY_TOPLEVEL_TASK_NAME = "Looper.dispatchMessage: ";
 
         @Override
         public void println(final String line) {
@@ -55,57 +50,32 @@ public class TraceEvent implements AutoCloseable {
             // will filter the event in this case.
             boolean earlyTracingActive = EarlyTraceEvent.isActive();
             if (sEnabled || earlyTracingActive) {
-                mCurrentTarget = getTraceEventName(line);
+                String target = getTarget(line);
                 if (sEnabled) {
-                    nativeBeginToplevel(mCurrentTarget);
-                } else {
-                    EarlyTraceEvent.begin(mCurrentTarget);
+                    nativeBeginToplevel(target);
+                } else if (earlyTracingActive) {
+                    // Synthesize a task name instead of using a parameter, as early tracing doesn't
+                    // support parameters.
+                    EarlyTraceEvent.begin(EARLY_TOPLEVEL_TASK_NAME + target);
                 }
             }
         }
 
         void endHandling(final String line) {
-            boolean earlyTracingActive = EarlyTraceEvent.isActive();
-            if ((sEnabled || earlyTracingActive) && mCurrentTarget != null) {
-                if (sEnabled) {
-                    nativeEndToplevel(mCurrentTarget);
-                } else {
-                    EarlyTraceEvent.end(mCurrentTarget);
-                }
+            if (EarlyTraceEvent.isActive()) {
+                EarlyTraceEvent.end(EARLY_TOPLEVEL_TASK_NAME + getTarget(line));
             }
-            mCurrentTarget = null;
-        }
-
-        private static String getTraceEventName(String line) {
-            return LOOPER_TASK_PREFIX + getTarget(line) + "(" + getTargetName(line) + ")";
+            if (sEnabled) nativeEndToplevel();
         }
 
         /**
-         * Android Looper formats |logLine| as
-         *
-         * ">>>>> Dispatching to (TARGET) {HASH_CODE} TARGET_NAME: WHAT"
-         *
-         * and
-         *
-         * "<<<<< Finished to (TARGET) {HASH_CODE} TARGET_NAME".
-         *
-         * This has been the case since at least 2009 (Donut). This function extracts the
-         * TARGET part of the message.
+         * Android Looper formats |line| as ">>>>> Dispatching to (TARGET) [...]" since at least
+         * 2009 (Donut). Extracts the TARGET part of the message.
          */
         private static String getTarget(String logLine) {
-            int start = logLine.indexOf('(', SHORTEST_LOG_PREFIX_LENGTH);
+            int start = logLine.indexOf('(', 21); // strlen(">>>>> Dispatching to ")
             int end = start == -1 ? -1 : logLine.indexOf(')', start);
             return end != -1 ? logLine.substring(start + 1, end) : "";
-        }
-
-        // Extracts the TARGET_NAME part of the log message (see above).
-        private static String getTargetName(String logLine) {
-            int start = logLine.indexOf('}', SHORTEST_LOG_PREFIX_LENGTH);
-            int end = start == -1 ? -1 : logLine.indexOf(':', start);
-            if (end == -1) {
-                end = logLine.length();
-            }
-            return start != -1 ? logLine.substring(start + 2, end) : "";
         }
     }
 
@@ -251,7 +221,7 @@ public class TraceEvent implements AutoCloseable {
      * Note that if tracing is not enabled, this will not result in allocating an object.
      *
      * @param name Trace event name.
-     * @param arg The arguments of the event.
+     * @param name The arguments of the event.
      * @return a TraceEvent, or null if tracing is not enabled.
      */
     public static TraceEvent scoped(String name, String arg) {
@@ -411,7 +381,7 @@ public class TraceEvent implements AutoCloseable {
     private static native void nativeBegin(String name, String arg);
     private static native void nativeEnd(String name, String arg);
     private static native void nativeBeginToplevel(String target);
-    private static native void nativeEndToplevel(String target);
+    private static native void nativeEndToplevel();
     private static native void nativeStartAsync(String name, long id);
     private static native void nativeFinishAsync(String name, long id);
 }

@@ -132,7 +132,7 @@ OnUploadProgressResponse callback) {
 
         @Override
         public void onReceiveCachedMetadata(
-org.chromium.mojo_base.mojom.BigBuffer data) {
+byte[] data) {
 
             UrlLoaderClientOnReceiveCachedMetadataParams _message = new UrlLoaderClientOnReceiveCachedMetadataParams();
 
@@ -687,10 +687,10 @@ UrlLoaderCompletionStatus status) {
     
     static final class UrlLoaderClientOnReceiveCachedMetadataParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 16;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public org.chromium.mojo_base.mojom.BigBuffer data;
+        public byte[] data;
 
         private UrlLoaderClientOnReceiveCachedMetadataParams(int version) {
             super(STRUCT_SIZE, version);
@@ -727,7 +727,7 @@ UrlLoaderCompletionStatus status) {
                 result = new UrlLoaderClientOnReceiveCachedMetadataParams(elementsOrVersion);
                     {
                         
-                    result.data = org.chromium.mojo_base.mojom.BigBuffer.decode(decoder0, 8);
+                    result.data = decoder0.readBytes(8, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     }
 
             } finally {
@@ -741,7 +741,7 @@ UrlLoaderCompletionStatus status) {
         protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            encoder0.encode(this.data, 8, false);
+            encoder0.encode(this.data, 8, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         }
     }
 

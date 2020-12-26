@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser.input;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -14,7 +15,6 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.CharacterStyle;
@@ -29,10 +29,8 @@ import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.UserData;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -45,13 +43,13 @@ import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content.browser.picker.InputDialogContainer;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.InputMethodManagerWrapper;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.ViewUtils;
-import org.chromium.ui.base.ime.TextInputAction;
 import org.chromium.ui.base.ime.TextInputType;
 
 import java.lang.ref.WeakReference;
@@ -83,7 +81,7 @@ import java.util.List;
  * lifetime of the object.
  */
 @JNINamespace("content")
-public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData {
+public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     private static final String TAG = "cr_Ime";
     private static final boolean DEBUG_LOGS = false;
 
@@ -118,7 +116,6 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
     private int mTextInputType = TextInputType.NONE;
     private int mTextInputFlags;
     private int mTextInputMode = WebTextInputMode.DEFAULT;
-    private int mTextInputAction = TextInputAction.DEFAULT;
     private boolean mNodeEditable;
     private boolean mNodePassword;
 
@@ -143,6 +140,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
      * {@ResultReceiver} passed in InputMethodManager#showSoftInput}. We need this to scroll to the
      * editable node at the right timing, which is after input method window shows up.
      */
+    // TODO(crbug.com/635567): Fix this properly.
+    @SuppressLint("ParcelCreator")
     private static class ShowKeyboardResultReceiver extends ResultReceiver {
         // Unfortunately, the memory life cycle of ResultReceiver object, once passed in
         // showSoftInput(), is in the control of Android's input method framework and IME app,
@@ -174,8 +173,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
      * @return {@link ImeAdapter} object.
      */
     public static ImeAdapterImpl fromWebContents(WebContents webContents) {
-        return ((WebContentsImpl) webContents)
-                .getOrSetUserData(ImeAdapterImpl.class, UserDataFactoryLazyHolder.INSTANCE);
+        return WebContentsUserData.fromWebContents(
+                webContents, ImeAdapterImpl.class, UserDataFactoryLazyHolder.INSTANCE);
     }
 
     /**
@@ -194,9 +193,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
         mWebContents = (WebContentsImpl) webContents;
         mViewDelegate = mWebContents.getViewAndroidDelegate();
         assert mViewDelegate != null;
-        // Use application context here to avoid leaking the activity context.
         InputMethodManagerWrapper wrapper =
-                createDefaultInputMethodManagerWrapper(ContextUtils.getApplicationContext());
+                createDefaultInputMethodManagerWrapper(mWebContents.getContext());
 
         // Deep copy newConfig so that we can notice the difference.
         mCurrentConfig = new Configuration(getContainerView().getResources().getConfiguration());
@@ -312,8 +310,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
         if (mInputConnectionFactory == null) return null;
         View containerView = getContainerView();
         setInputConnection(mInputConnectionFactory.initializeAndGet(containerView, this,
-                mTextInputType, mTextInputFlags, mTextInputMode, mTextInputAction,
-                mLastSelectionStart, mLastSelectionEnd, outAttrs));
+                mTextInputType, mTextInputFlags, mTextInputMode, mLastSelectionStart,
+                mLastSelectionEnd, outAttrs));
         if (DEBUG_LOGS) Log.i(TAG, "onCreateInputConnection: " + mInputConnection);
 
         if (mCursorAnchorInfoController != null) {
@@ -400,7 +398,6 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
      * @param textInputType Text input type for the currently focused field in renderer.
      * @param textInputFlags Text input flags.
      * @param textInputMode Text input mode.
-     * @param textInputAction Text input mode action.
      * @param showIfNeeded Whether the keyboard should be shown if it is currently hidden.
      * @param text The String contents of the field being edited.
      * @param selectionStart The character offset of the selection start, or the caret position if
@@ -415,15 +412,13 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
      */
     @CalledByNative
     private void updateState(int textInputType, int textInputFlags, int textInputMode,
-            int textInputAction, boolean showIfNeeded, String text, int selectionStart,
-            int selectionEnd, int compositionStart, int compositionEnd, boolean replyToRequest) {
+            boolean showIfNeeded, String text, int selectionStart, int selectionEnd,
+            int compositionStart, int compositionEnd, boolean replyToRequest) {
         TraceEvent.begin("ImeAdapter.updateState");
         try {
             if (DEBUG_LOGS) {
-                Log.i(TAG,
-                        "updateState: type [%d->%d], flags [%d], mode[%d], action[%d] show [%b], ",
-                        mTextInputType, textInputType, textInputFlags, textInputMode,
-                        textInputAction, showIfNeeded);
+                Log.i(TAG, "updateState: type [%d->%d], flags [%d], mode[%d], show [%b], ",
+                        mTextInputType, textInputType, textInputFlags, textInputMode, showIfNeeded);
             }
             boolean needsRestart = false;
             boolean hide = false;
@@ -447,10 +442,6 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
                 }
             } else if (textInputType == TextInputType.NONE) {
                 hide = true;
-            }
-            if (mTextInputAction != textInputAction) {
-                mTextInputAction = textInputAction;
-                needsRestart = true;
             }
 
             boolean editable = focusedNodeEditable();
@@ -694,7 +685,7 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
     }
 
     @CalledByNative
-    private void onNativeDestroyed() {
+    private void destroy() {
         resetAndHideKeyboard();
         mNativeImeAdapterAndroid = 0;
         mIsConnected = false;
@@ -759,36 +750,28 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
 
     boolean performEditorAction(int actionCode) {
         if (!isValid()) return false;
-
-        // If mTextInputAction has been specified (indicating an enterKeyHint
-        // has been specified in the HTML) then we do will send the enter key
-        // events. Otherwise we fallback to having the enter key move focus
-        // between the elements.
-        if (mTextInputAction == TextInputAction.DEFAULT) {
-            switch (actionCode) {
-                case EditorInfo.IME_ACTION_NEXT:
-                    advanceFocusInForm(WebFocusType.FORWARD);
-                    return true;
-                case EditorInfo.IME_ACTION_PREVIOUS:
-                    advanceFocusInForm(WebFocusType.BACKWARD);
-                    return true;
-            }
+        switch (actionCode) {
+            case EditorInfo.IME_ACTION_NEXT:
+                advanceFocusInForm(WebFocusType.FORWARD);
+                break;
+            case EditorInfo.IME_ACTION_PREVIOUS:
+                advanceFocusInForm(WebFocusType.BACKWARD);
+                break;
+            default:
+                sendSyntheticKeyPress(KeyEvent.KEYCODE_ENTER,
+                        KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE
+                                | KeyEvent.FLAG_EDITOR_ACTION);
+                break;
         }
-        sendSyntheticKeyPress(KeyEvent.KEYCODE_ENTER,
-                KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE
-                        | KeyEvent.FLAG_EDITOR_ACTION);
         return true;
     }
 
     /**
-     * @see InputConnection#performPrivateCommand(java.lang.String, android.os.Bundle)
+     * Advances the focus to next input field in the current form.
+     *
+     * @param focusType indicates whether to advance forward or backward direction.
      */
-    public void performPrivateCommand(String action, Bundle data) {
-        mViewDelegate.performPrivateImeCommand(action, data);
-    }
-
-    @Override
-    public void advanceFocusInForm(int focusType) {
+    private void advanceFocusInForm(int focusType) {
         if (mNativeImeAdapterAndroid == 0) return;
         nativeAdvanceFocusInForm(mNativeImeAdapterAndroid, focusType);
     }
@@ -807,9 +790,7 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
 
     private void onImeEvent() {
         for (ImeEventObserver observer : mEventObservers) observer.onImeEvent();
-        if (mNodeEditable && mWebContents.getRenderWidgetHostView() != null) {
-            mWebContents.getRenderWidgetHostView().dismissTextHandles();
-        }
+        if (mNodeEditable) mWebContents.dismissTextHandles();
     }
 
     boolean sendCompositionToNative(
@@ -1020,7 +1001,6 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
         SpannableString spannableString = ((SpannableString) text);
         CharacterStyle spans[] = spannableString.getSpans(0, text.length(), CharacterStyle.class);
         for (CharacterStyle span : spans) {
-            final int spanFlags = spannableString.getSpanFlags(span);
             if (span instanceof BackgroundColorSpan) {
                 nativeAppendBackgroundColorSpan(imeTextSpans, spannableString.getSpanStart(span),
                         spannableString.getSpanEnd(span),
@@ -1030,29 +1010,24 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
                         spannableString.getSpanEnd(span));
             } else if (span instanceof SuggestionSpan) {
                 final SuggestionSpan suggestionSpan = (SuggestionSpan) span;
-                // See android.text.Spanned#SPAN_COMPOSING, We are using this flag to determine if
-                // we need to remove the SuggestionSpan after IMEs done with composing state.
-                final boolean removeOnFinishComposing = (spanFlags & Spanned.SPAN_COMPOSING) != 0;
-                // We support all three flags of SuggestionSpans with caveat:
-                // - FLAG_EASY_CORRECT, full support.
-                // - FLAG_MISSPELLED, full support.
-                // - FLAG_AUTO_CORRECTION, no animation support for this flag for
-                //   commitCorrection().
-                // Note that FLAG_AUTO_CORRECTION has precedence than the other two flags.
 
-                // Other cases:
+                // We currently only support FLAG_EASY_CORRECT and FLAG_MISSPELLED SuggestionSpans.
+
+                // Other types:
+                // - FLAG_AUTO_CORRECTION is used e.g. by Samsung's IME to flash a blue background
+                //   on a word being replaced by an autocorrect suggestion. We don't currently
+                //   support this.
+                //
                 // - Some IMEs (e.g. the AOSP keyboard on Jelly Bean) add SuggestionSpans with no
                 //   flags set and no underline color to add suggestions to words marked as
                 //   misspelled (instead of having the spell checker return the suggestions when
                 //   called). We don't support these either.
-                final boolean isEasyCorrectSpan =
-                        (suggestionSpan.getFlags() & SuggestionSpan.FLAG_EASY_CORRECT) != 0;
                 final boolean isMisspellingSpan =
                         (suggestionSpan.getFlags() & SuggestionSpan.FLAG_MISSPELLED) != 0;
-                final boolean isAutoCorrectionSpan =
-                        (suggestionSpan.getFlags() & SuggestionSpan.FLAG_AUTO_CORRECTION) != 0;
-
-                if (!isEasyCorrectSpan && !isMisspellingSpan && !isAutoCorrectionSpan) continue;
+                if (suggestionSpan.getFlags() != SuggestionSpan.FLAG_EASY_CORRECT
+                        && !isMisspellingSpan) {
+                    continue;
+                }
 
                 // Copied from Android's Editor.java so we use the same colors
                 // as the native Android text widget.
@@ -1062,14 +1037,10 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
                 final int suggestionHighlightColor =
                         (underlineColor & 0x00FFFFFF) + (newAlpha << 24);
 
-                // In native side, we treat FLAG_AUTO_CORRECTION span as kMisspellingSuggestion
-                // marker with 0 suggestion.
                 nativeAppendSuggestionSpan(imeTextSpans,
                         spannableString.getSpanStart(suggestionSpan),
-                        spannableString.getSpanEnd(suggestionSpan),
-                        isMisspellingSpan || isAutoCorrectionSpan, removeOnFinishComposing,
-                        underlineColor, suggestionHighlightColor,
-                        isAutoCorrectionSpan ? new String[0] : suggestionSpan.getSuggestions());
+                        spannableString.getSpanEnd(suggestionSpan), isMisspellingSpan,
+                        underlineColor, suggestionHighlightColor, suggestionSpan.getSuggestions());
             }
         }
     }
@@ -1103,8 +1074,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver, UserData
     private static native void nativeAppendBackgroundColorSpan(
             long spanPtr, int start, int end, int backgroundColor);
     private static native void nativeAppendSuggestionSpan(long spanPtr, int start, int end,
-            boolean isMisspelling, boolean removeOnFinishComposing, int underlineColor,
-            int suggestionHighlightColor, String[] suggestions);
+            boolean isMisspelling, int underlineColor, int suggestionHighlightColor,
+            String[] suggestions);
     private native void nativeSetComposingText(
             long nativeImeAdapterAndroid, CharSequence text, String textStr, int newCursorPosition);
     private native void nativeCommitText(

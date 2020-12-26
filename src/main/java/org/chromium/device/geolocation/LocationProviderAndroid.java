@@ -139,8 +139,12 @@ public class LocationProviderAndroid implements LocationListener, LocationProvid
         final Location location =
                 mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         if (location != null) {
-            ThreadUtils.assertOnUiThread();
-            LocationProviderAdapter.onNewLocationAvailable(location);
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LocationProviderAdapter.onNewLocationAvailable(location);
+                }
+            });
         }
         return true;
     }

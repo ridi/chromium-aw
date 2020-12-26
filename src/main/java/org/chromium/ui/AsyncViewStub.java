@@ -33,7 +33,6 @@ public class AsyncViewStub extends View implements AsyncLayoutInflater.OnInflate
     private static AsyncLayoutInflater sAsyncLayoutInflater;
 
     private final ObserverList<Callback<View>> mListeners = new ObserverList<>();
-    private boolean mOnBackground;
 
     public AsyncViewStub(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -50,7 +49,7 @@ public class AsyncViewStub extends View implements AsyncLayoutInflater.OnInflate
     }
 
     /**
-     * Specifies the layout resource to inflate when {@link #inflate()} is invoked. The View
+     * Specifies the layout resource to inflate when {@link #inflate(boolean)} is invoked. The View
      * created by inflating the layout resource is used to replace this AsyncViewStub in its parent.
      *
      * @param layoutResource A valid layout resource identifier (different from 0.)
@@ -81,15 +80,17 @@ public class AsyncViewStub extends View implements AsyncLayoutInflater.OnInflate
     /**
      * Starts background inflation for the stub, the AsyncViewStub must be attached to the window
      * (ie have a parent) before you call inflate on it. Must be called on the UI thread.
+     * @param onBackgroundThread if inflation should be tried on a background thread first, this is
+     *                           used for A/B testing.
      */
-    public void inflate() {
+    public void inflate(boolean onBackgroundThread) {
         try (TraceEvent te = TraceEvent.scoped("AsyncViewStub.inflate")) {
             ThreadUtils.assertOnUiThread();
             final ViewParent viewParent = getParent();
             assert viewParent != null;
             assert viewParent instanceof ViewGroup;
             assert mLayoutResource != 0;
-            if (mOnBackground) {
+            if (onBackgroundThread) {
                 // AsyncLayoutInflater uses its own thread and cannot inflate <merge> elements. It
                 // might be a good idea to write our own version to use our scheduling primitives
                 // and to handle <merge> inflations.
@@ -149,16 +150,5 @@ public class AsyncViewStub extends View implements AsyncLayoutInflater.OnInflate
                 parent.addView(view, index);
             }
         }
-    }
-
-    /**
-     * Sets whether the view should be inflated on a background thread or the UI thread (the
-     * default). This method should not be called after the view has been inflated.
-     * @param shouldInflateOnBackgroundThread True if the view should be inflated on a background
-     * thread, false otherwise.
-     */
-    public void setShouldInflateOnBackgroundThread(boolean shouldInflateOnBackgroundThread) {
-        assert mInflatedView == null;
-        mOnBackground = shouldInflateOnBackgroundThread;
     }
 }

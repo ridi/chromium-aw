@@ -18,14 +18,8 @@ public final class RunOrClosePipeInput extends org.chromium.mojo.bindings.Union 
 
     public static final class Tag {
         public static final int RequireVersion = 0;
-        public static final int EnableIdleTracking = 1;
-        public static final int MessageAck = 2;
-        public static final int NotifyIdle = 3;
     };
     private RequireVersion mRequireVersion;
-    private EnableIdleTracking mEnableIdleTracking;
-    private MessageAck mMessageAck;
-    private NotifyIdle mNotifyIdle;
 
     public void setRequireVersion(RequireVersion requireVersion) {
         this.mTag = Tag.RequireVersion;
@@ -37,36 +31,6 @@ public final class RunOrClosePipeInput extends org.chromium.mojo.bindings.Union 
         return this.mRequireVersion;
     }
 
-    public void setEnableIdleTracking(EnableIdleTracking enableIdleTracking) {
-        this.mTag = Tag.EnableIdleTracking;
-        this.mEnableIdleTracking = enableIdleTracking;
-    }
-
-    public EnableIdleTracking getEnableIdleTracking() {
-        assert this.mTag == Tag.EnableIdleTracking;
-        return this.mEnableIdleTracking;
-    }
-
-    public void setMessageAck(MessageAck messageAck) {
-        this.mTag = Tag.MessageAck;
-        this.mMessageAck = messageAck;
-    }
-
-    public MessageAck getMessageAck() {
-        assert this.mTag == Tag.MessageAck;
-        return this.mMessageAck;
-    }
-
-    public void setNotifyIdle(NotifyIdle notifyIdle) {
-        this.mTag = Tag.NotifyIdle;
-        this.mNotifyIdle = notifyIdle;
-    }
-
-    public NotifyIdle getNotifyIdle() {
-        assert this.mTag == Tag.NotifyIdle;
-        return this.mNotifyIdle;
-    }
-
 
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder0, int offset) {
@@ -76,21 +40,6 @@ public final class RunOrClosePipeInput extends org.chromium.mojo.bindings.Union 
             case Tag.RequireVersion: {
                 
                 encoder0.encode(this.mRequireVersion, offset + 8, false);
-                break;
-            }
-            case Tag.EnableIdleTracking: {
-                
-                encoder0.encode(this.mEnableIdleTracking, offset + 8, false);
-                break;
-            }
-            case Tag.MessageAck: {
-                
-                encoder0.encode(this.mMessageAck, offset + 8, false);
-                break;
-            }
-            case Tag.NotifyIdle: {
-                
-                encoder0.encode(this.mNotifyIdle, offset + 8, false);
                 break;
             }
             default: {
@@ -115,27 +64,6 @@ public final class RunOrClosePipeInput extends org.chromium.mojo.bindings.Union 
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
                 result.mRequireVersion = RequireVersion.decode(decoder1);
                 result.mTag = Tag.RequireVersion;
-                break;
-            }
-            case Tag.EnableIdleTracking: {
-                
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
-                result.mEnableIdleTracking = EnableIdleTracking.decode(decoder1);
-                result.mTag = Tag.EnableIdleTracking;
-                break;
-            }
-            case Tag.MessageAck: {
-                
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
-                result.mMessageAck = MessageAck.decode(decoder1);
-                result.mTag = Tag.MessageAck;
-                break;
-            }
-            case Tag.NotifyIdle: {
-                
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
-                result.mNotifyIdle = NotifyIdle.decode(decoder1);
-                result.mTag = Tag.NotifyIdle;
                 break;
             }
             default: {

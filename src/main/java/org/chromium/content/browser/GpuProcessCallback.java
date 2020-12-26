@@ -22,10 +22,14 @@ class GpuProcessCallback extends IGpuProcessCallback.Stub {
 
     @Override
     public SurfaceWrapper getViewSurface(int surfaceId) {
-        return nativeGetViewSurface(surfaceId);
+        Surface surface = nativeGetViewSurface(surfaceId);
+        if (surface == null) {
+            return null;
+        }
+        return new SurfaceWrapper(surface);
     }
 
     private static native void nativeCompleteScopedSurfaceRequest(
             UnguessableToken requestToken, Surface surface);
-    private static native SurfaceWrapper nativeGetViewSurface(int surfaceId);
+    private static native Surface nativeGetViewSurface(int surfaceId);
 };

@@ -9,6 +9,8 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import org.chromium.base.ApiCompatibilityUtils;
+
 /**
  * Provides a {@Rect} for the location of a {@View} in its window, see
  * {@link View#getLocationOnScreen(int[])}.
@@ -130,7 +132,7 @@ public class ViewRectProvider extends RectProvider
 
         // Account for the padding.
         if (!mIncludePadding) {
-            boolean isRtl = mView.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+            boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(mView);
             mRect.left +=
                     isRtl ? ViewCompat.getPaddingEnd(mView) : ViewCompat.getPaddingStart(mView);
             mRect.right -=

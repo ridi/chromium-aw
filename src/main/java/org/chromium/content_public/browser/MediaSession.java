@@ -46,11 +46,14 @@ public abstract class MediaSession {
     public abstract void stop();
 
     /**
-     * Seeks the media session by the specified number of milliseconds. The
-     * number of millseconds can be positive or negative to seek fowards or
-     * backwards. It should not be zero.
+     * Seeks the media session forward by the specified number of milliseconds.
      */
-    public abstract void seek(long millis);
+    public abstract void seekForward(long millis);
+
+    /**
+     * Seeks the media session backward by the specified number of milliseconds.
+     */
+    public abstract void seekBackward(long millis);
 
     /**
      * Notify the media session that an action has been performed.

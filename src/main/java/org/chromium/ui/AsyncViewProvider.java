@@ -15,7 +15,7 @@ import org.chromium.base.ThreadUtils;
  * an {@link AsyncViewStub}.
  * @param <T> type of the {@link View} that this provider encapsulates.
  */
-public class AsyncViewProvider<T extends View> implements Callback<View>, ViewProvider<T> {
+public class AsyncViewProvider<T extends View> implements Callback<View> {
     private int mResId;
     // Exactly one of mView and mViewStub is non-null at any point.
     private T mView;
@@ -103,12 +103,11 @@ public class AsyncViewProvider<T extends View> implements Callback<View>, ViewPr
         return of(mViewStub, resId);
     }
 
-    @Override
-    public void inflate() {
-        mViewStub.inflate();
-    }
-
-    @Override
+    /**
+     * Add a callback that would be run (on the UI thread) once the {@link View} encapsulated by
+     * this provider is inflated. The callback runs immediately (blocking) if the view has
+     * already been inflated.
+     */
     public void whenLoaded(Callback<T> callback) {
         ThreadUtils.assertOnUiThread();
         if (mDestroyed) return;

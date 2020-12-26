@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser.picker;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +16,6 @@ import android.widget.NumberPicker;
 import org.chromium.android_webview.R;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * A time picker dialog with upto 5 number pickers left to right:
@@ -26,6 +26,8 @@ import java.util.Locale;
  * The milli picker is not displayed if step >= SECOND_IN_MILLIS
  * The second picker is not displayed if step >= MINUTE_IN_MILLIS.
  */
+// TODO(crbug.com/635567): Fix these properly.
+@SuppressLint("DefaultLocale")
 public class MultiFieldTimePickerDialog
         extends AlertDialog implements OnClickListener {
 
@@ -233,7 +235,7 @@ public class MultiFieldTimePickerDialog
             // Non-decimal step value.
             ArrayList<String> strValue = new ArrayList<String>();
             for (int i = min; i < max; i += step) {
-                strValue.add(String.format(Locale.getDefault(), "%03d", i));
+                strValue.add(String.format("%03d", i));
             }
             mMilliSpinner.setMinValue(0);
             mMilliSpinner.setMaxValue(strValue.size() - 1);
@@ -283,7 +285,7 @@ public class MultiFieldTimePickerDialog
 
         @Override
         public String format(int value) {
-            return String.format(Locale.getDefault(), mFormat, value);
+            return String.format(mFormat, value);
         }
     }
 }

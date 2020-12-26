@@ -10,11 +10,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.view.View;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.ui.UiUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -24,7 +26,8 @@ import java.lang.ref.WeakReference;
  * Only instantiate this class when you need the implemented features.
  */
 public class ActivityWindowAndroid
-        extends WindowAndroid implements ApplicationStatus.ActivityStateListener {
+        extends WindowAndroid
+        implements ApplicationStatus.ActivityStateListener, View.OnLayoutChangeListener {
     // Constants used for intent request code bounding.
     private static final int REQUEST_CODE_PREFIX = 1000;
     private static final int REQUEST_CODE_RANGE_SIZE = 100;
@@ -59,7 +62,6 @@ public class ActivityWindowAndroid
             ApplicationStatus.registerStateListenerForActivity(this, activity);
         }
 
-        setKeyboardDelegate(createKeyboardVisibilityDelegate());
         setAndroidPermissionDelegate(createAndroidPermissionDelegate());
     }
 
@@ -67,13 +69,20 @@ public class ActivityWindowAndroid
         return new ActivityAndroidPermissionDelegate(getActivity());
     }
 
-    protected ActivityKeyboardVisibilityDelegate createKeyboardVisibilityDelegate() {
-        return new ActivityKeyboardVisibilityDelegate(getActivity());
+    @Override
+    protected void registerKeyboardVisibilityCallbacks() {
+        Activity activity = getActivity().get();
+        if (activity == null) return;
+        View content = activity.findViewById(android.R.id.content);
+        mIsKeyboardShowing = UiUtils.isKeyboardShowing(getActivity().get(), content);
+        content.addOnLayoutChangeListener(this);
     }
 
     @Override
-    public ActivityKeyboardVisibilityDelegate getKeyboardDelegate() {
-        return (ActivityKeyboardVisibilityDelegate) super.getKeyboardDelegate();
+    protected void unregisterKeyboardVisibilityCallbacks() {
+        Activity activity = getActivity().get();
+        if (activity == null) return;
+        activity.findViewById(android.R.id.content).removeOnLayoutChangeListener(this);
     }
 
     @Override
@@ -159,7 +168,7 @@ public class ActivityWindowAndroid
 
     @Override
     public WeakReference<Activity> getActivity() {
-        return new WeakReference<>(activityFromContext(getContext().get()));
+        return new WeakReference<Activity>(activityFromContext(getContext().get()));
     }
 
     @Override
@@ -180,6 +189,12 @@ public class ActivityWindowAndroid
     public int getActivityState() {
         return mListenToActivityState ? ApplicationStatus.getStateForActivity(getActivity().get())
                                       : super.getActivityState();
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+            int oldTop, int oldRight, int oldBottom) {
+        keyboardVisibilityPossiblyChanged(UiUtils.isKeyboardShowing(getActivity().get(), v));
     }
 
     private int generateNextRequestCode() {

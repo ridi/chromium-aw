@@ -68,15 +68,13 @@ class UrlLoader_Internal {
 
         @Override
         public void followRedirect(
-String[] removedHeaders, HttpRequestHeaders modifiedHeaders, org.chromium.url.mojom.Url newUrl) {
+String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders) {
 
             UrlLoaderFollowRedirectParams _message = new UrlLoaderFollowRedirectParams();
 
-            _message.removedHeaders = removedHeaders;
+            _message.toBeRemovedRequestHeaders = toBeRemovedRequestHeaders;
 
-            _message.modifiedHeaders = modifiedHeaders;
-
-            _message.newUrl = newUrl;
+            _message.modifiedRequestHeaders = modifiedRequestHeaders;
 
 
             getProxyHandler().getMessageReceiver().accept(
@@ -183,7 +181,7 @@ int priority, int intraPriorityValue) {
                         UrlLoaderFollowRedirectParams data =
                                 UrlLoaderFollowRedirectParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().followRedirect(data.removedHeaders, data.modifiedHeaders, data.newUrl);
+                        getImpl().followRedirect(data.toBeRemovedRequestHeaders, data.modifiedRequestHeaders);
                         return true;
                     }
 
@@ -286,12 +284,11 @@ int priority, int intraPriorityValue) {
     
     static final class UrlLoaderFollowRedirectParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 32;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+        private static final int STRUCT_SIZE = 24;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public String[] removedHeaders;
-        public HttpRequestHeaders modifiedHeaders;
-        public org.chromium.url.mojom.Url newUrl;
+        public String[] toBeRemovedRequestHeaders;
+        public HttpRequestHeaders modifiedRequestHeaders;
 
         private UrlLoaderFollowRedirectParams(int version) {
             super(STRUCT_SIZE, version);
@@ -328,25 +325,22 @@ int priority, int intraPriorityValue) {
                 result = new UrlLoaderFollowRedirectParams(elementsOrVersion);
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    {
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, true);
+                    if (decoder1 == null) {
+                        result.toBeRemovedRequestHeaders = null;
+                    } else {
                         org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                        result.removedHeaders = new String[si1.elementsOrVersion];
+                        result.toBeRemovedRequestHeaders = new String[si1.elementsOrVersion];
                         for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
                             
-                            result.removedHeaders[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                            result.toBeRemovedRequestHeaders[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
                         }
                     }
                     }
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                    result.modifiedHeaders = HttpRequestHeaders.decode(decoder1);
-                    }
-                    {
-                        
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, true);
-                    result.newUrl = org.chromium.url.mojom.Url.decode(decoder1);
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, true);
+                    result.modifiedRequestHeaders = HttpRequestHeaders.decode(decoder1);
                     }
 
             } finally {
@@ -360,19 +354,17 @@ int priority, int intraPriorityValue) {
         protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            if (this.removedHeaders == null) {
-                encoder0.encodeNullPointer(8, false);
+            if (this.toBeRemovedRequestHeaders == null) {
+                encoder0.encodeNullPointer(8, true);
             } else {
-                org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.removedHeaders.length, 8, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                for (int i0 = 0; i0 < this.removedHeaders.length; ++i0) {
+                org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.toBeRemovedRequestHeaders.length, 8, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                for (int i0 = 0; i0 < this.toBeRemovedRequestHeaders.length; ++i0) {
                     
-                    encoder1.encode(this.removedHeaders[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+                    encoder1.encode(this.toBeRemovedRequestHeaders[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
                 }
             }
             
-            encoder0.encode(this.modifiedHeaders, 16, false);
-            
-            encoder0.encode(this.newUrl, 24, true);
+            encoder0.encode(this.modifiedRequestHeaders, 16, true);
         }
     }
 

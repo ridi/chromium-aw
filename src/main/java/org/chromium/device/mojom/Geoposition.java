@@ -21,24 +21,41 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
 
     public static final class ErrorCode {
+
+
+        public static final int NONE = (int) (0L);
+
+        public static final int PERMISSION_DENIED = (int) (1L);
+
+        public static final int POSITION_UNAVAILABLE = (int) (2L);
+
+        public static final int TIMEOUT = (int) (3L);
+
+        public static final int LAST = (int) (Geoposition.ErrorCode.TIMEOUT);
+
+
         private static final boolean IS_EXTENSIBLE = false;
 
-        public static final int NONE = 0;
-        public static final int PERMISSION_DENIED = 1;
-        public static final int POSITION_UNAVAILABLE = 2;
-        public static final int TIMEOUT = 3;
-        public static final int LAST = Geoposition.ErrorCode.TIMEOUT;
-
         public static boolean isKnownValue(int value) {
-            return value >= 0 && value <= 3;
+            switch (value) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    return true;
+            }
+            return false;
         }
 
         public static void validate(int value) {
-            if (IS_EXTENSIBLE || isKnownValue(value)) return;
+            if (IS_EXTENSIBLE || isKnownValue(value))
+                return;
+
             throw new DeserializationException("Invalid enum value.");
         }
 
         private ErrorCode() {}
+
     }
     public boolean valid;
     public double latitude;

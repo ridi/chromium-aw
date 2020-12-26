@@ -18,7 +18,7 @@ final class RemoteObjectRegistry implements RemoteObjectImpl.ObjectIdAllocator {
     private final Set<? super RemoteObjectRegistry> mRetainingSet;
     private final Map<Integer, Object> mObjectsById = new HashMap<>();
     private final Map<Object, Integer> mIdsByObject = new HashMap<>();
-    private int mNextId;
+    private int mNextId = 0;
 
     RemoteObjectRegistry(Set<? super RemoteObjectRegistry> retainingSet) {
         retainingSet.add(this);

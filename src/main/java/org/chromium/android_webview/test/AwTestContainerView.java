@@ -4,18 +4,14 @@
 
 package org.chromium.android_webview.test;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.opengl.GLSurfaceView;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,12 +22,8 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.android_webview.AwContents;
-import org.chromium.android_webview.gfx.AwDrawFnImpl;
-import org.chromium.android_webview.shell.DrawFn;
-import org.chromium.base.Callback;
+import org.chromium.android_webview.shell.DrawGL;
 import org.chromium.content_public.browser.WebContents;
-
-import java.nio.ByteBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -58,13 +50,12 @@ public class AwTestContainerView extends FrameLayout {
         // and drawGL on the rendering thread. The variables following
         // are protected by it.
         private final Object mSyncLock = new Object();
-        private int mFunctor;
-        private int mLastDrawnFunctor;
-        private boolean mSyncDone;
-        private boolean mPendingDestroy;
+        private boolean mFunctorAttached;
+        private boolean mNeedsProcessGL;
+        private boolean mNeedsDrawGL;
+        private boolean mWaitForCompletion;
         private int mLastScrollX;
         private int mLastScrollY;
-        private Callback<int[]> mQuadrantReadbackCallback;
 
         // Only used by drawGL on render thread to store the value of scroll offsets at most recent
         // sync for subsequent draws.
@@ -74,6 +65,9 @@ public class AwTestContainerView extends FrameLayout {
         private boolean mHaveSurface;
         private Runnable mReadyToRenderCallback;
         private Runnable mReadyToDetachCallback;
+
+        private long mDrawGL;
+        private long mViewContext;
 
         public HardwareView(Context context) {
             super(context);
@@ -86,7 +80,7 @@ public class AwTestContainerView extends FrameLayout {
 
                 @Override
                 public void onDrawFrame(GL10 gl) {
-                    HardwareView.this.onDrawFrame(gl, mWidth, mHeight);
+                    HardwareView.this.drawGL(mWidth, mHeight);
                 }
 
                 @Override
@@ -98,18 +92,16 @@ public class AwTestContainerView extends FrameLayout {
                 }
 
                 @Override
-                public void onSurfaceCreated(GL10 gl, EGLConfig config) {}
+                public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+                }
             });
 
             setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         }
 
-        public void readbackQuadrantColors(Callback<int[]> callback) {
-            synchronized (mSyncLock) {
-                assert mQuadrantReadbackCallback == null;
-                mQuadrantReadbackCallback = callback;
-            }
-            super.requestRender();
+        public void initialize(long drawGL) {
+            mDrawGL = drawGL;
+            mViewContext = 0;
         }
 
         public boolean isReadyToRender() {
@@ -152,99 +144,91 @@ public class AwTestContainerView extends FrameLayout {
             }
         }
 
-        public void awContentsDetached() {
+        public void detachGLFunctor() {
             synchronized (mSyncLock) {
-                super.requestRender();
-                assert !mPendingDestroy;
-                mPendingDestroy = true;
-                try {
-                    while (!mPendingDestroy) {
-                        mSyncLock.wait();
-                    }
-                } catch (InterruptedException e) {
-                    // ...
-                }
+                mFunctorAttached = false;
+                mNeedsProcessGL = false;
+                mNeedsDrawGL = false;
+                mWaitForCompletion = false;
             }
         }
 
-        public void drawWebViewFunctor(int functor) {
+        public void requestRender(long viewContext, Canvas canvas, boolean waitForCompletion) {
             synchronized (mSyncLock) {
+                assert viewContext != 0;
+                mViewContext = viewContext;
                 super.requestRender();
-                assert mFunctor == 0;
-                mFunctor = functor;
-                mSyncDone = false;
-                try {
-                    while (!mSyncDone) {
-                        mSyncLock.wait();
-                    }
-                } catch (InterruptedException e) {
-                    // ...
-                }
-            }
-        }
-
-        public void onDrawFrame(GL10 gl, int width, int height) {
-            int functor;
-            int scrollX;
-            int scrollY;
-            synchronized (mSyncLock) {
-                scrollX = mLastScrollX;
-                scrollY = mLastScrollY;
-
-                if (mFunctor != 0) {
-                    assert !mSyncDone;
-                    functor = mFunctor;
-                    mLastDrawnFunctor = mFunctor;
-                    mFunctor = 0;
-                    DrawFn.sync(functor, false);
-                    mSyncDone = true;
-                    mSyncLock.notifyAll();
+                mFunctorAttached = true;
+                mWaitForCompletion = waitForCompletion;
+                if (canvas == null) {
+                    mNeedsProcessGL = true;
                 } else {
-                    functor = mLastDrawnFunctor;
-                    if (mPendingDestroy) {
-                        DrawFn.destroyReleased();
-                        mPendingDestroy = false;
-                        mLastDrawnFunctor = 0;
-                        mSyncLock.notifyAll();
-                        return;
+                    mNeedsDrawGL = true;
+                    if (!waitForCompletion) {
+                        // Wait until SYNC is complete only.
+                        // Do this every time there was a new frame.
+                        try {
+                            while (mNeedsDrawGL) {
+                                mSyncLock.wait();
+                            }
+                        } catch (InterruptedException e) {
+                            // ...
+                        }
                     }
                 }
-            }
-            if (functor != 0) {
-                DrawFn.drawGL(functor, width, height, scrollX, scrollY);
-
-                Callback<int[]> quadrantReadbackCallback = null;
-                synchronized (mSyncLock) {
-                    if (mQuadrantReadbackCallback != null) {
-                        quadrantReadbackCallback = mQuadrantReadbackCallback;
-                        mQuadrantReadbackCallback = null;
+                if (waitForCompletion) {
+                    try {
+                        while (mWaitForCompletion) {
+                            mSyncLock.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        // ...
                     }
-                }
-                if (quadrantReadbackCallback != null) {
-                    int quadrantColors[] = new int[4];
-                    int quarterWidth = width / 4;
-                    int quarterHeight = height / 4;
-                    ByteBuffer buffer = ByteBuffer.allocate(4);
-                    gl.glReadPixels(quarterWidth, quarterHeight * 3, 1, 1, GL10.GL_RGBA,
-                            GL10.GL_UNSIGNED_BYTE, buffer);
-                    quadrantColors[0] = readbackToColor(buffer);
-                    gl.glReadPixels(quarterWidth * 3, quarterHeight * 3, 1, 1, GL10.GL_RGBA,
-                            GL10.GL_UNSIGNED_BYTE, buffer);
-                    quadrantColors[1] = readbackToColor(buffer);
-                    gl.glReadPixels(quarterWidth, quarterHeight, 1, 1, GL10.GL_RGBA,
-                            GL10.GL_UNSIGNED_BYTE, buffer);
-                    quadrantColors[2] = readbackToColor(buffer);
-                    gl.glReadPixels(quarterWidth * 3, quarterHeight, 1, 1, GL10.GL_RGBA,
-                            GL10.GL_UNSIGNED_BYTE, buffer);
-                    quadrantColors[3] = readbackToColor(buffer);
-                    quadrantReadbackCallback.onResult(quadrantColors);
                 }
             }
         }
 
-        private int readbackToColor(ByteBuffer buffer) {
-            return Color.argb(buffer.get(3) & 0xff, buffer.get(0) & 0xff, buffer.get(1) & 0xff,
-                    buffer.get(2) & 0xff);
+        public void drawGL(int width, int height) {
+            final boolean draw;
+            final boolean process;
+            final boolean waitForCompletion;
+            final long viewContext;
+
+            synchronized (mSyncLock) {
+                if (!mFunctorAttached) {
+                    mSyncLock.notifyAll();
+                    return;
+                }
+
+                draw = mNeedsDrawGL;
+                process = mNeedsProcessGL;
+                waitForCompletion = mWaitForCompletion;
+                viewContext = mViewContext;
+                if (draw) {
+                    DrawGL.drawGL(mDrawGL, viewContext, width, height, 0, 0, MODE_SYNC);
+                    mCommittedScrollX = mLastScrollX;
+                    mCommittedScrollY = mLastScrollY;
+                }
+                mNeedsDrawGL = false;
+                mNeedsProcessGL = false;
+                if (!waitForCompletion) {
+                    mSyncLock.notifyAll();
+                }
+            }
+            if (process) {
+                DrawGL.drawGL(mDrawGL, viewContext, width, height, 0, 0, MODE_PROCESS);
+            }
+            if (process || draw) {
+                DrawGL.drawGL(mDrawGL, viewContext, width, height, mCommittedScrollX,
+                        mCommittedScrollY, MODE_DRAW);
+            }
+
+            if (waitForCompletion) {
+                synchronized (mSyncLock) {
+                    mWaitForCompletion = false;
+                    mSyncLock.notifyAll();
+                }
+            }
         }
     }
 
@@ -277,20 +261,12 @@ public class AwTestContainerView extends FrameLayout {
     public void initialize(AwContents awContents) {
         mAwContents = awContents;
         if (isBackedByHardwareView()) {
-            AwDrawFnImpl.setDrawFnFunctionTable(DrawFn.getDrawFnFunctionTable());
+            mHardwareView.initialize(AwContents.getAwDrawGLFunction());
         }
     }
 
     public boolean isBackedByHardwareView() {
         return mHardwareView != null;
-    }
-
-    /**
-     * Use glReadPixels to get 4 pixels from center of 4 quadrants. Result is in row-major order.
-     */
-    public void readbackQuadrantColors(Callback<int[]> callback) {
-        assert isBackedByHardwareView();
-        mHardwareView.readbackQuadrantColors(callback);
     }
 
     public WebContents getWebContents() {
@@ -301,8 +277,8 @@ public class AwTestContainerView extends FrameLayout {
         return mAwContents;
     }
 
-    public AwContents.NativeDrawFunctorFactory getNativeDrawFunctorFactory() {
-        return new NativeDrawFunctorFactory();
+    public AwContents.NativeDrawGLFunctorFactory getNativeDrawGLFunctorFactory() {
+        return new NativeDrawGLFunctorFactory();
     }
 
     public AwContents.InternalAccessDelegate getInternalAccessDelegate() {
@@ -329,9 +305,6 @@ public class AwTestContainerView extends FrameLayout {
         assert mAttachedContents;
         mAwContents.onDetachedFromWindow();
         mAttachedContents = false;
-        if (mHardwareView != null) {
-            mHardwareView.awContentsDetached();
-        }
     }
 
     @Override
@@ -463,29 +436,59 @@ public class AwTestContainerView extends FrameLayout {
         return mAwContents.performAccessibilityAction(action, arguments);
     }
 
-    @Override
-    @TargetApi(Build.VERSION_CODES.N)
-    public boolean onDragEvent(DragEvent event) {
-        return mAwContents.onDragEvent(event);
-    }
-
-    private class NativeDrawFunctorFactory implements AwContents.NativeDrawFunctorFactory {
+    private class NativeDrawGLFunctorFactory implements AwContents.NativeDrawGLFunctorFactory {
         @Override
-        public AwContents.NativeDrawGLFunctor createGLFunctor(long context) {
-            return null;
-        }
-
-        @Override
-        public AwDrawFnImpl.DrawFnAccess getDrawFnAccess() {
-            return new DrawFnAccess();
+        public NativeDrawGLFunctor createFunctor(long context) {
+            return new NativeDrawGLFunctor(context);
         }
     }
 
-    private class DrawFnAccess implements AwDrawFnImpl.DrawFnAccess {
+    private static final class NativeDrawGLFunctorDestroyRunnable implements Runnable {
+        public long mContext;
+        NativeDrawGLFunctorDestroyRunnable(long context) {
+            mContext = context;
+        }
         @Override
-        public void drawWebViewFunctor(Canvas canvas, int functor) {
-            assert isBackedByHardwareView();
-            mHardwareView.drawWebViewFunctor(functor);
+        public void run() {
+            mContext = 0;
+        }
+    }
+
+    private class NativeDrawGLFunctor implements AwContents.NativeDrawGLFunctor {
+        private NativeDrawGLFunctorDestroyRunnable mDestroyRunnable;
+
+        NativeDrawGLFunctor(long context) {
+            mDestroyRunnable = new NativeDrawGLFunctorDestroyRunnable(context);
+        }
+
+        @Override
+        public boolean supportsDrawGLFunctorReleasedCallback() {
+            return false;
+        }
+
+        @Override
+        public boolean requestDrawGL(Canvas canvas, Runnable releasedRunnable) {
+            assert releasedRunnable == null;
+            if (!isBackedByHardwareView()) return false;
+            mHardwareView.requestRender(mDestroyRunnable.mContext, canvas, false);
+            return true;
+        }
+
+        @Override
+        public boolean requestInvokeGL(View containerView, boolean waitForCompletion) {
+            if (!isBackedByHardwareView()) return false;
+            mHardwareView.requestRender(mDestroyRunnable.mContext, null, waitForCompletion);
+            return true;
+        }
+
+        @Override
+        public void detach(View containerView) {
+            if (isBackedByHardwareView()) mHardwareView.detachGLFunctor();
+        }
+
+        @Override
+        public Runnable getDestroyRunnable() {
+            return mDestroyRunnable;
         }
     }
 

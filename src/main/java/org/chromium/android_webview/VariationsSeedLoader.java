@@ -61,7 +61,7 @@ import java.util.concurrent.TimeoutException;
  * 4. Call finishVariationsInit() with the value returned from startVariationsInit(). This will
  *    block for up to SEED_LOAD_TIMEOUT_MILLIS if the task hasn't fininshed loading the seed. If the
  *    seed is loaded on time, variations will be initialized. finishVariationsInit() must be called
- *    before AwFeatureListCreator::SetUpFieldTrials() runs.
+ *    before AwFieldTrialCreator::SetUpFieldTrials() runs.
  */
 public class VariationsSeedLoader {
     private static final String TAG = "VariationsSeedLoader";
@@ -74,9 +74,7 @@ public class VariationsSeedLoader {
     private static final long MAX_REQUEST_PERIOD_MILLIS = TimeUnit.HOURS.toMillis(1);
 
     // Block in finishVariationsInit() for at most this value waiting for the seed. If the timeout
-    // is exceeded, proceed with variations disabled, and record the event in the
-    // Variations.SeedLoadResult histogram's "Seed Load Timed Out" bucket. See the discussion on
-    // https://crbug.com/936172 about the trade-offs of increasing or decreasing this value.
+    // is exceeded, proceed with variations disabled.
     private static final long SEED_LOAD_TIMEOUT_MILLIS = 20;
 
     private SeedLoadAndUpdateRunnable mRunnable;
@@ -107,6 +105,8 @@ public class VariationsSeedLoader {
         private long mCurrentSeedDate = Long.MIN_VALUE;
 
         private FutureTask<SeedInfo> mLoadTask = new FutureTask<>(() -> {
+            AwMetricsServiceClient.preloadClientId();
+
             File newSeedFile = VariationsUtils.getNewSeedFile();
             File oldSeedFile = VariationsUtils.getSeedFile();
 
@@ -234,8 +234,8 @@ public class VariationsSeedLoader {
                 return mRunnable.get(SEED_LOAD_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
             } finally {
                 long end = SystemClock.elapsedRealtime();
-                TimesHistogramSample histogram =
-                        new TimesHistogramSample("Variations.SeedLoadBlockingTime");
+                TimesHistogramSample histogram = new TimesHistogramSample(
+                        "Variations.SeedLoadBlockingTime", TimeUnit.MILLISECONDS);
                 histogram.record(end - start);
             }
         } catch (TimeoutException e) {
