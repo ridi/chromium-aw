@@ -16,22 +16,24 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    SubmissionSource.SAME_DOCUMENT_NAVIGATION, SubmissionSource.XHR_SUCCEEDED,
-    SubmissionSource.FRAME_DETACHED, SubmissionSource.DOM_MUTATION_AFTER_XHR,
-    SubmissionSource.PROBABLY_FORM_SUBMITTED, SubmissionSource.FORM_SUBMISSION
+    SubmissionSource.NONE, SubmissionSource.SAME_DOCUMENT_NAVIGATION,
+    SubmissionSource.XHR_SUCCEEDED, SubmissionSource.FRAME_DETACHED,
+    SubmissionSource.DOM_MUTATION_AFTER_XHR, SubmissionSource.PROBABLY_FORM_SUBMITTED,
+    SubmissionSource.FORM_SUBMISSION
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SubmissionSource {
-  int SAME_DOCUMENT_NAVIGATION = 0;
+  int NONE = 0;
+  int SAME_DOCUMENT_NAVIGATION = 1;
   /**
    * navigation.
    */
-  int XHR_SUCCEEDED = 1;
-  int FRAME_DETACHED = 2;
-  int DOM_MUTATION_AFTER_XHR = 3;
-  int PROBABLY_FORM_SUBMITTED = 4;
+  int XHR_SUCCEEDED = 2;
+  int FRAME_DETACHED = 3;
+  int DOM_MUTATION_AFTER_XHR = 4;
+  int PROBABLY_FORM_SUBMITTED = 5;
   /**
    * is loaded.
    */
-  int FORM_SUBMISSION = 5;
+  int FORM_SUBMISSION = 6;
 }
