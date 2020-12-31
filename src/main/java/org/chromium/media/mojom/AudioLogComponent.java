@@ -22,6 +22,8 @@ public final class AudioLogComponent {
 
     public static final int OUTPUT_STREAM = OUTPUT_CONTROLLER + 1;
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (2);
 
     private static final boolean IS_EXTENSIBLE = false;
 

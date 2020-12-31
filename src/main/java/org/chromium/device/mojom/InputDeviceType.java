@@ -24,6 +24,8 @@ public final class InputDeviceType {
 
     public static final int TYPE_UNKNOWN = (int) (3L);
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (3);
 
     private static final boolean IS_EXTENSIBLE = false;
 

@@ -26,6 +26,8 @@ public final class SerialSendError {
 
     public static final int SYSTEM_ERROR = TIMEOUT + 1;
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (4);
 
     private static final boolean IS_EXTENSIBLE = false;
 

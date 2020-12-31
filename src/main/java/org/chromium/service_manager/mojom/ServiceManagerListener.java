@@ -35,7 +35,7 @@ RunningServiceInfo service);
 
 
     void onServiceStarted(
-Identity identity, int pid);
+Identity identity, int pidDeprecated);
 
 
 

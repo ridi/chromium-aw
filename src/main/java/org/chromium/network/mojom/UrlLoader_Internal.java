@@ -68,13 +68,15 @@ class UrlLoader_Internal {
 
         @Override
         public void followRedirect(
-String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders) {
+String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders, org.chromium.url.mojom.Url newUrl) {
 
             UrlLoaderFollowRedirectParams _message = new UrlLoaderFollowRedirectParams();
 
             _message.toBeRemovedRequestHeaders = toBeRemovedRequestHeaders;
 
             _message.modifiedRequestHeaders = modifiedRequestHeaders;
+
+            _message.newUrl = newUrl;
 
 
             getProxyHandler().getMessageReceiver().accept(
@@ -181,7 +183,7 @@ int priority, int intraPriorityValue) {
                         UrlLoaderFollowRedirectParams data =
                                 UrlLoaderFollowRedirectParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().followRedirect(data.toBeRemovedRequestHeaders, data.modifiedRequestHeaders);
+                        getImpl().followRedirect(data.toBeRemovedRequestHeaders, data.modifiedRequestHeaders, data.newUrl);
                         return true;
                     }
 
@@ -284,11 +286,12 @@ int priority, int intraPriorityValue) {
     
     static final class UrlLoaderFollowRedirectParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 32;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public String[] toBeRemovedRequestHeaders;
         public HttpRequestHeaders modifiedRequestHeaders;
+        public org.chromium.url.mojom.Url newUrl;
 
         private UrlLoaderFollowRedirectParams(int version) {
             super(STRUCT_SIZE, version);
@@ -342,6 +345,11 @@ int priority, int intraPriorityValue) {
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, true);
                     result.modifiedRequestHeaders = HttpRequestHeaders.decode(decoder1);
                     }
+                    {
+                        
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, true);
+                    result.newUrl = org.chromium.url.mojom.Url.decode(decoder1);
+                    }
 
             } finally {
                 decoder0.decreaseStackDepth();
@@ -365,6 +373,8 @@ int priority, int intraPriorityValue) {
             }
             
             encoder0.encode(this.modifiedRequestHeaders, 16, true);
+            
+            encoder0.encode(this.newUrl, 24, true);
         }
     }
 

@@ -22,6 +22,8 @@ public final class PaymentComplete {
 
     public static final int UNKNOWN = SUCCESS + 1;
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (2);
 
     private static final boolean IS_EXTENSIBLE = false;
 

@@ -62,11 +62,9 @@ public final class FeaturePolicyFeature {
 
     public static final int LEGACY_IMAGE_FORMATS = (int) (22L);
 
-    public static final int IMAGE_COMPRESSION = (int) (23L);
+    public static final int UNOPTIMIZED_IMAGES = (int) (23L);
 
-    public static final int ANIMATIONS = (int) (24L);
-
-    public static final int MAX_DOWNSCALING_IMAGE = (int) (25L);
+    public static final int OVERSIZED_IMAGES = (int) (25L);
 
     public static final int PICTURE_IN_PICTURE = (int) (26L);
 
@@ -76,6 +74,10 @@ public final class FeaturePolicyFeature {
 
     public static final int LAZY_LOAD = (int) (29L);
 
+    public static final int LAYOUT_ANIMATIONS = (int) (30L);
+
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (30);
 
     private static final boolean IS_EXTENSIBLE = false;
 
@@ -105,12 +107,12 @@ public final class FeaturePolicyFeature {
             case 21:
             case 22:
             case 23:
-            case 24:
             case 25:
             case 26:
             case 27:
             case 28:
             case 29:
+            case 30:
                 return true;
         }
         return false;

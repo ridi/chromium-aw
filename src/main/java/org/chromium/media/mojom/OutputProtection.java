@@ -25,6 +25,8 @@ public interface OutputProtection extends org.chromium.mojo.bindings.Interface {
 
         public static final int HDCP = (int) (1L);
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (1);
 
         private static final boolean IS_EXTENSIBLE = false;
 
@@ -68,6 +70,8 @@ public interface OutputProtection extends org.chromium.mojo.bindings.Interface {
 
         public static final int NETWORK = (int) (64L);
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (64);
 
         private static final boolean IS_EXTENSIBLE = false;
 

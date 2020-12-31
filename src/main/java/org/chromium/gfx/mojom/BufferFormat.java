@@ -48,6 +48,8 @@ public final class BufferFormat {
 
     public static final int LAST = (int) (BufferFormat.UYVY_422);
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (14);
 
     private static final boolean IS_EXTENSIBLE = false;
 

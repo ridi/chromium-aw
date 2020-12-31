@@ -27,6 +27,8 @@ public final class VideoEncodeAcceleratorConfig extends org.chromium.mojo.bindin
 
         public static final int DISPLAY = CAMERA + 1;
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (1);
 
         private static final boolean IS_EXTENSIBLE = false;
 

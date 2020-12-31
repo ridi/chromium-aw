@@ -32,6 +32,8 @@ public final class BasicCardNetwork {
 
     public static final int VISA = UNIONPAY + 1;
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (7);
 
     private static final boolean IS_EXTENSIBLE = false;
 

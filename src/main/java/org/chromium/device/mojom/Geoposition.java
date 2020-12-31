@@ -33,6 +33,8 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
 
         public static final int LAST = (int) (Geoposition.ErrorCode.TIMEOUT);
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (3);
 
         private static final boolean IS_EXTENSIBLE = false;
 

@@ -19,9 +19,11 @@ public final class BigBuffer extends org.chromium.mojo.bindings.Union {
     public static final class Tag {
         public static final int Bytes = 0;
         public static final int SharedMemory = 1;
+        public static final int InvalidBuffer = 2;
     };
     private byte[] mBytes;
     private BigBufferSharedMemoryRegion mSharedMemory;
+    private boolean mInvalidBuffer;
 
     public void setBytes(byte[] bytes) {
         this.mTag = Tag.Bytes;
@@ -43,6 +45,16 @@ public final class BigBuffer extends org.chromium.mojo.bindings.Union {
         return this.mSharedMemory;
     }
 
+    public void setInvalidBuffer(boolean invalidBuffer) {
+        this.mTag = Tag.InvalidBuffer;
+        this.mInvalidBuffer = invalidBuffer;
+    }
+
+    public boolean getInvalidBuffer() {
+        assert this.mTag == Tag.InvalidBuffer;
+        return this.mInvalidBuffer;
+    }
+
 
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder0, int offset) {
@@ -57,6 +69,11 @@ public final class BigBuffer extends org.chromium.mojo.bindings.Union {
             case Tag.SharedMemory: {
                 
                 encoder0.encode(this.mSharedMemory, offset + 8, false);
+                break;
+            }
+            case Tag.InvalidBuffer: {
+                
+                encoder0.encode(this.mInvalidBuffer, offset + 8, 0);
                 break;
             }
             default: {
@@ -87,6 +104,12 @@ public final class BigBuffer extends org.chromium.mojo.bindings.Union {
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
                 result.mSharedMemory = BigBufferSharedMemoryRegion.decode(decoder1);
                 result.mTag = Tag.SharedMemory;
+                break;
+            }
+            case Tag.InvalidBuffer: {
+                
+                result.mInvalidBuffer = decoder0.readBoolean(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, 0);
+                result.mTag = Tag.InvalidBuffer;
                 break;
             }
             default: {

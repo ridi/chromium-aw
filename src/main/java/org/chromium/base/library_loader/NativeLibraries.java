@@ -10,7 +10,7 @@ public class NativeLibraries {
     public static final String[] LIBRARIES =
       {"drawgl","standalonelibwebviewchromium"};
     static String sVersionNumber =
-      "71.0.3578.141";
+      "72.0.3626.122";
     public static int sCpuFamily =
         CPU_FAMILY_X86;
 }

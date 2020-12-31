@@ -72,6 +72,8 @@ public final class VideoCodecProfile {
 
     public static final int AV1PROFILE_PROFILE_PRO = AV1PROFILE_PROFILE_HIGH + 1;
 
+    public static final int MIN_VALUE = (int) (-1);
+    public static final int MAX_VALUE = (int) (26);
 
     private static final boolean IS_EXTENSIBLE = false;
 

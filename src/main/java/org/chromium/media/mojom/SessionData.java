@@ -16,11 +16,33 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SessionData extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 24;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+    private static final int STRUCT_SIZE = 32;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+
+    public static final class KeyType {
+
+
+
+        private static final boolean IS_EXTENSIBLE = false;
+
+        public static boolean isKnownValue(int value) {
+            return false;
+        }
+
+        public static void validate(int value) {
+            if (IS_EXTENSIBLE || isKnownValue(value))
+                return;
+
+            throw new DeserializationException("Invalid enum value.");
+        }
+
+        private KeyType() {}
+
+    }
     public byte[] keySetId;
     public String mimeType;
+    public int keyType;
 
     private SessionData(int version) {
         super(STRUCT_SIZE, version);
@@ -63,6 +85,11 @@ public final class SessionData extends org.chromium.mojo.bindings.Struct {
                     
                 result.mimeType = decoder0.readString(16, false);
                 }
+                {
+                    
+                result.keyType = decoder0.readInt(24);
+                    SessionData.KeyType.validate(result.keyType);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -78,5 +105,7 @@ public final class SessionData extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.keySetId, 8, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         
         encoder0.encode(this.mimeType, 16, false);
+        
+        encoder0.encode(this.keyType, 24);
     }
 }

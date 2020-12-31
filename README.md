@@ -42,7 +42,7 @@ android {
 
 ## Chromium build information
 
-Current version is based on [`71.0.3578.141`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/71.0.3578.141)
+Current version is based on [`72.0.3626.122`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/71.0.3578.141)
 
 ## Customizing
 
@@ -129,7 +129,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/71.0.3578.141
+$ git checkout tags/$VERSION # ex) tags/72.0.3626.122
 
 $ gclient sync
 ```

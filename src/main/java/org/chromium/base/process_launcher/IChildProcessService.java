@@ -60,8 +60,8 @@ _arg0 = android.os.Bundle.CREATOR.createFromParcel(data);
 else {
 _arg0 = null;
 }
-org.chromium.base.process_launcher.ICallbackInt _arg1;
-_arg1 = org.chromium.base.process_launcher.ICallbackInt.Stub.asInterface(data.readStrongBinder());
+org.chromium.base.process_launcher.IParentProcess _arg1;
+_arg1 = org.chromium.base.process_launcher.IParentProcess.Stub.asInterface(data.readStrongBinder());
 java.util.List<android.os.IBinder> _arg2;
 _arg2 = data.createBinderArrayList();
 this.setupConnection(_arg0, _arg1, _arg2);
@@ -122,7 +122,7 @@ return _result;
 }
 // Sets up the initial IPC channel.
 
-@Override public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.ICallbackInt pidCallback, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException
+@Override public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.IParentProcess parentProcess, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 try {
@@ -134,7 +134,7 @@ args.writeToParcel(_data, 0);
 else {
 _data.writeInt(0);
 }
-_data.writeStrongBinder((((pidCallback!=null))?(pidCallback.asBinder()):(null)));
+_data.writeStrongBinder((((parentProcess!=null))?(parentProcess.asBinder()):(null)));
 _data.writeBinderList(clientInterfaces);
 mRemote.transact(Stub.TRANSACTION_setupConnection, _data, null, android.os.IBinder.FLAG_ONEWAY);
 }
@@ -182,7 +182,7 @@ static final int TRANSACTION_onMemoryPressure = (android.os.IBinder.FIRST_CALL_T
 public boolean bindToCaller() throws android.os.RemoteException;
 // Sets up the initial IPC channel.
 
-public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.ICallbackInt pidCallback, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException;
+public void setupConnection(android.os.Bundle args, org.chromium.base.process_launcher.IParentProcess parentProcess, java.util.List<android.os.IBinder> clientInterfaces) throws android.os.RemoteException;
 // Forcefully kills the child process.
 
 public void forceKill() throws android.os.RemoteException;

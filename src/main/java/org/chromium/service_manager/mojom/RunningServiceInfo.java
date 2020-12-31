@@ -19,9 +19,9 @@ public final class RunningServiceInfo extends org.chromium.mojo.bindings.Struct 
     private static final int STRUCT_SIZE = 24;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public int id;
     public Identity identity;
     public int pid;
+    public int state;
 
     private RunningServiceInfo(int version) {
         super(STRUCT_SIZE, version);
@@ -58,16 +58,17 @@ public final class RunningServiceInfo extends org.chromium.mojo.bindings.Struct 
             result = new RunningServiceInfo(elementsOrVersion);
                 {
                     
-                result.id = decoder0.readInt(8);
-                }
-                {
-                    
-                result.pid = decoder0.readInt(12);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
                 result.identity = Identity.decode(decoder1);
+                }
+                {
+                    
+                result.pid = decoder0.readInt(16);
+                }
+                {
+                    
+                result.state = decoder0.readInt(20);
+                    InstanceState.validate(result.state);
                 }
 
         } finally {
@@ -81,10 +82,10 @@ public final class RunningServiceInfo extends org.chromium.mojo.bindings.Struct 
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.id, 8);
+        encoder0.encode(this.identity, 8, false);
         
-        encoder0.encode(this.pid, 12);
+        encoder0.encode(this.pid, 16);
         
-        encoder0.encode(this.identity, 16, false);
+        encoder0.encode(this.state, 20);
     }
 }

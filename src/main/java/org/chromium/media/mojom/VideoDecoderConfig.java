@@ -16,13 +16,12 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class VideoDecoderConfig extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 88;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
+    private static final int STRUCT_SIZE = 80;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(80, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int codec;
     public int profile;
     public int format;
-    public int colorSpace;
     public int videoRotation;
     public org.chromium.gfx.mojom.Size codedSize;
     public org.chromium.gfx.mojom.Rect visibleRect;
@@ -82,46 +81,41 @@ public final class VideoDecoderConfig extends org.chromium.mojo.bindings.Struct 
                 }
                 {
                     
-                result.colorSpace = decoder0.readInt(20);
-                    ColorSpace.validate(result.colorSpace);
-                }
-                {
-                    
-                result.videoRotation = decoder0.readInt(24);
+                result.videoRotation = decoder0.readInt(20);
                     VideoRotation.validate(result.videoRotation);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                 result.codedSize = org.chromium.gfx.mojom.Size.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
                 result.visibleRect = org.chromium.gfx.mojom.Rect.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
                 result.naturalSize = org.chromium.gfx.mojom.Size.decode(decoder1);
                 }
                 {
                     
-                result.extraData = decoder0.readBytes(56, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                result.extraData = decoder0.readBytes(48, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(56, false);
                 result.encryptionScheme = EncryptionScheme.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(72, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
                 result.colorSpaceInfo = VideoColorSpace.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(80, true);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(72, true);
                 result.hdrMetadata = HdrMetadata.decode(decoder1);
                 }
 
@@ -142,22 +136,20 @@ public final class VideoDecoderConfig extends org.chromium.mojo.bindings.Struct 
         
         encoder0.encode(this.format, 16);
         
-        encoder0.encode(this.colorSpace, 20);
+        encoder0.encode(this.videoRotation, 20);
         
-        encoder0.encode(this.videoRotation, 24);
+        encoder0.encode(this.codedSize, 24, false);
         
-        encoder0.encode(this.codedSize, 32, false);
+        encoder0.encode(this.visibleRect, 32, false);
         
-        encoder0.encode(this.visibleRect, 40, false);
+        encoder0.encode(this.naturalSize, 40, false);
         
-        encoder0.encode(this.naturalSize, 48, false);
+        encoder0.encode(this.extraData, 48, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         
-        encoder0.encode(this.extraData, 56, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        encoder0.encode(this.encryptionScheme, 56, false);
         
-        encoder0.encode(this.encryptionScheme, 64, false);
+        encoder0.encode(this.colorSpaceInfo, 64, false);
         
-        encoder0.encode(this.colorSpaceInfo, 72, false);
-        
-        encoder0.encode(this.hdrMetadata, 80, true);
+        encoder0.encode(this.hdrMetadata, 72, true);
     }
 }

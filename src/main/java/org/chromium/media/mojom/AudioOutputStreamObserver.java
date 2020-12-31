@@ -31,6 +31,8 @@ public interface AudioOutputStreamObserver extends org.chromium.mojo.bindings.In
 
         public static final int DOCUMENT_DESTROYED = (int) (4L);
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (4);
 
         private static final boolean IS_EXTENSIBLE = false;
 

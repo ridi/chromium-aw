@@ -30,6 +30,8 @@ public final class ProxyScheme {
 
     public static final int QUIC = HTTPS + 1;
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (6);
 
     private static final boolean IS_EXTENSIBLE = false;
 

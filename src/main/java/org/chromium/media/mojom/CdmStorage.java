@@ -27,6 +27,8 @@ public interface CdmStorage extends org.chromium.mojo.bindings.Interface {
 
         public static final int FAILURE = IN_USE + 1;
 
+        public static final int MIN_VALUE = (int) (0);
+        public static final int MAX_VALUE = (int) (2);
 
         private static final boolean IS_EXTENSIBLE = false;
 

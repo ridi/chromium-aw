@@ -16,12 +16,13 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class Identity extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 32;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public String name;
-    public String userId;
-    public String instance;
+    public org.chromium.mojo_base.mojom.Token instanceGroup;
+    public org.chromium.mojo_base.mojom.Token instanceId;
+    public org.chromium.mojo_base.mojom.Token globallyUniqueId;
 
     private Identity(int version) {
         super(STRUCT_SIZE, version);
@@ -62,11 +63,18 @@ public final class Identity extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.userId = decoder0.readString(16, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                result.instanceGroup = org.chromium.mojo_base.mojom.Token.decode(decoder1);
                 }
                 {
                     
-                result.instance = decoder0.readString(24, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                result.instanceId = org.chromium.mojo_base.mojom.Token.decode(decoder1);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                result.globallyUniqueId = org.chromium.mojo_base.mojom.Token.decode(decoder1);
                 }
 
         } finally {
@@ -82,8 +90,10 @@ public final class Identity extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.name, 8, false);
         
-        encoder0.encode(this.userId, 16, false);
+        encoder0.encode(this.instanceGroup, 16, false);
         
-        encoder0.encode(this.instance, 24, false);
+        encoder0.encode(this.instanceId, 24, false);
+        
+        encoder0.encode(this.globallyUniqueId, 32, false);
     }
 }

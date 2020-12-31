@@ -20,6 +20,8 @@ public final class HidBusType {
 
     public static final int HID_BUS_TYPE_BLUETOOTH = (int) (1L);
 
+    public static final int MIN_VALUE = (int) (0);
+    public static final int MAX_VALUE = (int) (1);
 
     private static final boolean IS_EXTENSIBLE = false;
 
