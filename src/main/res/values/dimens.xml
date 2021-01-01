@@ -102,4 +102,7 @@
     <dimen name="text_edit_suggestion_item_layout_height">48dp</dimen>
     <dimen name="text_suggestion_popup_elevation">2dp</dimen>
     <dimen name="text_suggestion_popup_vertical_margin">20dp</dimen>
+
+    <dimen name="chip_no_icon_padding">16dp</dimen>
+    <dimen name="chip_icon_padding">8dp</dimen>
 </resources>

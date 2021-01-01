@@ -8,9 +8,9 @@ public class NativeLibraries {
     public static boolean sUseLibraryInZipFile;
     public static boolean sEnableLinkerTests;
     public static final String[] LIBRARIES =
-      {"drawgl","standalonelibwebviewchromium"};
-    static String sVersionNumber =
-      "72.0.3626.122";
+      {"standalonelibwebviewchromium"};
+    public static String sVersionNumber =
+      "73.0.3683.121";
     public static int sCpuFamily =
-        CPU_FAMILY_X86;
+      CPU_FAMILY_UNKNOWN;
 }

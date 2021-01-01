@@ -76,8 +76,12 @@ public final class FeaturePolicyFeature {
 
     public static final int LAYOUT_ANIMATIONS = (int) (30L);
 
+    public static final int WAKE_LOCK = (int) (31L);
+
+    public static final int FONT_DISPLAY = (int) (32L);
+
     public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (30);
+    public static final int MAX_VALUE = (int) (32);
 
     private static final boolean IS_EXTENSIBLE = false;
 
@@ -113,6 +117,8 @@ public final class FeaturePolicyFeature {
             case 28:
             case 29:
             case 30:
+            case 31:
+            case 32:
                 return true;
         }
         return false;

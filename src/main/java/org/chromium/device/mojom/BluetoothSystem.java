@@ -249,4 +249,12 @@ StopScanResponse callback);
     interface StopScanResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Integer> { }
 
 
+
+    void getAvailableDevices(
+
+GetAvailableDevicesResponse callback);
+
+    interface GetAvailableDevicesResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<BluetoothDeviceInfo[]> { }
+
+
 }

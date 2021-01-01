@@ -64,6 +64,11 @@ int result);
 
 
 
+    void onHasEnrolledInstrument(
+int result);
+
+
+
     void warnNoFavicon(
 );
 

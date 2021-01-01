@@ -81,8 +81,10 @@ public final class PaymentDetails extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
-                {
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, true);
+                if (decoder1 == null) {
+                    result.shippingOptions = null;
+                } else {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.shippingOptions = new PaymentShippingOption[si1.elementsOrVersion];
                     for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
@@ -143,7 +145,7 @@ public final class PaymentDetails extends org.chromium.mojo.bindings.Struct {
         }
         
         if (this.shippingOptions == null) {
-            encoder0.encodeNullPointer(24, false);
+            encoder0.encodeNullPointer(24, true);
         } else {
             org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.shippingOptions.length, 24, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.shippingOptions.length; ++i0) {

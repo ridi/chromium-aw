@@ -63,6 +63,8 @@ class PaymentRequest_Internal {
 
     private static final int CAN_MAKE_PAYMENT_ORDINAL = 7;
 
+    private static final int HAS_ENROLLED_INSTRUMENT_ORDINAL = 8;
+
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements PaymentRequest.Proxy {
 
@@ -208,6 +210,21 @@ PaymentValidationErrors errors) {
         }
 
 
+        @Override
+        public void hasEnrolledInstrument(
+) {
+
+            PaymentRequestHasEnrolledInstrumentParams _message = new PaymentRequestHasEnrolledInstrumentParams();
+
+
+            getProxyHandler().getMessageReceiver().accept(
+                    _message.serializeWithHeader(
+                            getProxyHandler().getCore(),
+                            new org.chromium.mojo.bindings.MessageHeader(HAS_ENROLLED_INSTRUMENT_ORDINAL)));
+
+        }
+
+
     }
 
     static final class Stub extends org.chromium.mojo.bindings.Interface.Stub<PaymentRequest> {
@@ -333,6 +350,18 @@ PaymentValidationErrors errors) {
                     }
 
 
+
+
+
+                    case HAS_ENROLLED_INSTRUMENT_ORDINAL: {
+
+                        PaymentRequestHasEnrolledInstrumentParams.deserialize(messageWithHeader.getPayload());
+
+                        getImpl().hasEnrolledInstrument();
+                        return true;
+                    }
+
+
                     default:
                         return false;
                 }
@@ -356,6 +385,8 @@ PaymentValidationErrors errors) {
                     case org.chromium.mojo.bindings.interfacecontrol.InterfaceControlMessagesConstants.RUN_MESSAGE_ID:
                         return org.chromium.mojo.bindings.InterfaceControlMessagesHelper.handleRun(
                                 getCore(), PaymentRequest_Internal.MANAGER, messageWithHeader, receiver);
+
+
 
 
 
@@ -895,6 +926,62 @@ PaymentValidationErrors errors) {
                 org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
                 final int elementsOrVersion = mainDataHeader.elementsOrVersion;
                 result = new PaymentRequestCanMakePaymentParams(elementsOrVersion);
+
+            } finally {
+                decoder0.decreaseStackDepth();
+            }
+            return result;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
+            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+        }
+    }
+
+
+
+    
+    static final class PaymentRequestHasEnrolledInstrumentParams extends org.chromium.mojo.bindings.Struct {
+
+        private static final int STRUCT_SIZE = 8;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
+        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+
+        private PaymentRequestHasEnrolledInstrumentParams(int version) {
+            super(STRUCT_SIZE, version);
+        }
+
+        public PaymentRequestHasEnrolledInstrumentParams() {
+            this(0);
+        }
+
+        public static PaymentRequestHasEnrolledInstrumentParams deserialize(org.chromium.mojo.bindings.Message message) {
+            return decode(new org.chromium.mojo.bindings.Decoder(message));
+        }
+
+        /**
+         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
+         *
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
+         */
+        public static PaymentRequestHasEnrolledInstrumentParams deserialize(java.nio.ByteBuffer data) {
+            return deserialize(new org.chromium.mojo.bindings.Message(
+                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
+        }
+
+        @SuppressWarnings("unchecked")
+        public static PaymentRequestHasEnrolledInstrumentParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+            if (decoder0 == null) {
+                return null;
+            }
+            decoder0.increaseStackDepth();
+            PaymentRequestHasEnrolledInstrumentParams result;
+            try {
+                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
+                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
+                result = new PaymentRequestHasEnrolledInstrumentParams(elementsOrVersion);
 
             } finally {
                 decoder0.decreaseStackDepth();
