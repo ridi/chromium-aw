@@ -44,8 +44,6 @@ public final class BarcodeFormat {
 
     public static final int UPC_E = UPC_A + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (13);
 
     private static final boolean IS_EXTENSIBLE = false;
 

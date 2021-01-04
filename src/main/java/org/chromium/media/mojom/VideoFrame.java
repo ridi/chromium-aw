@@ -16,8 +16,8 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class VideoFrame extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 80;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(80, 0)};
+    private static final int STRUCT_SIZE = 72;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(72, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int format;
     public org.chromium.gfx.mojom.Size codedSize;
@@ -26,7 +26,6 @@ public final class VideoFrame extends org.chromium.mojo.bindings.Struct {
     public org.chromium.mojo_base.mojom.TimeDelta timestamp;
     public VideoFrameData data;
     public org.chromium.mojo_base.mojom.DictionaryValue metadata;
-    public org.chromium.gfx.mojom.ColorSpace colorSpace;
 
     private VideoFrame(int version) {
         super(STRUCT_SIZE, version);
@@ -95,11 +94,6 @@ public final class VideoFrame extends org.chromium.mojo.bindings.Struct {
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
                 result.metadata = org.chromium.mojo_base.mojom.DictionaryValue.decode(decoder1);
                 }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(72, false);
-                result.colorSpace = org.chromium.gfx.mojom.ColorSpace.decode(decoder1);
-                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -125,7 +119,5 @@ public final class VideoFrame extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.data, 48, false);
         
         encoder0.encode(this.metadata, 64, false);
-        
-        encoder0.encode(this.colorSpace, 72, false);
     }
 }

@@ -436,8 +436,5 @@ public abstract class AwContentsClient {
         mCallbackHelper.postOnReceivedTitle(mTitle);
     }
 
-    public abstract void onRendererUnresponsive(AwRenderProcess renderProcess);
-    public abstract void onRendererResponsive(AwRenderProcess renderProcess);
-
     public abstract boolean onRenderProcessGone(AwRenderProcessGoneDetail detail);
 }

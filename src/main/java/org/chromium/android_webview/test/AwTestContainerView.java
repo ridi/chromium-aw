@@ -277,8 +277,8 @@ public class AwTestContainerView extends FrameLayout {
         return mAwContents;
     }
 
-    public AwContents.NativeDrawFunctorFactory getNativeDrawFunctorFactory() {
-        return new NativeDrawFunctorFactory();
+    public AwContents.NativeDrawGLFunctorFactory getNativeDrawGLFunctorFactory() {
+        return new NativeDrawGLFunctorFactory();
     }
 
     public AwContents.InternalAccessDelegate getInternalAccessDelegate() {
@@ -436,18 +436,29 @@ public class AwTestContainerView extends FrameLayout {
         return mAwContents.performAccessibilityAction(action, arguments);
     }
 
-    private class NativeDrawFunctorFactory implements AwContents.NativeDrawFunctorFactory {
+    private class NativeDrawGLFunctorFactory implements AwContents.NativeDrawGLFunctorFactory {
         @Override
-        public NativeDrawGLFunctor createGLFunctor(long context) {
+        public NativeDrawGLFunctor createFunctor(long context) {
             return new NativeDrawGLFunctor(context);
         }
     }
 
+    private static final class NativeDrawGLFunctorDestroyRunnable implements Runnable {
+        public long mContext;
+        NativeDrawGLFunctorDestroyRunnable(long context) {
+            mContext = context;
+        }
+        @Override
+        public void run() {
+            mContext = 0;
+        }
+    }
+
     private class NativeDrawGLFunctor implements AwContents.NativeDrawGLFunctor {
-        private long mContext;
+        private NativeDrawGLFunctorDestroyRunnable mDestroyRunnable;
 
         NativeDrawGLFunctor(long context) {
-            mContext = context;
+            mDestroyRunnable = new NativeDrawGLFunctorDestroyRunnable(context);
         }
 
         @Override
@@ -459,14 +470,14 @@ public class AwTestContainerView extends FrameLayout {
         public boolean requestDrawGL(Canvas canvas, Runnable releasedRunnable) {
             assert releasedRunnable == null;
             if (!isBackedByHardwareView()) return false;
-            mHardwareView.requestRender(mContext, canvas, false);
+            mHardwareView.requestRender(mDestroyRunnable.mContext, canvas, false);
             return true;
         }
 
         @Override
         public boolean requestInvokeGL(View containerView, boolean waitForCompletion) {
             if (!isBackedByHardwareView()) return false;
-            mHardwareView.requestRender(mContext, null, waitForCompletion);
+            mHardwareView.requestRender(mDestroyRunnable.mContext, null, waitForCompletion);
             return true;
         }
 
@@ -476,8 +487,8 @@ public class AwTestContainerView extends FrameLayout {
         }
 
         @Override
-        public void destroy() {
-            mContext = 0;
+        public Runnable getDestroyRunnable() {
+            return mDestroyRunnable;
         }
     }
 

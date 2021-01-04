@@ -32,8 +32,6 @@ public final class ColorType {
 
     public static final int GRAY_8 = INDEX_8 + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (7);
 
     private static final boolean IS_EXTENSIBLE = false;
 

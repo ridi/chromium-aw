@@ -34,8 +34,6 @@ public final class BufferUsage {
 
     public static final int LAST = (int) (BufferUsage.GPU_READ_CPU_READ_WRITE_PERSISTENT);
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (7);
 
     private static final boolean IS_EXTENSIBLE = false;
 

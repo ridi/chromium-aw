@@ -16,12 +16,11 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class TransferableMessage extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 64;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(64, 0)};
+    private static final int STRUCT_SIZE = 56;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public CloneableMessage message;
     public org.chromium.mojo.system.MessagePipeHandle[] ports;
-    public org.chromium.mojo.system.MessagePipeHandle[] streamChannels;
     public SerializedArrayBufferContents[] arrayBufferContentsArray;
     public org.chromium.skia.mojom.Bitmap[] imageBitmapContentsArray;
     public boolean hasUserGesture;
@@ -71,11 +70,7 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 }
                 {
                     
-                result.streamChannels = decoder0.readMessagePipeHandles(24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                }
-                {
-                    
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.arrayBufferContentsArray = new SerializedArrayBufferContents[si1.elementsOrVersion];
@@ -88,7 +83,7 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.imageBitmapContentsArray = new org.chromium.skia.mojom.Bitmap[si1.elementsOrVersion];
@@ -101,11 +96,11 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 }
                 {
                     
-                result.hasUserGesture = decoder0.readBoolean(48, 0);
+                result.hasUserGesture = decoder0.readBoolean(40, 0);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(56, true);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, true);
                 result.userActivation = UserActivationSnapshot.decode(decoder1);
                 }
 
@@ -124,12 +119,10 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
         
         encoder0.encode(this.ports, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         
-        encoder0.encode(this.streamChannels, 24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-        
         if (this.arrayBufferContentsArray == null) {
-            encoder0.encodeNullPointer(32, false);
+            encoder0.encodeNullPointer(24, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.arrayBufferContentsArray.length, 32, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.arrayBufferContentsArray.length, 24, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.arrayBufferContentsArray.length; ++i0) {
                 
                 encoder1.encode(this.arrayBufferContentsArray[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
@@ -137,17 +130,17 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
         }
         
         if (this.imageBitmapContentsArray == null) {
-            encoder0.encodeNullPointer(40, false);
+            encoder0.encodeNullPointer(32, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.imageBitmapContentsArray.length, 40, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.imageBitmapContentsArray.length, 32, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.imageBitmapContentsArray.length; ++i0) {
                 
                 encoder1.encode(this.imageBitmapContentsArray[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
             }
         }
         
-        encoder0.encode(this.hasUserGesture, 48, 0);
+        encoder0.encode(this.hasUserGesture, 40, 0);
         
-        encoder0.encode(this.userActivation, 56, true);
+        encoder0.encode(this.userActivation, 48, true);
     }
 }

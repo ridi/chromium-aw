@@ -17,7 +17,6 @@ import android.util.Pair;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.MainDex;
 import org.chromium.base.metrics.RecordHistogram;
 
 import java.io.ByteArrayInputStream;
@@ -50,8 +49,8 @@ import javax.security.auth.x500.X500Principal;
  * Utility functions for verifying X.509 certificates.
  */
 @JNINamespace("net")
-@MainDex
 public class X509Util {
+
     private static final String TAG = "X509Util";
 
     private static final class TrustStorageListener extends BroadcastReceiver {
@@ -200,8 +199,9 @@ public class X509Util {
     private static final Object sLock = new Object();
 
     /**
-     * Allow disabling recording histograms for the certificate changes. Java unit tests do not load
-     * native libraries which prevent this from succeeding.
+     * Allow disabling registering the observer and recording histograms for the certificate
+     * changes. Net unit tests do not load native libraries which prevent this to succeed. Moreover,
+     * the system does not allow to interact with the certificate store without user interaction.
      */
     private static boolean sDisableNativeCodeForTest;
 
@@ -268,7 +268,7 @@ public class X509Util {
         if (sTestTrustManager == null) {
             sTestTrustManager = X509Util.createTrustManager(sTestKeyStore);
         }
-        if (sTrustStorageListener == null) {
+        if (!sDisableNativeCodeForTest && sTrustStorageListener == null) {
             sTrustStorageListener = new TrustStorageListener();
             IntentFilter filter = new IntentFilter();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

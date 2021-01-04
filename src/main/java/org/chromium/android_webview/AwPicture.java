@@ -68,6 +68,7 @@ class AwPicture extends Picture {
         nativeDraw(mNativeAwPicture, canvas);
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public void writeToStream(OutputStream stream) {
         unsupportedOperation();

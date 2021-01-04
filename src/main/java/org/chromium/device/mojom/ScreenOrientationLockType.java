@@ -34,8 +34,6 @@ public final class ScreenOrientationLockType {
 
     public static final int NATURAL = PORTRAIT + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (8);
 
     private static final boolean IS_EXTENSIBLE = false;
 

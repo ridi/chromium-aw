@@ -17,7 +17,6 @@ import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.AccessedByNative;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.base.annotations.JniIgnoreNatives;
 import org.chromium.base.annotations.MainDex;
 
 import java.util.HashMap;
@@ -151,7 +150,6 @@ import javax.annotation.Nullable;
  *
  *    This method also ensures the process uses the shared RELROs.
  */
-@JniIgnoreNatives
 public class Linker {
     // Log tag for this class.
     private static final String TAG = "LibraryLoader";

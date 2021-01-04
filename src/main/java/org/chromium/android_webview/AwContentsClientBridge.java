@@ -301,8 +301,7 @@ public class AwContentsClientBridge {
             } else {
                 error.errorCode = ErrorCodeConversionHelper.convertErrorCode(error.errorCode);
             }
-            if (request.isMainFrame
-                    && AwFeatureList.pageStartedOnCommitEnabled(isRendererInitiated)) {
+            if (request.isMainFrame && isRendererInitiated) {
                 mClient.getCallbackHelper().postOnPageStarted(request.url);
             }
             mClient.getCallbackHelper().postOnReceivedError(request, error);

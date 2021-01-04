@@ -18,6 +18,7 @@ import org.chromium.android_webview.command_line.CommandLineUtil;
 import org.chromium.android_webview.policy.AwPolicyProvider;
 import org.chromium.android_webview.services.CrashReceiverService;
 import org.chromium.android_webview.services.ICrashReceiverService;
+import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -104,7 +105,7 @@ public final class AwBrowserProcess {
     public static void start() {
         try (ScopedSysTraceEvent e1 = ScopedSysTraceEvent.scoped("AwBrowserProcess.start")) {
             final Context appContext = ContextUtils.getApplicationContext();
-            tryObtainingDataDirLock(appContext);
+            tryObtainingDataDirLock();
             // We must post to the UI thread to cover the case that the user
             // has invoked Chromium startup by using the (thread-safe)
             // CookieManager rather than creating a WebView.
@@ -151,13 +152,12 @@ public final class AwBrowserProcess {
         }
     }
 
-    private static void tryObtainingDataDirLock(final Context appContext) {
+    private static void tryObtainingDataDirLock() {
         try (ScopedSysTraceEvent e1 =
                         ScopedSysTraceEvent.scoped("AwBrowserProcess.tryObtainingDataDirLock")) {
             // Many existing apps rely on this even though it's known to be unsafe.
             // Make it fatal when on P for apps that target P or higher
-            boolean dieOnFailure = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
-                    && appContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.P;
+            boolean dieOnFailure = BuildInfo.isAtLeastP() && BuildInfo.targetsAtLeastP();
 
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
             try {

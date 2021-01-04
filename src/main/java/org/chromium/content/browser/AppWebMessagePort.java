@@ -256,7 +256,6 @@ public class AppWebMessagePort implements MessagePort {
         msg.arrayBufferContentsArray = new SerializedArrayBufferContents[0];
         msg.imageBitmapContentsArray = new Bitmap[0];
         msg.ports = ports;
-        msg.streamChannels = new MessagePipeHandle[0];
         mConnector.accept(msg.serializeWithHeader(mMojoCore, MESSAGE_HEADER));
     }
 

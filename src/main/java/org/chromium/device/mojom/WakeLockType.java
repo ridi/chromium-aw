@@ -22,8 +22,6 @@ public final class WakeLockType {
 
     public static final int PREVENT_DISPLAY_SLEEP_ALLOW_DIMMING = (int) (2L);
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (2);
 
     private static final boolean IS_EXTENSIBLE = false;
 

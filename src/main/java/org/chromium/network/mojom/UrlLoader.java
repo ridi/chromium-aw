@@ -30,7 +30,7 @@ public interface UrlLoader extends org.chromium.mojo.bindings.Interface {
 
 
     void followRedirect(
-String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders, org.chromium.url.mojom.Url newUrl);
+String[] toBeRemovedRequestHeaders, HttpRequestHeaders modifiedRequestHeaders);
 
 
 

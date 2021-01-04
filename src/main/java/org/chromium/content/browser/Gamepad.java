@@ -5,8 +5,6 @@
 package org.chromium.content.browser;
 
 import android.content.Context;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
 import org.chromium.base.UserData;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
@@ -45,13 +43,5 @@ class Gamepad implements WindowEventObserver, UserData {
     @Override
     public void onDetachedFromWindow() {
         GamepadList.onDetachedFromWindow();
-    }
-
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        return GamepadList.onGenericMotionEvent(event);
-    }
-
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        return GamepadList.dispatchKeyEvent(event);
     }
 }

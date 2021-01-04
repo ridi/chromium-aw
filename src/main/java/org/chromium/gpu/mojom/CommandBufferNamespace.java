@@ -28,8 +28,6 @@ public final class CommandBufferNamespace {
 
     public static final int NUM_COMMAND_BUFFER_NAMESPACES = MOJO_LOCAL + 1;
 
-    public static final int MIN_VALUE = (int) (-1);
-    public static final int MAX_VALUE = (int) (4);
 
     private static final boolean IS_EXTENSIBLE = false;
 

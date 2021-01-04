@@ -24,8 +24,6 @@ public final class RemoteInvocationError {
 
     public static final int EXCEPTION_THROWN = OBJECT_GET_CLASS_BLOCKED + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (3);
 
     private static final boolean IS_EXTENSIBLE = false;
 

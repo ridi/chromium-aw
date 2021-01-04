@@ -28,8 +28,6 @@ public final class DecodeError {
 
     public static final int PLATFORM_FAILURE = UNSUPPORTED_JPEG + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (5);
 
     private static final boolean IS_EXTENSIBLE = false;
 

@@ -169,5 +169,5 @@ public @interface WebInputEventType {
   int POINTER_CANCEL = 37;
   int POINTER_CAUSED_UA_ACTION = 38;
   int POINTER_TYPE_LAST = 38;
-  int TYPE_LAST = 38;
+  int TYPE_LAST = 32;
 }

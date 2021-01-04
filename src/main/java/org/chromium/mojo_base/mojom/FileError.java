@@ -50,8 +50,6 @@ public final class FileError {
 
     public static final int IO = (int) (-16L);
 
-    public static final int MIN_VALUE = (int) (-16);
-    public static final int MAX_VALUE = (int) (0);
 
     private static final boolean IS_EXTENSIBLE = false;
 

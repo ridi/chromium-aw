@@ -163,7 +163,7 @@ int cdmId, org.chromium.mojo.bindings.InterfaceRequest<Decryptor> decryptor) {
 
         @Override
         public void createCdmProxy(
-org.chromium.mojo_base.mojom.Token cdmGuid, org.chromium.mojo.bindings.InterfaceRequest<CdmProxy> cdmProxy) {
+String cdmGuid, org.chromium.mojo.bindings.InterfaceRequest<CdmProxy> cdmProxy) {
 
             InterfaceFactoryCreateCdmProxyParams _message = new InterfaceFactoryCreateCdmProxyParams();
 
@@ -680,7 +680,7 @@ org.chromium.mojo_base.mojom.Token cdmGuid, org.chromium.mojo.bindings.Interface
         private static final int STRUCT_SIZE = 24;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public org.chromium.mojo_base.mojom.Token cdmGuid;
+        public String cdmGuid;
         public org.chromium.mojo.bindings.InterfaceRequest<CdmProxy> cdmProxy;
 
         private InterfaceFactoryCreateCdmProxyParams(int version) {
@@ -718,8 +718,7 @@ org.chromium.mojo_base.mojom.Token cdmGuid, org.chromium.mojo.bindings.Interface
                 result = new InterfaceFactoryCreateCdmProxyParams(elementsOrVersion);
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.cdmGuid = org.chromium.mojo_base.mojom.Token.decode(decoder1);
+                    result.cdmGuid = decoder0.readString(8, false);
                     }
                     {
                         

@@ -26,8 +26,6 @@ public final class AntialiasingMode {
 
     public static final int SCREEN_SPACE_ANTIALIASING = MSAA_EXPLICIT_RESOLVE + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (4);
 
     private static final boolean IS_EXTENSIBLE = false;
 

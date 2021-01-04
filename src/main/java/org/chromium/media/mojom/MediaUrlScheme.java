@@ -44,8 +44,6 @@ public final class MediaUrlScheme {
 
     public static final int CONTENT_ID = CONTENT + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (13);
 
     private static final boolean IS_EXTENSIBLE = false;
 

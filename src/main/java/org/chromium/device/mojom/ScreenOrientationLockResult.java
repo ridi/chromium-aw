@@ -24,8 +24,6 @@ public final class ScreenOrientationLockResult {
 
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_ERROR_CANCELED = SCREEN_ORIENTATION_LOCK_RESULT_ERROR_FULLSCREEN_REQUIRED + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (3);
 
     private static final boolean IS_EXTENSIBLE = false;
 

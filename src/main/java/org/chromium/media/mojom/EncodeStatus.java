@@ -30,8 +30,6 @@ public final class EncodeStatus {
 
     public static final int PLATFORM_FAILURE = PARSE_IMAGE_FAILED + 1;
 
-    public static final int MIN_VALUE = (int) (0);
-    public static final int MAX_VALUE = (int) (6);
 
     private static final boolean IS_EXTENSIBLE = false;
 

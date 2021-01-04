@@ -289,7 +289,7 @@ public class VideoCaptureCamera
     }
 
     @Override
-    public boolean allocate(int width, int height, int frameRate, boolean enableFaceDetection) {
+    public boolean allocate(int width, int height, int frameRate) {
         Log.d(TAG, "allocate: requested (%d x %d) @%dfps", width, height, frameRate);
         try {
             mCamera = android.hardware.Camera.open(mId);

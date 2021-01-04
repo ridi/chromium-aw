@@ -34,11 +34,6 @@ int status);
 
 
 
-    void setIsAdMedia(
-);
-
-
-
     void setIsEme(
 );
 
@@ -71,11 +66,6 @@ PlaybackProperties properties, org.chromium.mojo.bindings.InterfaceRequest<Watch
 
     void acquireVideoDecodeStatsRecorder(
 org.chromium.mojo.bindings.InterfaceRequest<VideoDecodeStatsRecorder> recorder);
-
-
-
-    void addBytesReceived(
-long bytesReceived);
 
 
 }

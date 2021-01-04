@@ -99,18 +99,17 @@ public class AwContentsStatics {
         nativeSetSafeBrowsingWhitelist(urlArray, callback);
     }
 
-    @SuppressWarnings("NoContextGetApplicationContext")
     public static void initSafeBrowsing(Context context, final Callback<Boolean> callback) {
         // Wrap the callback to make sure we always invoke it on the UI thread, as guaranteed by the
         // API.
+        final Context appContext = context.getApplicationContext();
         Callback<Boolean> wrapperCallback = b -> {
             if (callback != null) {
                 ThreadUtils.runOnUiThread(() -> callback.onResult(b));
             }
         };
 
-        PlatformServiceBridge.getInstance().warmUpSafeBrowsing(
-                context.getApplicationContext(), wrapperCallback);
+        PlatformServiceBridge.getInstance().warmUpSafeBrowsing(appContext, wrapperCallback);
     }
 
     public static Uri getSafeBrowsingPrivacyPolicyUrl() {

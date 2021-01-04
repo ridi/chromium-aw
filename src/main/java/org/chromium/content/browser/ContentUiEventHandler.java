@@ -17,6 +17,7 @@ import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
 import org.chromium.content_public.browser.ViewEventSink.InternalAccessDelegate;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.device.gamepad.GamepadList;
 import org.chromium.ui.base.EventForwarder;
 
 /**
@@ -60,7 +61,7 @@ public class ContentUiEventHandler implements UserData {
 
     @CalledByNative
     private boolean onGenericMotionEvent(MotionEvent event) {
-        if (Gamepad.from(mWebContents).onGenericMotionEvent(event)) return true;
+        if (GamepadList.onGenericMotionEvent(event)) return true;
         if (JoystickHandler.fromWebContents(mWebContents).onGenericMotionEvent(event)) return true;
         if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
             switch (event.getActionMasked()) {
@@ -115,7 +116,7 @@ public class ContentUiEventHandler implements UserData {
 
     @CalledByNative
     private boolean dispatchKeyEvent(KeyEvent event) {
-        if (Gamepad.from(mWebContents).dispatchKeyEvent(event)) return true;
+        if (GamepadList.dispatchKeyEvent(event)) return true;
         if (!shouldPropagateKeyEvent(event)) {
             return mEventDelegate.super_dispatchKeyEvent(event);
         }

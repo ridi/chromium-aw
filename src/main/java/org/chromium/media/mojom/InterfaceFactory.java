@@ -50,7 +50,7 @@ int cdmId, org.chromium.mojo.bindings.InterfaceRequest<Decryptor> decryptor);
 
 
     void createCdmProxy(
-org.chromium.mojo_base.mojom.Token cdmGuid, org.chromium.mojo.bindings.InterfaceRequest<CdmProxy> cdmProxy);
+String cdmGuid, org.chromium.mojo.bindings.InterfaceRequest<CdmProxy> cdmProxy);
 
 
 }

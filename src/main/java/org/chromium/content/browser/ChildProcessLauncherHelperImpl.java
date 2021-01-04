@@ -413,9 +413,8 @@ public final class ChildProcessLauncherHelperImpl {
 
         int bindingCounts[] = connection.remainingBindingStateCountsCurrentOrWhenDied();
         nativeSetTerminationInfo(terminationInfoPtr, connection.bindingStateCurrentOrWhenDied(),
-                connection.isKilledByUs(), connection.hasCleanExit(),
-                bindingCounts[ChildBindingState.STRONG], bindingCounts[ChildBindingState.MODERATE],
-                bindingCounts[ChildBindingState.WAIVED]);
+                connection.isKilledByUs(), bindingCounts[ChildBindingState.STRONG],
+                bindingCounts[ChildBindingState.MODERATE], bindingCounts[ChildBindingState.WAIVED]);
     }
 
     @CalledByNative
@@ -645,6 +644,6 @@ public final class ChildProcessLauncherHelperImpl {
     }
 
     private static native void nativeSetTerminationInfo(long termiantionInfoPtr,
-            @ChildBindingState int bindingState, boolean killedByUs, boolean cleanExit,
-            int remainingStrong, int remainingModerate, int remainingWaived);
+            @ChildBindingState int bindingState, boolean killedByUs, int remainingStrong,
+            int remainingModerate, int remainingWaived);
 }

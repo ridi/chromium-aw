@@ -7,6 +7,9 @@ package org.chromium.base;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * This class provides package checking related methods.
@@ -32,19 +35,19 @@ public class PackageUtils {
     }
 
     /**
-     * Checks if the app has been installed on the system.
-     * @return true if the PackageManager reports that the app is installed, false otherwise.
-     * @param context Any context.
-     * @param packageName Name of the package to check.
+     * Decodes into a Bitmap an Image resource stored in another package.
+     * @param otherPackage The package containing the resource.
+     * @param resourceId The id of the resource.
+     * @return A Bitmap containing the resource or null if the package could not be found.
      */
-    public static boolean isPackageInstalled(Context context, String packageName) {
-        PackageManager pm = context.getPackageManager();
+    public static Bitmap decodeImageResource(String otherPackage, int resourceId) {
+        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
         try {
-            pm.getPackageInfo(packageName, 0);
+            Resources resources = packageManager.getResourcesForApplication(otherPackage);
+            return BitmapFactory.decodeResource(resources, resourceId);
         } catch (PackageManager.NameNotFoundException e) {
-            return false;
+            return null;
         }
-        return true;
     }
 
     private PackageUtils() {
