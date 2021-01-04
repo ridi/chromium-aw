@@ -52,8 +52,8 @@ public class BrowserTaskExecutor implements TaskExecutor {
     }
 
     @Override
-    public void postDelayedTask(TaskTraits taskTraits, Runnable task, long delay) {
-        createSingleThreadTaskRunner(taskTraits).postDelayedTask(task, delay);
+    public void postTask(TaskTraits taskTraits, Runnable task) {
+        createSingleThreadTaskRunner(taskTraits).postTask(task);
     }
 
     public static void register() {

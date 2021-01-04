@@ -17,22 +17,7 @@ public interface TaskRunner {
      *
      * @param task The task to be run immediately.
      */
-    void postTask(Runnable task);
-
-    /**
-     * Cleans up native side of TaskRunner. This must be called if the TaskRunner will have a
-     * shorter lifetime than the process it is created in. Thread-safe and safe to be called
-     * multiple times.
-     */
-    void destroy();
-
-    /**
-     * Posts a task to run after a specified delay.
-     *
-     * @param task The task to be run.
-     * @param delay The delay in milliseconds before the task can be run.
-     */
-    public void postDelayedTask(Runnable task, long delay);
+    public void postTask(Runnable task);
 
     /**
      * Instructs the TaskRunner to initialize the native TaskRunner and migrate any tasks over to

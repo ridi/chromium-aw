@@ -63,9 +63,4 @@ PaymentValidationErrors errors);
 );
 
 
-
-    void hasEnrolledInstrument(
-);
-
-
 }

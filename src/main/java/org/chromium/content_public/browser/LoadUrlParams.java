@@ -4,8 +4,6 @@
 
 package org.chromium.content_public.browser;
 
-import android.support.annotation.Nullable;
-
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content_public.browser.navigation_controller.LoadURLType;
@@ -29,9 +27,6 @@ public class LoadUrlParams {
     // native code. Should not be accessed directly anywhere else outside of
     // this class.
     String mUrl;
-    // TODO(nasko,tedchoc): Don't use String to store initiator origin, as it
-    // is lossy format.
-    String mInitiatorOrigin;
     int mLoadUrlType;
     int mTransitionType;
     Referrer mReferrer;
@@ -202,20 +197,6 @@ public class LoadUrlParams {
      */
     public String getUrl() {
         return mUrl;
-    }
-
-    /**
-     * Sets the initiator origin.
-     */
-    public void setInitiatorOrigin(String initiatorOrigin) {
-        mInitiatorOrigin = initiatorOrigin;
-    }
-
-    /**
-     * Return the initiator origin.
-     */
-    public @Nullable String getInitiatorOrigin() {
-        return mInitiatorOrigin;
     }
 
     /**

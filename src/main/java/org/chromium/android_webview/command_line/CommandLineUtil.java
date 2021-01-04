@@ -4,9 +4,9 @@
 
 package org.chromium.android_webview.command_line;
 
+import android.os.Build;
 import android.os.StrictMode;
 
-import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
 
 /**
@@ -22,12 +22,16 @@ public class CommandLineUtil {
     public static final String CRASH_UPLOADS_ENABLED_FOR_TESTING_SWITCH =
             "enable-crash-reporter-for-testing";
 
+    public static boolean isBuildDebuggable() {
+        return !Build.TYPE.equals("user");
+    }
+
     /**
      * Initialize the CommandLine for WebView - this should be initialized on the same thread where
      * we subsequently access CommandLine.
      */
     public static void initCommandLine() {
-        if (BuildInfo.isDebugAndroid()) {
+        if (isBuildDebuggable()) {
             // Suppress the StrictMode violation as this codepath is only hit on debuggable builds.
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             CommandLine.initFromFile(CommandLineUtil.WEBVIEW_COMMAND_LINE_FILE);

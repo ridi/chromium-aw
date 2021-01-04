@@ -51,9 +51,4 @@ public interface RenderCoordinates {
      * @return Maximum possible vertical scroll in physical pixels (approx, integer).
      */
     int getMaxVerticalScrollPixInt();
-
-    /**
-     * @return Maximum possible horizontal scroll in physical pixels (approx, integer).
-     */
-    int getMaxHorizontalScrollPixInt();
 }

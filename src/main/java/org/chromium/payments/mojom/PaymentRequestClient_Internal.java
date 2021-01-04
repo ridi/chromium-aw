@@ -63,9 +63,7 @@ class PaymentRequestClient_Internal {
 
     private static final int ON_CAN_MAKE_PAYMENT_ORDINAL = 7;
 
-    private static final int ON_HAS_ENROLLED_INSTRUMENT_ORDINAL = 8;
-
-    private static final int WARN_NO_FAVICON_ORDINAL = 9;
+    private static final int WARN_NO_FAVICON_ORDINAL = 8;
 
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements PaymentRequestClient.Proxy {
@@ -206,23 +204,6 @@ int result) {
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
                             new org.chromium.mojo.bindings.MessageHeader(ON_CAN_MAKE_PAYMENT_ORDINAL)));
-
-        }
-
-
-        @Override
-        public void onHasEnrolledInstrument(
-int result) {
-
-            PaymentRequestClientOnHasEnrolledInstrumentParams _message = new PaymentRequestClientOnHasEnrolledInstrumentParams();
-
-            _message.result = result;
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(ON_HAS_ENROLLED_INSTRUMENT_ORDINAL)));
 
         }
 
@@ -372,19 +353,6 @@ int result) {
 
 
 
-                    case ON_HAS_ENROLLED_INSTRUMENT_ORDINAL: {
-
-                        PaymentRequestClientOnHasEnrolledInstrumentParams data =
-                                PaymentRequestClientOnHasEnrolledInstrumentParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().onHasEnrolledInstrument(data.result);
-                        return true;
-                    }
-
-
-
-
-
                     case WARN_NO_FAVICON_ORDINAL: {
 
                         PaymentRequestClientWarnNoFaviconParams.deserialize(messageWithHeader.getPayload());
@@ -417,8 +385,6 @@ int result) {
                     case org.chromium.mojo.bindings.interfacecontrol.InterfaceControlMessagesConstants.RUN_MESSAGE_ID:
                         return org.chromium.mojo.bindings.InterfaceControlMessagesHelper.handleRun(
                                 getCore(), PaymentRequestClient_Internal.MANAGER, messageWithHeader, receiver);
-
-
 
 
 
@@ -933,70 +899,6 @@ int result) {
                         
                     result.result = decoder0.readInt(8);
                         CanMakePaymentQueryResult.validate(result.result);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            encoder0.encode(this.result, 8);
-        }
-    }
-
-
-
-    
-    static final class PaymentRequestClientOnHasEnrolledInstrumentParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 16;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public int result;
-
-        private PaymentRequestClientOnHasEnrolledInstrumentParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public PaymentRequestClientOnHasEnrolledInstrumentParams() {
-            this(0);
-        }
-
-        public static PaymentRequestClientOnHasEnrolledInstrumentParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static PaymentRequestClientOnHasEnrolledInstrumentParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static PaymentRequestClientOnHasEnrolledInstrumentParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            PaymentRequestClientOnHasEnrolledInstrumentParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new PaymentRequestClientOnHasEnrolledInstrumentParams(elementsOrVersion);
-                    {
-                        
-                    result.result = decoder0.readInt(8);
-                        HasEnrolledInstrumentQueryResult.validate(result.result);
                     }
 
             } finally {

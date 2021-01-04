@@ -13,7 +13,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.system.Os;
 
@@ -39,6 +38,8 @@ import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import javax.annotation.Nullable;
 
 /**
  * This class provides functionality to load and register the native libraries.

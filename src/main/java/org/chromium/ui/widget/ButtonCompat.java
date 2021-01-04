@@ -68,8 +68,7 @@ public class ButtonCompat extends AppCompatButton {
         boolean buttonRaised = a.getBoolean(R.styleable.ButtonCompat_buttonRaised, true);
         a.recycle();
 
-        mRippleBackgroundHelper = new RippleBackgroundHelper(this, buttonColorId, rippleColorId,
-                getResources().getDimensionPixelSize(R.dimen.button_compat_corner_radius));
+        mRippleBackgroundHelper = new RippleBackgroundHelper(this, buttonColorId, rippleColorId);
         setRaised(buttonRaised);
     }
 

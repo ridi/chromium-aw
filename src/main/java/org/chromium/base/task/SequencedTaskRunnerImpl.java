@@ -4,34 +4,82 @@
 
 package org.chromium.base.task;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import org.chromium.base.annotations.JNINamespace;
+
+import javax.annotation.Nullable;
 
 /**
  * Implementation of the abstract class {@link SequencedTaskRunner}. Uses AsyncTasks until
  * native APIs are available.
  */
-public class SequencedTaskRunnerImpl extends TaskRunnerImpl implements SequencedTaskRunner {
-    private AtomicInteger mPendingTasks = new AtomicInteger();
+@JNINamespace("base")
+public class SequencedTaskRunnerImpl implements SequencedTaskRunner {
+    private final Object mLock = new Object();
+
+    @Nullable
+    private final TaskTraits mTaskTraits;
+    private long mNativeTaskRunnerAndroid;
+
+    @Nullable
+    private PreNativeSequence mPreNativeSequence;
 
     /**
      * @param traits The TaskTraits associated with this SequencedTaskRunnerImpl.
      */
     SequencedTaskRunnerImpl(TaskTraits traits) {
-        super(traits, "SequencedTaskRunnerImpl", TaskRunnerType.SEQUENCED);
+        mTaskTraits = traits;
     }
 
     @Override
-    protected void schedulePreNativeTask() {
-        if (mPendingTasks.getAndIncrement() == 0) {
-            super.schedulePreNativeTask();
+    protected void finalize() {
+        if (mNativeTaskRunnerAndroid != 0) nativeFinalize(mNativeTaskRunnerAndroid);
+    }
+
+    @Override
+    public void initNativeTaskRunner() {
+        synchronized (mLock) {
+            mNativeTaskRunnerAndroid = nativeInit(mTaskTraits.mPrioritySetExplicitly,
+                    mTaskTraits.mPriority, mTaskTraits.mMayBlock, mTaskTraits.mExtensionId,
+                    mTaskTraits.mExtensionData);
+
+            if (mPreNativeSequence != null) mPreNativeSequence.migrateToNative();
         }
     }
 
     @Override
-    protected void runPreNativeTask() {
-        super.runPreNativeTask();
-        if (mPendingTasks.decrementAndGet() > 0) {
-            super.schedulePreNativeTask();
+    public void postTask(Runnable task) {
+        synchronized (mLock) {
+            if (mNativeTaskRunnerAndroid != 0) {
+                nativePostTask(mNativeTaskRunnerAndroid, task);
+            } else {
+                if (mPreNativeSequence == null) mPreNativeSequence = new PreNativeImpl();
+                mPreNativeSequence.postTask(task);
+            }
         }
     }
+
+    private class PreNativeImpl extends PreNativeSequence {
+        PreNativeImpl() {
+            super("SequencedTaskRunnerImpl.PreNativeImpl.run");
+        }
+
+        @Override
+        protected void scheduleNext() {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(this);
+        }
+
+        @Override
+        protected void migrateToNative() {
+            while (!mTasks.isEmpty()) {
+                nativePostTask(mNativeTaskRunnerAndroid, mTasks.poll());
+            }
+            mPreNativeSequence = null;
+        }
+    }
+
+    // NB due to Proguard obfuscation it's easiest to pass the traits via arguments.
+    private static native long nativeInit(boolean prioritySetExplicitly, int priority,
+            boolean mayBlock, byte extensionId, byte[] extensionData);
+    private native void nativeFinalize(long nativeTaskRunnerAndroid);
+    private native void nativePostTask(long nativeTaskRunnerAndroid, Runnable task);
 }

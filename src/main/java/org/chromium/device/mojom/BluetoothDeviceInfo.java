@@ -122,7 +122,7 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         private DeviceType() {}
 
     }
-    public BluetoothAddress address;
+    public String address;
     public String name;
     public int connectionState;
     public boolean isPaired;
@@ -163,8 +163,7 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
             result = new BluetoothDeviceInfo(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.address = BluetoothAddress.decode(decoder1);
+                result.address = decoder0.readString(8, false);
                 }
                 {
                     

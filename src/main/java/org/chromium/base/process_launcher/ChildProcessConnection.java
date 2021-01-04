@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
 
 import org.chromium.base.ChildBindingState;
 import org.chromium.base.Log;
@@ -27,6 +26,7 @@ import org.chromium.base.memory.MemoryPressureCallback;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 /**
@@ -103,16 +103,14 @@ public class ChildProcessConnection {
         private final Context mContext;
         private final Intent mBindIntent;
         private final int mBindFlags;
-        private final Handler mHandler;
         private final ChildServiceConnectionDelegate mDelegate;
         private boolean mBound;
 
         private ChildServiceConnectionImpl(Context context, Intent bindIntent, int bindFlags,
-                Handler handler, ChildServiceConnectionDelegate delegate) {
+                ChildServiceConnectionDelegate delegate) {
             mContext = context;
             mBindIntent = bindIntent;
             mBindFlags = bindFlags;
-            mHandler = handler;
             mDelegate = delegate;
         }
 
@@ -121,8 +119,7 @@ public class ChildProcessConnection {
             if (!mBound) {
                 try {
                     TraceEvent.begin("ChildProcessConnection.ChildServiceConnectionImpl.bind");
-                    mBound = BindService.doBindService(
-                            mContext, mBindIntent, this, mBindFlags, mHandler);
+                    mBound = mContext.bindService(mBindIntent, this, mBindFlags);
                 } finally {
                     TraceEvent.end("ChildProcessConnection.ChildServiceConnectionImpl.bind");
                 }
@@ -284,31 +281,30 @@ public class ChildProcessConnection {
                 @Override
                 public ChildServiceConnection createConnection(
                         Intent bindIntent, int bindFlags, ChildServiceConnectionDelegate delegate) {
-                    return new ChildServiceConnectionImpl(
-                            context, bindIntent, bindFlags, mLauncherHandler, delegate);
+                    return new ChildServiceConnectionImpl(context, bindIntent, bindFlags, delegate);
                 }
             };
         }
 
-        // Methods on the delegate are can be called on launcher thread or UI thread, so need to
-        // handle both cases. See BindService for details.
         ChildServiceConnectionDelegate delegate = new ChildServiceConnectionDelegate() {
             @Override
             public void onServiceConnected(final IBinder service) {
-                if (mLauncherHandler.getLooper() == Looper.myLooper()) {
-                    onServiceConnectedOnLauncherThread(service);
-                    return;
-                }
-                mLauncherHandler.post(() -> onServiceConnectedOnLauncherThread(service));
+                mLauncherHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onServiceConnectedOnLauncherThread(service);
+                    }
+                });
             }
 
             @Override
             public void onServiceDisconnected() {
-                if (mLauncherHandler.getLooper() == Looper.myLooper()) {
-                    onServiceDisconnectedOnLauncherThread();
-                    return;
-                }
-                mLauncherHandler.post(() -> onServiceDisconnectedOnLauncherThread());
+                mLauncherHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onServiceDisconnectedOnLauncherThread();
+                    }
+                });
             }
         };
 

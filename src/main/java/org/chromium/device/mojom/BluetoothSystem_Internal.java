@@ -57,8 +57,6 @@ class BluetoothSystem_Internal {
 
     private static final int STOP_SCAN_ORDINAL = 4;
 
-    private static final int GET_AVAILABLE_DEVICES_ORDINAL = 5;
-
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements BluetoothSystem.Proxy {
 
@@ -170,26 +168,6 @@ StopScanResponse callback) {
         }
 
 
-        @Override
-        public void getAvailableDevices(
-
-GetAvailableDevicesResponse callback) {
-
-            BluetoothSystemGetAvailableDevicesParams _message = new BluetoothSystemGetAvailableDevicesParams();
-
-
-            getProxyHandler().getMessageReceiver().acceptWithResponder(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(
-                                    GET_AVAILABLE_DEVICES_ORDINAL,
-                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG,
-                                    0)),
-                    new BluetoothSystemGetAvailableDevicesResponseParamsForwardToCallback(callback));
-
-        }
-
-
     }
 
     static final class Stub extends org.chromium.mojo.bindings.Interface.Stub<BluetoothSystem> {
@@ -212,8 +190,6 @@ GetAvailableDevicesResponse callback) {
                     case org.chromium.mojo.bindings.interfacecontrol.InterfaceControlMessagesConstants.RUN_OR_CLOSE_PIPE_MESSAGE_ID:
                         return org.chromium.mojo.bindings.InterfaceControlMessagesHelper.handleRunOrClosePipe(
                                 BluetoothSystem_Internal.MANAGER, messageWithHeader);
-
-
 
 
 
@@ -318,20 +294,6 @@ GetAvailableDevicesResponse callback) {
                         BluetoothSystemStopScanParams.deserialize(messageWithHeader.getPayload());
 
                         getImpl().stopScan(new BluetoothSystemStopScanResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
-                        return true;
-                    }
-
-
-
-
-
-
-
-                    case GET_AVAILABLE_DEVICES_ORDINAL: {
-
-                        BluetoothSystemGetAvailableDevicesParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().getAvailableDevices(new BluetoothSystemGetAvailableDevicesResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
 
@@ -1251,203 +1213,6 @@ GetAvailableDevicesResponse callback) {
                             mCore,
                             new org.chromium.mojo.bindings.MessageHeader(
                                     STOP_SCAN_ORDINAL,
-                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
-                                    mRequestId));
-            mMessageReceiver.accept(_message);
-        }
-    }
-
-
-
-    
-    static final class BluetoothSystemGetAvailableDevicesParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 8;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-
-        private BluetoothSystemGetAvailableDevicesParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public BluetoothSystemGetAvailableDevicesParams() {
-            this(0);
-        }
-
-        public static BluetoothSystemGetAvailableDevicesParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static BluetoothSystemGetAvailableDevicesParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static BluetoothSystemGetAvailableDevicesParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            BluetoothSystemGetAvailableDevicesParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new BluetoothSystemGetAvailableDevicesParams(elementsOrVersion);
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-        }
-    }
-
-
-
-    
-    static final class BluetoothSystemGetAvailableDevicesResponseParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 16;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public BluetoothDeviceInfo[] devices;
-
-        private BluetoothSystemGetAvailableDevicesResponseParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public BluetoothSystemGetAvailableDevicesResponseParams() {
-            this(0);
-        }
-
-        public static BluetoothSystemGetAvailableDevicesResponseParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static BluetoothSystemGetAvailableDevicesResponseParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static BluetoothSystemGetAvailableDevicesResponseParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            BluetoothSystemGetAvailableDevicesResponseParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new BluetoothSystemGetAvailableDevicesResponseParams(elementsOrVersion);
-                    {
-                        
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    {
-                        org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                        result.devices = new BluetoothDeviceInfo[si1.elementsOrVersion];
-                        for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
-                            
-                            org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
-                            result.devices[i1] = BluetoothDeviceInfo.decode(decoder2);
-                        }
-                    }
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            if (this.devices == null) {
-                encoder0.encodeNullPointer(8, false);
-            } else {
-                org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.devices.length, 8, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                for (int i0 = 0; i0 < this.devices.length; ++i0) {
-                    
-                    encoder1.encode(this.devices[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
-                }
-            }
-        }
-    }
-
-    static class BluetoothSystemGetAvailableDevicesResponseParamsForwardToCallback extends org.chromium.mojo.bindings.SideEffectFreeCloseable
-            implements org.chromium.mojo.bindings.MessageReceiver {
-        private final BluetoothSystem.GetAvailableDevicesResponse mCallback;
-
-        BluetoothSystemGetAvailableDevicesResponseParamsForwardToCallback(BluetoothSystem.GetAvailableDevicesResponse callback) {
-            this.mCallback = callback;
-        }
-
-        @Override
-        public boolean accept(org.chromium.mojo.bindings.Message message) {
-            try {
-                org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
-                        message.asServiceMessage();
-                org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(GET_AVAILABLE_DEVICES_ORDINAL,
-                                           org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG)) {
-                    return false;
-                }
-
-                BluetoothSystemGetAvailableDevicesResponseParams response = BluetoothSystemGetAvailableDevicesResponseParams.deserialize(messageWithHeader.getPayload());
-
-                mCallback.call(response.devices);
-                return true;
-            } catch (org.chromium.mojo.bindings.DeserializationException e) {
-                return false;
-            }
-        }
-    }
-
-    static class BluetoothSystemGetAvailableDevicesResponseParamsProxyToResponder implements BluetoothSystem.GetAvailableDevicesResponse {
-
-        private final org.chromium.mojo.system.Core mCore;
-        private final org.chromium.mojo.bindings.MessageReceiver mMessageReceiver;
-        private final long mRequestId;
-
-        BluetoothSystemGetAvailableDevicesResponseParamsProxyToResponder(
-                org.chromium.mojo.system.Core core,
-                org.chromium.mojo.bindings.MessageReceiver messageReceiver,
-                long requestId) {
-            mCore = core;
-            mMessageReceiver = messageReceiver;
-            mRequestId = requestId;
-        }
-
-        @Override
-        public void call(BluetoothDeviceInfo[] devices) {
-            BluetoothSystemGetAvailableDevicesResponseParams _response = new BluetoothSystemGetAvailableDevicesResponseParams();
-
-            _response.devices = devices;
-
-            org.chromium.mojo.bindings.ServiceMessage _message =
-                    _response.serializeWithHeader(
-                            mCore,
-                            new org.chromium.mojo.bindings.MessageHeader(
-                                    GET_AVAILABLE_DEVICES_ORDINAL,
                                     org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
                                     mRequestId));
             mMessageReceiver.accept(_message);

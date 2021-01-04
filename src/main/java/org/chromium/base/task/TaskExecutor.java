@@ -13,9 +13,8 @@ public interface TaskExecutor {
     /**
      * @param traits The TaskTraits that describe the desired TaskRunner.
      * @param task The task to be run with the specified traits.
-     * @param delay The delay in milliseconds before the task can be run.
      */
-    public void postDelayedTask(TaskTraits traits, Runnable task, long delay);
+    public void postTask(TaskTraits traits, Runnable task);
 
     /**
      * @param traits The TaskTraits that describe the desired TaskRunner.
