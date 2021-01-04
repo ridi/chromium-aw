@@ -42,7 +42,7 @@ android {
 
 ## Chromium build information
 
-Current version is based on [`85.0.4183.162`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/85.0.4183.162)
+Current version is based on [`81.0.4044.156`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/81.0.4044.156)
 
 ## Customizing
 
@@ -55,6 +55,7 @@ Current version is based on [`85.0.4183.162`](https://chromium.googlesource.com/
 - [Checking out and building Chromium for Android](https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md)
 - [Build Instructions(Android WebView)](https://www.chromium.org/developers/how-tos/build-instructions-android-webview)
 - [GN build configuration](https://www.chromium.org/developers/gn-build-configuration)
+- [Runtime Enabled Features](https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/blink/renderer/platform/RuntimeEnabledFeatures.md)
 
 ### Environment install steps
 
@@ -129,7 +130,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/85.0.4183.162
+$ git checkout tags/$VERSION # ex) tags/81.0.4044.156
 
 $ gclient sync
 ```
@@ -153,46 +154,9 @@ $ ninja -C out/$TARGET webview_instrumentation_apk
 
 **IMPORTANT : It may be different depending on Chromium version.**
 
-$TARGET | $DEST
----|---
-arm | armeabi-v7a
-arm64 | arm64-v8a
-x86 | x86
-x64 | x86_64
-
-<details><summary>Commands</summary>
-<p>
-
 ```sh
-# binary
-$ cd ~/chromium/src/out/$TARGET
-$ \cp -f libstandalonelibchromiumwebview.so ~/chromium-aw/src/main/jniLibs/$DEST
-$ \cp -f icudtl.dat ~/chromium-aw/src/main/assets # Only once, regardless of $TARGET.
-
-# pak (gen)
-$ cd ~/chromium/src/out/$TARGET/gen
-$ \cp -f android_webview/locale/en-US.pak ~/chromium-aw/src/main/assets/fallback-locales
-$ \cp -f android_webview/chrome_100_percent.pak ~/chromium-aw/src/main/assets
-$ \cp -f android_webview/resources.pak ~/chromium-aw/src/main/assets
-
-# natives (gen)
-$ cd ~/chromium/src/out/$TARGET/gen/android_webview/test/webview_instrumentation_apk/generated_java/input_srcjars
-$ \cp -f J/N.java ~/chromium-aw/src/main/java/J
-$ \cp -f org/chromium/android_webview/ProductConfig.java ~/chromium-aw/src/main/java/org/chromium/android_webview
-$ \cp -f org/chromium/base/library_loader/NativeLibraries.java ~/chromium-aw/src/main/java/org/chromium/base/library_loader
-$ \cp -f org/chromium/base/natives/GEN_JNI.java ~/chromium-aw/src/main/java/org/chromium/base/natives
-$ \cp -f org/chromium/base/BuildConfig.java ~/chromium-aw/src/main/java/org/chromium/base
-
-# Remove files
-$ cd ~/chromium-aw
-$ find . -name "R.java" -exec rm "{}" \;
-$ find . -name "*Tests.java" -exec rm "{}" \;
-$ find . -name "delegate/*Test.java" -exec rm "{}" \;
-$ find . -name "mojom/*Test.java" -exec rm "{}" \;
+$ node scripts/copy.js
 ```
-
-</p>
-</details>
 
 ## Crash dump decoding instructions
 
