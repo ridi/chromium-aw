@@ -354,6 +354,7 @@ int scanResult, java.util.Map<String, String[]> matches) {
                     {
                         
                     result.scanResult = decoder0.readInt(8);
+                        ScanResult.validate(result.scanResult);
                     }
                     {
                         
@@ -430,6 +431,7 @@ int scanResult, java.util.Map<String, String[]> matches) {
                     {
                         
                     result.scanResult = decoder0.readInt(8);
+                        ScanResult.validate(result.scanResult);
                     }
                     {
                         

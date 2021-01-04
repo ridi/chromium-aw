@@ -16,10 +16,11 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class PaymentValidationErrors extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 24;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+    private static final int STRUCT_SIZE = 32;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public PayerErrorFields payer;
+    public String error;
+    public PayerErrors payer;
     public AddressErrors shippingAddress;
 
     private PaymentValidationErrors(int version) {
@@ -57,12 +58,16 @@ public final class PaymentValidationErrors extends org.chromium.mojo.bindings.St
             result = new PaymentValidationErrors(elementsOrVersion);
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.payer = PayerErrorFields.decode(decoder1);
+                result.error = decoder0.readString(8, false);
                 }
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                result.payer = PayerErrors.decode(decoder1);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                 result.shippingAddress = AddressErrors.decode(decoder1);
                 }
 
@@ -77,8 +82,10 @@ public final class PaymentValidationErrors extends org.chromium.mojo.bindings.St
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.payer, 8, false);
+        encoder0.encode(this.error, 8, false);
         
-        encoder0.encode(this.shippingAddress, 16, false);
+        encoder0.encode(this.payer, 16, false);
+        
+        encoder0.encode(this.shippingAddress, 24, false);
     }
 }

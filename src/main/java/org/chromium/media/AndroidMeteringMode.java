@@ -26,4 +26,5 @@ public @interface AndroidMeteringMode {
   int FIXED = 2;
   int SINGLE_SHOT = 3;
   int CONTINUOUS = 4;
+  int NUM_ENTRIES = 5;
 }

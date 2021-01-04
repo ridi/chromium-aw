@@ -14,31 +14,19 @@ package org.chromium.blink.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SpeechAudioErrorDetails {
-
-
-    public static final int NONE = 0;
-
-    public static final int NO_MIC = NONE + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int NONE = 0;
+    public static final int NO_MIC = 1; // NONE + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 1;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SpeechAudioErrorDetails() {}
-
 }

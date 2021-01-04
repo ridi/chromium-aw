@@ -16,8 +16,8 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class PaymentAddress extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 104;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0)};
+    private static final int STRUCT_SIZE = 88;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public String country;
     public String[] addressLine;
@@ -26,8 +26,6 @@ public final class PaymentAddress extends org.chromium.mojo.bindings.Struct {
     public String dependentLocality;
     public String postalCode;
     public String sortingCode;
-    public String languageCode;
-    public String scriptCode;
     public String organization;
     public String recipient;
     public String phone;
@@ -103,23 +101,15 @@ public final class PaymentAddress extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.languageCode = decoder0.readString(64, false);
+                result.organization = decoder0.readString(64, false);
                 }
                 {
                     
-                result.scriptCode = decoder0.readString(72, false);
+                result.recipient = decoder0.readString(72, false);
                 }
                 {
                     
-                result.organization = decoder0.readString(80, false);
-                }
-                {
-                    
-                result.recipient = decoder0.readString(88, false);
-                }
-                {
-                    
-                result.phone = decoder0.readString(96, false);
+                result.phone = decoder0.readString(80, false);
                 }
 
         } finally {
@@ -155,14 +145,10 @@ public final class PaymentAddress extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.sortingCode, 56, false);
         
-        encoder0.encode(this.languageCode, 64, false);
+        encoder0.encode(this.organization, 64, false);
         
-        encoder0.encode(this.scriptCode, 72, false);
+        encoder0.encode(this.recipient, 72, false);
         
-        encoder0.encode(this.organization, 80, false);
-        
-        encoder0.encode(this.recipient, 88, false);
-        
-        encoder0.encode(this.phone, 96, false);
+        encoder0.encode(this.phone, 80, false);
     }
 }

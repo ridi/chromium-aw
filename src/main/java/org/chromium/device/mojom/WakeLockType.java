@@ -14,34 +14,20 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class WakeLockType {
-
-
-    public static final int PREVENT_APP_SUSPENSION = (int) (0L);
-
-    public static final int PREVENT_DISPLAY_SLEEP = (int) (1L);
-
-    public static final int PREVENT_DISPLAY_SLEEP_ALLOW_DIMMING = (int) (2L);
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int PREVENT_APP_SUSPENSION = 0;
+    public static final int PREVENT_DISPLAY_SLEEP = 1;
+    public static final int PREVENT_DISPLAY_SLEEP_ALLOW_DIMMING = 2;
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private WakeLockType() {}
-
 }

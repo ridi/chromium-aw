@@ -14,37 +14,21 @@ package org.chromium.blink.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class ViewportFit {
-
-
-    public static final int AUTO = 0;
-
-    public static final int CONTAIN = AUTO + 1;
-
-    public static final int COVER = CONTAIN + 1;
-
-    public static final int COVER_FORCED_BY_USER_AGENT = COVER + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int AUTO = 0;
+    public static final int CONTAIN = 1; // AUTO + 1
+    public static final int COVER = 2; // CONTAIN + 1
+    public static final int COVER_FORCED_BY_USER_AGENT = 3; // COVER + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 3;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private ViewportFit() {}
-
 }

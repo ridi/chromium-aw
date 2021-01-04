@@ -14,34 +14,20 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class NfcPushTarget {
-
-
-    public static final int TAG = 0;
-
-    public static final int PEER = TAG + 1;
-
-    public static final int ANY = PEER + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int TAG = 0;
+    public static final int PEER = 1; // TAG + 1
+    public static final int ANY = 2; // PEER + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private NfcPushTarget() {}
-
 }

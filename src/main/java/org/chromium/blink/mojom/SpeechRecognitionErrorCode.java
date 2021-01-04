@@ -14,55 +14,27 @@ package org.chromium.blink.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SpeechRecognitionErrorCode {
-
-
-    public static final int NONE = 0;
-
-    public static final int NO_SPEECH = NONE + 1;
-
-    public static final int ABORTED = NO_SPEECH + 1;
-
-    public static final int AUDIO_CAPTURE = ABORTED + 1;
-
-    public static final int NETWORK = AUDIO_CAPTURE + 1;
-
-    public static final int NOT_ALLOWED = NETWORK + 1;
-
-    public static final int SERVICE_NOT_ALLOWED = NOT_ALLOWED + 1;
-
-    public static final int BAD_GRAMMAR = SERVICE_NOT_ALLOWED + 1;
-
-    public static final int LANGUAGE_NOT_SUPPORTED = BAD_GRAMMAR + 1;
-
-    public static final int NO_MATCH = LANGUAGE_NOT_SUPPORTED + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int NONE = 0;
+    public static final int NO_SPEECH = 1; // NONE + 1
+    public static final int ABORTED = 2; // NO_SPEECH + 1
+    public static final int AUDIO_CAPTURE = 3; // ABORTED + 1
+    public static final int NETWORK = 4; // AUDIO_CAPTURE + 1
+    public static final int NOT_ALLOWED = 5; // NETWORK + 1
+    public static final int SERVICE_NOT_ALLOWED = 6; // NOT_ALLOWED + 1
+    public static final int BAD_GRAMMAR = 7; // SERVICE_NOT_ALLOWED + 1
+    public static final int LANGUAGE_NOT_SUPPORTED = 8; // BAD_GRAMMAR + 1
+    public static final int NO_MATCH = 9; // LANGUAGE_NOT_SUPPORTED + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 9;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SpeechRecognitionErrorCode() {}
-
 }

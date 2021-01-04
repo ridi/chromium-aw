@@ -16,12 +16,13 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class NfcPushOptions extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 24;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+    private static final int STRUCT_SIZE = 32;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int target;
     public double timeout;
     public boolean ignoreRead;
+    public int compatibility;
 
     private NfcPushOptions(int version) {
         super(STRUCT_SIZE, version);
@@ -69,6 +70,11 @@ public final class NfcPushOptions extends org.chromium.mojo.bindings.Struct {
                     
                 result.timeout = decoder0.readDouble(16);
                 }
+                {
+                    
+                result.compatibility = decoder0.readInt(24);
+                    NdefCompatibility.validate(result.compatibility);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -86,5 +92,7 @@ public final class NfcPushOptions extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.ignoreRead, 12, 0);
         
         encoder0.encode(this.timeout, 16);
+        
+        encoder0.encode(this.compatibility, 24);
     }
 }

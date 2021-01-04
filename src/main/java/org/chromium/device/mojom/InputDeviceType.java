@@ -14,37 +14,21 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class InputDeviceType {
-
-
-    public static final int TYPE_BLUETOOTH = (int) (0L);
-
-    public static final int TYPE_USB = (int) (1L);
-
-    public static final int TYPE_SERIO = (int) (2L);
-
-    public static final int TYPE_UNKNOWN = (int) (3L);
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int TYPE_BLUETOOTH = 0;
+    public static final int TYPE_USB = 1;
+    public static final int TYPE_SERIO = 2;
+    public static final int TYPE_UNKNOWN = 3;
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 3;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private InputDeviceType() {}
-
 }

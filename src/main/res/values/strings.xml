@@ -226,5 +226,4 @@
     <string name="link_copied">"Link copied"</string>
     <string name="chip_remove_icon_content_description">"Remove \'%1$s\'"</string>
     <string name="url_copied">"URL copied"</string>
-    <string name="current_detected_ui_locale_name">"en-US"</string>
 </resources>

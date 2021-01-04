@@ -14,52 +14,26 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class NfcErrorType {
-
-
-    public static final int SECURITY = 0;
-
-    public static final int NOT_SUPPORTED = SECURITY + 1;
-
-    public static final int DEVICE_DISABLED = NOT_SUPPORTED + 1;
-
-    public static final int NOT_FOUND = DEVICE_DISABLED + 1;
-
-    public static final int INVALID_MESSAGE = NOT_FOUND + 1;
-
-    public static final int OPERATION_CANCELLED = INVALID_MESSAGE + 1;
-
-    public static final int TIMER_EXPIRED = OPERATION_CANCELLED + 1;
-
-    public static final int CANNOT_CANCEL = TIMER_EXPIRED + 1;
-
-    public static final int IO_ERROR = CANNOT_CANCEL + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int NOT_ALLOWED = 0;
+    public static final int NOT_SUPPORTED = 1; // NOT_ALLOWED + 1
+    public static final int NOT_READABLE = 2; // NOT_SUPPORTED + 1
+    public static final int NOT_FOUND = 3; // NOT_READABLE + 1
+    public static final int INVALID_MESSAGE = 4; // NOT_FOUND + 1
+    public static final int OPERATION_CANCELLED = 5; // INVALID_MESSAGE + 1
+    public static final int TIMER_EXPIRED = 6; // OPERATION_CANCELLED + 1
+    public static final int CANNOT_CANCEL = 7; // TIMER_EXPIRED + 1
+    public static final int IO_ERROR = 8; // CANNOT_CANCEL + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 8;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private NfcErrorType() {}
-
 }

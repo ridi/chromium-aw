@@ -39,4 +39,9 @@ OnBindInterfaceResponse callback);
     interface OnBindInterfaceResponse extends org.chromium.mojo.bindings.Callbacks.Callback0 { }
 
 
+
+    void createPackagedServiceInstance(
+Identity identity, org.chromium.mojo.bindings.InterfaceRequest<Service> receiver, ProcessMetadata metadata);
+
+
 }

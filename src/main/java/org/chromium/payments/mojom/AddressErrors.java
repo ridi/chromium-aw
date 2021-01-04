@@ -16,20 +16,18 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class AddressErrors extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 104;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0)};
+    private static final int STRUCT_SIZE = 88;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public String addressLine;
     public String city;
     public String country;
     public String dependentLocality;
-    public String languageCode;
     public String organization;
     public String phone;
     public String postalCode;
     public String recipient;
     public String region;
-    public String regionCode;
     public String sortingCode;
 
     private AddressErrors(int version) {
@@ -83,35 +81,27 @@ public final class AddressErrors extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.languageCode = decoder0.readString(40, false);
+                result.organization = decoder0.readString(40, false);
                 }
                 {
                     
-                result.organization = decoder0.readString(48, false);
+                result.phone = decoder0.readString(48, false);
                 }
                 {
                     
-                result.phone = decoder0.readString(56, false);
+                result.postalCode = decoder0.readString(56, false);
                 }
                 {
                     
-                result.postalCode = decoder0.readString(64, false);
+                result.recipient = decoder0.readString(64, false);
                 }
                 {
                     
-                result.recipient = decoder0.readString(72, false);
+                result.region = decoder0.readString(72, false);
                 }
                 {
                     
-                result.region = decoder0.readString(80, false);
-                }
-                {
-                    
-                result.regionCode = decoder0.readString(88, false);
-                }
-                {
-                    
-                result.sortingCode = decoder0.readString(96, false);
+                result.sortingCode = decoder0.readString(80, false);
                 }
 
         } finally {
@@ -133,20 +123,16 @@ public final class AddressErrors extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.dependentLocality, 32, false);
         
-        encoder0.encode(this.languageCode, 40, false);
+        encoder0.encode(this.organization, 40, false);
         
-        encoder0.encode(this.organization, 48, false);
+        encoder0.encode(this.phone, 48, false);
         
-        encoder0.encode(this.phone, 56, false);
+        encoder0.encode(this.postalCode, 56, false);
         
-        encoder0.encode(this.postalCode, 64, false);
+        encoder0.encode(this.recipient, 64, false);
         
-        encoder0.encode(this.recipient, 72, false);
+        encoder0.encode(this.region, 72, false);
         
-        encoder0.encode(this.region, 80, false);
-        
-        encoder0.encode(this.regionCode, 88, false);
-        
-        encoder0.encode(this.sortingCode, 96, false);
+        encoder0.encode(this.sortingCode, 80, false);
     }
 }

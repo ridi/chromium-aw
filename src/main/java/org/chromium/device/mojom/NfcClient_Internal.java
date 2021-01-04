@@ -60,11 +60,13 @@ class NfcClient_Internal {
 
         @Override
         public void onWatch(
-int[] watchIds, NfcMessage message) {
+int[] watchIds, String serialNumber, NdefMessage message) {
 
             NfcClientOnWatchParams _message = new NfcClientOnWatchParams();
 
             _message.watchIds = watchIds;
+
+            _message.serialNumber = serialNumber;
 
             _message.message = message;
 
@@ -109,7 +111,7 @@ int[] watchIds, NfcMessage message) {
                         NfcClientOnWatchParams data =
                                 NfcClientOnWatchParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().onWatch(data.watchIds, data.message);
+                        getImpl().onWatch(data.watchIds, data.serialNumber, data.message);
                         return true;
                     }
 
@@ -155,11 +157,12 @@ int[] watchIds, NfcMessage message) {
     
     static final class NfcClientOnWatchParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 32;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public int[] watchIds;
-        public NfcMessage message;
+        public String serialNumber;
+        public NdefMessage message;
 
         private NfcClientOnWatchParams(int version) {
             super(STRUCT_SIZE, version);
@@ -200,8 +203,12 @@ int[] watchIds, NfcMessage message) {
                     }
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                    result.message = NfcMessage.decode(decoder1);
+                    result.serialNumber = decoder0.readString(16, true);
+                    }
+                    {
+                        
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                    result.message = NdefMessage.decode(decoder1);
                     }
 
             } finally {
@@ -217,7 +224,9 @@ int[] watchIds, NfcMessage message) {
             
             encoder0.encode(this.watchIds, 8, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             
-            encoder0.encode(this.message, 16, false);
+            encoder0.encode(this.serialNumber, 16, true);
+            
+            encoder0.encode(this.message, 24, false);
         }
     }
 

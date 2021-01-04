@@ -14,36 +14,21 @@ package org.chromium.skia.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class BlurTileMode {
-
-
-    public static final int CLAMP = 0;
-
-    public static final int REPEAT = CLAMP + 1;
-
-    public static final int CLAMP_TO_BLACK = REPEAT + 1;
-
-    public static final int BLUR_TILE_MODE_LAST = (int) (BlurTileMode.CLAMP_TO_BLACK);
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int CLAMP = 0;
+    public static final int REPEAT = 1; // CLAMP + 1
+    public static final int CLAMP_TO_BLACK = 2; // REPEAT + 1
+    public static final int BLUR_TILE_MODE_LAST = BlurTileMode.CLAMP_TO_BLACK;
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private BlurTileMode() {}
-
 }

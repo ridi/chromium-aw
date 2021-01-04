@@ -17,7 +17,7 @@ import android.util.Pair;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.base.annotations.MainDex;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -49,8 +49,8 @@ import javax.security.auth.x500.X500Principal;
  * Utility functions for verifying X.509 certificates.
  */
 @JNINamespace("net")
+@MainDex
 public class X509Util {
-
     private static final String TAG = "X509Util";
 
     private static final class TrustStorageListener extends BroadcastReceiver {
@@ -199,9 +199,8 @@ public class X509Util {
     private static final Object sLock = new Object();
 
     /**
-     * Allow disabling registering the observer and recording histograms for the certificate
-     * changes. Net unit tests do not load native libraries which prevent this to succeed. Moreover,
-     * the system does not allow to interact with the certificate store without user interaction.
+     * Allow disabling recording histograms for the certificate changes. Java unit tests do not load
+     * native libraries which prevent this from succeeding.
      */
     private static boolean sDisableNativeCodeForTest;
 
@@ -245,13 +244,6 @@ public class X509Util {
                 // Could not load AndroidCAStore. Continue anyway; isKnownRoot will always
                 // return false.
             }
-            if (!sDisableNativeCodeForTest
-                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                // Only record the histogram for 4.2 and up. Before 4.2, the platform doesn't
-                // return the certificate chain anyway.
-                RecordHistogram.recordBooleanHistogram(
-                        "Net.FoundSystemTrustRootsAndroid", sSystemKeyStore != null);
-            }
             sLoadedSystemKeyStore = true;
         }
         if (sSystemTrustAnchorCache == null) {
@@ -268,7 +260,7 @@ public class X509Util {
         if (sTestTrustManager == null) {
             sTestTrustManager = X509Util.createTrustManager(sTestKeyStore);
         }
-        if (!sDisableNativeCodeForTest && sTrustStorageListener == null) {
+        if (sTrustStorageListener == null) {
             sTrustStorageListener = new TrustStorageListener();
             IntentFilter filter = new IntentFilter();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

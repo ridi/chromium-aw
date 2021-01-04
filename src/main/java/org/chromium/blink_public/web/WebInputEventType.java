@@ -38,7 +38,7 @@ import java.lang.annotation.RetentionPolicy;
     WebInputEventType.TOUCH_SCROLL_STARTED, WebInputEventType.TOUCH_TYPE_LAST,
     WebInputEventType.POINTER_DOWN, WebInputEventType.POINTER_TYPE_FIRST,
     WebInputEventType.POINTER_UP, WebInputEventType.POINTER_MOVE,
-    WebInputEventType.POINTER_RAW_MOVE, WebInputEventType.POINTER_CANCEL,
+    WebInputEventType.POINTER_RAW_UPDATE, WebInputEventType.POINTER_CANCEL,
     WebInputEventType.POINTER_CAUSED_UA_ACTION, WebInputEventType.POINTER_TYPE_LAST,
     WebInputEventType.TYPE_LAST
 })
@@ -136,11 +136,12 @@ public @interface WebInputEventType {
    */
   int GESTURE_TAP_UNCONFIRMED = 26;
   /**
-   * Double-tap is two single-taps spread apart in time, like a double-click. This event is only
-   * sent on desktop pages viewed on an Android phone, and is always preceded by
-   * GestureTapUnconfirmed.  It's an instruction to Blink to perform a PageScaleAnimation zoom onto
-   * the double-tapped content.  (It's treated differently from GestureTap with tapCount=2, which
-   * can also happen.)
+   * On Android, double-tap is two single-taps spread apart in time, like a double-click. This event
+   * is only sent on desktop pages, and is always preceded by GestureTapUnconfirmed. It's an
+   * instruction to Blink to perform a PageScaleAnimation zoom onto the double-tapped content. (It's
+   * treated differently from GestureTap with tapCount=2, which can also happen.) On desktop, this
+   * event may be used for a double-tap with two fingers on a touchpad, as the desired effect is
+   * similar to Android's double-tap.
    */
   int GESTURE_DOUBLE_TAP = 27;
   int GESTURE_TYPE_LAST = 27;
@@ -164,9 +165,9 @@ public @interface WebInputEventType {
   int POINTER_TYPE_FIRST = 33;
   int POINTER_UP = 34;
   int POINTER_MOVE = 35;
-  int POINTER_RAW_MOVE = 36;
+  int POINTER_RAW_UPDATE = 36;
   int POINTER_CANCEL = 37;
   int POINTER_CAUSED_UA_ACTION = 38;
   int POINTER_TYPE_LAST = 38;
-  int TYPE_LAST = 32;
+  int TYPE_LAST = 38;
 }

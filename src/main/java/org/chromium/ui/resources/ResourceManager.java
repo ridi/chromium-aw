@@ -122,28 +122,34 @@ public class ResourceManager implements ResourceLoaderCallback {
      * @param resId   The id of the Android resource.
      * @return The corresponding {@link LayoutResource}.
      */
-    public LayoutResource getResource(int resType, int resId) {
+    public LayoutResource getResource(@AndroidResourceType int resType, int resId) {
         SparseArray<LayoutResource> bucket = mLoadedResources.get(resType);
         return bucket != null ? bucket.get(resId) : null;
     }
 
     @SuppressWarnings("cast")
     @Override
-    public void onResourceLoaded(int resType, int resId, Resource resource) {
-        if (resource == null || resource.getBitmap() == null) return;
+    public void onResourceLoaded(@AndroidResourceType int resType, int resId, Resource resource) {
+        if (resource == null) return;
+        Bitmap bitmap = resource.getBitmap();
+        if (bitmap == null) return;
 
         saveMetadataForLoadedResource(resType, resId, resource);
 
         if (mNativeResourceManagerPtr == 0) return;
 
-        nativeOnResourceReady(mNativeResourceManagerPtr, resType, resId, resource.getBitmap(),
+        nativeOnResourceReady(mNativeResourceManagerPtr, resType, resId, bitmap,
+                resource.getBitmapSize().width(), resource.getBitmapSize().height(),
                 resource.createNativeResource());
     }
 
     @Override
-    public void onResourceUnregistered(int resType, int resId) {
-        // Only remove dynamic bitmaps that were unregistered.
-        if (resType != AndroidResourceType.DYNAMIC_BITMAP) return;
+    public void onResourceUnregistered(@AndroidResourceType int resType, int resId) {
+        // Only remove dynamic resources that were unregistered.
+        if (resType != AndroidResourceType.DYNAMIC_BITMAP && resType != AndroidResourceType.DYNAMIC)
+            return;
+
+        if (mNativeResourceManagerPtr == 0) return;
 
         nativeRemoveResource(mNativeResourceManagerPtr, resType, resId);
     }
@@ -156,7 +162,8 @@ public class ResourceManager implements ResourceLoaderCallback {
         nativeClearTintedResourceCache(mNativeResourceManagerPtr);
     }
 
-    private void saveMetadataForLoadedResource(int resType, int resId, Resource resource) {
+    private void saveMetadataForLoadedResource(
+            @AndroidResourceType int resType, int resId, Resource resource) {
         SparseArray<LayoutResource> bucket = mLoadedResources.get(resType);
         if (bucket == null) {
             bucket = new SparseArray<LayoutResource>();
@@ -193,7 +200,7 @@ public class ResourceManager implements ResourceLoaderCallback {
     }
 
     private native void nativeOnResourceReady(long nativeResourceManagerImpl, int resType,
-            int resId, Bitmap bitmap, long nativeResource);
+            int resId, Bitmap bitmap, int width, int height, long nativeResource);
     private native void nativeRemoveResource(long nativeResourceManagerImpl, int resType,
             int resId);
     private native void nativeClearTintedResourceCache(long nativeResourceManagerImpl);

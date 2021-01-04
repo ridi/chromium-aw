@@ -25,7 +25,7 @@ public interface NfcClient extends org.chromium.mojo.bindings.Interface {
 
 
     void onWatch(
-int[] watchIds, NfcMessage message);
+int[] watchIds, String serialNumber, NdefMessage message);
 
 
 }

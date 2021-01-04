@@ -14,40 +14,20 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SerialSendError {
-
-
-    public static final int NONE = 0;
-
-    public static final int DISCONNECTED = NONE + 1;
-
-    public static final int PENDING = DISCONNECTED + 1;
-
-    public static final int TIMEOUT = PENDING + 1;
-
-    public static final int SYSTEM_ERROR = TIMEOUT + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int NONE = 0;
+    public static final int DISCONNECTED = 1; // NONE + 1
+    public static final int SYSTEM_ERROR = 2; // DISCONNECTED + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SerialSendError() {}
-
 }

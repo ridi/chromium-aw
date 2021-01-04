@@ -16,9 +16,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    WebFocusType.NONE, WebFocusType.FORWARD, WebFocusType.BACKWARD, WebFocusType.UP,
-    WebFocusType.DOWN, WebFocusType.LEFT, WebFocusType.RIGHT, WebFocusType.MOUSE, WebFocusType.PAGE,
-    WebFocusType.LAST
+    WebFocusType.NONE, WebFocusType.FORWARD, WebFocusType.BACKWARD, WebFocusType.SPATIAL_NAVIGATION,
+    WebFocusType.MOUSE, WebFocusType.ACCESS_KEY, WebFocusType.PAGE, WebFocusType.LAST
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface WebFocusType {
@@ -34,17 +33,18 @@ public @interface WebFocusType {
   /**
    * Spatial navigation.
    */
-  int UP = 3;
-  int DOWN = 4;
-  int LEFT = 5;
-  int RIGHT = 6;
+  int SPATIAL_NAVIGATION = 3;
   /**
    * Mouse press
    */
-  int MOUSE = 7;
+  int MOUSE = 4;
+  /**
+   * Access key
+   */
+  int ACCESS_KEY = 5;
   /**
    * Re-focus by a page focus
    */
-  int PAGE = 8;
-  int LAST = 8;
+  int PAGE = 6;
+  int LAST = 6;
 }

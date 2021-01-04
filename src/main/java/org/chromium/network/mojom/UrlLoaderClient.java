@@ -43,7 +43,7 @@ OnUploadProgressResponse callback);
 
 
     void onReceiveCachedMetadata(
-byte[] data);
+org.chromium.mojo_base.mojom.BigBuffer data);
 
 
 

@@ -10,7 +10,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
@@ -94,6 +93,7 @@ public interface WebContents extends Parcelable {
     /**
      * @return The top level WindowAndroid associated with this WebContents.  This can be null.
      */
+    @Nullable
     WindowAndroid getTopLevelNativeWindow();
 
     /*
@@ -108,6 +108,7 @@ public interface WebContents extends Parcelable {
      * @return The {@link ViewAndroidDelegate} from which to get the container view.
      *         This can be null.
      */
+    @Nullable
     ViewAndroidDelegate getViewAndroidDelegate();
 
     /**
@@ -121,14 +122,34 @@ public interface WebContents extends Parcelable {
     boolean isDestroyed();
 
     /**
+     * Removes the native WebContents' reference to this object. This is used when we want to
+     * destroy this object without destroying its native counterpart.
+     */
+    void clearNativeReference();
+
+    /**
      * @return The navigation controller associated with this WebContents.
      */
     NavigationController getNavigationController();
 
     /**
-     * @return  The main frame associated with this WebContents.
+     * @return The main frame associated with this WebContents.
      */
     RenderFrameHost getMainFrame();
+
+    /**
+     * @return The focused frame associated with this WebContents. Will be null if the WebContents
+     * does not have focus.
+     */
+    @Nullable
+    RenderFrameHost getFocusedFrame();
+
+    /**
+     * @return The root level view from the renderer, or {@code null} in some cases where there is
+     *         none.
+     */
+    @Nullable
+    RenderWidgetHostView getRenderWidgetHostView();
 
     /**
      * @return The title for the current visible page.
@@ -193,11 +214,6 @@ public interface WebContents extends Parcelable {
     void setAudioMuted(boolean mute);
 
     /**
-     * Get the Background color from underlying RenderWidgetHost for this WebContent.
-     */
-    int getBackgroundColor();
-
-    /**
      * @return Whether the page is currently showing an interstitial, such as a bad HTTPS page.
      */
     boolean isShowingInterstitialPage();
@@ -207,13 +223,6 @@ public interface WebContents extends Parcelable {
      */
     boolean focusLocationBarByDefault();
 
-    /**
-     * If the view is ready to draw contents to the screen. In hardware mode,
-     * the initialization of the surface texture may not occur until after the
-     * view has been added to the layout. This method will return {@code true}
-     * once the texture is actually ready.
-     */
-    boolean isReady();
 
      /**
      * Inform WebKit that Fullscreen mode has been exited by the user.
@@ -275,7 +284,7 @@ public interface WebContents extends Parcelable {
      *                 will be made on the main thread.
      *                 If no result is required, pass null.
      */
-    void evaluateJavaScript(String script, JavaScriptCallback callback);
+    void evaluateJavaScript(String script, @Nullable JavaScriptCallback callback);
 
     /**
      * Injects the passed Javascript code in the current page and evaluates it.
@@ -288,7 +297,7 @@ public interface WebContents extends Parcelable {
      *                 If no result is required, pass null.
      */
     @VisibleForTesting
-    void evaluateJavaScriptForTests(String script, JavaScriptCallback callback);
+    void evaluateJavaScriptForTests(String script, @Nullable JavaScriptCallback callback);
 
     /**
      * Adds a log message to dev tools console. |level| must be a value of
@@ -297,23 +306,20 @@ public interface WebContents extends Parcelable {
     void addMessageToDevToolsConsole(int level, String message);
 
     /**
-     * Post a message to a frame.
+     * Post a message to main frame.
      *
-     * @param frameName The name of the frame. If the name is null the message is posted
-     *                  to the main frame.
      * @param message   The message
      * @param targetOrigin  The target origin. If the target origin is a "*" or a
      *                  empty string, it indicates a wildcard target origin.
-     * @param sentPorts The sent message ports, if any. Pass null if there is no
+     * @param ports The sent message ports, if any. Pass null if there is no
      *                  message ports to pass.
      */
-    void postMessageToFrame(String frameName, String message,
-            String sourceOrigin, String targetOrigin, MessagePort[] ports);
+    void postMessageToMainFrame(String message, String sourceOrigin, String targetOrigin,
+            @Nullable MessagePort[] ports);
 
     /**
      * Creates a message channel for sending postMessage requests and returns the ports for
      * each end of the channel.
-     * @param service The message port service to register the channel with.
      * @return The ports that forms the ends of the message channel created.
      */
     MessagePort[] createMessageChannel();
@@ -335,6 +341,11 @@ public interface WebContents extends Parcelable {
      * @return The theme color for the content as set by the theme-color meta tag.
      */
     int getThemeColor();
+
+    /**
+     * @return Current page load progress on a scale of 0 to 100.
+     */
+    int getLoadProgress();
 
     /**
      * Initiate extraction of text, HTML, and other information for clipping puposes (smart clip)
@@ -383,16 +394,10 @@ public interface WebContents extends Parcelable {
     void setOverscrollRefreshHandler(OverscrollRefreshHandler handler);
 
     /**
-     * Requests an image snapshot of the content and stores it in the specified folder.
-     *
-     * @param width The width of the resulting bitmap, or 0 for "auto."
-     * @param height The height of the resulting bitmap, or 0 for "auto."
-     * @param path The folder in which to store the screenshot.
-     * @param callback May be called synchronously, or at a later point, to deliver the bitmap
-     *                 result (or a failure code).
+     * Controls use of spatial-navigation mode.
+     * @param disable True if spatial navigation should never be used.
      */
-    void writeContentBitmapToDiskAsync(
-            int width, int height, String path, Callback<String> callback);
+    void setSpatialNavigationDisabled(boolean disabled);
 
     /**
      * Reloads all the Lo-Fi images in this WebContents.
@@ -441,14 +446,6 @@ public interface WebContents extends Parcelable {
     Rect getFullscreenVideoSize();
 
     /**
-     * Issues a fake notification about the renderer being killed.
-     *
-     * @param wasOomProtected True if the renderer was protected from the OS out-of-memory killer
-     *                        (e.g. renderer for the currently selected tab)
-     */
-    void simulateRendererKilledForTesting(boolean wasOomProtected);
-
-    /**
      * Notifies the WebContents about the new persistent video status. It should be called whenever
      * the value changes.
      *
@@ -485,4 +482,9 @@ public interface WebContents extends Parcelable {
      * @param insets The insets stored in a Rect.
      */
     void setDisplayCutoutSafeArea(Rect insets);
+
+    /**
+     * Notify that web preferences needs update for various properties.
+     */
+    void notifyRendererPreferenceUpdate();
 }

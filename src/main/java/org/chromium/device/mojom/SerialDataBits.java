@@ -14,34 +14,20 @@ package org.chromium.device.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class SerialDataBits {
-
-
-    public static final int NONE = 0;
-
-    public static final int SEVEN = NONE + 1;
-
-    public static final int EIGHT = SEVEN + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int NONE = 0;
+    public static final int SEVEN = 1; // NONE + 1
+    public static final int EIGHT = 2; // SEVEN + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private SerialDataBits() {}
-
 }

@@ -14,43 +14,23 @@ package org.chromium.gpu.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class CommandBufferNamespace {
-
-
-    public static final int INVALID = (int) (-1L);
-
-    public static final int GPU_IO = INVALID + 1;
-
-    public static final int IN_PROCESS = GPU_IO + 1;
-
-    public static final int MOJO = IN_PROCESS + 1;
-
-    public static final int MOJO_LOCAL = MOJO + 1;
-
-    public static final int NUM_COMMAND_BUFFER_NAMESPACES = MOJO_LOCAL + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int INVALID = -1;
+    public static final int GPU_IO = 0; // INVALID + 1
+    public static final int IN_PROCESS = 1; // GPU_IO + 1
+    public static final int MOJO = 2; // IN_PROCESS + 1
+    public static final int MOJO_LOCAL = 3; // MOJO + 1
+    public static final int NUM_COMMAND_BUFFER_NAMESPACES = 4; // MOJO_LOCAL + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case -1:
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                return true;
-        }
-        return false;
+        return value >= -1 && value <= 4;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private CommandBufferNamespace() {}
-
 }

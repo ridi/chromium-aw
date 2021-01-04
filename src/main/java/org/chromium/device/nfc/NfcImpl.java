@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.nfc.FormatException;
-import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.ReaderCallback;
 import android.nfc.NfcManager;
@@ -24,15 +23,15 @@ import android.util.SparseArray;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.device.mojom.NdefCompatibility;
+import org.chromium.device.mojom.NdefMessage;
 import org.chromium.device.mojom.Nfc;
 import org.chromium.device.mojom.NfcClient;
 import org.chromium.device.mojom.NfcError;
 import org.chromium.device.mojom.NfcErrorType;
-import org.chromium.device.mojom.NfcMessage;
 import org.chromium.device.mojom.NfcPushOptions;
 import org.chromium.device.mojom.NfcPushTarget;
-import org.chromium.device.mojom.NfcWatchMode;
-import org.chromium.device.mojom.NfcWatchOptions;
+import org.chromium.device.mojom.NfcReaderOptions;
 import org.chromium.mojo.bindings.Callbacks;
 import org.chromium.mojo.system.MojoException;
 
@@ -81,7 +80,7 @@ public class NfcImpl implements Nfc {
 
     /**
      * Object that contains data that was passed to method
-     * #push(NfcMessage message, NfcPushOptions options, PushResponse callback)
+     * #push(NdefMessage message, NfcPushOptions options, PushResponse callback)
      * @see PendingPushOperation
      */
     private PendingPushOperation mPendingPushOperation;
@@ -93,7 +92,7 @@ public class NfcImpl implements Nfc {
     private NfcTagHandler mTagHandler;
 
     /**
-     * Client interface used to deliver NFCMessages for registered watch operations.
+     * Client interface used to deliver NdefMessages for registered watch operations.
      * @see #watch
      */
     private NfcClient mClient;
@@ -104,12 +103,12 @@ public class NfcImpl implements Nfc {
     private int mWatcherId;
 
     /**
-     * Map of watchId <-> NfcWatchOptions. All NfcWatchOptions are matched against tag that is in
+     * Map of watchId <-> NfcReaderOptions. All NfcReaderOptions are matched against tag that is in
      * proximity, when match algorithm (@see #matchesWatchOptions) returns true, watcher with
      * corresponding ID would be notified using NfcClient interface.
-     * @see NfcClient#onWatch(int[] id, NfcMessage message)
+     * @see NfcClient#onWatch(int[] id, String serial_number, NdefMessage message)
      */
-    private final SparseArray<NfcWatchOptions> mWatchers = new SparseArray<>();
+    private final SparseArray<NfcReaderOptions> mWatchers = new SparseArray<>();
 
     /**
      * Handler that runs delayed push timeout task.
@@ -164,8 +163,8 @@ public class NfcImpl implements Nfc {
 
     /**
      * Sets NfcClient. NfcClient interface is used to notify mojo NFC service client when NFC
-     * device is in proximity and has NfcMessage that matches NfcWatchOptions criteria.
-     * @see Nfc#watch(NfcWatchOptions options, WatchResponse callback)
+     * device is in proximity and has NdefMessage that matches NfcReaderOptions criteria.
+     * @see Nfc#watch(NfcReaderOptions options, WatchResponse callback)
      *
      * @param client @see NfcClient
      */
@@ -175,7 +174,7 @@ public class NfcImpl implements Nfc {
     }
 
     /**
-     * Pushes NfcMessage to Tag or Peer, whenever NFC device is in proximity. At the moment, only
+     * Pushes NdefMessage to Tag or Peer, whenever NFC device is in proximity. At the moment, only
      * passive NFC devices are supported (NfcPushTarget.TAG).
      *
      * @param message that should be pushed to NFC device.
@@ -183,10 +182,10 @@ public class NfcImpl implements Nfc {
      * @param callback that is used to notify when push operation is completed.
      */
     @Override
-    public void push(NfcMessage message, NfcPushOptions options, PushResponse callback) {
+    public void push(NdefMessage message, NfcPushOptions options, PushResponse callback) {
         if (!checkIfReady(callback)) return;
 
-        if (!NfcMessageValidator.isValid(message)) {
+        if (!NdefMessageValidator.isValid(message)) {
             callback.call(createError(NfcErrorType.INVALID_MESSAGE));
             return;
         }
@@ -229,7 +228,7 @@ public class NfcImpl implements Nfc {
         }
 
         if (mPendingPushOperation == null) {
-            callback.call(createError(NfcErrorType.NOT_FOUND));
+            callback.call(createError(NfcErrorType.CANNOT_CANCEL));
         } else {
             completePendingPushOperation(createError(NfcErrorType.OPERATION_CANCELLED));
             callback.call(null);
@@ -237,17 +236,17 @@ public class NfcImpl implements Nfc {
     }
 
     /**
-     * Watch method allows to set filtering criteria for NfcMessages that are found when NFC device
+     * Watch method allows to set filtering criteria for NdefMessages that are found when NFC device
      * is within proximity. On success, watch ID is returned to caller through WatchResponse
-     * callback. When NfcMessage that matches NfcWatchOptions is found, it is passed to NfcClient
+     * callback. When NdefMessage that matches NfcReaderOptions is found, it is passed to NfcClient
      * interface together with corresponding watch ID.
-     * @see NfcClient#onWatch(int[] id, NfcMessage message)
+     * @see NfcClient#onWatch(int[] id, String serial_number, NdefMessage message)
      *
-     * @param options used to filter NfcMessages, @see NfcWatchOptions.
+     * @param options used to filter NdefMessages, @see NfcReaderOptions.
      * @param callback that is used to notify caller when watch() is completed and return watch ID.
      */
     @Override
-    public void watch(NfcWatchOptions options, WatchResponse callback) {
+    public void watch(NfcReaderOptions options, WatchResponse callback) {
         if (!checkIfReady(callback)) return;
         int watcherId = ++mWatcherId;
         mWatchers.put(watcherId, options);
@@ -324,15 +323,31 @@ public class NfcImpl implements Nfc {
      * Holds information about pending push operation.
      */
     private static class PendingPushOperation {
-        public final NfcMessage nfcMessage;
+        public final NdefMessage ndefMessage;
         public final NfcPushOptions nfcPushOptions;
         private final PushResponse mPushResponseCallback;
 
         public PendingPushOperation(
-                NfcMessage message, NfcPushOptions options, PushResponse callback) {
-            nfcMessage = message;
+                NdefMessage message, NfcPushOptions options, PushResponse callback) {
+            ndefMessage = message;
             nfcPushOptions = options;
             mPushResponseCallback = callback;
+        }
+
+        /**
+         * Check if the NFC device matches the |compatibility| field in |options|.
+         *
+         * @param compatibility denotes the compatibility kind of the found NFC device.
+         * @return boolean true if NFC the compatibility matches.
+         */
+        boolean checkCompatibility(int compatibility) {
+            // 'nfc-forum' option can only push messages to NFC standard devices and 'vendor'
+            // option can only push to vendor specific ones.
+            if (nfcPushOptions.compatibility == NdefCompatibility.ANY
+                    || nfcPushOptions.compatibility == compatibility) {
+                return true;
+            }
+            return false;
         }
 
         /**
@@ -361,11 +376,9 @@ public class NfcImpl implements Nfc {
      */
     private NfcError checkIfReady() {
         if (!mHasPermission || mActivity == null) {
-            return createError(NfcErrorType.SECURITY);
-        } else if (mNfcManager == null || mNfcAdapter == null) {
-            return createError(NfcErrorType.NOT_SUPPORTED);
-        } else if (!mNfcAdapter.isEnabled()) {
-            return createError(NfcErrorType.DEVICE_DISABLED);
+            return createError(NfcErrorType.NOT_ALLOWED);
+        } else if (mNfcManager == null || mNfcAdapter == null || !mNfcAdapter.isEnabled()) {
+            return createError(NfcErrorType.NOT_READABLE);
         }
         return null;
     }
@@ -498,12 +511,16 @@ public class NfcImpl implements Nfc {
             return;
         }
 
+        if (!mPendingPushOperation.checkCompatibility(mTagHandler.compatibility())) {
+            return;
+        }
+
         try {
             mTagHandler.connect();
-            mTagHandler.write(NfcTypeConverter.toNdefMessage(mPendingPushOperation.nfcMessage));
+            mTagHandler.write(NfcTypeConverter.toNdefMessage(mPendingPushOperation.ndefMessage));
             pendingPushOperationCompleted(null);
-        } catch (InvalidNfcMessageException e) {
-            Log.w(TAG, "Cannot write data to NFC tag. Invalid NfcMessage.");
+        } catch (InvalidNdefMessageException e) {
+            Log.w(TAG, "Cannot write data to NFC tag. Invalid NdefMessage.");
             pendingPushOperationCompleted(createError(NfcErrorType.INVALID_MESSAGE));
         } catch (TagLostException e) {
             Log.w(TAG, "Cannot write data to NFC tag. Tag is lost.");
@@ -515,7 +532,7 @@ public class NfcImpl implements Nfc {
     }
 
     /**
-     * Reads NfcMessage from a tag and forwards message to matching method.
+     * Reads NdefMessage from a tag and forwards message to matching method.
      */
     private void processPendingWatchOperations() {
         if (mTagHandler == null || mClient == null || mWatchers.size() == 0) return;
@@ -530,13 +547,13 @@ public class NfcImpl implements Nfc {
             return;
         }
 
-        NdefMessage message = null;
+        android.nfc.NdefMessage message = null;
 
         try {
             mTagHandler.connect();
             message = mTagHandler.read();
-            if (message.getByteArrayLength() > NfcMessage.MAX_SIZE) {
-                Log.w(TAG, "Cannot read data from NFC tag. NfcMessage exceeds allowed size.");
+            if (message.getByteArrayLength() > NdefMessage.MAX_SIZE) {
+                Log.w(TAG, "Cannot read data from NFC tag. NdefMessage exceeds allowed size.");
                 return;
             }
         } catch (TagLostException e) {
@@ -545,20 +562,21 @@ public class NfcImpl implements Nfc {
             Log.w(TAG, "Cannot read data from NFC tag. IO_ERROR.");
         }
 
-        if (message != null) notifyMatchingWatchers(message);
+        if (message != null) notifyMatchingWatchers(message, mTagHandler.compatibility());
     }
 
     /**
-     * Iterates through active watchers and if any of those match NfcWatchOptions criteria,
-     * delivers NfcMessage to the client.
+     * Iterates through active watchers and if any of those match NfcReaderOptions criteria,
+     * delivers NdefMessage to the client.
      */
-    private void notifyMatchingWatchers(NdefMessage message) {
+    private void notifyMatchingWatchers(android.nfc.NdefMessage message, int compatibility) {
         try {
-            NfcMessage nfcMessage = NfcTypeConverter.toNfcMessage(message);
+            NdefMessage ndefMessage = NfcTypeConverter.toNdefMessage(message);
             List<Integer> watchIds = new ArrayList<Integer>();
             for (int i = 0; i < mWatchers.size(); i++) {
-                NfcWatchOptions options = mWatchers.valueAt(i);
-                if (matchesWatchOptions(nfcMessage, options)) watchIds.add(mWatchers.keyAt(i));
+                NfcReaderOptions options = mWatchers.valueAt(i);
+                if (matchesWatchOptions(ndefMessage, compatibility, options))
+                    watchIds.add(mWatchers.keyAt(i));
             }
 
             if (watchIds.size() != 0) {
@@ -566,20 +584,22 @@ public class NfcImpl implements Nfc {
                 for (int i = 0; i < watchIds.size(); ++i) {
                     ids[i] = watchIds.get(i).intValue();
                 }
-                mClient.onWatch(ids, nfcMessage);
+                mClient.onWatch(ids, mTagHandler.serialNumber(), ndefMessage);
             }
         } catch (UnsupportedEncodingException e) {
-            Log.w(TAG, "Cannot convert NdefMessage to NfcMessage.");
+            Log.w(TAG, "Cannot convert NdefMessage to NdefMessage.");
         }
     }
 
     /**
      * Implements matching algorithm.
      */
-    private boolean matchesWatchOptions(NfcMessage message, NfcWatchOptions options) {
-        // Valid WebNFC message must have non-empty url.
-        if (options.mode == NfcWatchMode.WEBNFC_ONLY
-                && (message.url == null || message.url.isEmpty())) {
+    private boolean matchesWatchOptions(
+            NdefMessage message, int compatibility, NfcReaderOptions options) {
+        // 'nfc-forum' option can only read messages from NFC standard devices and 'vendor' option
+        // can only read from vendor specific ones.
+        if (options.compatibility != NdefCompatibility.ANY
+                && options.compatibility != compatibility) {
             return false;
         }
 

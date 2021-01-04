@@ -5,10 +5,10 @@
 package org.chromium.content.browser;
 
 import android.content.Context;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.IntDef;
 
+import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
@@ -19,9 +19,11 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.LoaderErrors;
 import org.chromium.base.library_loader.ProcessInitException;
+import org.chromium.base.task.PostTask;
 import org.chromium.content.app.ContentMain;
+import org.chromium.content.browser.ServicificationStartupUma.ServicificationStartup;
 import org.chromium.content_public.browser.BrowserStartupController;
-import org.chromium.content_public.browser.BrowserStartupController.StartupCallback;
+import org.chromium.content_public.browser.UiThreadTaskTraits;
 import org.chromium.ui.resources.ResourceExtractor;
 
 import java.lang.annotation.Retention;
@@ -43,11 +45,12 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     @VisibleForTesting
     static final int STARTUP_FAILURE = 1;
 
-    @IntDef({BROWSER_START_TYPE_FULL_BROWSER, BROWSER_START_TYPE_SERVICE_MANAGER_ONLY})
+    @IntDef({BrowserStartType.FULL_BROWSER, BrowserStartType.SERVICE_MANAGER_ONLY})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface BrowserStartType {}
-    private static final int BROWSER_START_TYPE_FULL_BROWSER = 0;
-    private static final int BROWSER_START_TYPE_SERVICE_MANAGER_ONLY = 1;
+    public @interface BrowserStartType {
+        int FULL_BROWSER = 0;
+        int SERVICE_MANAGER_ONLY = 1;
+    }
 
     private static BrowserStartupControllerImpl sInstance;
 
@@ -106,13 +109,17 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
 
     private int mLibraryProcessType;
 
+    // Tests may inject a method to be run instead of calling ContentMain() in order for them to
+    // initialize the C++ system via another means.
+    private Runnable mContentMainCallbackForTests;
+
     // Browser start up type. If the type is |BROWSER_START_TYPE_SERVICE_MANAGER_ONLY|, start up
     // will be paused after ServiceManager is launched. Additional request to launch the full
     // browser process is needed to fully complete the startup process. Callbacks will executed
     // once the browser is fully started, or when the ServiceManager is started and there is no
     // outstanding requests to start the full browser.
     @BrowserStartType
-    private int mCurrentBrowserStartType = BROWSER_START_TYPE_FULL_BROWSER;
+    private int mCurrentBrowserStartType = BrowserStartType.FULL_BROWSER;
 
     // If the app is only started with the ServiceManager, whether it needs to launch full browser
     // funcionalities now.
@@ -121,31 +128,35 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     // Whether ServiceManager is started.
     private boolean mServiceManagerStarted;
 
-    private TracingControllerAndroid mTracingController;
+    private TracingControllerAndroidImpl mTracingController;
 
     BrowserStartupControllerImpl(int libraryProcessType) {
         mAsyncStartupCallbacks = new ArrayList<>();
         mServiceManagerCallbacks = new ArrayList<>();
         mLibraryProcessType = libraryProcessType;
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                addStartupCompletedObserver(new StartupCallback() {
-                    @Override
-                    public void onSuccess() {
-                        assert mTracingController == null;
-                        Context context = ContextUtils.getApplicationContext();
-                        mTracingController = new TracingControllerAndroid(context);
-                        mTracingController.registerReceiver(context);
-                    }
+        if (BuildInfo.isDebugAndroid()) {
+            // Only set up the tracing broadcast receiver on debug builds of the OS. Normal tracing
+            // should use the DevTools API.
+            PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
+                @Override
+                public void run() {
+                    addStartupCompletedObserver(new StartupCallback() {
+                        @Override
+                        public void onSuccess() {
+                            assert mTracingController == null;
+                            Context context = ContextUtils.getApplicationContext();
+                            mTracingController = new TracingControllerAndroidImpl(context);
+                            mTracingController.registerReceiver(context);
+                        }
 
-                    @Override
-                    public void onFailure() {
-                        // Startup failed.
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void onFailure() {
+                            // Startup failed.
+                        }
+                    });
+                }
+            });
+        }
     }
 
     /**
@@ -177,6 +188,9 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     public void startBrowserProcessesAsync(boolean startGpuProcess, boolean startServiceManagerOnly,
             final StartupCallback callback) throws ProcessInitException {
         assert ThreadUtils.runningOnUiThread() : "Tried to start the browser on the wrong thread.";
+        ServicificationStartupUma.getInstance().record(ServicificationStartupUma.getStartupMode(
+                mFullBrowserStartupDone, mServiceManagerStarted, startServiceManagerOnly));
+
         if (mFullBrowserStartupDone || (startServiceManagerOnly && mServiceManagerStarted)) {
             // Browser process initialization has already been completed, so we can immediately post
             // the callback.
@@ -193,7 +207,7 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
         // If the browser process is launched with ServiceManager only, we need to relaunch the full
         // process in serviceManagerStarted() if such a request was received.
         mLaunchFullBrowserAfterServiceManagerStart |=
-                (mCurrentBrowserStartType == BROWSER_START_TYPE_SERVICE_MANAGER_ONLY)
+                (mCurrentBrowserStartType == BrowserStartType.SERVICE_MANAGER_ONLY)
                 && !startServiceManagerOnly;
         if (!mHasStartedInitializingBrowserProcess) {
             // This is the first time we have been asked to start the browser process. We set the
@@ -208,8 +222,8 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
                     ThreadUtils.assertOnUiThread();
                     if (mHasCalledContentStart) return;
                     mCurrentBrowserStartType = startServiceManagerOnly
-                            ? BROWSER_START_TYPE_SERVICE_MANAGER_ONLY
-                            : BROWSER_START_TYPE_FULL_BROWSER;
+                            ? BrowserStartType.SERVICE_MANAGER_ONLY
+                            : BrowserStartType.FULL_BROWSER;
                     if (contentStart() > 0) {
                         // Failed. The callbacks may not have run, so run them.
                         enqueueCallbackExecution(STARTUP_FAILURE);
@@ -219,13 +233,17 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
         } else if (mServiceManagerStarted && mLaunchFullBrowserAfterServiceManagerStart) {
             // If we missed the serviceManagerStarted() call, launch the full browser now if needed.
             // Otherwise, serviceManagerStarted() will handle the full browser launch.
-            mCurrentBrowserStartType = BROWSER_START_TYPE_FULL_BROWSER;
+            mCurrentBrowserStartType = BrowserStartType.FULL_BROWSER;
             if (contentStart() > 0) enqueueCallbackExecution(STARTUP_FAILURE);
         }
     }
 
     @Override
     public void startBrowserProcessesSync(boolean singleProcess) throws ProcessInitException {
+        ServicificationStartupUma.getInstance().record(
+                ServicificationStartupUma.getStartupMode(mFullBrowserStartupDone,
+                        mServiceManagerStarted, false /* startServiceManagerOnly */));
+
         // If already started skip to checking the result
         if (!mFullBrowserStartupDone) {
             if (!mHasStartedInitializingBrowserProcess || !mPostResourceExtractionTasksCompleted) {
@@ -234,14 +252,14 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
 
             boolean startedSuccessfully = true;
             if (!mHasCalledContentStart) {
-                mCurrentBrowserStartType = BROWSER_START_TYPE_FULL_BROWSER;
+                mCurrentBrowserStartType = BrowserStartType.FULL_BROWSER;
                 if (contentStart() > 0) {
                     // Failed. The callbacks may not have run, so run them.
                     enqueueCallbackExecution(STARTUP_FAILURE);
                     startedSuccessfully = false;
                 }
-            } else if (mCurrentBrowserStartType == BROWSER_START_TYPE_SERVICE_MANAGER_ONLY) {
-                mCurrentBrowserStartType = BROWSER_START_TYPE_FULL_BROWSER;
+            } else if (mCurrentBrowserStartType == BrowserStartType.SERVICE_MANAGER_ONLY) {
+                mCurrentBrowserStartType = BrowserStartType.FULL_BROWSER;
                 if (contentStart() > 0) {
                     enqueueCallbackExecution(STARTUP_FAILURE);
                     startedSuccessfully = false;
@@ -263,13 +281,27 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
      * Start the browser process by calling ContentMain.start().
      */
     int contentStart() {
-        boolean startServiceManagerOnly =
-                mCurrentBrowserStartType == BROWSER_START_TYPE_SERVICE_MANAGER_ONLY;
-        int result = contentMainStart(startServiceManagerOnly);
+        int result = 0;
+        if (mContentMainCallbackForTests == null) {
+            boolean startServiceManagerOnly =
+                    mCurrentBrowserStartType == BrowserStartType.SERVICE_MANAGER_ONLY;
+            result = contentMainStart(startServiceManagerOnly);
+            // No need to launch the full browser again if we are launching full browser now.
+            if (!startServiceManagerOnly) mLaunchFullBrowserAfterServiceManagerStart = false;
+        } else {
+            assert mCurrentBrowserStartType == BrowserStartType.FULL_BROWSER;
+            // Run the injected Runnable instead of ContentMain().
+            mContentMainCallbackForTests.run();
+            mLaunchFullBrowserAfterServiceManagerStart = false;
+        }
         mHasCalledContentStart = true;
-        // No need to launch the full browser again if we are launching full browser now.
-        if (!startServiceManagerOnly) mLaunchFullBrowserAfterServiceManagerStart = false;
         return result;
+    }
+
+    @Override
+    public void setContentMainCallbackForTests(Runnable r) {
+        assert !mHasCalledContentStart;
+        mContentMainCallbackForTests = r;
     }
 
     /**
@@ -286,9 +318,21 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     }
 
     @Override
-    public boolean isStartupSuccessfullyCompleted() {
+    public boolean isFullBrowserStarted() {
         ThreadUtils.assertOnUiThread();
         return mFullBrowserStartupDone && mStartupSuccess;
+    }
+
+    @Override
+    public boolean isRunningInServiceManagerMode() {
+        ThreadUtils.assertOnUiThread();
+        return mServiceManagerStarted && !mFullBrowserStartupDone && mStartupSuccess;
+    }
+
+    @Override
+    public boolean isNativeStarted() {
+        ThreadUtils.assertOnUiThread();
+        return (mServiceManagerStarted || mFullBrowserStartupDone) && mStartupSuccess;
     }
 
     @Override
@@ -300,6 +344,11 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
             mAsyncStartupCallbacks.add(callback);
         }
     }
+    @Override
+    public @ServicificationStartup int getStartupMode(boolean startServiceManagerOnly) {
+        return ServicificationStartupUma.getStartupMode(
+                mFullBrowserStartupDone, mServiceManagerStarted, startServiceManagerOnly);
+    }
 
     /**
      * Called when ServiceManager is launched.
@@ -309,34 +358,37 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
         if (mLaunchFullBrowserAfterServiceManagerStart) {
             // If startFullBrowser() fails, execute the callbacks right away. Otherwise,
             // callbacks will be deferred until browser startup completes.
-            mCurrentBrowserStartType = BROWSER_START_TYPE_FULL_BROWSER;
+            mCurrentBrowserStartType = BrowserStartType.FULL_BROWSER;
             if (contentStart() > 0) enqueueCallbackExecution(STARTUP_FAILURE);
-        } else if (mCurrentBrowserStartType == BROWSER_START_TYPE_SERVICE_MANAGER_ONLY) {
-            // If full browser startup is not needed, execute all the callbacks now.
-            executeEnqueuedCallbacks(STARTUP_SUCCESS);
+            return;
         }
+
+        if (mCurrentBrowserStartType == BrowserStartType.SERVICE_MANAGER_ONLY) {
+            executeServiceManagerCallbacks(STARTUP_SUCCESS);
+        }
+        recordStartupUma();
     }
 
     private void executeEnqueuedCallbacks(int startupResult) {
         assert ThreadUtils.runningOnUiThread() : "Callback from browser startup from wrong thread.";
-        // If only ServiceManager is launched, don't set mFullBrowserStartupDone, wait for the full
-        // browser launch to set this variable.
-        mFullBrowserStartupDone = mCurrentBrowserStartType == BROWSER_START_TYPE_FULL_BROWSER;
+        mFullBrowserStartupDone = true;
         mStartupSuccess = (startupResult <= 0);
-        if (mFullBrowserStartupDone) {
-            for (StartupCallback asyncStartupCallback : mAsyncStartupCallbacks) {
-                if (mStartupSuccess) {
-                    asyncStartupCallback.onSuccess();
-                } else {
-                    asyncStartupCallback.onFailure();
-                }
+        for (StartupCallback asyncStartupCallback : mAsyncStartupCallbacks) {
+            if (mStartupSuccess) {
+                asyncStartupCallback.onSuccess();
+            } else {
+                asyncStartupCallback.onFailure();
             }
-            // We don't want to hold on to any objects after we do not need them anymore.
-            mAsyncStartupCallbacks.clear();
         }
-        // The ServiceManager should have been started, call the callbacks now.
-        // TODO(qinmin): Handle mServiceManagerCallbacks in serviceManagerStarted() instead of
-        // here once http://crbug.com/854231 is fixed.
+        // We don't want to hold on to any objects after we do not need them anymore.
+        mAsyncStartupCallbacks.clear();
+
+        executeServiceManagerCallbacks(startupResult);
+        recordStartupUma();
+    }
+
+    private void executeServiceManagerCallbacks(int startupResult) {
+        mStartupSuccess = (startupResult <= 0);
         for (StartupCallback serviceMangerCallback : mServiceManagerCallbacks) {
             if (mStartupSuccess) {
                 serviceMangerCallback.onSuccess();
@@ -350,7 +402,7 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     // Queue the callbacks to run. Since running the callbacks clears the list it is safe to call
     // this more than once.
     private void enqueueCallbackExecution(final int startupFailure) {
-        new Handler().post(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.BOOTSTRAP, new Runnable() {
             @Override
             public void run() {
                 executeEnqueuedCallbacks(startupFailure);
@@ -359,7 +411,7 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     }
 
     private void postStartupCompleted(final StartupCallback callback) {
-        new Handler().post(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.BOOTSTRAP, new Runnable() {
             @Override
             public void run() {
                 if (mStartupSuccess) {
@@ -404,6 +456,7 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
             }
         };
 
+        ResourceExtractor.get().setResultTraits(UiThreadTaskTraits.BOOTSTRAP);
         if (completionCallback == null) {
             // If no continuation callback is specified, then force the resource extraction
             // to complete.
@@ -415,14 +468,11 @@ public class BrowserStartupControllerImpl implements BrowserStartupController {
     }
 
     /**
-     * Initialization needed for tests. Mainly used by content browsertests.
+     * Can be overridden by testing.
      */
-    @Override
-    public void initChromiumBrowserProcessForTests() {
-        ResourceExtractor resourceExtractor = ResourceExtractor.get();
-        resourceExtractor.startExtractingResources();
-        resourceExtractor.waitForCompletion();
-        nativeSetCommandLineFlags(false);
+    @VisibleForTesting
+    void recordStartupUma() {
+        ServicificationStartupUma.getInstance().commit();
     }
 
     private static native void nativeSetCommandLineFlags(boolean singleProcess);

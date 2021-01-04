@@ -14,34 +14,20 @@ package org.chromium.service_manager.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class ConnectResult {
-
-
-    public static final int SUCCEEDED = 0;
-
-    public static final int INVALID_ARGUMENT = SUCCEEDED + 1;
-
-    public static final int ACCESS_DENIED = INVALID_ARGUMENT + 1;
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int SUCCEEDED = 0;
+    public static final int INVALID_ARGUMENT = 1; // SUCCEEDED + 1
+    public static final int ACCESS_DENIED = 2; // INVALID_ARGUMENT + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private ConnectResult() {}
-
 }

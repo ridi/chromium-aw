@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
 }
 
 task sourcesJar(type: Jar) {

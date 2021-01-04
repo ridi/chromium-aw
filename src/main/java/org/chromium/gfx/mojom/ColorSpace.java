@@ -16,9 +16,15 @@ import org.chromium.mojo.bindings.DeserializationException;
 
 public final class ColorSpace extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 8;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    public int primaries;
+    public int transfer;
+    public int matrix;
+    public int range;
+    public float[] customPrimaryMatrix;
+    public float[] customTransferParams;
 
     private ColorSpace(int version) {
         super(STRUCT_SIZE, version);
@@ -53,6 +59,34 @@ public final class ColorSpace extends org.chromium.mojo.bindings.Struct {
             org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
             final int elementsOrVersion = mainDataHeader.elementsOrVersion;
             result = new ColorSpace(elementsOrVersion);
+                {
+                    
+                result.primaries = decoder0.readInt(8);
+                    ColorSpacePrimaryId.validate(result.primaries);
+                }
+                {
+                    
+                result.transfer = decoder0.readInt(12);
+                    ColorSpaceTransferId.validate(result.transfer);
+                }
+                {
+                    
+                result.matrix = decoder0.readInt(16);
+                    ColorSpaceMatrixId.validate(result.matrix);
+                }
+                {
+                    
+                result.range = decoder0.readInt(20);
+                    ColorSpaceRangeId.validate(result.range);
+                }
+                {
+                    
+                result.customPrimaryMatrix = decoder0.readFloats(24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 9);
+                }
+                {
+                    
+                result.customTransferParams = decoder0.readFloats(32, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 7);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -63,6 +97,18 @@ public final class ColorSpace extends org.chromium.mojo.bindings.Struct {
     @SuppressWarnings("unchecked")
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-        encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+        org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+        
+        encoder0.encode(this.primaries, 8);
+        
+        encoder0.encode(this.transfer, 12);
+        
+        encoder0.encode(this.matrix, 16);
+        
+        encoder0.encode(this.range, 20);
+        
+        encoder0.encode(this.customPrimaryMatrix, 24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 9);
+        
+        encoder0.encode(this.customTransferParams, 32, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 7);
     }
 }

@@ -14,87 +14,33 @@ package org.chromium.gfx.mojom;
 import org.chromium.mojo.bindings.DeserializationException;
 
 public final class BufferFormat {
-
-
-    public static final int ATC = 0;
-
-    public static final int ATCIA = ATC + 1;
-
-    public static final int DXT1 = ATCIA + 1;
-
-    public static final int DXT5 = DXT1 + 1;
-
-    public static final int ETC1 = DXT5 + 1;
-
-    public static final int R_8 = ETC1 + 1;
-
-    public static final int R_16 = R_8 + 1;
-
-    public static final int RG_88 = R_16 + 1;
-
-    public static final int BGR_565 = RG_88 + 1;
-
-    public static final int RGBA_4444 = BGR_565 + 1;
-
-    public static final int RGBX_8888 = RGBA_4444 + 1;
-
-    public static final int RGBA_8888 = RGBX_8888 + 1;
-
-    public static final int BGRX_8888 = RGBA_8888 + 1;
-
-    public static final int BGRX_1010102 = BGRX_8888 + 1;
-
-    public static final int RGBX_1010102 = BGRX_1010102 + 1;
-
-    public static final int BGRA_8888 = RGBX_1010102 + 1;
-
-    public static final int RGBA_F16 = BGRA_8888 + 1;
-
-    public static final int YVU_420 = RGBA_F16 + 1;
-
-    public static final int YUV_420_BIPLANAR = YVU_420 + 1;
-
-    public static final int UYVY_422 = YUV_420_BIPLANAR + 1;
-
-    public static final int LAST = (int) (BufferFormat.UYVY_422);
-
-
     private static final boolean IS_EXTENSIBLE = false;
 
+    public static final int R_8 = 0;
+    public static final int R_16 = 1; // R_8 + 1
+    public static final int RG_88 = 2; // R_16 + 1
+    public static final int BGR_565 = 3; // RG_88 + 1
+    public static final int RGBA_4444 = 4; // BGR_565 + 1
+    public static final int RGBX_8888 = 5; // RGBA_4444 + 1
+    public static final int RGBA_8888 = 6; // RGBX_8888 + 1
+    public static final int BGRX_8888 = 7; // RGBA_8888 + 1
+    public static final int BGRX_1010102 = 8; // BGRX_8888 + 1
+    public static final int RGBX_1010102 = 9; // BGRX_1010102 + 1
+    public static final int BGRA_8888 = 10; // RGBX_1010102 + 1
+    public static final int RGBA_F16 = 11; // BGRA_8888 + 1
+    public static final int YVU_420 = 12; // RGBA_F16 + 1
+    public static final int YUV_420_BIPLANAR = 13; // YVU_420 + 1
+    public static final int UYVY_422 = 14; // YUV_420_BIPLANAR + 1
+    public static final int P010 = 15; // UYVY_422 + 1
+
     public static boolean isKnownValue(int value) {
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-                return true;
-        }
-        return false;
+        return value >= 0 && value <= 15;
     }
 
     public static void validate(int value) {
-        if (IS_EXTENSIBLE || isKnownValue(value))
-            return;
-
+        if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new DeserializationException("Invalid enum value.");
     }
 
     private BufferFormat() {}
-
 }

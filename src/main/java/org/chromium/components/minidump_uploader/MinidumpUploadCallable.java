@@ -24,6 +24,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.concurrent.Callable;
@@ -50,17 +52,15 @@ public class MinidumpUploadCallable implements Callable<Integer> {
     @VisibleForTesting
     protected static final String CONTENT_TYPE_TMPL = "multipart/form-data; boundary=%s";
 
-    @IntDef({
-        UPLOAD_SUCCESS,
-        UPLOAD_FAILURE,
-        UPLOAD_USER_DISABLED,
-        UPLOAD_DISABLED_BY_SAMPLING
-    })
-    public @interface MinidumpUploadStatus {}
-    public static final int UPLOAD_SUCCESS = 0;
-    public static final int UPLOAD_FAILURE = 1;
-    public static final int UPLOAD_USER_DISABLED = 2;
-    public static final int UPLOAD_DISABLED_BY_SAMPLING = 3;
+    @IntDef({MinidumpUploadStatus.SUCCESS, MinidumpUploadStatus.FAILURE,
+            MinidumpUploadStatus.USER_DISABLED, MinidumpUploadStatus.DISABLED_BY_SAMPLING})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface MinidumpUploadStatus {
+        int SUCCESS = 0;
+        int FAILURE = 1;
+        int USER_DISABLED = 2;
+        int DISABLED_BY_SAMPLING = 3;
+    }
 
     private final File mFileToUpload;
     private final File mLogfile;
@@ -83,7 +83,7 @@ public class MinidumpUploadCallable implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() {
+    public @MinidumpUploadStatus Integer call() {
         if (mPermManager.isUploadEnabledForTests()) {
             Log.i(TAG, "Minidump upload enabled for tests, skipping other checks.");
         } else if (!CrashFileManager.isForcedUpload(mFileToUpload)) {
@@ -91,44 +91,44 @@ public class MinidumpUploadCallable implements Callable<Integer> {
                 Log.i(TAG, "Minidump upload is not permitted by user. Marking file as skipped for "
                                 + "cleanup to prevent future uploads.");
                 CrashFileManager.markUploadSkipped(mFileToUpload);
-                return UPLOAD_USER_DISABLED;
+                return MinidumpUploadStatus.USER_DISABLED;
             }
 
             if (!mPermManager.isClientInMetricsSample()) {
                 Log.i(TAG, "Minidump upload skipped due to sampling.  Marking file as skipped for "
                                 + "cleanup to prevent future uploads.");
                 CrashFileManager.markUploadSkipped(mFileToUpload);
-                return UPLOAD_DISABLED_BY_SAMPLING;
+                return MinidumpUploadStatus.DISABLED_BY_SAMPLING;
             }
 
             if (!mPermManager.isNetworkAvailableForCrashUploads()) {
                 Log.i(TAG, "Minidump cannot currently be uploaded due to network constraints.");
-                return UPLOAD_FAILURE;
+                return MinidumpUploadStatus.FAILURE;
             }
         }
 
         HttpURLConnection connection =
                 mHttpURLConnectionFactory.createHttpURLConnection(CRASH_URL_STRING);
         if (connection == null) {
-            return UPLOAD_FAILURE;
+            return MinidumpUploadStatus.FAILURE;
         }
 
         FileInputStream minidumpInputStream = null;
         try {
             if (!configureConnectionForHttpPost(connection)) {
-                return UPLOAD_FAILURE;
+                return MinidumpUploadStatus.FAILURE;
             }
             minidumpInputStream = new FileInputStream(mFileToUpload);
             streamCopy(minidumpInputStream, new GZIPOutputStream(connection.getOutputStream()));
             boolean success = handleExecutionResponse(connection);
 
-            return success ? UPLOAD_SUCCESS : UPLOAD_FAILURE;
+            return success ? MinidumpUploadStatus.SUCCESS : MinidumpUploadStatus.FAILURE;
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
             // ArrayIndexOutOfBoundsException due to bad GZIPOutputStream implementation on some
             // old sony devices.
             // For now just log the stack trace.
             Log.w(TAG, "Error while uploading " + mFileToUpload.getName(), e);
-            return UPLOAD_FAILURE;
+            return MinidumpUploadStatus.FAILURE;
         } finally {
             connection.disconnect();
 
@@ -174,8 +174,9 @@ public class MinidumpUploadCallable implements Callable<Integer> {
         if (isSuccessful(responseCode)) {
             String responseContent = getResponseContentAsString(connection);
             // The crash server returns the crash ID.
-            String id = responseContent != null ? responseContent : "unknown";
-            Log.i(TAG, "Minidump " + mFileToUpload.getName() + " uploaded successfully, id: " + id);
+            String uploadId = responseContent != null ? responseContent : "unknown";
+            String crashFileName = mFileToUpload.getName();
+            Log.i(TAG, "Minidump " + crashFileName + " uploaded successfully, id: " + uploadId);
 
             // TODO(acleung): MinidumpUploadService is in charge of renaming while this class is
             // in charge of deleting. We should move all the file system operations into
@@ -183,7 +184,8 @@ public class MinidumpUploadCallable implements Callable<Integer> {
             CrashFileManager.markUploadSuccess(mFileToUpload);
 
             try {
-                appendUploadedEntryToLog(id);
+                String localId = CrashFileManager.getCrashLocalIdFromFileName(crashFileName);
+                appendUploadedEntryToLog(localId, uploadId);
             } catch (IOException ioe) {
                 Log.e(TAG, "Fail to write uploaded entry to log file");
             }
@@ -205,9 +207,10 @@ public class MinidumpUploadCallable implements Callable<Integer> {
      * Records the upload entry to a log file
      * similar to what is done in chrome/app/breakpad_linux.cc
      *
-     * @param id The crash ID return from the server.
+     * @param localId The local ID when crash happened.
+     * @param uploadId The crash ID return from the server.
      */
-    private void appendUploadedEntryToLog(String id) throws IOException {
+    private void appendUploadedEntryToLog(String localId, String uploadId) throws IOException {
         FileWriter writer = new FileWriter(mLogfile, /* Appending */ true);
 
         // The log entries are formated like so:
@@ -215,7 +218,11 @@ public class MinidumpUploadCallable implements Callable<Integer> {
         StringBuilder sb = new StringBuilder();
         sb.append(System.currentTimeMillis() / 1000);
         sb.append(",");
-        sb.append(id);
+        sb.append(uploadId);
+        if (localId != null) {
+            sb.append(",");
+            sb.append(localId);
+        }
         sb.append('\n');
 
         try {
