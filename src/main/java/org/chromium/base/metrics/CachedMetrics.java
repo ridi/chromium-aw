@@ -9,6 +9,8 @@ import org.chromium.base.library_loader.LibraryLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * Utility classes for recording UMA metrics before the native library
  * may have been loaded.  Metrics are cached until the library is known
@@ -23,6 +25,7 @@ public class CachedMetrics {
      * commit operation when the native library is loaded.
      */
     private abstract static class CachedMetric {
+        @GuardedBy("sMetrics")
         private static final List<CachedMetric> sMetrics = new ArrayList<CachedMetric>();
 
         protected final String mName;
@@ -41,6 +44,7 @@ public class CachedMetrics {
          * Note: The synchronization is not done inside this function because subclasses
          * need to increment their held values under lock to ensure thread-safety.
          */
+        @GuardedBy("sMetrics")
         protected final void addToCache() {
             assert Thread.holdsLock(sMetrics);
 
@@ -53,6 +57,7 @@ public class CachedMetrics {
          * Commits the metric. Expects the native library to be loaded.
          * Must be called while holding the synchronized(sMetrics) lock.
          */
+        @GuardedBy("sMetrics")
         protected abstract void commitAndClear();
     }
 
@@ -60,6 +65,7 @@ public class CachedMetrics {
      * Caches an action that will be recorded after native side is loaded.
      */
     public static class ActionEvent extends CachedMetric {
+        @GuardedBy("CachedMetric.sMetrics")
         private int mCount;
 
         public ActionEvent(String actionName) {
@@ -82,6 +88,7 @@ public class CachedMetrics {
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             while (mCount > 0) {
                 recordWithNative();
@@ -90,8 +97,14 @@ public class CachedMetrics {
         }
     }
 
-    /** Caches a set of integer histogram samples. */
+    /**
+     * Caches a set of integer histogram samples.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
+     */
+    @Deprecated
     public static class SparseHistogramSample extends CachedMetric {
+        @GuardedBy("CachedMetric.sMetrics")
         private final List<Integer> mSamples = new ArrayList<Integer>();
 
         public SparseHistogramSample(String histogramName) {
@@ -114,6 +127,7 @@ public class CachedMetrics {
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             for (Integer sample : mSamples) {
                 recordWithNative(sample);
@@ -122,7 +136,12 @@ public class CachedMetrics {
         }
     }
 
-    /** Caches a set of enumerated histogram samples. */
+    /**
+     * Caches a set of enumerated histogram samples.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
+     */
+    @Deprecated
     public static class EnumeratedHistogramSample extends CachedMetric {
         private final List<Integer> mSamples = new ArrayList<Integer>();
         private final int mMaxValue;
@@ -148,6 +167,7 @@ public class CachedMetrics {
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             for (Integer sample : mSamples) {
                 recordWithNative(sample);
@@ -156,8 +176,14 @@ public class CachedMetrics {
         }
     }
 
-    /** Caches a set of times histogram samples. */
+    /**
+     * Caches a set of times histogram samples.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
+     */
+    @Deprecated
     public static class TimesHistogramSample extends CachedMetric {
+        @GuardedBy("CachedMetric.sMetrics")
         private final List<Long> mSamples = new ArrayList<Long>();
 
         public TimesHistogramSample(String histogramName) {
@@ -180,6 +206,7 @@ public class CachedMetrics {
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             for (Long sample : mSamples) {
                 recordWithNative(sample);
@@ -191,7 +218,10 @@ public class CachedMetrics {
     /**
      * Caches a set of times histogram samples, calls
      * {@link RecordHistogram#recordMediumTimesHistogram(String, long)}.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
      */
+    @Deprecated
     public static class MediumTimesHistogramSample extends TimesHistogramSample {
         public MediumTimesHistogramSample(String histogramName) {
             super(histogramName);
@@ -203,8 +233,14 @@ public class CachedMetrics {
         }
     }
 
-    /** Caches a set of boolean histogram samples. */
+    /**
+     * Caches a set of boolean histogram samples.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
+     */
+    @Deprecated
     public static class BooleanHistogramSample extends CachedMetric {
+        @GuardedBy("CachedMetric.sMetrics")
         private final List<Boolean> mSamples = new ArrayList<Boolean>();
 
         public BooleanHistogramSample(String histogramName) {
@@ -227,6 +263,7 @@ public class CachedMetrics {
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             for (Boolean sample : mSamples) {
                 recordWithNative(sample);
@@ -238,12 +275,16 @@ public class CachedMetrics {
     /**
      * Caches a set of custom count histogram samples.
      * Corresponds to UMA_HISTOGRAM_CUSTOM_COUNTS C++ macro.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
      */
+    @Deprecated
     public static class CustomCountHistogramSample extends CachedMetric {
+        @GuardedBy("CachedMetric.sMetrics")
         private final List<Integer> mSamples = new ArrayList<Integer>();
-        private final int mMin;
-        private final int mMax;
-        private final int mNumBuckets;
+        protected final int mMin;
+        protected final int mMax;
+        protected final int mNumBuckets;
 
         public CustomCountHistogramSample(String histogramName, int min, int max, int numBuckets) {
             super(histogramName);
@@ -263,11 +304,12 @@ public class CachedMetrics {
             }
         }
 
-        private void recordWithNative(int sample) {
+        protected void recordWithNative(int sample) {
             RecordHistogram.recordCustomCountHistogram(mName, sample, mMin, mMax, mNumBuckets);
         }
 
         @Override
+        @GuardedBy("CachedMetric.sMetrics")
         protected void commitAndClear() {
             for (Integer sample : mSamples) {
                 recordWithNative(sample);
@@ -279,7 +321,10 @@ public class CachedMetrics {
     /**
      * Caches a set of count histogram samples in range [1, 100).
      * Corresponds to UMA_HISTOGRAM_COUNTS_100 C++ macro.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
      */
+    @Deprecated
     public static class Count100HistogramSample extends CustomCountHistogramSample {
         public Count100HistogramSample(String histogramName) {
             super(histogramName, 1, 100, 50);
@@ -289,7 +334,10 @@ public class CachedMetrics {
     /**
      * Caches a set of count histogram samples in range [1, 1000).
      * Corresponds to UMA_HISTOGRAM_COUNTS_1000 C++ macro.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
      */
+    @Deprecated
     public static class Count1000HistogramSample extends CustomCountHistogramSample {
         public Count1000HistogramSample(String histogramName) {
             super(histogramName, 1, 1000, 50);
@@ -299,10 +347,30 @@ public class CachedMetrics {
     /**
      * Caches a set of count histogram samples in range [1, 1000000).
      * Corresponds to UMA_HISTOGRAM_COUNTS_1M C++ macro.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
      */
+    @Deprecated
     public static class Count1MHistogramSample extends CustomCountHistogramSample {
         public Count1MHistogramSample(String histogramName) {
             super(histogramName, 1, 1000000, 50);
+        }
+    }
+
+    /**
+     * Caches a set of linear count histogram samples.
+     *
+     * @deprecated Use {@link RecordHistogram} instead.
+     */
+    @Deprecated
+    public static class LinearCountHistogramSample extends CustomCountHistogramSample {
+        public LinearCountHistogramSample(String histogramName, int min, int max, int numBuckets) {
+            super(histogramName, min, max, numBuckets);
+        }
+
+        @Override
+        protected void recordWithNative(int sample) {
+            RecordHistogram.recordLinearCountHistogram(mName, sample, mMin, mMax, mNumBuckets);
         }
     }
 

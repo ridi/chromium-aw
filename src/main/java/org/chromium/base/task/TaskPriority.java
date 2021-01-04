@@ -10,7 +10,7 @@
 
 package org.chromium.base.task;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,12 +26,13 @@ public @interface TaskPriority {
    */
   int LOWEST = 0;
   /**
-   * This task will only start running when machine resources are available. Dependending on the
-   * ThreadPolicy, it may run on a thread that is likely to be descheduled when higher priority work
-   * arrives (in this process or another). Examples: - Reporting metrics. - Persisting data to disk.
-   * - Loading data that is required for a potential future user interaction (Note: Use
-   * CreateUpdateableSequencedTaskRunner() to increase the priority when that user interactions
-   * happens).
+   * This task will only start running when machine resources are available. The application may
+   * preempt the task if it expects that resources will soon be needed by work of higher priority.
+   * Dependending on the ThreadPolicy, the task may run on a thread that is likely to be descheduled
+   * when higher priority work arrives (in this process or another). Examples: - Reporting metrics.
+   * - Persisting data to disk. - Loading data that is required for a potential future user
+   * interaction (Note: Use CreateUpdateableSequencedTaskRunner() to increase the priority when that
+   * user interactions happens).
    */
   int BEST_EFFORT = 0;
   /**

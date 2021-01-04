@@ -4,7 +4,7 @@
 
 package org.chromium.base.task;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 
@@ -22,7 +22,9 @@ public class TaskTraits {
     // Keep in sync with base::TaskTraitsExtensionStorage::kStorageSize
     public static final int EXTENSION_STORAGE_SIZE = 8;
 
-    // Convenience variables explicitly specifying common priorities
+    // Convenience variables explicitly specifying common priorities.
+    // These also imply THREAD_POOL unless explicitly overwritten.
+    // TODO(1026641): Make destination explicit in Java too.
 
     // This task will only be scheduled when machine resources are available. Once
     // running, it may be descheduled if higher priority work arrives (in this
@@ -66,9 +68,8 @@ public class TaskTraits {
     // For tasks that should run on the thread pool instead of the main thread.
     // Note that currently also tasks which lack this trait will execute on the
     // thread pool unless a trait for a named thread is given.
-    // TODO(skyostil@): Make it required to state the thread affinity for all
-    // tasks.
-    public static final TaskTraits THREAD_POOL = new TaskTraits().threadPool();
+    public static final TaskTraits THREAD_POOL =
+            new TaskTraits().threadPool().taskPriority(TaskPriority.USER_BLOCKING);
     public static final TaskTraits THREAD_POOL_USER_BLOCKING =
             THREAD_POOL.taskPriority(TaskPriority.USER_BLOCKING);
     public static final TaskTraits THREAD_POOL_USER_VISIBLE =
@@ -159,6 +160,21 @@ public class TaskTraits {
         return taskTraits;
     }
 
+    /**
+     * Returns a TaskTraits with an explicit destination.
+     *
+     * The C++ side enforces that a destination _must_ be specified. The Java
+     * side loosely considers lack of destination as implying THREAD_POOL
+     * destination.
+     * TODO(1026641): Bring the Java side inline with the C++ side.
+     */
+    public TaskTraits withExplicitDestination() {
+        if (!mUseThreadPool && !hasExtension()) {
+            return this.threadPool();
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(@Nullable Object object) {
         if (object == this) {
@@ -166,8 +182,11 @@ public class TaskTraits {
         } else if (object instanceof TaskTraits) {
             TaskTraits other = (TaskTraits) object;
             return mPrioritySetExplicitly == other.mPrioritySetExplicitly
-                    && mPriority == other.mPriority && mExtensionId == other.mExtensionId
-                    && Arrays.equals(mExtensionData, other.mExtensionData);
+                    && mPriority == other.mPriority && mMayBlock == other.mMayBlock
+                    && mUseThreadPool == other.mUseThreadPool
+                    && mExtensionId == other.mExtensionId
+                    && Arrays.equals(mExtensionData, other.mExtensionData)
+                    && mIsChoreographerFrame == other.mIsChoreographerFrame;
         } else {
             return false;
         }

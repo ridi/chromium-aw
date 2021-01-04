@@ -10,7 +10,7 @@
 
 package org.chromium.components.autofill;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,8 +23,10 @@ import java.lang.annotation.RetentionPolicy;
     PopupItemId.ITEM_ID_DATALIST_ENTRY, PopupItemId.ITEM_ID_SCAN_CREDIT_CARD,
     PopupItemId.ITEM_ID_TITLE, PopupItemId.ITEM_ID_CREDIT_CARD_SIGNIN_PROMO,
     PopupItemId.ITEM_ID_USERNAME_ENTRY, PopupItemId.ITEM_ID_CREATE_HINT,
-    PopupItemId.ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, PopupItemId.ITEM_ID_GOOGLE_PAY_BRANDING,
-    PopupItemId.ITEM_ID_GENERATE_PASSWORD_ENTRY, PopupItemId.ITEM_ID_SHOW_ACCOUNT_CARDS
+    PopupItemId.ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, PopupItemId.ITEM_ID_GENERATE_PASSWORD_ENTRY,
+    PopupItemId.ITEM_ID_SHOW_ACCOUNT_CARDS, PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_OPTIN,
+    PopupItemId.ITEM_ID_HIDE_AUTOFILL_SUGGESTIONS, PopupItemId.ITEM_ID_USE_VIRTUAL_CARD,
+    PopupItemId.ITEM_ID_ONE_TIME_CODE
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface PopupItemId {
@@ -41,7 +43,10 @@ public @interface PopupItemId {
   int ITEM_ID_USERNAME_ENTRY = -11;
   int ITEM_ID_CREATE_HINT = -12;
   int ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY = -13;
-  int ITEM_ID_GOOGLE_PAY_BRANDING = -14;
-  int ITEM_ID_GENERATE_PASSWORD_ENTRY = -15;
-  int ITEM_ID_SHOW_ACCOUNT_CARDS = -16;
+  int ITEM_ID_GENERATE_PASSWORD_ENTRY = -14;
+  int ITEM_ID_SHOW_ACCOUNT_CARDS = -15;
+  int ITEM_ID_PASSWORD_ACCOUNT_STORAGE_OPTIN = -16;
+  int ITEM_ID_HIDE_AUTOFILL_SUGGESTIONS = -17;
+  int ITEM_ID_USE_VIRTUAL_CARD = -18;
+  int ITEM_ID_ONE_TIME_CODE = -19;
 }

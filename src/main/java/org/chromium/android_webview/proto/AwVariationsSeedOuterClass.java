@@ -68,30 +68,33 @@ public final class AwVariationsSeedOuterClass {
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    boolean hasDate();
+    @java.lang.Deprecated boolean hasDateHeader();
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    java.lang.String getDate();
+    @java.lang.Deprecated java.lang.String getDateHeader();
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    com.google.protobuf.ByteString
-        getDateBytes();
+    @java.lang.Deprecated com.google.protobuf.ByteString
+        getDateHeaderBytes();
 
     /**
      * <pre>
@@ -126,6 +129,25 @@ public final class AwVariationsSeedOuterClass {
      * <code>optional bytes seed_data = 5;</code>
      */
     com.google.protobuf.ByteString getSeedData();
+
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    boolean hasDate();
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    long getDate();
   }
   /**
    * <pre>
@@ -133,7 +155,7 @@ public final class AwVariationsSeedOuterClass {
    * required HTTP header metadata, to a file. While Chrome stores the seed in
    * prefs, WebView stores it in a separate file so the WebView service can write
    * new seeds directly to each app's seed file.
-   * Next tag: 6
+   * Next tag: 7
    * </pre>
    *
    * Protobuf type {@code org.chromium.android_webview.proto.AwVariationsSeed}
@@ -146,7 +168,7 @@ public final class AwVariationsSeedOuterClass {
     private AwVariationsSeed() {
       signature_ = "";
       country_ = "";
-      date_ = "";
+      dateHeader_ = "";
       seedData_ = com.google.protobuf.ByteString.EMPTY;
     }
     private int bitField0_;
@@ -300,85 +322,91 @@ public final class AwVariationsSeedOuterClass {
       country_ = value.toStringUtf8();
     }
 
-    public static final int DATE_FIELD_NUMBER = 3;
-    private java.lang.String date_;
+    public static final int DATE_HEADER_FIELD_NUMBER = 3;
+    private java.lang.String dateHeader_;
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    public boolean hasDate() {
+    @java.lang.Deprecated public boolean hasDateHeader() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    public java.lang.String getDate() {
-      return date_;
+    @java.lang.Deprecated public java.lang.String getDateHeader() {
+      return dateHeader_;
     }
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    public com.google.protobuf.ByteString
-        getDateBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(date_);
+    @java.lang.Deprecated public com.google.protobuf.ByteString
+        getDateHeaderBytes() {
+      return com.google.protobuf.ByteString.copyFromUtf8(dateHeader_);
     }
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    private void setDate(
+    private void setDateHeader(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000004;
-      date_ = value;
+      dateHeader_ = value;
     }
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    private void clearDate() {
+    private void clearDateHeader() {
       bitField0_ = (bitField0_ & ~0x00000004);
-      date_ = getDefaultInstance().getDate();
+      dateHeader_ = getDefaultInstance().getDateHeader();
     }
     /**
      * <pre>
      * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
      * sections 3.3.1 and 14.18 for the format.
+     * This was deprecated in favor of the |date| field in October 2019.
      * </pre>
      *
-     * <code>optional string date = 3;</code>
+     * <code>optional string date_header = 3 [deprecated = true];</code>
      */
-    private void setDateBytes(
+    private void setDateHeaderBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000004;
-      date_ = value.toStringUtf8();
+      dateHeader_ = value.toStringUtf8();
     }
 
     public static final int IS_GZIP_COMPRESSED_FIELD_NUMBER = 4;
@@ -474,6 +502,55 @@ public final class AwVariationsSeedOuterClass {
       seedData_ = getDefaultInstance().getSeedData();
     }
 
+    public static final int DATE_FIELD_NUMBER = 6;
+    private long date_;
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    public boolean hasDate() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    public long getDate() {
+      return date_;
+    }
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    private void setDate(long value) {
+      bitField0_ |= 0x00000020;
+      date_ = value;
+    }
+    /**
+     * <pre>
+     * Date the seed was downloaded according to the device's clock in
+     * milliseconds since UNIX epoch, GMT.
+     * </pre>
+     *
+     * <code>optional int64 date = 6;</code>
+     */
+    private void clearDate() {
+      bitField0_ = (bitField0_ & ~0x00000020);
+      date_ = 0L;
+    }
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -483,13 +560,16 @@ public final class AwVariationsSeedOuterClass {
         output.writeString(2, getCountry());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeString(3, getDate());
+        output.writeString(3, getDateHeader());
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeBool(4, isGzipCompressed_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeBytes(5, seedData_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt64(6, date_);
       }
       unknownFields.writeTo(output);
     }
@@ -509,7 +589,7 @@ public final class AwVariationsSeedOuterClass {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getDate());
+          .computeStringSize(3, getDateHeader());
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
@@ -518,6 +598,10 @@ public final class AwVariationsSeedOuterClass {
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(5, seedData_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, date_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -598,7 +682,7 @@ public final class AwVariationsSeedOuterClass {
      * required HTTP header metadata, to a file. While Chrome stores the seed in
      * prefs, WebView stores it in a separate file so the WebView service can write
      * new seeds directly to each app's seed file.
-     * Next tag: 6
+     * Next tag: 7
      * </pre>
      *
      * Protobuf type {@code org.chromium.android_webview.proto.AwVariationsSeed}
@@ -758,75 +842,81 @@ public final class AwVariationsSeedOuterClass {
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public boolean hasDate() {
-        return instance.hasDate();
+      @java.lang.Deprecated public boolean hasDateHeader() {
+        return instance.hasDateHeader();
       }
       /**
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public java.lang.String getDate() {
-        return instance.getDate();
+      @java.lang.Deprecated public java.lang.String getDateHeader() {
+        return instance.getDateHeader();
       }
       /**
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public com.google.protobuf.ByteString
-          getDateBytes() {
-        return instance.getDateBytes();
+      @java.lang.Deprecated public com.google.protobuf.ByteString
+          getDateHeaderBytes() {
+        return instance.getDateHeaderBytes();
       }
       /**
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public Builder setDate(
+      @java.lang.Deprecated public Builder setDateHeader(
           java.lang.String value) {
         copyOnWrite();
-        instance.setDate(value);
+        instance.setDateHeader(value);
         return this;
       }
       /**
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public Builder clearDate() {
+      @java.lang.Deprecated public Builder clearDateHeader() {
         copyOnWrite();
-        instance.clearDate();
+        instance.clearDateHeader();
         return this;
       }
       /**
        * <pre>
        * Date the seed was downloaded. Comes from HTTP header "Date"; see RFC 2616,
        * sections 3.3.1 and 14.18 for the format.
+       * This was deprecated in favor of the |date| field in October 2019.
        * </pre>
        *
-       * <code>optional string date = 3;</code>
+       * <code>optional string date_header = 3 [deprecated = true];</code>
        */
-      public Builder setDateBytes(
+      @java.lang.Deprecated public Builder setDateHeaderBytes(
           com.google.protobuf.ByteString value) {
         copyOnWrite();
-        instance.setDateBytes(value);
+        instance.setDateHeaderBytes(value);
         return this;
       }
 
@@ -920,6 +1010,55 @@ public final class AwVariationsSeedOuterClass {
         return this;
       }
 
+      /**
+       * <pre>
+       * Date the seed was downloaded according to the device's clock in
+       * milliseconds since UNIX epoch, GMT.
+       * </pre>
+       *
+       * <code>optional int64 date = 6;</code>
+       */
+      public boolean hasDate() {
+        return instance.hasDate();
+      }
+      /**
+       * <pre>
+       * Date the seed was downloaded according to the device's clock in
+       * milliseconds since UNIX epoch, GMT.
+       * </pre>
+       *
+       * <code>optional int64 date = 6;</code>
+       */
+      public long getDate() {
+        return instance.getDate();
+      }
+      /**
+       * <pre>
+       * Date the seed was downloaded according to the device's clock in
+       * milliseconds since UNIX epoch, GMT.
+       * </pre>
+       *
+       * <code>optional int64 date = 6;</code>
+       */
+      public Builder setDate(long value) {
+        copyOnWrite();
+        instance.setDate(value);
+        return this;
+      }
+      /**
+       * <pre>
+       * Date the seed was downloaded according to the device's clock in
+       * milliseconds since UNIX epoch, GMT.
+       * </pre>
+       *
+       * <code>optional int64 date = 6;</code>
+       */
+      public Builder clearDate() {
+        copyOnWrite();
+        instance.clearDate();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:org.chromium.android_webview.proto.AwVariationsSeed)
     }
     protected final Object dynamicMethod(
@@ -947,15 +1086,18 @@ public final class AwVariationsSeedOuterClass {
           country_ = visitor.visitString(
               hasCountry(), country_,
               other.hasCountry(), other.country_);
-          date_ = visitor.visitString(
-              hasDate(), date_,
-              other.hasDate(), other.date_);
+          dateHeader_ = visitor.visitString(
+              hasDateHeader(), dateHeader_,
+              other.hasDateHeader(), other.dateHeader_);
           isGzipCompressed_ = visitor.visitBoolean(
               hasIsGzipCompressed(), isGzipCompressed_,
               other.hasIsGzipCompressed(), other.isGzipCompressed_);
           seedData_ = visitor.visitByteString(
               hasSeedData(), seedData_,
               other.hasSeedData(), other.seedData_);
+          date_ = visitor.visitLong(
+              hasDate(), date_,
+              other.hasDate(), other.date_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
             bitField0_ |= other.bitField0_;
@@ -996,7 +1138,7 @@ public final class AwVariationsSeedOuterClass {
                 case 26: {
                   String s = input.readString();
                   bitField0_ |= 0x00000004;
-                  date_ = s;
+                  dateHeader_ = s;
                   break;
                 }
                 case 32: {
@@ -1007,6 +1149,11 @@ public final class AwVariationsSeedOuterClass {
                 case 42: {
                   bitField0_ |= 0x00000010;
                   seedData_ = input.readBytes();
+                  break;
+                }
+                case 48: {
+                  bitField0_ |= 0x00000020;
+                  date_ = input.readInt64();
                   break;
                 }
               }

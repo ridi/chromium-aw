@@ -9,8 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,6 +36,9 @@ public class FileUtils {
      */
     public static boolean recursivelyDeleteFile(File currentFile) {
         if (!currentFile.exists()) {
+            // This file could be a broken symlink, so try to delete. If we don't delete a broken
+            // symlink, the directory containing it cannot be deleted.
+            currentFile.delete();
             return true;
         }
         if (currentFile.isDirectory()) {

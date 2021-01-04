@@ -10,7 +10,7 @@
 
 package org.chromium.content_public.browser;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

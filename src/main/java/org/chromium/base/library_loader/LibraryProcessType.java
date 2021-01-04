@@ -10,7 +10,7 @@
 
 package org.chromium.base.library_loader;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,7 +18,8 @@ import java.lang.annotation.RetentionPolicy;
 @IntDef({
     LibraryProcessType.PROCESS_UNINITIALIZED, LibraryProcessType.PROCESS_BROWSER,
     LibraryProcessType.PROCESS_CHILD, LibraryProcessType.PROCESS_WEBVIEW,
-    LibraryProcessType.PROCESS_WEBVIEW_CHILD
+    LibraryProcessType.PROCESS_WEBVIEW_CHILD, LibraryProcessType.PROCESS_WEBLAYER,
+    LibraryProcessType.PROCESS_WEBLAYER_CHILD
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface LibraryProcessType {
@@ -42,4 +43,12 @@ public @interface LibraryProcessType {
    * Shared library is running in child process as part of webview.
    */
   int PROCESS_WEBVIEW_CHILD = 4;
+  /**
+   * Shared library is running in the app that uses weblayer.
+   */
+  int PROCESS_WEBLAYER = 5;
+  /**
+   * Shared library is running in child process as part of weblayer.
+   */
+  int PROCESS_WEBLAYER_CHILD = 6;
 }

@@ -12,15 +12,12 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.nfc.tech.TagTechnology;
 
-import org.chromium.device.mojom.NdefCompatibility;
-
 import java.io.IOException;
 
 /**
  * Utility class that provides I/O operations for NFC tags.
  */
 public class NfcTagHandler {
-    private final int mCompatibility;
     private final TagTechnology mTech;
     private final TagTechnologyHandler mTechHandler;
     private boolean mWasConnected;
@@ -37,19 +34,14 @@ public class NfcTagHandler {
 
         Ndef ndef = Ndef.get(tag);
         if (ndef != null) {
-            int compatibility = NdefCompatibility.VENDOR;
             String type = ndef.getType();
-            if (type.equals(Ndef.NFC_FORUM_TYPE_1) || type.equals(Ndef.NFC_FORUM_TYPE_2)
-                    || type.equals(Ndef.NFC_FORUM_TYPE_3) || type.equals(Ndef.NFC_FORUM_TYPE_4)) {
-                compatibility = NdefCompatibility.NFC_FORUM;
-            }
-            return new NfcTagHandler(compatibility, ndef, new NdefHandler(ndef), tag.getId());
+            return new NfcTagHandler(ndef, new NdefHandler(ndef), tag.getId());
         }
 
         NdefFormatable formattable = NdefFormatable.get(tag);
         if (formattable != null) {
-            return new NfcTagHandler(NdefCompatibility.VENDOR, formattable,
-                    new NdefFormattableHandler(formattable), tag.getId());
+            return new NfcTagHandler(
+                    formattable, new NdefFormattableHandler(formattable), tag.getId());
         }
 
         return null;
@@ -63,6 +55,8 @@ public class NfcTagHandler {
         public void write(NdefMessage message)
                 throws IOException, TagLostException, FormatException, IllegalStateException;
         public NdefMessage read()
+                throws IOException, TagLostException, FormatException, IllegalStateException;
+        public boolean canAlwaysOverwrite()
                 throws IOException, TagLostException, FormatException, IllegalStateException;
     }
 
@@ -88,6 +82,13 @@ public class NfcTagHandler {
                 throws IOException, TagLostException, FormatException, IllegalStateException {
             return mNdef.getNdefMessage();
         }
+
+        @Override
+        public boolean canAlwaysOverwrite()
+                throws IOException, TagLostException, FormatException, IllegalStateException {
+            // Getting null means the tag is empty, overwrite is safe.
+            return mNdef.getNdefMessage() == null;
+        }
     }
 
     /**
@@ -109,13 +110,16 @@ public class NfcTagHandler {
 
         @Override
         public NdefMessage read() throws FormatException {
-            return NfcTypeConverter.emptyNdefMessage();
+            return NdefMessageUtils.emptyNdefMessage();
+        }
+
+        @Override
+        public boolean canAlwaysOverwrite() {
+            return true;
         }
     }
 
-    protected NfcTagHandler(
-            int compatibility, TagTechnology tech, TagTechnologyHandler handler, byte[] id) {
-        mCompatibility = compatibility;
+    protected NfcTagHandler(TagTechnology tech, TagTechnologyHandler handler, byte[] id) {
         mTech = tech;
         mTechHandler = handler;
         mSerialNumber = bytesToSerialNumber(id);
@@ -195,10 +199,11 @@ public class NfcTagHandler {
     }
 
     /**
-     * Returns NdefCompatibility.NFC_FORUM if the tag has a NFC standard type, otherwise returns
-     * NdefCompatibility.VENDOR.
+     * Returns false only if the tag is already NDEF formatted and contains some records. Otherwise
+     * true.
      */
-    public int compatibility() {
-        return mCompatibility;
+    public boolean canAlwaysOverwrite()
+            throws IOException, TagLostException, FormatException, IllegalStateException {
+        return mTechHandler.canAlwaysOverwrite();
     }
 }

@@ -6,4 +6,6 @@ public class BuildConfig {
     public static final boolean IS_CHROME_BRANDED = false;
     public static final int R_STRING_PRODUCT_VERSION = 0;
     public static final int MIN_SDK_VERSION = 1;
+    public static final boolean BUNDLES_SUPPORTED = false;
+    public static final boolean IS_INCREMENTAL_INSTALL = false;
 }

@@ -6,13 +6,15 @@ package org.chromium.components.variations.firstrun;
 
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.support.annotation.IntDef;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.VisibleForTesting;
+
+import org.chromium.base.BuildConfig;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
 import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
 
@@ -53,6 +55,7 @@ public class VariationsSeedFetcher {
     // Values for the "Variations.FirstRun.SeedFetchResult" sparse histogram, which also logs
     // HTTP result codes. These are negative so that they don't conflict with the HTTP codes.
     // These values should not be renumbered or re-used since they are logged to UMA.
+    private static final int SEED_FETCH_RESULT_INVALID_DATE_HEADER = -4;
     private static final int SEED_FETCH_RESULT_UNKNOWN_HOST_EXCEPTION = -3;
     private static final int SEED_FETCH_RESULT_TIMEOUT = -2;
     private static final int SEED_FETCH_RESULT_IOEXCEPTION = -1;
@@ -126,28 +129,49 @@ public class VariationsSeedFetcher {
     }
 
     /**
+     * Object holding information about the status of a seed download attempt.
+     */
+    public static class SeedFetchInfo {
+        // The result of the download, containing either an HTTP status code or a negative
+        // value representing a specific error. This value is suitable for recording to the
+        // "Variations.FirstRun.SeedFetchResult" histogram.
+        public int seedFetchResult;
+
+        // Information about the seed that was downloaded. Null if the download failed.
+        public SeedInfo seedInfo;
+    }
+
+    /**
      * Object holding the seed data and related fields retrieved from HTTP headers.
      */
     public static class SeedInfo {
         // If you add fields, see VariationsTestUtils.
         public String signature;
         public String country;
-        public String date;
+        // Date according to the Variations server in milliseconds since UNIX epoch GMT.
+        public long date;
         public boolean isGzipCompressed;
         public byte[] seedData;
 
-        public Date parseDate() throws ParseException {
-            // The date field comes from the HTTP "Date" header, which has this format. (See RFC
-            // 2616, sections 3.3.1 and 14.18.) SimpleDateFormat is weirdly not thread-safe, so
-            // instantiate a new one for each call.
-            return new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US).parse(date);
+        // TODO(crbug.com/1013390): Delete once Date header to timestamp migration is done (~M81).
+        @Deprecated
+        public static long parseDateHeader(String header) throws ParseException {
+            // The date field comes from the HTTP "Date" header, which has this format.
+            // (See RFC 2616, sections 3.3.1 and 14.18.) SimpleDateFormat is weirdly not
+            // thread-safe, so instantiate a new one for each call.
+            return new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US)
+                    .parse(header)
+                    .getTime();
         }
 
         @Override
         public String toString() {
-            return "SeedInfo{signature=\"" + signature + "\" country=\"" + country
-                    + "\" date=\"" + date + " isGzipCompressed=" + isGzipCompressed
-                    + " seedData=" + Arrays.toString(seedData);
+            if (BuildConfig.DCHECK_IS_ON) {
+                return "SeedInfo{signature=\"" + signature + "\" country=\"" + country
+                        + "\" date=\"" + date + " isGzipCompressed=" + isGzipCompressed
+                        + " seedData=" + Arrays.toString(seedData);
+            }
+            return super.toString();
         }
     }
 
@@ -173,17 +197,13 @@ public class VariationsSeedFetcher {
                 return;
             }
 
-            try {
-                SeedInfo info = downloadContent(
-                        VariationsPlatform.ANDROID, restrictMode, milestone, channel);
+            SeedFetchInfo fetchInfo =
+                    downloadContent(VariationsPlatform.ANDROID, restrictMode, milestone, channel);
+            recordFetchResultOrCode(fetchInfo.seedFetchResult);
+            if (fetchInfo.seedInfo != null) {
+                SeedInfo info = fetchInfo.seedInfo;
                 VariationsSeedBridge.setVariationsFirstRunSeed(info.seedData, info.signature,
                         info.country, info.date, info.isGzipCompressed);
-            } catch (IOException e) {
-                Log.e(TAG, "IOException when fetching variations seed.", e);
-                // Exceptions are handled and logged in the downloadContent method, so we don't
-                // need any exception handling here. The only reason we need a catch-statement here
-                // is because those exceptions are re-thrown from downloadContent to skip the
-                // normal logic flow within that method.
             }
             // VARIATIONS_INITIALIZED_PREF should still be set to true when exceptions occur
             prefs.edit().putBoolean(VARIATIONS_INITIALIZED_PREF, true).apply();
@@ -210,21 +230,17 @@ public class VariationsSeedFetcher {
     }
 
     /**
-     * Download the variations seed data with platform and retrictMode.
+     * Download the variations seed data with platform and restrictMode.
      * @param platform the platform parameter to let server only return experiments which can be
      * run on that platform.
      * @param restrictMode the restrict mode parameter to pass to the server via a URL param.
      * @param milestone the milestone parameter to pass to the server via a URL param.
      * @param channel the channel parameter to pass to the server via a URL param.
-     * @return the object holds the seed data and its related header fields.
-     * @throws SocketTimeoutException when fetching seed connection times out.
-     * @throws UnknownHostException when fetching seed connection has an unknown host.
-     * @throws IOException when response code is not HTTP_OK or transmission fails on the open
-     * connection.
+     * @return the object holds the request result and seed data with its related header fields.
      */
-    public SeedInfo downloadContent(
-            @VariationsPlatform int platform, String restrictMode, String milestone, String channel)
-            throws SocketTimeoutException, UnknownHostException, IOException {
+    public SeedFetchInfo downloadContent(@VariationsPlatform int platform, String restrictMode,
+            String milestone, String channel) {
+        SeedFetchInfo fetchInfo = new SeedFetchInfo();
         HttpURLConnection connection = null;
         try {
             long startTimeMillis = SystemClock.elapsedRealtime();
@@ -235,7 +251,7 @@ public class VariationsSeedFetcher {
             connection.setRequestProperty("A-IM", "gzip");
             connection.connect();
             int responseCode = connection.getResponseCode();
-            recordFetchResultOrCode(responseCode);
+            fetchInfo.seedFetchResult = responseCode;
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 String errorMsg = "Non-OK response code = " + responseCode;
                 Log.w(TAG, errorMsg);
@@ -244,30 +260,28 @@ public class VariationsSeedFetcher {
 
             recordSeedConnectTime(SystemClock.elapsedRealtime() - startTimeMillis);
 
-            SeedInfo info = new SeedInfo();
-            info.seedData = getRawSeed(connection);
-            info.signature = getHeaderFieldOrEmpty(connection, "X-Seed-Signature");
-            info.country = getHeaderFieldOrEmpty(connection, "X-Country");
-            info.date = getHeaderFieldOrEmpty(connection, "Date");
-            info.isGzipCompressed = getHeaderFieldOrEmpty(connection, "IM").equals("gzip");
+            SeedInfo seedInfo = new SeedInfo();
+            seedInfo.seedData = getRawSeed(connection);
+            seedInfo.signature = getHeaderFieldOrEmpty(connection, "X-Seed-Signature");
+            seedInfo.country = getHeaderFieldOrEmpty(connection, "X-Country");
+            seedInfo.date = new Date().getTime();
+            seedInfo.isGzipCompressed = getHeaderFieldOrEmpty(connection, "IM").equals("gzip");
             recordSeedFetchTime(SystemClock.elapsedRealtime() - startTimeMillis);
-            return info;
+            fetchInfo.seedInfo = seedInfo;
         } catch (SocketTimeoutException e) {
-            recordFetchResultOrCode(SEED_FETCH_RESULT_TIMEOUT);
+            fetchInfo.seedFetchResult = SEED_FETCH_RESULT_TIMEOUT;
             Log.w(TAG, "SocketTimeoutException timeout when fetching variations seed.", e);
-            throw e;
         } catch (UnknownHostException e) {
-            recordFetchResultOrCode(SEED_FETCH_RESULT_UNKNOWN_HOST_EXCEPTION);
+            fetchInfo.seedFetchResult = SEED_FETCH_RESULT_UNKNOWN_HOST_EXCEPTION;
             Log.w(TAG, "UnknownHostException unknown host when fetching variations seed.", e);
-            throw e;
         } catch (IOException e) {
-            recordFetchResultOrCode(SEED_FETCH_RESULT_IOEXCEPTION);
+            fetchInfo.seedFetchResult = SEED_FETCH_RESULT_IOEXCEPTION;
             Log.w(TAG, "IOException when fetching variations seed.", e);
-            throw e;
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
+            return fetchInfo;
         }
     }
 

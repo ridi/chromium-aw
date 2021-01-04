@@ -43,12 +43,4 @@
 
     <attr name="select_dialog_multichoice" format="reference" />
     <attr name="select_dialog_singlechoice" format="reference" />
-
-    <declare-styleable name="RoundedCornerImageView">
-        <attr name="cornerRadiusTopStart" format="dimension" />
-        <attr name="cornerRadiusTopEnd" format="dimension" />
-        <attr name="cornerRadiusBottomStart" format="dimension" />
-        <attr name="cornerRadiusBottomEnd" format="dimension" />
-        <attr name="roundedfillColor" format="reference|color" />
-    </declare-styleable>
 </resources>

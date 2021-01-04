@@ -19,14 +19,17 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.android_webview.R;
 import org.chromium.base.ContentUriUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.PathUtils;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.task.AsyncTask;
 import org.chromium.base.task.PostTask;
@@ -544,8 +547,13 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
         }
 
         if (ContentResolver.SCHEME_FILE.equals(results.getData().getScheme())) {
-            onFileSelected(mNativeSelectFileDialog, results.getData().getSchemeSpecificPart(), "");
-            return;
+            String filePath = results.getData().getPath();
+            // Don't allow files under private data dir to be uploaded.
+            if (!TextUtils.isEmpty(filePath)
+                    && !filePath.startsWith(PathUtils.getDataDirectory())) {
+                onFileSelected(mNativeSelectFileDialog, filePath, "");
+                return;
+            }
         }
 
         if (ContentResolver.SCHEME_CONTENT.equals(results.getScheme())) {
@@ -758,18 +766,21 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
     private void onFileSelected(
             long nativeSelectFileDialogImpl, String filePath, String displayName) {
         if (eligibleForPhotoPicker()) recordImageCountHistogram(1);
-        nativeOnFileSelected(nativeSelectFileDialogImpl, filePath, displayName);
+        SelectFileDialogJni.get().onFileSelected(
+                nativeSelectFileDialogImpl, SelectFileDialog.this, filePath, displayName);
     }
 
     private void onMultipleFilesSelected(
             long nativeSelectFileDialogImpl, String[] filePathArray, String[] displayNameArray) {
         if (eligibleForPhotoPicker()) recordImageCountHistogram(filePathArray.length);
-        nativeOnMultipleFilesSelected(nativeSelectFileDialogImpl, filePathArray, displayNameArray);
+        SelectFileDialogJni.get().onMultipleFilesSelected(
+                nativeSelectFileDialogImpl, SelectFileDialog.this, filePathArray, displayNameArray);
     }
 
     private void onFileNotSelected(long nativeSelectFileDialogImpl) {
         if (eligibleForPhotoPicker()) recordImageCountHistogram(0);
-        nativeOnFileNotSelected(nativeSelectFileDialogImpl);
+        SelectFileDialogJni.get().onFileNotSelected(
+                nativeSelectFileDialogImpl, SelectFileDialog.this);
     }
 
     private void recordImageCountHistogram(int count) {
@@ -782,10 +793,14 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
         return new SelectFileDialog(nativeSelectFileDialog);
     }
 
-    private native void nativeOnFileSelected(long nativeSelectFileDialogImpl,
-            String filePath, String displayName);
-    private native void nativeOnMultipleFilesSelected(long nativeSelectFileDialogImpl,
-            String[] filePathArray, String[] displayNameArray);
-    private native void nativeOnFileNotSelected(long nativeSelectFileDialogImpl);
-    private native void nativeOnContactsSelected(long nativeSelectFileDialogImpl, String contacts);
+    @NativeMethods
+    interface Natives {
+        void onFileSelected(long nativeSelectFileDialogImpl, SelectFileDialog caller,
+                String filePath, String displayName);
+        void onMultipleFilesSelected(long nativeSelectFileDialogImpl, SelectFileDialog caller,
+                String[] filePathArray, String[] displayNameArray);
+        void onFileNotSelected(long nativeSelectFileDialogImpl, SelectFileDialog caller);
+        void onContactsSelected(
+                long nativeSelectFileDialogImpl, SelectFileDialog caller, String contacts);
+    }
 }

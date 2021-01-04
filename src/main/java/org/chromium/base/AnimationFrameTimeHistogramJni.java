@@ -4,8 +4,10 @@ import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
+import org.chromium.base.annotations.CheckDiscard;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
+@CheckDiscard("crbug.com/993421")
 final class AnimationFrameTimeHistogramJni implements AnimationFrameTimeHistogram.Natives {
   private static AnimationFrameTimeHistogram.Natives testInstance;
 
@@ -13,6 +15,9 @@ final class AnimationFrameTimeHistogramJni implements AnimationFrameTimeHistogra
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.base.AnimationFrameTimeHistogram.Natives instance) {
+      if (!J.N.TESTING_ENABLED) {
+        throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
+      }
       testInstance = instance;
     }
   };
@@ -31,6 +36,7 @@ final class AnimationFrameTimeHistogramJni implements AnimationFrameTimeHistogra
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.base.AnimationFrameTimeHistogram.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }
+    NativeLibraryLoadedStatus.checkLoaded(false);
     return new AnimationFrameTimeHistogramJni();
   }
 }

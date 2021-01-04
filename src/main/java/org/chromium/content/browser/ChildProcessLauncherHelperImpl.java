@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.ApplicationState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
@@ -20,9 +22,9 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.CpuFeatures;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.process_launcher.ChildConnectionAllocator;
@@ -34,6 +36,7 @@ import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.SandboxedProcessService;
 import org.chromium.content.common.ContentSwitchUtils;
 import org.chromium.content_public.browser.ChildProcessImportance;
+import org.chromium.content_public.browser.ContentFeatureList;
 import org.chromium.content_public.common.ContentSwitches;
 
 import java.io.IOException;
@@ -55,12 +58,8 @@ public final class ChildProcessLauncherHelperImpl {
     // Manifest values used to specify the service names.
     private static final String NUM_SANDBOXED_SERVICES_KEY =
             "org.chromium.content.browser.NUM_SANDBOXED_SERVICES";
-    private static final String SANDBOXED_SERVICES_NAME =
-            "org.chromium.content.app.SandboxedProcessService";
     private static final String NUM_PRIVILEGED_SERVICES_KEY =
             "org.chromium.content.browser.NUM_PRIVILEGED_SERVICES";
-    private static final String PRIVILEGED_SERVICES_NAME =
-            "org.chromium.content.app.PrivilegedProcessService";
 
     // Flag to check features after native is initialized.
     private static boolean sCheckedFeatures;
@@ -132,7 +131,7 @@ public final class ChildProcessLauncherHelperImpl {
                             ContentChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
                     connectionBundle.putLong(
                             ContentChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
-                    if (LibraryLoader.useCrazyLinker()) {
+                    if (LibraryLoader.getInstance().useChromiumLinker()) {
                         connectionBundle.putBundle(Linker.EXTRA_LINKER_SHARED_RELROS,
                                 Linker.getInstance().getSharedRelros());
                     }
@@ -155,7 +154,7 @@ public final class ChildProcessLauncherHelperImpl {
 
                     // Tell native launch result (whether getPid is 0).
                     if (mNativeChildProcessLauncherHelper != 0) {
-                        nativeOnChildProcessStarted(
+                        ChildProcessLauncherHelperImplJni.get().onChildProcessStarted(
                                 mNativeChildProcessLauncherHelper, connection.getPid());
                     }
                     mNativeChildProcessLauncherHelper = 0;
@@ -165,7 +164,12 @@ public final class ChildProcessLauncherHelperImpl {
                 public void onConnectionLost(ChildProcessConnection connection) {
                     assert LauncherThread.runningOnLauncherThread();
                     if (connection.getPid() == 0) return;
-                    sLauncherByPid.remove(connection.getPid());
+
+                    ChildProcessLauncherHelperImpl result =
+                            sLauncherByPid.remove(connection.getPid());
+                    // Child process might die before onConnectionEstablished.
+                    if (result == null) return;
+
                     if (mBindingManager != null) mBindingManager.removeConnection(connection);
                     if (mRanking != null) {
                         setReverseRankWhenConnectionLost(mRanking.getReverseRank(connection));
@@ -346,7 +350,6 @@ public final class ChildProcessLauncherHelperImpl {
     @VisibleForTesting
     static ChildConnectionAllocator getConnectionAllocator(Context context, boolean sandboxed) {
         assert LauncherThread.runningOnLauncherThread();
-        final String packageName = ChildProcessCreationParamsImpl.getPackageNameForService();
         boolean bindToCaller = ChildProcessCreationParamsImpl.getBindToCallerCheck();
         boolean bindAsExternalService =
                 sandboxed && ChildProcessCreationParamsImpl.getIsSandboxedServiceExternal();
@@ -355,14 +358,18 @@ public final class ChildProcessLauncherHelperImpl {
             if (sPrivilegedChildConnectionAllocator == null) {
                 sPrivilegedChildConnectionAllocator =
                         ChildConnectionAllocator.create(context, LauncherThread.getHandler(), null,
-                                packageName, PRIVILEGED_SERVICES_NAME, NUM_PRIVILEGED_SERVICES_KEY,
-                                bindToCaller, bindAsExternalService, true /* useStrongBinding */);
+                                ChildProcessCreationParamsImpl.getPackageNameForPrivilegedService(),
+                                ChildProcessCreationParamsImpl.getPrivilegedServicesName(),
+                                NUM_PRIVILEGED_SERVICES_KEY, bindToCaller, bindAsExternalService,
+                                true /* useStrongBinding */);
             }
             return sPrivilegedChildConnectionAllocator;
         }
 
         if (sSandboxedChildConnectionAllocator == null) {
-            Log.w(TAG,
+            final String packageName =
+                    ChildProcessCreationParamsImpl.getPackageNameForSandboxedService();
+            Log.d(TAG,
                     "Create a new ChildConnectionAllocator with package name = %s,"
                             + " sandboxed = true",
                     packageName);
@@ -386,13 +393,15 @@ public final class ChildProcessLauncherHelperImpl {
                                 bindToCaller, bindAsExternalService, false /* useStrongBinding */);
             } else if (ChildProcessConnection.supportVariableConnections()) {
                 connectionAllocator = ChildConnectionAllocator.createVariableSize(context,
-                        LauncherThread.getHandler(), packageName, SANDBOXED_SERVICES_NAME,
-                        bindToCaller, bindAsExternalService, false /* useStrongBinding */);
+                        LauncherThread.getHandler(), freeSlotRunnable, packageName,
+                        ChildProcessCreationParamsImpl.getSandboxedServicesName(), bindToCaller,
+                        bindAsExternalService, false /* useStrongBinding */);
             } else {
                 connectionAllocator = ChildConnectionAllocator.create(context,
                         LauncherThread.getHandler(), freeSlotRunnable, packageName,
-                        SANDBOXED_SERVICES_NAME, NUM_SANDBOXED_SERVICES_KEY, bindToCaller,
-                        bindAsExternalService, false /* useStrongBinding */);
+                        ChildProcessCreationParamsImpl.getSandboxedServicesName(),
+                        NUM_SANDBOXED_SERVICES_KEY, bindToCaller, bindAsExternalService,
+                        false /* useStrongBinding */);
             }
             if (sSandboxedServiceFactoryForTesting != null) {
                 connectionAllocator.setConnectionFactoryForTesting(
@@ -474,10 +483,11 @@ public final class ChildProcessLauncherHelperImpl {
         // is not thread safe, so this is the best we can do.
         int reverseRank = getReverseRankWhenConnectionLost();
         int bindingCounts[] = connection.remainingBindingStateCountsCurrentOrWhenDied();
-        nativeSetTerminationInfo(terminationInfoPtr, connection.bindingStateCurrentOrWhenDied(),
-                connection.isKilledByUs(), connection.hasCleanExit(),
-                bindingCounts[ChildBindingState.STRONG], bindingCounts[ChildBindingState.MODERATE],
-                bindingCounts[ChildBindingState.WAIVED], reverseRank);
+        ChildProcessLauncherHelperImplJni.get().setTerminationInfo(terminationInfoPtr,
+                connection.bindingStateCurrentOrWhenDied(), connection.isKilledByUs(),
+                connection.hasCleanExit(), bindingCounts[ChildBindingState.STRONG],
+                bindingCounts[ChildBindingState.MODERATE], bindingCounts[ChildBindingState.WAIVED],
+                reverseRank);
         LauncherThread.post(() -> mLauncher.stop());
     }
 
@@ -587,16 +597,12 @@ public final class ChildProcessLauncherHelperImpl {
         }
     }
 
-    // Can be called on a number of threads, including launcher, and binder.
-    private static native void nativeOnChildProcessStarted(
-            long nativeChildProcessLauncherHelper, int pid);
-
     private static boolean sLinkerInitialized;
     private static long sLinkerLoadAddress;
     private static void initLinker() {
         assert LauncherThread.runningOnLauncherThread();
         if (sLinkerInitialized) return;
-        if (LibraryLoader.useCrazyLinker()) {
+        if (LibraryLoader.getInstance().useChromiumLinker()) {
             sLinkerLoadAddress = Linker.getInstance().getBaseLoadAddress();
             if (sLinkerLoadAddress == 0) {
                 Log.i(TAG, "Shared RELRO support disabled!");
@@ -614,10 +620,11 @@ public final class ChildProcessLauncherHelperImpl {
 
         // Always wait for the shared RELROs in service processes.
         final boolean waitForSharedRelros = true;
-        if (Linker.areTestsEnabled()) {
+        if (LibraryLoader.getInstance().areTestsEnabled()) {
             Linker linker = Linker.getInstance();
             return new ChromiumLinkerParams(sLinkerLoadAddress, waitForSharedRelros,
-                    linker.getTestRunnerClassNameForTesting());
+                    linker.getTestRunnerClassNameForTesting(),
+                    linker.getImplementationForTesting());
         } else {
             return new ChromiumLinkerParams(sLinkerLoadAddress, waitForSharedRelros);
         }
@@ -717,7 +724,13 @@ public final class ChildProcessLauncherHelperImpl {
         return connection == null ? null : connection.getConnection();
     }
 
-    private static native void nativeSetTerminationInfo(long termiantionInfoPtr,
-            @ChildBindingState int bindingState, boolean killedByUs, boolean cleanExit,
-            int remainingStrong, int remainingModerate, int remainingWaived, int reverseRank);
+    @NativeMethods
+    interface Natives {
+        // Can be called on a number of threads, including launcher, and binder.
+        void onChildProcessStarted(long nativeChildProcessLauncherHelper, int pid);
+
+        void setTerminationInfo(long termiantionInfoPtr, @ChildBindingState int bindingState,
+                boolean killedByUs, boolean cleanExit, int remainingStrong, int remainingModerate,
+                int remainingWaived, int reverseRank);
+    }
 }

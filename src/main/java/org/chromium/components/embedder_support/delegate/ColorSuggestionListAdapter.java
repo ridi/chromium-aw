@@ -8,7 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v4.view.MarginLayoutParamsCompat;
+import androidx.core.view.MarginLayoutParamsCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;

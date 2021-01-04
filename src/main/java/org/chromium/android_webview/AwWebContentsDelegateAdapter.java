@@ -56,11 +56,6 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
     }
 
     @Override
-    public void onLoadProgressChanged(int progress) {
-        mContentsClient.getCallbackHelper().postOnProgressChanged(progress);
-    }
-
-    @Override
     public void handleKeyboardEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             int direction;
@@ -226,7 +221,7 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
                 }
                 mCompleted = true;
                 if (results == null) {
-                    nativeFilesSelectedInChooser(
+                    AwWebContentsDelegateJni.get().filesSelectedInChooser(
                             processId, renderId, modeFlags, null, null);
                     return;
                 }
@@ -348,7 +343,8 @@ class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
 
         @Override
         protected void onPostExecute(String[] result) {
-            nativeFilesSelectedInChooser(mProcessId, mRenderId, mModeFlags, mFilePaths, result);
+            AwWebContentsDelegateJni.get().filesSelectedInChooser(
+                    mProcessId, mRenderId, mModeFlags, mFilePaths, result);
         }
 
         /**

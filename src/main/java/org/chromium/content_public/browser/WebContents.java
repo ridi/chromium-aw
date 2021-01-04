@@ -7,14 +7,17 @@ package org.chromium.content_public.browser;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import org.chromium.base.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
+
+import java.util.List;
 
 /**
  * The WebContents Java wrapper to allow communicating with the native WebContents object.
@@ -152,6 +155,11 @@ public interface WebContents extends Parcelable {
     RenderWidgetHostView getRenderWidgetHostView();
 
     /**
+     * @return The WebContents that are nested within this one.
+     */
+    List<? extends WebContents> getInnerWebContents();
+
+    /**
      * @return The title for the current visible page.
      */
     String getTitle();
@@ -223,8 +231,13 @@ public interface WebContents extends Parcelable {
      */
     boolean focusLocationBarByDefault();
 
+    /**
+     * Sets or removes page level focus.
+     * @param hasFocus Indicates if focus should be set or removed.
+     */
+    void setFocus(boolean hasFocus);
 
-     /**
+    /**
      * Inform WebKit that Fullscreen mode has been exited by the user.
      */
     void exitFullscreen();
@@ -343,9 +356,9 @@ public interface WebContents extends Parcelable {
     int getThemeColor();
 
     /**
-     * @return Current page load progress on a scale of 0 to 100.
+     * @return Current page load progress on a scale of 0 to 1.
      */
-    int getLoadProgress();
+    float getLoadProgress();
 
     /**
      * Initiate extraction of text, HTML, and other information for clipping puposes (smart clip)
@@ -398,11 +411,6 @@ public interface WebContents extends Parcelable {
      * @param disable True if spatial navigation should never be used.
      */
     void setSpatialNavigationDisabled(boolean disabled);
-
-    /**
-     * Reloads all the Lo-Fi images in this WebContents.
-     */
-    void reloadLoFiImages();
 
     /**
      * Sends a request to download the given image {@link url}.
@@ -462,16 +470,16 @@ public interface WebContents extends Parcelable {
     void setSize(int width, int height);
 
     /**
-     * Gets the view size width of the WebContents. The size is in physical pixels.
+     * Gets the view size width of the WebContents.
      *
-     * @return The width of the view.
+     * @return The width of the view in dip.
      */
     int getWidth();
 
     /**
-     * Gets the view size width of the WebContents. The size is in physical pixels.
+     * Gets the view size width of the WebContents.
      *
-     * @return The width of the view.
+     * @return The width of the view in dip.
      */
     int getHeight();
 
@@ -487,4 +495,11 @@ public interface WebContents extends Parcelable {
      * Notify that web preferences needs update for various properties.
      */
     void notifyRendererPreferenceUpdate();
+
+    /**
+     * Notify that the browser controls heights have changed. Any change to the top controls height,
+     * bottom controls height, top controls min-height, and bottom controls min-height will call
+     * this. Min-height is the minimum visible height the controls can have.
+     */
+    void notifyBrowserControlsHeightChanged();
 }
