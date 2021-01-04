@@ -7,7 +7,6 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:4.0.1")
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.12"
     }
 }
 
@@ -20,7 +19,6 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.google.protobuf'
 
 group = 'com.github.ridi'
 version = '81.0.4044.156-3'
@@ -60,7 +58,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:10.2.0'
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
     implementation 'org.glassfish:javax.annotation:10.0-b28'
 }
 
