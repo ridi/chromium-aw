@@ -21,6 +21,7 @@ import android.webkit.MimeTypeMap;
 
 import org.chromium.android_webview.R;
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.AsyncTask;
 import org.chromium.base.ContentUriUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -29,7 +30,6 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.base.task.AsyncTask;
 import org.chromium.ui.ContactsPickerListener;
 import org.chromium.ui.PhotoPickerListener;
 import org.chromium.ui.UiUtils;
@@ -373,13 +373,13 @@ public class SelectFileDialog
     }
 
     @Override
-    public void onPhotoPickerUserAction(@PhotoPickerAction int action, String[] photos) {
+    public void onPhotoPickerUserAction(Action action, String[] photos) {
         switch (action) {
-            case PhotoPickerAction.CANCEL:
+            case CANCEL:
                 onFileNotSelected();
                 break;
 
-            case PhotoPickerAction.PHOTOS_SELECTED:
+            case PHOTOS_SELECTED:
                 if (photos.length == 0) {
                     onFileNotSelected();
                     return;
@@ -402,7 +402,7 @@ public class SelectFileDialog
                 }
                 break;
 
-            case PhotoPickerAction.LAUNCH_GALLERY:
+            case LAUNCH_GALLERY:
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 if (mAllowMultiple) intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -410,7 +410,7 @@ public class SelectFileDialog
                 mWindowAndroid.showCancelableIntent(intent, this, R.string.low_memory_error);
                 break;
 
-            case PhotoPickerAction.LAUNCH_CAMERA:
+            case LAUNCH_CAMERA:
                 if (!mWindowAndroid.hasPermission(Manifest.permission.CAMERA)) {
                     mWindowAndroid.requestPermissions(new String[] {Manifest.permission.CAMERA},
                             (permissions, grantResults) -> {
@@ -431,18 +431,14 @@ public class SelectFileDialog
     }
 
     @Override
-    public void onContactsPickerUserAction(@ContactsPickerAction int action, String contacts) {
+    public void onContactsPickerUserAction(ContactsPickerAction action, String[] contacts) {
         switch (action) {
-            case ContactsPickerAction.CANCEL:
+            case CANCEL:
                 onFileNotSelected();
                 break;
 
-            case ContactsPickerAction.CONTACTS_SELECTED:
-                nativeOnContactsSelected(mNativeSelectFileDialog, contacts);
-                break;
-
-            case ContactsPickerAction.SELECT_ALL:
-            case ContactsPickerAction.UNDO_SELECT_ALL:
+            case CONTACTS_SELECTED:
+                onFileNotSelected();
                 break;
         }
     }
@@ -820,5 +816,4 @@ public class SelectFileDialog
     private native void nativeOnMultipleFilesSelected(long nativeSelectFileDialogImpl,
             String[] filePathArray, String[] displayNameArray);
     private native void nativeOnFileNotSelected(long nativeSelectFileDialogImpl);
-    private native void nativeOnContactsSelected(long nativeSelectFileDialogImpl, String contacts);
 }

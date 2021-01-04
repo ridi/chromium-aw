@@ -10,12 +10,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
+import android.os.Process;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.system.Os;
 
+import org.chromium.base.AsyncTask;
 import org.chromium.base.BuildConfig;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
@@ -28,9 +30,7 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.compat.ApiHelperForM;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.base.task.AsyncTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -358,9 +358,8 @@ public class LibraryLoader {
 
         @Override
         protected Void doInBackground() {
-            int percentage = nativePercentageOfResidentNativeLibraryCode();
-            try (TraceEvent e = TraceEvent.scoped("LibraryLoader.asyncPrefetchLibrariesToMemory",
-                         Integer.toString(percentage))) {
+            try (TraceEvent e = TraceEvent.scoped("LibraryLoader.asyncPrefetchLibrariesToMemory")) {
+                int percentage = nativePercentageOfResidentNativeLibraryCode();
                 // Arbitrary percentage threshold. If most of the native library is already
                 // resident (likely with monochrome), don't bother creating a prefetch process.
                 boolean prefetch = mColdStart && percentage < 90;
@@ -426,7 +425,7 @@ public class LibraryLoader {
     // Invoke either Linker.loadLibrary(...), System.loadLibrary(...) or System.load(...),
     // triggering JNI_OnLoad in native code.
     // TODO(crbug.com/635567): Fix this properly.
-    @SuppressLint({"DefaultLocale", "UnsafeDynamicallyLoadedCode"})
+    @SuppressLint({"DefaultLocale", "NewApi", "UnsafeDynamicallyLoadedCode"})
     private void loadAlreadyLocked(Context appContext) throws ProcessInitException {
         try (TraceEvent te = TraceEvent.scoped("LibraryLoader.loadAlreadyLocked")) {
             if (!mLoaded) {
@@ -496,7 +495,7 @@ public class LibraryLoader {
                                 System.loadLibrary(library);
                             } else {
                                 // Load directly from the APK.
-                                boolean is64Bit = ApiHelperForM.isProcess64Bit();
+                                boolean is64Bit = Process.is64Bit();
                                 String zipFilePath = appContext.getApplicationInfo().sourceDir;
                                 // In API level 23 and above, it’s possible to open a .so file
                                 // directly from the APK of the path form

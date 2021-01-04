@@ -4,10 +4,9 @@
 
 package org.chromium.content.browser;
 
-import org.chromium.base.UserData;
 import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
-import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Controls all the popup views on content view.
  */
-public class PopupController implements UserData {
+public class PopupController {
     /** Interface for popup views that expose a method for hiding itself. */
     public interface HideablePopup {
         /**
@@ -32,8 +31,8 @@ public class PopupController implements UserData {
     private final List<HideablePopup> mHideablePopups = new ArrayList<>();
 
     public static PopupController fromWebContents(WebContents webContents) {
-        return ((WebContentsImpl) webContents)
-                .getOrSetUserData(PopupController.class, UserDataFactoryLazyHolder.INSTANCE);
+        return WebContentsUserData.fromWebContents(
+                webContents, PopupController.class, UserDataFactoryLazyHolder.INSTANCE);
     }
 
     private PopupController(WebContents webContents) {}

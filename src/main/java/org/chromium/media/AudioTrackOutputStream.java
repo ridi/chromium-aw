@@ -71,7 +71,7 @@ class AudioTrackOutputStream {
     private int mLeftSize;
 
     class WorkerThread extends Thread {
-        private volatile boolean mDone;
+        private volatile boolean mDone = false;
 
         public void finish() {
             mDone = true;

@@ -105,6 +105,8 @@ public class VariationsSeedLoader {
         private long mCurrentSeedDate = Long.MIN_VALUE;
 
         private FutureTask<SeedInfo> mLoadTask = new FutureTask<>(() -> {
+            AwMetricsServiceClient.preloadClientId();
+
             File newSeedFile = VariationsUtils.getNewSeedFile();
             File oldSeedFile = VariationsUtils.getSeedFile();
 

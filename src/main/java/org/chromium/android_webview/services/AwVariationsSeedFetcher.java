@@ -4,6 +4,7 @@
 
 package org.chromium.android_webview.services;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -14,10 +15,9 @@ import android.content.Context;
 import android.os.Build;
 
 import org.chromium.android_webview.VariationsUtils;
+import org.chromium.base.AsyncTask;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.compat.ApiHelperForN;
-import org.chromium.base.task.AsyncTask;
 import org.chromium.components.background_task_scheduler.TaskIds;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
@@ -63,6 +63,7 @@ public class AwVariationsSeedFetcher extends JobService {
 
     // Use JobScheduler.getPendingJob() if it's available. Otherwise, fall back to iterating over
     // all jobs to find the one we want.
+    @SuppressLint("NewApi")
     private static JobInfo getPendingJob(JobScheduler scheduler, int jobId) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             for (JobInfo info : scheduler.getAllPendingJobs()) {
@@ -70,7 +71,8 @@ public class AwVariationsSeedFetcher extends JobService {
             }
             return null;
         }
-        return ApiHelperForN.getPendingJob(scheduler, jobId);
+
+        return scheduler.getPendingJob(jobId);
     }
 
     private static JobScheduler getScheduler() {

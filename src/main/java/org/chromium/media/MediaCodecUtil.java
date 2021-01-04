@@ -20,7 +20,6 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.compat.ApiHelperForN;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -105,7 +104,7 @@ class MediaCodecUtil {
         private MediaCodecInfo[] mCodecList;
 
         private class CodecInfoIterator implements Iterator<MediaCodecInfo> {
-            private int mPosition;
+            private int mPosition = 0;
 
             @Override
             public boolean hasNext() {
@@ -674,7 +673,7 @@ class MediaCodecUtil {
      */
     static void setPatternIfSupported(CryptoInfo cryptoInfo, int encrypt, int skip) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            ApiHelperForN.setCryptoInfoPattern(cryptoInfo, encrypt, skip);
+            cryptoInfo.setPattern(new CryptoInfo.Pattern(encrypt, skip));
         }
     }
 }

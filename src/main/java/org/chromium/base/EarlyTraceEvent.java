@@ -102,7 +102,7 @@ public class EarlyTraceEvent {
     @VisibleForTesting static final int STATE_FINISHED = 3;
 
     private static final String BACKGROUND_STARTUP_TRACING_ENABLED_KEY = "bg_startup_tracing";
-    private static boolean sCachedBackgroundStartupTracingFlag;
+    private static boolean sCachedBackgroundStartupTracingFlag = false;
 
     // Locks the fields below.
     private static final Object sLock = new Object();

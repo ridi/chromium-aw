@@ -20,8 +20,6 @@ import android.view.Surface;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.UserData;
-import org.chromium.base.UserDataHost;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -34,6 +32,7 @@ import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content.browser.accessibility.WebContentsAccessibilityImpl;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
 import org.chromium.content.browser.framehost.RenderFrameHostImpl;
+import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.selection.SelectionPopupControllerImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
@@ -53,7 +52,9 @@ import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -188,7 +189,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
     private boolean mInitialized;
 
     private static class WebContentsInternalsImpl implements WebContentsInternals {
-        public UserDataHost userDataHost;
+        public HashMap<Class<?>, WebContentsUserData> userDataMap;
         public ViewAndroidDelegate viewAndroidDelegate;
     }
 
@@ -216,7 +217,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
 
         mInternalsHolder = internalsHolder;
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
-        internals.userDataHost = new UserDataHost();
+        internals.userDataMap = new HashMap<>();
         mInternalsHolder.set(internals);
 
         mRenderCoordinates = new RenderCoordinatesImpl();
@@ -229,6 +230,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
 
         ViewEventSinkImpl.from(this).setAccessDelegate(accessDelegate);
         getRenderCoordinates().setDeviceScaleFactor(windowAndroid.getDisplay().getDipScale());
+        TextSuggestionHost.fromWebContents(this);
     }
 
     @Nullable
@@ -319,13 +321,9 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
 
     @Override
     public void destroy() {
-        // Note that |WebContents.destroy| is not guaranteed to be invoked.
-        // Any resource release relying on this method will likely be leaked.
-
         if (!ThreadUtils.runningOnUiThread()) {
             throw new IllegalStateException("Attempting to destroy WebContents on non-UI thread");
         }
-
         if (mNativeWebContentsAndroid != 0) nativeDestroyWebContents(mNativeWebContentsAndroid);
     }
 
@@ -613,6 +611,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
         nativeRequestAccessibilitySnapshot(mNativeWebContentsAndroid, callback);
     }
 
+    @Override
     @VisibleForTesting
     public void simulateRendererKilledForTesting(boolean wasOomProtected) {
         if (mObserverProxy != null) {
@@ -801,42 +800,40 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
      *         not created yet, or {@code userDataFactory} is null, or the internal data
      *         storage is already garbage-collected.
      */
-    public <T extends UserData> T getOrSetUserData(
-            Class<T> key, UserDataFactory<T> userDataFactory) {
+    public <T> T getOrSetUserData(Class<T> key, UserDataFactory<T> userDataFactory) {
         // For tests that go without calling |initialize|.
         if (!mInitialized) return null;
 
-        UserDataHost userDataHost = getUserDataHost();
+        Map<Class<?>, WebContentsUserData> userDataMap = getUserDataMap();
 
         // Map can be null after WebView gets gc'ed on its way to destruction.
-        if (userDataHost == null) {
-            Log.e(TAG, "UserDataHost can't be found");
+        if (userDataMap == null) {
+            Log.e(TAG, "UserDataMap can't be found");
             return null;
         }
 
-        T data = userDataHost.getUserData(key);
+        WebContentsUserData data = userDataMap.get(key);
         if (data == null && userDataFactory != null) {
-            assert userDataHost.getUserData(key) == null; // Do not allow overwriting
+            assert !userDataMap.containsKey(key); // Do not allow duplicated Data
 
             T object = userDataFactory.create(this);
             assert key.isInstance(object);
-
+            userDataMap.put(key, new WebContentsUserData(object));
             // Retrieves from the map again to return null in case |setUserData| fails
             // to store the object.
-            data = userDataHost.setUserData(key, object);
+            data = userDataMap.get(key);
         }
-        return key.cast(data);
+        return data != null ? key.cast(data.getObject()) : null;
     }
 
     /**
-     * @return {@code UserDataHost} that contains internal user data. {@code null} if
-     *         it is already gc'ed.
+     * @return {@code UserDataMap} that contains internal user data. {@code null} if
+     *         the map is already gc'ed.
      */
-    private UserDataHost getUserDataHost() {
-        if (mInternalsHolder == null) return null;
+    private Map<Class<?>, WebContentsUserData> getUserDataMap() {
         WebContentsInternals internals = mInternalsHolder.get();
         if (internals == null) return null;
-        return ((WebContentsInternalsImpl) internals).userDataHost;
+        return ((WebContentsInternalsImpl) internals).userDataMap;
     }
 
     // WindowEventObserver

@@ -168,4 +168,8 @@ public class ContextUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean isMainProcess() {
+        return !getProcessName().contains(":");
+    }
 }

@@ -32,7 +32,7 @@ public class CrashReceiverService extends Service {
     private static final String WEBVIEW_TMP_CRASH_DIR = "WebView_Crashes_Tmp";
 
     private final Object mCopyingLock = new Object();
-    private boolean mIsCopying;
+    private boolean mIsCopying = false;
 
     @Override
     public void onCreate() {

@@ -120,19 +120,12 @@ public class AwContentsStatics {
         nativeSetCheckClearTextPermitted(permitted);
     }
 
-    @CalledByNative
-    private static void proxyOverrideChanged(Runnable callback) {
-        if (callback == null) return;
-        callback.run();
+    public static void setProxyOverride(String host, int port, String[] exclusionList) {
+        nativeSetProxyOverride(host, port, exclusionList);
     }
 
-    public static void setProxyOverride(
-            String host, int port, String[] exclusionList, Runnable callback) {
-        nativeSetProxyOverride(host, port, exclusionList, callback);
-    }
-
-    public static void clearProxyOverride(Runnable callback) {
-        nativeClearProxyOverride(callback);
+    public static void clearProxyOverride() {
+        nativeClearProxyOverride();
     }
 
     /**
@@ -162,6 +155,6 @@ public class AwContentsStatics {
             String[] urls, Callback<Boolean> callback);
     private static native void nativeSetCheckClearTextPermitted(boolean permitted);
     private static native void nativeSetProxyOverride(
-            String host, int port, String[] exclusionList, Runnable callback);
-    private static native void nativeClearProxyOverride(Runnable callback);
+            String host, int port, String[] exclusionList);
+    private static native void nativeClearProxyOverride();
 }

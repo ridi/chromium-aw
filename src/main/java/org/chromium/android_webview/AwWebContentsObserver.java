@@ -91,9 +91,8 @@ public class AwWebContentsObserver extends WebContentsObserver {
     @Override
     public void didFinishNavigation(final String url, boolean isInMainFrame, boolean isErrorPage,
             boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
-            boolean isRendererInitiated, boolean isDownload, Integer pageTransition, int errorCode,
-            String errorDescription, int httpStatusCode) {
-        if (errorCode != 0 && !isDownload) {
+            Integer pageTransition, int errorCode, String errorDescription, int httpStatusCode) {
+        if (errorCode != 0) {
             didFailLoad(isInMainFrame, errorCode, errorDescription, url);
         }
 
@@ -104,14 +103,7 @@ public class AwWebContentsObserver extends WebContentsObserver {
         if (!isInMainFrame) return;
 
         AwContentsClient client = mAwContentsClient.get();
-        if (client != null) {
-            // OnPageStarted is not called for in-page navigations, which include fragment
-            // navigations and navigation from history.push/replaceState.
-            // Error page is handled by AwContentsClientBridge.onReceivedError.
-            if (!isSameDocument && !isErrorPage && isRendererInitiated) {
-                client.getCallbackHelper().postOnPageStarted(url);
-            }
-
+        if (hasCommitted && client != null) {
             boolean isReload = pageTransition != null
                     && ((pageTransition & PageTransition.CORE_MASK) == PageTransition.RELOAD);
             client.getCallbackHelper().postDoUpdateVisitedHistory(url, isReload);
@@ -137,7 +129,6 @@ public class AwWebContentsObserver extends WebContentsObserver {
         }
 
         if (client != null && isFragmentNavigation) {
-            // Note fragment navigations do not have a matching onPageStarted.
             client.getCallbackHelper().postOnPageFinished(url);
         }
     }

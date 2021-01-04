@@ -41,7 +41,6 @@ public class LoadUrlParams {
     boolean mIsRendererInitiated;
     boolean mShouldReplaceCurrentEntry;
     long mIntentReceivedTimestamp;
-    long mInputStartTimestamp;
     boolean mHasUserGesture;
     boolean mShouldClearHistoryList;
 
@@ -452,21 +451,6 @@ public class LoadUrlParams {
      */
     public long getIntentReceivedTimestamp() {
         return mIntentReceivedTimestamp;
-    }
-
-    /**
-     * @param inputStartTimestamp the timestamp of the event in the location bar that triggered
-     *                            this URL load, as returned by System.currentMillis.
-     */
-    public void setInputStartTimestamp(long inputStartTimestamp) {
-        mInputStartTimestamp = inputStartTimestamp;
-    }
-
-    /**
-     * @return The timestamp of the event in the location bar that triggered this URL load.
-     */
-    public long getInputStartTimestamp() {
-        return mInputStartTimestamp;
     }
 
     /**

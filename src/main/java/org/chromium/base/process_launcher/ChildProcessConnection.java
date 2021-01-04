@@ -152,15 +152,13 @@ public class ChildProcessConnection {
         }
     }
 
-    // Global lock to protect all the fields that can be accessed outside launcher thread.
-    private static final Object sBindingStateLock = new Object();
-
-    @GuardedBy("sBindingStateLock")
+    // Synchronize on this for access.
+    @GuardedBy("sAllBindingStateCounts")
     private static final int[] sAllBindingStateCounts = new int[NUM_BINDING_STATES];
 
     @VisibleForTesting
     static void resetBindingStateCountsForTesting() {
-        synchronized (sBindingStateLock) {
+        synchronized (sAllBindingStateCounts) {
             for (int i = 0; i < NUM_BINDING_STATES; ++i) {
                 sAllBindingStateCounts[i] = 0;
             }
@@ -238,19 +236,21 @@ public class ChildProcessConnection {
     private boolean mUnbound;
 
     // Binding state of this connection.
-    @GuardedBy("sBindingStateLock")
     private @ChildBindingState int mBindingState;
 
+    // Protects access to instance variables that are also accessed on the client thread.
+    private final Object mClientThreadLock = new Object();
+
     // Same as above except it no longer updates after |unbind()|.
-    @GuardedBy("sBindingStateLock")
+    @GuardedBy("mClientThreadLock")
     private @ChildBindingState int mBindingStateCurrentOrWhenDied;
 
     // Indicate |kill()| was called to intentionally kill this process.
-    @GuardedBy("sBindingStateLock")
+    @GuardedBy("mClientThreadLock")
     private boolean mKilledByUs;
 
     // Copy of |sAllBindingStateCounts| at the time this is unbound.
-    @GuardedBy("sBindingStateLock")
+    @GuardedBy("mClientThreadLock")
     private int[] mAllBindingStateCountsWhenDied;
 
     private MemoryPressureCallback mMemoryPressureCallback;
@@ -423,14 +423,13 @@ public class ChildProcessConnection {
         } catch (RemoteException e) {
             // Intentionally ignore since we are killing it anyway.
         }
-        synchronized (sBindingStateLock) {
+        synchronized (mClientThreadLock) {
             mKilledByUs = true;
         }
         notifyChildProcessDied();
     }
 
-    @VisibleForTesting
-    protected void onServiceConnectedOnLauncherThread(IBinder service) {
+    private void onServiceConnectedOnLauncherThread(IBinder service) {
         assert isRunningOnLauncherThread();
         // A flag from the parent class ensures we run the post-connection logic only once
         // (instead of once per each ChildServiceConnection).
@@ -481,8 +480,7 @@ public class ChildProcessConnection {
         }
     }
 
-    @VisibleForTesting
-    protected void onServiceDisconnectedOnLauncherThread() {
+    private void onServiceDisconnectedOnLauncherThread() {
         assert isRunningOnLauncherThread();
         // Ensure that the disconnection logic runs only once (instead of once per each
         // ChildServiceConnection).
@@ -574,9 +572,12 @@ public class ChildProcessConnection {
         mModerateBinding.unbind();
         updateBindingState();
 
-        synchronized (sBindingStateLock) {
-            mAllBindingStateCountsWhenDied =
-                    Arrays.copyOf(sAllBindingStateCounts, NUM_BINDING_STATES);
+        int[] bindingStateCounts;
+        synchronized (sAllBindingStateCounts) {
+            bindingStateCounts = Arrays.copyOf(sAllBindingStateCounts, NUM_BINDING_STATES);
+        }
+        synchronized (mClientThreadLock) {
+            mAllBindingStateCountsWhenDied = bindingStateCounts;
         }
 
         if (mMemoryPressureCallback != null) {
@@ -658,7 +659,7 @@ public class ChildProcessConnection {
         // WARNING: this method can be called from a thread other than the launcher thread.
         // Note that it returns the current waived bound only state and is racy. This not really
         // preventable without changing the caller's API, short of blocking.
-        synchronized (sBindingStateLock) {
+        synchronized (mClientThreadLock) {
             return mBindingStateCurrentOrWhenDied;
         }
     }
@@ -670,62 +671,53 @@ public class ChildProcessConnection {
         // WARNING: this method can be called from a thread other than the launcher thread.
         // Note that it returns the current waived bound only state and is racy. This not really
         // preventable without changing the caller's API, short of blocking.
-        synchronized (sBindingStateLock) {
+        synchronized (mClientThreadLock) {
             return mKilledByUs;
         }
     }
 
-    /**
-     * Returns the binding state of remaining processes, excluding the current connection.
-     *
-     * If the current process is dead then returns the binding state of all processes when it died.
-     * Otherwise returns current state.
-     */
-    public int[] remainingBindingStateCountsCurrentOrWhenDied() {
+    public int[] bindingStateCountsCurrentOrWhenDied() {
         // WARNING: this method can be called from a thread other than the launcher thread.
         // Note that it returns the current waived bound only state and is racy. This not really
         // preventable without changing the caller's API, short of blocking.
-        synchronized (sBindingStateLock) {
+        synchronized (mClientThreadLock) {
             if (mAllBindingStateCountsWhenDied != null) {
                 return Arrays.copyOf(mAllBindingStateCountsWhenDied, NUM_BINDING_STATES);
             }
-
-            int[] counts = Arrays.copyOf(sAllBindingStateCounts, NUM_BINDING_STATES);
-            // If current process is still bound then remove it from the counts.
-            if (mBindingState != ChildBindingState.UNBOUND) {
-                assert counts[mBindingState] > 0;
-                counts[mBindingState]--;
-            }
-            return counts;
+        }
+        synchronized (sAllBindingStateCounts) {
+            return Arrays.copyOf(sAllBindingStateCounts, NUM_BINDING_STATES);
         }
     }
 
     // Should be called any binding is bound or unbound.
     private void updateBindingState() {
-        int newBindingState;
+        int oldBindingState = mBindingState;
         if (mUnbound) {
-            newBindingState = ChildBindingState.UNBOUND;
+            mBindingState = ChildBindingState.UNBOUND;
         } else if (mStrongBinding.isBound()) {
-            newBindingState = ChildBindingState.STRONG;
+            mBindingState = ChildBindingState.STRONG;
         } else if (mModerateBinding.isBound()) {
-            newBindingState = ChildBindingState.MODERATE;
+            mBindingState = ChildBindingState.MODERATE;
         } else {
             assert mWaivedBinding.isBound();
-            newBindingState = ChildBindingState.WAIVED;
+            mBindingState = ChildBindingState.WAIVED;
         }
 
-        synchronized (sBindingStateLock) {
-            if (newBindingState != mBindingState) {
-                if (mBindingState != ChildBindingState.UNBOUND) {
-                    assert sAllBindingStateCounts[mBindingState] > 0;
-                    sAllBindingStateCounts[mBindingState]--;
+        if (mBindingState != oldBindingState) {
+            synchronized (sAllBindingStateCounts) {
+                if (oldBindingState != ChildBindingState.UNBOUND) {
+                    assert sAllBindingStateCounts[oldBindingState] > 0;
+                    sAllBindingStateCounts[oldBindingState]--;
                 }
-                if (newBindingState != ChildBindingState.UNBOUND) {
-                    sAllBindingStateCounts[newBindingState]++;
+                if (mBindingState != ChildBindingState.UNBOUND) {
+                    sAllBindingStateCounts[mBindingState]++;
                 }
             }
-            mBindingState = newBindingState;
-            if (!mUnbound) {
+        }
+
+        if (!mUnbound) {
+            synchronized (mClientThreadLock) {
                 mBindingStateCurrentOrWhenDied = mBindingState;
             }
         }
@@ -745,12 +737,8 @@ public class ChildProcessConnection {
     }
 
     @VisibleForTesting
-    public void crashServiceForTesting() {
-        try {
-            mService.forceKill();
-        } catch (RemoteException e) {
-            // Expected. Ignore.
-        }
+    public void crashServiceForTesting() throws RemoteException {
+        mService.forceKill();
     }
 
     @VisibleForTesting

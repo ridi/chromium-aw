@@ -84,28 +84,6 @@ public interface CdmProxy extends org.chromium.mojo.bindings.Interface {
     }
 
 
-    public static final class KeyType {
-
-
-
-        private static final boolean IS_EXTENSIBLE = false;
-
-        public static boolean isKnownValue(int value) {
-            return false;
-        }
-
-        public static void validate(int value) {
-            if (IS_EXTENSIBLE || isKnownValue(value))
-                return;
-
-            throw new DeserializationException("Invalid enum value.");
-        }
-
-        private KeyType() {}
-
-    }
-
-
     public interface Proxy extends CdmProxy, org.chromium.mojo.bindings.Interface.Proxy {
     }
 
@@ -137,18 +115,12 @@ CreateMediaCryptoSessionResponse callback);
 
 
     void setKey(
-int cryptoSessionId, byte[] keyId, int keyType, byte[] keyBlob, 
-SetKeyResponse callback);
-
-    interface SetKeyResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Integer> { }
+int cryptoSessionId, byte[] keyId, byte[] keyBlob);
 
 
 
     void removeKey(
-int cryptoSessionId, byte[] keyId, 
-RemoveKeyResponse callback);
-
-    interface RemoveKeyResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Integer> { }
+int cryptoSessionId, byte[] keyId);
 
 
 }
