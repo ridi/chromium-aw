@@ -4,11 +4,23 @@
 
 package org.chromium.content.browser.input;
 
-import org.chromium.base.VisibleForTesting;
+import android.content.Context;
+
+import androidx.annotation.VisibleForTesting;
+
+import org.chromium.base.UserData;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.base.annotations.NativeMethods;
+import org.chromium.content.browser.PopupController;
+import org.chromium.content.browser.PopupController.HideablePopup;
+import org.chromium.content.browser.WindowEventObserver;
+import org.chromium.content.browser.WindowEventObserverManager;
+import org.chromium.content.browser.webcontents.WebContentsImpl;
+import org.chromium.content.browser.webcontents.WebContentsImpl.UserDataFactory;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.ui.base.ViewAndroidDelegate;
+import org.chromium.ui.base.WindowAndroid;
 
 /**
  * Handles displaying the Android spellcheck/text suggestion menu (provided by
@@ -16,38 +28,131 @@ import org.chromium.content_public.browser.WebContents;
  * the commands in that menu (by calling back to the C++ class).
  */
 @JNINamespace("content")
-public class TextSuggestionHost {
+public class TextSuggestionHost implements WindowEventObserver, HideablePopup, UserData {
     private long mNativeTextSuggestionHost;
-    private final ContentViewCore mContentViewCore;
+    private final WebContentsImpl mWebContents;
+    private final Context mContext;
+    private final ViewAndroidDelegate mViewDelegate;
 
-    private SuggestionsPopupWindow mSuggestionsPopupWindow;
+    private boolean mIsAttachedToWindow;
+    private WindowAndroid mWindowAndroid;
 
-    public TextSuggestionHost(ContentViewCore contentViewCore) {
-        mContentViewCore = contentViewCore;
-        mNativeTextSuggestionHost = nativeInit(contentViewCore.getWebContents());
+    private SpellCheckPopupWindow mSpellCheckPopupWindow;
+    private TextSuggestionsPopupWindow mTextSuggestionsPopupWindow;
+
+    private static final class UserDataFactoryLazyHolder {
+        private static final UserDataFactory<TextSuggestionHost> INSTANCE = TextSuggestionHost::new;
+    }
+
+    /**
+     * Get {@link TextSuggestionHost} object used for the give WebContents.
+     * {@link #create()} should precede any calls to this.
+     * @param webContents {@link WebContents} object.
+     * @return {@link TextSuggestionHost} object.
+     */
+    @VisibleForTesting
+    static TextSuggestionHost fromWebContents(WebContents webContents) {
+        return ((WebContentsImpl) webContents)
+                .getOrSetUserData(TextSuggestionHost.class, UserDataFactoryLazyHolder.INSTANCE);
+    }
+
+    @CalledByNative
+    private static TextSuggestionHost create(WebContents webContents, long nativePtr) {
+        TextSuggestionHost host = fromWebContents(webContents);
+        host.setNativePtr(nativePtr);
+        return host;
+    }
+
+    /**
+     * Create {@link TextSuggestionHost} instance.
+     * @param webContents WebContents instance.
+     */
+    public TextSuggestionHost(WebContents webContents) {
+        mWebContents = (WebContentsImpl) webContents;
+        mContext = mWebContents.getContext();
+        mWindowAndroid = mWebContents.getTopLevelNativeWindow();
+        mViewDelegate = mWebContents.getViewAndroidDelegate();
+        assert mViewDelegate != null;
+        PopupController.register(mWebContents, this);
+        WindowEventObserverManager.from(mWebContents).addObserver(this);
+    }
+
+    private void setNativePtr(long nativePtr) {
+        mNativeTextSuggestionHost = nativePtr;
+    }
+
+    private float getContentOffsetYPix() {
+        return mWebContents.getRenderCoordinates().getContentOffsetYPix();
+    }
+
+    // WindowEventObserver
+
+    @Override
+    public void onWindowAndroidChanged(WindowAndroid newWindowAndroid) {
+        mWindowAndroid = newWindowAndroid;
+        if (mSpellCheckPopupWindow != null) {
+            mSpellCheckPopupWindow.updateWindowAndroid(mWindowAndroid);
+        }
+        if (mTextSuggestionsPopupWindow != null) {
+            mTextSuggestionsPopupWindow.updateWindowAndroid(mWindowAndroid);
+        }
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        mIsAttachedToWindow = true;
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        mIsAttachedToWindow = false;
+    }
+
+    @Override
+    public void onRotationChanged(int rotation) {
+        hidePopups();
+    }
+
+    // HieablePopup
+    @Override
+    public void hide() {
+        hidePopups();
     }
 
     @CalledByNative
     private void showSpellCheckSuggestionMenu(
-            double caretX, double caretY, String markedText, String[] suggestions) {
-        if (!mContentViewCore.isAttachedToWindow()) {
+            double caretXPx, double caretYPx, String markedText, String[] suggestions) {
+        if (!mIsAttachedToWindow) {
             // This can happen if a new browser window is opened immediately after tapping a spell
             // check underline, before the timer to open the menu fires.
-            suggestionMenuClosed(false);
+            onSuggestionMenuClosed(false);
             return;
         }
 
-        if (mSuggestionsPopupWindow == null) {
-            mSuggestionsPopupWindow = new SuggestionsPopupWindow(mContentViewCore.getContext(),
-                    this, mContentViewCore.getContainerView(), mContentViewCore);
+        hidePopups();
+        mSpellCheckPopupWindow = new SpellCheckPopupWindow(
+                mContext, this, mWindowAndroid, mViewDelegate.getContainerView());
+
+        mSpellCheckPopupWindow.show(
+                caretXPx, caretYPx + getContentOffsetYPix(), markedText, suggestions);
+    }
+
+    @CalledByNative
+    private void showTextSuggestionMenu(
+            double caretXPx, double caretYPx, String markedText, SuggestionInfo[] suggestions) {
+        if (!mIsAttachedToWindow) {
+            // This can happen if a new browser window is opened immediately after tapping a spell
+            // check underline, before the timer to open the menu fires.
+            onSuggestionMenuClosed(false);
+            return;
         }
 
-        mSuggestionsPopupWindow.setHighlightedText(markedText);
-        mSuggestionsPopupWindow.setSpellCheckSuggestions(suggestions);
+        hidePopups();
+        mTextSuggestionsPopupWindow = new TextSuggestionsPopupWindow(
+                mContext, this, mWindowAndroid, mViewDelegate.getContainerView());
 
-        float density = mContentViewCore.getRenderCoordinates().getDeviceScaleFactor();
-        mSuggestionsPopupWindow.show(density * caretX,
-                density * caretY + mContentViewCore.getRenderCoordinates().getContentOffsetYPix());
+        mTextSuggestionsPopupWindow.show(
+                caretXPx, caretYPx + getContentOffsetYPix(), markedText, suggestions);
     }
 
     /**
@@ -55,9 +160,14 @@ public class TextSuggestionHost {
      */
     @CalledByNative
     public void hidePopups() {
-        if (mSuggestionsPopupWindow != null && mSuggestionsPopupWindow.isShowing()) {
-            mSuggestionsPopupWindow.dismiss();
-            mSuggestionsPopupWindow = null;
+        if (mTextSuggestionsPopupWindow != null && mTextSuggestionsPopupWindow.isShowing()) {
+            mTextSuggestionsPopupWindow.dismiss();
+            mTextSuggestionsPopupWindow = null;
+        }
+
+        if (mSpellCheckPopupWindow != null && mSpellCheckPopupWindow.isShowing()) {
+            mSpellCheckPopupWindow.dismiss();
+            mSpellCheckPopupWindow = null;
         }
     }
 
@@ -65,52 +175,81 @@ public class TextSuggestionHost {
      * Tells Blink to replace the active suggestion range with the specified replacement.
      */
     public void applySpellCheckSuggestion(String suggestion) {
-        nativeApplySpellCheckSuggestion(mNativeTextSuggestionHost, suggestion);
+        TextSuggestionHostJni.get().applySpellCheckSuggestion(
+                mNativeTextSuggestionHost, TextSuggestionHost.this, suggestion);
+    }
+
+    /**
+     * Tells Blink to replace the active suggestion range with the specified suggestion on the
+     * specified marker.
+     */
+    public void applyTextSuggestion(int markerTag, int suggestionIndex) {
+        TextSuggestionHostJni.get().applyTextSuggestion(
+                mNativeTextSuggestionHost, TextSuggestionHost.this, markerTag, suggestionIndex);
     }
 
     /**
      * Tells Blink to delete the active suggestion range.
      */
     public void deleteActiveSuggestionRange() {
-        nativeDeleteActiveSuggestionRange(mNativeTextSuggestionHost);
+        TextSuggestionHostJni.get().deleteActiveSuggestionRange(
+                mNativeTextSuggestionHost, TextSuggestionHost.this);
     }
 
     /**
      * Tells Blink to remove spelling markers under all instances of the specified word.
      */
-    public void newWordAddedToDictionary(String word) {
-        nativeNewWordAddedToDictionary(mNativeTextSuggestionHost, word);
+    public void onNewWordAddedToDictionary(String word) {
+        TextSuggestionHostJni.get().onNewWordAddedToDictionary(
+                mNativeTextSuggestionHost, TextSuggestionHost.this, word);
     }
 
     /**
      * Tells Blink the suggestion menu was closed (and also clears the reference to the
      * SuggestionsPopupWindow instance so it can be garbage collected).
      */
-    public void suggestionMenuClosed(boolean dismissedByItemTap) {
+    public void onSuggestionMenuClosed(boolean dismissedByItemTap) {
         if (!dismissedByItemTap) {
-            nativeSuggestionMenuClosed(mNativeTextSuggestionHost);
+            TextSuggestionHostJni.get().onSuggestionMenuClosed(
+                    mNativeTextSuggestionHost, TextSuggestionHost.this);
         }
-        mSuggestionsPopupWindow = null;
+        mSpellCheckPopupWindow = null;
+        mTextSuggestionsPopupWindow = null;
     }
 
     @CalledByNative
-    private void destroy() {
+    private void onNativeDestroyed() {
+        hidePopups();
         mNativeTextSuggestionHost = 0;
     }
 
     /**
-     * @return The SuggestionsPopupWindow, if one exists.
+     * @return The TextSuggestionsPopupWindow, if one exists.
      */
     @VisibleForTesting
-    public SuggestionsPopupWindow getSuggestionsPopupWindowForTesting() {
-        return mSuggestionsPopupWindow;
+    public SuggestionsPopupWindow getTextSuggestionsPopupWindowForTesting() {
+        return mTextSuggestionsPopupWindow;
     }
 
-    private native long nativeInit(WebContents webContents);
-    private native void nativeApplySpellCheckSuggestion(
-            long nativeTextSuggestionHostAndroid, String suggestion);
-    private native void nativeDeleteActiveSuggestionRange(long nativeTextSuggestionHostAndroid);
-    private native void nativeNewWordAddedToDictionary(
-            long nativeTextSuggestionHostAndroid, String word);
-    private native void nativeSuggestionMenuClosed(long nativeTextSuggestionHostAndroid);
+    /**
+     * @return The SpellCheckPopupWindow, if one exists.
+     */
+    @VisibleForTesting
+    public SuggestionsPopupWindow getSpellCheckPopupWindowForTesting() {
+        return mSpellCheckPopupWindow;
+    }
+
+    @NativeMethods
+    interface Natives {
+        void applySpellCheckSuggestion(
+                long nativeTextSuggestionHostAndroid, TextSuggestionHost caller, String suggestion);
+        void applyTextSuggestion(long nativeTextSuggestionHostAndroid, TextSuggestionHost caller,
+                int markerTag, int suggestionIndex);
+        void deleteActiveSuggestionRange(
+                long nativeTextSuggestionHostAndroid, TextSuggestionHost caller);
+        void onNewWordAddedToDictionary(
+                long nativeTextSuggestionHostAndroid, TextSuggestionHost caller, String word);
+        void onSuggestionMenuClosed(
+                long nativeTextSuggestionHostAndroid, TextSuggestionHost caller);
+    }
 }

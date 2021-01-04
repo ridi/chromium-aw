@@ -8,17 +8,18 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Process;
 import android.provider.Settings;
-import android.text.TextUtils;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.VisibleForTesting;
-import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.compat.ApiHelperForP;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
@@ -35,9 +36,8 @@ public class LocationUtils {
     protected LocationUtils() {}
 
     /**
-     * Returns the singleton instance of LocationSettings, creating it if needed.
+     * Returns the singleton instance of LocationUtils, creating it if needed.
      */
-    @SuppressFBWarnings("LI_LAZY_INIT_STATIC")
     public static LocationUtils getInstance() {
         ThreadUtils.assertOnUiThread();
         if (sInstance == null) {
@@ -75,14 +75,35 @@ public class LocationUtils {
     @SuppressWarnings("deprecation")
     public boolean isSystemLocationSettingEnabled() {
         Context context = ContextUtils.getApplicationContext();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return Settings.Secure.getInt(context.getContentResolver(),
-                           Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
-                    != Settings.Secure.LOCATION_MODE_OFF;
-        } else {
-            return !TextUtils.isEmpty(Settings.Secure.getString(
-                    context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            LocationManager locationManager =
+                    (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            return locationManager != null && ApiHelperForP.isLocationEnabled(locationManager);
         }
+
+        return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE,
+                       Settings.Secure.LOCATION_MODE_OFF)
+                != Settings.Secure.LOCATION_MODE_OFF;
+    }
+
+    /**
+     * Returns whether location services are enabled in sensors-only mode, i.e. when network
+     * location services are disabled but GPS and other sensors are enabled.
+     */
+    @SuppressWarnings("deprecation")
+    public boolean isSystemLocationSettingSensorsOnly() {
+        Context context = ContextUtils.getApplicationContext();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            LocationManager locationManager =
+                    (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            return locationManager != null && ApiHelperForP.isLocationEnabled(locationManager)
+                    && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                    && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+
+        return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE,
+                       Settings.Secure.LOCATION_MODE_OFF)
+                == Settings.Secure.LOCATION_MODE_SENSORS_ONLY;
     }
 
     /**

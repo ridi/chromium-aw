@@ -5,8 +5,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath("com.android.tools.build:gradle:4.0.1")
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.12"
     }
 }
 
@@ -19,13 +20,14 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.google.protobuf'
 
 group = 'com.github.ridi'
-version = '62.0.3202.101-6'
+version = '81.0.4044.156-2'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -42,19 +44,24 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            useProguard true
-            consumerProguardFile 'proguard-rules.pro'
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.gms:play-services-gcm:10.2.0'
     implementation 'com.google.android.gms:play-services-location:10.2.0'
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
 }
 
 task sourcesJar(type: Jar) {

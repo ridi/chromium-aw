@@ -4,9 +4,17 @@
 
 package org.chromium.base;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.os.Process;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
@@ -15,7 +23,6 @@ import org.chromium.base.annotations.MainDex;
  * This class provides Android application context related utility methods.
  */
 @JNINamespace("base::android")
-@MainDex
 public class ContextUtils {
     private static final String TAG = "ContextUtils";
     private static Context sApplicationContext;
@@ -52,12 +59,12 @@ public class ContextUtils {
      *
      * @param appContext The application context.
      */
+    @MainDex // TODO(agrieve): Could add to whole class if not for ApplicationStatus.initialize().
     public static void initApplicationContext(Context appContext) {
         // Conceding that occasionally in tests, native is loaded before the browser process is
         // started, in which case the browser process re-sets the application context.
-        if (sApplicationContext != null && sApplicationContext != appContext) {
-            throw new RuntimeException("Attempting to set multiple global application contexts.");
-        }
+        assert sApplicationContext == null || sApplicationContext == appContext
+                || ((ContextWrapper) sApplicationContext).getBaseContext() == appContext;
         initJavaSideApplicationContext(appContext);
     }
 
@@ -66,6 +73,7 @@ public class ContextUtils {
      *
      * @return The application-wide shared preferences.
      */
+    @SuppressWarnings("DefaultSharedPreferencesCheck")
     private static SharedPreferences fetchAppSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(sApplicationContext);
     }
@@ -95,9 +103,60 @@ public class ContextUtils {
     }
 
     private static void initJavaSideApplicationContext(Context appContext) {
-        if (appContext == null) {
-            throw new RuntimeException("Global application context cannot be set to null.");
+        assert appContext != null;
+        // Guard against anyone trying to downcast.
+        if (BuildConfig.DCHECK_IS_ON && appContext instanceof Application) {
+            appContext = new ContextWrapper(appContext);
         }
         sApplicationContext = appContext;
+    }
+
+    /**
+     * In most cases, {@link Context#getAssets()} can be used directly. Modified resources are
+     * used downstream and are set up on application startup, and this method provides access to
+     * regular assets before that initialization is complete.
+     *
+     * This method should ONLY be used for accessing files within the assets folder.
+     *
+     * @return Application assets.
+     */
+    public static AssetManager getApplicationAssets() {
+        Context context = getApplicationContext();
+        while (context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return context.getAssets();
+    }
+
+    /**
+     * @return Whether the process is isolated.
+     */
+    @SuppressWarnings("NewApi")
+    public static boolean isIsolatedProcess() {
+        // Was not made visible until Android P, but the method has always been there.
+        return Process.isIsolated();
+    }
+
+    /** @return The name of the current process. E.g. "org.chromium.chrome:privileged_process0". */
+    public static String getProcessName() {
+        return ApiCompatibilityUtils.getProcessName();
+    }
+
+    /**
+     * Extract the {@link Activity} if the given {@link Context} either is or wraps one.
+     *
+     * @param context The context to check.
+     * @return Extracted activity if it exists, otherwise null.
+     */
+    public static @Nullable Activity activityFromContext(@Nullable Context context) {
+        // Only retrieves the base context if the supplied context is a ContextWrapper but not an
+        // Activity, because Activity is a subclass of ContextWrapper.
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) return (Activity) context;
+
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        return null;
     }
 }

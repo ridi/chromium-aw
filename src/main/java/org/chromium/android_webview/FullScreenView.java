@@ -10,9 +10,11 @@ import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
@@ -27,9 +29,11 @@ public class FullScreenView extends FrameLayout {
     private final AwContents mAwContents;
     private InternalAccessAdapter mInternalAccessAdapter;
 
-    public FullScreenView(Context context, AwViewMethods awViewMethods,
-            AwContents awContents) {
+    public FullScreenView(Context context, AwViewMethods awViewMethods, AwContents awContents,
+            int initialWidth, int initialHeight) {
         super(context);
+        setRight(initialWidth);
+        setBottom(initialHeight);
         setAwViewMethods(awViewMethods);
         mAwContents = awContents;
         mInternalAccessAdapter = new InternalAccessAdapter();
@@ -135,7 +139,10 @@ public class FullScreenView extends FrameLayout {
     @Override
     public void onSizeChanged(final int w, final int h, final int ow, final int oh) {
         super.onSizeChanged(w, h, ow, oh);
-        mAwViewMethods.onSizeChanged(w, h, ow, oh);
+        // Null check for setting initial size before mAwViewMethods is set.
+        if (mAwViewMethods != null) {
+            mAwViewMethods.onSizeChanged(w, h, ow, oh);
+        }
     }
 
     @Override
@@ -191,6 +198,16 @@ public class FullScreenView extends FrameLayout {
         mAwViewMethods.computeScroll();
     }
 
+    @Override
+    public AccessibilityNodeProvider getAccessibilityNodeProvider() {
+        return mAwViewMethods.getAccessibilityNodeProvider();
+    }
+
+    @Override
+    public boolean performAccessibilityAction(final int action, final Bundle arguments) {
+        return mAwViewMethods.performAccessibilityAction(action, arguments);
+    }
+
     // AwContents.InternalAccessDelegate implementation --------------------------------------
     private class InternalAccessAdapter implements AwContents.InternalAccessDelegate {
 
@@ -224,16 +241,6 @@ public class FullScreenView extends FrameLayout {
             throw new RuntimeException(
                     "FullScreenView InternalAccessAdapter shouldn't call startActivityForResult. "
                     + "See AwContents#startActivityForResult");
-        }
-
-        @Override
-        public boolean awakenScrollBars() {
-            return FullScreenView.this.awakenScrollBars(0);
-        }
-
-        @Override
-        public boolean super_awakenScrollBars(int startDelay, boolean invalidate) {
-            return FullScreenView.super.awakenScrollBars(startDelay, invalidate);
         }
 
         @Override

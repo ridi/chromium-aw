@@ -5,6 +5,7 @@
 package org.chromium.base.metrics;
 
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Java API which exposes the registered histograms on the native side as
@@ -15,11 +16,16 @@ public final class StatisticsRecorderAndroid {
     private StatisticsRecorderAndroid() {}
 
     /**
-      * @return All the registered histograms as JSON text.
-      */
-    public static String toJson() {
-        return nativeToJson();
+     * @param verbosityLevel controls the information that should be included when dumping each of
+     * the histogram.
+     * @return All the registered histograms as JSON text.
+     */
+    public static String toJson(@JSONVerbosityLevel int verbosityLevel) {
+        return StatisticsRecorderAndroidJni.get().toJson(verbosityLevel);
     }
 
-    private static native String nativeToJson();
+    @NativeMethods
+    interface Natives {
+        String toJson(@JSONVerbosityLevel int verbosityLevel);
+    }
 }

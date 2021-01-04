@@ -11,6 +11,7 @@ import android.view.autofill.AutofillValue;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -76,7 +77,7 @@ public abstract class AutofillProvider {
             FormData formData, int focus, float x, float y, float width, float height);
 
     /**
-     * Invoked when text field is changed.
+     * Invoked when form field's value is changed.
      *
      * @param index index of field in current form.
      * @param x the boundary of focus field.
@@ -86,15 +87,30 @@ public abstract class AutofillProvider {
      *
      */
     @CalledByNative
-    protected abstract void onTextFieldDidChange(
+    protected abstract void onFormFieldDidChange(
+            int index, float x, float y, float width, float height);
+
+    /**
+     * Invoked when text field is scrolled.
+     *
+     * @param index index of field in current form.
+     * @param x the boundary of focus field.
+     * @param y the boundary of focus field.
+     * @param width the boundary of focus field.
+     * @param height the boundary of focus field.
+     *
+     */
+    @CalledByNative
+    protected abstract void onTextFieldDidScroll(
             int index, float x, float y, float width, float height);
 
     /**
      * Invoked when current form will be submitted.
-     *
+     * @param submissionSource the submission source, could be any member defined in
+     * SubmissionSource.java
      */
     @CalledByNative
-    protected abstract void onWillSubmitForm();
+    protected abstract void onFormSubmitted(int submissionSource);
 
     /**
      * Invoked when focus field changed.
@@ -117,7 +133,8 @@ public abstract class AutofillProvider {
      * @param formData the form to fill.
      */
     protected void autofill(long nativeAutofillProvider, FormData formData) {
-        nativeOnAutofillAvailable(nativeAutofillProvider, formData);
+        AutofillProviderJni.get().onAutofillAvailable(
+                nativeAutofillProvider, AutofillProvider.this, formData);
     }
 
     /**
@@ -132,6 +149,9 @@ public abstract class AutofillProvider {
     @CalledByNative
     protected abstract void onDidFillAutofillFormData();
 
-    private native void nativeOnAutofillAvailable(
-            long nativeAutofillProviderAndroid, FormData formData);
+    @NativeMethods
+    interface Natives {
+        void onAutofillAvailable(
+                long nativeAutofillProviderAndroid, AutofillProvider caller, FormData formData);
+    }
 }

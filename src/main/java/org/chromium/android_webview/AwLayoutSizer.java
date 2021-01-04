@@ -87,7 +87,6 @@ public class AwLayoutSizer {
      * Update the contents size.
      * This should be called whenever the content size changes (due to DOM manipulation or page
      * load, for example).
-     * The width and height should be in CSS pixels.
      */
     public void onContentSizeChanged(int widthCss, int heightCss) {
         doUpdate(widthCss, heightCss, mPageScaleFactor);

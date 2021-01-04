@@ -13,6 +13,7 @@ import android.util.Printer;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
+import org.chromium.base.annotations.NativeMethods;
 /**
  * Java mirror of Chrome trace event API. See base/trace_event/trace_event.h.
  *
@@ -22,6 +23,9 @@ import org.chromium.base.annotations.MainDex;
  *   // code.
  * }
  * }</pre>
+ *
+ * The event name of the trace events must be a string literal or a |static final String| class
+ * member. Otherwise NoDynamicStringsInTraceEventCheck error will be thrown.
  *
  * It is OK to use tracing before the native library has loaded, in a slightly restricted fashion.
  * @see EarlyTraceEvent for details.
@@ -33,7 +37,9 @@ public class TraceEvent implements AutoCloseable {
     private static volatile boolean sATraceEnabled; // True when taking an Android systrace.
 
     private static class BasicLooperMonitor implements Printer {
-        private static final String EARLY_TOPLEVEL_TASK_NAME = "Looper.dispatchMessage: ";
+        private static final String LOOPER_TASK_PREFIX = "Looper.dispatch: ";
+        private static final int SHORTEST_LOG_PREFIX_LENGTH = "<<<<< Finished to ".length();
+        private String mCurrentTarget;
 
         @Override
         public void println(final String line) {
@@ -50,32 +56,57 @@ public class TraceEvent implements AutoCloseable {
             // will filter the event in this case.
             boolean earlyTracingActive = EarlyTraceEvent.isActive();
             if (sEnabled || earlyTracingActive) {
-                String target = getTarget(line);
+                mCurrentTarget = getTraceEventName(line);
                 if (sEnabled) {
-                    nativeBeginToplevel(target);
-                } else if (earlyTracingActive) {
-                    // Synthesize a task name instead of using a parameter, as early tracing doesn't
-                    // support parameters.
-                    EarlyTraceEvent.begin(EARLY_TOPLEVEL_TASK_NAME + target);
+                    TraceEventJni.get().beginToplevel(mCurrentTarget);
+                } else {
+                    EarlyTraceEvent.begin(mCurrentTarget);
                 }
             }
         }
 
         void endHandling(final String line) {
-            if (EarlyTraceEvent.isActive()) {
-                EarlyTraceEvent.end(EARLY_TOPLEVEL_TASK_NAME + getTarget(line));
+            boolean earlyTracingActive = EarlyTraceEvent.isActive();
+            if ((sEnabled || earlyTracingActive) && mCurrentTarget != null) {
+                if (sEnabled) {
+                    TraceEventJni.get().endToplevel(mCurrentTarget);
+                } else {
+                    EarlyTraceEvent.end(mCurrentTarget);
+                }
             }
-            if (sEnabled) nativeEndToplevel();
+            mCurrentTarget = null;
+        }
+
+        private static String getTraceEventName(String line) {
+            return LOOPER_TASK_PREFIX + getTarget(line) + "(" + getTargetName(line) + ")";
         }
 
         /**
-         * Android Looper formats |line| as ">>>>> Dispatching to (TARGET) [...]" since at least
-         * 2009 (Donut). Extracts the TARGET part of the message.
+         * Android Looper formats |logLine| as
+         *
+         * ">>>>> Dispatching to (TARGET) {HASH_CODE} TARGET_NAME: WHAT"
+         *
+         * and
+         *
+         * "<<<<< Finished to (TARGET) {HASH_CODE} TARGET_NAME".
+         *
+         * This has been the case since at least 2009 (Donut). This function extracts the
+         * TARGET part of the message.
          */
         private static String getTarget(String logLine) {
-            int start = logLine.indexOf('(', 21); // strlen(">>>>> Dispatching to ")
+            int start = logLine.indexOf('(', SHORTEST_LOG_PREFIX_LENGTH);
             int end = start == -1 ? -1 : logLine.indexOf(')', start);
             return end != -1 ? logLine.substring(start + 1, end) : "";
+        }
+
+        // Extracts the TARGET_NAME part of the log message (see above).
+        private static String getTargetName(String logLine) {
+            int start = logLine.indexOf('}', SHORTEST_LOG_PREFIX_LENGTH);
+            int end = start == -1 ? -1 : logLine.indexOf(':', start);
+            if (end == -1) {
+                end = logLine.length();
+            }
+            return start != -1 ? logLine.substring(start + 2, end) : "";
         }
     }
 
@@ -103,7 +134,7 @@ public class TraceEvent implements AutoCloseable {
     private static final class IdleTracingLooperMonitor extends BasicLooperMonitor
             implements MessageQueue.IdleHandler {
         // Tags for dumping to logcat or TraceEvent
-        private static final String TAG = "TraceEvent.LooperMonitor";
+        private static final String TAG = "TraceEvent_LooperMonitor";
         private static final String IDLE_EVENT_NAME = "Looper.queueIdle";
 
         // Calculation constants
@@ -205,9 +236,9 @@ public class TraceEvent implements AutoCloseable {
     /**
      * Constructor used to support the "try with resource" construct.
      */
-    private TraceEvent(String name) {
+    private TraceEvent(String name, String arg) {
         mName = name;
-        begin(name);
+        begin(name, arg);
     }
 
     @Override
@@ -221,18 +252,26 @@ public class TraceEvent implements AutoCloseable {
      * Note that if tracing is not enabled, this will not result in allocating an object.
      *
      * @param name Trace event name.
+     * @param arg The arguments of the event.
      * @return a TraceEvent, or null if tracing is not enabled.
      */
-    public static TraceEvent scoped(String name) {
+    public static TraceEvent scoped(String name, String arg) {
         if (!(EarlyTraceEvent.enabled() || enabled())) return null;
-        return new TraceEvent(name);
+        return new TraceEvent(name, arg);
+    }
+
+    /**
+     * Similar to {@link #scoped(String, String arg)}, but uses null for |arg|.
+     */
+    public static TraceEvent scoped(String name) {
+        return scoped(name, null);
     }
 
     /**
      * Register an enabled observer, such that java traces are always enabled with native.
      */
     public static void registerNativeEnabledObserver() {
-        nativeRegisterEnabledObserver();
+        TraceEventJni.get().registerEnabledObserver();
     }
 
     /**
@@ -276,11 +315,11 @@ public class TraceEvent implements AutoCloseable {
         if (enabled) {
             // Calls TraceEvent.setEnabled(true) via
             // TraceLog::EnabledStateObserver::OnTraceLogEnabled
-            nativeStartATrace();
+            TraceEventJni.get().startATrace();
         } else {
             // Calls TraceEvent.setEnabled(false) via
             // TraceLog::EnabledStateObserver::OnTraceLogDisabled
-            nativeStopATrace();
+            TraceEventJni.get().stopATrace();
         }
     }
 
@@ -298,7 +337,7 @@ public class TraceEvent implements AutoCloseable {
      * @param name The name of the event.
      */
     public static void instant(String name) {
-        if (sEnabled) nativeInstant(name, null);
+        if (sEnabled) TraceEventJni.get().instant(name, null);
     }
 
     /**
@@ -307,7 +346,7 @@ public class TraceEvent implements AutoCloseable {
      * @param arg  The arguments of the event.
      */
     public static void instant(String name, String arg) {
-        if (sEnabled) nativeInstant(name, arg);
+        if (sEnabled) TraceEventJni.get().instant(name, arg);
     }
 
     /**
@@ -316,7 +355,8 @@ public class TraceEvent implements AutoCloseable {
      * @param id   The id of the asynchronous event.
      */
     public static void startAsync(String name, long id) {
-        if (sEnabled) nativeStartAsync(name, id);
+        EarlyTraceEvent.startAsync(name, id);
+        if (sEnabled) TraceEventJni.get().startAsync(name, id);
     }
 
     /**
@@ -325,7 +365,8 @@ public class TraceEvent implements AutoCloseable {
      * @param id   The id of the asynchronous event.
      */
     public static void finishAsync(String name, long id) {
-        if (sEnabled) nativeFinishAsync(name, id);
+        EarlyTraceEvent.finishAsync(name, id);
+        if (sEnabled) TraceEventJni.get().finishAsync(name, id);
     }
 
     /**
@@ -343,7 +384,7 @@ public class TraceEvent implements AutoCloseable {
      */
     public static void begin(String name, String arg) {
         EarlyTraceEvent.begin(name);
-        if (sEnabled) nativeBegin(name, arg);
+        if (sEnabled) TraceEventJni.get().begin(name, arg);
     }
 
     /**
@@ -361,17 +402,20 @@ public class TraceEvent implements AutoCloseable {
      */
     public static void end(String name, String arg) {
         EarlyTraceEvent.end(name);
-        if (sEnabled) nativeEnd(name, arg);
+        if (sEnabled) TraceEventJni.get().end(name, arg);
     }
 
-    private static native void nativeRegisterEnabledObserver();
-    private static native void nativeStartATrace();
-    private static native void nativeStopATrace();
-    private static native void nativeInstant(String name, String arg);
-    private static native void nativeBegin(String name, String arg);
-    private static native void nativeEnd(String name, String arg);
-    private static native void nativeBeginToplevel(String target);
-    private static native void nativeEndToplevel();
-    private static native void nativeStartAsync(String name, long id);
-    private static native void nativeFinishAsync(String name, long id);
+    @NativeMethods
+    interface Natives {
+        void registerEnabledObserver();
+        void startATrace();
+        void stopATrace();
+        void instant(String name, String arg);
+        void begin(String name, String arg);
+        void end(String name, String arg);
+        void beginToplevel(String target);
+        void endToplevel(String target);
+        void startAsync(String name, long id);
+        void finishAsync(String name, long id);
+    }
 }

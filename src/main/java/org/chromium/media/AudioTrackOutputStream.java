@@ -10,10 +10,12 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Build;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.Log;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
 import java.nio.ByteBuffer;
 
@@ -71,12 +73,13 @@ class AudioTrackOutputStream {
     private int mLeftSize;
 
     class WorkerThread extends Thread {
-        private volatile boolean mDone = false;
+        private volatile boolean mDone;
 
         public void finish() {
             mDone = true;
         }
 
+        @Override
         public void run() {
             // This should not be a busy loop, since the thread would be blocked in either
             // AudioSyncReader::WaitUntilDataIsReady() or AudioTrack.write().
@@ -121,17 +124,20 @@ class AudioTrackOutputStream {
 
             @Override
             public AudioBufferInfo onMoreData(ByteBuffer audioData, long delayInFrames) {
-                return nativeOnMoreData(mNativeAudioTrackOutputStream, audioData, delayInFrames);
+                return AudioTrackOutputStreamJni.get().onMoreData(mNativeAudioTrackOutputStream,
+                        AudioTrackOutputStream.this, audioData, delayInFrames);
             }
 
             @Override
             public long getAddress(ByteBuffer byteBuffer) {
-                return nativeGetAddress(mNativeAudioTrackOutputStream, byteBuffer);
+                return AudioTrackOutputStreamJni.get().getAddress(
+                        mNativeAudioTrackOutputStream, AudioTrackOutputStream.this, byteBuffer);
             }
 
             @Override
             public void onError() {
-                nativeOnError(mNativeAudioTrackOutputStream);
+                AudioTrackOutputStreamJni.get().onError(
+                        mNativeAudioTrackOutputStream, AudioTrackOutputStream.this);
             }
         };
     }
@@ -248,7 +254,7 @@ class AudioTrackOutputStream {
     void setVolume(double volume) {
         // Chrome sends the volume in the range [0, 1.0], whereas Android
         // expects the volume to be within [0, getMaxVolume()].
-        float scaledVolume = (float) (volume * mAudioTrack.getMaxVolume());
+        float scaledVolume = (float) (volume * AudioTrack.getMaxVolume());
         mAudioTrack.setStereoVolume(scaledVolume, scaledVolume);
     }
 
@@ -312,8 +318,12 @@ class AudioTrackOutputStream {
         return mAudioTrack.write(mWriteBuffer, mLeftSize, AudioTrack.WRITE_BLOCKING);
     }
 
-    private native AudioBufferInfo nativeOnMoreData(
-            long nativeAudioTrackOutputStream, ByteBuffer audioData, long delayInFrames);
-    private native void nativeOnError(long nativeAudioTrackOutputStream);
-    private native long nativeGetAddress(long nativeAudioTrackOutputStream, ByteBuffer byteBuffer);
+    @NativeMethods
+    interface Natives {
+        AudioBufferInfo onMoreData(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller,
+                ByteBuffer audioData, long delayInFrames);
+        void onError(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller);
+        long getAddress(long nativeAudioTrackOutputStream, AudioTrackOutputStream caller,
+                ByteBuffer byteBuffer);
+    }
 }

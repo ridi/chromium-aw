@@ -5,18 +5,22 @@
 package org.chromium.content.browser.accessibility;
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ReceiverCallNotAllowedException;
 import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.LocaleSpan;
+import android.text.style.SuggestionSpan;
 import android.util.SparseArray;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.Locale;
@@ -30,24 +34,37 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     private static SparseArray<AccessibilityAction> sAccessibilityActionMap =
             new SparseArray<AccessibilityAction>();
     private String mSystemLanguageTag;
+    private BroadcastReceiver mBroadcastReceiver;
 
-    LollipopWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordinates,
-            boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
-        mSystemLanguageTag = Locale.getDefault().toLanguageTag();
+    LollipopWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
+    }
+
+    @Override
+    protected void onNativeInit() {
+        super.onNativeInit();
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mSystemLanguageTag = Locale.getDefault().toLanguageTag();
+            }
+        };
+
+        // Register a broadcast receiver for locale change for Lollipop or higher version.
+        if (mView.isAttachedToWindow()) registerLocaleChangeReceiver();
     }
 
     @Override
     protected void setAccessibilityNodeInfoLollipopAttributes(AccessibilityNodeInfo node,
             boolean canOpenPopup, boolean contentInvalid, boolean dismissable, boolean multiLine,
-            int inputType, int liveRegion) {
+            int inputType, int liveRegion, String errorMessage) {
         node.setCanOpenPopup(canOpenPopup);
         node.setContentInvalid(contentInvalid);
         node.setDismissable(contentInvalid);
         node.setMultiLine(multiLine);
         node.setInputType(inputType);
         node.setLiveRegion(liveRegion);
+        node.setError(errorMessage);
     }
 
     @Override
@@ -125,8 +142,10 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     }
 
     @Override
-    protected CharSequence computeText(String text, boolean annotateAsLink, String language) {
-        CharSequence charSequence = super.computeText(text, annotateAsLink, language);
+    protected CharSequence computeText(String text, boolean annotateAsLink, String language,
+            int[] suggestionStarts, int[] suggestionEnds, String[] suggestions) {
+        CharSequence charSequence = super.computeText(
+                text, annotateAsLink, language, suggestionStarts, suggestionEnds, suggestions);
         if (!language.isEmpty() && !language.equals(mSystemLanguageTag)) {
             SpannableString spannable;
             if (charSequence instanceof SpannableString) {
@@ -136,8 +155,67 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
             }
             Locale locale = Locale.forLanguageTag(language);
             spannable.setSpan(new LocaleSpan(locale), 0, spannable.length(), 0);
-            return spannable;
+            charSequence = spannable;
         }
+
+        if (suggestionStarts != null && suggestionStarts.length > 0) {
+            assert suggestionEnds != null;
+            assert suggestionEnds.length == suggestionStarts.length;
+            assert suggestions != null;
+            assert suggestions.length == suggestionStarts.length;
+
+            SpannableString spannable;
+            if (charSequence instanceof SpannableString) {
+                spannable = (SpannableString) charSequence;
+            } else {
+                spannable = new SpannableString(charSequence);
+            }
+
+            int spannableLen = spannable.length();
+            for (int i = 0; i < suggestionStarts.length; i++) {
+                int start = suggestionStarts[i];
+                int end = suggestionEnds[i];
+                // Ignore any spans outside the range of the spannable string.
+                if (start < 0 || start > spannableLen || end < 0 || end > spannableLen
+                        || start > end) {
+                    continue;
+                }
+
+                String[] suggestionArray = new String[1];
+                suggestionArray[0] = suggestions[i];
+                int flags = SuggestionSpan.FLAG_MISSPELLED;
+                SuggestionSpan suggestionSpan =
+                        new SuggestionSpan(mContext, suggestionArray, flags);
+                spannable.setSpan(suggestionSpan, start, end, 0);
+            }
+            charSequence = spannable;
+        }
+
         return charSequence;
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (!isNativeInitialized()) return;
+        ContextUtils.getApplicationContext().unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        registerLocaleChangeReceiver();
+    }
+
+    private void registerLocaleChangeReceiver() {
+        if (!isNativeInitialized()) return;
+        try {
+            IntentFilter filter = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+            ContextUtils.getApplicationContext().registerReceiver(mBroadcastReceiver, filter);
+        } catch (ReceiverCallNotAllowedException e) {
+            // WebView may be running inside a BroadcastReceiver, in which case registerReceiver is
+            // not allowed.
+        }
+        mSystemLanguageTag = Locale.getDefault().toLanguageTag();
     }
 }

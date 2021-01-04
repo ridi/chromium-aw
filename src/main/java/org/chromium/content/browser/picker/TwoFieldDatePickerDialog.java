@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 
 import org.chromium.android_webview.R;
-
 import org.chromium.content.browser.picker.TwoFieldDatePicker.OnMonthOrWeekChangedListener;
 
 /**

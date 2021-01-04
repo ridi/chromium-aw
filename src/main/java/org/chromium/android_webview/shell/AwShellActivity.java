@@ -5,7 +5,9 @@
 package org.chromium.android_webview.shell;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,8 +20,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebChromeClient;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -30,28 +30,29 @@ import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwDevToolsServer;
+import org.chromium.android_webview.AwGeolocationPermissions;
 import org.chromium.android_webview.AwSettings;
+import org.chromium.android_webview.JsResultReceiver;
 import org.chromium.android_webview.R;
 import org.chromium.android_webview.test.AwTestContainerView;
 import org.chromium.android_webview.test.NullContentsClient;
-import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
-import org.chromium.content.app.ContentApplication;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.ContentUrlConstants;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * This is a lightweight activity for tests that only require WebView functionality.
  */
 public class AwShellActivity extends Activity {
-    private static final String TAG = "cr.AwShellActivity";
+    private static final String TAG = "AwShellActivity";
     private static final String PREFERENCES_NAME = "AwShellPrefs";
     private static final String INITIAL_URL = ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL;
     private AwBrowserContext mBrowserContext;
@@ -69,11 +70,7 @@ public class AwShellActivity extends Activity {
 
         AwShellResourceProvider.registerResources(this);
 
-        ContentApplication.initCommandLine(this);
-        waitForDebuggerIfNeeded();
-
-        ContextUtils.initApplicationContext(getApplicationContext());
-        AwBrowserProcess.loadLibrary();
+        AwBrowserProcess.loadLibrary(null);
 
         if (CommandLine.getInstance().hasSwitch(AwShellSwitches.ENABLE_ATRACE)) {
             Log.e(TAG, "Enabling Android trace.");
@@ -84,7 +81,7 @@ public class AwShellActivity extends Activity {
 
         mAwTestContainerView = createAwTestContainerView();
 
-        mWebContents = mAwTestContainerView.getContentViewCore().getWebContents();
+        mWebContents = mAwTestContainerView.getWebContents();
         mNavigationController = mWebContents.getNavigationController();
         LinearLayout contentContainer = (LinearLayout) findViewById(R.id.content_container);
         mAwTestContainerView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -121,6 +118,40 @@ public class AwShellActivity extends Activity {
             private View mCustomView;
 
             @Override
+            public void handleJsConfirm(String url, String message, JsResultReceiver receiver) {
+                String title = "From ";
+                try {
+                    URL javaUrl = new URL(url);
+                    title += javaUrl.getProtocol() + "://" + javaUrl.getHost();
+                    if (javaUrl.getPort() != -1) {
+                        title += ":" + javaUrl.getPort();
+                    }
+                } catch (MalformedURLException e) {
+                    title += url;
+                }
+
+                new AlertDialog.Builder(testContainerView.getContext())
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        receiver.confirm();
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        receiver.cancel();
+                                    }
+                                })
+                        .create()
+                        .show();
+            }
+
+            @Override
             public void onPageStarted(String url) {
                 if (mUrlTextView != null) {
                     mUrlTextView.setText(url);
@@ -128,7 +159,7 @@ public class AwShellActivity extends Activity {
             }
 
             @Override
-            public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+            public void onShowCustomView(View view, AwContentsClient.CustomViewCallback callback) {
                 getWindow().setFlags(
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -158,8 +189,8 @@ public class AwShellActivity extends Activity {
             }
 
             @Override
-            public void onGeolocationPermissionsShowPrompt(String origin,
-                    GeolocationPermissions.Callback callback) {
+            public void onGeolocationPermissionsShowPrompt(
+                    String origin, AwGeolocationPermissions.Callback callback) {
                 callback.invoke(origin, false, false);
             }
         };
@@ -167,7 +198,8 @@ public class AwShellActivity extends Activity {
         SharedPreferences sharedPreferences =
                 getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         if (mBrowserContext == null) {
-            mBrowserContext = new AwBrowserContext(sharedPreferences, getApplicationContext());
+            mBrowserContext = new AwBrowserContext(
+                    sharedPreferences, AwBrowserContext.getDefault().getNativePointer(), true);
         }
         final AwSettings awSettings =
                 new AwSettings(this /* context */, false /* isAccessFromFileURLsGrantedByDefault */,
@@ -181,11 +213,11 @@ public class AwShellActivity extends Activity {
         awSettings.setDisplayZoomControls(false);
         awSettings.setUseWideViewPort(true);
         awSettings.setLoadWithOverviewMode(true);
-        awSettings.setLayoutAlgorithm(android.webkit.WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+        awSettings.setLayoutAlgorithm(AwSettings.LAYOUT_ALGORITHM_TEXT_AUTOSIZING);
 
         testContainerView.initialize(new AwContents(mBrowserContext, testContainerView,
                 testContainerView.getContext(), testContainerView.getInternalAccessDelegate(),
-                testContainerView.getNativeDrawGLFunctorFactory(), awContentsClient, awSettings));
+                testContainerView.getNativeDrawFunctorFactory(), awContentsClient, awSettings));
         testContainerView.getAwContents().getSettings().setJavaScriptEnabled(true);
         if (mDevToolsServer == null) {
             mDevToolsServer = new AwDevToolsServer();
@@ -270,13 +302,5 @@ public class AwShellActivity extends Activity {
         }
 
         return super.onKeyUp(keyCode, event);
-    }
-
-    private void waitForDebuggerIfNeeded() {
-        if (CommandLine.getInstance().hasSwitch(BaseSwitches.WAIT_FOR_JAVA_DEBUGGER)) {
-            Log.e(TAG, "Waiting for Java debugger to connect...");
-            android.os.Debug.waitForDebugger();
-            Log.e(TAG, "Java debugger connected. Resuming execution.");
-        }
     }
 }

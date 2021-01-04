@@ -15,9 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.chromium.android_webview.R;
-
+import org.chromium.base.PackageManagerUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
+import org.chromium.content_public.browser.SelectionPopupController;
+import org.chromium.content_public.browser.WebContents;
 
 /**
  * A class that handles selection action mode for Android WebView.
@@ -28,11 +30,11 @@ public class AwActionModeCallback implements ActionMode.Callback {
     private final ActionModeCallbackHelper mHelper;
     private int mAllowedMenuItems;
 
-    public AwActionModeCallback(Context context, AwContents awContents,
-            ActionModeCallbackHelper helper) {
+    public AwActionModeCallback(Context context, AwContents awContents, WebContents webContents) {
         mContext = context;
         mAwContents = awContents;
-        mHelper = helper;
+        mHelper =
+                SelectionPopupController.fromWebContents(webContents).getActionModeCallbackHelper();
         mHelper.setAllowedMenuItems(0);  // No item is allowed by default for WebView.
     }
 
@@ -60,8 +62,8 @@ public class AwActionModeCallback implements ActionMode.Callback {
     private boolean isWebSearchAvailable() {
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
         intent.putExtra(SearchManager.EXTRA_NEW_SEARCH, true);
-        return mContext.getPackageManager().queryIntentActivities(intent,
-                PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
+        return !PackageManagerUtils.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+                        .isEmpty();
     }
 
     @Override

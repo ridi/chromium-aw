@@ -12,13 +12,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
-import android.util.Log;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
+
+import androidx.annotation.Nullable;
 
 import org.chromium.base.annotations.CalledByNative;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -53,6 +55,15 @@ public abstract class ContentUriUtils {
         }
     }
 
+    /**
+     * Get a URI for |file| which has the image capture. This function assumes that path of |file|
+     * is based on the result of UiUtils.getDirectoryForImageCapture().
+     *
+     * @param file image capture file.
+     * @return URI for |file|.
+     * @throws IllegalArgumentException when the given File is outside the paths supported by the
+     *         provider.
+     */
     public static Uri getContentUriFromFile(File file) {
         synchronized (sLock) {
             if (sFileProviderUtil != null) {
@@ -154,12 +165,8 @@ public abstract class ContentUriUtils {
                     return new AssetFileDescriptor(pfd, 0, AssetFileDescriptor.UNKNOWN_LENGTH);
                 }
             }
-        } catch (FileNotFoundException e) {
-            Log.w(TAG, "Cannot find content uri: " + uriString, e);
-        } catch (SecurityException e) {
-            Log.w(TAG, "Cannot open content uri: " + uriString, e);
         } catch (Exception e) {
-            Log.w(TAG, "Unknown content uri: " + uriString, e);
+            Log.w(TAG, "Cannot open content uri: %s", uriString, e);
         }
         return null;
     }
@@ -209,6 +216,32 @@ public abstract class ContentUriUtils {
     }
 
     /**
+     * Method to resolve the display name of a content URI if possible.
+     *
+     * @param uriString the content URI to look up.
+     * @return the display name of the uri if present in the database or null otherwise.
+     */
+    @Nullable
+    @CalledByNative
+    public static String maybeGetDisplayName(String uriString) {
+        Uri uri = Uri.parse(uriString);
+
+        try {
+            String displayName = getDisplayName(uri, ContextUtils.getApplicationContext(),
+                    MediaStore.MediaColumns.DISPLAY_NAME);
+            return TextUtils.isEmpty(displayName) ? null : displayName;
+        } catch (Exception e) {
+            // There are a few Exceptions we can hit here (e.g. SecurityException), but we don't
+            // particularly care what kind of Exception we hit. If we hit one, just don't return a
+            // display name.
+            Log.w(TAG, "Cannot open content uri: %s", uriString, e);
+        }
+
+        // If we are unable to query the content URI, just return null.
+        return null;
+    }
+
+    /**
      * Checks whether the passed Uri represents a virtual document.
      *
      * @param uri the content URI to be resolved.
@@ -247,5 +280,47 @@ public abstract class ContentUriUtils {
         int index = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_FLAGS);
         return index > -1
                 && (cursor.getLong(index) & DocumentsContract.Document.FLAG_VIRTUAL_DOCUMENT) != 0;
+    }
+
+    /**
+     * @return whether a Uri has content scheme.
+     */
+    public static boolean isContentUri(String uri) {
+        if (uri == null) return false;
+        Uri parsedUri = Uri.parse(uri);
+        return parsedUri != null && ContentResolver.SCHEME_CONTENT.equals(parsedUri.getScheme());
+    }
+
+    /**
+     * Deletes a content uri from the system.
+     *
+     * @return True if the uri was deleted.
+     */
+    @CalledByNative
+    public static boolean delete(String uriString) {
+        assert isContentUri(uriString);
+        Uri parsedUri = Uri.parse(uriString);
+        ContentResolver resolver = ContextUtils.getApplicationContext().getContentResolver();
+        return resolver.delete(parsedUri, null, null) > 0;
+    }
+
+    /**
+     * Retrieve the content URI from the file path.
+     *
+     * @param filePathString the file path.
+     * @return content URI or null if the input params are invalid.
+     */
+    @CalledByNative
+    public static String getContentUriFromFilePath(String filePathString) {
+        try {
+            Uri contentUri = getContentUriFromFile(new File(filePathString));
+            if (contentUri != null) {
+                return contentUri.toString();
+            }
+        } catch (IllegalArgumentException e) {
+            // This happens when the given File is outside the paths supported by the provider.
+            Log.e(TAG, "Cannot retrieve content uri from file: %s", filePathString, e);
+        }
+        return null;
     }
 }

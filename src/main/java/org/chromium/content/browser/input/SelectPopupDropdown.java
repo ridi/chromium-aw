@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.base.Callback;
+import org.chromium.content_public.browser.GestureListenerManager;
+import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.DropdownAdapter;
 import org.chromium.ui.DropdownPopupWindow;
 
@@ -18,19 +21,17 @@ import java.util.List;
 /**
  * Handles the dropdown popup for the <select> HTML tag support.
  */
-public class SelectPopupDropdown implements SelectPopup {
-
-    private final ContentViewCore mContentViewCore;
-    private final Context mContext;
+public class SelectPopupDropdown implements SelectPopup.Ui {
+    private final Callback<int[]> mSelectionChangedCallback;
     private final DropdownPopupWindow mDropdownPopupWindow;
 
     private boolean mSelectionNotified;
 
-    public SelectPopupDropdown(ContentViewCore contentViewCore, View anchorView,
-            List<SelectPopupItem> items, int[] selected, boolean rightAligned) {
-        mContentViewCore = contentViewCore;
-        mContext = mContentViewCore.getContext();
-        mDropdownPopupWindow = new DropdownPopupWindow(mContext, anchorView);
+    public SelectPopupDropdown(Context context, Callback<int[]> selectionChangedCallback,
+            View anchorView, List<SelectPopupItem> items, int[] selected, boolean rightAligned,
+            WebContents webContents) {
+        mSelectionChangedCallback = selectionChangedCallback;
+        mDropdownPopupWindow = new DropdownPopupWindow(context, anchorView);
         mDropdownPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,9 +45,7 @@ public class SelectPopupDropdown implements SelectPopup {
             initialSelection = selected[0];
         }
         mDropdownPopupWindow.setInitialSelection(initialSelection);
-        mDropdownPopupWindow.setAdapter(new DropdownAdapter(
-                mContext, items, null /* separators */, null /* backgroundColor */,
-                null /* dividerColor */, null /* dropdownItemHeight */, null /* margin */));
+        mDropdownPopupWindow.setAdapter(new DropdownAdapter(context, items, null /* separators */));
         mDropdownPopupWindow.setRtl(rightAligned);
         mDropdownPopupWindow.setOnDismissListener(
                 new PopupWindow.OnDismissListener() {
@@ -55,11 +54,17 @@ public class SelectPopupDropdown implements SelectPopup {
                         notifySelection(null);
                     }
                 });
+        GestureListenerManager.fromWebContents(webContents).addListener(new GestureStateListener() {
+            @Override
+            public void onScrollStarted(int scrollOffsetY, int scrollExtentY) {
+                hide(true);
+            }
+        });
     }
 
     private void notifySelection(int[] indicies) {
         if (mSelectionNotified) return;
-        mContentViewCore.selectPopupMenuItems(indicies);
+        mSelectionChangedCallback.onResult(indicies);
         mSelectionNotified = true;
     }
 

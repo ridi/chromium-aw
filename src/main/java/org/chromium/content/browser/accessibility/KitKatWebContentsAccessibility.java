@@ -6,14 +6,11 @@ package org.chromium.content.browser.accessibility;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -21,23 +18,34 @@ import org.chromium.content_public.browser.WebContents;
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
+public class KitKatWebContentsAccessibility extends WebContentsAccessibilityImpl {
     private String mSupportedHtmlElementTypes;
 
-    KitKatWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordinates,
-            boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
-        mSupportedHtmlElementTypes = nativeGetSupportedHtmlElementTypes(mNativeObj);
+    KitKatWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
+    }
+
+    @Override
+    protected void onNativeInit() {
+        super.onNativeInit();
+        mSupportedHtmlElementTypes =
+                WebContentsAccessibilityImplJni.get().getSupportedHtmlElementTypes(
+                        mNativeObj, KitKatWebContentsAccessibility.this);
     }
 
     @Override
     protected void setAccessibilityNodeInfoKitKatAttributes(AccessibilityNodeInfo node,
-            boolean isRoot, boolean isEditableText, String roleDescription, String hint,
-            int selectionStartIndex, int selectionEndIndex) {
+            boolean isRoot, boolean isEditableText, String role, String roleDescription,
+            String hint, int selectionStartIndex, int selectionEndIndex, boolean hasImage,
+            boolean contentInvalid, String targetUrl) {
         Bundle bundle = node.getExtras();
+        bundle.putCharSequence("AccessibilityNodeInfo.chromeRole", role);
         bundle.putCharSequence("AccessibilityNodeInfo.roleDescription", roleDescription);
         bundle.putCharSequence("AccessibilityNodeInfo.hint", hint);
+        if (!targetUrl.isEmpty()) {
+            bundle.putCharSequence("AccessibilityNodeInfo.targetUrl", targetUrl);
+        }
+        if (hasImage) bundle.putCharSequence("AccessibilityNodeInfo.hasImage", "true");
         if (isRoot) {
             bundle.putCharSequence(
                     "ACTION_ARGUMENT_HTML_ELEMENT_STRING_VALUES", mSupportedHtmlElementTypes);
@@ -46,6 +54,8 @@ public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
             node.setEditable(true);
             node.setTextSelection(selectionStartIndex, selectionEndIndex);
         }
+
+        node.setContentInvalid(contentInvalid);
     }
 
     @Override

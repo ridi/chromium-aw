@@ -4,25 +4,23 @@
 
 package org.chromium.base.multidex;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
+import androidx.annotation.VisibleForTesting;
+
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.VisibleForTesting;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import org.chromium.base.annotations.MainDex;
 
 /**
  *  Performs multidex installation for non-isolated processes.
  */
+@MainDex
 public class ChromiumMultiDexInstaller {
-
     private static final String TAG = "base_multidex";
 
     /**
@@ -47,34 +45,17 @@ public class ChromiumMultiDexInstaller {
      */
     @VisibleForTesting
     public static void install(Context context) {
+        // No-op on platforms that support multidex natively.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
         // TODO(jbudorick): Back out this version check once support for K & below works.
         // http://crbug.com/512357
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
-                && !shouldInstallMultiDex(context)) {
+        if (!shouldInstallMultiDex(context)) {
             Log.i(TAG, "Skipping multidex installation: not needed for process.");
         } else {
             MultiDex.install(context);
             Log.i(TAG, "Completed multidex installation.");
-        }
-    }
-
-    private static String getProcessName(Context context) {
-        try {
-            String currentProcessName = null;
-            int pid = android.os.Process.myPid();
-
-            ActivityManager manager =
-                    (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-            for (RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
-                if (processInfo.pid == pid) {
-                    currentProcessName = processInfo.processName;
-                    break;
-                }
-            }
-
-            return currentProcessName;
-        } catch (SecurityException ex) {
-            return null;
         }
     }
 
@@ -83,21 +64,10 @@ public class ChromiumMultiDexInstaller {
     // Privileged processes need ot have all of their dependencies in the MainDex for
     // performance reasons.
     private static boolean shouldInstallMultiDex(Context context) {
-        try {
-            Method isIsolatedMethod =
-                    android.os.Process.class.getMethod("isIsolated");
-            Object retVal = isIsolatedMethod.invoke(null);
-            if (retVal != null && retVal instanceof Boolean && ((Boolean) retVal)) {
-                return false;
-            }
-        } catch (IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException | NoSuchMethodException e) {
-            // Ignore and fall back to checking the app processes.
+        if (ContextUtils.isIsolatedProcess()) {
+            return false;
         }
-
-        String currentProcessName = getProcessName(context);
-        if (currentProcessName == null) return true;
-
+        String currentProcessName = ContextUtils.getProcessName();
         PackageManager packageManager = context.getPackageManager();
         try {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(context.getPackageName(),

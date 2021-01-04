@@ -27,12 +27,17 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import androidx.annotation.IntDef;
+
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.NativeMethods;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
 
 /**
@@ -43,17 +48,33 @@ import java.nio.ByteBuffer;
 @JNINamespace("media")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenCapture extends Fragment {
-    private static final String TAG = "cr_ScreenCapture";
+    private static final String TAG = "ScreenCapture";
 
     private static final int REQUEST_MEDIA_PROJECTION = 1;
+
+    @IntDef({CaptureState.ATTACHED, CaptureState.ALLOWED, CaptureState.STARTED,
+            CaptureState.STOPPING, CaptureState.STOPPED})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface CaptureState {
+        int ATTACHED = 0;
+        int ALLOWED = 1;
+        int STARTED = 2;
+        int STOPPING = 3;
+        int STOPPED = 4;
+    }
+
+    @IntDef({DeviceOrientation.PORTRAIT, DeviceOrientation.LANDSCAPE})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface DeviceOrientation {
+        int PORTRAIT = 0;
+        int LANDSCAPE = 1;
+    }
 
     // Native callback context variable.
     private final long mNativeScreenCaptureMachineAndroid;
 
-    private static enum CaptureState { ATTACHED, ALLOWED, STARTED, STOPPING, STOPPED }
-    private static enum DeviceOrientation { PORTRAIT, LANDSCAPE }
     private final Object mCaptureStateLock = new Object();
-    private CaptureState mCaptureState = CaptureState.STOPPED;
+    private @CaptureState int mCaptureState = CaptureState.STOPPED;
 
     private MediaProjection mMediaProjection;
     private MediaProjectionManager mMediaProjectionManager;
@@ -63,7 +84,7 @@ public class ScreenCapture extends Fragment {
     private HandlerThread mThread;
     private Handler mBackgroundHandler;
     private Display mDisplay;
-    private DeviceOrientation mCurrentOrientation;
+    private @DeviceOrientation int mCurrentOrientation;
     private Intent mResultData;
 
     private int mScreenDensity;
@@ -123,7 +144,8 @@ public class ScreenCapture extends Fragment {
                             throw new IllegalStateException();
                         }
 
-                        nativeOnRGBAFrameAvailable(mNativeScreenCaptureMachineAndroid,
+                        ScreenCaptureJni.get().onRGBAFrameAvailable(
+                                mNativeScreenCaptureMachineAndroid, ScreenCapture.this,
                                 image.getPlanes()[0].getBuffer(),
                                 image.getPlanes()[0].getRowStride(), image.getCropRect().left,
                                 image.getCropRect().top, image.getCropRect().width(),
@@ -138,7 +160,8 @@ public class ScreenCapture extends Fragment {
 
                         // The pixel stride of Y plane is always 1. The U/V planes are guaranteed
                         // to have the same row stride and pixel stride.
-                        nativeOnI420FrameAvailable(mNativeScreenCaptureMachineAndroid,
+                        ScreenCaptureJni.get().onI420FrameAvailable(
+                                mNativeScreenCaptureMachineAndroid, ScreenCapture.this,
                                 image.getPlanes()[0].getBuffer(),
                                 image.getPlanes()[0].getRowStride(),
                                 image.getPlanes()[1].getBuffer(), image.getPlanes()[2].getBuffer(),
@@ -274,8 +297,8 @@ public class ScreenCapture extends Fragment {
             mResultData = data;
             changeCaptureStateAndNotify(CaptureState.ALLOWED);
         }
-        nativeOnActivityResult(
-                mNativeScreenCaptureMachineAndroid, resultCode == Activity.RESULT_OK);
+        ScreenCaptureJni.get().onActivityResult(mNativeScreenCaptureMachineAndroid,
+                ScreenCapture.this, resultCode == Activity.RESULT_OK);
     }
 
     @CalledByNative
@@ -355,7 +378,7 @@ public class ScreenCapture extends Fragment {
                 null);
     }
 
-    private void changeCaptureStateAndNotify(CaptureState state) {
+    private void changeCaptureStateAndNotify(@CaptureState int state) {
         synchronized (mCaptureStateLock) {
             mCaptureState = state;
             mCaptureStateLock.notifyAll();
@@ -379,7 +402,7 @@ public class ScreenCapture extends Fragment {
         }
     }
 
-    private DeviceOrientation getDeviceOrientation(int rotation) {
+    private @DeviceOrientation int getDeviceOrientation(int rotation) {
         switch (rotation) {
             case 0:
             case 180:
@@ -396,39 +419,42 @@ public class ScreenCapture extends Fragment {
 
     private boolean maybeDoRotation() {
         final int rotation = getDeviceRotation();
-        final DeviceOrientation orientation = getDeviceOrientation(rotation);
+        final @DeviceOrientation int orientation = getDeviceOrientation(rotation);
         if (orientation == mCurrentOrientation) {
             return false;
         }
 
         mCurrentOrientation = orientation;
         rotateCaptureOrientation(orientation);
-        nativeOnOrientationChange(mNativeScreenCaptureMachineAndroid, rotation);
+        ScreenCaptureJni.get().onOrientationChange(
+                mNativeScreenCaptureMachineAndroid, ScreenCapture.this, rotation);
         return true;
     }
 
-    private void rotateCaptureOrientation(DeviceOrientation orientation) {
+    private void rotateCaptureOrientation(@DeviceOrientation int orientation) {
         if ((orientation == DeviceOrientation.LANDSCAPE && mWidth < mHeight)
                 || (orientation == DeviceOrientation.PORTRAIT && mHeight < mWidth)) {
             mWidth += mHeight - (mHeight = mWidth);
         }
     }
 
-    // Method for ScreenCapture implementations to call back native code.
-    private native void nativeOnRGBAFrameAvailable(long nativeScreenCaptureMachineAndroid,
-            ByteBuffer buf, int left, int top, int width, int height, int rowStride,
-            long timestamp);
+    @NativeMethods
+    interface Natives {
+        // Method for ScreenCapture implementations to call back native code.
+        void onRGBAFrameAvailable(long nativeScreenCaptureMachineAndroid, ScreenCapture caller,
+                ByteBuffer buf, int rowStride, int left, int top, int width, int height,
+                long timestamp);
 
-    private native void nativeOnI420FrameAvailable(long nativeScreenCaptureMachineAndroid,
-            ByteBuffer yBuffer, int yStride, ByteBuffer uBuffer, ByteBuffer vBuffer,
-            int uvRowStride, int uvPixelStride, int left, int top, int width, int height,
-            long timestamp);
+        void onI420FrameAvailable(long nativeScreenCaptureMachineAndroid, ScreenCapture caller,
+                ByteBuffer yBuffer, int yStride, ByteBuffer uBuffer, ByteBuffer vBuffer,
+                int uvRowStride, int uvPixelStride, int left, int top, int width, int height,
+                long timestamp);
+        // Method for ScreenCapture implementations to notify activity result.
+        void onActivityResult(
+                long nativeScreenCaptureMachineAndroid, ScreenCapture caller, boolean result);
 
-    // Method for ScreenCapture implementations to notify activity result.
-    private native void nativeOnActivityResult(
-            long nativeScreenCaptureMachineAndroid, boolean result);
-
-    // Method for ScreenCapture implementations to notify orientation change.
-    private native void nativeOnOrientationChange(
-            long nativeScreenCaptureMachineAndroid, int rotation);
+        // Method for ScreenCapture implementations to notify orientation change.
+        void onOrientationChange(
+                long nativeScreenCaptureMachineAndroid, ScreenCapture caller, int rotation);
+    }
 }

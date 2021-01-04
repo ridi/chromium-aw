@@ -59,4 +59,12 @@
     <item type="id" name="select_action_menu_paste_as_plain_text" />
     <item type="id" name="select_action_menu_web_search" />
     <item type="id" name="select_action_menu_text_processing_menus" />
+
+    <!-- Model Utils -->
+    <item type="id" name="view_model" />
+    <item type="id" name="view_type" />
+    <item type="id" name="view_mcp" />
+
+    <!-- Widgets -->
+    <item type="id" name="chip_cancel_btn" />
 </resources>

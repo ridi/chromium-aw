@@ -7,17 +7,17 @@ package org.chromium.media;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 
+import org.chromium.android_webview.R;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.MainDex;
+import org.chromium.base.annotations.NativeMethods;
 
 /**
  * Class for listening to Android MediaServer crashes to throttle media decoding
  * when needed.
  */
-@MainDex
 @JNINamespace("media")
 public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
     private static final String TAG = "crMediaCrashListener";
@@ -59,7 +59,7 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
         if (mPlayer != null) return true;
 
         try {
-            mPlayer = MediaPlayer.create(ContextUtils.getApplicationContext(), org.chromium.android_webview.R.raw.empty);
+            mPlayer = MediaPlayer.create(ContextUtils.getApplicationContext(), R.raw.empty);
         } catch (IllegalStateException e) {
             Log.e(TAG, "Exception while creating the watchdog player.", e);
         } catch (RuntimeException e) {
@@ -85,7 +85,8 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
                 || (currentTime - mLastReportedWatchdogCreationFailure)
                         > APPROX_MEDIA_SERVER_RESTART_TIME_IN_MS) {
             Log.e(TAG, "Unable to create watchdog player, treating it as server crash.");
-            nativeOnMediaServerCrashDetected(mNativeMediaServerCrashListener, false);
+            MediaServerCrashListenerJni.get().onMediaServerCrashDetected(
+                    mNativeMediaServerCrashListener, MediaServerCrashListener.this, false);
             mLastReportedWatchdogCreationFailure = currentTime;
         }
         return false;
@@ -94,12 +95,16 @@ public class MediaServerCrashListener implements MediaPlayer.OnErrorListener {
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-            nativeOnMediaServerCrashDetected(mNativeMediaServerCrashListener, true);
+            MediaServerCrashListenerJni.get().onMediaServerCrashDetected(
+                    mNativeMediaServerCrashListener, MediaServerCrashListener.this, true);
             releaseWatchdog();
         }
         return true;
     }
 
-    private native void nativeOnMediaServerCrashDetected(
-            long nativeMediaServerCrashListener, boolean watchdogNeedsRelease);
+    @NativeMethods
+    interface Natives {
+        void onMediaServerCrashDetected(long nativeMediaServerCrashListener,
+                MediaServerCrashListener caller, boolean watchdogNeedsRelease);
+    }
 }

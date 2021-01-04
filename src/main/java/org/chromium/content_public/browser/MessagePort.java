@@ -7,6 +7,8 @@ package org.chromium.content_public.browser;
 import android.os.Handler;
 
 import org.chromium.base.annotations.UsedByReflection;
+import org.chromium.content.browser.AppWebMessagePort;
+import org.chromium.mojo.system.MessagePipeHandle;
 
 /**
  * Interface for message ports that handle postMessage requests.
@@ -26,10 +28,20 @@ public interface MessagePort {
     }
 
     /**
-     * @return Whether the message port is ready for receiving
-     *         {@link MessagePort#postMessage(String, MessagePort[])} calls.
+     * Called to create an entangled pair of ports.
+     * @return An array of a pair of{@link MessagePort} instances.
      */
-    boolean isReady();
+    public static MessagePort[] createPair() {
+        return AppWebMessagePort.createPair();
+    }
+
+    /**
+     * Called to create a port from {@link MessagePipeHandle}.
+     * @return A {@link MessagePort} instance.
+     */
+    public static MessagePort create(MessagePipeHandle handle) {
+        return AppWebMessagePort.create(handle);
+    }
 
     /**
      * Close the port for use.

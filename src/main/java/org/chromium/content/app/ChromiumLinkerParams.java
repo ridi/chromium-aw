@@ -53,10 +53,8 @@ public class ChromiumLinkerParams {
     /**
      * Use this constructor to create a LinkerParams instance for testing.
      */
-    public ChromiumLinkerParams(long baseLoadAddress,
-                                boolean waitForSharedRelro,
-                                String testRunnerClassName,
-                                int linkerImplementation) {
+    public ChromiumLinkerParams(long baseLoadAddress, boolean waitForSharedRelro,
+            String testRunnerClassName, int linkerImplementation) {
         mBaseLoadAddress = baseLoadAddress;
         mWaitForSharedRelro = waitForSharedRelro;
         mTestRunnerClassNameForTesting = testRunnerClassName;

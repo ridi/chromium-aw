@@ -4,10 +4,10 @@
 
 package org.chromium.android_webview;
 
+import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-
-import java.util.HashMap;
 
 /**
  * Delegate for handling callbacks. All methods are called on the background thread.
@@ -15,6 +15,7 @@ import java.util.HashMap;
  */
 @JNINamespace("android_webview")
 public abstract class AwContentsBackgroundThreadClient {
+    private static final String TAG = "AwBgThreadClient";
 
     public abstract AwWebResourceResponse shouldInterceptRequest(
             AwContentsClient.AwWebResourceRequest request);
@@ -22,19 +23,28 @@ public abstract class AwContentsBackgroundThreadClient {
     // Protected methods ---------------------------------------------------------------------------
 
     @CalledByNative
-    private AwWebResourceResponse shouldInterceptRequestFromNative(String url, boolean isMainFrame,
-            boolean hasUserGesture, String method, String[] requestHeaderNames,
+    private AwWebResourceInterceptResponse shouldInterceptRequestFromNative(String url,
+            boolean isMainFrame, boolean hasUserGesture, String method, String[] requestHeaderNames,
             String[] requestHeaderValues) {
-        AwContentsClient.AwWebResourceRequest request =
-                new AwContentsClient.AwWebResourceRequest();
-        request.url = url;
-        request.isMainFrame = isMainFrame;
-        request.hasUserGesture = hasUserGesture;
-        request.method = method;
-        request.requestHeaders = new HashMap<String, String>(requestHeaderNames.length);
-        for (int i = 0; i < requestHeaderNames.length; ++i) {
-            request.requestHeaders.put(requestHeaderNames[i], requestHeaderValues[i]);
+        try {
+            return new AwWebResourceInterceptResponse(
+                    shouldInterceptRequest(new AwContentsClient.AwWebResourceRequest(url,
+                            isMainFrame, hasUserGesture, method, requestHeaderNames,
+                            requestHeaderValues)),
+                    /*raisedException=*/false);
+        } catch (Exception e) {
+            Log.e(TAG,
+                    "Client raised exception in shouldInterceptRequest. Re-throwing on UI thread.");
+
+            ThreadUtils.getUiThreadHandler().post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "The following exception was raised by shouldInterceptRequest:");
+                    throw e;
+                }
+            });
+
+            return new AwWebResourceInterceptResponse(null, /*raisedException=*/true);
         }
-        return shouldInterceptRequest(request);
     }
 }

@@ -19,9 +19,12 @@ import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.VisibleForTesting;
+import org.chromium.base.task.PostTask;
+import org.chromium.content_public.browser.UiThreadTaskTraits;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -38,7 +41,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * details.
  */
 class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
-    private static final String TAG = "cr_Ime";
+    private static final String TAG = "Ime";
     private static final boolean DEBUG_LOGS = false;
 
     private static final TextInputState UNBLOCKER = new TextInputState(
@@ -79,7 +82,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final ImeAdapter mImeAdapter;
+    private final ImeAdapterImpl mImeAdapter;
     private final Handler mHandler;
     private int mNumNestedBatchEdits;
 
@@ -91,7 +94,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     private int mCurrentExtractedTextRequestToken;
     private boolean mShouldUpdateExtractedText;
 
-    ThreadedInputConnection(View view, ImeAdapter imeAdapter, Handler handler) {
+    ThreadedInputConnection(View view, ImeAdapterImpl imeAdapter, Handler handler) {
         super(view, true);
         if (DEBUG_LOGS) Log.i(TAG, "constructor");
         ImeUtils.checkOnUiThread();
@@ -215,7 +218,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             return mCachedTextInputState;
         }
         assertOnImeThread();
-        ThreadUtils.postOnUiThread(mRequestTextInputStateUpdate);
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, mRequestTextInputStateUpdate);
         return blockAndGetStateUpdate();
     }
 
@@ -279,7 +282,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     private void notifyUserAction() {
-        ThreadUtils.postOnUiThread(mNotifyUserActionRunnable);
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, mNotifyUserActionRunnable);
     }
 
     /**
@@ -298,7 +301,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @VisibleForTesting
     public boolean updateComposingText(
             final CharSequence text, final int newCursorPosition, final boolean isPendingAccent) {
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 updateComposingTextOnUiThread(text, newCursorPosition, isPendingAccent);
@@ -323,15 +326,36 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     public boolean commitText(final CharSequence text, final int newCursorPosition) {
         if (DEBUG_LOGS) Log.i(TAG, "commitText [%s] [%d]", text, newCursorPosition);
         if (text == null) return false;
-        ThreadUtils.postOnUiThread(new Runnable() {
+
+        // One WebView app detects Enter in JS by looking at KeyDown (http://crbug/577967).
+        if (TextUtils.equals(text, "\n")) {
+            beginBatchEdit();
+            // Clear the current composition range (the keypress alone wouldn't do this).
+            commitText("", 1);
+            PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
+                @Override
+                public void run() {
+                    mImeAdapter.sendSyntheticKeyPress(KeyEvent.KEYCODE_ENTER,
+                            KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE);
+                }
+            });
+            endBatchEdit();
+            return true;
+        }
+
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
-                cancelCombiningAccentOnUiThread();
-                mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
+                commitTextOnUiThread(text, newCursorPosition);
             }
         });
         notifyUserAction();
         return true;
+    }
+
+    private void commitTextOnUiThread(final CharSequence text, final int newCursorPosition) {
+        cancelCombiningAccentOnUiThread();
+        mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
     }
 
     /**
@@ -340,7 +364,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean performEditorAction(final int actionCode) {
         if (DEBUG_LOGS) Log.i(TAG, "performEditorAction [%d]", actionCode);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 mImeAdapter.performEditorAction(actionCode);
@@ -355,7 +379,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean performContextMenuAction(final int id) {
         if (DEBUG_LOGS) Log.i(TAG, "performContextMenuAction [%d]", id);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 mImeAdapter.performContextMenuAction(id);
@@ -426,7 +450,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean deleteSurroundingText(final int beforeLength, final int afterLength) {
         if (DEBUG_LOGS) Log.i(TAG, "deleteSurroundingText [%d %d]", beforeLength, afterLength);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 if (mPendingAccent != 0) {
@@ -447,7 +471,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         if (DEBUG_LOGS) {
             Log.i(TAG, "deleteSurroundingTextInCodePoints [%d %d]", beforeLength, afterLength);
         }
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 if (mPendingAccent != 0) {
@@ -465,7 +489,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean sendKeyEvent(final KeyEvent event) {
         if (DEBUG_LOGS) Log.i(TAG, "sendKeyEvent [%d %d]", event.getAction(), event.getKeyCode());
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 if (handleCombiningAccentOnUiThread(event)) return;
@@ -476,6 +500,14 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         return true;
     }
 
+    private void commitCodePointOnUiThread(int codePoint, int pendingAccentToSet) {
+        StringBuilder builder = new StringBuilder();
+        builder.appendCodePoint(codePoint);
+        String text = builder.toString();
+        mImeAdapter.sendCompositionToNative(text, 1, true, 0);
+        setCombiningAccentOnUiThread(pendingAccentToSet);
+    }
+
     private boolean handleCombiningAccentOnUiThread(final KeyEvent event) {
         // TODO(changwan): this will break the current composition. check if we can
         // implement it in the renderer instead.
@@ -483,24 +515,40 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         int unicodeChar = event.getUnicodeChar();
 
         if (action != KeyEvent.ACTION_DOWN) return false;
+
+        if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+            // We clear the pending accent on receiving a backspace key event (and also delete the
+            // preceding character).
+            setCombiningAccentOnUiThread(0);
+            return false;
+        }
+
         if ((unicodeChar & KeyCharacterMap.COMBINING_ACCENT) != 0) {
-            int pendingAccent = unicodeChar & KeyCharacterMap.COMBINING_ACCENT_MASK;
-            StringBuilder builder = new StringBuilder();
-            builder.appendCodePoint(pendingAccent);
-            updateComposingTextOnUiThread(builder.toString(), 1, true);
-            setCombiningAccentOnUiThread(pendingAccent);
+            int newPendingAccent = unicodeChar & KeyCharacterMap.COMBINING_ACCENT_MASK;
+            if (mPendingAccent != 0) {
+                // Already have an accent pending. Commit the previous accent. If the newly-typed
+                // accent is not the same as the previous one, set it as pending.
+                if (newPendingAccent == mPendingAccent) {
+                    commitCodePointOnUiThread(mPendingAccent, 0);
+                } else {
+                    commitCodePointOnUiThread(mPendingAccent, newPendingAccent);
+                }
+                return true;
+            }
+
+            // No accent currently pending. Just set the new accent as the pending accent and
+            // return.
+            setCombiningAccentOnUiThread(newPendingAccent);
             return true;
         } else if (mPendingAccent != 0 && unicodeChar != 0) {
             int combined = KeyEvent.getDeadChar(mPendingAccent, unicodeChar);
             if (combined != 0) {
-                StringBuilder builder = new StringBuilder();
-                builder.appendCodePoint(combined);
-                String text = builder.toString();
-                mImeAdapter.sendCompositionToNative(text, 1, text.length() > 0, 0);
+                commitCodePointOnUiThread(combined, 0);
                 return true;
             }
             // Noncombinable character; commit the accent character and fall through to sending
             // the key event for the character afterwards.
+            commitCodePointOnUiThread(mPendingAccent, 0);
             finishComposingTextOnUiThread();
         }
         return false;
@@ -523,12 +571,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         if (DEBUG_LOGS) Log.i(TAG, "finishComposingText");
         // This is the only function that may be called on UI thread because
         // of direct calls from InputMethodManager.
-        ThreadUtils.postOnUiThread(mFinishComposingTextRunnable);
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, mFinishComposingTextRunnable);
         return true;
     }
 
     private void finishComposingTextOnUiThread() {
-        cancelCombiningAccentOnUiThread();
         mImeAdapter.finishComposingText();
     }
 
@@ -538,7 +585,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean setSelection(final int start, final int end) {
         if (DEBUG_LOGS) Log.i(TAG, "setSelection [%d %d]", start, end);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 mImeAdapter.setEditableSelectionOffsets(start, end);
@@ -553,7 +600,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean setComposingRegion(final int start, final int end) {
         if (DEBUG_LOGS) Log.i(TAG, "setComposingRegion [%d %d]", start, end);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 mImeAdapter.setComposingRegion(start, end);
@@ -658,7 +705,13 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean performPrivateCommand(String action, Bundle data) {
         if (DEBUG_LOGS) Log.i(TAG, "performPrivateCommand [%s]", action);
-        return false;
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
+            @Override
+            public void run() {
+                mImeAdapter.performPrivateCommand(action, data);
+            }
+        });
+        return true;
     }
 
     /**
@@ -667,7 +720,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean requestCursorUpdates(final int cursorUpdateMode) {
         if (DEBUG_LOGS) Log.i(TAG, "requestCursorUpdates [%x]", cursorUpdateMode);
-        ThreadUtils.postOnUiThread(new Runnable() {
+        PostTask.postTask(UiThreadTaskTraits.DEFAULT, new Runnable() {
             @Override
             public void run() {
                 mImeAdapter.onRequestCursorUpdates(cursorUpdateMode);

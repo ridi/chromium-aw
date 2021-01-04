@@ -6,6 +6,7 @@ package org.chromium.content.app;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
+import org.chromium.base.annotations.NativeMethods;
 
 /**
  * This class is used to initialize all types of process. It corresponds to
@@ -22,10 +23,15 @@ import org.chromium.base.annotations.MainDex;
 public class ContentMain {
     /**
      * Start the ContentMainRunner in native side.
+     *
+     * @param startServiceManagerOnly Whether to start only the ServiceManager.
      **/
-    public static int start() {
-        return nativeStart();
+    public static int start(boolean startServiceManagerOnly) {
+        return ContentMainJni.get().start(startServiceManagerOnly);
     }
 
-    private static native int nativeStart();
+    @NativeMethods
+    interface Natives {
+        int start(boolean startServiceManagerOnly);
+    }
 }

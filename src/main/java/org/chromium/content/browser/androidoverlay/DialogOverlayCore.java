@@ -7,13 +7,17 @@ package org.chromium.content.browser.androidoverlay;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.gfx.mojom.Rect;
 import org.chromium.media.mojom.AndroidOverlayConfig;
 
@@ -35,9 +39,13 @@ class DialogOverlayCore {
         // Notify the host that we have failed to get a surface or the surface was destroyed.
         void onOverlayDestroyed();
 
-        // Wait until the host has been told to clean up.  We are allowed to let surfaceDestroyed
+        // Wait until the host has been told to close.  We are allowed to let surfaceDestroyed
         // proceed once this happens.
-        void waitForCleanup();
+        void waitForClose();
+
+        // Notify the host that waitForClose() is done waiting, so that it can enforce that cleanup
+        // always happens.
+        void enforceClose();
     }
 
     private Host mHost;
@@ -56,6 +64,9 @@ class DialogOverlayCore {
     // If true, then we'll be a panel rather than media overlay.  This is for testing.
     private boolean mAsPanel;
 
+    // Looper that we're initialized on, for thread checking.
+    private Looper mLooper;
+
     /**
      * Construction may be called from a random thread, for simplicity.  Call initialize from the
      * proper thread before doing anything else.
@@ -71,6 +82,7 @@ class DialogOverlayCore {
      */
     public void initialize(
             Context context, AndroidOverlayConfig config, Host host, boolean asPanel) {
+        mLooper = Looper.myLooper();
         mHost = host;
         mAsPanel = asPanel;
 
@@ -84,15 +96,13 @@ class DialogOverlayCore {
 
     /**
      * Release the underlying surface, and generally clean up, in response to
-     * the client releasing the AndroidOverlay.
+     * the client releasing the AndroidOverlay.  This may be called more than once.
      */
     public void release() {
+        assertProperThread();
+
         // If we've not released the dialog yet, then do so.
-        if (mDialog != null) {
-            if (mDialog.isShowing()) mDialog.dismiss();
-            mDialog = null;
-            mDialogCallbacks = null;
-        }
+        dismissDialogQuietly();
 
         mLayoutParams.token = null;
 
@@ -100,13 +110,23 @@ class DialogOverlayCore {
         mHost = null;
     }
 
-    private void copyRectToLayoutParams(final Rect rect) {
+    /**
+     * Updates the most recent position/size for the dialog window. Returns false if |rect| already
+     * matches the current params.
+     */
+    private boolean copyRectToLayoutParams(final Rect rect) {
+        if (mLayoutParams.x == rect.x && mLayoutParams.y == rect.y
+                && mLayoutParams.width == rect.width && mLayoutParams.height == rect.height) {
+            return false;
+        }
+
         // TODO(liberato): adjust for CompositorView screen location here if we want to support
         // non-full screen use cases.
         mLayoutParams.x = rect.x;
         mLayoutParams.y = rect.y;
         mLayoutParams.width = rect.width;
         mLayoutParams.height = rect.height;
+        return true;
     }
 
     /**
@@ -116,7 +136,10 @@ class DialogOverlayCore {
     public void layoutSurface(final Rect rect) {
         if (mDialog == null || mLayoutParams.token == null) return;
 
-        copyRectToLayoutParams(rect);
+        // Note that it is important to not update the attributes if updating the layout params was
+        // a no-op because it results in unnecessary re-layouts for the window.
+        if (!copyRectToLayoutParams(rect)) return;
+
         mDialog.getWindow().setAttributes(mLayoutParams);
     }
 
@@ -130,6 +153,8 @@ class DialogOverlayCore {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
+            assertProperThread();
+
             // Make sure that we haven't torn down the dialog yet.
             if (mDialog == null) return;
 
@@ -140,9 +165,28 @@ class DialogOverlayCore {
         public void surfaceDestroyed(SurfaceHolder holder) {
             if (mDialog == null || mHost == null) return;
 
-            // Notify the host that we've been destroyed, and wait for it to clean up.
+            // This method should be called on the overlay thread, but is sometimes called on the
+            // browser UI thread due to framework bugs.  If that happens, we can't really clean up
+            // properly (synchronously), since |mHost| can't be closed properly from the remote side
+            // since we're blocking the UI thread.  To avoid that, we just give up on synchronous
+            // shutdown and hope for the best.
+            //
+            // We only allow it on P and later, since it's observed on both P and Q.
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                assertProperThread();
+            } else if (mLooper != Looper.myLooper()) {
+                Log.e(TAG, "surfaceDestroyed called on wrong thread.  Avoiding proper shutdown.");
+                // We still notify the client, so that it can shut down, but we don't wait.  Note
+                // that this can result in calls back into |this| on the overlay thread, including
+                // clearing |mHost| even if it is not null now.
+                mHost.onOverlayDestroyed();
+                return;
+            }
+
+            // Notify the host that we've been destroyed, and wait for it to clean up or time out.
             mHost.onOverlayDestroyed();
-            mHost.waitForCleanup();
+            mHost.waitForClose();
+            mHost.enforceClose();
             mHost = null;
         }
 
@@ -151,6 +195,8 @@ class DialogOverlayCore {
     }
 
     public void onWindowToken(IBinder token) {
+        assertProperThread();
+
         if (mDialog == null || mHost == null) return;
 
         if (token == null || (mLayoutParams.token != null && token != mLayoutParams.token)) {
@@ -158,7 +204,7 @@ class DialogOverlayCore {
             // Notify the client.
             mHost.onOverlayDestroyed();
             mHost = null;
-            if (mDialog.isShowing()) mDialog.dismiss();
+            dismissDialogQuietly();
             return;
         }
 
@@ -236,5 +282,34 @@ class DialogOverlayCore {
      */
     Dialog getDialog() {
         return mDialog;
+    }
+
+    // Dismiss |mDialog| if needed, and clear it and the callbacks.  This hides any exception, since
+    // there's a race during app shutdown between this running on the overlay-ui thread, and losing
+    // the window token on the browser UI thread.
+    // See crbug.com/784224 .
+    private void dismissDialogQuietly() {
+        if (mDialog != null && mDialog.isShowing()) {
+            try {
+                mDialog.dismiss();
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to dismiss overlay dialog.  \"WindowLeaked\" is ignorable.");
+            }
+        }
+
+        mDialog = null;
+        mDialogCallbacks = null;
+    }
+
+    // Throw an exception if we're on the wrong thread, regardless of build.
+    private void assertProperThread() {
+        if (mLooper == Looper.myLooper()) return;
+
+        // Special-case the browser UI thread, just to be more helpful.
+        if (ThreadUtils.runningOnUiThread()) {
+            throw new RuntimeException("DialogOverlayCore is on the UI thread");
+        } else {
+            throw new RuntimeException("DialogOverlayCore is on the wrong thread");
+        }
     }
 }

@@ -15,22 +15,26 @@ public class NavigationEntry {
     private final String mUrl;
     private final String mOriginalUrl;
     private final String mVirtualUrl;
+    private final String mReferrerUrl;
     private final String mTitle;
     private Bitmap mFavicon;
     private int mTransition;
+    private long mTimestamp;
 
     /**
      * Default constructor.
      */
     public NavigationEntry(int index, String url, String virtualUrl, String originalUrl,
-            String title, Bitmap favicon, int transition) {
+            String referrerUrl, String title, Bitmap favicon, int transition, long timestamp) {
         mIndex = index;
         mUrl = url;
         mVirtualUrl = virtualUrl;
         mOriginalUrl = originalUrl;
+        mReferrerUrl = referrerUrl;
         mTitle = title;
         mFavicon = favicon;
         mTransition = transition;
+        mTimestamp = timestamp;
     }
 
     /**
@@ -72,6 +76,13 @@ public class NavigationEntry {
     }
 
     /**
+     * @return The referring URL, can be empty.
+     */
+    public String getReferrerUrl() {
+        return mReferrerUrl;
+    }
+
+    /**
      * @return The title as set by the page. This will be empty if there is no
      *         title set. The caller is responsible for detecting when there is
      *         no title and displaying the appropriate "Untitled" label if this
@@ -97,5 +108,12 @@ public class NavigationEntry {
 
     public int getTransition() {
         return mTransition;
+    }
+
+    /**
+     * @return The Timestamp when the last navigation completed.
+     */
+    public long getTimestamp() {
+        return mTimestamp;
     }
 }

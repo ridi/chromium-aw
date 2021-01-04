@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,17 +26,17 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
-import org.chromium.android_webview.R;
+import androidx.annotation.VisibleForTesting;
 
+import org.chromium.android_webview.R;
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.VisibleForTesting;
-import org.chromium.content.browser.WindowAndroidProvider;
 import org.chromium.ui.UiUtils;
+import org.chromium.ui.base.WindowAndroid;
 
 /**
  * Popup window that displays a menu for viewing and applying text replacement suggestions.
  */
-public class SuggestionsPopupWindow
+public abstract class SuggestionsPopupWindow
         implements OnItemClickListener, OnDismissListener, View.OnClickListener {
     private static final String ACTION_USER_DICTIONARY_INSERT =
             "com.android.settings.USER_DICTIONARY_INSERT";
@@ -45,18 +46,16 @@ public class SuggestionsPopupWindow
     private static final int ADD_TO_DICTIONARY_MAX_LENGTH_ON_JELLY_BEAN = 48;
 
     private final Context mContext;
-    private final TextSuggestionHost mTextSuggestionHost;
+    protected final TextSuggestionHost mTextSuggestionHost;
     private final View mParentView;
-    private final WindowAndroidProvider mWindowAndroidProvider;
+    private WindowAndroid mWindowAndroid;
 
     private Activity mActivity;
     private DisplayMetrics mDisplayMetrics;
     private PopupWindow mPopupWindow;
     private LinearLayout mContentView;
 
-    private SuggestionAdapter mSuggestionsAdapter;
     private String mHighlightedText;
-    private String[] mSpellCheckSuggestions = new String[0];
     private int mNumberOfSuggestionsToUse;
     private TextView mAddToDictionaryButton;
     private TextView mDeleteButton;
@@ -66,24 +65,53 @@ public class SuggestionsPopupWindow
     private int mPopupVerticalMargin;
 
     private boolean mDismissedByItemTap;
-
     /**
      * @param context Android context to use.
      * @param textSuggestionHost TextSuggestionHost instance (used to communicate with Blink).
+     * @param windowAndroid The current WindowAndroid instance.
      * @param parentView The view used to attach the PopupWindow.
-     * @param windowAndroidProvider A WindowAndroidProvider instance used to get the window size.
      */
     public SuggestionsPopupWindow(Context context, TextSuggestionHost textSuggestionHost,
-            View parentView, WindowAndroidProvider windowAndroidProvider) {
+            WindowAndroid windowAndroid, View parentView) {
         mContext = context;
         mTextSuggestionHost = textSuggestionHost;
+        mWindowAndroid = windowAndroid;
         mParentView = parentView;
-        mWindowAndroidProvider = windowAndroidProvider;
 
         createPopupWindow();
         initContentView();
 
         mPopupWindow.setContentView(mContentView);
+    }
+
+    /**
+     * Method to be implemented by subclasses that returns how mnay suggestions are available (some
+     * of them may not be displayed if there's not enough room in the window).
+     */
+    protected abstract int getSuggestionsCount();
+
+    /**
+     * Method to be implemented by subclasses to return an object representing the suggestion at
+     * the specified position.
+     */
+    protected abstract Object getSuggestionItem(int position);
+
+    /**
+     * Method to be implemented by subclasses to return a SpannableString representing text,
+     * possibly with formatting added, to display for the suggestion at the specified position.
+     */
+    protected abstract SpannableString getSuggestionText(int position);
+
+    /**
+     * Method to be implemented by subclasses to apply the suggestion at the specified position.
+     */
+    protected abstract void applySuggestion(int position);
+
+    /**
+     * Hides or shows the "Add to dictionary" button in the suggestion menu footer.
+     */
+    protected void setAddToDictionaryEnabled(boolean isEnabled) {
+        mAddToDictionaryButton.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
     }
 
     private void createPopupWindow() {
@@ -123,7 +151,7 @@ public class SuggestionsPopupWindow
             // Set this on the content view instead of on the PopupWindow so we can retrieve the
             // padding later.
             mContentView.setBackground(ApiCompatibilityUtils.getDrawable(
-                    mContext.getResources(), R.drawable.dropdown_popup_background));
+                    mContext.getResources(), R.drawable.popup_bg));
         }
 
         // mPopupVerticalMargin is the minimum amount of space we want to have between the popup
@@ -140,8 +168,7 @@ public class SuggestionsPopupWindow
                 (LinearLayout) inflater.inflate(R.layout.text_edit_suggestion_list_footer, null);
         mSuggestionListView.addFooterView(mListFooter, null, false);
 
-        mSuggestionsAdapter = new SuggestionAdapter();
-        mSuggestionListView.setAdapter(mSuggestionsAdapter);
+        mSuggestionListView.setAdapter(new SuggestionAdapter());
         mSuggestionListView.setOnItemClickListener(this);
 
         mDivider = mContentView.findViewById(R.id.divider);
@@ -166,6 +193,13 @@ public class SuggestionsPopupWindow
      */
     public boolean isShowing() {
         return mPopupWindow.isShowing();
+    }
+
+    /**
+     * Used by TextSuggestionHost to update {@link WindowAndroid} to the current one.
+     */
+    public void updateWindowAndroid(WindowAndroid windowAndroid) {
+        mWindowAndroid = windowAndroid;
     }
 
     private void addToDictionary() {
@@ -202,7 +236,7 @@ public class SuggestionsPopupWindow
 
         @Override
         public Object getItem(int position) {
-            return mSpellCheckSuggestions[position];
+            return getSuggestionItem(position);
         }
 
         @Override
@@ -217,8 +251,8 @@ public class SuggestionsPopupWindow
                 textView = (TextView) mInflater.inflate(
                         R.layout.text_edit_suggestion_item, parent, false);
             }
-            final String suggestion = mSpellCheckSuggestions[position];
-            textView.setText(suggestion);
+
+            textView.setText(getSuggestionText(position));
             return textView;
         }
     }
@@ -249,26 +283,11 @@ public class SuggestionsPopupWindow
      * Called by TextSuggestionHost to tell this class what text is currently highlighted (so it can
      * be added to the dictionary if requested).
      */
-    public void setHighlightedText(String text) {
-        mHighlightedText = text;
-    }
+    protected void show(double caretXPx, double caretYPx, String highlightedText) {
+        mNumberOfSuggestionsToUse = getSuggestionsCount();
+        mHighlightedText = highlightedText;
 
-    /**
-     * Called by TextSuggestionHost to set the list of spell check suggestions to show in the
-     * suggestion menu.
-     */
-    public void setSpellCheckSuggestions(String[] suggestions) {
-        mSpellCheckSuggestions = suggestions.clone();
-        mNumberOfSuggestionsToUse = mSpellCheckSuggestions.length;
-    }
-
-    /**
-     * Shows the text suggestion menu at the specified coordinates (relative to the viewport).
-     */
-    public void show(double caretX, double caretY) {
-        mSuggestionsAdapter.notifyDataSetChanged();
-
-        mActivity = mWindowAndroidProvider.getWindowAndroid().getActivity().get();
+        mActivity = mWindowAndroid.getActivity().get();
         // Note: the Activity can be null here if we're in a WebView that was created without
         // using an Activity. So all code in this class should handle this case.
         if (mActivity != null) {
@@ -328,8 +347,8 @@ public class SuggestionsPopupWindow
 
         // Horizontally center the menu on the caret location, and vertically position the menu
         // under the caret.
-        int positionX = (int) Math.round(caretX - width / 2.0f);
-        int positionY = (int) Math.round(caretY);
+        int positionX = (int) Math.round(caretXPx - width / 2.0f);
+        int positionY = (int) Math.round(caretYPx);
 
         // We get the insertion point coords relative to the viewport.
         // We need to render the popup relative to the window.
@@ -365,7 +384,7 @@ public class SuggestionsPopupWindow
     public void onClick(View v) {
         if (v == mAddToDictionaryButton) {
             addToDictionary();
-            mTextSuggestionHost.newWordAddedToDictionary(mHighlightedText);
+            mTextSuggestionHost.onNewWordAddedToDictionary(mHighlightedText);
             mDismissedByItemTap = true;
             mPopupWindow.dismiss();
         } else if (v == mDeleteButton) {
@@ -383,15 +402,14 @@ public class SuggestionsPopupWindow
             return;
         }
 
-        String suggestion = mSpellCheckSuggestions[position];
-        mTextSuggestionHost.applySpellCheckSuggestion(suggestion);
+        applySuggestion(position);
         mDismissedByItemTap = true;
         mPopupWindow.dismiss();
     }
 
     @Override
     public void onDismiss() {
-        mTextSuggestionHost.suggestionMenuClosed(mDismissedByItemTap);
+        mTextSuggestionHost.onSuggestionMenuClosed(mDismissedByItemTap);
         mDismissedByItemTap = false;
     }
 

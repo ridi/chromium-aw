@@ -8,7 +8,6 @@ import android.os.Process;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.annotations.MainDex;
-import org.chromium.base.annotations.SuppressFBWarnings;
 
 /**
  * Handler that immediately kills the current process on an uncaught exception.
@@ -36,13 +35,13 @@ class KillChildUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
     }
 
     @Override
-    @SuppressFBWarnings("DM_EXIT")
+    @SuppressWarnings("checkstyle:SystemExitCheck") // Allowed since the goal is to mimic Android.
     public void uncaughtException(Thread t, Throwable e) {
         // Never re-enter.
         if (mCrashing) return;
         mCrashing = true;
 
-        // Copyed from Android KillApplicationHandler in RuntimeInit.java. This is how the default
+        // Copied from Android KillApplicationHandler in RuntimeInit.java. This is how the default
         // Android handler kills this process.
         Process.killProcess(Process.myPid());
         System.exit(10);

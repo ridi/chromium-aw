@@ -6,6 +6,7 @@ package org.chromium.media;
 
 import android.media.MediaDrm;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.media.MediaDrmStorageBridge.PersistentInfo;
 
@@ -72,7 +73,8 @@ class MediaDrmSessionManager {
          * @return Session ID with random generated EME session ID.
          */
         static SessionId createPersistentSessionId(byte[] drmId) {
-            byte[] emeId = UUID.randomUUID().toString().replace('-', '0').getBytes();
+            byte[] emeId = ApiCompatibilityUtils.getBytesUtf8(
+                    UUID.randomUUID().toString().replace('-', '0'));
             return new SessionId(emeId, drmId, null /* keySetId */);
         }
 
@@ -170,7 +172,8 @@ class MediaDrmSessionManager {
         private PersistentInfo toPersistentInfo() {
             assert mSessionId.keySetId() != null;
 
-            return new PersistentInfo(mSessionId.emeId(), mSessionId.keySetId(), mMimeType);
+            return new PersistentInfo(
+                    mSessionId.emeId(), mSessionId.keySetId(), mMimeType, mKeyType);
         }
 
         private static SessionInfo fromPersistentInfo(PersistentInfo persistentInfo) {
@@ -180,7 +183,18 @@ class MediaDrmSessionManager {
 
             SessionId sessionId = new SessionId(
                     persistentInfo.emeId(), null /* drmId */, persistentInfo.keySetId());
-            return new SessionInfo(sessionId, persistentInfo.mimeType(), MediaDrm.KEY_TYPE_OFFLINE);
+            return new SessionInfo(sessionId, persistentInfo.mimeType(),
+                    getKeyTypeFromPersistentInfo(persistentInfo));
+        }
+
+        private static int getKeyTypeFromPersistentInfo(PersistentInfo persistentInfo) {
+            int keyType = persistentInfo.keyType();
+            if (keyType == MediaDrm.KEY_TYPE_OFFLINE || keyType == MediaDrm.KEY_TYPE_RELEASE) {
+                return keyType;
+            }
+
+            // Key type is missing. Use OFFLINE by default.
+            return MediaDrm.KEY_TYPE_OFFLINE;
         }
     }
 
@@ -236,13 +250,13 @@ class MediaDrmSessionManager {
      * Mark key as released. It should only be called for persistent license
      * session.
      */
-    void markKeyReleased(SessionId sessionId) {
+    void setKeyType(SessionId sessionId, int keyType, Callback<Boolean> callback) {
         SessionInfo info = get(sessionId);
 
         assert info != null;
-        assert info.keyType() == MediaDrm.KEY_TYPE_OFFLINE;
 
-        info.setKeyType(MediaDrm.KEY_TYPE_RELEASE);
+        info.setKeyType(keyType);
+        mStorage.saveInfo(info.toPersistentInfo(), callback);
     }
 
     /**

@@ -7,18 +7,18 @@ package org.chromium.base;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.base.annotations.MainDex;
+import org.chromium.base.annotations.NativeMethods;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -29,15 +29,6 @@ import java.util.concurrent.atomic.AtomicReference;
 **/
 @MainDex
 public abstract class CommandLine {
-    /**
-     * Allows classes who cache command line flags to be notified when those arguments are updated
-     * at runtime. This happens in tests.
-     */
-    public interface ResetListener {
-        /** Called when the command line arguments are reset. */
-        void onCommandLineReset();
-    }
-
     // Public abstract interface, implemented in derived classes.
     // All these methods reflect their native-side counterparts.
     /**
@@ -93,6 +84,12 @@ public abstract class CommandLine {
     public abstract void appendSwitchesAndArguments(String[] array);
 
     /**
+     * Remove the switch from the command line.  If no such switch is present, this has no effect.
+     * @param switchString The switch key to lookup. It should NOT start with '--' !
+     */
+    public abstract void removeSwitch(String switchString);
+
+    /**
      * Determine if the command line is bound to the native (JNI) implementation.
      * @return true if the underlying implementation is delegating to the native command line.
      */
@@ -100,12 +97,23 @@ public abstract class CommandLine {
         return false;
     }
 
-    private static final List<ResetListener> sResetListeners = new ArrayList<>();
+    /**
+     * Returns the switches and arguments passed into the program, with switches and their
+     * values coming before all of the arguments.
+     */
+    protected abstract String[] getCommandLineArguments();
+
+    /**
+     * Destroy the command line. Called when a different instance is set.
+     * @see #setInstance
+     */
+    protected void destroy() {}
+
     private static final AtomicReference<CommandLine> sCommandLine =
             new AtomicReference<CommandLine>();
 
     /**
-     * @returns true if the command line has already been initialized.
+     * @return true if the command line has already been initialized.
      */
     public static boolean isInitialized() {
         return sCommandLine.get() != null;
@@ -124,7 +132,7 @@ public abstract class CommandLine {
      * via one of the convenience wrappers below) before using the static singleton instance.
      * @param args command line flags in 'argv' format: args[0] is the program name.
      */
-    public static void init(String[] args) {
+    public static void init(@Nullable String[] args) {
         setInstance(new JavaCommandLine(args));
     }
 
@@ -134,9 +142,8 @@ public abstract class CommandLine {
      * @param file The fully qualified command line file.
      */
     public static void initFromFile(String file) {
-        // Just field trials can take upto 10K of command line.
-        char[] buffer = readUtf8FileFullyCrashIfTooBig(file, 64 * 1024);
-        init(buffer == null ? null : tokenizeQuotedAruments(buffer));
+        char[] buffer = readFileAsUtf8(file);
+        init(buffer == null ? null : tokenizeQuotedArguments(buffer));
     }
 
     /**
@@ -146,24 +153,9 @@ public abstract class CommandLine {
     @VisibleForTesting
     public static void reset() {
         setInstance(null);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (ResetListener listener : sResetListeners) listener.onCommandLineReset();
-            }
-        });
-    }
-
-    public static void addResetListener(ResetListener listener) {
-        sResetListeners.add(listener);
-    }
-
-    public static void removeResetListener(ResetListener listener) {
-        sResetListeners.remove(listener);
     }
 
     /**
-     * Public for testing (TODO: why are the tests in a different package?)
      * Parse command line flags from a flat buffer, supporting double-quote enclosed strings
      * containing whitespace. argv elements are derived by splitting the buffer on whitepace;
      * double quote characters may enclose tokens containing whitespace; a double-quote literal
@@ -171,7 +163,14 @@ public abstract class CommandLine {
      * @param buffer A command line in command line file format as described above.
      * @return the tokenized arguments, suitable for passing to init().
      */
-    public static String[] tokenizeQuotedAruments(char[] buffer) {
+    @VisibleForTesting
+    static String[] tokenizeQuotedArguments(char[] buffer) {
+        // Just field trials can take up to 10K of command line.
+        if (buffer.length > 64 * 1024) {
+            // Check that our test runners are setting a reasonable number of flags.
+            throw new RuntimeException("Flags file too big: " + buffer.length);
+        }
+
         ArrayList<String> args = new ArrayList<String>();
         StringBuilder arg = null;
         final char noQuote = '\0';
@@ -216,63 +215,47 @@ public abstract class CommandLine {
         // Make a best-effort to ensure we make a clean (atomic) switch over from the old to
         // the new command line implementation. If another thread is modifying the command line
         // when this happens, all bets are off. (As per the native CommandLine).
-        sCommandLine.set(new NativeCommandLine());
+        sCommandLine.set(new NativeCommandLine(getJavaSwitchesOrNull()));
     }
 
+    @Nullable
     public static String[] getJavaSwitchesOrNull() {
         CommandLine commandLine = sCommandLine.get();
         if (commandLine != null) {
-            assert !commandLine.isNativeImplementation();
-            return ((JavaCommandLine) commandLine).getCommandLineArguments();
+            return commandLine.getCommandLineArguments();
         }
         return null;
     }
 
     private static void setInstance(CommandLine commandLine) {
         CommandLine oldCommandLine = sCommandLine.getAndSet(commandLine);
-        if (oldCommandLine != null && oldCommandLine.isNativeImplementation()) {
-            nativeReset();
+        if (oldCommandLine != null) {
+            oldCommandLine.destroy();
         }
     }
 
     /**
-     * @param fileName the file to read in.
-     * @param sizeLimit cap on the file size.
-     * @return Array of chars read from the file, or null if the file cannot be read.
-     * @throws RuntimeException if the file size exceeds |sizeLimit|.
+     * Set {@link CommandLine} for testing.
+     * @param commandLine The {@link CommandLine} to use.
      */
-    private static char[] readUtf8FileFullyCrashIfTooBig(String fileName, int sizeLimit) {
-        Reader reader = null;
+    @VisibleForTesting
+    public static void setInstanceForTesting(CommandLine commandLine) {
+        setInstance(commandLine);
+    }
+
+    /**
+     * @param fileName the file to read in.
+     * @return Array of chars read from the file, or null if the file cannot be read.
+     */
+    private static char[] readFileAsUtf8(String fileName) {
         File f = new File(fileName);
-        long fileLength = f.length();
-
-        if (fileLength == 0) {
-            return null;
-        }
-
-        if (fileLength > sizeLimit) {
-            throw new RuntimeException(
-                    "File " + fileName + " length " + fileLength + " exceeds limit " + sizeLimit);
-        }
-
-        try {
-            char[] buffer = new char[(int) fileLength];
-            reader = new InputStreamReader(new FileInputStream(f), "UTF-8");
+        try (FileReader reader = new FileReader(f)) {
+            char[] buffer = new char[(int) f.length()];
             int charsRead = reader.read(buffer);
-            // Debug check that we've exhausted the input stream (will fail e.g. if the
-            // file grew after we inspected its length).
-            assert !reader.ready();
-            return charsRead < buffer.length ? Arrays.copyOfRange(buffer, 0, charsRead) : buffer;
-        } catch (FileNotFoundException e) {
-            return null;
+            // charsRead < f.length() in the case of multibyte characters.
+            return Arrays.copyOfRange(buffer, 0, charsRead);
         } catch (IOException e) {
-            return null;
-        } finally {
-            try {
-                if (reader != null) reader.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Unable to close file reader.", e);
-            }
+            return null; // Most likely file not found.
         }
     }
 
@@ -285,7 +268,7 @@ public abstract class CommandLine {
         // The arguments begin at index 1, since index 0 contains the executable name.
         private int mArgsBegin = 1;
 
-        JavaCommandLine(String[] args) {
+        JavaCommandLine(@Nullable String[] args) {
             if (args == null || args.length == 0 || args[0] == null) {
                 mArgs.add("");
             } else {
@@ -296,11 +279,8 @@ public abstract class CommandLine {
             assert mArgs.size() > 0;
         }
 
-        /**
-         * Returns the switches and arguments passed into the program, with switches and their
-         * values coming before all of the arguments.
-         */
-        private String[] getCommandLineArguments() {
+        @Override
+        protected String[] getCommandLineArguments() {
             return mArgs.toArray(new String[mArgs.size()]);
         }
 
@@ -367,44 +347,86 @@ public abstract class CommandLine {
                 }
             }
         }
+
+        @Override
+        public void removeSwitch(String switchString) {
+            mSwitches.remove(switchString);
+            String combinedSwitchString = SWITCH_PREFIX + switchString;
+
+            // Since we permit a switch to be added multiple times, we need to remove all instances
+            // from mArgs.
+            for (int i = mArgsBegin - 1; i > 0; i--) {
+                if (mArgs.get(i).equals(combinedSwitchString)
+                        || mArgs.get(i).startsWith(combinedSwitchString + SWITCH_VALUE_SEPARATOR)) {
+                    --mArgsBegin;
+                    mArgs.remove(i);
+                }
+            }
+        }
     }
 
     private static class NativeCommandLine extends CommandLine {
+        public NativeCommandLine(@Nullable String[] args) {
+            CommandLineJni.get().init(args);
+        }
+
         @Override
         public boolean hasSwitch(String switchString) {
-            return nativeHasSwitch(switchString);
+            return CommandLineJni.get().hasSwitch(switchString);
         }
 
         @Override
         public String getSwitchValue(String switchString) {
-            return nativeGetSwitchValue(switchString);
+            return CommandLineJni.get().getSwitchValue(switchString);
         }
 
         @Override
         public void appendSwitch(String switchString) {
-            nativeAppendSwitch(switchString);
+            CommandLineJni.get().appendSwitch(switchString);
         }
 
         @Override
         public void appendSwitchWithValue(String switchString, String value) {
-            nativeAppendSwitchWithValue(switchString, value);
+            CommandLineJni.get().appendSwitchWithValue(switchString, value);
         }
 
         @Override
         public void appendSwitchesAndArguments(String[] array) {
-            nativeAppendSwitchesAndArguments(array);
+            CommandLineJni.get().appendSwitchesAndArguments(array);
+        }
+
+        @Override
+        public void removeSwitch(String switchString) {
+            CommandLineJni.get().removeSwitch(switchString);
         }
 
         @Override
         public boolean isNativeImplementation() {
             return true;
         }
+
+        @Override
+        protected String[] getCommandLineArguments() {
+            assert false;
+            return null;
+        }
+
+        @Override
+        protected void destroy() {
+            // TODO(https://crbug.com/771205): Downgrade this to an assert once we have eliminated
+            // tests that do this.
+            throw new IllegalStateException("Can't destroy native command line after startup");
+        }
     }
 
-    private static native void nativeReset();
-    private static native boolean nativeHasSwitch(String switchString);
-    private static native String nativeGetSwitchValue(String switchString);
-    private static native void nativeAppendSwitch(String switchString);
-    private static native void nativeAppendSwitchWithValue(String switchString, String value);
-    private static native void nativeAppendSwitchesAndArguments(String[] array);
+    @NativeMethods
+    interface Natives {
+        void init(String[] args);
+        boolean hasSwitch(String switchString);
+        String getSwitchValue(String switchString);
+        void appendSwitch(String switchString);
+        void appendSwitchWithValue(String switchString, String value);
+        void appendSwitchesAndArguments(String[] array);
+        void removeSwitch(String switchString);
+    }
 }

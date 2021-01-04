@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:left="0.0dip" android:top="0.0dip" android:right="0.0dip" android:bottom="0.0dip">
+<!--
+     Copyright 2013 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file.
+-->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="0dp"
+        android:right="0dp"
+        android:bottom="0dp"
+        android:left="0dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/color_picker_border_color" />
+            <solid android:color="@color/color_picker_border_color"/>
         </shape>
     </item>
-    <item android:left="1.0px" android:top="0.0px" android:right="1.0px" android:bottom="0.0px">
+    <item android:top="0px"
+        android:right="1px"
+        android:bottom="0px"
+        android:left="1px">
         <shape android:shape="rectangle">
-            <solid android:color="@color/color_picker_background_color" />
+            <solid android:color="@color/color_picker_background_color"/>
         </shape>
     </item>
-    <item android:id="@id/color_button_swatch" android:left="2.0px" android:top="1.0px" android:right="2.0px" android:bottom="1.0px">
+    <item
+        android:id="@+id/color_button_swatch"
+        android:top="1px"
+        android:right="2px"
+        android:bottom="1px"
+        android:left="2px">
         <shape android:shape="rectangle">
-            <solid android:color="#ffff0000" />
+            <solid android:color="#FF0000"/>
         </shape>
     </item>
 </layer-list>
