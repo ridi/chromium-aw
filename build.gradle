@@ -21,7 +21,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ridi'
-version = '62.0.3202.101-6'
+version = '86.0.4240.198-1'
 
 android {
     compileSdkVersion 30
