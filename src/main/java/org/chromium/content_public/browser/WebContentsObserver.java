@@ -5,8 +5,10 @@
 package org.chromium.content_public.browser;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import org.chromium.blink.mojom.ViewportFit;
+import org.chromium.ui.base.WindowAndroid;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,6 +28,15 @@ public abstract class WebContentsObserver {
         mWebContents = new WeakReference<WebContents>(webContents);
         webContents.addObserver(this);
     }
+
+    /**
+     * Called when a RenderFrame for renderFrameHost is created in the
+     * renderer process.
+     * To avoid creating a RenderFrameHost object without necessity, only process id and frame id
+     * are passed. Call WebContents#getRenderFrameHostFromId() to get the RenderFrameHostImpl object
+     * if needed.
+     */
+    public void renderFrameCreated(int renderProcessId, int renderFrameId) {}
 
     /**
      * Called when the RenderView of the current RenderViewHost is ready, e.g. because we recreated
@@ -150,16 +161,6 @@ public abstract class WebContentsObserver {
     public void navigationEntriesChanged() {}
 
     /**
-     * Called when an interstitial page gets attached to the tab content.
-     */
-    public void didAttachInterstitialPage() {}
-
-    /**
-     * Called when an interstitial page gets detached from the tab content.
-     */
-    public void didDetachInterstitialPage() {}
-
-    /**
      * Called when the theme color was changed.
      */
     public void didChangeThemeColor() {}
@@ -195,6 +196,9 @@ public abstract class WebContentsObserver {
      * RenderWidgetHosts within the same WebContents.
      */
     public void onWebContentsLostFocus() {}
+
+    /** Called when the top level WindowAndroid changes. */
+    public void onTopLevelNativeWindowChanged(@Nullable WindowAndroid windowAndroid) {}
 
     /**
      * Stop observing the web contents and clean up associated references.

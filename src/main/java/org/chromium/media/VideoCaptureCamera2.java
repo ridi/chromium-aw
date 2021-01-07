@@ -575,7 +575,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 }
             }
             try {
-                if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_LOCK_AVAILABLE)) {
+                Boolean ae_lock_available =
+                        cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_LOCK_AVAILABLE);
+                if (ae_lock_available != null && ae_lock_available.booleanValue()) {
                     exposureModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
                 }
             } catch (NoSuchFieldError e) {
@@ -622,7 +624,9 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 }
             }
             try {
-                if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_LOCK_AVAILABLE)) {
+                Boolean awb_lock_available =
+                        cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_LOCK_AVAILABLE);
+                if (awb_lock_available != null && awb_lock_available.booleanValue()) {
                     whiteBalanceModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
                 }
             } catch (NoSuchFieldError e) {
@@ -847,8 +851,10 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 // have to do with preview, e.g. the ImageReader and its associated Surface.
                 configureCommonCaptureSettings(mPreviewRequestBuilder);
 
+                mPreviewRequest = mPreviewRequestBuilder.build();
+
                 try {
-                    mPreviewSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
+                    mPreviewSession.setRepeatingRequest(mPreviewRequest, null, null);
                 } catch (CameraAccessException | SecurityException | IllegalStateException
                         | IllegalArgumentException ex) {
                     Log.e(TAG, "setRepeatingRequest: ", ex);
@@ -1355,6 +1361,18 @@ public class VideoCaptureCamera2 extends VideoCapture {
             default:
                 return VideoCaptureApi.ANDROID_API2_LEGACY;
         }
+    }
+
+    public static boolean isPanTiltZoomSupported(int id) {
+        final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(id);
+        if (cameraCharacteristics == null) {
+            return false;
+        }
+
+        final float maxZoom =
+                cameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+        final boolean isZoomSupported = maxZoom > 1.0f;
+        return isZoomSupported;
     }
 
     public static int getFacingMode(int id) {

@@ -1,6 +1,5 @@
 package org.chromium.base.library_loader;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
@@ -8,6 +7,7 @@ import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.annotations.MainDex;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
@@ -19,7 +19,7 @@ final class LibraryLoaderJni implements LibraryLoader.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.base.library_loader.LibraryLoader.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -28,30 +28,30 @@ final class LibraryLoaderJni implements LibraryLoader.Natives {
 
   @Override
   public boolean libraryLoaded(int processType) {
-    return (boolean)N.M81WqFvs(processType);
+    return (boolean)GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_libraryLoaded(processType);
   }
 
   @Override
   public void registerNonMainDexJni() {
-    N.MIOj213u();
+    GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_registerNonMainDexJni();
   }
 
   @Override
   public void recordRendererLibraryLoadTime(long libraryLoadTime) {
-    N.MiAWbgCC(libraryLoadTime);
+    GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_recordRendererLibraryLoadTime(libraryLoadTime);
   }
 
   @Override
   public String getVersionNumber() {
-    return (String)N.M$HdV9JM();
+    return (String)GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_getVersionNumber();
   }
 
   public static LibraryLoader.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.base.library_loader.LibraryLoader.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

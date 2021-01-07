@@ -6,11 +6,14 @@ package org.chromium.base.compat;
 
 import android.annotation.TargetApi;
 import android.content.ClipDescription;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.view.Display;
 import android.view.View;
+import android.view.Window;
 
 import org.chromium.base.annotations.VerifiesOnO;
 
@@ -27,6 +30,11 @@ public final class ApiHelperForO {
     /** See {@link Display#isWideColorGamut() }. */
     public static boolean isWideColorGamut(Display display) {
         return display.isWideColorGamut();
+    }
+
+    /** See {@link Window#setColorMode(int) }. */
+    public static void setColorMode(Window window, int colorMode) {
+        window.setColorMode(colorMode);
     }
 
     /** See {@link Configuration#isScreenWideColorGamut() }. */
@@ -47,5 +55,16 @@ public final class ApiHelperForO {
     /** See {@link ClipDescription#getTimestamp()}. */
     public static long getTimestamp(ClipDescription clipDescription) {
         return clipDescription.getTimestamp();
+    }
+
+    /** See {@link ApplicationInfo#splitNames}. */
+    public static String[] getSplitNames(ApplicationInfo info) {
+        return info.splitNames;
+    }
+
+    /** See {@link Context.createContextForSplit(String) }. */
+    public static Context createContextForSplit(Context context, String name)
+            throws PackageManager.NameNotFoundException {
+        return context.createContextForSplit(name);
     }
 }

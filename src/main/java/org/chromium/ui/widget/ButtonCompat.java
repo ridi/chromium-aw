@@ -9,12 +9,11 @@ import android.animation.StateListAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.os.Build;
-import androidx.appcompat.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 
 import androidx.annotation.StyleRes;
+import androidx.appcompat.widget.AppCompatButton;
 
 import org.chromium.android_webview.R;
 
@@ -93,7 +92,6 @@ public class ButtonCompat extends AppCompatButton {
     */
     private void setRaised(boolean raised) {
         // All buttons are flat on pre-L devices.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 
         if (raised) {
             // Use the StateListAnimator from the Widget.Material.Button style to animate the
@@ -116,14 +114,6 @@ public class ButtonCompat extends AppCompatButton {
         } else {
             setElevation(0f);
             setStateListAnimator(null);
-        }
-    }
-
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if (mRippleBackgroundHelper != null) {
-            mRippleBackgroundHelper.onDrawableStateChanged();
         }
     }
 }

@@ -17,7 +17,9 @@ public final class CspDisposition {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int CHECK = 0;
-    public static final int DO_NOT_CHECK = 1; // CHECK + 1
+    public static final int DO_NOT_CHECK = 1;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 1;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 1;

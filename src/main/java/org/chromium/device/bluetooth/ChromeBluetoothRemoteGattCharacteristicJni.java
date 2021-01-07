@@ -1,12 +1,12 @@
 package org.chromium.device.bluetooth;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -17,7 +17,7 @@ final class ChromeBluetoothRemoteGattCharacteristicJni implements ChromeBluetoot
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.device.bluetooth.ChromeBluetoothRemoteGattCharacteristic.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -27,19 +27,19 @@ final class ChromeBluetoothRemoteGattCharacteristicJni implements ChromeBluetoot
   @Override
   public void onChanged(long nativeBluetoothRemoteGattCharacteristicAndroid,
       ChromeBluetoothRemoteGattCharacteristic caller, byte[] value) {
-    N.MZCKcdTH(nativeBluetoothRemoteGattCharacteristicAndroid, caller, value);
+    GEN_JNI.org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onChanged(nativeBluetoothRemoteGattCharacteristicAndroid, caller, value);
   }
 
   @Override
   public void onRead(long nativeBluetoothRemoteGattCharacteristicAndroid,
       ChromeBluetoothRemoteGattCharacteristic caller, int status, byte[] value) {
-    N.Mn9Gzi$d(nativeBluetoothRemoteGattCharacteristicAndroid, caller, status, value);
+    GEN_JNI.org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onRead(nativeBluetoothRemoteGattCharacteristicAndroid, caller, status, value);
   }
 
   @Override
   public void onWrite(long nativeBluetoothRemoteGattCharacteristicAndroid,
       ChromeBluetoothRemoteGattCharacteristic caller, int status) {
-    N.M3TCxDs5(nativeBluetoothRemoteGattCharacteristicAndroid, caller, status);
+    GEN_JNI.org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onWrite(nativeBluetoothRemoteGattCharacteristicAndroid, caller, status);
   }
 
   @Override
@@ -47,15 +47,15 @@ final class ChromeBluetoothRemoteGattCharacteristicJni implements ChromeBluetoot
       ChromeBluetoothRemoteGattCharacteristic caller, String instanceId,
       Wrappers.BluetoothGattDescriptorWrapper descriptorWrapper,
       ChromeBluetoothDevice chromeBluetoothDevice) {
-    N.MkqvrLoV(nativeBluetoothRemoteGattCharacteristicAndroid, caller, instanceId, descriptorWrapper, chromeBluetoothDevice);
+    GEN_JNI.org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_createGattRemoteDescriptor(nativeBluetoothRemoteGattCharacteristicAndroid, caller, instanceId, descriptorWrapper, chromeBluetoothDevice);
   }
 
   public static ChromeBluetoothRemoteGattCharacteristic.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.device.bluetooth.ChromeBluetoothRemoteGattCharacteristic.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

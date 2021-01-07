@@ -17,7 +17,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,14 +53,6 @@ class MidiManagerAndroid {
      * The associated midi::MidiDeviceAndroid instance.
      */
     private final long mNativeManagerPointer;
-
-    /**
-     * True is this object is stopped.
-     * This is needed because MidiManagerAndroid functions are called from the IO thread but
-     * callbacks are called on the UI thread (because the IO thread doesn't have a Looper). We need
-     * to protect each native function call with a synchronized block that also checks this flag.
-     */
-    private boolean mStopped;
 
     /**
      * Checks if Android MIDI is supported on the device.
@@ -103,12 +94,7 @@ class MidiManagerAndroid {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    synchronized (MidiManagerAndroid.this) {
-                        if (mStopped) {
-                            return;
-                        }
-                        MidiManagerAndroidJni.get().onInitializationFailed(mNativeManagerPointer);
-                    }
+                    nativeOnInitializationFailed(mNativeManagerPointer);
                 }
             });
             return;
@@ -133,26 +119,13 @@ class MidiManagerAndroid {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                synchronized (MidiManagerAndroid.this) {
-                    if (mStopped) {
-                        return;
-                    }
-                    if (mPendingDevices.isEmpty() && !mIsInitialized) {
-                        MidiManagerAndroidJni.get().onInitialized(
-                                mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
-                        mIsInitialized = true;
-                    }
+                if (mPendingDevices.isEmpty() && !mIsInitialized) {
+                    nativeOnInitialized(
+                            mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
+                    mIsInitialized = true;
                 }
             }
         });
-    }
-
-    /**
-     * Marks this object as stopped.
-     */
-    @CalledByNative
-    synchronized void stop() {
-        mStopped = true;
     }
 
     private void openDevice(final MidiDeviceInfo info) {
@@ -179,42 +152,33 @@ class MidiManagerAndroid {
      * Called when a midi device is detached.
      * @param info the detached device information.
      */
-    private synchronized void onDeviceRemoved(MidiDeviceInfo info) {
-        if (mStopped) {
-            return;
-        }
+    private void onDeviceRemoved(MidiDeviceInfo info) {
         for (MidiDeviceAndroid device : mDevices) {
             if (device.isOpen() && device.getInfo().getId() == info.getId()) {
                 device.close();
-                MidiManagerAndroidJni.get().onDetached(mNativeManagerPointer, device);
+                nativeOnDetached(mNativeManagerPointer, device);
             }
         }
     }
 
-    private synchronized void onDeviceOpened(MidiDevice device, MidiDeviceInfo info) {
-        if (mStopped) {
-            return;
-        }
+    private void onDeviceOpened(MidiDevice device, MidiDeviceInfo info) {
         mPendingDevices.remove(info);
         if (device != null) {
             MidiDeviceAndroid xdevice = new MidiDeviceAndroid(device);
             mDevices.add(xdevice);
             if (mIsInitialized) {
-                MidiManagerAndroidJni.get().onAttached(mNativeManagerPointer, xdevice);
+                nativeOnAttached(mNativeManagerPointer, xdevice);
             }
         }
         if (!mIsInitialized && mPendingDevices.isEmpty()) {
-            MidiManagerAndroidJni.get().onInitialized(
-                    mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
+            nativeOnInitialized(mNativeManagerPointer, mDevices.toArray(new MidiDeviceAndroid[0]));
             mIsInitialized = true;
         }
     }
 
-    @NativeMethods
-    interface Natives {
-        void onInitialized(long nativeMidiManagerAndroid, MidiDeviceAndroid[] devices);
-        void onInitializationFailed(long nativeMidiManagerAndroid);
-        void onAttached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
-        void onDetached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
-    }
+    static native void nativeOnInitialized(
+            long nativeMidiManagerAndroid, MidiDeviceAndroid[] devices);
+    static native void nativeOnInitializationFailed(long nativeMidiManagerAndroid);
+    static native void nativeOnAttached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
+    static native void nativeOnDetached(long nativeMidiManagerAndroid, MidiDeviceAndroid device);
 }

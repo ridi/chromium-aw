@@ -12,7 +12,6 @@ import android.os.Build;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.base.annotations.NativeMethods;
 
 import java.io.IOException;
 
@@ -70,13 +69,7 @@ class MidiInputPortAndroid {
         mPort.connect(new MidiReceiver() {
             @Override
             public void onSend(byte[] bs, int offset, int count, long timestamp) {
-                synchronized (MidiInputPortAndroid.this) {
-                    if (mPort == null) {
-                        return;
-                    }
-                    MidiInputPortAndroidJni.get().onData(
-                            mNativeReceiverPointer, bs, offset, count, timestamp);
-                }
+                nativeOnData(mNativeReceiverPointer, bs, offset, count, timestamp);
             }
         });
         return true;
@@ -86,7 +79,7 @@ class MidiInputPortAndroid {
      * Closes the port.
      */
     @CalledByNative
-    synchronized void close() {
+    void close() {
         if (mPort == null) {
             return;
         }
@@ -99,9 +92,6 @@ class MidiInputPortAndroid {
         mPort = null;
     }
 
-    @NativeMethods
-    interface Natives {
-        void onData(
-                long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
-    }
+    private static native void nativeOnData(
+            long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
 }

@@ -76,7 +76,6 @@ import java.util.List;
  * Implementation of the interface {@link SelectionPopupController}.
  */
 @JNINamespace("content")
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
         implements ImeEventObserver, SelectionPopupController, WindowEventObserver, HideablePopup,
                    ContainerViewObserver, UserData {
@@ -293,6 +292,23 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
         getPopupController().registerPopup(this);
     }
 
+    private void reset() {
+        dropFocus();
+        mContext = null;
+        mWindowAndroid = null;
+    }
+
+    private void dropFocus() {
+        // Hide popups and clear selection.
+        destroyActionModeAndUnselect();
+        dismissTextHandles();
+        PopupController.hideAll(mWebContents);
+        // Clear the selection. The selection is cleared on destroying IME
+        // and also here since we may receive destroy first, for example
+        // when focus is lost in webview.
+        clearSelection();
+    }
+
     public static String sanitizeQuery(String query, int maxLength) {
         if (TextUtils.isEmpty(query) || query.length() < maxLength) return query;
         Log.w(TAG, "Truncating oversized query (" + query.length() + ").");
@@ -352,7 +368,8 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
     }
 
     // True if action mode is initialized to a working (not a no-op) mode.
-    private boolean isActionModeSupported() {
+    @VisibleForTesting
+    public boolean isActionModeSupported() {
         return mCallback != EMPTY_CALLBACK;
     }
 
@@ -609,6 +626,11 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
 
     @Override
     public void onWindowAndroidChanged(WindowAndroid newWindowAndroid) {
+        if (newWindowAndroid == null) {
+            reset();
+            return;
+        }
+
         mWindowAndroid = newWindowAndroid;
         mContext = mWebContents.getContext();
         initHandleObserver();
@@ -637,14 +659,7 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
                 setPreserveSelectionOnNextLossOfFocus(false);
                 hidePopupsAndPreserveSelection();
             } else {
-                // Hide popups and clear selection.
-                destroyActionModeAndUnselect();
-                dismissTextHandles();
-                PopupController.hideAll(mWebContents);
-                // Clear the selection. The selection is cleared on destroying IME
-                // and also here since we may receive destroy first, for example
-                // when focus is lost in webview.
-                clearSelection();
+                dropFocus();
             }
         }
     }
@@ -871,7 +886,8 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
     /**
      * Intialize the menu items for processing text, if there is any.
      */
-    private void initializeTextProcessingMenu(Menu menu) {
+    @VisibleForTesting
+    /* package */ void initializeTextProcessingMenu(Menu menu) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
                 || !isSelectActionModeAllowed(MENU_ITEM_PROCESS_TEXT)) {
             return;
@@ -881,6 +897,8 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
                 PackageManagerUtils.queryIntentActivities(createProcessTextIntent(), 0);
         for (int i = 0; i < supportedActivities.size(); i++) {
             ResolveInfo resolveInfo = supportedActivities.get(i);
+            if (resolveInfo.activityInfo == null || !resolveInfo.activityInfo.exported) continue;
+
             CharSequence label = resolveInfo.loadLabel(mContext.getPackageManager());
             menu.add(R.id.select_action_menu_text_processing_menus, Menu.NONE,
                         MENU_ITEM_ORDER_TEXT_PROCESS_START + i, label)
@@ -1123,7 +1141,8 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
         RecordUserAction.record("MobileActionMode.ProcessTextIntent");
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
-        String query = sanitizeQuery(getSelectedText(), MAX_SEARCH_QUERY_LENGTH);
+        // Use MAX_SHARE_QUERY_LENGTH for the Intent 100k limitation.
+        String query = sanitizeQuery(getSelectedText(), MAX_SHARE_QUERY_LENGTH);
         if (TextUtils.isEmpty(query)) return;
 
         intent.putExtra(Intent.EXTRA_PROCESS_TEXT, query);
@@ -1443,10 +1462,9 @@ public class SelectionPopupControllerImpl extends ActionModeCallbackHelper
     @Override
     public void setSelectionClient(@Nullable SelectionClient selectionClient) {
         mSelectionClient = selectionClient;
-        if (mSelectionClient != null) {
-            mSelectionMetricsLogger =
-                    (SmartSelectionMetricsLogger) mSelectionClient.getSelectionMetricsLogger();
-        }
+        mSelectionMetricsLogger = mSelectionClient == null
+                ? null
+                : (SmartSelectionMetricsLogger) mSelectionClient.getSelectionMetricsLogger();
 
         mClassificationResult = null;
 

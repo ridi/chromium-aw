@@ -387,7 +387,12 @@ class AndroidNetworkLibrary {
         if (network == null) {
             return null;
         }
-        LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
+        LinkProperties linkProperties;
+        try {
+            linkProperties = connectivityManager.getLinkProperties(network);
+        } catch (RuntimeException e) {
+            return null;
+        }
         if (linkProperties == null) {
             return null;
         }
@@ -398,6 +403,22 @@ class AndroidNetworkLibrary {
         } else {
             return new DnsStatus(dnsServersList, false, "");
         }
+    }
+
+    /**
+     * Reports a connectivity issue with the device's current default network.
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    @CalledByNative
+    private static boolean reportBadDefaultNetwork() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) ContextUtils.getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) return false;
+
+        connectivityManager.reportNetworkConnectivity(null, false);
+        return true;
     }
 
     /**

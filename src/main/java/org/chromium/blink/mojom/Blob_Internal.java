@@ -55,11 +55,13 @@ class Blob_Internal {
 
     private static final int READ_RANGE_ORDINAL = 3;
 
-    private static final int READ_SIDE_DATA_ORDINAL = 4;
+    private static final int LOAD_ORDINAL = 4;
 
-    private static final int CAPTURE_SNAPSHOT_ORDINAL = 5;
+    private static final int READ_SIDE_DATA_ORDINAL = 5;
 
-    private static final int GET_INTERNAL_UUID_ORDINAL = 6;
+    private static final int CAPTURE_SNAPSHOT_ORDINAL = 6;
+
+    private static final int GET_INTERNAL_UUID_ORDINAL = 7;
 
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements Blob.Proxy {
@@ -147,6 +149,29 @@ long offset, long length, org.chromium.mojo.system.DataPipe.ProducerHandle pipe,
 
 
         @Override
+        public void load(
+org.chromium.mojo.bindings.InterfaceRequest<org.chromium.network.mojom.UrlLoader> loader, String requestMethod, org.chromium.network.mojom.HttpRequestHeaders headers, org.chromium.network.mojom.UrlLoaderClient client) {
+
+            BlobLoadParams _message = new BlobLoadParams();
+
+            _message.loader = loader;
+
+            _message.requestMethod = requestMethod;
+
+            _message.headers = headers;
+
+            _message.client = client;
+
+
+            getProxyHandler().getMessageReceiver().accept(
+                    _message.serializeWithHeader(
+                            getProxyHandler().getCore(),
+                            new org.chromium.mojo.bindings.MessageHeader(LOAD_ORDINAL)));
+
+        }
+
+
+        @Override
         public void readSideData(
 
 ReadSideDataResponse callback) {
@@ -220,7 +245,11 @@ GetInternalUuidResponse callback) {
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.NO_FLAG)) {
+                int flags = org.chromium.mojo.bindings.MessageHeader.NO_FLAG;
+                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
+                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
+                }
+                if (!header.validateHeader(flags)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -285,6 +314,19 @@ GetInternalUuidResponse callback) {
 
 
 
+                    case LOAD_ORDINAL: {
+
+                        BlobLoadParams data =
+                                BlobLoadParams.deserialize(messageWithHeader.getPayload());
+
+                        getImpl().load(data.loader, data.requestMethod, data.headers, data.client);
+                        return true;
+                    }
+
+
+
+
+
 
 
 
@@ -303,7 +345,11 @@ GetInternalUuidResponse callback) {
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG)) {
+                int flags = org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG;
+                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
+                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
+                }
+                if (!header.validateHeader(flags)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -311,6 +357,8 @@ GetInternalUuidResponse callback) {
                     case org.chromium.mojo.bindings.interfacecontrol.InterfaceControlMessagesConstants.RUN_MESSAGE_ID:
                         return org.chromium.mojo.bindings.InterfaceControlMessagesHelper.handleRun(
                                 getCore(), Blob_Internal.MANAGER, messageWithHeader, receiver);
+
+
 
 
 
@@ -657,6 +705,91 @@ GetInternalUuidResponse callback) {
 
 
     
+    static final class BlobLoadParams extends org.chromium.mojo.bindings.Struct {
+
+        private static final int STRUCT_SIZE = 40;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
+        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+        public org.chromium.mojo.bindings.InterfaceRequest<org.chromium.network.mojom.UrlLoader> loader;
+        public String requestMethod;
+        public org.chromium.network.mojom.HttpRequestHeaders headers;
+        public org.chromium.network.mojom.UrlLoaderClient client;
+
+        private BlobLoadParams(int version) {
+            super(STRUCT_SIZE, version);
+        }
+
+        public BlobLoadParams() {
+            this(0);
+        }
+
+        public static BlobLoadParams deserialize(org.chromium.mojo.bindings.Message message) {
+            return decode(new org.chromium.mojo.bindings.Decoder(message));
+        }
+
+        /**
+         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
+         *
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
+         */
+        public static BlobLoadParams deserialize(java.nio.ByteBuffer data) {
+            return deserialize(new org.chromium.mojo.bindings.Message(
+                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
+        }
+
+        @SuppressWarnings("unchecked")
+        public static BlobLoadParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+            if (decoder0 == null) {
+                return null;
+            }
+            decoder0.increaseStackDepth();
+            BlobLoadParams result;
+            try {
+                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
+                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
+                result = new BlobLoadParams(elementsOrVersion);
+                    {
+                        
+                    result.loader = decoder0.readInterfaceRequest(8, false);
+                    }
+                    {
+                        
+                    result.requestMethod = decoder0.readString(16, false);
+                    }
+                    {
+                        
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                    result.headers = org.chromium.network.mojom.HttpRequestHeaders.decode(decoder1);
+                    }
+                    {
+                        
+                    result.client = decoder0.readServiceInterface(32, false, org.chromium.network.mojom.UrlLoaderClient.MANAGER);
+                    }
+
+            } finally {
+                decoder0.decreaseStackDepth();
+            }
+            return result;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
+            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+            
+            encoder0.encode(this.loader, 8, false);
+            
+            encoder0.encode(this.requestMethod, 16, false);
+            
+            encoder0.encode(this.headers, 24, false);
+            
+            encoder0.encode(this.client, 32, false, org.chromium.network.mojom.UrlLoaderClient.MANAGER);
+        }
+    }
+
+
+
+    
     static final class BlobReadSideDataParams extends org.chromium.mojo.bindings.Struct {
 
         private static final int STRUCT_SIZE = 8;
@@ -976,7 +1109,7 @@ GetInternalUuidResponse callback) {
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
                 if (!header.validateHeader(CAPTURE_SNAPSHOT_ORDINAL,
-                                           org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG)) {
+                                           org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG| org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
                     return false;
                 }
 
@@ -1018,7 +1151,7 @@ GetInternalUuidResponse callback) {
                             mCore,
                             new org.chromium.mojo.bindings.MessageHeader(
                                     CAPTURE_SNAPSHOT_ORDINAL,
-                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
+                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG| org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG,
                                     mRequestId));
             mMessageReceiver.accept(_message);
         }

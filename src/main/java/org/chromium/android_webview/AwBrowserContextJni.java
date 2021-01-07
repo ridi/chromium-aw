@@ -1,11 +1,11 @@
 package org.chromium.android_webview;
 
-import J.N;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -16,7 +16,7 @@ final class AwBrowserContextJni implements AwBrowserContext.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.android_webview.AwBrowserContext.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -25,20 +25,25 @@ final class AwBrowserContextJni implements AwBrowserContext.Natives {
 
   @Override
   public AwBrowserContext getDefaultJava() {
-    return (AwBrowserContext)N.MCLx2xtg();
+    return (AwBrowserContext)GEN_JNI.org_chromium_android_1webview_AwBrowserContext_getDefaultJava();
   }
 
   @Override
   public long getQuotaManagerBridge(long nativeAwBrowserContext) {
-    return (long)N.MyGX0Tx3(nativeAwBrowserContext);
+    return (long)GEN_JNI.org_chromium_android_1webview_AwBrowserContext_getQuotaManagerBridge(nativeAwBrowserContext);
+  }
+
+  @Override
+  public void setWebLayerRunningInSameProcess(long nativeAwBrowserContext) {
+    GEN_JNI.org_chromium_android_1webview_AwBrowserContext_setWebLayerRunningInSameProcess(nativeAwBrowserContext);
   }
 
   public static AwBrowserContext.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.android_webview.AwBrowserContext.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

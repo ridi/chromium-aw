@@ -225,5 +225,4 @@
     <string name="speech_recognition_service_not_found">"Google speech engine can\'t be found"</string>
     <string name="link_copied">"Link copied"</string>
     <string name="chip_remove_icon_content_description">"Remove \'%1$s\'"</string>
-    <string name="url_copied">"URL copied"</string>
 </resources>

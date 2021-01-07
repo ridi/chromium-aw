@@ -13,7 +13,6 @@ public class NativeLibraries {
     // Set to true to enable the use of the Chromium Linker.
     public static final boolean sUseLinker = false;
     public static final boolean sUseLibraryInZipFile = false;
-    public static final boolean sEnableLinkerTests = false;
     public static final boolean sUseModernLinker = false;
 
     // This is the list of native libraries to be loaded (in the correct order)
@@ -28,7 +27,7 @@ public class NativeLibraries {
     // TODO(torne): This is public to work around classloader issues in Trichrome
     // where NativeLibraries is not in the same dex as LibraryLoader.
     // We should instead split up Java code along package boundaries.
-    public static final String sVersionNumber = "81.0.4044.156";
+    public static final String sVersionNumber = "86.0.4240.198";
 
     public static final int sCpuFamily = CPU_FAMILY_X86;
 }

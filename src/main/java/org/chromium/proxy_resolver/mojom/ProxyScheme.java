@@ -17,12 +17,14 @@ public final class ProxyScheme {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int INVALID = 0;
-    public static final int DIRECT = 1; // INVALID + 1
-    public static final int HTTP = 2; // DIRECT + 1
-    public static final int SOCKS4 = 3; // HTTP + 1
-    public static final int SOCKS5 = 4; // SOCKS4 + 1
-    public static final int HTTPS = 5; // SOCKS5 + 1
-    public static final int QUIC = 6; // HTTPS + 1
+    public static final int DIRECT = 1;
+    public static final int HTTP = 2;
+    public static final int SOCKS4 = 3;
+    public static final int SOCKS5 = 4;
+    public static final int HTTPS = 5;
+    public static final int QUIC = 6;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 6;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 6;

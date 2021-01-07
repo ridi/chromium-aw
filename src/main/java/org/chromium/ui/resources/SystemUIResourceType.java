@@ -16,12 +16,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    SystemUIResourceType.OVERSCROLL_EDGE, SystemUIResourceType.OVERSCROLL_GLOW,
-    SystemUIResourceType.OVERSCROLL_GLOW_L
+    SystemUIResourceType.OVERSCROLL_GLOW
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SystemUIResourceType {
-  int OVERSCROLL_EDGE = 0;
-  int OVERSCROLL_GLOW = 1;
-  int OVERSCROLL_GLOW_L = 2;
+  int OVERSCROLL_GLOW = 0;
 }

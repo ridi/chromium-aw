@@ -18,7 +18,8 @@ import java.lang.annotation.RetentionPolicy;
 @IntDef({
     CrashKeyIndex.LOADED_DYNAMIC_MODULE, CrashKeyIndex.ACTIVE_DYNAMIC_MODULE,
     CrashKeyIndex.APPLICATION_STATUS, CrashKeyIndex.INSTALLED_MODULES,
-    CrashKeyIndex.EMULATED_MODULES, CrashKeyIndex.DYNAMIC_MODULE_DEX_NAME
+    CrashKeyIndex.EMULATED_MODULES, CrashKeyIndex.DYNAMIC_MODULE_DEX_NAME,
+    CrashKeyIndex.PARTNER_CUSTOMIZATION_CONFIG
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface CrashKeyIndex {
@@ -28,5 +29,6 @@ public @interface CrashKeyIndex {
   int INSTALLED_MODULES = 3;
   int EMULATED_MODULES = 4;
   int DYNAMIC_MODULE_DEX_NAME = 5;
-  int NUM_ENTRIES = 6;
+  int PARTNER_CUSTOMIZATION_CONFIG = 6;
+  int NUM_ENTRIES = 7;
 }

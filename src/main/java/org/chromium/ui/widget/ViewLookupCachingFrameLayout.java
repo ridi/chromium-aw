@@ -14,8 +14,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import org.chromium.base.BuildConfig;
 
 import java.lang.ref.WeakReference;
@@ -25,8 +23,8 @@ import java.lang.ref.WeakReference;
  * the result of the lookup. Adding or removing a view with the same ID as a cached version will
  * cause the cache to be invalidated for that view and cause a re-lookup the next time it is
  * queried. The goal of this view type is to be used in cases where child views are frequently
- * accessed or reused, for example as part of a {@link RecyclerView}. The
- * logic in the {@link #fastFindViewById(int)} method would be in {@link #findViewById(int)} if
+ * accessed or reused, for example as part of a {@link androidx.recyclerview.widget.RecyclerView}.
+ * The logic in the {@link #fastFindViewById(int)} method would be in {@link #findViewById(int)} if
  * it weren't final on the {@link View} class.
  *
  * {@link android.view.ViewGroup.OnHierarchyChangeListener}s cannot be used on ViewGroups that are

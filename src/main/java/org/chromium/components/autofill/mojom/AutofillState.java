@@ -17,8 +17,10 @@ public final class AutofillState {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NO_SUGGESTIONS = 0;
-    public static final int AUTOFILL_AVAILABLE = 1; // NO_SUGGESTIONS + 1
-    public static final int AUTOCOMPLETE_AVAILABLE = 2; // AUTOFILL_AVAILABLE + 1
+    public static final int AUTOFILL_AVAILABLE = 1;
+    public static final int AUTOCOMPLETE_AVAILABLE = 2;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

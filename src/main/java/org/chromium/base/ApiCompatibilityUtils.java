@@ -19,22 +19,24 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.ImageDecoder;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.TransitionDrawable;
+import android.hardware.display.DisplayManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.StrictMode;
 import android.os.UserManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
-import androidx.core.widget.ImageViewCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,6 +50,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ImageViewCompat;
 
 import org.chromium.base.annotations.VerifiesOnLollipop;
 import org.chromium.base.annotations.VerifiesOnLollipopMR1;
@@ -55,11 +58,15 @@ import org.chromium.base.annotations.VerifiesOnM;
 import org.chromium.base.annotations.VerifiesOnN;
 import org.chromium.base.annotations.VerifiesOnO;
 import org.chromium.base.annotations.VerifiesOnP;
+import org.chromium.base.annotations.VerifiesOnQ;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Utility class to use new APIs that were added after KitKat (API level 19).
+ * Utility class to use APIs not in all supported Android versions.
  *
  * Do not inline because we use many new APIs, and if they are inlined, they could cause dex
  * validation errors on low Android versions.
@@ -68,11 +75,42 @@ public class ApiCompatibilityUtils {
     private ApiCompatibilityUtils() {
     }
 
+    @VerifiesOnQ
+    @TargetApi(Build.VERSION_CODES.Q)
+    private static class ApisQ {
+        static boolean isRunningInUserTestHarness() {
+            return ActivityManager.isRunningInUserTestHarness();
+        }
+
+        static List<Integer> getTargetableDisplayIds(@Nullable Activity activity) {
+            List<Integer> displayList = new ArrayList<>();
+            if (activity == null) return displayList;
+            DisplayManager displayManager =
+                    (DisplayManager) activity.getSystemService(Context.DISPLAY_SERVICE);
+            if (displayManager == null) return displayList;
+            Display[] displays = displayManager.getDisplays();
+            ActivityManager am =
+                    (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+            for (Display display : displays) {
+                if (display.getState() == Display.STATE_ON
+                        && am.isActivityStartAllowedOnDisplay(activity, display.getDisplayId(),
+                                new Intent(activity, activity.getClass()))) {
+                    displayList.add(display.getDisplayId());
+                }
+            }
+            return displayList;
+        }
+    }
+
     @VerifiesOnP
     @TargetApi(Build.VERSION_CODES.P)
     private static class ApisP {
         static String getProcessName() {
             return Application.getProcessName();
+        }
+
+        static Bitmap getBitmapByUri(ContentResolver cr, Uri uri) throws IOException {
+            return ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, uri));
         }
     }
 
@@ -583,6 +621,22 @@ public class ApiCompatibilityUtils {
     }
 
     /**
+     * Get a list of ids of targetable displays, including the default display for the
+     * current activity. A set of targetable displays can only be determined on Q+. An empty list
+     * is returned if called on prior Q.
+     * @param activity The {@link Activity} to check.
+     * @return A list of display ids. Empty if there is none or version is less than Q, or
+     *         windowAndroid does not contain an activity.
+     */
+    @NonNull
+    public static List<Integer> getTargetableDisplayIds(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return ApisQ.getTargetableDisplayIds(activity);
+        }
+        return new ArrayList<>();
+    }
+
+    /**
      * Disables the Smart Select {@link TextClassifier} for the given {@link TextView} instance.
      * @param textView The {@link TextView} that should have its classifier disabled.
      */
@@ -611,32 +665,6 @@ public class ApiCompatibilityUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             ApisLmr1.setAccessibilityTraversalBefore(view, viewFocusedAfter);
         }
-    }
-
-    /**
-     * Creates regular LayerDrawable on Android L+. On older versions creates a helper class that
-     * fixes issues around {@link LayerDrawable#mutate()}. See https://crbug.com/890317 for details.
-     * See also {@link #createTransitionDrawable}.
-     * @param layers A list of drawables to use as layers in this new drawable.
-     */
-    public static LayerDrawable createLayerDrawable(@NonNull Drawable[] layers) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-            return new LayerDrawableCompat(layers);
-        }
-        return new LayerDrawable(layers);
-    }
-
-    /**
-     * Creates regular TransitionDrawable on Android L+. On older versions creates a helper class
-     * that fixes issues around {@link TransitionDrawable#mutate()}. See https://crbug.com/892061
-     * for details. See also {@link #createLayerDrawable}.
-     * @param layers A list of drawables to use as layers in this new drawable.
-     */
-    public static TransitionDrawable createTransitionDrawable(@NonNull Drawable[] layers) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-            return new TransitionDrawableCompat(layers);
-        }
-        return new TransitionDrawable(layers);
     }
 
     /**
@@ -679,77 +707,20 @@ public class ApiCompatibilityUtils {
         }
     }
 
-    private static class LayerDrawableCompat extends LayerDrawable {
-        private boolean mMutated;
-
-        LayerDrawableCompat(@NonNull Drawable[] layers) {
-            super(layers);
+    public static boolean isRunningInUserTestHarness() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return ApisQ.isRunningInUserTestHarness();
         }
-
-        @NonNull
-        @Override
-        public Drawable mutate() {
-            // LayerDrawable in Android K loses bounds of layers, so this method works around that.
-            if (mMutated) {
-                // This object has already been mutated and shouldn't have any shared state.
-                return this;
-            }
-
-            Rect[] oldBounds = getLayersBounds(this);
-            Drawable superResult = super.mutate();
-            // LayerDrawable.mutate() always returns this, bail out if this isn't the case.
-            if (superResult != this) return superResult;
-            restoreLayersBounds(this, oldBounds);
-            mMutated = true;
-            return this;
-        }
-    }
-
-    private static class TransitionDrawableCompat extends TransitionDrawable {
-        private boolean mMutated;
-
-        TransitionDrawableCompat(@NonNull Drawable[] layers) {
-            super(layers);
-        }
-
-        @NonNull
-        @Override
-        public Drawable mutate() {
-            // LayerDrawable in Android K loses bounds of layers, so this method works around that.
-            if (mMutated) {
-                // This object has already been mutated and shouldn't have any shared state.
-                return this;
-            }
-            Rect[] oldBounds = getLayersBounds(this);
-            Drawable superResult = super.mutate();
-            // TransitionDrawable.mutate() always returns this, bail out if this isn't the case.
-            if (superResult != this) return superResult;
-            restoreLayersBounds(this, oldBounds);
-            mMutated = true;
-            return this;
-        }
+        return false;
     }
 
     /**
-     * Helper for {@link LayerDrawableCompat#mutate} and {@link TransitionDrawableCompat#mutate}.
-     * Obtains the bounds of layers so they can be restored after a mutation.
+     * Retrieves an image for the given url as a Bitmap.
      */
-    private static Rect[] getLayersBounds(LayerDrawable layerDrawable) {
-        Rect[] result = new Rect[layerDrawable.getNumberOfLayers()];
-        for (int i = 0; i < layerDrawable.getNumberOfLayers(); i++) {
-            result[i] = layerDrawable.getDrawable(i).getBounds();
+    public static Bitmap getBitmapByUri(ContentResolver cr, Uri uri) throws IOException {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return ApisP.getBitmapByUri(cr, uri);
         }
-        return result;
-    }
-
-    /**
-     * Helper for {@link LayerDrawableCompat#mutate} and {@link TransitionDrawableCompat#mutate}.
-     * Restores the bounds of layers after a mutation.
-     */
-    private static void restoreLayersBounds(LayerDrawable layerDrawable, Rect[] oldBounds) {
-        assert layerDrawable.getNumberOfLayers() == oldBounds.length;
-        for (int i = 0; i < layerDrawable.getNumberOfLayers(); i++) {
-            layerDrawable.getDrawable(i).setBounds(oldBounds[i]);
-        }
+        return MediaStore.Images.Media.getBitmap(cr, uri);
     }
 }

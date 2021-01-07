@@ -1,6 +1,5 @@
 package org.chromium.content.browser;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import java.nio.ByteBuffer;
@@ -8,6 +7,7 @@ import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -18,7 +18,7 @@ final class ContactsDialogHostJni implements ContactsDialogHost.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.content.browser.ContactsDialogHost.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -28,26 +28,26 @@ final class ContactsDialogHostJni implements ContactsDialogHost.Natives {
   @Override
   public void addContact(long nativeContactsProviderAndroid, String[] names, String[] emails,
       String[] tel, ByteBuffer[] addresses, ByteBuffer[] icons) {
-    N.MS9BZrW0(nativeContactsProviderAndroid, names, emails, tel, addresses, icons);
+    GEN_JNI.org_chromium_content_browser_ContactsDialogHost_addContact(nativeContactsProviderAndroid, names, emails, tel, addresses, icons);
   }
 
   @Override
   public void endContactsList(long nativeContactsProviderAndroid, int percentageShared,
       int propertiesRequested) {
-    N.MwwTaBAE(nativeContactsProviderAndroid, percentageShared, propertiesRequested);
+    GEN_JNI.org_chromium_content_browser_ContactsDialogHost_endContactsList(nativeContactsProviderAndroid, percentageShared, propertiesRequested);
   }
 
   @Override
   public void endWithPermissionDenied(long nativeContactsProviderAndroid) {
-    N.MOM50EIZ(nativeContactsProviderAndroid);
+    GEN_JNI.org_chromium_content_browser_ContactsDialogHost_endWithPermissionDenied(nativeContactsProviderAndroid);
   }
 
   public static ContactsDialogHost.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.content.browser.ContactsDialogHost.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

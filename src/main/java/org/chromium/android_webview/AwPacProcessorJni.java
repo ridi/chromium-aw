@@ -1,12 +1,12 @@
 package org.chromium.android_webview;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -16,7 +16,7 @@ final class AwPacProcessorJni implements AwPacProcessor.Natives {
   public static final JniStaticTestMocker<AwPacProcessor.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwPacProcessor.Natives>() {
     @java.lang.Override
     public void setInstanceForTesting(org.chromium.android_webview.AwPacProcessor.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -24,26 +24,41 @@ final class AwPacProcessorJni implements AwPacProcessor.Natives {
   };
 
   @Override
-  public long getDefaultPacProcessor() {
-    return (long)N.Mf2TcTCl();
+  public void initializeEnvironment() {
+    GEN_JNI.org_chromium_android_1webview_AwPacProcessor_initializeEnvironment();
+  }
+
+  @Override
+  public long createNativePacProcessor(long netHandle) {
+    return (long)GEN_JNI.org_chromium_android_1webview_AwPacProcessor_createNativePacProcessor(netHandle);
   }
 
   @Override
   public boolean setProxyScript(long nativeAwPacProcessor, AwPacProcessor caller, String script) {
-    return (boolean)N.MEjwJwuS(nativeAwPacProcessor, caller, script);
+    return (boolean)GEN_JNI.org_chromium_android_1webview_AwPacProcessor_setProxyScript(nativeAwPacProcessor, caller, script);
   }
 
   @Override
   public String makeProxyRequest(long nativeAwPacProcessor, AwPacProcessor caller, String url) {
-    return (String)N.ME9i0MKK(nativeAwPacProcessor, caller, url);
+    return (String)GEN_JNI.org_chromium_android_1webview_AwPacProcessor_makeProxyRequest(nativeAwPacProcessor, caller, url);
+  }
+
+  @Override
+  public void destroyNative(long nativeAwPacProcessor, AwPacProcessor caller) {
+    GEN_JNI.org_chromium_android_1webview_AwPacProcessor_destroyNative(nativeAwPacProcessor, caller);
+  }
+
+  @Override
+  public void setNetworkLinkAddresses(long nativeAwPacProcessor, String[] adresses) {
+    GEN_JNI.org_chromium_android_1webview_AwPacProcessor_setNetworkLinkAddresses(nativeAwPacProcessor, adresses);
   }
 
   public static AwPacProcessor.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.android_webview.AwPacProcessor.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

@@ -17,14 +17,16 @@ public final class ScreenOrientationLockType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int DEFAULT = 0;
-    public static final int PORTRAIT_PRIMARY = 1; // DEFAULT + 1
-    public static final int PORTRAIT_SECONDARY = 2; // PORTRAIT_PRIMARY + 1
-    public static final int LANDSCAPE_PRIMARY = 3; // PORTRAIT_SECONDARY + 1
-    public static final int LANDSCAPE_SECONDARY = 4; // LANDSCAPE_PRIMARY + 1
-    public static final int ANY = 5; // LANDSCAPE_SECONDARY + 1
-    public static final int LANDSCAPE = 6; // ANY + 1
-    public static final int PORTRAIT = 7; // LANDSCAPE + 1
-    public static final int NATURAL = 8; // PORTRAIT + 1
+    public static final int PORTRAIT_PRIMARY = 1;
+    public static final int PORTRAIT_SECONDARY = 2;
+    public static final int LANDSCAPE_PRIMARY = 3;
+    public static final int LANDSCAPE_SECONDARY = 4;
+    public static final int ANY = 5;
+    public static final int LANDSCAPE = 6;
+    public static final int PORTRAIT = 7;
+    public static final int NATURAL = 8;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 8;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 8;

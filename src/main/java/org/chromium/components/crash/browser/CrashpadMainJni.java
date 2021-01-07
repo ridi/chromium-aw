@@ -1,12 +1,12 @@
 package org.chromium.components.crash.browser;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -17,7 +17,7 @@ final class CrashpadMainJni implements CrashpadMain.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.components.crash.browser.CrashpadMain.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -26,15 +26,15 @@ final class CrashpadMainJni implements CrashpadMain.Natives {
 
   @Override
   public void crashpadMain(String[] argv) {
-    N.MT6tcXz3(argv);
+    GEN_JNI.org_chromium_components_crash_browser_CrashpadMain_crashpadMain(argv);
   }
 
   public static CrashpadMain.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.components.crash.browser.CrashpadMain.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

@@ -15,8 +15,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
-import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
+import org.chromium.base.metrics.RecordHistogram;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +26,8 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Fetches the variations seed before the actual first run of Chrome.
@@ -153,17 +149,6 @@ public class VariationsSeedFetcher {
         public boolean isGzipCompressed;
         public byte[] seedData;
 
-        // TODO(crbug.com/1013390): Delete once Date header to timestamp migration is done (~M81).
-        @Deprecated
-        public static long parseDateHeader(String header) throws ParseException {
-            // The date field comes from the HTTP "Date" header, which has this format.
-            // (See RFC 2616, sections 3.3.1 and 14.18.) SimpleDateFormat is weirdly not
-            // thread-safe, so instantiate a new one for each call.
-            return new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US)
-                    .parse(header)
-                    .getTime();
-        }
-
         @Override
         public String toString() {
             if (BuildConfig.DCHECK_IS_ON) {
@@ -211,22 +196,17 @@ public class VariationsSeedFetcher {
     }
 
     private void recordFetchResultOrCode(int resultOrCode) {
-        SparseHistogramSample histogram =
-                new SparseHistogramSample("Variations.FirstRun.SeedFetchResult");
-        histogram.record(resultOrCode);
+        RecordHistogram.recordSparseHistogram("Variations.FirstRun.SeedFetchResult", resultOrCode);
     }
 
     private void recordSeedFetchTime(long timeDeltaMillis) {
         Log.i(TAG, "Fetched first run seed in " + timeDeltaMillis + " ms");
-        TimesHistogramSample histogram =
-                new TimesHistogramSample("Variations.FirstRun.SeedFetchTime");
-        histogram.record(timeDeltaMillis);
+        RecordHistogram.recordTimesHistogram("Variations.FirstRun.SeedFetchTime", timeDeltaMillis);
     }
 
     private void recordSeedConnectTime(long timeDeltaMillis) {
-        TimesHistogramSample histogram =
-                new TimesHistogramSample("Variations.FirstRun.SeedConnectTime");
-        histogram.record(timeDeltaMillis);
+        RecordHistogram.recordTimesHistogram(
+                "Variations.FirstRun.SeedConnectTime", timeDeltaMillis);
     }
 
     /**

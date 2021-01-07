@@ -16,19 +16,33 @@ package org.chromium.network.mojom;
 
 public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 24;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public CspSource[] sources;
+    public String[] nonces;
+    public CspHashSource[] hashes;
     public boolean allowSelf;
     public boolean allowStar;
     public boolean allowResponseRedirects;
+    public boolean allowInline;
+    public boolean allowEval;
+    public boolean allowWasmEval;
+    public boolean allowDynamic;
+    public boolean allowUnsafeHashes;
+    public boolean reportSample;
 
     private CspSourceList(int version) {
         super(STRUCT_SIZE, version);
         this.allowSelf = (boolean) false;
         this.allowStar = (boolean) false;
         this.allowResponseRedirects = (boolean) false;
+        this.allowInline = (boolean) false;
+        this.allowEval = (boolean) false;
+        this.allowWasmEval = (boolean) false;
+        this.allowDynamic = (boolean) false;
+        this.allowUnsafeHashes = (boolean) false;
+        this.reportSample = (boolean) false;
     }
 
     public CspSourceList() {
@@ -75,15 +89,64 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.allowSelf = decoder0.readBoolean(16, 0);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.nonces = new String[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        result.nonces[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                    }
+                }
                 }
                 {
                     
-                result.allowStar = decoder0.readBoolean(16, 1);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.hashes = new CspHashSource[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                        result.hashes[i1] = CspHashSource.decode(decoder2);
+                    }
+                }
                 }
                 {
                     
-                result.allowResponseRedirects = decoder0.readBoolean(16, 2);
+                result.allowSelf = decoder0.readBoolean(32, 0);
+                }
+                {
+                    
+                result.allowStar = decoder0.readBoolean(32, 1);
+                }
+                {
+                    
+                result.allowResponseRedirects = decoder0.readBoolean(32, 2);
+                }
+                {
+                    
+                result.allowInline = decoder0.readBoolean(32, 3);
+                }
+                {
+                    
+                result.allowEval = decoder0.readBoolean(32, 4);
+                }
+                {
+                    
+                result.allowWasmEval = decoder0.readBoolean(32, 5);
+                }
+                {
+                    
+                result.allowDynamic = decoder0.readBoolean(32, 6);
+                }
+                {
+                    
+                result.allowUnsafeHashes = decoder0.readBoolean(32, 7);
+                }
+                {
+                    
+                result.reportSample = decoder0.readBoolean(33, 0);
                 }
 
         } finally {
@@ -107,10 +170,42 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
             }
         }
         
-        encoder0.encode(this.allowSelf, 16, 0);
+        if (this.nonces == null) {
+            encoder0.encodeNullPointer(16, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.nonces.length, 16, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.nonces.length; ++i0) {
+                
+                encoder1.encode(this.nonces[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
         
-        encoder0.encode(this.allowStar, 16, 1);
+        if (this.hashes == null) {
+            encoder0.encodeNullPointer(24, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.hashes.length, 24, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.hashes.length; ++i0) {
+                
+                encoder1.encode(this.hashes[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
         
-        encoder0.encode(this.allowResponseRedirects, 16, 2);
+        encoder0.encode(this.allowSelf, 32, 0);
+        
+        encoder0.encode(this.allowStar, 32, 1);
+        
+        encoder0.encode(this.allowResponseRedirects, 32, 2);
+        
+        encoder0.encode(this.allowInline, 32, 3);
+        
+        encoder0.encode(this.allowEval, 32, 4);
+        
+        encoder0.encode(this.allowWasmEval, 32, 5);
+        
+        encoder0.encode(this.allowDynamic, 32, 6);
+        
+        encoder0.encode(this.allowUnsafeHashes, 32, 7);
+        
+        encoder0.encode(this.reportSample, 33, 0);
     }
 }

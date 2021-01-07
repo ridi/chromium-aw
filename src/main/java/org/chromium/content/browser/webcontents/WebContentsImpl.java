@@ -46,6 +46,7 @@ import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.ViewEventSink.InternalAccessDelegate;
+import org.chromium.content_public.browser.Visibility;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.WebContentsObserver;
@@ -53,6 +54,7 @@ import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
+import org.chromium.url.GURL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,7 +168,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
                     (int) (coordinateSpace.getContentOffsetYPix()
                             / coordinateSpace.getDeviceScaleFactor()));
             Bundle bundle = new Bundle();
-            bundle.putString("url", getVisibleUrl());
+            bundle.putString("url", getVisibleUrlString());
             bundle.putString("title", getTitle());
             bundle.putString("text", text);
             bundle.putString("html", html);
@@ -313,6 +315,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
         WebContentsImplJni.get().setTopLevelNativeWindow(
                 mNativeWebContentsAndroid, WebContentsImpl.this, windowAndroid);
         WindowEventObserverManager.from(this).onWindowAndroidChanged(windowAndroid);
+        if (mObserverProxy != null) mObserverProxy.onTopLevelNativeWindowChanged(windowAndroid);
     }
 
     @Override
@@ -382,6 +385,13 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
     }
 
     @Override
+    public RenderFrameHost getRenderFrameHostFromId(int renderProcessId, int renderFrameId) {
+        checkNotDestroyed();
+        return WebContentsImplJni.get().getRenderFrameHostFromId(
+                mNativeWebContentsAndroid, renderProcessId, renderFrameId);
+    }
+
+    @Override
     public @Nullable RenderWidgetHostViewImpl getRenderWidgetHostView() {
         if (mNativeWebContentsAndroid == 0) return null;
         RenderWidgetHostViewImpl rwhvi = WebContentsImplJni.get().getRenderWidgetHostView(
@@ -400,16 +410,27 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
     }
 
     @Override
+    public @Visibility int getVisibility() {
+        checkNotDestroyed();
+        return WebContentsImplJni.get().getVisibility(mNativeWebContentsAndroid);
+    }
+
+    @Override
     public String getTitle() {
         checkNotDestroyed();
         return WebContentsImplJni.get().getTitle(mNativeWebContentsAndroid, WebContentsImpl.this);
     }
 
     @Override
-    public String getVisibleUrl() {
+    public GURL getVisibleUrl() {
         checkNotDestroyed();
         return WebContentsImplJni.get().getVisibleURL(
                 mNativeWebContentsAndroid, WebContentsImpl.this);
+    }
+
+    @Override
+    public String getVisibleUrlString() {
+        return getVisibleUrl().getSpec();
     }
 
     @Override
@@ -430,6 +451,13 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
         checkNotDestroyed();
         return WebContentsImplJni.get().isLoadingToDifferentDocument(
                 mNativeWebContentsAndroid, WebContentsImpl.this);
+    }
+
+    @Override
+    public void dispatchBeforeUnload(boolean autoCancel) {
+        if (mNativeWebContentsAndroid == 0) return;
+        WebContentsImplJni.get().dispatchBeforeUnload(
+                mNativeWebContentsAndroid, WebContentsImpl.this, autoCancel);
     }
 
     @Override
@@ -541,19 +569,18 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
     }
 
     @Override
-    public boolean isShowingInterstitialPage() {
-        checkNotDestroyed();
-        return WebContentsImplJni.get().isShowingInterstitialPage(
-                mNativeWebContentsAndroid, WebContentsImpl.this);
-    }
-
-    @Override
     public boolean focusLocationBarByDefault() {
         checkNotDestroyed();
         return WebContentsImplJni.get().focusLocationBarByDefault(
                 mNativeWebContentsAndroid, WebContentsImpl.this);
     }
 
+    @Override
+    public boolean isFullscreenForCurrentTab() {
+        checkNotDestroyed();
+        return WebContentsImplJni.get().isFullscreenForCurrentTab(
+                mNativeWebContentsAndroid, WebContentsImpl.this);
+    }
 
     @Override
     public void exitFullscreen() {
@@ -1032,15 +1059,21 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
                 long nativeWebContentsAndroid, WebContentsImpl caller, WindowAndroid windowAndroid);
         RenderFrameHost getMainFrame(long nativeWebContentsAndroid, WebContentsImpl caller);
         RenderFrameHost getFocusedFrame(long nativeWebContentsAndroid, WebContentsImpl caller);
+        RenderFrameHost getRenderFrameHostFromId(
+                long nativeWebContentsAndroid, int renderProcessId, int renderFrameId);
         RenderWidgetHostViewImpl getRenderWidgetHostView(
                 long nativeWebContentsAndroid, WebContentsImpl caller);
         WebContentsImpl[] getInnerWebContents(
                 long nativeWebContentsAndroid, WebContentsImpl caller);
+        @Visibility
+        int getVisibility(long nativeWebContentsAndroid);
         String getTitle(long nativeWebContentsAndroid, WebContentsImpl caller);
-        String getVisibleURL(long nativeWebContentsAndroid, WebContentsImpl caller);
+        GURL getVisibleURL(long nativeWebContentsAndroid, WebContentsImpl caller);
         String getEncoding(long nativeWebContentsAndroid, WebContentsImpl caller);
         boolean isLoading(long nativeWebContentsAndroid, WebContentsImpl caller);
         boolean isLoadingToDifferentDocument(long nativeWebContentsAndroid, WebContentsImpl caller);
+        void dispatchBeforeUnload(
+                long nativeWebContentsAndroid, WebContentsImpl caller, boolean autoCancel);
         void stop(long nativeWebContentsAndroid, WebContentsImpl caller);
         void cut(long nativeWebContentsAndroid, WebContentsImpl caller);
         void copy(long nativeWebContentsAndroid, WebContentsImpl caller);
@@ -1054,8 +1087,8 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate, Wi
         void setImportance(long nativeWebContentsAndroid, WebContentsImpl caller, int importance);
         void suspendAllMediaPlayers(long nativeWebContentsAndroid, WebContentsImpl caller);
         void setAudioMuted(long nativeWebContentsAndroid, WebContentsImpl caller, boolean mute);
-        boolean isShowingInterstitialPage(long nativeWebContentsAndroid, WebContentsImpl caller);
         boolean focusLocationBarByDefault(long nativeWebContentsAndroid, WebContentsImpl caller);
+        boolean isFullscreenForCurrentTab(long nativeWebContentsAndroid, WebContentsImpl caller);
         void exitFullscreen(long nativeWebContentsAndroid, WebContentsImpl caller);
         void scrollFocusedEditableNodeIntoView(
                 long nativeWebContentsAndroid, WebContentsImpl caller);

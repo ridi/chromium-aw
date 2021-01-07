@@ -59,10 +59,6 @@ class Nfc_Internal {
 
     private static final int CANCEL_ALL_WATCHES_ORDINAL = 5;
 
-    private static final int SUSPEND_NFC_OPERATIONS_ORDINAL = 6;
-
-    private static final int RESUME_NFC_OPERATIONS_ORDINAL = 7;
-
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements Nfc.Proxy {
 
@@ -199,36 +195,6 @@ CancelAllWatchesResponse callback) {
         }
 
 
-        @Override
-        public void suspendNfcOperations(
-) {
-
-            NfcSuspendNfcOperationsParams _message = new NfcSuspendNfcOperationsParams();
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(SUSPEND_NFC_OPERATIONS_ORDINAL)));
-
-        }
-
-
-        @Override
-        public void resumeNfcOperations(
-) {
-
-            NfcResumeNfcOperationsParams _message = new NfcResumeNfcOperationsParams();
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(RESUME_NFC_OPERATIONS_ORDINAL)));
-
-        }
-
-
     }
 
     static final class Stub extends org.chromium.mojo.bindings.Interface.Stub<Nfc> {
@@ -243,7 +209,11 @@ CancelAllWatchesResponse callback) {
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.NO_FLAG)) {
+                int flags = org.chromium.mojo.bindings.MessageHeader.NO_FLAG;
+                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
+                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
+                }
+                if (!header.validateHeader(flags)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -276,30 +246,6 @@ CancelAllWatchesResponse callback) {
 
 
 
-
-
-
-                    case SUSPEND_NFC_OPERATIONS_ORDINAL: {
-
-                        NfcSuspendNfcOperationsParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().suspendNfcOperations();
-                        return true;
-                    }
-
-
-
-
-
-                    case RESUME_NFC_OPERATIONS_ORDINAL: {
-
-                        NfcResumeNfcOperationsParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().resumeNfcOperations();
-                        return true;
-                    }
-
-
                     default:
                         return false;
                 }
@@ -315,7 +261,11 @@ CancelAllWatchesResponse callback) {
                 org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
                         message.asServiceMessage();
                 org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG)) {
+                int flags = org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG;
+                if (header.hasFlag(org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG)) {
+                    flags = flags | org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG;
+                }
+                if (!header.validateHeader(flags)) {
                     return false;
                 }
                 switch(header.getType()) {
@@ -398,10 +348,6 @@ CancelAllWatchesResponse callback) {
                         getImpl().cancelAllWatches(new NfcCancelAllWatchesResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
-
-
-
-
 
 
                     default:
@@ -1416,118 +1362,6 @@ CancelAllWatchesResponse callback) {
                                     org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
                                     mRequestId));
             mMessageReceiver.accept(_message);
-        }
-    }
-
-
-
-    
-    static final class NfcSuspendNfcOperationsParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 8;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-
-        private NfcSuspendNfcOperationsParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public NfcSuspendNfcOperationsParams() {
-            this(0);
-        }
-
-        public static NfcSuspendNfcOperationsParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static NfcSuspendNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static NfcSuspendNfcOperationsParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            NfcSuspendNfcOperationsParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new NfcSuspendNfcOperationsParams(elementsOrVersion);
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-        }
-    }
-
-
-
-    
-    static final class NfcResumeNfcOperationsParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 8;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-
-        private NfcResumeNfcOperationsParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public NfcResumeNfcOperationsParams() {
-            this(0);
-        }
-
-        public static NfcResumeNfcOperationsParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static NfcResumeNfcOperationsParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static NfcResumeNfcOperationsParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            NfcResumeNfcOperationsParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new NfcResumeNfcOperationsParams(elementsOrVersion);
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         }
     }
 

@@ -1,11 +1,11 @@
 package org.chromium.content.browser;
 
-import J.N;
 import java.lang.Override;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -15,7 +15,7 @@ final class TtsPlatformImplJni implements TtsPlatformImpl.Natives {
   public static final JniStaticTestMocker<TtsPlatformImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.TtsPlatformImpl.Natives>() {
     @java.lang.Override
     public void setInstanceForTesting(org.chromium.content.browser.TtsPlatformImpl.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -23,39 +23,31 @@ final class TtsPlatformImplJni implements TtsPlatformImpl.Natives {
   };
 
   @Override
-  public void requestTtsStop(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller) {
-    N.M0BAvNEw(nativeTtsPlatformImplAndroid, caller);
+  public void voicesChanged(long nativeTtsPlatformImplAndroid) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_voicesChanged(nativeTtsPlatformImplAndroid);
   }
 
   @Override
-  public void voicesChanged(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller) {
-    N.MpJkwIUo(nativeTtsPlatformImplAndroid, caller);
+  public void onEndEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onEndEvent(nativeTtsPlatformImplAndroid, utteranceId);
   }
 
   @Override
-  public void onEndEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
-      int utteranceId) {
-    N.M47GdBO5(nativeTtsPlatformImplAndroid, caller, utteranceId);
+  public void onStartEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onStartEvent(nativeTtsPlatformImplAndroid, utteranceId);
   }
 
   @Override
-  public void onStartEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
-      int utteranceId) {
-    N.M2$X0reE(nativeTtsPlatformImplAndroid, caller, utteranceId);
-  }
-
-  @Override
-  public void onErrorEvent(long nativeTtsPlatformImplAndroid, TtsPlatformImpl caller,
-      int utteranceId) {
-    N.M1Kw17GB(nativeTtsPlatformImplAndroid, caller, utteranceId);
+  public void onErrorEvent(long nativeTtsPlatformImplAndroid, int utteranceId) {
+    GEN_JNI.org_chromium_content_browser_TtsPlatformImpl_onErrorEvent(nativeTtsPlatformImplAndroid, utteranceId);
   }
 
   public static TtsPlatformImpl.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.content.browser.TtsPlatformImpl.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

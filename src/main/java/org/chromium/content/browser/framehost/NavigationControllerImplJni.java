@@ -1,6 +1,5 @@
 package org.chromium.content.browser.framehost;
 
-import J.N;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -8,6 +7,7 @@ import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.common.ResourceRequestBody;
@@ -21,7 +21,7 @@ final class NavigationControllerImplJni implements NavigationControllerImpl.Nati
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.content.browser.framehost.NavigationControllerImpl.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -31,89 +31,89 @@ final class NavigationControllerImplJni implements NavigationControllerImpl.Nati
   @Override
   public boolean canGoBack(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (boolean)N.MgAw5sIR(nativeNavigationControllerAndroid, caller);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_canGoBack(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean canGoForward(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (boolean)N.MCUxt83x(nativeNavigationControllerAndroid, caller);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_canGoForward(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean isInitialNavigation(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (boolean)N.MEOFE6aD(nativeNavigationControllerAndroid, caller);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_isInitialNavigation(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void loadIfNecessary(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.MWJb9aa$(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadIfNecessary(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean needsReload(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (boolean)N.MsUTH_HQ(nativeNavigationControllerAndroid, caller);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_needsReload(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void setNeedsReload(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.MQgIP2q9(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_setNeedsReload(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean canGoToOffset(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int offset) {
-    return (boolean)N.M4jjW0jG(nativeNavigationControllerAndroid, caller, offset);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_canGoToOffset(nativeNavigationControllerAndroid, caller, offset);
   }
 
   @Override
   public void goBack(long nativeNavigationControllerAndroid, NavigationControllerImpl caller) {
-    N.Mdhd0AR3(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_goBack(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void goForward(long nativeNavigationControllerAndroid, NavigationControllerImpl caller) {
-    N.MEEEhNfT(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_goForward(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void goToOffset(long nativeNavigationControllerAndroid, NavigationControllerImpl caller,
       int offset) {
-    N.ML_uBbdi(nativeNavigationControllerAndroid, caller, offset);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_goToOffset(nativeNavigationControllerAndroid, caller, offset);
   }
 
   @Override
   public void goToNavigationIndex(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index) {
-    N.MuxwAbEo(nativeNavigationControllerAndroid, caller, index);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_goToNavigationIndex(nativeNavigationControllerAndroid, caller, index);
   }
 
   @Override
   public void cancelPendingReload(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.MNF4lMMb(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_cancelPendingReload(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void continuePendingReload(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.Mp5SLq_N(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_continuePendingReload(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void reload(long nativeNavigationControllerAndroid, NavigationControllerImpl caller,
       boolean checkForRepost) {
-    N.M81h$w2r(nativeNavigationControllerAndroid, caller, checkForRepost);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_reload(nativeNavigationControllerAndroid, caller, checkForRepost);
   }
 
   @Override
   public void reloadBypassingCache(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, boolean checkForRepost) {
-    N.My0bMgld(nativeNavigationControllerAndroid, caller, checkForRepost);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_reloadBypassingCache(nativeNavigationControllerAndroid, caller, checkForRepost);
   }
 
   @Override
@@ -123,106 +123,106 @@ final class NavigationControllerImplJni implements NavigationControllerImpl.Nati
       String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString,
       boolean canLoadLocalResources, boolean isRendererInitiated,
       boolean shouldReplaceCurrentEntry) {
-    N.MAqmDh4t(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry);
   }
 
   @Override
   public void clearHistory(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.MK2ttcH1(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_clearHistory(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public int getNavigationHistory(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, Object history) {
-    return (int)N.MUZRDUOx(nativeNavigationControllerAndroid, caller, history);
+    return (int)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getNavigationHistory(nativeNavigationControllerAndroid, caller, history);
   }
 
   @Override
   public void getDirectedNavigationHistory(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, NavigationHistory history, boolean isForward,
       int itemLimit) {
-    N.Mx5VuK3_(nativeNavigationControllerAndroid, caller, history, isForward, itemLimit);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getDirectedNavigationHistory(nativeNavigationControllerAndroid, caller, history, isForward, itemLimit);
   }
 
   @Override
   public void clearSslPreferences(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.MpKIKzer(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_clearSslPreferences(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean getUseDesktopUserAgent(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (boolean)N.MCIN9$qH(nativeNavigationControllerAndroid, caller);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getUseDesktopUserAgent(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public void setUseDesktopUserAgent(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, boolean override, boolean reloadOnChange) {
-    N.MrilyCK6(nativeNavigationControllerAndroid, caller, override, reloadOnChange);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_setUseDesktopUserAgent(nativeNavigationControllerAndroid, caller, override, reloadOnChange);
   }
 
   @Override
   public NavigationEntry getEntryAtIndex(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index) {
-    return (NavigationEntry)N.MLcS2$Fy(nativeNavigationControllerAndroid, caller, index);
+    return (NavigationEntry)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getEntryAtIndex(nativeNavigationControllerAndroid, caller, index);
   }
 
   @Override
   public NavigationEntry getVisibleEntry(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (NavigationEntry)N.MHqMy8sY(nativeNavigationControllerAndroid, caller);
+    return (NavigationEntry)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getVisibleEntry(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public NavigationEntry getPendingEntry(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (NavigationEntry)N.Mgxh2WfC(nativeNavigationControllerAndroid, caller);
+    return (NavigationEntry)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getPendingEntry(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public int getLastCommittedEntryIndex(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    return (int)N.Mil0WqAo(nativeNavigationControllerAndroid, caller);
+    return (int)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getLastCommittedEntryIndex(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public boolean removeEntryAtIndex(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index) {
-    return (boolean)N.MVbDeBRx(nativeNavigationControllerAndroid, caller, index);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_removeEntryAtIndex(nativeNavigationControllerAndroid, caller, index);
   }
 
   @Override
   public void pruneForwardEntries(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller) {
-    N.M2mQucXv(nativeNavigationControllerAndroid, caller);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_pruneForwardEntries(nativeNavigationControllerAndroid, caller);
   }
 
   @Override
   public String getEntryExtraData(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index, String key) {
-    return (String)N.McQE1GI8(nativeNavigationControllerAndroid, caller, index, key);
+    return (String)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_getEntryExtraData(nativeNavigationControllerAndroid, caller, index, key);
   }
 
   @Override
   public void setEntryExtraData(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index, String key, String value) {
-    N.Mw19wBW8(nativeNavigationControllerAndroid, caller, index, key, value);
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_setEntryExtraData(nativeNavigationControllerAndroid, caller, index, key, value);
   }
 
   @Override
   public boolean isEntryMarkedToBeSkipped(long nativeNavigationControllerAndroid,
       NavigationControllerImpl caller, int index) {
-    return (boolean)N.MVjP87pN(nativeNavigationControllerAndroid, caller, index);
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_isEntryMarkedToBeSkipped(nativeNavigationControllerAndroid, caller, index);
   }
 
   public static NavigationControllerImpl.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.content.browser.framehost.NavigationControllerImpl.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

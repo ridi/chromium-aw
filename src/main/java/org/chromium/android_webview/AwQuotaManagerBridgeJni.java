@@ -1,12 +1,12 @@
 package org.chromium.android_webview;
 
-import J.N;
 import java.lang.Override;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
+import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -17,7 +17,7 @@ final class AwQuotaManagerBridgeJni implements AwQuotaManagerBridge.Natives {
     @java.lang.Override
     public void setInstanceForTesting(
         org.chromium.android_webview.AwQuotaManagerBridge.Natives instance) {
-      if (!J.N.TESTING_ENABLED) {
+      if (!org.chromium.base.natives.GEN_JNI.TESTING_ENABLED) {
         throw new RuntimeException("Tried to set a JNI mock when mocks aren't enabled!");
       }
       testInstance = instance;
@@ -26,38 +26,38 @@ final class AwQuotaManagerBridgeJni implements AwQuotaManagerBridge.Natives {
 
   @Override
   public void init(long nativeAwQuotaManagerBridge, AwQuotaManagerBridge caller) {
-    N.MIrzsg_q(nativeAwQuotaManagerBridge, caller);
+    GEN_JNI.org_chromium_android_1webview_AwQuotaManagerBridge_init(nativeAwQuotaManagerBridge, caller);
   }
 
   @Override
   public void deleteAllData(long nativeAwQuotaManagerBridge, AwQuotaManagerBridge caller) {
-    N.MMBD8oze(nativeAwQuotaManagerBridge, caller);
+    GEN_JNI.org_chromium_android_1webview_AwQuotaManagerBridge_deleteAllData(nativeAwQuotaManagerBridge, caller);
   }
 
   @Override
   public void deleteOrigin(long nativeAwQuotaManagerBridge, AwQuotaManagerBridge caller,
       String origin) {
-    N.MVmZoL1a(nativeAwQuotaManagerBridge, caller, origin);
+    GEN_JNI.org_chromium_android_1webview_AwQuotaManagerBridge_deleteOrigin(nativeAwQuotaManagerBridge, caller, origin);
   }
 
   @Override
   public void getOrigins(long nativeAwQuotaManagerBridge, AwQuotaManagerBridge caller,
       int callbackId) {
-    N.MBqEItUo(nativeAwQuotaManagerBridge, caller, callbackId);
+    GEN_JNI.org_chromium_android_1webview_AwQuotaManagerBridge_getOrigins(nativeAwQuotaManagerBridge, caller, callbackId);
   }
 
   @Override
   public void getUsageAndQuotaForOrigin(long nativeAwQuotaManagerBridge,
       AwQuotaManagerBridge caller, String origin, int callbackId, boolean isQuota) {
-    N.MJn4yzAu(nativeAwQuotaManagerBridge, caller, origin, callbackId, isQuota);
+    GEN_JNI.org_chromium_android_1webview_AwQuotaManagerBridge_getUsageAndQuotaForOrigin(nativeAwQuotaManagerBridge, caller, origin, callbackId, isQuota);
   }
 
   public static AwQuotaManagerBridge.Natives get() {
-    if (N.TESTING_ENABLED) {
+    if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {
         return testInstance;
       }
-      if (N.REQUIRE_MOCK) {
+      if (GEN_JNI.REQUIRE_MOCK) {
         throw new UnsupportedOperationException("No mock found for the native implementation for org.chromium.android_webview.AwQuotaManagerBridge.Natives. The current configuration requires all native implementations to have a mock instance.");
       }
     }

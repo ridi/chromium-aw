@@ -613,7 +613,9 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
             if (ignoreConnectedNetwork(network, capabilities)) {
                 return;
             }
-            final boolean makeVpnDefault = capabilities.hasTransport(TRANSPORT_VPN);
+            final boolean makeVpnDefault = capabilities.hasTransport(TRANSPORT_VPN) &&
+                    // Only make the VPN the default if it isn't already.
+                    (mVpnInPlace == null || !network.equals(mVpnInPlace));
             if (makeVpnDefault) {
                 mVpnInPlace = network;
             }
@@ -1172,8 +1174,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
      * Marshmallow and newer releases. Only available on Lollipop and newer releases.
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @VisibleForTesting
-    static long networkToNetId(Network network) {
+    public static long networkToNetId(Network network) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return ApiHelperForM.getNetworkHandle(network);
         } else {

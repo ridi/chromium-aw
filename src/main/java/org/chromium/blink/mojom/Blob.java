@@ -44,6 +44,11 @@ long offset, long length, org.chromium.mojo.system.DataPipe.ProducerHandle pipe,
 
 
 
+    void load(
+org.chromium.mojo.bindings.InterfaceRequest<org.chromium.network.mojom.UrlLoader> loader, String requestMethod, org.chromium.network.mojom.HttpRequestHeaders headers, org.chromium.network.mojom.UrlLoaderClient client);
+
+
+
     void readSideData(
 
 ReadSideDataResponse callback);

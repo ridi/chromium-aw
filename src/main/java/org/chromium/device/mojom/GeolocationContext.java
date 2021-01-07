@@ -25,7 +25,7 @@ public interface GeolocationContext extends org.chromium.mojo.bindings.Interface
 
 
     void bindGeolocation(
-org.chromium.mojo.bindings.InterfaceRequest<Geolocation> receiver);
+org.chromium.mojo.bindings.InterfaceRequest<Geolocation> receiver, org.chromium.url.mojom.Url origin);
 
 
 

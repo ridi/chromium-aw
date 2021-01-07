@@ -16,17 +16,15 @@ package org.chromium.blink.mojom;
 
 public final class TransferableMessage extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 64;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(64, 0)};
+    private static final int STRUCT_SIZE = 56;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public CloneableMessage message;
-    public org.chromium.mojo.system.MessagePipeHandle[] ports;
-    public org.chromium.mojo.system.MessagePipeHandle[] streamChannels;
+    public MessagePortDescriptor[] ports;
+    public MessagePortDescriptor[] streamChannels;
     public SerializedArrayBufferContents[] arrayBufferContentsArray;
     public org.chromium.skia.mojom.Bitmap[] imageBitmapContentsArray;
     public UserActivationSnapshot userActivation;
-    public boolean transferUserActivation;
-    public boolean allowAutoplay;
 
     private TransferableMessage(int version) {
         super(STRUCT_SIZE, version);
@@ -68,11 +66,29 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 }
                 {
                     
-                result.ports = decoder0.readMessagePipeHandles(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.ports = new MessagePortDescriptor[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                        result.ports[i1] = MessagePortDescriptor.decode(decoder2);
+                    }
+                }
                 }
                 {
                     
-                result.streamChannels = decoder0.readMessagePipeHandles(24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.streamChannels = new MessagePortDescriptor[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                        result.streamChannels[i1] = MessagePortDescriptor.decode(decoder2);
+                    }
+                }
                 }
                 {
                     
@@ -105,14 +121,6 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, true);
                 result.userActivation = UserActivationSnapshot.decode(decoder1);
                 }
-                {
-                    
-                result.transferUserActivation = decoder0.readBoolean(56, 0);
-                }
-                {
-                    
-                result.allowAutoplay = decoder0.readBoolean(56, 1);
-                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -127,9 +135,25 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
         
         encoder0.encode(this.message, 8, false);
         
-        encoder0.encode(this.ports, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        if (this.ports == null) {
+            encoder0.encodeNullPointer(16, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.ports.length, 16, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.ports.length; ++i0) {
+                
+                encoder1.encode(this.ports[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
         
-        encoder0.encode(this.streamChannels, 24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        if (this.streamChannels == null) {
+            encoder0.encodeNullPointer(24, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.streamChannels.length, 24, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.streamChannels.length; ++i0) {
+                
+                encoder1.encode(this.streamChannels[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
         
         if (this.arrayBufferContentsArray == null) {
             encoder0.encodeNullPointer(32, false);
@@ -152,9 +176,5 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
         }
         
         encoder0.encode(this.userActivation, 48, true);
-        
-        encoder0.encode(this.transferUserActivation, 56, 0);
-        
-        encoder0.encode(this.allowAutoplay, 56, 1);
     }
 }

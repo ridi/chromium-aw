@@ -4,6 +4,8 @@
 
 package org.chromium.content.browser.input;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -14,6 +16,7 @@ import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.VerifiesOnR;
 import org.chromium.blink_public.web.WebTextInputFlags;
 import org.chromium.blink_public.web.WebTextInputMode;
 import org.chromium.ui.base.ime.TextInputAction;
@@ -25,6 +28,26 @@ import java.util.Locale;
  * Utilities for IME such as computing outAttrs, and dumping object information.
  */
 public class ImeUtils {
+    /**
+     * A class to contain R-specific code inside a separate class to avoid performance regression.
+     *
+     * See
+     * https://source.chromium.org/chromium/chromium/src/+/master:build/android/docs/class_verification_failures.md
+     * for details.
+     */
+    @VerifiesOnR
+    @TargetApi(Build.VERSION_CODES.R)
+    private static final class HelperForR {
+        /** see {@link EditorInfo#setInitialSurroundingText(EditorInfo, String)} */
+        public static void setInitialSurroundingText(EditorInfo outAttrs, String lastText) {
+            // Note: Android's internal implementation trims the text up to 2048 chars before
+            // sending it to the IMM service. In the future, if we consider limiting the number of
+            // chars between renderer and browser, then consider calling
+            // setInitialSurroundingSubText() instead.
+            outAttrs.setInitialSurroundingText(lastText);
+        }
+    }
+
     /**
      * Compute {@link EditorInfo} based on the given parameters. This is needed for
      * {@link View#onCreateInputConnection(EditorInfo)}.
@@ -38,7 +61,8 @@ public class ImeUtils {
      * @param outAttrs An instance of {@link EditorInfo} that we are going to change.
      */
     public static void computeEditorInfo(int inputType, int inputFlags, int inputMode,
-            int inputAction, int initialSelStart, int initialSelEnd, EditorInfo outAttrs) {
+            int inputAction, int initialSelStart, int initialSelEnd, String lastText,
+            EditorInfo outAttrs) {
         outAttrs.inputType =
                 EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT;
 
@@ -75,7 +99,6 @@ public class ImeUtils {
             } else if (inputType == TextInputType.NUMBER) {
                 // Number
                 outAttrs.inputType = InputType.TYPE_CLASS_NUMBER
-                        | InputType.TYPE_NUMBER_VARIATION_NORMAL
                         | InputType.TYPE_NUMBER_FLAG_DECIMAL;
             }
         } else {
@@ -101,8 +124,10 @@ public class ImeUtils {
                             | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
                     break;
                 case WebTextInputMode.NUMERIC:
-                    outAttrs.inputType =
-                            InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL;
+                    outAttrs.inputType = InputType.TYPE_CLASS_NUMBER;
+                    if (inputType == TextInputType.PASSWORD) {
+                        outAttrs.inputType |= InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                    }
                     break;
                 case WebTextInputMode.DECIMAL:
                     outAttrs.inputType =
@@ -126,13 +151,17 @@ public class ImeUtils {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
         }
 
-        if ((inputFlags & WebTextInputFlags.HAS_BEEN_PASSWORD_FIELD) != 0) {
+        if ((inputFlags & WebTextInputFlags.HAS_BEEN_PASSWORD_FIELD) != 0
+                && (outAttrs.inputType & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == 0) {
             outAttrs.inputType =
                     InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
         }
 
         outAttrs.initialSelStart = initialSelStart;
         outAttrs.initialSelEnd = initialSelEnd;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            HelperForR.setInitialSurroundingText(outAttrs, lastText);
+        }
     }
 
     private static int getImeAction(int inputType, int inputFlags, int inputMode, int inputAction,

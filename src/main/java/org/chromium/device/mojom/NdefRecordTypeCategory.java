@@ -17,8 +17,10 @@ public final class NdefRecordTypeCategory {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int STANDARDIZED = 0;
-    public static final int EXTERNAL = 1; // STANDARDIZED + 1
-    public static final int LOCAL = 2; // EXTERNAL + 1
+    public static final int EXTERNAL = 1;
+    public static final int LOCAL = 2;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 2;

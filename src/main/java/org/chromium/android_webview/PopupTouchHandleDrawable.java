@@ -25,7 +25,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.GestureListenerManager;
-import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.GestureStateListenerWithScroll;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid.DisplayAndroidObserver;
@@ -90,7 +90,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     private boolean mRotationChanged;
 
     // Gesture accounting for handle hiding while scrolling.
-    private final GestureStateListener mGestureStateListener;
+    private final GestureStateListenerWithScroll mGestureStateListener;
 
     // There are no guarantees that the side effects of setting the position of
     // the PopupWindow and the visibility of its content View will be realized
@@ -102,7 +102,6 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     // Deferred runnable to avoid invalidating outside of frame dispatch,
     // in turn avoiding issues with sync barrier insertion.
     private Runnable mInvalidationRunnable;
-    private boolean mHasPendingInvalidate;
 
     private boolean mNeedsUpdateDrawable;
 
@@ -143,7 +142,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
 
         mParentPositionObserver = new ViewPositionObserver(containerView);
         mParentPositionListener = (x, y) -> updateParentPosition(x, y);
-        mGestureStateListener = new GestureStateListener() {
+        mGestureStateListener = new GestureStateListenerWithScroll() {
             @Override
             public void onScrollStarted(int scrollOffsetX, int scrollOffsetY) {
                 setIsScrolling(true);
@@ -310,6 +309,17 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     }
 
     private void updatePosition() {
+        // Do not update the position when the handle is hidden, because PopupWindow.update()
+        // will trigger android wm performLayout in the same doFrame(), which is a serious waste
+        // of CPU and easy to cause page jitter when scrolling, the user experience become worse.
+        if (getVisibility() != VISIBLE) {
+            // This does not affect the TextMagnifier feature, because that once the first
+            // MotionEvent is passed to this PopupWindow, if we don't lift finger, the following
+            // MotionEvents are still passed to PopupWindow, so even the PopupWindow isn't moving
+            // follow finger, it still can correctly pass events to EventForwarder. Therefore the
+            // cursor/selection is still correctly adjusted.
+            return;
+        }
         mContainer.update(getContainerPositionX(), getContainerPositionY(),
                 getRight() - getLeft(), getBottom() - getTop());
     }
@@ -448,15 +458,12 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     }
 
     private void scheduleInvalidate() {
-        if (mInvalidationRunnable == null) {
-            mInvalidationRunnable = () -> {
-                mHasPendingInvalidate = false;
-                doInvalidate();
-            };
-        }
+        if (mInvalidationRunnable != null) return;
 
-        if (mHasPendingInvalidate) return;
-        mHasPendingInvalidate = true;
+        mInvalidationRunnable = () -> {
+            mInvalidationRunnable = null;
+            doInvalidate();
+        };
         postOnAnimation(mInvalidationRunnable);
     }
 

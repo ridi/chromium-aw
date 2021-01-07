@@ -17,7 +17,9 @@ public final class BindInterfacePriority {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int IMPORTANT = 0;
-    public static final int BEST_EFFORT = 1; // IMPORTANT + 1
+    public static final int BEST_EFFORT = 1;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 1;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 1;

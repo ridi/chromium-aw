@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:4.0.1")
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.12"
     }
 }
 
@@ -19,13 +20,14 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.google.protobuf'
 
 group = 'com.github.ridi'
-version = '81.0.4044.156-5'
+version = '62.0.3202.101-6'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -51,14 +53,30 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation("androidx.multidex:multidex:2.0.1")
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
     implementation 'com.google.android.gms:play-services-gcm:10.2.0'
     implementation 'com.google.android.gms:play-services-location:10.2.0'
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.google.protobuf:protobuf-javalite:3.8.0'
     implementation 'org.glassfish:javax.annotation:10.0-b28'
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.8.0'
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option "lite"
+                }
+            }
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {

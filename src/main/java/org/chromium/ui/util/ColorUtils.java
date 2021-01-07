@@ -4,6 +4,8 @@
 
 package org.chromium.ui.util;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 
 import org.chromium.base.MathUtils;
@@ -19,6 +21,15 @@ public class ColorUtils {
 
     /** Percentage to darken a color by when setting the status bar color. */
     private static final float DARKEN_COLOR_FRACTION = 0.6f;
+
+    /**
+     * @param context <b>Activity</b> context.
+     * @return Whether the activity is currently in night mode.
+     */
+    public static boolean inNightMode(Context context) {
+        int uiMode = context.getResources().getConfiguration().uiMode;
+        return (uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+    }
 
     /**
      * Computes the lightness value in HSL standard for the given color.
@@ -49,18 +60,14 @@ public class ColorUtils {
     }
 
     /**
-     * Get a color when overlayed with a different color.
+     * Get a color when overlaid with a different color. Note that colors returned by this method
+     * are always opaque.
      * @param baseColor The base Android color.
      * @param overlayColor The overlay Android color.
      * @param overlayAlpha The alpha |overlayColor| should have on the base color.
      */
     public static int getColorWithOverlay(int baseColor, int overlayColor, float overlayAlpha) {
-        return Color.rgb((int) MathUtils.interpolate(
-                                 Color.red(baseColor), Color.red(overlayColor), overlayAlpha),
-                (int) MathUtils.interpolate(
-                        Color.green(baseColor), Color.green(overlayColor), overlayAlpha),
-                (int) MathUtils.interpolate(
-                        Color.blue(baseColor), Color.blue(overlayColor), overlayAlpha));
+        return getColorWithOverlay(baseColor, overlayColor, overlayAlpha, false);
     }
 
     /**
@@ -137,5 +144,29 @@ public class ColorUtils {
             return ColorUtils.getColorWithOverlay(
                     themeColor, Color.BLACK, THEMED_FOREGROUND_BLACK_FRACTION);
         }
+    }
+
+    /**
+     * Get a color when overlaid with a different color.
+     * @param baseColor The base Android color.
+     * @param overlayColor The overlay Android color.
+     * @param overlayAlpha The alpha |overlayColor| should have on the base color.
+     * @param considerOpacity indicates whether to take color opacity into consideration when
+     * calculating the new color.
+     */
+    public static int getColorWithOverlay(
+            int baseColor, int overlayColor, float overlayAlpha, boolean considerOpacity) {
+        int red = (int) MathUtils.interpolate(
+                Color.red(baseColor), Color.red(overlayColor), overlayAlpha);
+        int green = (int) MathUtils.interpolate(
+                Color.green(baseColor), Color.green(overlayColor), overlayAlpha);
+        int blue = (int) MathUtils.interpolate(
+                Color.blue(baseColor), Color.blue(overlayColor), overlayAlpha);
+        if (considerOpacity) {
+            int alpha = (int) MathUtils.interpolate(
+                    Color.alpha(baseColor), Color.alpha(overlayColor), overlayAlpha);
+            return Color.argb(alpha, red, green, blue);
+        }
+        return Color.rgb(red, green, blue);
     }
 }

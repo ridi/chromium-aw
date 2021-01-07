@@ -7,6 +7,7 @@ package org.chromium.content.browser;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
+
 import androidx.collection.ArraySet;
 
 import org.chromium.base.Log;

@@ -8,12 +8,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.chromium.android_webview.R;
+import org.chromium.ui.LayoutInflaterUtils;
 
 /**
  * UI for the color chooser that shows on the Android platform as a result of
@@ -26,6 +28,8 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
 
     private final Button mMoreButton;
 
+    private final View mContent;
+
     // The view up in the corner that shows the user the color they've currently selected.
     private final View mCurrentColorView;
 
@@ -34,6 +38,10 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
     private final int mInitialColor;
 
     private int mCurrentColor;
+
+    View inflateView(Context context, int id) {
+        return LayoutInflaterUtils.inflate(context, id, null);
+    }
 
     /**
      * @param context The context the dialog is to run in.
@@ -50,9 +58,7 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
         mCurrentColor = mInitialColor;
 
         // Initialize title
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View title = inflater.inflate(R.layout.color_picker_dialog_title, null);
+        View title = inflateView(context, R.layout.color_picker_dialog_title);
         setCustomTitle(title);
 
         mCurrentColorView = title.findViewById(R.id.selected_color_view);
@@ -92,11 +98,11 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
         });
 
         // Initialize main content view
-        View content = inflater.inflate(R.layout.color_picker_dialog_content, null);
-        setView(content);
+        mContent = inflateView(context, R.layout.color_picker_dialog_content);
+        setView(mContent);
 
         // Initialize More button.
-        mMoreButton = (Button) content.findViewById(R.id.more_colors_button);
+        mMoreButton = (Button) mContent.findViewById(R.id.more_colors_button);
         mMoreButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,11 +112,11 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
 
         // Initialize advanced color view (hidden initially).
         mAdvancedColorPicker =
-                (ColorPickerAdvanced) content.findViewById(R.id.color_picker_advanced);
+                (ColorPickerAdvanced) mContent.findViewById(R.id.color_picker_advanced);
         mAdvancedColorPicker.setVisibility(View.GONE);
 
         // Initialize simple color view (default view).
-        mSimpleColorPicker = (ColorPickerSimple) content.findViewById(R.id.color_picker_simple);
+        mSimpleColorPicker = (ColorPickerSimple) mContent.findViewById(R.id.color_picker_simple);
         mSimpleColorPicker.init(suggestions, this);
 
         updateCurrentColor(mInitialColor);
@@ -134,8 +140,7 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
     private void showAdvancedView() {
         // Only need to hide the borders, not the Views themselves, since the Views are
         // contained within the borders.
-        View buttonBorder = findViewById(R.id.more_colors_button_border);
-        buttonBorder.setVisibility(View.GONE);
+        mMoreButton.setVisibility(View.GONE);
 
         View simpleView = findViewById(R.id.color_picker_simple);
         simpleView.setVisibility(View.GONE);
@@ -159,5 +164,10 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
     private void updateCurrentColor(int color) {
         mCurrentColor = color;
         if (mCurrentColorView != null) mCurrentColorView.setBackgroundColor(color);
+    }
+
+    @VisibleForTesting
+    public View getContentView() {
+        return mContent;
     }
 }

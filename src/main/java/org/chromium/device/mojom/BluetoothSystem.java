@@ -22,10 +22,12 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int UNSUPPORTED = 0;
-        public static final int UNAVAILABLE = 1; // UNSUPPORTED + 1
-        public static final int POWERED_OFF = 2; // UNAVAILABLE + 1
-        public static final int TRANSITIONING = 3; // POWERED_OFF + 1
-        public static final int POWERED_ON = 4; // TRANSITIONING + 1
+        public static final int UNAVAILABLE = 1;
+        public static final int POWERED_OFF = 2;
+        public static final int TRANSITIONING = 3;
+        public static final int POWERED_ON = 4;
+        public static final int MIN_VALUE = 0;
+        public static final int MAX_VALUE = 4;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 4;
@@ -44,9 +46,11 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int SUCCESS = 0;
-        public static final int FAILED_UNKNOWN_REASON = 1; // SUCCESS + 1
-        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2; // FAILED_UNKNOWN_REASON + 1
-        public static final int FAILED_IN_PROGRESS = 3; // FAILED_BLUETOOTH_UNAVAILABLE + 1
+        public static final int FAILED_UNKNOWN_REASON = 1;
+        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2;
+        public static final int FAILED_IN_PROGRESS = 3;
+        public static final int MIN_VALUE = 0;
+        public static final int MAX_VALUE = 3;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 3;
@@ -65,8 +69,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int NOT_SCANNING = 0;
-        public static final int TRANSITIONING = 1; // NOT_SCANNING + 1
-        public static final int SCANNING = 2; // TRANSITIONING + 1
+        public static final int TRANSITIONING = 1;
+        public static final int SCANNING = 2;
+        public static final int MIN_VALUE = 0;
+        public static final int MAX_VALUE = 2;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;
@@ -85,8 +91,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int SUCCESS = 0;
-        public static final int FAILED_UNKNOWN_REASON = 1; // SUCCESS + 1
-        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2; // FAILED_UNKNOWN_REASON + 1
+        public static final int FAILED_UNKNOWN_REASON = 1;
+        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2;
+        public static final int MIN_VALUE = 0;
+        public static final int MAX_VALUE = 2;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;
@@ -105,8 +113,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         private static final boolean IS_EXTENSIBLE = false;
 
         public static final int SUCCESS = 0;
-        public static final int FAILED_UNKNOWN_REASON = 1; // SUCCESS + 1
-        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2; // FAILED_UNKNOWN_REASON + 1
+        public static final int FAILED_UNKNOWN_REASON = 1;
+        public static final int FAILED_BLUETOOTH_UNAVAILABLE = 2;
+        public static final int MIN_VALUE = 0;
+        public static final int MAX_VALUE = 2;
 
         public static boolean isKnownValue(int value) {
             return value >= 0 && value <= 2;

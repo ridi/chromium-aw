@@ -17,11 +17,13 @@ public final class FetchResponseType {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int BASIC = 0;
-    public static final int CORS = 1; // BASIC + 1
-    public static final int DEFAULT = 2; // CORS + 1
-    public static final int ERROR = 3; // DEFAULT + 1
-    public static final int OPAQUE = 4; // ERROR + 1
-    public static final int OPAQUE_REDIRECT = 5; // OPAQUE + 1
+    public static final int CORS = 1;
+    public static final int DEFAULT = 2;
+    public static final int ERROR = 3;
+    public static final int OPAQUE = 4;
+    public static final int OPAQUE_REDIRECT = 5;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 5;
 
     public static boolean isKnownValue(int value) {
         return value >= 0 && value <= 5;

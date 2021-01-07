@@ -5,7 +5,6 @@
 package org.chromium.device.nfc;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -15,7 +14,6 @@ import android.nfc.NfcAdapter.ReaderCallback;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
-import android.os.Build;
 import android.os.Process;
 import android.os.Vibrator;
 import android.util.SparseArray;
@@ -98,11 +96,6 @@ public class NfcImpl implements Nfc {
      * @see #watch
      */
     private NfcClient mClient;
-
-    /**
-     * Watcher id that is incremented for each #watch call.
-     */
-    private int mWatcherId;
 
     /**
      * Map of watchId <-> NdefScanOptions. All NdefScanOptions are matched against tag that is in
@@ -245,6 +238,7 @@ public class NfcImpl implements Nfc {
      * @see NfcClient#onWatch(int[] id, String serial_number, NdefMessage message)
      *
      * @param options used to filter NdefMessages, @see NdefScanOptions.
+     * @param id request ID from Blink which will be the watch ID if succeeded.
      * @param callback that is used to notify caller when watch() is completed.
      */
     @Override
@@ -303,22 +297,6 @@ public class NfcImpl implements Nfc {
         }
     }
 
-    /**
-     * Suspends all pending operations. Should be called when web page visibility is lost.
-     */
-    @Override
-    public void suspendNfcOperations() {
-        disableReaderMode();
-    }
-
-    /**
-     * Resumes all pending watch / push operations. Should be called when web page becomes visible.
-     */
-    @Override
-    public void resumeNfcOperations() {
-        enableReaderModeIfNeeded();
-    }
-
     @Override
     public void close() {
         mDelegate.stopTrackingActivityForHost(mHostId);
@@ -329,6 +307,20 @@ public class NfcImpl implements Nfc {
     public void onConnectionError(MojoException e) {
         // We do nothing here since close() is always called no matter the connection gets closed
         // normally or abnormally.
+    }
+
+    /**
+     * Suspends all pending operations.
+     */
+    public void suspendNfcOperations() {
+        disableReaderMode();
+    }
+
+    /**
+     * Resumes all pending watch / push operations.
+     */
+    public void resumeNfcOperations() {
+        enableReaderModeIfNeeded();
     }
 
     /**
@@ -419,7 +411,6 @@ public class NfcImpl implements Nfc {
      * discovered, Tag object is delegated to mojo service implementation method
      * NfcImpl.onTagDiscovered().
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private static class ReaderCallbackHandler implements ReaderCallback {
         private final NfcImpl mNfcImpl;
 
@@ -455,7 +446,6 @@ public class NfcImpl implements Nfc {
      * Disables reader mode.
      * @see android.nfc.NfcAdapter#disableReaderMode
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void disableReaderMode() {
         // There is no API that could query whether reader mode is enabled for adapter.
         // If mReaderCallbackHandler is null, reader mode is not enabled.
@@ -564,10 +554,6 @@ public class NfcImpl implements Nfc {
                 notifyMatchingWatchers(webNdefMessage);
                 return;
             }
-            if (message.getByteArrayLength() > NdefMessage.MAX_SIZE) {
-                Log.w(TAG, "Cannot read data from NFC tag. NdefMessage exceeds allowed size.");
-                return;
-            }
             NdefMessage webNdefMessage = NdefMessageUtils.toNdefMessage(message);
             notifyMatchingWatchers(webNdefMessage);
         } catch (UnsupportedEncodingException e) {
@@ -669,13 +655,13 @@ public class NfcImpl implements Nfc {
     protected void processPendingOperations(NfcTagHandler tagHandler) {
         mTagHandler = tagHandler;
 
-        // This tag is not NDEF compatible.
+        // This tag is not supported.
         if (mTagHandler == null) {
-            Log.w(TAG, "This tag is not NDEF compatible.");
+            Log.w(TAG, "This tag is not supported.");
             notifyErrorToAllWatchers(
-                    createError(NdefErrorType.NOT_SUPPORTED, "This tag is not NDEF compatible."));
+                    createError(NdefErrorType.NOT_SUPPORTED, "This tag is not supported."));
             pendingPushOperationCompleted(
-                    createError(NdefErrorType.NOT_SUPPORTED, "This tag is not NDEF compatible."));
+                    createError(NdefErrorType.NOT_SUPPORTED, "This tag is not supported."));
             return;
         }
 

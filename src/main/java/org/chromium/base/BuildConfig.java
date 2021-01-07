@@ -8,4 +8,5 @@ public class BuildConfig {
     public static final int MIN_SDK_VERSION = 1;
     public static final boolean BUNDLES_SUPPORTED = false;
     public static final boolean IS_INCREMENTAL_INSTALL = false;
+    public static final boolean IS_CHROMECAST_BRANDING_INTERNAL = false;
 }

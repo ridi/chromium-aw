@@ -12,6 +12,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeMethods;
 import org.chromium.content_public.browser.NavigationHandle;
 import org.chromium.content_public.browser.WebContentsObserver;
+import org.chromium.ui.base.WindowAndroid;
 
 /**
  * Serves as a compound observer proxy for dispatching WebContentsObserver callbacks,
@@ -60,6 +61,14 @@ class WebContentsObserverProxy extends WebContentsObserver {
      */
     boolean hasObservers() {
         return !mObservers.isEmpty();
+    }
+
+    @Override
+    @CalledByNative
+    public void renderFrameCreated(int renderProcessId, int renderFrameId) {
+        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
+            mObserversIterator.next().renderFrameCreated(renderProcessId, renderFrameId);
+        }
     }
 
     @Override
@@ -224,22 +233,6 @@ class WebContentsObserverProxy extends WebContentsObserver {
 
     @Override
     @CalledByNative
-    public void didAttachInterstitialPage() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().didAttachInterstitialPage();
-        }
-    }
-
-    @Override
-    @CalledByNative
-    public void didDetachInterstitialPage() {
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().didDetachInterstitialPage();
-        }
-    }
-
-    @Override
-    @CalledByNative
     public void didChangeThemeColor() {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
             mObserversIterator.next().didChangeThemeColor();
@@ -275,6 +268,13 @@ class WebContentsObserverProxy extends WebContentsObserver {
     public void onWebContentsLostFocus() {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
             mObserversIterator.next().onWebContentsLostFocus();
+        }
+    }
+
+    @Override
+    public void onTopLevelNativeWindowChanged(WindowAndroid windowAndroid) {
+        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
+            mObserversIterator.next().onTopLevelNativeWindowChanged(windowAndroid);
         }
     }
 

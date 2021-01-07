@@ -1,6 +1,7 @@
 # Glob
 .DS_Store
 *~
+*.so
 *.swp
 *.mchg
 *.pyc
