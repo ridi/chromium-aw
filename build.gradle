@@ -23,7 +23,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.google.protobuf'
 
 group = 'com.github.ridi'
-version = '86.0.4240.198-1'
+version = '87.0.4280.143-1'
 
 android {
     compileSdkVersion 30
