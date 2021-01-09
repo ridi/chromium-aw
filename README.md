@@ -6,37 +6,61 @@
 
 ## Getting started
 
-This library is distributed by [jitpack](https://jitpack.io).
+This library is distributed by [GitHub Releases](https://github.com/ridi/chromium-aw/releases).
 
-You should add jitpack maven repository to build.gradle file of your project.
+You should add [de.undercouch.download plugin](https://plugins.gradle.org/plugin/de.undercouch.download) to `build.gradle` file of your project.
+
+Using the [plugins DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block):
 
 ```
-repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-    ...
+plugins {
+  id("de.undercouch.download") version "4.1.1"
 }
 ```
 
-Then you can include this library by adding dependency script to build.gradle file of your project.
+Using [legacy plugin application](https://docs.gradle.org/current/userguide/plugins.html#sec:old_plugin_application):
 
 ```
-dependencies {
-    ...
-    compile 'com.github.ridi:chromium-aw:<version>'
-    ...
+buildscript {
+  repositories {
+    maven {
+      url = uri("https://plugins.gradle.org/m2/")
+    }
+  }
+  dependencies {
+    classpath("de.undercouch:gradle-download-task:4.1.1")
+  }
 }
+
+apply(plugin = "de.undercouch.download")
+```
+
+Then you can include this library by adding dependency script to `build.gradle` file of your project.
+
+```
+val version = "87.0.4280.143-1"
+val fileName = "chromium-aw-release.aar"
+val destPath = "../libs/${fileName}"
+val downloadChromiumAwTaskName = "chromium-aw@aar"
+tasks.register<de.undercouch.gradle.tasks.download.Download>(downloadChromiumAwTaskName) {
+  src("https://github.com/ridi/chromium-aw/releases/download/${version}/${fileName}")
+  dest(destPath)
+  overwrite(true)
+  onlyIfModified(true)
+}
+tasks.matching { it.name != downloadChromiumAwTaskName }
+  .all { dependsOn(downloadChromiumAwTaskName) }
 ```
 
 **IMPORTANT : Add following `aaptOptions` to prevent asset files being compressed.**
 
 ```
 android {
-    ...
-    aaptOptions {
-        noCompress 'dat', 'pak'
-    }
-    ...
+  ...
+  aaptOptions {
+    noCompress("dat", "pak")
+  }
+  ...
 }
 ```
 
