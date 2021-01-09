@@ -49,8 +49,6 @@ class CrossOriginOpenerPolicyReporter_Internal {
 
     private static final int QUEUE_ACCESS_REPORT_ORDINAL = 0;
 
-    private static final int CLONE_ORDINAL = 1;
-
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements CrossOriginOpenerPolicyReporter.Proxy {
 
@@ -62,7 +60,7 @@ class CrossOriginOpenerPolicyReporter_Internal {
 
         @Override
         public void queueAccessReport(
-int reportType, String property, SourceLocation sourceLocation) {
+int reportType, String property, SourceLocation sourceLocation, String reportedWindowUrl) {
 
             CrossOriginOpenerPolicyReporterQueueAccessReportParams _message = new CrossOriginOpenerPolicyReporterQueueAccessReportParams();
 
@@ -72,28 +70,13 @@ int reportType, String property, SourceLocation sourceLocation) {
 
             _message.sourceLocation = sourceLocation;
 
+            _message.reportedWindowUrl = reportedWindowUrl;
+
 
             getProxyHandler().getMessageReceiver().accept(
                     _message.serializeWithHeader(
                             getProxyHandler().getCore(),
                             new org.chromium.mojo.bindings.MessageHeader(QUEUE_ACCESS_REPORT_ORDINAL)));
-
-        }
-
-
-        @Override
-        public void clone(
-org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> receiver) {
-
-            CrossOriginOpenerPolicyReporterCloneParams _message = new CrossOriginOpenerPolicyReporterCloneParams();
-
-            _message.receiver = receiver;
-
-
-            getProxyHandler().getMessageReceiver().accept(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(CLONE_ORDINAL)));
 
         }
 
@@ -134,20 +117,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
                         CrossOriginOpenerPolicyReporterQueueAccessReportParams data =
                                 CrossOriginOpenerPolicyReporterQueueAccessReportParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().queueAccessReport(data.reportType, data.property, data.sourceLocation);
-                        return true;
-                    }
-
-
-
-
-
-                    case CLONE_ORDINAL: {
-
-                        CrossOriginOpenerPolicyReporterCloneParams data =
-                                CrossOriginOpenerPolicyReporterCloneParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().clone(data.receiver);
+                        getImpl().queueAccessReport(data.reportType, data.property, data.sourceLocation, data.reportedWindowUrl);
                         return true;
                     }
 
@@ -183,8 +153,6 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
 
 
 
-
-
                     default:
                         return false;
                 }
@@ -199,12 +167,13 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
     
     static final class CrossOriginOpenerPolicyReporterQueueAccessReportParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 32;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+        private static final int STRUCT_SIZE = 40;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public int reportType;
         public String property;
         public SourceLocation sourceLocation;
+        public String reportedWindowUrl;
 
         private CrossOriginOpenerPolicyReporterQueueAccessReportParams(int version) {
             super(STRUCT_SIZE, version);
@@ -253,6 +222,10 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
                     result.sourceLocation = SourceLocation.decode(decoder1);
                     }
+                    {
+                        
+                    result.reportedWindowUrl = decoder0.readString(32, false);
+                    }
 
             } finally {
                 decoder0.decreaseStackDepth();
@@ -270,69 +243,8 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> rec
             encoder0.encode(this.property, 16, false);
             
             encoder0.encode(this.sourceLocation, 24, false);
-        }
-    }
-
-
-
-    
-    static final class CrossOriginOpenerPolicyReporterCloneParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 16;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> receiver;
-
-        private CrossOriginOpenerPolicyReporterCloneParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public CrossOriginOpenerPolicyReporterCloneParams() {
-            this(0);
-        }
-
-        public static CrossOriginOpenerPolicyReporterCloneParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static CrossOriginOpenerPolicyReporterCloneParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static CrossOriginOpenerPolicyReporterCloneParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            CrossOriginOpenerPolicyReporterCloneParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new CrossOriginOpenerPolicyReporterCloneParams(elementsOrVersion);
-                    {
-                        
-                    result.receiver = decoder0.readInterfaceRequest(8, false);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            encoder0.encode(this.receiver, 8, false);
+            encoder0.encode(this.reportedWindowUrl, 32, false);
         }
     }
 

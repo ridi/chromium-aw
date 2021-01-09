@@ -108,12 +108,6 @@ public final class ContentSwitches {
     // TODO(enne): remove this once app cache has been removed.
     public static final String APP_CACHE_FORCE_ENABLED = "app-cache-force-enabled";
 
-    // Set blink settings. Format is <name>[=<value],<name>[=<value>],...
-    // The names are declared in Settings.json5. For boolean type, use "true",
-    // "false", or omit '=<value>' part to set to true. For enum type, use the int
-    // value of the enum value. Applied after other command line flags and prefs.
-    public static final String BLINK_SETTINGS = "blink-settings";
-
     // Causes the browser process to crash on startup.
     public static final String BROWSER_CRASH_TEST = "crash-test";
 
@@ -178,6 +172,9 @@ public final class ContentSwitches {
     // Disable the per-domain blocking for 3D APIs after GPU reset.
     // This switch is intended only for tests.
     public static final String DISABLE_DOMAIN_BLOCKING_FOR3DAP_IS = "disable-domain-blocking-for-3d-apis";
+
+    // Disables the in-process stack traces.
+    public static final String DISABLE_IN_PROCESS_STACK_TRACES = "disable-in-process-stack-traces";
 
     // Disable all versions of WebGL.
     public static final String DISABLE_WEB_GL = "disable-webgl";
@@ -276,9 +273,6 @@ public final class ContentSwitches {
     // Disables compositor-accelerated touch-screen pinch gestures.
     public static final String DISABLE_PINCH = "disable-pinch";
 
-    // Disable the creation of compositing layers when it would prevent LCD text.
-    public static final String DISABLE_PREFER_COMPOSITING_TO_LCD_TEXT = "disable-prefer-compositing-to-lcd-text";
-
     // Disables the Presentation API.
     public static final String DISABLE_PRESENTATION_API = "disable-presentation-api";
 
@@ -330,9 +324,6 @@ public final class ContentSwitches {
     // Disable multithreaded GPU compositing of web content.
     public static final String DISABLE_THREADED_COMPOSITING = "disable-threaded-compositing";
 
-    // Disable multithreaded, compositor scrolling of web content.
-    public static final String DISABLE_THREADED_SCROLLING = "disable-threaded-scrolling";
-
     // Disable V8 idle tasks.
     public static final String DISABLE_V8_IDLE_TASKS = "disable-v8-idle-tasks";
 
@@ -364,9 +355,6 @@ public final class ContentSwitches {
 
     // Enables LCD text.
     public static final String ENABLE_LCD_TEXT = "enable-lcd-text";
-
-    // Enable the creation of compositing layers when it would prevent LCD text.
-    public static final String ENABLE_PREFER_COMPOSITING_TO_LCD_TEXT = "enable-prefer-compositing-to-lcd-text";
 
     // Enable one or more Blink runtime-enabled features.
     // Use names from runtime_enabled_features.json5, separated by commas.
@@ -564,6 +552,9 @@ public final class ContentSwitches {
     // Enables experimental Harmony (ECMAScript 6) features.
     public static final String JAVA_SCRIPT_HARMONY = "javascript-harmony";
 
+    // Enables unsafe fast JS calls between Blink and V8.
+    public static final String ENABLE_UNSAFE_FAST_JS_CALLS = "enable-unsafe-fast-js-calls";
+
     // Specifies the flags passed to JS engine.
     public static final String JAVA_SCRIPT_FLAGS = "js-flags";
 
@@ -605,13 +596,6 @@ public final class ContentSwitches {
     // Use a Mojo-based LocalStorage implementation.
     public static final String MOJO_LOCAL_STORAGE = "mojo-local-storage";
 
-    // Sets the timeout seconds of the network-quiet timers in IdlenessDetector.
-    // Used by embedders who want to change the timeout time in order to run web
-    // contents on various embedded devices and changeable network bandwidths in
-    // different regions. For example, it's useful when using FirstMeaningfulPaint
-    // signal to dismiss a splash screen.
-    public static final String NETWORK_QUIET_TIMEOUT = "network-quiet-timeout";
-
     // Disables the use of a zygote process for forking child processes. Instead,
     // child processes will be forked and exec'd directly. Note that --no-sandbox
     // should also be used together with this flag because the sandbox needs the
@@ -629,13 +613,6 @@ public final class ContentSwitches {
     // Set the value to 'always' to always throttle every plugin instance. Set the
     // value to 'never' to disable throttling.
     public static final String OVERRIDE_PLUGIN_POWER_SAVER_FOR_TESTING = "override-plugin-power-saver-for-testing";
-
-    // Override the default value for the 'passive' field in javascript
-    // addEventListener calls. Values are defined as:
-    //  'documentonlytrue' to set the default be true only for document level nodes.
-    //  'true' to set the default to be true on all nodes (when not specified).
-    //  'forcealltrue' to force the value on all nodes.
-    public static final String PASSIVE_LISTENERS_DEFAULT = "passive-listeners-default";
 
     // Argument to the process type that indicates a PPAPI broker process type.
     public static final String PPAPI_BROKER_PROCESS = "ppapi-broker";
@@ -730,6 +707,12 @@ public final class ContentSwitches {
     // Causes the process to run as a sandbox IPC subprocess.
     public static final String SANDBOX_IPC_PROCESS = "sandbox-ipc";
 
+    // where <file_id> is an ID string from the manifest of the service being
+    // launched and <descriptor_id> is the numeric identifier of the descriptor for
+    // the child process can use to retrieve the file descriptor from the
+    // global descriptor table.
+    public static final String SHARED_FILES = "shared-files";
+
     // Runs the renderer and plugins in the same process as the browser
     public static final String SINGLE_PROCESS = "single-process";
 
@@ -778,11 +761,6 @@ public final class ContentSwitches {
 
     //   disabled: touch events are disabled.
     public static final String TOUCH_EVENT_FEATURE_DETECTION_DISABLED = "disabled";
-
-    // Controls how text selection granularity changes when touch text selection
-    // handles are dragged. Should be "character" or "direction". If not specified,
-    // the platform default is used.
-    public static final String TOUCH_TEXT_SELECTION_STRATEGY = "touch-selection-strategy";
 
     // Accepts specified file URL of a trustable WebBundle file. This flag
     // should be used only for testing purpose.
@@ -838,6 +816,9 @@ public final class ContentSwitches {
 
     // The prefix used when starting the zygote process. (i.e. 'gdb --args')
     public static final String ZYGOTE_CMD_PREFIX = "zygote-cmd-prefix";
+
+    // Causes the process to run as a zygote.
+    public static final String ZYGOTE_PROCESS = "zygote";
 
     // Enables specified backend for the Web OTP API.
     public static final String WEB_OTP_BACKEND = "web-otp-backend";
@@ -915,12 +896,6 @@ public final class ContentSwitches {
     public static final String WEB_XR_RUNTIME_ORIENTATION_SENSORS = "orientation-sensors";
 
     // The following are the runtimes that WebXr supports.
-    public static final String WEB_XR_RUNTIME_OCULUS = "oculus";
-
-
-    public static final String WEB_XR_RUNTIME_OPEN_VR = "openvr";
-
-
     public static final String WEB_XR_RUNTIME_OPEN_XR = "openxr";
 
 

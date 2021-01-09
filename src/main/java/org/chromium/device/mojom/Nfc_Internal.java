@@ -131,12 +131,10 @@ CancelPushResponse callback) {
 
         @Override
         public void watch(
-NdefScanOptions options, int id, 
+int id, 
 WatchResponse callback) {
 
             NfcWatchParams _message = new NfcWatchParams();
-
-            _message.options = options;
 
             _message.id = id;
 
@@ -316,7 +314,7 @@ CancelAllWatchesResponse callback) {
                         NfcWatchParams data =
                                 NfcWatchParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().watch(data.options, data.id, new NfcWatchResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
+                        getImpl().watch(data.id, new NfcWatchResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
 
@@ -805,10 +803,9 @@ CancelAllWatchesResponse callback) {
     
     static final class NfcWatchParams extends org.chromium.mojo.bindings.Struct {
 
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
+        private static final int STRUCT_SIZE = 16;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public NdefScanOptions options;
         public int id;
 
         private NfcWatchParams(int version) {
@@ -846,12 +843,7 @@ CancelAllWatchesResponse callback) {
                 result = new NfcWatchParams(elementsOrVersion);
                     {
                         
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.options = NdefScanOptions.decode(decoder1);
-                    }
-                    {
-                        
-                    result.id = decoder0.readInt(16);
+                    result.id = decoder0.readInt(8);
                     }
 
             } finally {
@@ -865,9 +857,7 @@ CancelAllWatchesResponse callback) {
         protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            encoder0.encode(this.options, 8, false);
-            
-            encoder0.encode(this.id, 16);
+            encoder0.encode(this.id, 8);
         }
     }
 

@@ -1,5 +1,5 @@
 
-// Copyright 2020 The Chromium Authors. All rights reserved.
+// Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -19,7 +19,8 @@ import java.lang.annotation.RetentionPolicy;
     ConnectionType.CONNECTION_UNKNOWN, ConnectionType.CONNECTION_ETHERNET,
     ConnectionType.CONNECTION_WIFI, ConnectionType.CONNECTION_2G, ConnectionType.CONNECTION_3G,
     ConnectionType.CONNECTION_4G, ConnectionType.CONNECTION_NONE,
-    ConnectionType.CONNECTION_BLUETOOTH, ConnectionType.CONNECTION_LAST
+    ConnectionType.CONNECTION_BLUETOOTH, ConnectionType.CONNECTION_5G,
+    ConnectionType.CONNECTION_LAST
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface ConnectionType {
@@ -34,5 +35,6 @@ public @interface ConnectionType {
   int CONNECTION_4G = 5;
   int CONNECTION_NONE = 6;
   int CONNECTION_BLUETOOTH = 7;
-  int CONNECTION_LAST = CONNECTION_BLUETOOTH;
+  int CONNECTION_5G = 8;
+  int CONNECTION_LAST = CONNECTION_5G;
 }

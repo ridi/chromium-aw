@@ -28,8 +28,9 @@ final class AwRenderProcessJni implements AwRenderProcess.Natives {
   }
 
   @Override
-  public boolean isProcessLockedForTesting(long nativeAwRenderProcess, AwRenderProcess caller) {
-    return (boolean)GEN_JNI.org_chromium_android_1webview_AwRenderProcess_isProcessLockedForTesting(nativeAwRenderProcess, caller);
+  public boolean isProcessLockedToSiteForTesting(long nativeAwRenderProcess,
+      AwRenderProcess caller) {
+    return (boolean)GEN_JNI.org_chromium_android_1webview_AwRenderProcess_isProcessLockedToSiteForTesting(nativeAwRenderProcess, caller);
   }
 
   public static AwRenderProcess.Natives get() {

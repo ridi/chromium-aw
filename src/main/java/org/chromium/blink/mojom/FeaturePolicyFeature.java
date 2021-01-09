@@ -26,7 +26,6 @@ public final class FeaturePolicyFeature {
     public static final int MIDI_FEATURE = 7;
     public static final int PAYMENT = 8;
     public static final int DOCUMENT_DOMAIN = 11;
-    public static final int SYNC_SCRIPT = 12;
     public static final int SYNC_XHR = 13;
     public static final int USB = 14;
     public static final int ACCELEROMETER = 17;
@@ -35,7 +34,6 @@ public final class FeaturePolicyFeature {
     public static final int MAGNETOMETER = 20;
     public static final int PICTURE_IN_PICTURE = 26;
     public static final int VERTICAL_SCROLL = 27;
-    public static final int DOCUMENT_WRITE = 28;
     public static final int SCREEN_WAKE_LOCK = 31;
     public static final int TOP_NAVIGATION = 33;
     public static final int FORM_SUBMISSION = 34;
@@ -93,7 +91,6 @@ public final class FeaturePolicyFeature {
             case 7:
             case 8:
             case 11:
-            case 12:
             case 13:
             case 14:
             case 17:
@@ -102,7 +99,6 @@ public final class FeaturePolicyFeature {
             case 20:
             case 26:
             case 27:
-            case 28:
             case 31:
             case 33:
             case 34:

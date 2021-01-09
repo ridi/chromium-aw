@@ -128,6 +128,11 @@ final class CoreImplJni implements CoreImpl.Natives {
     return (int)GEN_JNI.org_chromium_mojo_system_impl_CoreImpl_getNativeBufferOffset(caller, buffer, alignment);
   }
 
+  @Override
+  public int createPlatformHandle(int fd) {
+    return (int)GEN_JNI.org_chromium_mojo_system_impl_CoreImpl_createPlatformHandle(fd);
+  }
+
   public static CoreImpl.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

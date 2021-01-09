@@ -5,8 +5,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.1")
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.12"
     }
 }
 
@@ -19,6 +20,7 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.google.protobuf'
 
 group = 'com.github.ridi'
 version = '86.0.4240.198-1'
@@ -58,7 +60,23 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:10.2.0'
     implementation 'com.google.android.gms:play-services-vision:10.2.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.google.protobuf:protobuf-javalite:3.11.0'
     implementation 'org.glassfish:javax.annotation:10.0-b28'
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.11.0'
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option "lite"
+                }
+            }
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {

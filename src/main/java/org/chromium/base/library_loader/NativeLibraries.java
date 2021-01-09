@@ -27,7 +27,7 @@ public class NativeLibraries {
     // TODO(torne): This is public to work around classloader issues in Trichrome
     // where NativeLibraries is not in the same dex as LibraryLoader.
     // We should instead split up Java code along package boundaries.
-    public static final String sVersionNumber = "86.0.4240.198";
+    public static final String sVersionNumber = "87.0.4280.143";
 
-    public static final int sCpuFamily = CPU_FAMILY_X86;
+    public static final int sCpuFamily = CPU_FAMILY_UNKNOWN;
 }

@@ -1,5 +1,5 @@
 
-// Copyright 2020 The Chromium Authors. All rights reserved.
+// Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -20,10 +20,11 @@ import java.lang.annotation.RetentionPolicy;
     PageTransition.AUTO_SUBFRAME, PageTransition.MANUAL_SUBFRAME, PageTransition.GENERATED,
     PageTransition.AUTO_TOPLEVEL, PageTransition.FORM_SUBMIT, PageTransition.RELOAD,
     PageTransition.KEYWORD, PageTransition.KEYWORD_GENERATED, PageTransition.LAST_CORE,
-    PageTransition.CORE_MASK, PageTransition.BLOCKED, PageTransition.FORWARD_BACK,
-    PageTransition.FROM_ADDRESS_BAR, PageTransition.HOME_PAGE, PageTransition.FROM_API,
-    PageTransition.CHAIN_START, PageTransition.CHAIN_END, PageTransition.CLIENT_REDIRECT,
-    PageTransition.SERVER_REDIRECT, PageTransition.IS_REDIRECT_MASK, PageTransition.QUALIFIER_MASK
+    PageTransition.CORE_MASK, PageTransition.FROM_API_3, PageTransition.FROM_API_2,
+    PageTransition.BLOCKED, PageTransition.FORWARD_BACK, PageTransition.FROM_ADDRESS_BAR,
+    PageTransition.HOME_PAGE, PageTransition.FROM_API, PageTransition.CHAIN_START,
+    PageTransition.CHAIN_END, PageTransition.CLIENT_REDIRECT, PageTransition.SERVER_REDIRECT,
+    PageTransition.IS_REDIRECT_MASK, PageTransition.QUALIFIER_MASK
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface PageTransition {
@@ -109,8 +110,16 @@ public @interface PageTransition {
   int CORE_MASK = 0xFF;
   /**
    * Qualifiers Any of the core values above can be augmented by one or more qualifiers. These
-   * qualifiers further define the transition. A managed user attempted to visit a URL but was
-   * blocked.
+   * qualifiers further define the transition. TODO(https://crbug.com/1141501): these are for an
+   * experiment, and will be removed once data is collected from experiment. Both of these
+   * transition types are for experiments to exclude visits from appearing in the omnibox.
+   * FROM_API_3 also makes it so the visit does not surface in the history page. Neither transition
+   * type is used with TYPED.
+   */
+  int FROM_API_3 = 0x00200000;
+  int FROM_API_2 = 0x00400000;
+  /**
+   * A managed user attempted to visit a URL but was blocked.
    */
   int BLOCKED = 0x00800000;
   /**

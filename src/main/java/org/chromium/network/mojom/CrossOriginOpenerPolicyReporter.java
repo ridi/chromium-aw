@@ -25,12 +25,7 @@ public interface CrossOriginOpenerPolicyReporter extends org.chromium.mojo.bindi
 
 
     void queueAccessReport(
-int reportType, String property, SourceLocation sourceLocation);
-
-
-
-    void clone(
-org.chromium.mojo.bindings.InterfaceRequest<CrossOriginOpenerPolicyReporter> receiver);
+int reportType, String property, SourceLocation sourceLocation, String reportedWindowUrl);
 
 
 }

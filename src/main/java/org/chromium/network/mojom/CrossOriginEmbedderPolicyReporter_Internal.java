@@ -62,11 +62,13 @@ class CrossOriginEmbedderPolicyReporter_Internal {
 
         @Override
         public void queueCorpViolationReport(
-org.chromium.url.mojom.Url blockedUrl, boolean reportOnly) {
+org.chromium.url.mojom.Url blockedUrl, int destination, boolean reportOnly) {
 
             CrossOriginEmbedderPolicyReporterQueueCorpViolationReportParams _message = new CrossOriginEmbedderPolicyReporterQueueCorpViolationReportParams();
 
             _message.blockedUrl = blockedUrl;
+
+            _message.destination = destination;
 
             _message.reportOnly = reportOnly;
 
@@ -132,7 +134,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginEmbedderPolicyReporter> r
                         CrossOriginEmbedderPolicyReporterQueueCorpViolationReportParams data =
                                 CrossOriginEmbedderPolicyReporterQueueCorpViolationReportParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().queueCorpViolationReport(data.blockedUrl, data.reportOnly);
+                        getImpl().queueCorpViolationReport(data.blockedUrl, data.destination, data.reportOnly);
                         return true;
                     }
 
@@ -201,6 +203,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginEmbedderPolicyReporter> r
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.url.mojom.Url blockedUrl;
+        public int destination;
         public boolean reportOnly;
 
         private CrossOriginEmbedderPolicyReporterQueueCorpViolationReportParams(int version) {
@@ -243,7 +246,12 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginEmbedderPolicyReporter> r
                     }
                     {
                         
-                    result.reportOnly = decoder0.readBoolean(16, 0);
+                    result.destination = decoder0.readInt(16);
+                        RequestDestination.validate(result.destination);
+                    }
+                    {
+                        
+                    result.reportOnly = decoder0.readBoolean(20, 0);
                     }
 
             } finally {
@@ -259,7 +267,9 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginEmbedderPolicyReporter> r
             
             encoder0.encode(this.blockedUrl, 8, false);
             
-            encoder0.encode(this.reportOnly, 16, 0);
+            encoder0.encode(this.destination, 16);
+            
+            encoder0.encode(this.reportOnly, 20, 0);
         }
     }
 

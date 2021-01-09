@@ -29,13 +29,18 @@ final class TraceEventJni implements TraceEvent.Natives {
   }
 
   @Override
-  public void startATrace() {
-    GEN_JNI.org_chromium_base_TraceEvent_startATrace();
+  public void startATrace(String categoryFilter) {
+    GEN_JNI.org_chromium_base_TraceEvent_startATrace(categoryFilter);
   }
 
   @Override
   public void stopATrace() {
     GEN_JNI.org_chromium_base_TraceEvent_stopATrace();
+  }
+
+  @Override
+  public void setupATraceStartupTrace(String categoryFilter) {
+    GEN_JNI.org_chromium_base_TraceEvent_setupATraceStartupTrace(categoryFilter);
   }
 
   @Override

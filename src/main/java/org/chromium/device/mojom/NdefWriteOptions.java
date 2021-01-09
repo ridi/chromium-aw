@@ -19,7 +19,6 @@ public final class NdefWriteOptions extends org.chromium.mojo.bindings.Struct {
     private static final int STRUCT_SIZE = 16;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public boolean ignoreRead;
     public boolean overwrite;
 
     private NdefWriteOptions(int version) {
@@ -57,11 +56,7 @@ public final class NdefWriteOptions extends org.chromium.mojo.bindings.Struct {
             result = new NdefWriteOptions(elementsOrVersion);
                 {
                     
-                result.ignoreRead = decoder0.readBoolean(8, 0);
-                }
-                {
-                    
-                result.overwrite = decoder0.readBoolean(8, 1);
+                result.overwrite = decoder0.readBoolean(8, 0);
                 }
 
         } finally {
@@ -75,8 +70,6 @@ public final class NdefWriteOptions extends org.chromium.mojo.bindings.Struct {
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.ignoreRead, 8, 0);
-        
-        encoder0.encode(this.overwrite, 8, 1);
+        encoder0.encode(this.overwrite, 8, 0);
     }
 }

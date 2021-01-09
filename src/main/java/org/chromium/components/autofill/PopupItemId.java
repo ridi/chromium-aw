@@ -1,5 +1,5 @@
 
-// Copyright 2020 The Chromium Authors. All rights reserved.
+// Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -22,9 +22,9 @@ import java.lang.annotation.RetentionPolicy;
     PopupItemId.ITEM_ID_CLEAR_FORM, PopupItemId.ITEM_ID_AUTOFILL_OPTIONS,
     PopupItemId.ITEM_ID_DATALIST_ENTRY, PopupItemId.ITEM_ID_SCAN_CREDIT_CARD,
     PopupItemId.ITEM_ID_TITLE, PopupItemId.ITEM_ID_CREDIT_CARD_SIGNIN_PROMO,
-    PopupItemId.ITEM_ID_USERNAME_ENTRY, PopupItemId.ITEM_ID_CREATE_HINT,
-    PopupItemId.ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, PopupItemId.ITEM_ID_GENERATE_PASSWORD_ENTRY,
-    PopupItemId.ITEM_ID_SHOW_ACCOUNT_CARDS, PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_OPT_IN,
+    PopupItemId.ITEM_ID_USERNAME_ENTRY, PopupItemId.ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY,
+    PopupItemId.ITEM_ID_GENERATE_PASSWORD_ENTRY, PopupItemId.ITEM_ID_SHOW_ACCOUNT_CARDS,
+    PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_OPT_IN,
     PopupItemId.ITEM_ID_HIDE_AUTOFILL_SUGGESTIONS, PopupItemId.ITEM_ID_USE_VIRTUAL_CARD,
     PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_OPT_IN_AND_GENERATE,
     PopupItemId.ITEM_ID_ACCOUNT_STORAGE_PASSWORD_ENTRY,
@@ -45,7 +45,6 @@ public @interface PopupItemId {
   int ITEM_ID_TITLE = -8;
   int ITEM_ID_CREDIT_CARD_SIGNIN_PROMO = -9;
   int ITEM_ID_USERNAME_ENTRY = -11;
-  int ITEM_ID_CREATE_HINT = -12;
   int ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY = -13;
   int ITEM_ID_GENERATE_PASSWORD_ENTRY = -14;
   int ITEM_ID_SHOW_ACCOUNT_CARDS = -15;

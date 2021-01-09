@@ -46,7 +46,7 @@ CancelPushResponse callback);
 
 
     void watch(
-NdefScanOptions options, int id, 
+int id, 
 WatchResponse callback);
 
     interface WatchResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NdefError> { }

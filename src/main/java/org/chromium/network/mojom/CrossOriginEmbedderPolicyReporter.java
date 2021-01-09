@@ -25,7 +25,7 @@ public interface CrossOriginEmbedderPolicyReporter extends org.chromium.mojo.bin
 
 
     void queueCorpViolationReport(
-org.chromium.url.mojom.Url blockedUrl, boolean reportOnly);
+org.chromium.url.mojom.Url blockedUrl, int destination, boolean reportOnly);
 
 
 

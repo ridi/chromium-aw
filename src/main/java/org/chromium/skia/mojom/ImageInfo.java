@@ -16,14 +16,15 @@ package org.chromium.skia.mojom;
 
 public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 32;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int colorType;
     public int alphaType;
-    public byte[] serializedColorSpace;
     public int width;
     public int height;
+    public float[] colorTransferFunction;
+    public float[] colorToXyzMatrix;
 
     private ImageInfo(int version) {
         super(STRUCT_SIZE, version);
@@ -70,15 +71,19 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.serializedColorSpace = decoder0.readBytes(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                result.width = decoder0.readInt(16);
                 }
                 {
                     
-                result.width = decoder0.readInt(24);
+                result.height = decoder0.readInt(20);
                 }
                 {
                     
-                result.height = decoder0.readInt(28);
+                result.colorTransferFunction = decoder0.readFloats(24, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, 7);
+                }
+                {
+                    
+                result.colorToXyzMatrix = decoder0.readFloats(32, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, 9);
                 }
 
         } finally {
@@ -96,10 +101,12 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.alphaType, 12);
         
-        encoder0.encode(this.serializedColorSpace, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        encoder0.encode(this.width, 16);
         
-        encoder0.encode(this.width, 24);
+        encoder0.encode(this.height, 20);
         
-        encoder0.encode(this.height, 28);
+        encoder0.encode(this.colorTransferFunction, 24, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, 7);
+        
+        encoder0.encode(this.colorToXyzMatrix, 32, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, 9);
     }
 }

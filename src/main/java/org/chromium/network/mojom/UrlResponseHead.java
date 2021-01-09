@@ -56,8 +56,10 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
     public boolean didMimeSniff;
     public boolean isSignedExchangeInnerResponse;
     public boolean wasInPrefetchCache;
+    public boolean wasCookieInRequest;
     public boolean interceptedByPlugin;
     public boolean isLegacyTlsVersion;
+    public boolean hasRangeRequested;
     public boolean timingAllowPassed;
     public AuthChallengeInfo authChallengeInfo;
     public org.chromium.mojo_base.mojom.TimeTicks requestStart;
@@ -80,7 +82,7 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         this.wasFetchedViaServiceWorker = (boolean) false;
         this.serviceWorkerResponseSource = (int) FetchResponseSource.UNSPECIFIED;
         this.wasFallbackRequiredByServiceWorker = (boolean) false;
-        this.responseType = (int) FetchResponseType.BASIC;
+        this.responseType = (int) FetchResponseType.DEFAULT;
         this.certStatus = (int) 0;
         this.didServiceWorkerNavigationPreload = (boolean) false;
         this.shouldReportCorbBlocking = (boolean) false;
@@ -88,8 +90,10 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         this.didMimeSniff = (boolean) false;
         this.isSignedExchangeInnerResponse = (boolean) false;
         this.wasInPrefetchCache = (boolean) false;
+        this.wasCookieInRequest = (boolean) false;
         this.interceptedByPlugin = (boolean) false;
         this.isLegacyTlsVersion = (boolean) false;
+        this.hasRangeRequested = (boolean) false;
         this.timingAllowPassed = (boolean) false;
     }
 
@@ -204,15 +208,23 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.interceptedByPlugin = decoder0.readBoolean(53, 5);
+                result.wasCookieInRequest = decoder0.readBoolean(53, 5);
                 }
                 {
                     
-                result.isLegacyTlsVersion = decoder0.readBoolean(53, 6);
+                result.interceptedByPlugin = decoder0.readBoolean(53, 6);
                 }
                 {
                     
-                result.timingAllowPassed = decoder0.readBoolean(53, 7);
+                result.isLegacyTlsVersion = decoder0.readBoolean(53, 7);
+                }
+                {
+                    
+                result.hasRangeRequested = decoder0.readBoolean(54, 0);
+                }
+                {
+                    
+                result.timingAllowPassed = decoder0.readBoolean(54, 1);
                 }
                 {
                     
@@ -392,11 +404,15 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.wasInPrefetchCache, 53, 4);
         
-        encoder0.encode(this.interceptedByPlugin, 53, 5);
+        encoder0.encode(this.wasCookieInRequest, 53, 5);
         
-        encoder0.encode(this.isLegacyTlsVersion, 53, 6);
+        encoder0.encode(this.interceptedByPlugin, 53, 6);
         
-        encoder0.encode(this.timingAllowPassed, 53, 7);
+        encoder0.encode(this.isLegacyTlsVersion, 53, 7);
+        
+        encoder0.encode(this.hasRangeRequested, 54, 0);
+        
+        encoder0.encode(this.timingAllowPassed, 54, 1);
         
         encoder0.encode(this.contentLength, 56);
         
