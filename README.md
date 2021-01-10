@@ -97,7 +97,7 @@ $ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 $ export PATH="$PATH:$HOME/depot_tools"
 ```
 
-1. Clone chromium.
+2. Clone chromium.
 
 ```sh
 $ mkdir ~/chromium && cd ~/chromium
