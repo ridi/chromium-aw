@@ -2,6 +2,7 @@ package org.chromium.base.task;
 
 import java.lang.Override;
 import java.lang.Runnable;
+import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
@@ -25,8 +26,8 @@ final class PostTaskJni implements PostTask.Natives {
 
   @Override
   public void postDelayedTask(int priority, boolean mayBlock, boolean useThreadPool,
-      byte extensionId, byte[] extensionData, Runnable task, long delay) {
-    GEN_JNI.org_chromium_base_task_PostTask_postDelayedTask(priority, mayBlock, useThreadPool, extensionId, extensionData, task, delay);
+      byte extensionId, byte[] extensionData, Runnable task, long delay, String runnableClassName) {
+    GEN_JNI.org_chromium_base_task_PostTask_postDelayedTask(priority, mayBlock, useThreadPool, extensionId, extensionData, task, delay, runnableClassName);
   }
 
   public static PostTask.Natives get() {

@@ -16,14 +16,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    BitmapFormat.NO_CONFIG, BitmapFormat.ALPHA_8, BitmapFormat.ARGB_4444, BitmapFormat.ARGB_8888,
-    BitmapFormat.RGB_565
+    BitmapFormat.NO_CONFIG, BitmapFormat.ARGB_8888, BitmapFormat.RGB_565, BitmapFormat.ARGB_4444,
+    BitmapFormat.ALPHA_8
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface BitmapFormat {
   int NO_CONFIG = 0;
-  int ALPHA_8 = 1;
-  int ARGB_4444 = 2;
-  int ARGB_8888 = 3;
+  int ARGB_8888 = 1;
   int RGB_565 = 4;
+  int ARGB_4444 = 7;
+  int ALPHA_8 = 8;
 }

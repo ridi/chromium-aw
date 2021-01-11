@@ -185,11 +185,6 @@ public abstract class MediaSwitches {
     // Sets the default value for the kLiveCaptionEnabled preference to true.
     public static final String ENABLE_LIVE_CAPTION_PREF_FOR_TESTING = "enable-live-caption-pref-for-testing";
 
-    // ChromeOS uses one of two VideoDecoder implementations based on SoC/board
-    // specific configurations that are signalled via this command line flag.
-    // TODO(b/159825227): remove when the "old" video decoder is fully launched.
-    public static final String PLATFORM_DISALLOWS_CHROME_OS_DIRECT_VIDEO_DECODER = "platform-disallows-chromeos-direct-video-decoder";
-
     // Autoplay policy that requires a document user activation.
     public static final String DOCUMENT_USER_ACTIVATION_REQUIRED_POLICY = "document-user-activation-required";
 

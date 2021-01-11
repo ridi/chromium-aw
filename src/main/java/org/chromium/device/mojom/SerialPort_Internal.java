@@ -47,25 +47,23 @@ class SerialPort_Internal {
     };
 
 
-    private static final int OPEN_ORDINAL = 0;
+    private static final int START_WRITING_ORDINAL = 0;
 
-    private static final int START_WRITING_ORDINAL = 1;
+    private static final int START_READING_ORDINAL = 1;
 
-    private static final int START_READING_ORDINAL = 2;
+    private static final int FLUSH_ORDINAL = 2;
 
-    private static final int FLUSH_ORDINAL = 3;
+    private static final int DRAIN_ORDINAL = 3;
 
-    private static final int DRAIN_ORDINAL = 4;
+    private static final int GET_CONTROL_SIGNALS_ORDINAL = 4;
 
-    private static final int GET_CONTROL_SIGNALS_ORDINAL = 5;
+    private static final int SET_CONTROL_SIGNALS_ORDINAL = 5;
 
-    private static final int SET_CONTROL_SIGNALS_ORDINAL = 6;
+    private static final int CONFIGURE_PORT_ORDINAL = 6;
 
-    private static final int CONFIGURE_PORT_ORDINAL = 7;
+    private static final int GET_PORT_INFO_ORDINAL = 7;
 
-    private static final int GET_PORT_INFO_ORDINAL = 8;
-
-    private static final int CLOSE_ORDINAL = 9;
+    private static final int CLOSE_ORDINAL = 8;
 
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements SerialPort.Proxy {
@@ -73,30 +71,6 @@ class SerialPort_Internal {
         Proxy(org.chromium.mojo.system.Core core,
               org.chromium.mojo.bindings.MessageReceiverWithResponder messageReceiver) {
             super(core, messageReceiver);
-        }
-
-
-        @Override
-        public void open(
-SerialConnectionOptions options, SerialPortClient client, 
-OpenResponse callback) {
-
-            SerialPortOpenParams _message = new SerialPortOpenParams();
-
-            _message.options = options;
-
-            _message.client = client;
-
-
-            getProxyHandler().getMessageReceiver().acceptWithResponder(
-                    _message.serializeWithHeader(
-                            getProxyHandler().getCore(),
-                            new org.chromium.mojo.bindings.MessageHeader(
-                                    OPEN_ORDINAL,
-                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG,
-                                    0)),
-                    new SerialPortOpenResponseParamsForwardToCallback(callback));
-
         }
 
 
@@ -311,8 +285,6 @@ CloseResponse callback) {
 
 
 
-
-
                     case START_WRITING_ORDINAL: {
 
                         SerialPortStartWritingParams data =
@@ -377,21 +349,6 @@ CloseResponse callback) {
                     case org.chromium.mojo.bindings.interfacecontrol.InterfaceControlMessagesConstants.RUN_MESSAGE_ID:
                         return org.chromium.mojo.bindings.InterfaceControlMessagesHelper.handleRun(
                                 getCore(), SerialPort_Internal.MANAGER, messageWithHeader, receiver);
-
-
-
-
-
-
-
-                    case OPEN_ORDINAL: {
-
-                        SerialPortOpenParams data =
-                                SerialPortOpenParams.deserialize(messageWithHeader.getPayload());
-
-                        getImpl().open(data.options, data.client, new SerialPortOpenResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
-                        return true;
-                    }
 
 
 
@@ -508,201 +465,6 @@ CloseResponse callback) {
             }
         }
     }
-
-
-    
-    static final class SerialPortOpenParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 24;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public SerialConnectionOptions options;
-        public SerialPortClient client;
-
-        private SerialPortOpenParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public SerialPortOpenParams() {
-            this(0);
-        }
-
-        public static SerialPortOpenParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static SerialPortOpenParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static SerialPortOpenParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            SerialPortOpenParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new SerialPortOpenParams(elementsOrVersion);
-                    {
-                        
-                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.options = SerialConnectionOptions.decode(decoder1);
-                    }
-                    {
-                        
-                    result.client = decoder0.readServiceInterface(16, false, SerialPortClient.MANAGER);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            encoder0.encode(this.options, 8, false);
-            
-            encoder0.encode(this.client, 16, false, SerialPortClient.MANAGER);
-        }
-    }
-
-
-
-    
-    static final class SerialPortOpenResponseParams extends org.chromium.mojo.bindings.Struct {
-
-        private static final int STRUCT_SIZE = 16;
-        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
-        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public boolean success;
-
-        private SerialPortOpenResponseParams(int version) {
-            super(STRUCT_SIZE, version);
-        }
-
-        public SerialPortOpenResponseParams() {
-            this(0);
-        }
-
-        public static SerialPortOpenResponseParams deserialize(org.chromium.mojo.bindings.Message message) {
-            return decode(new org.chromium.mojo.bindings.Decoder(message));
-        }
-
-        /**
-         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
-         *
-         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
-         */
-        public static SerialPortOpenResponseParams deserialize(java.nio.ByteBuffer data) {
-            return deserialize(new org.chromium.mojo.bindings.Message(
-                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public static SerialPortOpenResponseParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
-            if (decoder0 == null) {
-                return null;
-            }
-            decoder0.increaseStackDepth();
-            SerialPortOpenResponseParams result;
-            try {
-                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
-                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
-                result = new SerialPortOpenResponseParams(elementsOrVersion);
-                    {
-                        
-                    result.success = decoder0.readBoolean(8, 0);
-                    }
-
-            } finally {
-                decoder0.decreaseStackDepth();
-            }
-            return result;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-            org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
-            
-            encoder0.encode(this.success, 8, 0);
-        }
-    }
-
-    static class SerialPortOpenResponseParamsForwardToCallback extends org.chromium.mojo.bindings.SideEffectFreeCloseable
-            implements org.chromium.mojo.bindings.MessageReceiver {
-        private final SerialPort.OpenResponse mCallback;
-
-        SerialPortOpenResponseParamsForwardToCallback(SerialPort.OpenResponse callback) {
-            this.mCallback = callback;
-        }
-
-        @Override
-        public boolean accept(org.chromium.mojo.bindings.Message message) {
-            try {
-                org.chromium.mojo.bindings.ServiceMessage messageWithHeader =
-                        message.asServiceMessage();
-                org.chromium.mojo.bindings.MessageHeader header = messageWithHeader.getHeader();
-                if (!header.validateHeader(OPEN_ORDINAL,
-                                           org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG)) {
-                    return false;
-                }
-
-                SerialPortOpenResponseParams response = SerialPortOpenResponseParams.deserialize(messageWithHeader.getPayload());
-
-                mCallback.call(response.success);
-                return true;
-            } catch (org.chromium.mojo.bindings.DeserializationException e) {
-                return false;
-            }
-        }
-    }
-
-    static class SerialPortOpenResponseParamsProxyToResponder implements SerialPort.OpenResponse {
-
-        private final org.chromium.mojo.system.Core mCore;
-        private final org.chromium.mojo.bindings.MessageReceiver mMessageReceiver;
-        private final long mRequestId;
-
-        SerialPortOpenResponseParamsProxyToResponder(
-                org.chromium.mojo.system.Core core,
-                org.chromium.mojo.bindings.MessageReceiver messageReceiver,
-                long requestId) {
-            mCore = core;
-            mMessageReceiver = messageReceiver;
-            mRequestId = requestId;
-        }
-
-        @Override
-        public void call(Boolean success) {
-            SerialPortOpenResponseParams _response = new SerialPortOpenResponseParams();
-
-            _response.success = success;
-
-            org.chromium.mojo.bindings.ServiceMessage _message =
-                    _response.serializeWithHeader(
-                            mCore,
-                            new org.chromium.mojo.bindings.MessageHeader(
-                                    OPEN_ORDINAL,
-                                    org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
-                                    mRequestId));
-            mMessageReceiver.accept(_message);
-        }
-    }
-
 
 
     

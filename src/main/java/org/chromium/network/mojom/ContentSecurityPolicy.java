@@ -33,7 +33,7 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
         super(STRUCT_SIZE, version);
         this.upgradeInsecureRequests = (boolean) false;
         this.treatAsPublicAddress = (boolean) false;
-        this.sandbox = (int) WebSandboxFlags.ALL;
+        this.sandbox = (int) WebSandboxFlags.NONE;
         this.useReportingApi = (boolean) false;
     }
 

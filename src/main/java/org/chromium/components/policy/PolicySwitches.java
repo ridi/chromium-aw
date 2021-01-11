@@ -24,6 +24,9 @@ public final class PolicySwitches {
     // Specifies the URL at which to upload real-time reports.
     public static final String REALTIME_REPORTING_URL = "realtime-reporting-url";
 
+    // Specifies the URL at which to upload encrypted reports.
+    public static final String ENCRYPTED_REPORTING_URL = "encrypted-reporting-url";
+
     // Always treat user as affiliated.
     // TODO(antrim): Remove once test servers correctly produce affiliation ids.
     public static final String USER_ALWAYS_AFFILIATED = "user-always-affiliated";

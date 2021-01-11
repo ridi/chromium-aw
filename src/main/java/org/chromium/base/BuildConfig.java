@@ -9,4 +9,5 @@ public class BuildConfig {
     public static final boolean BUNDLES_SUPPORTED = false;
     public static final boolean IS_INCREMENTAL_INSTALL = false;
     public static final boolean IS_CHROMECAST_BRANDING_INTERNAL = false;
+    public static final boolean ISOLATED_SPLITS_ENABLED = false;
 }

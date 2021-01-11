@@ -36,7 +36,7 @@ GetUniqueNameLookupTableResponse callback);
 String fontUniqueName, 
 MatchLocalFontByUniqueNameResponse callback);
 
-    interface MatchLocalFontByUniqueNameResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<org.chromium.mojo_base.mojom.File> { }
+    interface MatchLocalFontByUniqueNameResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<org.chromium.mojo_base.mojom.ReadOnlyFile> { }
 
 
 }

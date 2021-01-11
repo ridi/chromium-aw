@@ -91,10 +91,6 @@ public final class ContentSwitches {
     // Allows loopback interface to be added in network list for peer connection.
     public static final String ALLOW_LOOPBACK_IN_PEER_CONNECTION = "allow-loopback-in-peer-connection";
 
-    // Allow a page to show popups during its unloading.
-    // TODO(https://crbug.com/937569): Remove this in Chrome 88.
-    public static final String ALLOW_POPUPS_DURING_PAGE_UNLOAD = "allow-popups-during-page-unload";
-
     // Allow a page to send synchronus XHR during its unloading.
     // TODO(https://crbug.com/1003101): Remove this in Chrome 88.
     public static final String ALLOW_SYNC_XHR_IN_PAGE_DISMISSAL = "allow-sync-xhr-in-page-dimissal";
@@ -448,7 +444,9 @@ public final class ContentSwitches {
     // Enable tracing during the execution of browser tests.
     public static final String ENABLE_TRACING = "enable-tracing";
 
-    // The filename to write the output of the test tracing to.
+    // The filename to write the output of the test tracing to. If it is empty
+    // or it ends in a directory separator then an auto-generated filename will be
+    // appended.
     public static final String ENABLE_TRACING_OUTPUT = "enable-tracing-output";
 
     // Enable screen capturing support for MediaStream API.
@@ -470,9 +468,6 @@ public final class ContentSwitches {
     // only to run web-platform-tests on content shell.
     // Removal of this deprecated API is blocked on crbug.com/937369.
     public static final String ENABLE_WEB_AUTH_DEPRECATED_MOJO_TESTING_API = "enable-web-auth-deprecated-mojo-testing-api";
-
-    // Enable WebGL2 Compute context.
-    public static final String ENABLE_WEB_GL2_COMPUTE_CONTEXT = "enable-webgl2-compute-context";
 
     // Enables WebGL extensions not yet approved by the community.
     public static final String ENABLE_WEB_GL_DRAFT_EXTENSIONS = "enable-webgl-draft-extensions";
@@ -607,18 +602,6 @@ public final class ContentSwitches {
 
     // Number of worker threads used to rasterize content.
     public static final String NUM_RASTER_THREADS = "num-raster-threads";
-
-    // Override the behavior of plugin throttling for testing.
-    // By default the throttler is only enabled for a hard-coded list of plugins.
-    // Set the value to 'always' to always throttle every plugin instance. Set the
-    // value to 'never' to disable throttling.
-    public static final String OVERRIDE_PLUGIN_POWER_SAVER_FOR_TESTING = "override-plugin-power-saver-for-testing";
-
-    // Argument to the process type that indicates a PPAPI broker process type.
-    public static final String PPAPI_BROKER_PROCESS = "ppapi-broker";
-
-    // "Command-line" arguments for the PPAPI Flash; used for debugging options.
-    public static final String PPAPI_FLASH_ARGS = "ppapi-flash-args";
 
     // Runs PPAPI (Pepper) plugins in-process.
     public static final String PPAPI_IN_PROCESS = "ppapi-in-process";
@@ -830,6 +813,9 @@ public final class ContentSwitches {
     // Enables User Consent backend for Web OTP API.
     public static final String WEB_OTP_BACKEND_USER_CONSENT = "web-otp-backend-user-consent";
 
+    // Enables auto backend selection for Web OTP API.
+    public static final String WEB_OTP_BACKEND_AUTO = "web-otp-backend-auto";
+
     // Disables encryption of RTP Media for WebRTC. When Chrome embeds Content, it
     // ignores this switch on its stable and beta channels.
     public static final String DISABLE_WEB_RTC_ENCRYPTION = "disable-webrtc-encryption";
@@ -1012,6 +998,12 @@ public final class ContentSwitches {
     // The enum value of FontRenderParams::subpixel_rendering to be passed to Ppapi
     // processes.
     public static final String PPAPI_SUBPIXEL_RENDERING_SETTING = "ppapi-subpixel-rendering-setting";
+
+    // Raise the timer interrupt frequency in all Chrome processes, for experimental
+    // purposes. This feature is needed because as of Windows 10 2004 the scheduling
+    // effects of changing the timer interrupt frequency are not global, and this
+    // lets us prove/disprove whether this matters. See https://crbug.com/1128917
+    public static final String RAISE_TIMER_FREQUENCY = "raise-timer-frequency";
 
     // Causes the second GPU process used for gpu info collection to display a
     // dialog on launch.

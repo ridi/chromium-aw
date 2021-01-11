@@ -26,9 +26,6 @@ public final class AwSwitches {
     // used to disable safebrowsing functionality in webview
     public static final String WEBVIEW_DISABLE_SAFEBROWSING_SUPPORT = "webview-disable-safebrowsing-support";
 
-    // Used to enable vulkan draw mode instead of interop draw mode for webview.
-    public static final String WEBVIEW_ENABLE_VULKAN = "webview-enable-vulkan";
-
     // Enables SafeBrowsing and causes WebView to treat all resources as malicious.
     // Use care: this will block all resources from loading.
     public static final String WEBVIEW_SAFEBROWSING_BLOCK_ALL_RESOURCES = "webview-safebrowsing-block-all-resources";

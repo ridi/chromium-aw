@@ -21,6 +21,10 @@ public final class GpuSwitches {
     // Overrides the kEnableGpuRasterization flag.
     public static final String DISABLE_GPU_RASTERIZATION = "disable-gpu-rasterization";
 
+    // Disables mipmap generation in Skia. Used a workaround for select low memory
+    // devices, see https://crbug.com/1138979 for details.
+    public static final String DISABLE_MIPMAP_GENERATION = "disable-mipmap-generation";
+
     // Allow heuristics to determine when a layer tile should be drawn with the
     // Skia GPU backend. Only valid with GPU accelerated compositing.
     public static final String ENABLE_GPU_RASTERIZATION = "enable-gpu-rasterization";
@@ -57,6 +61,9 @@ public final class GpuSwitches {
     // Enable validation layers in Dawn backends.
     public static final String ENABLE_DAWN_BACKEND_VALIDATION = "enable-dawn-backend-validation";
 
+    // Enable the toggle Toggle::DisableRobustness when creating Dawn device.
+    public static final String DISABLE_DAWN_ROBUSTNESS = "disable-dawn-robustness";
+
     // Increases the priority (to REALTIME_AUDIO) of gpu process and compositor
     // thread.
     // This is only to be used for perf tests on macOS for more reliable values.
@@ -89,6 +96,28 @@ public final class GpuSwitches {
     // Passes the active graphics driver version from browser process to info
     // collection GPU process.
     public static final String GPU_DRIVER_VERSION = "gpu-driver-version";
+
+    // Indicate that the this is being used by Android WebView and its draw functor
+    // is using vulkan.
+    public static final String WEBVIEW_DRAW_FUNCTOR_USES_VULKAN = "webview-draw-functor-uses-vulkan";
+
+    // Enables using protected memory for vulkan resources.
+    public static final String ENABLE_VULKAN_PROTECTED_MEMORY = "enable-vulkan-protected-memory";
+
+    // Forces vulkan resources to use protected memory for vulkan compositing.
+    public static final String ENFORCE_VULKAN_PROTECTED_MEMORY = "enforce-vulkan-protected-memory";
+
+    // Disables falling back to GL based hardware rendering if initializing Vulkan
+    // fails. This is to allow tests to catch regressions in Vulkan.
+    public static final String DISABLE_VULKAN_FALLBACK_TO_GL_FOR_TESTING = "disable-vulkan-fallback-to-gl-for-testing";
+
+    // Specifies the heap limit for Vulkan memory.
+    // TODO(crbug/1158000): Remove this switch.
+    public static final String VULKAN_HEAP_MEMORY_LIMIT_MB = "vulkan-heap-memory-limit-mb";
+
+    // Specifies the sync CPU limit for total Vulkan memory.
+    // TODO(crbug/1158000): Remove this switch.
+    public static final String VULKAN_SYNC_CPU_MEMORY_LIMIT_MB = "vulkan-sync-cpu-memory-limit-mb";
 
     // Prevent instantiation.
     private GpuSwitches() {}

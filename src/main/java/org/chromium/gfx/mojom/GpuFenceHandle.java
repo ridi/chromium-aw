@@ -57,7 +57,7 @@ public final class GpuFenceHandle extends org.chromium.mojo.bindings.Struct {
             result = new GpuFenceHandle(elementsOrVersion);
                 {
                     
-                result.nativeFd = decoder0.readUntypedHandle(8, true);
+                result.nativeFd = decoder0.readUntypedHandle(8, false);
                 }
 
         } finally {
@@ -71,6 +71,6 @@ public final class GpuFenceHandle extends org.chromium.mojo.bindings.Struct {
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.nativeFd, 8, true);
+        encoder0.encode(this.nativeFd, 8, false);
     }
 }

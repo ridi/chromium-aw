@@ -28,6 +28,11 @@ final class AwDebugJni implements AwDebug.Natives {
     GEN_JNI.org_chromium_android_1webview_AwDebug_setSupportLibraryWebkitVersionCrashKey(version);
   }
 
+  @Override
+  public void setCpuAffinityToLittleCores() {
+    GEN_JNI.org_chromium_android_1webview_AwDebug_setCpuAffinityToLittleCores();
+  }
+
   public static AwDebug.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

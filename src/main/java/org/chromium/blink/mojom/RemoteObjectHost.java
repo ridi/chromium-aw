@@ -29,6 +29,11 @@ int objectId, org.chromium.mojo.bindings.InterfaceRequest<RemoteObject> receiver
 
 
 
+    void acquireObject(
+int objectId);
+
+
+
     void releaseObject(
 int objectId);
 

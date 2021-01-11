@@ -2,6 +2,7 @@ package org.chromium.base.task;
 
 import java.lang.Override;
 import java.lang.Runnable;
+import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
@@ -35,8 +36,9 @@ final class TaskRunnerImplJni implements TaskRunnerImpl.Natives {
   }
 
   @Override
-  public void postDelayedTask(long nativeTaskRunnerAndroid, Runnable task, long delay) {
-    GEN_JNI.org_chromium_base_task_TaskRunnerImpl_postDelayedTask(nativeTaskRunnerAndroid, task, delay);
+  public void postDelayedTask(long nativeTaskRunnerAndroid, Runnable task, long delay,
+      String runnableClassName) {
+    GEN_JNI.org_chromium_base_task_TaskRunnerImpl_postDelayedTask(nativeTaskRunnerAndroid, task, delay, runnableClassName);
   }
 
   @Override

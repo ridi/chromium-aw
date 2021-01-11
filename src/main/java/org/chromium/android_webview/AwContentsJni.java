@@ -160,11 +160,6 @@ final class AwContentsJni implements AwContents.Natives {
   }
 
   @Override
-  public void killRenderProcess(long nativeAwContents, AwContents caller) {
-    GEN_JNI.org_chromium_android_1webview_AwContents_killRenderProcess(nativeAwContents, caller);
-  }
-
-  @Override
   public byte[] getCertificate(long nativeAwContents, AwContents caller) {
     return (byte[])GEN_JNI.org_chromium_android_1webview_AwContents_getCertificate(nativeAwContents, caller);
   }
@@ -240,6 +235,16 @@ final class AwContentsJni implements AwContents.Natives {
   @Override
   public void setDipScale(long nativeAwContents, AwContents caller, float dipScale) {
     GEN_JNI.org_chromium_android_1webview_AwContents_setDipScale(nativeAwContents, caller, dipScale);
+  }
+
+  @Override
+  public boolean isDisplayingOpenWebContent(long nativeAwContents, AwContents caller) {
+    return (boolean)GEN_JNI.org_chromium_android_1webview_AwContents_isDisplayingOpenWebContent(nativeAwContents, caller);
+  }
+
+  @Override
+  public void updateOpenWebScreenArea(int pixels, int percentage) {
+    GEN_JNI.org_chromium_android_1webview_AwContents_updateOpenWebScreenArea(pixels, percentage);
   }
 
   @Override

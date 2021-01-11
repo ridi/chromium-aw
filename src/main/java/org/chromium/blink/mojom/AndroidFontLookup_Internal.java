@@ -468,7 +468,7 @@ MatchLocalFontByUniqueNameResponse callback) {
         private static final int STRUCT_SIZE = 16;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public org.chromium.mojo_base.mojom.File fontFileHandle;
+        public org.chromium.mojo_base.mojom.ReadOnlyFile fontFileHandle;
 
         private AndroidFontLookupMatchLocalFontByUniqueNameResponseParams(int version) {
             super(STRUCT_SIZE, version);
@@ -506,7 +506,7 @@ MatchLocalFontByUniqueNameResponse callback) {
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, true);
-                    result.fontFileHandle = org.chromium.mojo_base.mojom.File.decode(decoder1);
+                    result.fontFileHandle = org.chromium.mojo_base.mojom.ReadOnlyFile.decode(decoder1);
                     }
 
             } finally {
@@ -569,7 +569,7 @@ MatchLocalFontByUniqueNameResponse callback) {
         }
 
         @Override
-        public void call(org.chromium.mojo_base.mojom.File fontFileHandle) {
+        public void call(org.chromium.mojo_base.mojom.ReadOnlyFile fontFileHandle) {
             AndroidFontLookupMatchLocalFontByUniqueNameResponseParams _response = new AndroidFontLookupMatchLocalFontByUniqueNameResponseParams();
 
             _response.fontFileHandle = fontFileHandle;

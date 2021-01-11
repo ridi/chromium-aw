@@ -24,14 +24,6 @@ public interface SerialPort extends org.chromium.mojo.bindings.Interface {
     Manager<SerialPort, SerialPort.Proxy> MANAGER = SerialPort_Internal.MANAGER;
 
 
-    void open(
-SerialConnectionOptions options, SerialPortClient client, 
-OpenResponse callback);
-
-    interface OpenResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<Boolean> { }
-
-
-
     void startWriting(
 org.chromium.mojo.system.DataPipe.ConsumerHandle consumer);
 

@@ -23,7 +23,7 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
     public int mode;
     public int action;
     public int flags;
-    public org.chromium.mojo_base.mojom.String16 value;
+    public org.chromium.mojo_base.mojom.BigString16 value;
     public org.chromium.gfx.mojom.Range selection;
     public org.chromium.gfx.mojom.Range composition;
     public boolean canComposeInline;
@@ -97,7 +97,7 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, true);
-                result.value = org.chromium.mojo_base.mojom.String16.decode(decoder1);
+                result.value = org.chromium.mojo_base.mojom.BigString16.decode(decoder1);
                 }
                 {
                     

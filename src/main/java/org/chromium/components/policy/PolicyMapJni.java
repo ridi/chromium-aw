@@ -53,6 +53,11 @@ public final class PolicyMapJni implements PolicyMap.Natives {
     return (String)GEN_JNI.org_chromium_components_policy_PolicyMap_getDictValue(nativePolicyMap, caller, policy);
   }
 
+  @Override
+  public boolean equals(long nativePolicyMap, PolicyMap caller, long nativeOtherPolicyMap) {
+    return (boolean)GEN_JNI.org_chromium_components_policy_PolicyMap_equals(nativePolicyMap, caller, nativeOtherPolicyMap);
+  }
+
   public static PolicyMap.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

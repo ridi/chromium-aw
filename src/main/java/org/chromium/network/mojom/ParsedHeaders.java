@@ -16,8 +16,8 @@ package org.chromium.network.mojom;
 
 public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 72;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(72, 0)};
+    private static final int STRUCT_SIZE = 80;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(80, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public ContentSecurityPolicy[] contentSecurityPolicy;
     public AllowCspFromHeaderValue allowCspFrom;
@@ -26,6 +26,7 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
     public boolean originIsolation;
     public int[] acceptCh;
     public org.chromium.mojo_base.mojom.TimeDelta acceptChLifetime;
+    public int[] criticalCh;
 
     private ParsedHeaders(int version) {
         super(STRUCT_SIZE, version);
@@ -106,6 +107,15 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, false);
                 result.acceptChLifetime = org.chromium.mojo_base.mojom.TimeDelta.decode(decoder1);
                 }
+                {
+                    
+                result.criticalCh = decoder0.readInts(72, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                if (result.criticalCh != null) {
+                    for (int i0 = 0; i0 < result.criticalCh.length; ++i0) {
+                        WebClientHintsType.validate(result.criticalCh[i0]);
+                    }
+                }
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -139,5 +149,7 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.acceptCh, 56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         
         encoder0.encode(this.acceptChLifetime, 64, false);
+        
+        encoder0.encode(this.criticalCh, 72, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
     }
 }

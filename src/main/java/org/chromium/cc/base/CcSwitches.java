@@ -117,6 +117,12 @@ public final class CcSwitches {
     // Switches the ui compositor to use layer lists instead of layer trees.
     public static final String UI_ENABLE_LAYER_LISTS = "ui-enable-layer-lists";
 
+    // Allows scaling clipped images in GpuImageDecodeCache. Note that this may
+    // cause color-bleeding.
+    // TODO(crbug.com/1157548): Remove this workaround flag once the underlying
+    // cache problems are solved.
+    public static final String ENABLE_CLIPPED_IMAGE_SCALING = "enable-scaling-clipped-images";
+
     // Prevents the layer tree unit tests from timing out.
     public static final String CC_LAYER_TREE_TEST_NO_TIMEOUT = "cc-layer-tree-test-no-timeout";
 
