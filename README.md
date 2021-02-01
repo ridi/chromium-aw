@@ -1,6 +1,6 @@
 # chromium-aw
 
-[![Build Status](https://travis-ci.com/ridi/chromium-aw.svg?token=ksQ7RJPHGHiCZLukAhKW&branch=master)](https://travis-ci.com/ridi/chromium-aw)
+[![Build Status](https://github.com/ridi/chromium-aw/workflows/Build/badge.svg?branch=master)](https://github.com/ridi/chromium-aw/actions)
 
 [Chromium](https://www.chromium.org) based Android WebView engine to be embedded in Ridibooks-Android
 
