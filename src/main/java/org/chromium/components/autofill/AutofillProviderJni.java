@@ -43,6 +43,11 @@ final class AutofillProviderJni implements AutofillProvider.Natives {
     GEN_JNI.org_chromium_components_autofill_AutofillProvider_setAnchorViewRect(nativeAutofillProviderAndroid, caller, anchorView, x, y, width, height);
   }
 
+  @Override
+  public boolean isQueryServerFieldTypesEnabled() {
+    return (boolean)GEN_JNI.org_chromium_components_autofill_AutofillProvider_isQueryServerFieldTypesEnabled();
+  }
+
   public static AutofillProvider.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

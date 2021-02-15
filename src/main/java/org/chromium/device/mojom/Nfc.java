@@ -38,10 +38,7 @@ PushResponse callback);
 
 
     void cancelPush(
-
-CancelPushResponse callback);
-
-    interface CancelPushResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NdefError> { }
+);
 
 
 
@@ -54,18 +51,7 @@ WatchResponse callback);
 
 
     void cancelWatch(
-int id, 
-CancelWatchResponse callback);
-
-    interface CancelWatchResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NdefError> { }
-
-
-
-    void cancelAllWatches(
-
-CancelAllWatchesResponse callback);
-
-    interface CancelAllWatchesResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<NdefError> { }
+int id);
 
 
 }

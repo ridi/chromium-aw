@@ -22,12 +22,14 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
         public static final int StringValue = 2;
         public static final int SingletonValue = 3;
         public static final int ArrayValue = 4;
+        public static final int TypedArrayValue = 5;
     };
     private double mNumberValue;
     private boolean mBooleanValue;
     private org.chromium.mojo_base.mojom.String16 mStringValue;
     private int mSingletonValue;
     private RemoteInvocationArgument[] mArrayValue;
+    private RemoteTypedArray mTypedArrayValue;
 
     public void setNumberValue(double numberValue) {
         this.mTag = Tag.NumberValue;
@@ -79,6 +81,16 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
         return this.mArrayValue;
     }
 
+    public void setTypedArrayValue(RemoteTypedArray typedArrayValue) {
+        this.mTag = Tag.TypedArrayValue;
+        this.mTypedArrayValue = typedArrayValue;
+    }
+
+    public RemoteTypedArray getTypedArrayValue() {
+        assert this.mTag == Tag.TypedArrayValue;
+        return this.mTypedArrayValue;
+    }
+
 
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder0, int offset) {
@@ -117,6 +129,11 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
                         org.chromium.mojo.bindings.BindingsHelper.UNION_SIZE * i0, false);
                     }
                 }
+                break;
+            }
+            case Tag.TypedArrayValue: {
+                
+                encoder0.encode(this.mTypedArrayValue, offset + 8, false);
                 break;
             }
             default: {
@@ -175,6 +192,13 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
                     }
                 }
                 result.mTag = Tag.ArrayValue;
+                break;
+            }
+            case Tag.TypedArrayValue: {
+                
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
+                result.mTypedArrayValue = RemoteTypedArray.decode(decoder1);
+                result.mTag = Tag.TypedArrayValue;
                 break;
             }
             default: {

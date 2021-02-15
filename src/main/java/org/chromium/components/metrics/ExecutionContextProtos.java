@@ -305,7 +305,15 @@ public final class ExecutionContextProtos {
     SERVICE_WORKER_THREAD(15),
     /**
      * <pre>
-     * Thread pool thread (in renderer process).
+     * DedicatedWorker thread in the renderer process.
+     * </pre>
+     *
+     * <code>DEDICATED_WORKER_THREAD = 18;</code>
+     */
+    DEDICATED_WORKER_THREAD(18),
+    /**
+     * <pre>
+     * Thread pool thread (can be in different Chrome processes).
      * </pre>
      *
      * <code>THREAD_POOL_THREAD = 16;</code>
@@ -319,6 +327,30 @@ public final class ExecutionContextProtos {
      * <code>GPU_MEMORY_THREAD = 17;</code>
      */
     GPU_MEMORY_THREAD(17),
+    /**
+     * <pre>
+     * The thread for Chrome memory tracing (can be in different processes).
+     * </pre>
+     *
+     * <code>MEMORY_INFRA_THREAD = 19;</code>
+     */
+    MEMORY_INFRA_THREAD(19),
+    /**
+     * <pre>
+     * Media thread (in renderer process).
+     * </pre>
+     *
+     * <code>MEDIA_THREAD = 20;</code>
+     */
+    MEDIA_THREAD(20),
+    /**
+     * <pre>
+     * WebRTC threads, e.g. WebRTC_Signaling,WebRTC_Network (in renderer process).
+     * </pre>
+     *
+     * <code>WEBRTC_THREAD = 21;</code>
+     */
+    WEBRTC_THREAD(21),
     /**
      * <pre>
      * A Chrome thread not identified by any other enum. Defined for the benefit
@@ -438,7 +470,15 @@ public final class ExecutionContextProtos {
     public static final int SERVICE_WORKER_THREAD_VALUE = 15;
     /**
      * <pre>
-     * Thread pool thread (in renderer process).
+     * DedicatedWorker thread in the renderer process.
+     * </pre>
+     *
+     * <code>DEDICATED_WORKER_THREAD = 18;</code>
+     */
+    public static final int DEDICATED_WORKER_THREAD_VALUE = 18;
+    /**
+     * <pre>
+     * Thread pool thread (can be in different Chrome processes).
      * </pre>
      *
      * <code>THREAD_POOL_THREAD = 16;</code>
@@ -452,6 +492,30 @@ public final class ExecutionContextProtos {
      * <code>GPU_MEMORY_THREAD = 17;</code>
      */
     public static final int GPU_MEMORY_THREAD_VALUE = 17;
+    /**
+     * <pre>
+     * The thread for Chrome memory tracing (can be in different processes).
+     * </pre>
+     *
+     * <code>MEMORY_INFRA_THREAD = 19;</code>
+     */
+    public static final int MEMORY_INFRA_THREAD_VALUE = 19;
+    /**
+     * <pre>
+     * Media thread (in renderer process).
+     * </pre>
+     *
+     * <code>MEDIA_THREAD = 20;</code>
+     */
+    public static final int MEDIA_THREAD_VALUE = 20;
+    /**
+     * <pre>
+     * WebRTC threads, e.g. WebRTC_Signaling,WebRTC_Network (in renderer process).
+     * </pre>
+     *
+     * <code>WEBRTC_THREAD = 21;</code>
+     */
+    public static final int WEBRTC_THREAD_VALUE = 21;
     /**
      * <pre>
      * A Chrome thread not identified by any other enum. Defined for the benefit
@@ -496,8 +560,12 @@ public final class ExecutionContextProtos {
         case 13: return SCHEDULER_WORKER_THREAD;
         case 14: return COMPOSITOR_TILE_WORKER_THREAD;
         case 15: return SERVICE_WORKER_THREAD;
+        case 18: return DEDICATED_WORKER_THREAD;
         case 16: return THREAD_POOL_THREAD;
         case 17: return GPU_MEMORY_THREAD;
+        case 19: return MEMORY_INFRA_THREAD;
+        case 20: return MEDIA_THREAD;
+        case 21: return WEBRTC_THREAD;
         case 12: return OTHER_THREAD;
         default: return null;
       }

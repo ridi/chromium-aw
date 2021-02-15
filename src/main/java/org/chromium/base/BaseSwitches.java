@@ -147,6 +147,13 @@ public final class BaseSwitches {
     // This flag requires the BPF sandbox to be disabled.
     public static final String ENABLE_THREAD_INSTRUCTION_COUNT = "enable-thread-instruction-count";
 
+    // Override the default scheduling boosting value for urgent tasks.
+    // This can be adjusted if a specific chromeos device shows better perf/power
+    // ratio (e.g. by running video conference tests).
+    // Currently, this values directs to linux scheduler's utilization min clamp.
+    // Range is 0(no biased load) ~ 100(mamximum load value).
+    public static final String SCHEDULER_BOOST_URGENT = "scheduler-boost-urgent";
+
     // Prefer CommonSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER where possible.
     // Block ChildProcessMain thread of render process service until a Java debugger
     // is attached. To pause even earlier: am set-debug-app

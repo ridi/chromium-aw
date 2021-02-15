@@ -31,12 +31,6 @@ public final class AwFeatures {
     // Enable display cutout support for Android P and above.
     public static final String WEBVIEW_DISPLAY_CUTOUT = "WebViewDisplayCutout";
 
-    // Only allow extra headers added via loadUrl() to be sent to the original
-    // domain (eTLD+1); strip them from the request if a cross-domain redirect
-    // occurs. kWebViewExtraHeadersSameOriginOnly is stricter; when that's enabled,
-    // this feature has no effect.
-    public static final String WEBVIEW_EXTRA_HEADERS_SAME_DOMAIN_ONLY = "WebViewExtraHeadersSameDomainOnly";
-
     // When enabled, passive mixed content (Audio/Video/Image subresources loaded
     // over HTTP on HTTPS sites) will be autoupgraded to HTTPS, and the load will be
     // blocked if the resource fails to load over HTTPS. This only affects apps that
@@ -47,7 +41,6 @@ public final class AwFeatures {
 
     // Only allow extra headers added via loadUrl() to be sent to the original
     // origin; strip them from the request if a cross-origin redirect occurs.
-    // When this is enabled, kWebViewExtraHeadersSameDomainOnly has no effect.
     public static final String WEBVIEW_EXTRA_HEADERS_SAME_ORIGIN_ONLY = "WebViewExtraHeadersSameOriginOnly";
 
     // Measure the number of pixels occupied by one or more WebViews as a

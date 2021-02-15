@@ -20,7 +20,7 @@ public final class CspHashSource extends org.chromium.mojo.bindings.Struct {
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public int algorithm;
-    public String value;
+    public byte[] value;
 
     private CspHashSource(int version) {
         super(STRUCT_SIZE, version);
@@ -62,7 +62,7 @@ public final class CspHashSource extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.value = decoder0.readString(16, false);
+                result.value = decoder0.readBytes(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 }
 
         } finally {
@@ -78,6 +78,6 @@ public final class CspHashSource extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.algorithm, 8);
         
-        encoder0.encode(this.value, 16, false);
+        encoder0.encode(this.value, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
     }
 }

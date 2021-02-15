@@ -60,7 +60,7 @@ class FaceDetection_Internal {
 
         @Override
         public void detect(
-org.chromium.skia.mojom.Bitmap bitmapData, 
+org.chromium.skia.mojom.BitmapN32 bitmapData, 
 DetectResponse callback) {
 
             FaceDetectionDetectParams _message = new FaceDetectionDetectParams();
@@ -171,7 +171,7 @@ DetectResponse callback) {
         private static final int STRUCT_SIZE = 16;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public org.chromium.skia.mojom.Bitmap bitmapData;
+        public org.chromium.skia.mojom.BitmapN32 bitmapData;
 
         private FaceDetectionDetectParams(int version) {
             super(STRUCT_SIZE, version);
@@ -209,7 +209,7 @@ DetectResponse callback) {
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                    result.bitmapData = org.chromium.skia.mojom.Bitmap.decode(decoder1);
+                    result.bitmapData = org.chromium.skia.mojom.BitmapN32.decode(decoder1);
                     }
 
             } finally {

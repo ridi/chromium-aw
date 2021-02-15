@@ -27,6 +27,11 @@ public interface IParentProcess extends android.os.IInterface
     @Override public void reportCleanExit() throws android.os.RemoteException
     {
     }
+    // Sends the PID and startup time of the app zygote if available.
+
+    @Override public void sendZygoteInfo(int zygotePid, long startupTimeMillis) throws android.os.RemoteException
+    {
+    }
     @Override
     public android.os.IBinder asBinder() {
       return null;
@@ -92,6 +97,16 @@ public interface IParentProcess extends android.os.IInterface
           data.enforceInterface(descriptor);
           this.reportCleanExit();
           reply.writeNoException();
+          return true;
+        }
+        case TRANSACTION_sendZygoteInfo:
+        {
+          data.enforceInterface(descriptor);
+          int _arg0;
+          _arg0 = data.readInt();
+          long _arg1;
+          _arg1 = data.readLong();
+          this.sendZygoteInfo(_arg0, _arg1);
           return true;
         }
         default:
@@ -179,11 +194,31 @@ public interface IParentProcess extends android.os.IInterface
           _data.recycle();
         }
       }
+      // Sends the PID and startup time of the app zygote if available.
+
+      @Override public void sendZygoteInfo(int zygotePid, long startupTimeMillis) throws android.os.RemoteException
+      {
+        android.os.Parcel _data = android.os.Parcel.obtain();
+        try {
+          _data.writeInterfaceToken(DESCRIPTOR);
+          _data.writeInt(zygotePid);
+          _data.writeLong(startupTimeMillis);
+          boolean _status = mRemote.transact(Stub.TRANSACTION_sendZygoteInfo, _data, null, android.os.IBinder.FLAG_ONEWAY);
+          if (!_status && getDefaultImpl() != null) {
+            getDefaultImpl().sendZygoteInfo(zygotePid, startupTimeMillis);
+            return;
+          }
+        }
+        finally {
+          _data.recycle();
+        }
+      }
       public static org.chromium.base.process_launcher.IParentProcess sDefaultImpl;
     }
     static final int TRANSACTION_sendPid = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
     static final int TRANSACTION_reportExceptionInInit = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
     static final int TRANSACTION_reportCleanExit = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
+    static final int TRANSACTION_sendZygoteInfo = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
     public static boolean setDefaultImpl(org.chromium.base.process_launcher.IParentProcess impl) {
       // Only one user of this interface can use this function
       // at a time. This is a heuristic to detect if two different
@@ -215,4 +250,7 @@ public interface IParentProcess extends android.os.IInterface
   // the browser receives the message before child exits.
 
   public void reportCleanExit() throws android.os.RemoteException;
+  // Sends the PID and startup time of the app zygote if available.
+
+  public void sendZygoteInfo(int zygotePid, long startupTimeMillis) throws android.os.RemoteException;
 }

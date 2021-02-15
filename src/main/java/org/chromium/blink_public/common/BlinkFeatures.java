@@ -48,6 +48,16 @@ public final class BlinkFeatures {
     // Freezes the user-agent as part of https://github.com/WICG/ua-client-hints.
     public static final String FREEZE_USER_AGENT = "FreezeUserAgent";
 
+    // Enables the frequency capping for detecting overlay popups. Overlay-popups
+    // are the interstitials that pop up and block the main content of the page.
+    public static final String FREQUENCY_CAPPING_FOR_OVERLAY_POPUP_DETECTION = "FrequencyCappingForOverlayPopupDetection";
+
+    // Enables the frequency capping for detecting large sticky ads.
+    // Large-sticky-ads are those ads that stick to the bottom of the page
+    // regardless of a user’s efforts to scroll, and take up more than 30% of the
+    // screen’s real estate.
+    public static final String FREQUENCY_CAPPING_FOR_LARGE_STICKY_AD_DETECTION = "FrequencyCappingForLargeStickyAdDetection";
+
     // Enables support for FTP URLs. When disabled FTP URLs will behave the same as
     // any other URL scheme that's unknown to the UA. See https://crbug.com/333943
     public static final String FTP_PROTOCOL = "FtpProtocol";
@@ -70,8 +80,14 @@ public final class BlinkFeatures {
     // Enable LayoutNG.
     public static final String LAYOUT_NG = "LayoutNG";
 
+    // Enable TableNG
+    public static final String LAYOUT_NG_TABLE = "LayoutNGTable";
+
     // Enable LayoutNGFieldset by default. This feature is for a kill switch.
     public static final String LAYOUT_NG_FIELDSET = "LayoutNGFieldset";
+
+
+    public static final String LAYOUT_NG_TEXT_CONTROL = "LayoutNGTextControl";
 
 
     public static final String FRAGMENT_ITEM = "FragmentItem";
@@ -113,11 +129,6 @@ public final class BlinkFeatures {
     // reasons. Consider enabling by default if experiment results are positive.
     public static final String PURGE_RENDERER_MEMORY_WHEN_BACKGROUNDED = "PurgeRendererMemoryWhenBackgrounded";
 
-    // Enable Implicit Root Scroller. https://crbug.com/903260.
-    // TODO(bokan): Temporarily disabled on desktop platforms to address issues
-    // with non-overlay scrollbars. https://crbug.com/948059.
-    public static final String IMPLICIT_ROOT_SCROLLER = "ImplicitRootScroller";
-
     // Enables toggling overwrite mode when insert key is pressed.
     // https://crbug.com/1030231.
     public static final String INSERT_KEY_TOGGLE_MODE = "InsertKeyToggleMode";
@@ -137,7 +148,7 @@ public final class BlinkFeatures {
 
     // Determines if the SDP attrbute extmap-allow-mixed should be offered by
     // default or not. The default value can be overridden by passing
-    // {offerExtmapAllowMixed:true} as an argument to the RTCPeerConnection
+    // {offerExtmapAllowMixed:false} as an argument to the RTCPeerConnection
     // constructor.
     public static final String RTC_OFFER_EXTMAP_ALLOW_MIXED = "RTCOfferExtmapAllowMixed";
 
@@ -161,13 +172,15 @@ public final class BlinkFeatures {
     // http://crbug.com/878465
     public static final String WEB_RTC_HIDE_LOCAL_IPS_WITH_MDNS = "WebRtcHideLocalIpsWithMdns";
 
+    // Causes WebRTC to not set the color space of video frames on the receive side
+    // in case it's unspecified. Otherwise we will guess that the color space is
+    // BT709. http://crbug.com/1129243
+    public static final String WEB_RTC_IGNORE_UNSPECIFIED_COLOR_SPACE = "WebRtcIgnoreUnspecifiedColorSpace";
+
     // Note that the base::Feature should not be read from;
     // rather the provided accessors should be used, which also take into account
     // the managed policy override of the feature.
     public static final String INTENSIVE_WAKE_UP_THROTTLING = "IntensiveWakeUpThrottling";
-
-    // When enabled, timers with timeout=0 are not throttled.
-    public static final String OPT_OUT_ZERO_TIMEOUT_TIMERS_FROM_THROTTLING = "OptOutZeroTimeoutTimersFromThrottling";
 
     // Run-time feature for the |rtc_use_h264| encoder/decoder.
     public static final String WEB_RTC_H264_WITH_OPEN_H264F_FMPEG = "WebRTC-H264WithOpenH264FFmpeg";
@@ -183,10 +196,6 @@ public final class BlinkFeatures {
     // Freeze scheduler task queues in background on network idle.
     // This feature only works if stop-in-background is enabled.
     public static final String FREEZE_BACKGROUND_TAB_ON_NETWORK_IDLE = "freeze-background-tab-on-network-idle";
-
-    // Freeze non-timer task queues in background, after allowed grace time.
-    // "stop" is a legacy name.
-    public static final String STOP_NON_TIMERS_IN_BACKGROUND = "stop-non-timers-in-background";
 
     // Enable the Storage Access API. https://crbug.com/989663.
     public static final String STORAGE_ACCESS_API = "StorageAccessAPI";
@@ -331,9 +340,6 @@ public final class BlinkFeatures {
     // Enables small accelerated canvases for webview (crbug.com/1004304)
     public static final String WEBVIEW_ACCELERATE_SMALL_CANVASES = "WebviewAccelerateSmallCanvases";
 
-
-    public static final String CSS_REDUCED_FONT_LOADING_LAYOUT_INVALIDATIONS = "CSSReducedFontLoadingLayoutInvalidations";
-
     // When enabled, frees up CachedMetadata after consumption by script resources
     // and modules. Needed for the experiment in http://crbug.com/1045052.
     public static final String DISCARD_CODE_CACHE_AFTER_FIRST_USE = "DiscardCodeCacheAfterFirstUse";
@@ -375,9 +381,6 @@ public final class BlinkFeatures {
     // browser will require origin trial tokens in order to load or store manifests
     // and their contents.
     public static final String APP_CACHE_REQUIRE_ORIGIN_TRIAL = "AppCacheRequireOriginTrial";
-
-    // Enables the AV1 Image File Format (AVIF).
-    public static final String AVIF = "AVIF";
 
     // Make all pending 'display: auto' web fonts enter the swap or failure period
     // immediately before reaching the LCP time limit (~2500ms), so that web fonts
@@ -472,6 +475,11 @@ public final class BlinkFeatures {
 
     public static final String LOG_UNEXPECTED_IPC_POSTED_TO_BACK_FORWARD_CACHED_DOCUMENTS = "LogUnexpectedIPCPostedToBackForwardCachedDocuments";
 
+    // Enables declarative link capturing in web apps.
+    // Explainer:
+    // https://github.com/WICG/sw-launch/blob/master/declarative_link_capturing.md
+    public static final String WEB_APP_ENABLE_LINK_CAPTURING = "WebAppEnableLinkCapturing";
+
     // Controls URL handling feature in web apps. Controls parsing of "url_handlers"
     // field in web app manifests. See explainer for more information:
     // https://github.com/WICG/pwa-url-handler/blob/master/explainer.md
@@ -498,6 +506,34 @@ public final class BlinkFeatures {
     // Controls how max frame rates are enforced in MediaStreamTracks.
     // TODO(crbug.com/1152307): Remove in M91.
     public static final String MEDIA_STREAM_TRACK_USE_CONFIG_MAX_FRAME_RATE = "MediaStreamTrackUseConfigMaxFrameRate";
+
+    // Kill switch for the new behavior whereby noopener windows no longer get their
+    // sessionStorage cloned from their originator. TODO(crbug.com/1151381): Remove
+    // in Chrome 92.
+    public static final String CLONE_SESSION_STORAGE_FOR_NO_OPENER = "CloneSessionStorageForNoOpener";
+
+    // When enabled, WebRTC's worker thread will run on a thread context distinct
+    // from the WebRTC signaling and network threads.
+    public static final String WEB_RTC_DISTINCT_WORKER_THREAD = "WebRtcDistinctWorkerThread";
+
+    // When enabled, the SubresourceFilter receives calls from the ResourceLoader
+    // to perform additional checks against any aliases found from DNS CNAME records
+    // for the requested URL.
+    public static final String SEND_CNAME_ALIASES_TO_SUBRESOURCE_FILTER_FROM_RENDERER = "SendCnameAliasesToSubresourceFilterFromRenderer";
+
+    // Kill switch for the InterestCohort API origin trial, i.e. if disabled, the
+    // API exposure will be disabled regardless of the OT config.
+    // (See https://github.com/WICG/floc.)
+    public static final String INTEREST_COHORT_API_ORIGIN_TRIAL = "InterestCohortAPIOriginTrial";
+
+    // Enable the availability of the "interest-cohort" feature policy.
+    public static final String INTEREST_COHORT_FEATURE_POLICY = "InterestCohortFeaturePolicy";
+
+    // Flags only used for testing purposes. No effect when enabled.
+    public static final String DOCUMENT_POLICY_RUNTIME_FLAG1_FOR_TEST = "kDocumentPolicyRuntimeFlag1ForTest";
+
+
+    public static final String DOCUMENT_POLICY_RUNTIME_FLAG2_FOR_TEST = "kDocumentPolicyRuntimeFlag2ForTest";
 
     // Do not instantiate this class.
     private BlinkFeatures() {}

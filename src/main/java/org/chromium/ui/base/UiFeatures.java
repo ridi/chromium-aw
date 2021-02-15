@@ -20,6 +20,9 @@ public final class UiFeatures {
     // If enabled, calculate native window occlusion - Windows-only.
     public static final String CALCULATE_NATIVE_WIN_OCCLUSION = "CalculateNativeWinOcclusion";
 
+
+    public static final String CALCULATE_NATIVE_WIN_OCCLUSION_CHECK_VIRTUAL_DESKTOP_USED = "CalculateNativeWinOcclusionCheckVirtualDesktopUsed";
+
     // Whether or not to delegate color queries to the color provider.
     public static final String COLOR_PROVIDER_REDIRECTION = "ColorProviderRedirection";
 
@@ -109,6 +112,9 @@ public final class UiFeatures {
 
 
     public static final String SYNCHRONOUS_PAGE_FLIP_TESTING = "SynchronousPageFlipTesting";
+
+
+    public static final String RESAMPLING_SCROLL_EVENTS_EXPERIMENTAL_PREDICTION = "ResamplingScrollEventsExperimentalPrediction";
 
 
     public static final String USE_OZONE_PLATFORM = "UseOzonePlatform";

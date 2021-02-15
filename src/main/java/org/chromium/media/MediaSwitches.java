@@ -185,6 +185,9 @@ public abstract class MediaSwitches {
     // Sets the default value for the kLiveCaptionEnabled preference to true.
     public static final String ENABLE_LIVE_CAPTION_PREF_FOR_TESTING = "enable-live-caption-pref-for-testing";
 
+    // Enables playback of clear (unencrypted) HEVC content for testing purposes.
+    public static final String ENABLE_CLEAR_HEVC_FOR_TESTING = "enable-clear-hevc-for-testing";
+
     // Autoplay policy that requires a document user activation.
     public static final String DOCUMENT_USER_ACTIVATION_REQUIRED_POLICY = "document-user-activation-required";
 

@@ -81,6 +81,12 @@ final class WebContentsImplJni implements WebContentsImpl.Natives {
   }
 
   @Override
+  public RenderFrameHost[] getAllRenderFrameHosts(long nativeWebContentsAndroid,
+      WebContentsImpl caller) {
+    return (RenderFrameHost[])GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_getAllRenderFrameHosts(nativeWebContentsAndroid, caller);
+  }
+
+  @Override
   public RenderWidgetHostViewImpl getRenderWidgetHostView(long nativeWebContentsAndroid,
       WebContentsImpl caller) {
     return (RenderWidgetHostViewImpl)GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_getRenderWidgetHostView(nativeWebContentsAndroid, caller);

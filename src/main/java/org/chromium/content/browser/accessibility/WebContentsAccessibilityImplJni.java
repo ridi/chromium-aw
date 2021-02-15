@@ -255,6 +255,18 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
     GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_addSpellingErrorForTesting(nativeWebContentsAccessibilityAndroid, caller, id, startOffset, endOffset);
   }
 
+  @Override
+  public void setMaxContentChangedEventsToFireForTesting(long nativeWebContentsAccessibilityAndroid,
+      WebContentsAccessibilityImpl caller, int maxEvents) {
+    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setMaxContentChangedEventsToFireForTesting(nativeWebContentsAccessibilityAndroid, caller, maxEvents);
+  }
+
+  @Override
+  public int getMaxContentChangedEventsToFireForTesting(
+      long nativeWebContentsAccessibilityAndroid) {
+    return (int)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getMaxContentChangedEventsToFireForTesting(nativeWebContentsAccessibilityAndroid);
+  }
+
   public static WebContentsAccessibilityImpl.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

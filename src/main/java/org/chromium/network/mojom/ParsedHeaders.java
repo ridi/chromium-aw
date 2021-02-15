@@ -23,14 +23,16 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
     public AllowCspFromHeaderValue allowCspFrom;
     public CrossOriginEmbedderPolicy crossOriginEmbedderPolicy;
     public CrossOriginOpenerPolicy crossOriginOpenerPolicy;
-    public boolean originIsolation;
+    public boolean originAgentCluster;
     public int[] acceptCh;
     public org.chromium.mojo_base.mojom.TimeDelta acceptChLifetime;
     public int[] criticalCh;
+    public int xfo;
 
     private ParsedHeaders(int version) {
         super(STRUCT_SIZE, version);
-        this.originIsolation = (boolean) false;
+        this.originAgentCluster = (boolean) false;
+        this.xfo = (int) XFrameOptionsValue.NONE;
     }
 
     public ParsedHeaders() {
@@ -91,14 +93,19 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.originIsolation = decoder0.readBoolean(48, 0);
+                result.originAgentCluster = decoder0.readBoolean(48, 0);
+                }
+                {
+                    
+                result.xfo = decoder0.readInt(52);
+                    XFrameOptionsValue.validate(result.xfo);
                 }
                 {
                     
                 result.acceptCh = decoder0.readInts(56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 if (result.acceptCh != null) {
-                    for (int i0 = 0; i0 < result.acceptCh.length; ++i0) {
-                        WebClientHintsType.validate(result.acceptCh[i0]);
+                    for (int i1 = 0; i1 < result.acceptCh.length; ++i1) {
+                        WebClientHintsType.validate(result.acceptCh[i1]);
                     }
                 }
                 }
@@ -111,8 +118,8 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                     
                 result.criticalCh = decoder0.readInts(72, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 if (result.criticalCh != null) {
-                    for (int i0 = 0; i0 < result.criticalCh.length; ++i0) {
-                        WebClientHintsType.validate(result.criticalCh[i0]);
+                    for (int i1 = 0; i1 < result.criticalCh.length; ++i1) {
+                        WebClientHintsType.validate(result.criticalCh[i1]);
                     }
                 }
                 }
@@ -144,7 +151,9 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.crossOriginOpenerPolicy, 40, false);
         
-        encoder0.encode(this.originIsolation, 48, 0);
+        encoder0.encode(this.originAgentCluster, 48, 0);
+        
+        encoder0.encode(this.xfo, 52);
         
         encoder0.encode(this.acceptCh, 56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
         

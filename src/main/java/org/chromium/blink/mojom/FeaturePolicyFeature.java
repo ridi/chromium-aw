@@ -76,8 +76,11 @@ public final class FeaturePolicyFeature {
     public static final int CLIPBOARD_WRITE = 77;
     public static final int WEB_SHARE = 78;
     public static final int GAMEPAD = 79;
+    public static final int OTP_CREDENTIALS = 80;
+    public static final int DISPLAY_CAPTURE = 81;
+    public static final int INTEREST_COHORT = 82;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 79;
+    public static final int MAX_VALUE = 82;
 
     public static boolean isKnownValue(int value) {
         switch (value) {
@@ -141,6 +144,9 @@ public final class FeaturePolicyFeature {
             case 77:
             case 78:
             case 79:
+            case 80:
+            case 81:
+            case 82:
                 return true;
         }
         return false;

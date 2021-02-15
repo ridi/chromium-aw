@@ -73,8 +73,8 @@ public final class DisplayColorSpaces extends org.chromium.mojo.bindings.Struct 
                     
                 result.bufferFormats = decoder0.readInts(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 6);
                 {
-                    for (int i0 = 0; i0 < result.bufferFormats.length; ++i0) {
-                        BufferFormat.validate(result.bufferFormats[i0]);
+                    for (int i1 = 0; i1 < result.bufferFormats.length; ++i1) {
+                        BufferFormat.validate(result.bufferFormats[i1]);
                     }
                 }
                 }

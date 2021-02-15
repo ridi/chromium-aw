@@ -16,11 +16,10 @@ package org.chromium.skia.mojom;
 
 public final class InlineBitmap extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 32;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+    private static final int STRUCT_SIZE = 24;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-    public ImageInfo imageInfo;
-    public long rowBytes;
+    public BitmapN32ImageInfo imageInfo;
     public byte[] pixelData;
 
     private InlineBitmap(int version) {
@@ -59,15 +58,11 @@ public final class InlineBitmap extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
-                result.imageInfo = ImageInfo.decode(decoder1);
+                result.imageInfo = BitmapN32ImageInfo.decode(decoder1);
                 }
                 {
                     
-                result.rowBytes = decoder0.readLong(16);
-                }
-                {
-                    
-                result.pixelData = decoder0.readBytes(24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                result.pixelData = decoder0.readBytes(16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 }
 
         } finally {
@@ -83,8 +78,6 @@ public final class InlineBitmap extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.imageInfo, 8, false);
         
-        encoder0.encode(this.rowBytes, 16);
-        
-        encoder0.encode(this.pixelData, 24, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        encoder0.encode(this.pixelData, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
     }
 }

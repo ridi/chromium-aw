@@ -28,8 +28,8 @@ final class AwProxyControllerJni implements AwProxyController.Natives {
 
   @Override
   public String setProxyOverride(AwProxyController caller, String[] urlSchemes, String[] proxyUrls,
-      String[] bypassRules, Runnable listener, Executor executor) {
-    return (String)GEN_JNI.org_chromium_android_1webview_AwProxyController_setProxyOverride(caller, urlSchemes, proxyUrls, bypassRules, listener, executor);
+      String[] bypassRules, Runnable listener, Executor executor, boolean reverseBypass) {
+    return (String)GEN_JNI.org_chromium_android_1webview_AwProxyController_setProxyOverride(caller, urlSchemes, proxyUrls, bypassRules, listener, executor, reverseBypass);
   }
 
   @Override

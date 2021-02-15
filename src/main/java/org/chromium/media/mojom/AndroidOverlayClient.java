@@ -34,6 +34,14 @@ long surfaceKey);
 
 
 
+    void onSynchronouslyDestroyed(
+
+OnSynchronouslyDestroyedResponse callback);
+
+    interface OnSynchronouslyDestroyedResponse extends org.chromium.mojo.bindings.Callbacks.Callback0 { }
+
+
+
     void onPowerEfficientState(
 boolean isPowerEfficient);
 

@@ -43,10 +43,6 @@ public final class GpuSwitches {
     // Ignores GPU blocklist.
     public static final String IGNORE_GPU_BLOCKLIST = "ignore-gpu-blocklist";
 
-    // Ignores GPU blocklist.
-    // TODO(crbug.com/1101491): remove in 2020Q4 in favor of --ignore-gpu-blocklist.
-    public static final String IGNORE_GPU_BLACKLIST = "ignore-gpu-blacklist";
-
     // Allows explicitly specifying the shader disk cache size for embedded devices.
     // Default value is 6MB. On Android, 2MB is default and 128KB for low-end
     // devices.
@@ -61,8 +57,11 @@ public final class GpuSwitches {
     // Enable validation layers in Dawn backends.
     public static final String ENABLE_DAWN_BACKEND_VALIDATION = "enable-dawn-backend-validation";
 
-    // Enable the toggle Toggle::DisableRobustness when creating Dawn device.
-    public static final String DISABLE_DAWN_ROBUSTNESS = "disable-dawn-robustness";
+    // Set the Dawn features(toggles) enabled on the creation of Dawn devices.
+    public static final String ENABLE_DAWN_FEATURES = "enable-dawn-features";
+
+    // Set the Dawn features(toggles) disabled on the creation of Dawn devices.
+    public static final String DISABLE_DAWN_FEATURES = "disable-dawn-features";
 
     // Increases the priority (to REALTIME_AUDIO) of gpu process and compositor
     // thread.

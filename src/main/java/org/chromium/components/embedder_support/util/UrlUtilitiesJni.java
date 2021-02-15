@@ -7,6 +7,7 @@ import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
+import org.chromium.url.GURL;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -25,7 +26,7 @@ public final class UrlUtilitiesJni implements UrlUtilities.Natives {
   };
 
   @Override
-  public boolean isDownloadable(String url) {
+  public boolean isDownloadable(GURL url) {
     return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_isDownloadable(url);
   }
 

@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
     SBThreatType.SIGNED_IN_SYNC_PASSWORD_REUSE, SBThreatType.SIGNED_IN_NON_SYNC_PASSWORD_REUSE,
     SBThreatType.BLOCKED_AD_REDIRECT, SBThreatType.AD_SAMPLE, SBThreatType.BLOCKED_AD_POPUP,
     SBThreatType.SUSPICIOUS_SITE, SBThreatType.ENTERPRISE_PASSWORD_REUSE, SBThreatType.BILLING,
-    SBThreatType.APK_DOWNLOAD, SBThreatType.HIGH_CONFIDENCE_ALLOWLIST
+    SBThreatType.APK_DOWNLOAD, SBThreatType.HIGH_CONFIDENCE_ALLOWLIST, SBThreatType.MAX
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SBThreatType {
@@ -133,4 +133,5 @@ public @interface SBThreatType {
    * Match found in the local high-confidence allowlist.
    */
   int HIGH_CONFIDENCE_ALLOWLIST = 24;
+  int MAX = HIGH_CONFIDENCE_ALLOWLIST;
 }

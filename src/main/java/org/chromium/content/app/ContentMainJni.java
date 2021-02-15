@@ -25,8 +25,8 @@ final class ContentMainJni implements ContentMain.Natives {
   };
 
   @Override
-  public int start(boolean startServiceManagerOnly) {
-    return (int)GEN_JNI.org_chromium_content_app_ContentMain_start(startServiceManagerOnly);
+  public int start(boolean startMinimalBrowser) {
+    return (int)GEN_JNI.org_chromium_content_app_ContentMain_start(startMinimalBrowser);
   }
 
   public static ContentMain.Natives get() {

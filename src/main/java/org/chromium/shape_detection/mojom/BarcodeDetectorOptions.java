@@ -58,8 +58,8 @@ public final class BarcodeDetectorOptions extends org.chromium.mojo.bindings.Str
                     
                 result.formats = decoder0.readInts(8, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                 {
-                    for (int i0 = 0; i0 < result.formats.length; ++i0) {
-                        BarcodeFormat.validate(result.formats[i0]);
+                    for (int i1 = 0; i1 < result.formats.length; ++i1) {
+                        BarcodeFormat.validate(result.formats[i1]);
                     }
                 }
                 }

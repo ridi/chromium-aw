@@ -74,8 +74,8 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
                         
                         keys0 = decoder1.readInts(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                         {
-                            for (int i1 = 0; i1 < keys0.length; ++i1) {
-                                LatencyComponentType.validate(keys0[i1]);
+                            for (int i2 = 0; i2 < keys0.length; ++i2) {
+                                LatencyComponentType.validate(keys0[i2]);
                             }
                         }
                     }

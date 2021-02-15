@@ -32,6 +32,13 @@ public final class GpuFeatures {
     // raster.
     public static final String WEBVIEW_VULKAN = "WebViewVulkan";
 
+    // Used to enable/disable zero copy video path on webview for MCVD.
+    public static final String WEBVIEW_ZERO_COPY_VIDEO = "WebViewZeroCopyVideo";
+
+    // Used to limit AImageReader max queue size to 1 since many devices especially
+    // android Tv devices do not support more than 1 images.
+    public static final String LIMIT_A_IMAGE_READER_MAX_SIZE_TO_ONE = "LimitAImageReaderMaxSizeToOne";
+
     // Enable GPU Rasterization by default. This can still be overridden by
     // --enable-gpu-rasterization or --disable-gpu-rasterization.
     // DefaultEnableGpuRasterization has launched on Mac, Windows, ChromeOS, and
@@ -51,9 +58,6 @@ public final class GpuFeatures {
 
     // Use ThreadPriority::DISPLAY for GPU main, viz compositor and IO threads.
     public static final String GPU_USE_DISPLAY_THREAD_PRIORITY = "GpuUseDisplayThreadPriority";
-
-    // Use a different set of watchdog timeouts on V2
-    public static final String GPU_WATCHDOG_V2_NEW_TIMEOUT = "GpuWatchdogV2NewTimeout";
 
     // Enable use of Metal for OOP rasterization.
     public static final String METAL = "Metal";

@@ -16,9 +16,9 @@ package org.chromium.device.mojom;
 
 public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 104;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0)};
-    private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    private static final int STRUCT_SIZE = 128;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0),new org.chromium.mojo.bindings.DataHeader(128, 1)};
+    private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[1];
     public String guid;
     public String physicalDeviceId;
     public short vendorId;
@@ -33,13 +33,16 @@ public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
     public long maxOutputReportSize;
     public long maxFeatureReportSize;
     public String deviceNode;
+    public byte[] protectedInputReportIds;
+    public byte[] protectedOutputReportIds;
+    public byte[] protectedFeatureReportIds;
 
     private HidDeviceInfo(int version) {
         super(STRUCT_SIZE, version);
     }
 
     public HidDeviceInfo() {
-        this(0);
+        this(1);
     }
 
     public static HidDeviceInfo deserialize(org.chromium.mojo.bindings.Message message) {
@@ -133,6 +136,20 @@ public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.deviceNode = decoder0.readString(96, false);
                 }
+            if (elementsOrVersion >= 1) {
+                {
+                    
+                result.protectedInputReportIds = decoder0.readBytes(104, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                }
+                {
+                    
+                result.protectedOutputReportIds = decoder0.readBytes(112, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                }
+                {
+                    
+                result.protectedFeatureReportIds = decoder0.readBytes(120, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                }
+            }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -180,5 +197,11 @@ public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.maxFeatureReportSize, 88);
         
         encoder0.encode(this.deviceNode, 96, false);
+        
+        encoder0.encode(this.protectedInputReportIds, 104, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        
+        encoder0.encode(this.protectedOutputReportIds, 112, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+        
+        encoder0.encode(this.protectedFeatureReportIds, 120, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
     }
 }

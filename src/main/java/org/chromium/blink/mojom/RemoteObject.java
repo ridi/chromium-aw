@@ -47,4 +47,9 @@ InvokeMethodResponse callback);
     interface InvokeMethodResponse extends org.chromium.mojo.bindings.Callbacks.Callback1<RemoteInvocationResult> { }
 
 
+
+    void notifyReleasedObject(
+);
+
+
 }

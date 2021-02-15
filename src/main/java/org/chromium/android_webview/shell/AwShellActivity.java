@@ -114,6 +114,7 @@ public class AwShellActivity extends Activity {
     }
 
     private AwTestContainerView createAwTestContainerView() {
+        AwTestContainerView.installDrawFnFunctionTable(/*useVulkan=*/false);
         AwBrowserProcess.start();
         AwTestContainerView testContainerView = new AwTestContainerView(this, true);
         AwContentsClient awContentsClient = new NullContentsClient() {

@@ -61,6 +61,11 @@ final class DialogOverlayImplJni implements DialogOverlayImpl.Natives {
     return (Surface)GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_lookupSurfaceForTesting(surfaceId);
   }
 
+  @Override
+  public void notifyDestroyedSynchronously(int messagePipeHandle) {
+    GEN_JNI.org_chromium_content_browser_androidoverlay_DialogOverlayImpl_notifyDestroyedSynchronously(messagePipeHandle);
+  }
+
   public static DialogOverlayImpl.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

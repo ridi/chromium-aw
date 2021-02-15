@@ -18,7 +18,7 @@ public final class VizFeatures {
     //     ../../components/viz/common/java/src/org/chromium/components/viz/common/VizFeatures.java.tmpl
 
 
-    public static final String FORCE_PREFERRED_INTERVAL_FOR_VIDEO = "ForcePreferredIntervalForVideo";
+    public static final String ENABLE_OVERLAY_PRIORITIZATION = "EnableOverlayPrioritization";
 
     // Use the SkiaRenderer.
     public static final String USE_SKIA_RENDERER = "UseSkiaRenderer";
@@ -57,6 +57,13 @@ public final class VizFeatures {
     // Enables swap chains to call SetPresentDuration to request DWM/OS to reduce
     // vsync.
     public static final String USE_SET_PRESENT_DURATION = "UseSetPresentDuration";
+
+    // Uses X11 Present Extensions instead of the Vulkan swapchain for presenting.
+    public static final String USE_X11_PRESENT = "UseX11Present";
+
+    // Used to debug Android WebView Vulkan composite. Composite to an intermediate
+    // buffer and draw the intermediate buffer to the secondary command buffer.
+    public static final String WEBVIEW_VULKAN_INTERMEDIATE_BUFFER = "WebViewVulkanIntermediateBuffer";
 
     // Prevent instantiation.
     private VizFeatures() {}

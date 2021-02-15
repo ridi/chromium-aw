@@ -75,11 +75,6 @@ public final class ContentSwitches {
     // Into
     //     ../../content/common/android/java_templates/ContentSwitches.java.tmpl
 
-    // Allows processing of input before a frame has been committed.
-    // TODO(schenney): crbug.com/987626. Used by headless. Look for a way not
-    // involving a command line switch.
-    public static final String ALLOW_PRE_COMMIT_INPUT = "allow-pre-commit-input";
-
     // By default, file:// URIs cannot read other file:// URIs. This is an
     // override for developers who need the old behavior for testing.
     public static final String ALLOW_FILE_ACCESS_FROM_FILES = "allow-file-access-from-files";
@@ -441,14 +436,6 @@ public final class ContentSwitches {
     // Enabled threaded compositing for web tests.
     public static final String ENABLE_THREADED_COMPOSITING = "enable-threaded-compositing";
 
-    // Enable tracing during the execution of browser tests.
-    public static final String ENABLE_TRACING = "enable-tracing";
-
-    // The filename to write the output of the test tracing to. If it is empty
-    // or it ends in a directory separator then an auto-generated filename will be
-    // appended.
-    public static final String ENABLE_TRACING_OUTPUT = "enable-tracing-output";
-
     // Enable screen capturing support for MediaStream API.
     public static final String ENABLE_USER_MEDIA_SCREEN_CAPTURING = "enable-usermedia-screen-capturing";
 
@@ -540,6 +527,9 @@ public final class ContentSwitches {
     // comma-separated list. For example:
     //   --isolate-origins=https://www.foo.com,https://www.bar.com
     public static final String ISOLATE_ORIGINS = "isolate-origins";
+
+    // https://crbug.com/1140371
+    public static final String ISOLATION_BY_DEFAULT = "isolation-by-default";
 
     // Disable latest shipping ECMAScript 6 features.
     public static final String DISABLE_JAVA_SCRIPT_HARMONY_SHIPPING = "disable-javascript-harmony-shipping";
@@ -649,6 +639,11 @@ public final class ContentSwitches {
     // touchpad and touchscreen, and set to '2' to enable it only for touchscreen.
     // Defaults to disabled.
     public static final String PULL_TO_REFRESH = "pull-to-refresh";
+
+    // Specifies the minimum amount of time, in seconds, that must pass before
+    // consecutive quota change events can be fired. Set the value to '0' to disable
+    // the debounce mechanimsm.
+    public static final String QUOTA_CHANGE_EVENT_INTERVAL = "quota-change-event-interval";
 
     // Register Pepper plugins (see pepper_plugin_list.cc for its format).
     public static final String REGISTER_PEPPER_PLUGINS = "register-pepper-plugins";
@@ -889,9 +884,6 @@ public final class ContentSwitches {
 
     // Disables hardware acceleration of video decode, where available.
     public static final String DISABLE_ACCELERATED_VIDEO_DECODE = "disable-accelerated-video-decode";
-
-    // Enables hardware acceleration of video decoding on linux. (defaults to off)
-    public static final String ENABLE_ACCELERATED_VIDEO_DECODE = "enable-accelerated-video-decode";
 
     // Disable Media Session API
     public static final String DISABLE_MEDIA_SESSION_API = "disable-media-session-api";

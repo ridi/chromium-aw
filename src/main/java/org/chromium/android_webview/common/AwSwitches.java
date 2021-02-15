@@ -56,6 +56,12 @@ public final class AwSwitches {
     // variations seed.
     public static final String FINCH_SEED_MIN_UPDATE_PERIOD = "finch-seed-min-update-period";
 
+    // Enables modern SameSite cookie behavior (as opposed to legacy behavior). This
+    // is used for WebView versions prior to when the modern behavior will be
+    // enabled by default. This enables the same-site-by-default-cookies,
+    // cookies-without-SameSite-must-be-secure, and schemeful-same-site features.
+    public static final String WEBVIEW_ENABLE_MODERN_COOKIE_SAME_SITE = "webview-enable-modern-cookie-same-site";
+
     // Do not instantiate this class.
     private AwSwitches() {}
 }

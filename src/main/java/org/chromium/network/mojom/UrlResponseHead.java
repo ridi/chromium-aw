@@ -16,8 +16,8 @@ package org.chromium.network.mojom;
 
 public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 232;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(232, 0)};
+    private static final int STRUCT_SIZE = 248;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(248, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public org.chromium.mojo_base.mojom.Time requestTime;
     public org.chromium.mojo_base.mojom.Time responseTime;
@@ -67,6 +67,8 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
     public ParsedHeaders parsedHeaders;
     public OriginPolicy originPolicy;
     public org.chromium.mojo_base.mojom.UnguessableToken recursivePrefetchToken;
+    public String[] dnsAliases;
+    public org.chromium.url.mojom.Url webBundleUrl;
 
     private UrlResponseHead(int version) {
         super(STRUCT_SIZE, version);
@@ -354,6 +356,23 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(224, true);
                 result.recursivePrefetchToken = org.chromium.mojo_base.mojom.UnguessableToken.decode(decoder1);
                 }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(232, false);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.dnsAliases = new String[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        result.dnsAliases[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                    }
+                }
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(240, false);
+                result.webBundleUrl = org.chromium.url.mojom.Url.decode(decoder1);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -477,5 +496,17 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.originPolicy, 216, true);
         
         encoder0.encode(this.recursivePrefetchToken, 224, true);
+        
+        if (this.dnsAliases == null) {
+            encoder0.encodeNullPointer(232, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.dnsAliases.length, 232, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.dnsAliases.length; ++i0) {
+                
+                encoder1.encode(this.dnsAliases[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
+        
+        encoder0.encode(this.webBundleUrl, 240, false);
     }
 }

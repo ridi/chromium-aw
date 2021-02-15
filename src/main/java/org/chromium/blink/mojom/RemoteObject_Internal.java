@@ -53,6 +53,8 @@ class RemoteObject_Internal {
 
     private static final int INVOKE_METHOD_ORDINAL = 2;
 
+    private static final int NOTIFY_RELEASED_OBJECT_ORDINAL = 3;
+
 
     static final class Proxy extends org.chromium.mojo.bindings.Interface.AbstractProxy implements RemoteObject.Proxy {
 
@@ -128,6 +130,21 @@ InvokeMethodResponse callback) {
         }
 
 
+        @Override
+        public void notifyReleasedObject(
+) {
+
+            RemoteObjectNotifyReleasedObjectParams _message = new RemoteObjectNotifyReleasedObjectParams();
+
+
+            getProxyHandler().getMessageReceiver().accept(
+                    _message.serializeWithHeader(
+                            getProxyHandler().getCore(),
+                            new org.chromium.mojo.bindings.MessageHeader(NOTIFY_RELEASED_OBJECT_ORDINAL)));
+
+        }
+
+
     }
 
     static final class Stub extends org.chromium.mojo.bindings.Interface.Stub<RemoteObject> {
@@ -160,6 +177,18 @@ InvokeMethodResponse callback) {
 
 
 
+
+
+
+
+
+                    case NOTIFY_RELEASED_OBJECT_ORDINAL: {
+
+                        RemoteObjectNotifyReleasedObjectParams.deserialize(messageWithHeader.getPayload());
+
+                        getImpl().notifyReleasedObject();
+                        return true;
+                    }
 
 
                     default:
@@ -233,6 +262,8 @@ InvokeMethodResponse callback) {
                         getImpl().invokeMethod(data.name, data.arguments, new RemoteObjectInvokeMethodResponseParamsProxyToResponder(getCore(), receiver, header.getRequestId()));
                         return true;
                     }
+
+
 
 
                     default:
@@ -837,6 +868,62 @@ InvokeMethodResponse callback) {
                                     org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_RESPONSE_FLAG| org.chromium.mojo.bindings.MessageHeader.MESSAGE_IS_SYNC_FLAG,
                                     mRequestId));
             mMessageReceiver.accept(_message);
+        }
+    }
+
+
+
+    
+    static final class RemoteObjectNotifyReleasedObjectParams extends org.chromium.mojo.bindings.Struct {
+
+        private static final int STRUCT_SIZE = 8;
+        private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
+        private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+
+        private RemoteObjectNotifyReleasedObjectParams(int version) {
+            super(STRUCT_SIZE, version);
+        }
+
+        public RemoteObjectNotifyReleasedObjectParams() {
+            this(0);
+        }
+
+        public static RemoteObjectNotifyReleasedObjectParams deserialize(org.chromium.mojo.bindings.Message message) {
+            return decode(new org.chromium.mojo.bindings.Decoder(message));
+        }
+
+        /**
+         * Similar to the method above, but deserializes from a |ByteBuffer| instance.
+         *
+         * @throws org.chromium.mojo.bindings.DeserializationException on deserialization failure.
+         */
+        public static RemoteObjectNotifyReleasedObjectParams deserialize(java.nio.ByteBuffer data) {
+            return deserialize(new org.chromium.mojo.bindings.Message(
+                    data, new java.util.ArrayList<org.chromium.mojo.system.Handle>()));
+        }
+
+        @SuppressWarnings("unchecked")
+        public static RemoteObjectNotifyReleasedObjectParams decode(org.chromium.mojo.bindings.Decoder decoder0) {
+            if (decoder0 == null) {
+                return null;
+            }
+            decoder0.increaseStackDepth();
+            RemoteObjectNotifyReleasedObjectParams result;
+            try {
+                org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
+                final int elementsOrVersion = mainDataHeader.elementsOrVersion;
+                result = new RemoteObjectNotifyReleasedObjectParams(elementsOrVersion);
+
+            } finally {
+                decoder0.decreaseStackDepth();
+            }
+            return result;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
+            encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         }
     }
 
