@@ -1958,6 +1958,10 @@ public class N {
     public static native boolean MlMmQVE9(long nativeNavigationImpl);
 
     public static native boolean M4U68Scc(long nativeNavigationImpl);
+
+    public static native boolean Mwx4wZuq(long nativeNavigationImpl);
+
+    public static native String MsHZd869(long nativeNavigationImpl);
     public static native long Mm1ByG3d(Object proxy, long tab);
 
     public static native void MxkBiJzp(long proxy);

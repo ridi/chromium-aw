@@ -25,7 +25,7 @@ public final class BufferUsage {
     public static final int PROTECTED_SCANOUT_VDA_WRITE = 6;
     public static final int GPU_READ_CPU_READ_WRITE = 7;
     public static final int SCANOUT_VEA_CPU_READ = 8;
-    public static final int SCANOUT_VEA_READ_CAMERA_AND_CPU_READ_WRITE = 9;
+    public static final int VEA_READ_CAMERA_AND_CPU_READ_WRITE = 9;
     public static final int MIN_VALUE = 0;
     public static final int MAX_VALUE = 9;
 

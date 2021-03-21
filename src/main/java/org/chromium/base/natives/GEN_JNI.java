@@ -4142,6 +4142,14 @@ public class GEN_JNI {
     public static boolean org_chromium_weblayer_1private_NavigationImpl_areIntentLaunchesAllowedInBackground(long nativeNavigationImpl) {
         return J.N.M4U68Scc(nativeNavigationImpl);
     }
+
+    public static boolean org_chromium_weblayer_1private_NavigationImpl_isFormSubmission(long nativeNavigationImpl) {
+        return J.N.Mwx4wZuq(nativeNavigationImpl);
+    }
+
+    public static String org_chromium_weblayer_1private_NavigationImpl_getReferrer(long nativeNavigationImpl) {
+        return J.N.MsHZd869(nativeNavigationImpl);
+    }
     public static long org_chromium_weblayer_1private_NewTabCallbackProxy_createNewTabCallbackProxy(Object proxy, long tab) {
         return J.N.Mm1ByG3d(proxy, tab);
     }
