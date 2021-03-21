@@ -179,7 +179,7 @@ $ ninja -C out/$TARGET webview_instrumentation_apk
 **IMPORTANT : It may be different depending on Chromium version.**
 
 ```sh
-$ node scripts/copy.js
+$ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 89.
 ```
 
 ## Crash dump decoding instructions
