@@ -35,19 +35,10 @@ public final class FeaturePolicyFeature {
     public static final int PICTURE_IN_PICTURE = 26;
     public static final int VERTICAL_SCROLL = 27;
     public static final int SCREEN_WAKE_LOCK = 31;
-    public static final int TOP_NAVIGATION = 33;
-    public static final int FORM_SUBMISSION = 34;
-    public static final int SCRIPT = 35;
-    public static final int POPUPS = 36;
-    public static final int POINTER_LOCK = 37;
-    public static final int MODALS = 38;
-    public static final int ORIENTATION_LOCK = 39;
-    public static final int PRESENTATION = 40;
     public static final int FROBULATE = 41;
     public static final int SERIAL = 42;
     public static final int HID = 43;
     public static final int IDLE_DETECTION = 44;
-    public static final int DOWNLOADS = 49;
     public static final int EXECUTION_WHILE_OUT_OF_VIEWPORT = 50;
     public static final int EXECUTION_WHILE_NOT_RENDERED = 51;
     public static final int FOCUS_WITHOUT_USER_ACTIVATION = 52;
@@ -103,19 +94,10 @@ public final class FeaturePolicyFeature {
             case 26:
             case 27:
             case 31:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-            case 37:
-            case 38:
-            case 39:
-            case 40:
             case 41:
             case 42:
             case 43:
             case 44:
-            case 49:
             case 50:
             case 51:
             case 52:
@@ -155,6 +137,10 @@ public final class FeaturePolicyFeature {
     public static void validate(int value) {
         if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+    }
+
+    public static int toKnownValue(int value) {
+      return value;
     }
 
     private FeaturePolicyFeature() {}

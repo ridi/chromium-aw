@@ -640,6 +640,7 @@ CloseResponse callback) {
                         
                     result.mode = decoder0.readInt(8);
                         SerialPortFlushMode.validate(result.mode);
+                        result.mode = SerialPortFlushMode.toKnownValue(result.mode);
                     }
 
             } finally {

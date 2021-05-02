@@ -99,6 +99,7 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                     
                 result.xfo = decoder0.readInt(52);
                     XFrameOptionsValue.validate(result.xfo);
+                    result.xfo = XFrameOptionsValue.toKnownValue(result.xfo);
                 }
                 {
                     

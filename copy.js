@@ -20,6 +20,13 @@ const Arch = {
   [Target.ARM64]: 'arm64-v8a',
 };
 
+const SnapshotSuffix = {
+  [Target.X86]: '86',
+  [Target.X64]: '86_64',
+  [Target.ARM]: '32',
+  [Target.ARM64]: '64',
+};
+
 const args = process.argv.slice(2);
 const [from, to] = args;
 const targets = [Target.X86, Target.X64, Target.ARM, Target.ARM64];
@@ -744,6 +751,7 @@ const tasks = [
           'CopyMode.java',
           'VideoFrameMetadata.java',
           'VideoRotation.java',
+          'VideoTransformation.java',
         ],
       ],
     ],
@@ -867,6 +875,14 @@ const tasks = [
         [
           'IpAddress.java',
           'IpEndPoint.java',
+        ],
+      ],
+      [
+        `src/out/${delegateTarget}/gen/services/network/public/mojom/mojom_network_param_java/generated_java/input_srcjars/org/chromium/network/mojom`,
+        [
+          'AuthChallengeInfo.java',
+          'HttpResponseHeaders.java',
+          'SslInfo.java',
         ],
       ],
       [
@@ -1192,6 +1208,18 @@ const tasks = [
     ],
     target: '/R.java',
   },
+  ...(targets => {
+    return targets.map(target => {
+      return {
+        name: `snapshot_blob_bin-${target}`,
+        action: Action.COPY,
+        src: [
+          `src/out/${target}/snapshot_blob.bin`,
+        ],
+        dest: `src/main/assets/snapshot_blob_${SnapshotSuffix[target]}.bin`,
+      };
+    });
+  })(targets),
 ];
 
 const logger = {
@@ -1353,7 +1381,9 @@ function getPathes(task, target, recursive = true, filter = []) {
 }
 
 function executeCopy(items, dest, task) {
-  if (!fs.existsSync(dest)) {
+  const components = dest.split('/');
+  const isFileToFile = components[components.length - 1].indexOf('.') !== -1;
+  if (!isFileToFile && !fs.existsSync(dest)) {
     fs.mkdirSync(dest, { recursive: true });
     logger.info(`Directory created: ${dest}`, task);
   }
@@ -1365,6 +1395,9 @@ function executeCopy(items, dest, task) {
         fs.mkdirSync(workingPath, { recursive: true });
         logger.info(`Directory created: ${workingPath}`, task);
       }
+    } else if (isFileToFile) {
+      fs.copyFileSync(fullPath, dest);
+      logger.info(`File copied: ${fullPath} -> ${dest}`, task);
     } else {
       fs.copyFileSync(fullPath, path.join(dest, subpath));
       logger.info(`File copied: ${fullPath} -> ${dest}, ${subpath}`, task);

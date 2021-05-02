@@ -69,6 +69,7 @@ public final class ImeTextSpan extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(8);
                     ImeTextSpanType.validate(result.type);
+                    result.type = ImeTextSpanType.toKnownValue(result.type);
                 }
                 {
                     
@@ -86,11 +87,13 @@ public final class ImeTextSpan extends org.chromium.mojo.bindings.Struct {
                     
                 result.thickness = decoder0.readInt(24);
                     ImeTextSpanThickness.validate(result.thickness);
+                    result.thickness = ImeTextSpanThickness.toKnownValue(result.thickness);
                 }
                 {
                     
                 result.underlineStyle = decoder0.readInt(28);
                     ImeTextSpanUnderlineStyle.validate(result.underlineStyle);
+                    result.underlineStyle = ImeTextSpanUnderlineStyle.toKnownValue(result.underlineStyle);
                 }
                 {
                     

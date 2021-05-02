@@ -28,11 +28,6 @@ public final class GURLUtilsJni implements GURLUtils.Natives {
     return (String)GEN_JNI.org_chromium_net_GURLUtils_getOrigin(url);
   }
 
-  @Override
-  public String getScheme(String url) {
-    return (String)GEN_JNI.org_chromium_net_GURLUtils_getScheme(url);
-  }
-
   public static GURLUtils.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

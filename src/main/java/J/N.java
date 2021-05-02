@@ -11,2081 +11,2390 @@ package J;
 public class N {
 
 
-    public static native String Myi_XSsy();
-
-    public static native String MZEbjzws();
-    public static native void M2z_jbiy(long nativeAwAutofillClient, Object caller);
-
-    public static native void Mg2XGOMM(long nativeAwAutofillClient, Object caller, int position);
-    public static native Object MCLx2xtg();
-
-    public static native long MyGX0Tx3(long nativeAwBrowserContext);
-
-    public static native void Mzi6ndOk(long nativeAwBrowserContext);
-    public static native void MgHPT6uL(String processName);
-    public static native long MFiR_zHY(long browserContextPointer);
-
-    public static native void MQGusfGb(long nativeAwContents);
-
-    public static native boolean MmfcaMzE();
-
-    public static native void M1aUwTSB(long functionTablePointer);
-
-    public static native void MHELqQxx(long functionTablePointer);
-
-    public static native int MpyFb$bm();
-
-    public static native void Mbm7UXr0();
-
-    public static native void Mer1B1Jd(String locale, String localeList);
-
-    public static native String M8bzablT();
-
-    public static native void MaOp$2xn(long nativeAwContents, Object caller, Object awContents, Object webViewWebContentsDelegate, Object contentsClientBridge, Object ioThreadClient, Object navigationInterceptionDelegate, Object autofillProvider);
-
-    public static native Object MybAxcKt(long nativeAwContents, Object caller);
-
-    public static native Object Mg88vWvb(long nativeAwContents, Object caller);
-
-    public static native void MzAVKSgA(long nativeAwContents, Object caller, long nativeCompositorFrameConsumer);
-
-    public static native void M74pgHWN(long nativeAwContents, Object caller, Object message);
-
-    public static native void MfwgZRb_(long nativeAwContents, Object caller, String path, Object callback);
-
-    public static native void MGEWt61o(long nativeAwContents, Object caller, String[] visitedLinks);
-
-    public static native void MuRWIe$h(long nativeAwContents, Object caller, float delta);
-
-    public static native void MkR1ETvU(long nativeAwContents, Object caller, long currentAnimationTimeMillis);
-
-    public static native boolean MTXp4fn_(long nativeAwContents, Object caller, Object canvas, boolean isHardwareAccelerated, int scrollX, int scrollY, int visibleLeft, int visibleTop, int visibleRight, int visibleBottom, boolean forceAuxiliaryBitmapRendering);
-
-    public static native boolean Mcwwaem4(long nativeAwContents, Object caller);
-
-    public static native void MkkpS1L9(long nativeAwContents, Object caller, String searchString);
-
-    public static native void M21lr0OA(long nativeAwContents, Object caller, boolean forward);
-
-    public static native void MFtcGkhm(long nativeAwContents, Object caller);
-
-    public static native void MhT$Vsgm(long nativeAwContents, Object caller, boolean includeDiskFiles);
-
-    public static native byte[] MJl6bbdC(long nativeAwContents, Object caller);
-
-    public static native void MbVTYFDu(long nativeAwContents, Object caller, float x, float y, float touchMajor);
-
-    public static native void MHBuiDmd(long nativeAwContents, Object caller);
-
-    public static native void MNxSIAOu(long nativeAwContents, Object caller, int w, int h, int ow, int oh);
-
-    public static native void Mnc0PDKE(long nativeAwContents, Object caller, int x, int y);
-
-    public static native void MFKs48sP(long nativeAwContents, Object caller, int x, int y);
-
-    public static native void MgUWjwjs(long nativeAwContents, Object caller, int targetX, int targetY, long durationMs);
-
-    public static native void MJqblGS2(long nativeAwContents, Object caller, boolean visible);
-
-    public static native void MkfSbdDV(long nativeAwContents, Object caller, boolean visible);
-
-    public static native void M11ykFVM(long nativeAwContents, Object caller, boolean paused);
-
-    public static native void MtQhJq6u(long nativeAwContents, Object caller, int w, int h);
-
-    public static native void MqVX7tnS(long nativeAwContents, Object caller);
-
-    public static native boolean M5$3H1S$(long nativeAwContents, Object caller);
-
-    public static native boolean MYvj_j$8(long nativeAwContents, Object caller);
-
-    public static native void MYYge55A(long nativeAwContents, Object caller, float dipScale);
-
-    public static native boolean MnhF3TBv(long nativeAwContents, Object caller);
-
-    public static native void MwsRRXR1(int pixels, int percentage);
-
-    public static native void MQn4UPnT(long nativeAwContents, Object caller);
-
-    public static native byte[] MtUUIkJC(long nativeAwContents, Object caller);
-
-    public static native boolean M$ugXLRy(long nativeAwContents, Object caller, byte[] state);
-
-    public static native long MOttaOmZ(long nativeAwContents, Object caller);
-
-    public static native void MunvchpP(long nativeAwContents, Object caller);
-
-    public static native void MLVoXr_n(long nativeAwContents, Object caller, int color);
-
-    public static native long MpPu_UgV(long nativeAwContents, Object caller, int width, int height);
-
-    public static native void MjvLhcRF(long nativeAwContents, Object caller, boolean enabled);
-
-    public static native void ME4bwr8X(long nativeAwContents, Object caller, long requestId, Object callback);
-
-    public static native void MsURZ4Xi(long nativeAwContents, Object caller);
-
-    public static native void Me4$sHFE(long nativeAwContents, Object caller, String url, String extraHeaders);
-
-    public static native void M0cKB_Do(long nativeAwContents, Object caller, boolean value, String requestingFrame);
-
-    public static native int MmkSmonh(long nativeAwContents, Object caller);
-
-    public static native void MSO7DbfT(long nativeAwContents, Object caller, boolean networkUp);
-
-    public static native void MxV2T4AB(long nativeAwContents, Object caller, int level, boolean visible);
-
-    public static native void MND9REwd(long nativeAwContents, Object caller, Object awPdfExporter);
-
-    public static native void MZm6NYk2(long nativeAwContents, Object caller, String origin, long resources);
-
-    public static native void Mt543z$z(long nativeAwContents, Object caller);
-
-    public static native void MlAm1rvf(long nativeAwContents, Object caller);
-
-    public static native Object Mj2HEglc(long nativeAwContents, Object caller);
-
-    public static native int MrxnMTWN(long nativeAwContents, Object caller, String script, String[] allowedOriginRules);
-
-    public static native void MHUaOxdC(long nativeAwContents, Object caller, int scriptId);
-
-    public static native String MxPw2eDG(long nativeAwContents, Object caller, Object listener, String jsObjectName, String[] allowedOrigins);
-
-    public static native void MJJ_9Fzq(long nativeAwContents, Object caller, String jsObjectName);
-
-    public static native Object[] MM3s1PPD(long nativeAwContents, Object caller, Class clazz);
-    public static native void MXMPzQYm(long nativeAwContentsClientBridge, Object caller, int action, boolean reporting, int requestId);
-
-    public static native void MgWlsTs7(long nativeAwContentsClientBridge, Object caller, boolean proceed, int id);
-
-    public static native void MZT_Y79r(long nativeAwContentsClientBridge, Object caller, int id, byte[][] certChain, Object androidKey);
-
-    public static native void MNISBPG1(long nativeAwContentsClientBridge, Object caller, int id, String prompt);
-
-    public static native void MXWyhv9x(long nativeAwContentsClientBridge, Object caller, int id);
-    public static native void MjT_gThK();
-
-    public static native void MQi$Ykmj(String[] switches, String[] features);
-
-    public static native String Mdfl4F0j();
-
-    public static native void Ml71D$Ud(Object callback);
-
-    public static native String M0AyjO$E();
-
-    public static native String MhBmyxCD();
-
-    public static native void MhYNFMfv(Object ioThreadClient, Object browserContext);
-
-    public static native void MXyUVZLW(String[] urls, Object callback);
-
-    public static native void Mu0fMVv8(boolean permitted);
-
-    public static native boolean M04mALrd();
-    public static native long M2x3bkF7();
-
-    public static native void MxGz1CMI(long nativeCookieManager, Object caller, boolean accept);
-
-    public static native boolean MIaWBQxt(long nativeCookieManager, Object caller);
-
-    public static native void MqWxZVFj(long nativeCookieManager, Object caller, String url, String value, Object callback);
-
-    public static native void M521ruQI(long nativeCookieManager, Object caller, String url, String value);
-
-    public static native String MwtyXc6D(long nativeCookieManager, Object caller, String url);
-
-    public static native void MPH4p3lP(long nativeCookieManager, Object caller, Object callback);
-
-    public static native void MCvO0Hcd(long nativeCookieManager, Object caller);
-
-    public static native void MYNMnyIh(long nativeCookieManager, Object caller, Object callback);
-
-    public static native void M8tXWfBc(long nativeCookieManager, Object caller);
-
-    public static native void MtpZW_Jk(long nativeCookieManager, Object caller);
-
-    public static native void MgWRfeHz(long nativeCookieManager, Object caller);
-
-    public static native boolean MLEl9vQp(long nativeCookieManager, Object caller);
-
-    public static native boolean MjZje8ZY(long nativeCookieManager, Object caller);
-
-    public static native void Mfo4YHeg(long nativeCookieManager, Object caller, boolean allow);
-
-    public static native void MEu0P4_Z(long nativeCookieManager, Object caller, boolean allow);
-    public static native void M06DsVuS(String version);
-
-    public static native void MtTQsh81();
-    public static native long MavwYLrk(Object caller);
-
-    public static native void MQr9muLU(Object caller, long devToolsServer);
-
-    public static native void MQE$FZ2u(Object caller, long devToolsServer, boolean enabled);
-    public static native boolean MA_KcuN3(String featureName);
-    public static native boolean MxzPtFuv();
-
-    public static native void MonDM6EC();
-    public static native void MWR2vWXA(long nativeAwHttpAuthHandler, Object caller, String username, String password);
-
-    public static native void MylO8zte(long nativeAwHttpAuthHandler, Object caller);
-    public static native void MNlWqe6a();
-
-    public static native long M1XOiRvG();
-
-    public static native boolean MEjwJwuS(long nativeAwPacProcessor, Object caller, String script);
-
-    public static native String ME9i0MKK(long nativeAwPacProcessor, Object caller, String url);
-
-    public static native void M_7y1FCn(long nativeAwPacProcessor, Object caller);
-
-    public static native void MN$L7RbV(long nativeAwPacProcessor, long networkHandle, String[] adresses);
-    public static native void Mp2j15Oh(long nativeAwPdfExporter, Object caller, int fd, int[] pages, Object cancellationSignal);
-    public static native String M8RBhX3H(Object caller, String[] urlSchemes, String[] proxyUrls, String[] bypassRules, Object listener, Object executor, boolean reverseBypass);
-
-    public static native void Mx5cEreM(Object caller, Object listener, Object executor);
-    public static native void MIrzsg_q(long nativeAwQuotaManagerBridge, Object caller);
-
-    public static native void MMBD8oze(long nativeAwQuotaManagerBridge, Object caller);
-
-    public static native void MVmZoL1a(long nativeAwQuotaManagerBridge, Object caller, String origin);
-
-    public static native void MBqEItUo(long nativeAwQuotaManagerBridge, Object caller, int callbackId);
-
-    public static native void MJn4yzAu(long nativeAwQuotaManagerBridge, Object caller, String origin, int callbackId, boolean isQuota);
-    public static native boolean MjS72mtS(long nativeAwRenderProcess, Object caller);
-
-    public static native boolean MPsgpP_t(long nativeAwRenderProcess, Object caller);
-    public static native long M4GPw_sx(Object caller, Object webContents);
-
-    public static native void MtdU4vpL(long nativeAwSettings, Object caller);
-
-    public static native void MrAp8rc4(long nativeAwSettings, Object caller, long webPrefsPtr);
-
-    public static native void MYBohkOD(long nativeAwSettings, Object caller);
-
-    public static native void Mq8l4Aae(long nativeAwSettings, Object caller);
-
-    public static native void ManPyeB5(long nativeAwSettings, Object caller);
-
-    public static native void MShmU87b(long nativeAwSettings, Object caller);
-
-    public static native void MuI9Jt0j(long nativeAwSettings, Object caller);
-
-    public static native String MEzAefkM();
-
-    public static native void Mt45ai_h(long nativeAwSettings, Object caller);
-
-    public static native void MbLkcpTV(long nativeAwSettings, Object caller);
-
-    public static native void ML5KB9Yq(long nativeAwSettings, Object caller);
-
-    public static native void MVXG782O(long nativeAwSettings, Object caller);
-
-    public static native void M2EmJ2$z(long nativeAwSettings, Object caller);
-
-    public static native void M_GO18v7(long nativeAwSettings, Object caller);
-
-    public static native boolean M25c7NLN(long nativeAwSettings, Object caller);
-    public static native long MJiQrQ3Z(Object caller);
-
-    public static native boolean MDhATp5G(long nativeAwTracingController, Object caller, String categories, int traceMode);
-
-    public static native boolean MVnr_0Jw(long nativeAwTracingController, Object caller);
-
-    public static native boolean MI9fwsnY(long nativeAwTracingController, Object caller);
-    public static native void MB5V$olG(int processId, int renderId, int modeFlags, String[] filePath, String[] displayName);
-    public static native void MayS5i9E(long nativeJsReplyProxy, String message);
-    public static native long MQ7e2Y0w(Object caller, float horizontalPaddingRatio);
-    public static native int MVv$dooB(long nativeAwDrawFnImpl, Object caller);
-
-    public static native long MyqeD0HT(long nativeAwDrawFnImpl, Object caller);
-
-    public static native void MTNG5d$d(long nativeAwDrawFnImpl, Object caller);
-
-    public static native void Muf_UBRy(long functionTablePointer);
-
-    public static native long M_e6WGre();
-    public static native void MsCe5UVl(long nativeAwGLFunctor, Object caller);
-
-    public static native void MOiMYd0I(long nativeAwGLFunctor, Object caller);
-
-    public static native long MfRoRhka(long nativeAwGLFunctor, Object caller);
-
-    public static native long Mq4IKpgt();
-
-    public static native void Ms3_fBgF(long nativeAwGLFunctor);
-
-    public static native long Me9QwrxV(Object javaProxy);
-
-    public static native int MW0m24ct();
-    public static native void Mt$FsvYN(long nativeAwPicture);
-
-    public static native int MxvjfQIM(long nativeAwPicture, Object caller);
-
-    public static native int MAAuagRx(long nativeAwPicture, Object caller);
-
-    public static native void MU5yPjvq(long nativeAwPicture, Object caller, Object canvas);
-    public static native void MsBIPWH$(long nativeRootBeginFrameSourceWebView, Object caller, float refreshRate);
-    public static native void Mdl6A1eo(boolean userConsent, boolean appConsent);
-
-    public static native void M3qPS3Ay(boolean fastStartupForTesting);
-
-    public static native void Mo7ROkjk(long uploadIntervalMs);
-
-    public static native void MF8QpxKk(Object listener);
-    public static native void MMMvkQsN();
-    public static native void Mk3Msvx7(long nativeAwPermissionRequest, Object caller, boolean allowed);
-
-    public static native void MhKumtZE(long nativeAwPermissionRequest);
-    public static native boolean MESZdotC();
-    public static native void MEJdC_Ny();
-    public static native boolean MCf0AD9v(String path);
-
-    public static native long MDwAh$S2();
-    public static native void MiAkQ_SU(int newState);
-    public static native void MDkrKi31(String[] args);
-
-    public static native boolean MsCvypjU(String switchString);
-
-    public static native String MZJ2lrZY(String switchString);
-
-    public static native String[] MHzche6O();
-
-    public static native void M5K_ewhl(String switchString);
-
-    public static native void MUoYiNbY(String switchString, String value);
-
-    public static native void MPquHBNa(String[] array);
-
-    public static native void M1cMYXGO(String switchString);
-    public static native int MOiBJ1qS();
-
-    public static native long ML0T8q1U();
-    public static native void MrWG2uUW(String name, long timeNanos, int threadId, long threadMillis);
-
-    public static native void MmyrhqXB(String name, long timeNanos, int threadId, long threadMillis);
-
-    public static native void M7UXCmoq(String name, long timeNanos, int threadId, long threadMillis);
-
-    public static native void MRlw2LEn(String name, long timeNanos, int threadId, long threadMillis);
-
-    public static native void M_Gv8TwM(String name, long id, long timestamp);
-
-    public static native void MrKsqeCD(String name, long id, long timestamp);
-    public static native boolean MFTJCvBh();
-    public static native String MdC43qwX(String trialName);
-
-    public static native boolean Mmqqda9c(String trialName);
-
-    public static native String MZWMOP4I(String trialName, String parameterKey);
-
-    public static native void MHz6Fn06();
-
-    public static native boolean MGqzwlIM(String trialName, String groupName);
-    public static native boolean MsOKBrZ5(String fileName, byte[] data);
-    public static native void MLlibBXh(boolean crashAfterReport, Throwable e);
-
-    public static native void MmS4zlEt(String stackTrace);
-    public static native void MJcct7gJ(long nativeJavaHandlerThread, long nativeEvent);
-
-    public static native void MYwg$x8E(long nativeJavaHandlerThread);
-    public static native void MZJzyjAa(int pressure);
-    public static native void M6H_IiaF(int what, String path);
-    public static native void MCImhGql();
-    public static native void MOXOasS5();
-    public static native long MklbOJun();
-    public static native void MFFzPOVw();
-
-    public static native void MRN$Vid3(String categoryFilter);
-
-    public static native void MOgCa3d$();
-
-    public static native void MlFM5bdC(String categoryFilter);
-
-    public static native void ML40H8ed(String name, String arg);
-
-    public static native void M9XfPu17(String name, String arg);
-
-    public static native void Mw73xTww(String name, String arg);
-
-    public static native void M_y76mct(String target);
-
-    public static native void MLJecZJ9(String target);
-
-    public static native void MHopMqLX(String name, long id);
-
-    public static native void MffNhCLU(String name, long id);
-    public static native boolean M81WqFvs(int processType);
-
-    public static native void MIOj213u();
-
-    public static native void MiAWbgCC(long libraryLoadTime);
-
-    public static native String M$HdV9JM();
-    public static native void MUjpxN8d();
-
-    public static native int MdFgVRJJ();
-
-    public static native void MLXZo1U6();
-    public static native long MtKTTHie(String name, long nativeHint, boolean sample);
-
-    public static native long MILRV9Ch(String name, long nativeHint, int sample, int min, int max, int numBuckets);
-
-    public static native long M$oMD214(String name, long nativeHint, int sample, int min, int max, int numBuckets);
-
-    public static native long Mk1ai9mx(String name, long nativeHint, int sample);
-
-    public static native void MTDsfZGe(String name, long millisSinceEvent);
-    public static native int M1gJHszj(String name, int sample);
-
-    public static native int M4mrObfZ(String name);
-    public static native long MH0bOwlk(Object callback);
-
-    public static native void MJl0LdjQ(long callbackId);
-    public static native String MvO$oy3r(int verbosityLevel);
-    public static native void Ma6rsNQO(String[] keys, int[] id, int[] fd, long[] offset, long[] size);
-
-    public static native void McvJWQ0j();
-
-    public static native void M6Y7Jzgj();
-    public static native void MTILOhAQ(int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData, Object task, long delay, String runnableClassName);
-    public static native long M5_IQXaH(int taskRunnerType, int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData);
-
-    public static native void MERCiIV8(long nativeTaskRunnerAndroid);
-
-    public static native void MGnQU$47(long nativeTaskRunnerAndroid, Object task, long delay, String runnableClassName);
-
-    public static native boolean MdFi6sVQ(long nativeTaskRunnerAndroid);
-    public static native boolean MAvd5yDU();
-
-    public static native boolean MbYaLxm7();
-    public static native void Mf8BmU2z();
-
-    public static native void MBDE8BZX();
-    public static native void MjdhoRtd(int fd);
-    public static native void MxVH2h8w(long nativeAutofillProviderAndroid, Object caller, Object formData);
-
-    public static native void MMueBMxQ(long nativeAutofillProviderAndroid, Object caller, String value);
-
-    public static native void M3yksvyh(long nativeAutofillProviderAndroid, Object caller, Object anchorView, float x, float y, float width, float height);
-
-    public static native boolean M0nAoa3G();
-    public static native boolean M_aHVqEu(Object webContents, String[] fieldIds, int[] fieldTypes);
-
-    public static native boolean MdA0W9re(Object webContents, String[] fieldIds, int[][] fieldTypes);
-
-    public static native void MNyPCN4b(Object webContents);
-    public static native Object MPHorj3A(long nativeFormDataAndroid);
-    public static native void MvoPqjlg();
-
-    public static native void M8LmNuWo(long requestPtr, byte[][] certChain, Object privateKey);
-    public static native boolean Mk6X8tWe(String featureName);
-    public static native void Mw4AD5hY();
-    public static native boolean ManEQDnV(String featureName);
-    public static native boolean Mi9B_Rpt(Object browserContextHandle, String origin);
-
-    public static native void M$1c3w6w(Object browserContextHandle, String origin, int newSettingValue);
-
-    public static native void MyQGLOqU(Object browserContextHandle, String origin);
-
-    public static native void MSoF8bn2(Object browserContextHandle, String origin);
-
-    public static native void Mks53EZS(Object browserContextHandle, String path);
-
-    public static native void M101q5hN(Object browserContextHandle, String path, Object callback);
-
-    public static native void MykycHKg(Object browserContextHandle, String origin, int type, Object callback);
-
-    public static native void MA5QWuba(Object browserContextHandle, int type, Object list);
-
-    public static native void MOHgUpop(Object browserContextHandle);
-
-    public static native void Mw9TjMNp(Object browserContextHandle, int type, String origin, String embedder, String object);
-
-    public static native boolean Mo$6Pn$c(String pattern);
-
-    public static native boolean MDL$4rLc(String url, String pattern);
-
-    public static native void MlZM1XeP(Object browserContextHandle, Object callback);
-
-    public static native void MvKW9dxN(Object browserContextHandle, Object callback, boolean includeImportant);
-
-    public static native void MexN59P3(Object browserContextHandle, int contentSettingsType, Object list, boolean managedOnly);
-
-    public static native int MUU7dsx0(Object browserContextHandle, int contentSettingsType, String origin, String embedder);
-
-    public static native void MxocgGQD(Object browserContextHandle, int contentSettingsType, String origin, String embedder, int value);
-
-    public static native boolean Mno5HIHV(Object browserContextHandle, int contentSettingsType, String origin);
-
-    public static native boolean Mq9o4NGp(Object browserContextHandle, String origin);
-
-    public static native boolean MJSt3Ocq(Object browserContextHandle, int contentSettingType);
-
-    public static native boolean MnAiqOhu(Object browserContextHandle, int contentSettingType);
-
-    public static native boolean M9l6T3Dg(Object browserContextHandle, String origin);
-
-    public static native void MM1KTgoi(Object browserContextHandle, int contentSettingType, boolean allow);
-
-    public static native void MI$w5f76(Object browserContextHandle, int contentSettingsType, Object list);
-
-    public static native void Mxr_KJ0u(Object browserContextHandle, int contentSettingType, String primaryPattern, String secondaryPattern, int setting);
-
-    public static native int MFhlM$PH(Object browserContextHandle, int contentSettingType);
-
-    public static native void MWm6GHwj(Object browserContextHandle, int contentSettingType, int setting);
-
-    public static native boolean MB23OvTV(Object browserContextHandle, int contentSettingType);
-
-    public static native boolean M1hZJgqW(Object browserContextHandle, int contentSettingType);
-
-    public static native boolean M__mL5j3(Object browserContextHandle);
-    public static native long MM$06MFa(Object contentCaptureController);
-
-    public static native void MxBXA3uk(long nativeContentCaptureController, Object caller, String[] allowlist, boolean[] isRegex);
-
-    public static native boolean MntScnJN(long nativeContentCaptureController, Object caller, String[] urls);
-    public static native boolean MRrWU$ia();
-
-    public static native boolean MxGt0EOk();
-    public static native Object MxegY8Dy(Object webContents);
-    public static native long Ma648rK8(Object caller, Object webContents, Object originalContextHandle);
-
-    public static native void MupWWV0Q(long nativeCookieControlsBridge, Object caller);
-
-    public static native void MTF7msU_(long nativeCookieControlsBridge, boolean blockCookies);
-
-    public static native void MGYjAHK4(long nativeCookieControlsBridge);
-
-    public static native boolean Mvm8S6US(Object browserContextHandle);
-    public static native void Mk$gnuuz(Object caller, int key, String value);
-    public static native void MT6tcXz3(String[] argv);
-    public static native long MazIrxOm(Object caller, long distilledPagePrefPtr);
-
-    public static native void MfkxLC88(long nativeDistilledPagePrefsAndroid, Object caller, int fontFamily);
-
-    public static native int MSGVGQGo(long nativeDistilledPagePrefsAndroid, Object caller);
-
-    public static native void MJBehZGI(long nativeDistilledPagePrefsAndroid, Object caller, int theme);
-
-    public static native int Mi1cN$gk(long nativeDistilledPagePrefsAndroid, Object caller);
-
-    public static native void MaB$bTgz(long nativeDistilledPagePrefsAndroid, Object caller, float scaling);
-
-    public static native float MGNXZIUg(long nativeDistilledPagePrefsAndroid, Object caller);
-
-    public static native void MznRD745(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
-
-    public static native void M_HmEv0F(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
-
-    public static native long MxAdC41V(Object caller);
-
-    public static native void MGXAfNxO(long nativeDistilledPagePrefsObserverAndroid);
-    public static native long MzVEzhvu(long nativeDomDistillerServiceAndroid);
-    public static native String MhGk9eKu(String scheme, String url, String title);
-
-    public static native String M1WDPiaY(String viewerUrl);
-
-    public static native boolean Me1sexxj(String url);
-
-    public static native String MaYR73PH(String url, String key);
-    public static native int M7rZ5uJE();
-    public static native void M2zph6xH(long nativeColorChooserAndroid, Object caller, int color);
-    public static native boolean Mjv_BekT(Object url);
-
-    public static native boolean MI2LJ$ny(String url);
-
-    public static native boolean MR0YZiDd(String url);
-
-    public static native boolean MM5WUf_F(String primaryUrl, String secondaryUrl, boolean includePrivateRegistries);
-
-    public static native String M3l9sLoY(String url, boolean includePrivateRegistries);
-
-    public static native boolean MnXKAgH9(String url, boolean allowNonStandardPort);
-
-    public static native boolean Mn0fHwI$(String url);
-
-    public static native boolean M$l72hrq(String url);
-
-    public static native boolean Mj1SQ9S8(String url);
-
-    public static native boolean MLKUC6KA(String url, String scopeUrl);
-
-    public static native boolean Ml0jhLAz(String url, String url2);
-
-    public static native boolean MMsz$c1t(String url, String url2);
-    public static native boolean MZOzKX8c(String featureName);
-    public static native void Mjjyc5BV(Object nativeInterceptNavigationDelegateImpl, Object webContents);
-    public static native long MwrhffLX();
-
-    public static native void MthPKzcb(long nativeLargeIconBridge);
-
-    public static native boolean M1pABITV(long nativeLargeIconBridge, Object browserContextHandle, Object pageUrl, int desiredSizePx, Object callback);
-    public static native long MW6nK$q1(Object caller, Object webContents);
-
-    public static native void MlPioXlo(long nativeFindInPageBridge, Object caller);
-
-    public static native void MiKuFRTN(long nativeFindInPageBridge, Object caller, String searchString, boolean forwardDirection, boolean caseSensitive);
-
-    public static native void MWOuMqhA(long nativeFindInPageBridge, Object caller, boolean clearSelection);
-
-    public static native String M3t_h9OB(long nativeFindInPageBridge, Object caller);
-
-    public static native void M4m8QCn$(long nativeFindInPageBridge, Object caller, int currentVersion);
-
-    public static native void MqpwqIAC(long nativeFindInPageBridge, Object caller, float x, float y);
-
-    public static native void MNC06_Rq(long nativeFindInPageBridge, Object caller);
-    public static native int MIZvQmze(long nativeInfoBarAndroid, Object caller);
-
-    public static native void M2s4r3u7(long nativeInfoBarAndroid, Object caller);
-
-    public static native void MQGsrOhB(long nativeInfoBarAndroid, Object caller, int action);
-
-    public static native void MKozrBH2(long nativeInfoBarAndroid, Object caller);
-    public static native void Mo6rag0q(long nativeAppModalDialogViewAndroid, Object caller, String prompt, boolean suppress);
-
-    public static native void MOSW2s7O(long nativeAppModalDialogViewAndroid, Object caller, boolean suppress);
-
-    public static native Object MpmiqdtU();
-    public static native void M9yPJzg8(long nativeTabModalDialogViewAndroid, Object caller, String prompt);
-
-    public static native void M0YaeICP(long nativeTabModalDialogViewAndroid, Object caller, boolean buttonClicked);
-    public static native void MeFOXp9F(long callback, int result);
-    public static native void M2xU9exV(long nativeMediaRouterAndroidBridge, Object caller, String sourceUrn, int count);
-
-    public static native void MKeidYbK(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String mediaSinkId, int createRouteRequestId, boolean wasLaunched);
-
-    public static native void MpDGY7p4(long nativeMediaRouterAndroidBridge, Object caller, String errorText, int requestId);
-
-    public static native void M9VY0XZb(long nativeMediaRouterAndroidBridge, Object caller, String errorText, int requestId);
-
-    public static native void MsmvhUN_(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId);
-
-    public static native void MRz6aWnp(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String message);
-
-    public static native void MM5f2cm0(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String message);
-    public static native void MsJMWxq0(long nativeMediaRouterDialogControllerAndroid, Object caller);
-
-    public static native void MUhSLnzh(long nativeMediaRouterDialogControllerAndroid, Object caller, String sourceUrn, String sinkId);
-
-    public static native void MSLqZyD4(long nativeMediaRouterDialogControllerAndroid, Object caller, String routeId);
-
-    public static native void MY1J7b0i(long nativeMediaRouterDialogControllerAndroid, Object caller);
-    public static native void MR1NlI2Y(long nativeFlingingControllerBridge, Object caller, Object status);
-    public static native void MjZjkDM7(String srcDir, String destDir);
-
-    public static native String[] MdQEl6jg(String srcDir, String destDir);
-    public static native int[] M8aH4n_l(String text, Object autocompleteSchemeClassifier);
-    public static native byte[][] MW74qHgy(Object webContents);
-    public static native String MVBnBWgu();
-
-    public static native String M61$9xnN();
-
-    public static native String M3Q$lPl0();
-
-    public static native String M2rGgvRp();
-
-    public static native String MtQn_hO9();
-
-    public static native String MsQpEHij();
-
-    public static native String MdXOhLT3();
-
-    public static native String MnsPVX7Z();
-
-    public static native String Mrqn7ZPZ();
-
-    public static native String Mj6CXcHR();
-
-    public static native String MGc5t$JX();
-
-    public static native String M3Qp55TF();
-
-    public static native String MRBlj4Pf();
-
-    public static native String M_b6sZk8();
-    public static native long MJUBMbqq(Object popup, Object webContents);
-
-    public static native void MISU_God(long nativeConnectionInfoViewAndroid, Object caller);
-
-    public static native void MYkS$dAY(long nativeConnectionInfoViewAndroid, Object caller, Object webContents);
-    public static native long MuLM_ayx(Object controller, Object webContents);
-
-    public static native void Mz6XBRgf(long nativePageInfoControllerAndroid, Object caller);
-
-    public static native void M5DCRkGK(long nativePageInfoControllerAndroid, Object caller, int action);
-
-    public static native void MDd48bYq(long nativePageInfoControllerAndroid, Object caller);
-    public static native boolean MJ8X0ZQd(String featureName);
-    public static native boolean MNXjZ6_e(Object webContents, String topLevelOrigin, String frameOrigin, Object query);
-    public static native long MRlatcKK(Object caller, String currencyCode, String localeName);
-
-    public static native void MkBG391d(long nativeCurrencyFormatterAndroid, Object caller);
-
-    public static native String MgDia2D2(long nativeCurrencyFormatterAndroid, Object caller, String amountValue);
-
-    public static native void M6ORVMPQ(long nativeCurrencyFormatterAndroid, int maxFractionalDigits);
-
-    public static native String MnbePYrk(long nativeCurrencyFormatterAndroid, Object caller);
-    public static native String M48LriN_(String[] methods);
-    public static native String[] McL$JgEC(long nativeJniPaymentApp);
-
-    public static native boolean MRag5HOD(long nativeJniPaymentApp, String method, Object dataByteBuffer);
-
-    public static native boolean McrEaHZb(long nativeJniPaymentApp);
-
-    public static native boolean MFs5Lo5_(long nativeJniPaymentApp);
-
-    public static native boolean MxH2M7Qu(long nativeJniPaymentApp);
-
-    public static native boolean Mz9bB0kb(long nativeJniPaymentApp);
-
-    public static native String MVauQfUP(long nativeJniPaymentApp);
-
-    public static native boolean MSRfo5q7(long nativeJniPaymentApp);
-
-    public static native boolean MOoH91qV(long nativeJniPaymentApp);
-
-    public static native boolean MU6Mtkqz(long nativeJniPaymentApp);
-
-    public static native void MdDxV11A(long nativeJniPaymentApp, Object callback);
-
-    public static native void MKIICwOk(long nativeJniPaymentApp, Object responseByteBuffer);
-
-    public static native void M1KlGngz(long nativeJniPaymentApp);
-
-    public static native boolean MY9Q_PcC(long nativeJniPaymentApp);
-
-    public static native void Mix09tOZ(long nativeJniPaymentApp, Object callback);
-
-    public static native boolean MfxbAxL$(long nativeJniPaymentApp);
-
-    public static native String MBu_znl4(long nativeJniPaymentApp);
-
-    public static native void M89HArmx(long nativeJniPaymentApp);
-
-    public static native String MJ23g7SX(long nativeJniPaymentApp);
-
-    public static native String[] MMxfB3ye(long nativeJniPaymentApp);
-
-    public static native long MNEirz5D(long nativeJniPaymentApp);
-
-    public static native void M_McFosm(long nativeJniPaymentApp, Object paymentHandlerHost);
-
-    public static native void MvY3Yqx_(long nativeJniPaymentApp);
-    public static native long MgtvkzAJ(Object caller, boolean isIncognito, Object webContents);
-
-    public static native void MK$_cVJA(long nativeJourneyLoggerAndroid, Object caller);
-
-    public static native void MPFG5SwC(long nativeJourneyLoggerAndroid, Object caller, int section, int number, boolean hasCompleteSuggestion);
-
-    public static native void MzcQanKX(long nativeJourneyLoggerAndroid, Object caller, boolean value);
-
-    public static native void Ma1hMajT(long nativeJourneyLoggerAndroid, Object caller, boolean value);
-
-    public static native void Mb7SmCEg(long nativeJourneyLoggerAndroid, Object caller, int event);
-
-    public static native void MyrdhicN(long nativeJourneyLoggerAndroid, Object caller, boolean requestShipping, boolean requestEmail, boolean requestPhone, boolean requestName);
-
-    public static native void MTwV5iBO(long nativeJourneyLoggerAndroid, Object caller, boolean requestedBasicCard, boolean requestedMethodGoogle, boolean requestedMethodOther);
-
-    public static native void My$biNCo(long nativeJourneyLoggerAndroid, Object caller);
-
-    public static native void MMB_UdCu(long nativeJourneyLoggerAndroid, Object caller, int reason);
-
-    public static native void MPhEgSJd(long nativeJourneyLoggerAndroid, Object caller, int reason);
-
-    public static native void M7kt1TFI(long nativeJourneyLoggerAndroid, Object caller, String currency, String value, boolean completed);
-
-    public static native void MpLIjj0f(long nativeJourneyLoggerAndroid, Object caller, int step);
-
-    public static native void MN_WbtBu(long nativeJourneyLoggerAndroid, Object caller);
-
-    public static native void MMsq7cME(long nativeJourneyLoggerAndroid, Object caller, long sourceId);
-    public static native boolean MdU5wLP0(String url);
-
-    public static native boolean MHuHQ1NP(String url);
-    public static native boolean M1X7xdZV(String featureName);
-    public static native long MNMwlyDN(Object webContents, Object listener);
-
-    public static native boolean MP9HwcPo(long nativePaymentHandlerHost);
-
-    public static native void MctjpILQ(long nativePaymentHandlerHost, Object responseBuffer);
-
-    public static native void MMPRXzHl(long nativePaymentHandlerHost);
-
-    public static native void MDWZVETg(long nativePaymentHandlerHost);
-    public static native void Ma2gt_BX(Object webContents);
-    public static native long MzoXDvTe(Object webContents);
-
-    public static native void MCkwfWHm(long nativePaymentManifestDownloaderAndroid, Object caller, Object merchantOrigin, Object methodName, Object callback);
-
-    public static native void MpedIYcV(long nativePaymentManifestDownloaderAndroid, Object caller, Object paymentMethodManifestOrigin, Object webAppManifestUri, Object callback);
-
-    public static native void MJUrxDH$(long nativePaymentManifestDownloaderAndroid, Object caller);
-
-    public static native Object MzutsE0Z();
-    public static native long MfK4x$Iq(Object webContents);
-
-    public static native void MFuu4tOD(long nativePaymentManifestParserAndroid);
-
-    public static native void M$4TUaJ7(long nativePaymentManifestParserAndroid, Object manifestUrl, String content, Object callback);
-
-    public static native void MhPu7GL6(long nativePaymentManifestParserAndroid, String content, Object callback);
-    public static native long MAELBHG4(Object optionsByteBuffer, Object detailsByteBuffer, Object[] methodDataByteBuffers, String appLocale);
-
-    public static native void MnD0tUEj(long nativePaymentRequestSpec, Object detailsByteBuffer);
-
-    public static native void MiyjJ0og(long nativePaymentRequestSpec, Object validationErrorsByteBuffer);
-
-    public static native void M_B2Caox(long nativePaymentRequestSpec);
-
-    public static native String MCGOhrza(long nativePaymentRequestSpec);
-
-    public static native void MiX2Cegu(long nativePaymentRequestSpec);
-
-    public static native byte[] MNkVMjnE(long nativePaymentRequestSpec);
-
-    public static native byte[][] MFWoiqvU(long nativePaymentRequestSpec);
-
-    public static native byte[] Mc7EwNM$(long nativePaymentRequestSpec);
-    public static native boolean MFiPq6M_(Object buffer);
-
-    public static native boolean MQ3mQqrV(Object buffer);
-    public static native String MnWerMBV(Object webContents);
-
-    public static native boolean Me8yLh8j(Object webContents);
-    public static native boolean MIhiwY_4(String url);
-
-    public static native boolean MSVZEfSr(String url);
-    public static native void MoC5mife(long nativePermissionDialogDelegate, Object caller);
-
-    public static native void MG2fhXvZ(long nativePermissionDialogDelegate, Object caller);
-
-    public static native void My1ZBTOK(long nativePermissionDialogDelegate, Object caller);
-
-    public static native void MLMIuACo(long nativePermissionDialogDelegate, Object caller);
-    public static native void M4qSX4lZ(long callback);
-    public static native void M81oD3lB(long nativeAndroidCombinedPolicyProvider, Object caller);
-    public static native void MNcVehwq(long nativePolicyConverter, Object caller, String policyKey, boolean value);
-
-    public static native void MX$FOTbg(long nativePolicyConverter, Object caller, String policyKey, int value);
-
-    public static native void Mu_Zn154(long nativePolicyConverter, Object caller, String policyKey, String value);
-
-    public static native void MLFU3fY7(long nativePolicyConverter, Object caller, String policyKey, String[] value);
-    public static native boolean MImr1kgV(long nativePolicyMap, Object caller, String policy);
-
-    public static native int MNIDvfzY(long nativePolicyMap, Object caller, String policy);
-
-    public static native boolean MG3FgY5r(long nativePolicyMap, Object caller, String policy);
-
-    public static native String MEWWQoKk(long nativePolicyMap, Object caller, String policy);
-
-    public static native String MQRev50_(long nativePolicyMap, Object caller, String policy);
-
-    public static native String MKY_klU2(long nativePolicyMap, Object caller, String policy);
-
-    public static native boolean MiO$KcSn(long nativePolicyMap, Object caller, long nativeOtherPolicyMap);
-    public static native void M4YsjnbO(long nativePolicyService, Object caller);
-
-    public static native void MU0pXsSP(long nativePolicyService, Object caller);
-
-    public static native boolean MCCtS0px(long nativePolicyService, Object caller);
-
-    public static native Object MtJKACFn(long nativePolicyService, Object caller);
-    public static native void MRGBEdxZ(long nativePrefServiceAndroid, String preference);
-
-    public static native boolean MzIXnlkD(long nativePrefServiceAndroid, String preference);
-
-    public static native void Mf2ABpoH(long nativePrefServiceAndroid, String preference, boolean value);
-
-    public static native int MzGf81GW(long nativePrefServiceAndroid, String preference);
-
-    public static native void MPBZLcVx(long nativePrefServiceAndroid, String preference, int value);
-
-    public static native String Ma80fvz5(long nativePrefServiceAndroid, String preference);
-
-    public static native void MY13p7Sp(long nativePrefServiceAndroid, String preference, String value);
-
-    public static native boolean MrEgF7hX(long nativePrefServiceAndroid, String preference);
-    public static native void M3tDaVsh(long callbackId, int resultStatus, String metadata, long checkDelta);
-    public static native void MZW64TXU(String spkiHash);
-
-    public static native void MVYBH9Mh(boolean osReportsCaptivePortal);
-    public static native int MYsxmQ1h(Object webContents);
-    public static native void M3JV9hBl(long nativeSpellCheckerSessionBridge, Object caller, int[] offsets, int[] lengths, String[][] suggestions);
-    public static native boolean MK7GTxrW(String featureName);
-    public static native Object Ml2KxI$W(String url);
-
-    public static native String M25QTkfm(String url);
-
-    public static native String MWAcU8Kr(String url);
-
-    public static native String MeroQv$e(String url);
-
-    public static native String MpICpYBr(Object url);
-
-    public static native String M52RypMk(String url);
-
-    public static native String MWcP3rTG(String url);
-
-    public static native String MN7bz_Mm(Object url, int schemeDisplay);
-
-    public static native String MR6Af3ZS(String url, int schemeDisplay);
-    public static native Object MeUSzoBw(Object browserContextHandle);
-    public static native String MOVY9QtZ(String trialName, String paramName);
-
-    public static native String Mkq2qJev();
-
-    public static native String M_cRNcHs();
-    public static native void Mhc_M_H$(long nativeExternalBeginFrameSourceAndroid, Object caller, long vsyncTimeMicros, long vsyncPeriodMicros);
-    public static native void MBlO3kR9(Object caller, int cpuCount, long cpuFeatures);
-
-    public static native void M0zXFFiu(Object caller);
-    public static native int M1Y_XVCN(boolean startMinimalBrowser);
-    public static native String MWL_OG7s(byte[] encodedData);
-
-    public static native byte[] Mk6SEKCp(String message);
-    public static native long[] MZ2WfWkn();
-
-    public static native long MsjrrfZt(int nativeHandle, long idLow, long idHigh, long sequenceNumber);
-
-    public static native int MbOQIpGw(long blinkMessagePortDescriptor);
-
-    public static native void MylsTJ$B(long blinkMessagePortDescriptor, int nativeHandle);
-
-    public static native void MpISG4bN(long blinkMessagePortDescriptor);
-
-    public static native long[] MJJP$CQY(long blinkMessagePortDescriptor);
-
-    public static native void MWkkqfl2(long blinkMessagePortDescriptor);
-
-    public static native void MgnCh9Wp(long blinkMessagePortDescriptor);
-    public static native void MUFA7yj7(long nativeAudioFocusDelegateAndroid, Object caller);
-
-    public static native void MqbF3KiE(long nativeAudioFocusDelegateAndroid, Object caller);
-
-    public static native void My_SIOp6(long nativeAudioFocusDelegateAndroid, Object caller);
-
-    public static native void MeoE5HbI(long nativeAudioFocusDelegateAndroid, Object caller);
-
-    public static native void Mn3dG6eh(long nativeAudioFocusDelegateAndroid, Object caller);
-    public static native void MJIG3QvD(long nativePtr, Object caller, int newConnectionType);
-    public static native void MwoPtAzD(boolean singleProcess);
-
-    public static native void M9iLjy6T();
-    public static native void MXR$KaDS(long nativeChildProcessLauncherHelper, int pid);
-
-    public static native void MJcoZ9pW(long termiantionInfoPtr, int bindingState, boolean killedByUs, boolean cleanExit, boolean exceptionDuringInit, int remainingStrong, int remainingModerate, int remainingWaived, int reverseRank);
-
-    public static native boolean MyYLH6Fg();
-    public static native void MS9BZrW0(long nativeContactsProviderAndroid, String[] names, String[] emails, String[] tel, Object[] addresses, Object[] icons);
-
-    public static native void MwwTaBAE(long nativeContactsProviderAndroid, int percentageShared, int propertiesRequested);
-
-    public static native void MOM50EIZ(long nativeContactsProviderAndroid);
-    public static native boolean Mudil8Bg(String featureName);
-    public static native long MXL6itCa(Object caller, Object webContents);
-
-    public static native void MifdK0lh(long nativeContentUiEventHandler, Object caller, long timeMs, float x, float y, float ticksX, float ticksY);
-
-    public static native void MjyjK8Gd(long nativeContentUiEventHandler, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
-
-    public static native void M_1sgTVt(long nativeContentUiEventHandler, Object caller, long timeMs, float deltaX, float deltaY);
-
-    public static native void MW$k83qi(long nativeContentUiEventHandler, Object caller, long timeMs);
-    public static native void M556jcRe(boolean suspend);
-    public static native long MefCIE9S(Object caller, Object webContents);
-
-    public static native void MMR0DKoy(long nativeGestureListenerManager, Object caller);
-
-    public static native void MrZmTSS9(long nativeGestureListenerManager, Object caller, boolean enabled);
-
-    public static native void M6a5zchR(long nativeGestureListenerManager, Object caller, boolean enabled);
-
-    public static native void M9FEGIKH(long nativeGestureListenerManager, boolean hasListeners);
-    public static native void M$O7xE3y(Object requestToken, Object surface);
-
-    public static native Object Mm9rCM0m(int surfaceId);
-    public static native long MaMB25XA(Object caller, Object webContents, Object retainedObjects);
-
-    public static native void M9VsdpoI(long nativeJavascriptInjector, Object caller, boolean allow);
-
-    public static native void Mpa5DCUY(long nativeJavascriptInjector, Object caller, Object object, String name, Class requiredAnnotation);
-
-    public static native void M5J62vXh(long nativeJavascriptInjector, Object caller, String name);
-    public static native void MlezJYnz(long nativeMediaSessionAndroid, Object caller);
-
-    public static native void M5LC9gX$(long nativeMediaSessionAndroid, Object caller);
-
-    public static native void MW5s36cs(long nativeMediaSessionAndroid, Object caller);
-
-    public static native void My_T5ZML(long nativeMediaSessionAndroid, Object caller, long millis);
-
-    public static native void MK7btVfc(long nativeMediaSessionAndroid, Object caller, long millis);
-
-    public static native void MAqRqyJa(long nativeMediaSessionAndroid, Object caller, int action);
-
-    public static native void MdnoDrDw(long nativeMediaSessionAndroid, Object caller);
-
-    public static native Object Mtun$qW8(Object contents);
-    public static native boolean MZn2HluM(long nativeRenderWidgetHostViewAndroid, Object caller);
-
-    public static native int MRWsmoin(long nativeRenderWidgetHostViewAndroid, Object caller);
-
-    public static native void MQWja$xA(long nativeRenderWidgetHostViewAndroid, Object caller);
-
-    public static native void McU85DFE(long nativeRenderWidgetHostViewAndroid, Object caller, int x, int y);
-
-    public static native void Myd8R_Wn(long nativeRenderWidgetHostViewAndroid, Object caller);
-
-    public static native void Mjmv7RJS(long nativeRenderWidgetHostViewAndroid, Object caller, int width, int height, String path, Object callback);
-    public static native void MdhaXGcn(long nativeSpeechRecognizerImplAndroid, Object caller);
-
-    public static native void M2Nl8ID9(long nativeSpeechRecognizerImplAndroid, Object caller);
-
-    public static native void MFB2QCbe(long nativeSpeechRecognizerImplAndroid, Object caller);
-
-    public static native void M2TRi32V(long nativeSpeechRecognizerImplAndroid, Object caller);
-
-    public static native void MnkvkoGY(long nativeSpeechRecognizerImplAndroid, Object caller, String[] results, float[] scores, boolean provisional);
-
-    public static native void MUf_fHKN(long nativeSpeechRecognizerImplAndroid, Object caller, int error);
-
-    public static native void MmgQYR9M(long nativeSpeechRecognizerImplAndroid, Object caller);
-    public static native long MWlLnA$6(Object caller);
-
-    public static native void MLYQdwUF(long nativeTracingControllerAndroid, Object caller);
-
-    public static native boolean MZYMIGWv(long nativeTracingControllerAndroid, Object caller, String categories, String traceOptions, boolean useProtobuf);
-
-    public static native void M$HKWu8q(long nativeTracingControllerAndroid, Object caller, String filename, boolean compressFile, boolean useProtobuf, Object callback);
-
-    public static native boolean MdRNuqnW(long nativeTracingControllerAndroid, Object caller, Object callback);
-
-    public static native String My9pNx9O(Object caller);
-
-    public static native boolean MkLMghix(long nativeTracingControllerAndroid, Object caller, Object callback);
-    public static native void MpJkwIUo(long nativeTtsPlatformImplAndroid);
-
-    public static native void M47GdBO5(long nativeTtsPlatformImplAndroid, int utteranceId);
-
-    public static native void M2$X0reE(long nativeTtsPlatformImplAndroid, int utteranceId);
-
-    public static native void M1Kw17GB(long nativeTtsPlatformImplAndroid, int utteranceId);
-    public static native void MAa7bxOG();
-    public static native long MjYAnP1s(Object caller, Object webContents);
-
-    public static native void MxGfnb$m(long nativeWebContentsAccessibilityAndroid);
-
-    public static native void MMiqVowe(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native void MdET073e(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native int Mk31b3DX(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native int MI8pU34f(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native boolean MTBNGzHX(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean M5uHFthk(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean MCMbXu4W(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean M8UuMlLD(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native int MnVi6Frs(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native int Mxt_kc4Q(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean MZ7sDynr(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
-
-    public static native boolean MJGtghd9(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
-
-    public static native boolean M2E1dEU9(long nativeWebContentsAccessibilityAndroid, Object caller, Object event, int id, int eventType);
-
-    public static native void MM4OAOXm(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native void MG_OiJKg(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native void MNm00fYN(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native void MB302_MP(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native int MavOU0SM(long nativeWebContentsAccessibilityAndroid, Object caller, int startId, String elementType, boolean forwards);
-
-    public static native void MEJD7Boi(long nativeWebContentsAccessibilityAndroid, Object caller, int id, String newValue);
-
-    public static native void MVuu0R4P(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int end);
-
-    public static native boolean McKjfBnu(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
-
-    public static native boolean M3suD0ji(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
-
-    public static native boolean MLjXc4lw(long nativeWebContentsAccessibilityAndroid, Object caller, int id, boolean increment);
-
-    public static native void MPQKLw45(long nativeWebContentsAccessibilityAndroid, Object caller, int oldId, int newId);
-
-    public static native boolean MkaakTGI(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean MNch0m9c(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int direction, boolean pageScroll);
-
-    public static native boolean MfTAAcu8(long nativeWebContentsAccessibilityAndroid, Object caller, int id, float value);
-
-    public static native String MPyIoFYC(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native void MOikWIf9(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native boolean Mr9fGid2(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native void Mg$cuhZc(long nativeWebContentsAccessibilityAndroid, Object caller);
-
-    public static native boolean MZcfOSQW(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native void M2WbOJ7$(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native int[] MVBiMGvZ(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int len);
-
-    public static native int MhMiVz6m(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
-
-    public static native void MzygGmQh(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int startOffset, int endOffset);
-
-    public static native void MjtR1x1L(long nativeWebContentsAccessibilityAndroid, Object caller, int maxEvents);
-
-    public static native int MoCCC$f_(long nativeWebContentsAccessibilityAndroid);
-    public static native long MX95jWaj(Object caller, Object webContents);
-
-    public static native void MM3_AH7F(long nativeCaptioningController, Object caller, boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily, String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor, String textTrackTextShadow, String textTrackTextSize);
-    public static native long MqPi0d6D(Object caller, long high, long low, boolean isPowerEfficient);
-
-    public static native void MQAm7B7f(long nativeDialogOverlayImpl, Object caller);
-
-    public static native void MJj9v_ba(long nativeDialogOverlayImpl, Object caller);
-
-    public static native void MAd6qeVr(long nativeDialogOverlayImpl, Object caller, Object rect);
-
-    public static native int MpcpmTlm(Object surface);
-
-    public static native void M1e4GdYZ(int surfaceId);
-
-    public static native Object MzUgOpRk(int surfaceId);
-
-    public static native void MFq0hOYg(int messagePipeHandle);
-    public static native boolean MgAw5sIR(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean MCUxt83x(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean MEOFE6aD(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void MWJb9aa$(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean MsUTH_HQ(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void MQgIP2q9(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean M4jjW0jG(long nativeNavigationControllerAndroid, Object caller, int offset);
-
-    public static native void Mdhd0AR3(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void MEEEhNfT(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void ML_uBbdi(long nativeNavigationControllerAndroid, Object caller, int offset);
-
-    public static native void MuxwAbEo(long nativeNavigationControllerAndroid, Object caller, int index);
-
-    public static native void MNF4lMMb(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void Mp5SLq_N(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void M81h$w2r(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
-
-    public static native void My0bMgld(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
-
-    public static native void MAqmDh4t(long nativeNavigationControllerAndroid, Object caller, String url, int loadUrlType, int transitionType, String referrerUrl, int referrerPolicy, int uaOverrideOption, String extraHeaders, Object postData, String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString, boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry);
-
-    public static native void MK2ttcH1(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native int MUZRDUOx(long nativeNavigationControllerAndroid, Object caller, Object history);
-
-    public static native void Mx5VuK3_(long nativeNavigationControllerAndroid, Object caller, Object history, boolean isForward, int itemLimit);
-
-    public static native void MpKIKzer(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean MCIN9$qH(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native void MrilyCK6(long nativeNavigationControllerAndroid, Object caller, boolean override, boolean reloadOnChange);
-
-    public static native Object MLcS2$Fy(long nativeNavigationControllerAndroid, Object caller, int index);
-
-    public static native Object MHqMy8sY(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native Object Mgxh2WfC(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native int Mil0WqAo(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native boolean MVbDeBRx(long nativeNavigationControllerAndroid, Object caller, int index);
-
-    public static native void M2mQucXv(long nativeNavigationControllerAndroid, Object caller);
-
-    public static native String McQE1GI8(long nativeNavigationControllerAndroid, Object caller, int index, String key);
-
-    public static native void Mw19wBW8(long nativeNavigationControllerAndroid, Object caller, int index, String key, String value);
-
-    public static native boolean MVjP87pN(long nativeNavigationControllerAndroid, Object caller, int index);
-    public static native String MBg$jIAu(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native Object Mcdslkop(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native void MUV0o0vB(long nativeRenderFrameHostAndroid, Object caller, Object callback);
-
-    public static native boolean MqDsGZSU(long nativeRenderFrameHostAndroid, Object caller, int feature);
-
-    public static native Object MJDViTxW(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native void M$j92GA1(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native boolean MhaRMzRy(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native boolean M6cbowZq(long nativeRenderFrameHostAndroid, Object caller);
-
-    public static native int M5dgGNo$(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
-
-    public static native int M2ouq_qG(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
-    public static native void MgUhdCLo(long nativeDateTimeChooserAndroid, Object caller, double dialogValue);
-
-    public static native void MCtaZNwj(long nativeDateTimeChooserAndroid, Object caller);
-    public static native long MhbsQh1H(Object caller, Object webContents);
-
-    public static native boolean M1qwlrOP(long nativeImeAdapterAndroid, Object caller, Object event, int type, int modifiers, long timestampMs, int keyCode, int scanCode, boolean isSystemKey, int unicodeChar);
-
-    public static native void MFfRzF$Z(long spanPtr, int start, int end);
-
-    public static native void MqqhDONa(long spanPtr, int start, int end, int backgroundColor);
-
-    public static native void M$b45Vvn(long spanPtr, int start, int end, boolean isMisspelling, boolean removeOnFinishComposing, int underlineColor, int suggestionHighlightColor, String[] suggestions);
-
-    public static native void Mlslst_P(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
-
-    public static native void Mb6t43di(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
-
-    public static native void M_V5g5ie(long nativeImeAdapterAndroid, Object caller);
-
-    public static native void MmtjCblb(long nativeImeAdapterAndroid, Object caller, int start, int end);
-
-    public static native void M8ty0WHb(long nativeImeAdapterAndroid, Object caller, int start, int end);
-
-    public static native void M26GCjn5(long nativeImeAdapterAndroid, Object caller, int before, int after);
-
-    public static native void Mvb046o_(long nativeImeAdapterAndroid, Object caller, int before, int after);
-
-    public static native boolean M7o5Xhhi(long nativeImeAdapterAndroid, Object caller);
-
-    public static native void MdwW1P2L(long nativeImeAdapterAndroid, Object caller, boolean immediateRequest, boolean monitorRequest);
-
-    public static native void Mm_z91JF(long nativeImeAdapterAndroid, Object caller, int focusType);
-    public static native void ME0LgXse(long nativeSelectPopup, Object caller, long nativeSelectPopupSourceFrame, int[] indices);
-    public static native void M7RnYR2r(long nativeTextSuggestionHostAndroid, Object caller, String suggestion);
-
-    public static native void MIADbBhq(long nativeTextSuggestionHostAndroid, Object caller, int markerTag, int suggestionIndex);
-
-    public static native void MCBTtv2g(long nativeTextSuggestionHostAndroid, Object caller);
-
-    public static native void MpJ8AQhr(long nativeTextSuggestionHostAndroid, Object caller, String word);
-
-    public static native void MnvYa0QF(long nativeTextSuggestionHostAndroid, Object caller);
-    public static native long MJHXNa8U(Object caller, Object webContents);
-
-    public static native void M01adZlM(long nativeSelectionPopupController, Object caller, boolean hidden);
-    public static native long MFA_dMJC(Object caller, Object webContents);
-
-    public static native void M2GZ6ZNR(long nativeSmartSelectionClient, Object caller, int numExtraCharacters, int callbackData);
-
-    public static native void MVHq2mA2(long nativeSmartSelectionClient, Object caller);
-    public static native void MDAxNisW(long nativeSmsProviderGms, String sms, int backend);
-
-    public static native void Mz9c1Rem(long nativeSmsProviderGms);
-
-    public static native void MqHdTL15(long nativeSmsProviderGms);
-
-    public static native void M$UJTj5O(long nativeSmsProviderGms);
-    public static native void MxxzO9Pe(long webContentsAndroidPtr);
-
-    public static native Object M$eaBDjM(long webContentsAndroidPtr);
-
-    public static native void M0iG1Oc2(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object MunY3e38(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MOKG_Wbb(long nativeWebContentsAndroid, Object caller, Object windowAndroid);
-
-    public static native Object MjidYpBx(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object MT2cFaRc(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object MZAK3_Tx(long nativeWebContentsAndroid, int renderProcessId, int renderFrameId);
-
-    public static native Object[] MEpC20hN(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object Mj9slq6o(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object[] MJSe_z5C(long nativeWebContentsAndroid, Object caller);
-
-    public static native int MOzDgqoz(long nativeWebContentsAndroid);
-
-    public static native String M7OgjMU8(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object M8927Uaf(long nativeWebContentsAndroid, Object caller);
-
-    public static native String M4pZ82rG(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean MtSTkEp2(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean M93b11tE(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M6R_ShZs(long nativeWebContentsAndroid, Object caller, boolean autoCancel);
-
-    public static native void M$$25N5$(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MhIiCaN7(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MpfMxfut(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MYRJ_nNk(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MdSkKRWg(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MevqfbP8(long nativeWebContentsAndroid, Object caller, String word);
-
-    public static native void MNvj1u1S(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MDK_KK0z(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MHNkuuGQ(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MtakfqIH(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MkBVGSRs(long nativeWebContentsAndroid, Object caller, int importance);
-
-    public static native void MSOsA4Ii(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M4fkbrQM(long nativeWebContentsAndroid, Object caller, boolean mute);
-
-    public static native boolean MkIL2bW9(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean M2hIwGoV(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M6c69Eq5(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MgbVQff0(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MlfwWHGJ(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MjgOFo_o(long nativeWebContentsAndroid, Object caller, int startAdjust, int endAdjust, boolean showSelectionMenu);
-
-    public static native String MrqMRJsG(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean MZbfAARG(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MQnLkNkP(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M0uS2SDH(long nativeWebContentsAndroid, Object caller, String script, Object callback);
-
-    public static native void MPoHZQTR(long nativeWebContentsAndroid, Object caller, String script, Object callback);
-
-    public static native void MseJ7A4a(long nativeWebContentsAndroid, Object caller, int level, String message);
-
-    public static native void MZFXk0el(long nativeWebContentsAndroid, Object caller, String message, String sourceOrigin, String targetOrigin, Object[] ports);
-
-    public static native boolean M6It8dra(long nativeWebContentsAndroid, Object caller);
-
-    public static native int MGZCJ6jO(long nativeWebContentsAndroid, Object caller);
-
-    public static native float MoQgY_pw(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MHF1rPTW(long nativeWebContentsAndroid, Object caller, Object callback, int x, int y, int width, int height);
-
-    public static native void M16eLpU9(long nativeWebContentsAndroid, Object caller, Object callback);
-
-    public static native void MTTB8znA(long nativeWebContentsAndroid, Object caller, Object nativeOverscrollRefreshHandler);
-
-    public static native void MjBPqNgx(long nativeWebContentsAndroid, Object caller, boolean disabled);
-
-    public static native int Mi3V1mlO(long nativeWebContentsAndroid, Object caller, String url, boolean isFavicon, int maxBitmapSize, boolean bypassCache, Object callback);
-
-    public static native void M12SiBFk(long nativeWebContentsAndroid, Object caller, boolean value);
-
-    public static native boolean MZao1OQG(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean MS0xMYL9(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object MN9JdEk5(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M7tTrJ_X(long nativeWebContentsAndroid, Object caller, int width, int height);
-
-    public static native int MB0i5_ri(long nativeWebContentsAndroid, Object caller);
-
-    public static native int MRVeP4Wk(long nativeWebContentsAndroid, Object caller);
-
-    public static native Object MJJFrmZs(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MgyWdCWB(long nativeWebContentsAndroid, Object caller, Object viewDelegate);
-
-    public static native void MlztHl3v(long nativeWebContentsAndroid, Object caller, int orientation);
-
-    public static native void MqhGkzSt(long nativeWebContentsAndroid, Object caller);
-
-    public static native void M9QxNoTJ(long nativeWebContentsAndroid, Object caller, boolean focused);
-
-    public static native void MtjP03pj(long nativeWebContentsAndroid, Object caller, int top, int left, int bottom, int right);
-
-    public static native void Mzsx8Sk2(long nativeWebContentsAndroid, Object caller);
-
-    public static native void MgcGzQax(long nativeWebContentsAndroid, Object caller);
-
-    public static native boolean M5A4vDoy(long nativeWebContentsAndroid, Object caller);
-    public static native long MTpUzW91(Object caller, Object webContents);
-
-    public static native void M7giG0Ri(long nativeWebContentsObserverProxy, Object caller);
-    public static native boolean MWH2gOYe(String url);
-    public static native void MACALLtV(long nativeNavigationHandleProxy, String headerName, String headerValue);
-
-    public static native void Mo7byNs$(long nativeNavigationHandleProxy, String headerName);
-    public static native byte[] MugoAW_d(byte[] httpBody);
-    public static native boolean MbmAQ8fm();
-    public static native boolean MVi$blz$(String featureName);
-    public static native void Mq3WoOFf(long nativeBluetoothAdapterAndroid, Object caller);
-
-    public static native void MOuw3NGo(long nativeBluetoothAdapterAndroid, Object caller, String address, Object deviceWrapper, String localName, int rssi, String[] advertisedUuids, int txPower, String[] serviceDataKeys, Object[] serviceDataValues, int[] manufacturerDataKeys, Object[] manufacturerDataValues, int advertiseFlags);
-
-    public static native void MGGbKqrZ(long nativeBluetoothAdapterAndroid, Object caller, boolean powered);
-    public static native void MmnW7gQC(long nativeBluetoothDeviceAndroid, Object caller, int status, boolean connected);
-
-    public static native void MAoRk69U(long nativeBluetoothDeviceAndroid, Object caller, String instanceId, Object serviceWrapper);
-
-    public static native void M9HSgyay(long nativeBluetoothDeviceAndroid, Object caller);
-    public static native void MZCKcdTH(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, byte[] value);
-
-    public static native void Mn9Gzi$d(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status, byte[] value);
-
-    public static native void M3TCxDs5(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status);
-
-    public static native void MkqvrLoV(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, String instanceId, Object descriptorWrapper, Object chromeBluetoothDevice);
-    public static native void MaKNZo8k(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status, byte[] value);
-
-    public static native void M4SmPJiR(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status);
-    public static native void MM2CqKoK(long nativeBluetoothRemoteGattServiceAndroid, Object caller, String instanceId, Object characteristicWrapper, Object chromeBluetoothDevice);
-    public static native void MOkngxPY(Object caller, long webGamepadsPtr, int index, boolean mapping, boolean connected, String devicename, long timestamp, float[] axes, float[] buttons, int buttonsLength);
-    public static native void MvJnRjJi(double latitude, double longitude, double timeStamp, boolean hasAltitude, double altitude, boolean hasAccuracy, double accuracy, boolean hasHeading, double heading, boolean hasSpeed, double speed);
-
-    public static native void M8Iz7Ptw(String message);
-    public static native void MrHXg7he(long nativePlatformSensorAndroid, Object caller);
-
-    public static native void Mb4JvlL7(long nativePlatformSensorAndroid, Object caller, double timestamp, double value1, double value2, double value3, double value4);
-    public static native void MjxIGcDd(long nativeTimeZoneMonitorAndroid, Object caller);
-    public static native void MNmyS$Xi(long nativeUsbServiceAndroid, Object caller, Object device);
-
-    public static native void MrBuy2sN(long nativeUsbServiceAndroid, Object caller, int deviceId);
-
-    public static native void MDvFAfgT(long nativeUsbServiceAndroid, Object caller, int deviceId, boolean granted);
-    public static native void MCgftn_d(long nativeAudioManagerAndroid, Object caller, boolean muted);
-    public static native Object MEPH2V3G(long nativeAudioTrackOutputStream, Object caller, Object audioData, long delayInFrames);
-
-    public static native void Mr6$Ko2f(long nativeAudioTrackOutputStream, Object caller);
-
-    public static native long MMQ1O_vA(long nativeAudioTrackOutputStream, Object caller, Object byteBuffer);
-    public static native int M6EY_9Mw(long nativeJniHdrMetadata, Object caller);
-
-    public static native int Myx2EYmS(long nativeJniHdrMetadata, Object caller);
-
-    public static native int MGKRBsYQ(long nativeJniHdrMetadata, Object caller);
-
-    public static native float Mc0wiJ8$(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MYP0SLZ2(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MRQrYl4t(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MtgfnGGz(long nativeJniHdrMetadata, Object caller);
-
-    public static native float McEG$Qxu(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MU6WBitK(long nativeJniHdrMetadata, Object caller);
-
-    public static native float M8pzdQ$h(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MXbY07SE(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MOL90CVq(long nativeJniHdrMetadata, Object caller);
-
-    public static native float MM07Xk18(long nativeJniHdrMetadata, Object caller);
-
-    public static native int MMmvZ$nS(long nativeJniHdrMetadata, Object caller);
-
-    public static native int MzRCryEE(long nativeJniHdrMetadata, Object caller);
-    public static native void MNqjfk23(long nativeMediaCodecBridge, Object caller);
-    public static native void MV9yuwVC(long nativeMediaDrmBridge, Object caller, Object mediaCrypto);
-
-    public static native void MmhSkOYV(long nativeMediaDrmBridge, Object caller, String defaultUrl, byte[] requestData);
-
-    public static native void MAaklmRW(long nativeMediaDrmBridge, Object caller, boolean success);
-
-    public static native void MOzXytse(long nativeMediaDrmBridge, Object caller, long promiseId);
-
-    public static native void MtWWjNjU(long nativeMediaDrmBridge, Object caller, long promiseId, byte[] emeSessionId);
-
-    public static native void M2P7BQ98(long nativeMediaDrmBridge, Object caller, long promiseId, String errorMessage);
-
-    public static native void Mf7HZHqV(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, int requestType, byte[] message);
-
-    public static native void MulYy5b7(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId);
-
-    public static native void Mk8V79M2(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, Object[] keysInfo, boolean hasAdditionalUsableKey, boolean isKeyRelease);
-
-    public static native void MFLUFEZc(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, long expirationTime);
-    public static native void ME6vNmlv(long nativeMediaDrmStorageBridge, Object caller, Object cb);
-
-    public static native void Mmi_qOX8(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
-
-    public static native void MeALR1v2(long nativeMediaDrmStorageBridge, Object caller, Object info, Object cb);
-
-    public static native void MYa_y6Dg(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
-    public static native void Mo4Rd8TE(long nativeMediaPlayerBridge, Object caller, boolean success);
-    public static native void Myj2LnkZ(long nativeMediaPlayerListener, Object caller, int errorType);
-
-    public static native void Mfq$ZJpW(long nativeMediaPlayerListener, Object caller, int width, int height);
-
-    public static native void MQTompEl(long nativeMediaPlayerListener, Object caller);
-
-    public static native void MX$D6jYE(long nativeMediaPlayerListener, Object caller);
-    public static native void Mm$QSrAo(long nativeMediaServerCrashListener, Object caller, boolean watchdogNeedsRelease);
-    public static native void MjDBp6op(long nativeScreenCaptureMachineAndroid, Object caller, Object buf, int rowStride, int left, int top, int width, int height, long timestamp);
-
-    public static native void MgLL$kUF(long nativeScreenCaptureMachineAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int left, int top, int width, int height, long timestamp);
-
-    public static native void M2auslLM(long nativeScreenCaptureMachineAndroid, Object caller, boolean result);
-
-    public static native void Ml8UDaFX(long nativeScreenCaptureMachineAndroid, Object caller, int rotation);
-    public static native void Mq5gIPzl(long nativeVideoCaptureDeviceAndroid, Object caller, byte[] data, int length, int rotation);
-
-    public static native void MlTacwJQ(long nativeVideoCaptureDeviceAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int width, int height, int rotation, long timestamp);
-
-    public static native void MhmwjISE(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureError, String message);
-
-    public static native void M651cEC1(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureFrameDropReason);
-
-    public static native void MumkJZ3e(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, Object result);
-
-    public static native void MdZBZ$ST(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, byte[] data);
-
-    public static native void MPaf3s5k(long nativeVideoCaptureDeviceAndroid, Object caller);
-
-    public static native void Mqw5545M(long nativeVideoCaptureDeviceAndroid, Object caller);
-    public static native void MzDIdqgH(long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
-    public static native void M3znzcE9(long nativeMidiManagerAndroid, Object[] devices);
-
-    public static native void MfmZ2$zu(long nativeMidiManagerAndroid);
-
-    public static native void MEOWUhL5(long nativeMidiManagerAndroid, Object device);
-
-    public static native void Md3XPFG5(long nativeMidiManagerAndroid, Object device);
-    public static native void MNGB4bj1(long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
-    public static native void MrVQrlMA(long nativeUsbMidiDeviceFactoryAndroid, Object[] devices);
-
-    public static native void MGbhHafy(long nativeUsbMidiDeviceFactoryAndroid, Object device);
-
-    public static native void MQPqHj_p(long nativeUsbMidiDeviceFactoryAndroid, int index);
-    public static native long MOJ55i7J(Object caller);
-
-    public static native void MWXT8JHC(Object caller);
-
-    public static native void MeWGVAnX(Object caller);
-
-    public static native void MvPYY0Pk(Object caller);
-
-    public static native void Mg$AGbqU(Object caller, long runLoopID, Object runnable, long delay);
-
-    public static native void MEexSuCr(Object caller, long runLoopID);
-    public static native long M48BvrvK(Object caller);
-
-    public static native Object MZhgS7uU(Object caller, Object optionsBuffer);
-
-    public static native Object MhNaf1lV(Object caller, Object optionsBuffer);
-
-    public static native Object MZ0nRPS0(Object caller, Object optionsBuffer, long numBytes);
-
-    public static native int MLQe1QEw(Object caller, int mojoHandle);
-
-    public static native int MJr0GcyT(Object caller, int mojoHandle, Object signalsStateBuffer);
-
-    public static native int Mkun8eIV(Object caller, int mojoHandle, Object bytes, int numBytes, Object handlesBuffer, int flags);
-
-    public static native Object MEHdfwD0(Object caller, int mojoHandle, int flags);
-
-    public static native Object MBDORBtR(Object caller, int mojoHandle, Object elements, int elementsSize, int flags);
-
-    public static native Object M_DxS0Vi(Object caller, int mojoHandle, int numBytes, int flags);
-
-    public static native int MC3EsLAG(Object caller, int mojoHandle, int numBytesRead);
-
-    public static native Object Mra2dnT9(Object caller, int mojoHandle, Object elements, int limit, int flags);
-
-    public static native Object M100xOXT(Object caller, int mojoHandle, int numBytes, int flags);
-
-    public static native int MBed1sI2(Object caller, int mojoHandle, int numBytesWritten);
-
-    public static native Object M6nJbV6M(Object caller, int mojoHandle, Object optionsBuffer);
-
-    public static native Object Mm6zKFIo(Object caller, int mojoHandle, long offset, long numBytes, int flags);
-
-    public static native int MC_p8PYl(Object caller, Object buffer);
-
-    public static native int MBIRtXF8(Object caller, Object buffer, int alignment);
-
-    public static native int MDMdj6cc(int fd);
-    public static native long MXGgOw9k(Object caller);
-
-    public static native int MOmBVeTt(Object caller, long implPtr, int mojoHandle, int flags);
-
-    public static native void MPTT407x(Object caller, long implPtr);
-
-    public static native void Mi32vqDA(Object caller, long implPtr);
-    public static native String MpCt7siL(String url);
-
-    public static native String M$mITdbo(String url);
-    public static native void M0s8NeYn(long nativeJavaNegotiateResultWrapper, Object caller, int status, String authToken);
-    public static native boolean MorcXgQd(String headerName, String headerValue);
-    public static native void MJRUHS0T(long nativeNetworkActivationRequest, long netId);
-    public static native void MbPIImnU(long nativePtr, Object caller, int newConnectionType, long defaultNetId);
-
-    public static native void Mt26m31j(long nativePtr, Object caller, int subType);
-
-    public static native void MBT1i5cd(long nativePtr, Object caller, long netId, int connectionType);
-
-    public static native void MiJIMrTb(long nativePtr, Object caller, long netId);
-
-    public static native void MDpuHJTB(long nativePtr, Object caller, long netId);
-
-    public static native void MpF$179U(long nativePtr, Object caller, long[] activeNetIds);
-    public static native void MyoFZt$2(long nativePtr, Object caller, String host, int port, String pacUrl, String[] exclusionList);
-
-    public static native void MCIk73GZ(long nativePtr, Object caller);
-    public static native void MGVAvp19();
-    public static native void M3YqItLq(long nativeClipboardAndroid, Object caller);
-
-    public static native void MWrNP8sy(long nativeClipboardAndroid, Object caller, long timestamp);
-
-    public static native long MN49cYVC(long nativeClipboardAndroid);
-    public static native Object M4_mlka_(long nativeEventForwarder, Object caller);
-
-    public static native boolean Mcw1yi1C(long nativeEventForwarder, Object caller, Object event, long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0, float y0, float x1, float y1, int pointerId0, int pointerId1, float touchMajor0, float touchMajor1, float touchMinor0, float touchMinor1, float orientation0, float orientation1, float tilt0, float tilt1, float rawX, float rawY, int androidToolType0, int androidToolType1, int gestureClassification, int androidButtonState, int androidMetaState, boolean isTouchHandleEvent);
-
-    public static native void M$2oj6EQ(long nativeEventForwarder, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
-
-    public static native void MZ1ZkPta(long nativeEventForwarder, Object caller, int action, int x, int y, int screenX, int screenY, String[] mimeTypes, String content);
-
-    public static native boolean MtyC4Bd2(long nativeEventForwarder, Object caller, int type, long timeMs, float delta);
-
-    public static native boolean MvdB06Zi(long nativeEventForwarder, Object caller, Object event, long timeMs);
-
-    public static native boolean MRbfSEI1(long nativeEventForwarder, Object caller, Object event, int keyCode);
-
-    public static native boolean MZE$0qqv(long nativeEventForwarder, Object caller, Object event);
-
-    public static native void MMwH$VBb(long nativeEventForwarder, Object caller, float deltaX, float deltaY);
-
-    public static native void M6lTZ5w8(long nativeEventForwarder, Object caller, float x, float y);
-
-    public static native void MNnWXapV(long nativeEventForwarder, Object caller, long timeMs, int x, int y);
-
-    public static native void MT1C98PL(long nativeEventForwarder, Object caller, long timeMs, float velocityX, float velocityY, boolean syntheticScroll, boolean preventBoosting);
-
-    public static native void MSvJWvYj(long nativeEventForwarder, Object caller, long timeMs, boolean preventBoosting);
-    public static native int MKiziH$q(String string);
-    public static native void MBeWYy2V(long nativeSelectFileDialogImpl, Object caller, String filePath, String displayName);
-
-    public static native void Mx1807vz(long nativeSelectFileDialogImpl, Object caller, String[] filePathArray, String[] displayNameArray);
-
-    public static native void MGVJOCWv(long nativeSelectFileDialogImpl, Object caller);
-
-    public static native void MXucAq1Y(long nativeSelectFileDialogImpl, Object caller, String contacts);
-    public static native long MFjTMMS_(Object caller, int displayId, float scrollFactor, boolean windowIsWideColorGamut);
-
-    public static native void MrnNdVRa(long nativeWindowAndroid, Object caller, boolean visible);
-
-    public static native void MMLuxHp6(long nativeWindowAndroid, Object caller);
-
-    public static native void MbyUPhMo(long nativeWindowAndroid, Object caller);
-
-    public static native void MotttR54(long nativeWindowAndroid, Object caller, boolean paused);
-
-    public static native void MWNjxKcW(long nativeWindowAndroid, Object caller, float refreshRate);
-
-    public static native void MV00Qksi(long nativeWindowAndroid, Object caller);
-
-    public static native void MTDQeb$o(long nativeWindowAndroid, Object caller, float[] supportedRefreshRates);
-    public static native void M2$ANfTC(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId, int width, int height, float dipScale, int rotationDegrees, int bitsPerPixel, int bitsPerComponent, boolean isWideColorGamut);
-
-    public static native void MyzQIqd_(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
-
-    public static native void MdOwtyr6(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
-    public static native void MGCvz8lp(Object caller);
-    public static native void MtrEpb2R(Object caller, float maximumFlingVelocity, float minimumFlingVelocity, float touchSlop, float doubleTapSlop, float minScalingSpan);
-    public static native void MRbPfCZQ(long nativeSurfaceTextureListener, Object caller);
-
-    public static native void MUH2vhAN(long nativeSurfaceTextureListener, Object caller);
-    public static native long MKzrMxwv();
-
-    public static native long MNZCYawX(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom, int apertureLeft, int apertureTop, int apertureRight, int apertureBottom);
-    public static native void MM7E4tBk(long nativeResourceManagerImpl, Object caller, int resType, int resId, Object bitmap, int width, int height, long nativeResource);
-
-    public static native void MxwZmAzJ(long nativeResourceManagerImpl, Object caller, int resType, int resId);
-
-    public static native void MnAVuP1v(long nativeResourceManagerImpl, Object caller);
-    public static native void MWBVWQ0I(String uri, Object target);
-
-    public static native void MNBd3mFA(String spec, boolean isValid, long nativeParsed, Object target);
-
-    public static native long MnPIH$$1(String spec, boolean isValid, long nativeParsed);
-    public static native long MsTyiXfW(int schemeBegin, int schemeLength, int usernameBegin, int usernameLength, int passwordBegin, int passwordLength, int hostBegin, int hostLength, int portBegin, int portLength, int pathBegin, int pathLength, int queryBegin, int queryLength, int refBegin, int refLength, boolean potentiallyDanglingMarkup, long innerUrl);
-    public static native long MdSMvPKd();
-
-    public static native void MlYZDcUq(long weblayerAutocompleteSchemeClassifier);
-    public static native long Me394HRR(Object view, long nativeContentViewRenderView, boolean isTop);
-
-    public static native void M8jqrC_w(long nativeBrowserControlsContainerView);
-
-    public static native void MlXpxEY_(long nativeBrowserControlsContainerView, int id);
-
-    public static native void M$BOyYG7(long nativeBrowserControlsContainerView);
-
-    public static native void M6ePJPUh(long nativeBrowserControlsContainerView, int contentOffsetY);
-
-    public static native void MY2oZhd3(long nativeBrowserControlsContainerView);
-
-    public static native void Mi5Me0JY(long nativeBrowserControlsContainerView, int width, int height);
-
-    public static native void McAxkPDo(long nativeBrowserControlsContainerView);
-
-    public static native void MfdDvIeb(long nativeBrowserControlsContainerView, Object webContents);
-
-    public static native boolean MXZ_n0Vr();
-    public static native long MChsAOfs(long profile, Object caller);
-
-    public static native void MaMrnX9h(long browser);
-
-    public static native void MJ$RHdW5(long nativeBrowserImpl, long nativeTab);
-
-    public static native Object[] MGDfuPeL(long nativeBrowserImpl);
-
-    public static native void MBT5EbFP(long nativeBrowserImpl, long nativeTab);
-
-    public static native Object Ms4h$LOA(long nativeBrowserImpl);
-
-    public static native void MM5Y8Vdi(long nativeBrowserImpl);
-
-    public static native String Mtk__Xyp(long nativeBrowserImpl);
-
-    public static native void MaKl4w3e(long nativeBrowserImpl);
-
-    public static native byte[] MxJsteK0(long nativeBrowserImpl);
-
-    public static native byte[] MtZQkZrN(long nativeBrowserImpl);
-
-    public static native void MF3mfzBs(long nativeBrowserImpl, String persistenceId, byte[] persistenceCryptoKey, byte[] minimalPersistenceState);
-
-    public static native void MCP8kZaA(long nativeBrowserImpl);
-
-    public static native void MJ3WqXoC(long nativeBrowserImpl);
-
-    public static native void M9jlcLN8(long nativeBrowserImpl);
-
-    public static native void Mu08S5Q_(long nativeBrowserImpl);
-
-    public static native boolean MyBeGQWT(long nativeBrowserImpl);
-    public static native void M55Lsrkg();
-    public static native long MuuxVGQm(Object caller, Object rootWindow);
-
-    public static native void MAIaE0OG(long nativeContentViewRenderView);
-
-    public static native void MYMjn0mf(long nativeContentViewRenderView, Object webContents);
-
-    public static native void MQtCkWmJ(long nativeContentViewRenderView, Object webContents, int width, int height, boolean forConfigChange);
-
-    public static native void MUdnoeZS(long nativeContentViewRenderView);
-
-    public static native void MfxYKOP7(long nativeContentViewRenderView, boolean cacheBackBuffer);
-
-    public static native void M4g6Q4ab(long nativeContentViewRenderView, boolean canBeUsedWithSurfaceControl, int format, int width, int height, Object surface);
-
-    public static native void MRC2ueBe(long nativeContentViewRenderView);
-
-    public static native void M9bR5p1w(long nativeContentViewRenderView);
-
-    public static native Object M7ewD88L(long nativeContentViewRenderView);
-
-    public static native void M41pvntE(long nativeContentViewRenderView);
-    public static native boolean MHaZNm_6(long nativeCookieManagerImpl, String url, String value, Object callback);
-
-    public static native void M55lJVED(long nativeCookieManagerImpl, String url, Object callback);
-
-    public static native int M9VhfsIF(long nativeCookieManagerImpl, String url, String name, Object callback);
-
-    public static native void MGwEaaJt(long nativeCookieManagerImpl, int id);
-    public static native long McPAi5G9(Object proxy, long tab);
-
-    public static native void Mq3U77nO(long proxy);
-
-    public static native void MYOOvdZV(long callbackId, boolean allow);
-    public static native void MCQjxfAX(long nativeDownloadImpl, Object caller);
-
-    public static native int Mg9vWlA3(long nativeDownloadImpl);
-
-    public static native long MLQnpV49(long nativeDownloadImpl);
-
-    public static native long MLPJbQwI(long nativeDownloadImpl);
-
-    public static native void Mmh9t8Wp(long nativeDownloadImpl);
-
-    public static native void MBdFHh_o(long nativeDownloadImpl);
-
-    public static native void M7ycbCea(long nativeDownloadImpl);
-
-    public static native String MBNW0Bg1(long nativeDownloadImpl);
-
-    public static native String MI7IhsRn(long nativeDownloadImpl);
-
-    public static native String MiYZ62wR(long nativeDownloadImpl);
-
-    public static native int MMo$maOT(long nativeDownloadImpl);
-    public static native long M0JND2JE(Object proxy, long tab);
-
-    public static native void MRiF9eNE(long proxy);
-    public static native long MyfmBjob(Object proxy, long tab);
-
-    public static native void MnfzceAY(long proxy);
-    public static native long MGmykU1g(Object proxy, long tab);
-
-    public static native void MeleUM$n(long proxy);
-
-    public static native void MSOA10zg(long nativeFullscreenCallbackProxy);
-    public static native long Mx3lCmAx(Object proxy, long profile);
-
-    public static native void MUHuXlGs(long proxy);
-
-    public static native void MBWckw0j(long callbackId, String token);
-    public static native long MULN$uwi(Object proxy, long tab);
-
-    public static native void MRFq4cp6(long proxy);
-    public static native void Mv_4SZop(long nativeHttpAuthHandlerImpl, String username, String password);
-
-    public static native void M9H0Xoj7(long nativeHttpAuthHandlerImpl);
-    public static native long MvmrRAzz(Object caller);
-
-    public static native void MIDu$Gd$(long nativeInfoBarContainerAndroid, Object caller, Object webContents);
-
-    public static native void MtgOM66q(long nativeInfoBarContainerAndroid, Object caller);
-    public static native void MNVsdYhF();
-    public static native void MpejyhKI(long nativeNavigationControllerImpl, Object caller);
-
-    public static native long MuaFsixb(long tab);
-
-    public static native void MdNsGAMH(long nativeNavigationControllerImpl, String uri, boolean shouldReplaceCurrentEntry, boolean disableIntentProcessing, boolean allowIntentLaunchesInBackground, boolean disableNetworkErrorAutoReload, boolean enableAutoPlay, Object response);
-
-    public static native void MZrOkH8X(long nativeNavigationControllerImpl);
-
-    public static native void MDkifRYV(long nativeNavigationControllerImpl);
-
-    public static native boolean Mk5Op77A(long nativeNavigationControllerImpl);
-
-    public static native boolean Myt080DX(long nativeNavigationControllerImpl);
-
-    public static native void M0Oi$rdJ(long nativeNavigationControllerImpl, int index);
-
-    public static native void MgCpZ61D(long nativeNavigationControllerImpl);
-
-    public static native void Mcpd2RLR(long nativeNavigationControllerImpl);
-
-    public static native int MTQXD9PA(long nativeNavigationControllerImpl);
-
-    public static native int MYvsya1k(long nativeNavigationControllerImpl);
-
-    public static native String MdarrSGz(long nativeNavigationControllerImpl, int index);
-
-    public static native String ME_QUEJm(long nativeNavigationControllerImpl, int index);
-
-    public static native boolean M1cVni5H(long nativeNavigationControllerImpl, int index);
-
-    public static native Object MiqMU_16(long nativeNavigationControllerImpl, long id);
-    public static native void MAxzZ9OU(long nativeNavigationImpl, Object caller);
-
-    public static native int MOjYwlCQ(long nativeNavigationImpl);
-
-    public static native String MLe5UH8x(long nativeNavigationImpl);
-
-    public static native String[] M4$r2b34(long nativeNavigationImpl);
-
-    public static native int MavL_hzo(long nativeNavigationImpl);
-
-    public static native boolean MNvdMHI6(long nativeNavigationImpl);
-
-    public static native boolean MIFgE7DZ(long nativeNavigationImpl);
-
-    public static native boolean MN_nBiKo(long nativeNavigationImpl);
-
-    public static native boolean MuyTe$xX(long nativeNavigationImpl);
-
-    public static native boolean MiBmbu2p(long nativeNavigationImpl);
-
-    public static native int Mu3sbx92(long nativeNavigationImpl);
-
-    public static native boolean MDotswwA(long nativeNavigationImpl, String name, String value);
-
-    public static native boolean MFHuFkAr(String name);
-
-    public static native boolean MDc77mDW(String value);
-
-    public static native boolean MylM4DA1(long nativeNavigationImpl, String value);
-
-    public static native boolean MpbIpLrc(long nativeNavigationImpl);
-
-    public static native boolean MbVVYHJf(long nativeNavigationImpl);
-
-    public static native boolean MJ48705W(long nativeNavigationImpl);
-
-    public static native boolean MlMmQVE9(long nativeNavigationImpl);
-
-    public static native boolean M4U68Scc(long nativeNavigationImpl);
-
-    public static native boolean Mwx4wZuq(long nativeNavigationImpl);
-
-    public static native String MsHZd869(long nativeNavigationImpl);
-    public static native long Mm1ByG3d(Object proxy, long tab);
-
-    public static native void MxkBiJzp(long proxy);
-    public static native void MUPlvIQU(long nativePrerenderControllerImpl, String url);
-    public static native void Ms_xftcU(Object callback);
-
-    public static native long MKGVVWNd(String name, Object caller, boolean isIncognito);
-
-    public static native void M_1y2G80(long profile);
-
-    public static native long MOV1crQP(long nativeProfileImpl);
-
-    public static native int MExAIK1i(long nativeProfileImpl);
-
-    public static native void Mxdeo3Gx(long nativeProfileImpl, Object completionCallback);
-
-    public static native void MTR7prkl(long nativeProfileImpl, int[] dataTypes, long fromMillis, long toMillis, Object callback);
-
-    public static native void Mq7GFTAG(long nativeProfileImpl, String directory);
-
-    public static native long MxyNOHnU(long nativeProfileImpl);
-
-    public static native long MhZhhQYg(long nativeProfileImpl);
-
-    public static native void M1$JPkux(long nativeProfileImpl);
-
-    public static native void MfdyKPni(long nativeProfileImpl, int type, boolean value);
-
-    public static native boolean MbEhNBrP(long nativeProfileImpl, int type);
-
-    public static native void MaK4GRyf(long nativeProfileImpl, Object callback);
-
-    public static native void M6_S2Eto(long nativeProfileImpl, String[] ids, Object callback);
-
-    public static native void MAa5N2Fy(long nativeProfileImpl);
-
-    public static native void MZVnG5ck(long nativeProfileImpl, String url, Object callback);
-
-    public static native void MrkqJOF5(long nativeProfileImpl);
-    public static native long MOUs9Qy6(Object proxy, long tab);
-
-    public static native void Mpl66Ope(long proxy);
-    public static native Object Mbc7Xl0E(Object webContents);
-
-    public static native long M0NNPeB3(long tab, Object caller);
-
-    public static native void M9fooq2v(long nativeTabImpl);
-
-    public static native void MD18T2Ck(long tab);
-
-    public static native void MKSJ4vB6(long nativeTabImpl, Object impl);
-
-    public static native void Myi236il(long nativeTabImpl, Object autofillProvider);
-
-    public static native void M7aoqPkm(long nativeTabImpl, long nativeTopBrowserControlsContainerView, long nativeBottomBrowserControlsContainerView);
-
-    public static native Object MV_K4t5p(long nativeTabImpl);
-
-    public static native void M9gymlSj(long nativeTabImpl, String script, boolean useSeparateIsolate, Object callback);
-
-    public static native void MmnuNqYM(long nativeTabImpl, int newConstraint, boolean animate);
-
-    public static native String MDUS1J6g(long nativeTabImpl);
-
-    public static native void MMWkDQW5(long nativeTabImpl, float scale, Object valueCallback);
-
-    public static native boolean MgVMsAds(long nativeTabImpl, String[] data);
-
-    public static native String[] MrvOtvmO(long nativeTabImpl);
-
-    public static native boolean MbX5H7T6(long nativeTabImpl);
-
-    public static native String MPKxPeqc(long nativeTabImpl, String jsObjectName, String[] allowedOrigins, Object client);
-
-    public static native void MajFds73(long nativeTabImpl, String jsObjectName);
-
-    public static native boolean MQH8tyfT(long nativeTabImpl);
-
-    public static native void M5P364$X(long nativeTabImpl);
-
-    public static native void MCsoCb3e(long nativeTabImpl, String targetLanguage);
-
-    public static native void MpMtYa7b(long nativeTabImpl, boolean enable);
-
-    public static native boolean MJRiqNu8(long nativeTabImpl);
-
-    public static native void MuPxZLXk(long nativeTabImpl, long nativeContextMenuParams);
-
-    public static native void MdN3ERgX(long contextMenuParams);
-    public static native void MMWKyuFU(long nativeTranslateCompactInfoBar, Object caller, int option, String value);
-
-    public static native void Mc1zGvz5(long nativeTranslateCompactInfoBar, Object caller, int option, boolean value);
-
-    public static native boolean MG9EGT5b(long nativeTranslateCompactInfoBar, Object caller, boolean menuExpanded);
-
-    public static native boolean MziN4Wi7(long nativeTranslateCompactInfoBar, Object caller);
-    public static native long MBXTos2n(long browserPtr);
-
-    public static native void MZ0OGKWB(long urlBarControllerImplPtr);
-
-    public static native String M7Zzb0z2(long nativeUrlBarControllerImpl);
-
-    public static native String MxbojYlz(long nativeUrlBarControllerImpl);
-
-    public static native int MgfY0koX(long nativeUrlBarControllerImpl);
-    public static native void M1lGn20V(boolean enabled);
-
-    public static native boolean MdEjk1wX();
-
-    public static native void MVSxAa8H(boolean value);
-
-    public static native String M3A3spS7();
-
-    public static native void MHioz7v6(int[] experimentIDs);
-
-    public static native boolean MgVMRXwV(String origin);
-    public static native void M$B6$KVY(long nativeWebMessageReplyProxyImpl, String message);
-    public static native long MFPf_4ZA(Object caller, Object webContents);
-
-    public static native void MF0say92(long manager);
-
-    public static native void M5xN38XE(long nativeMediaStreamManager, int requestId, boolean allow);
-
-    public static native void MgNVNxSj(long nativeMediaStreamManager);
-    public static native void Mar1tTQP(boolean userConsent, boolean appConsent);
-    public static native void Ms$UzmXN(long callback, boolean result);
+      // Original name: org_chromium_android_1webview_AndroidProtocolHandler_getAndroidAssetPath
+      public static native String Myi_XSsy();
+      // Original name: org_chromium_android_1webview_AndroidProtocolHandler_getAndroidResourcePath
+      public static native String MZEbjzws();
+      // Original name: org_chromium_android_1webview_AwAutofillClient_dismissed
+      public static native void M2z_jbiy(long nativeAwAutofillClient, Object caller);
+      // Original name: org_chromium_android_1webview_AwAutofillClient_suggestionSelected
+      public static native void Mg2XGOMM(long nativeAwAutofillClient, Object caller, int position);
+      // Original name: org_chromium_android_1webview_AwBrowserContext_getDefaultJava
+      public static native Object MCLx2xtg();
+      // Original name: org_chromium_android_1webview_AwBrowserContext_getQuotaManagerBridge
+      public static native long MyGX0Tx3(long nativeAwBrowserContext);
+      // Original name: org_chromium_android_1webview_AwBrowserContext_setWebLayerRunningInSameProcess
+      public static native void Mzi6ndOk(long nativeAwBrowserContext);
+      // Original name: org_chromium_android_1webview_AwBrowserProcess_setProcessNameCrashKey
+      public static native void MgHPT6uL(String processName);
+      // Original name: org_chromium_android_1webview_AwContents_init
+      public static native long MFiR_zHY(long browserContextPointer);
+      // Original name: org_chromium_android_1webview_AwContents_destroy
+      public static native void MQGusfGb(long nativeAwContents);
+      // Original name: org_chromium_android_1webview_AwContents_hasRequiredHardwareExtensions
+      public static native boolean MmfcaMzE();
+      // Original name: org_chromium_android_1webview_AwContents_setAwDrawSWFunctionTable
+      public static native void M1aUwTSB(long functionTablePointer);
+      // Original name: org_chromium_android_1webview_AwContents_setAwDrawGLFunctionTable
+      public static native void MHELqQxx(long functionTablePointer);
+      // Original name: org_chromium_android_1webview_AwContents_getNativeInstanceCount
+      public static native int MpyFb$bm();
+      // Original name: org_chromium_android_1webview_AwContents_setShouldDownloadFavicons
+      public static native void Mbm7UXr0();
+      // Original name: org_chromium_android_1webview_AwContents_updateDefaultLocale
+      public static native void Mer1B1Jd(String locale, String localeList);
+      // Original name: org_chromium_android_1webview_AwContents_getSafeBrowsingLocaleForTesting
+      public static native String M8bzablT();
+      // Original name: org_chromium_android_1webview_AwContents_setJavaPeers
+      public static native void MaOp$2xn(long nativeAwContents, Object caller, Object awContents, Object webViewWebContentsDelegate, Object contentsClientBridge, Object ioThreadClient, Object navigationInterceptionDelegate, Object autofillProvider);
+      // Original name: org_chromium_android_1webview_AwContents_getWebContents
+      public static native Object MybAxcKt(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_getBrowserContext
+      public static native Object Mg88vWvb(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_setCompositorFrameConsumer
+      public static native void MzAVKSgA(long nativeAwContents, Object caller, long nativeCompositorFrameConsumer);
+      // Original name: org_chromium_android_1webview_AwContents_documentHasImages
+      public static native void M74pgHWN(long nativeAwContents, Object caller, Object message);
+      // Original name: org_chromium_android_1webview_AwContents_generateMHTML
+      public static native void MfwgZRb_(long nativeAwContents, Object caller, String path, Object callback);
+      // Original name: org_chromium_android_1webview_AwContents_addVisitedLinks
+      public static native void MGEWt61o(long nativeAwContents, Object caller, String[] visitedLinks);
+      // Original name: org_chromium_android_1webview_AwContents_zoomBy
+      public static native void MuRWIe$h(long nativeAwContents, Object caller, float delta);
+      // Original name: org_chromium_android_1webview_AwContents_onComputeScroll
+      public static native void MkR1ETvU(long nativeAwContents, Object caller, long currentAnimationTimeMillis);
+      // Original name: org_chromium_android_1webview_AwContents_onDraw
+      public static native boolean MTXp4fn_(long nativeAwContents, Object caller, Object canvas, boolean isHardwareAccelerated, int scrollX, int scrollY, int visibleLeft, int visibleTop, int visibleRight, int visibleBottom, boolean forceAuxiliaryBitmapRendering);
+      // Original name: org_chromium_android_1webview_AwContents_needToDrawBackgroundColor
+      public static native boolean Mcwwaem4(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_findAllAsync
+      public static native void MkkpS1L9(long nativeAwContents, Object caller, String searchString);
+      // Original name: org_chromium_android_1webview_AwContents_findNext
+      public static native void M21lr0OA(long nativeAwContents, Object caller, boolean forward);
+      // Original name: org_chromium_android_1webview_AwContents_clearMatches
+      public static native void MFtcGkhm(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_clearCache
+      public static native void MhT$Vsgm(long nativeAwContents, Object caller, boolean includeDiskFiles);
+      // Original name: org_chromium_android_1webview_AwContents_getCertificate
+      public static native byte[] MJl6bbdC(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_requestNewHitTestDataAt
+      public static native void MbVTYFDu(long nativeAwContents, Object caller, float x, float y, float touchMajor);
+      // Original name: org_chromium_android_1webview_AwContents_updateLastHitTestData
+      public static native void MHBuiDmd(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_onSizeChanged
+      public static native void MNxSIAOu(long nativeAwContents, Object caller, int w, int h, int ow, int oh);
+      // Original name: org_chromium_android_1webview_AwContents_scrollTo
+      public static native void Mnc0PDKE(long nativeAwContents, Object caller, int x, int y);
+      // Original name: org_chromium_android_1webview_AwContents_restoreScrollAfterTransition
+      public static native void MFKs48sP(long nativeAwContents, Object caller, int x, int y);
+      // Original name: org_chromium_android_1webview_AwContents_smoothScroll
+      public static native void MgUWjwjs(long nativeAwContents, Object caller, int targetX, int targetY, long durationMs);
+      // Original name: org_chromium_android_1webview_AwContents_setViewVisibility
+      public static native void MJqblGS2(long nativeAwContents, Object caller, boolean visible);
+      // Original name: org_chromium_android_1webview_AwContents_setWindowVisibility
+      public static native void MkfSbdDV(long nativeAwContents, Object caller, boolean visible);
+      // Original name: org_chromium_android_1webview_AwContents_setIsPaused
+      public static native void M11ykFVM(long nativeAwContents, Object caller, boolean paused);
+      // Original name: org_chromium_android_1webview_AwContents_onAttachedToWindow
+      public static native void MtQhJq6u(long nativeAwContents, Object caller, int w, int h);
+      // Original name: org_chromium_android_1webview_AwContents_onDetachedFromWindow
+      public static native void MqVX7tnS(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_isVisible
+      public static native boolean M5$3H1S$(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_isDisplayingInterstitialForTesting
+      public static native boolean MYvj_j$8(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_setDipScale
+      public static native void MYYge55A(long nativeAwContents, Object caller, float dipScale);
+      // Original name: org_chromium_android_1webview_AwContents_isDisplayingOpenWebContent
+      public static native boolean MnhF3TBv(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_updateOpenWebScreenArea
+      public static native void MwsRRXR1(int pixels, int percentage);
+      // Original name: org_chromium_android_1webview_AwContents_onInputEvent
+      public static native void MQn4UPnT(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_getOpaqueState
+      public static native byte[] MtUUIkJC(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_restoreFromOpaqueState
+      public static native boolean M$ugXLRy(long nativeAwContents, Object caller, byte[] state);
+      // Original name: org_chromium_android_1webview_AwContents_releasePopupAwContents
+      public static native long MOttaOmZ(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_focusFirstNode
+      public static native void MunvchpP(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_setBackgroundColor
+      public static native void MLVoXr_n(long nativeAwContents, Object caller, int color);
+      // Original name: org_chromium_android_1webview_AwContents_capturePicture
+      public static native long MpPu_UgV(long nativeAwContents, Object caller, int width, int height);
+      // Original name: org_chromium_android_1webview_AwContents_enableOnNewPicture
+      public static native void MjvLhcRF(long nativeAwContents, Object caller, boolean enabled);
+      // Original name: org_chromium_android_1webview_AwContents_insertVisualStateCallback
+      public static native void ME4bwr8X(long nativeAwContents, Object caller, long requestId, Object callback);
+      // Original name: org_chromium_android_1webview_AwContents_clearView
+      public static native void MsURZ4Xi(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_setExtraHeadersForUrl
+      public static native void Me4$sHFE(long nativeAwContents, Object caller, String url, String extraHeaders);
+      // Original name: org_chromium_android_1webview_AwContents_invokeGeolocationCallback
+      public static native void M0cKB_Do(long nativeAwContents, Object caller, boolean value, String requestingFrame);
+      // Original name: org_chromium_android_1webview_AwContents_getEffectivePriority
+      public static native int MmkSmonh(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_setJsOnlineProperty
+      public static native void MSO7DbfT(long nativeAwContents, Object caller, boolean networkUp);
+      // Original name: org_chromium_android_1webview_AwContents_trimMemory
+      public static native void MxV2T4AB(long nativeAwContents, Object caller, int level, boolean visible);
+      // Original name: org_chromium_android_1webview_AwContents_createPdfExporter
+      public static native void MND9REwd(long nativeAwContents, Object caller, Object awPdfExporter);
+      // Original name: org_chromium_android_1webview_AwContents_preauthorizePermission
+      public static native void MZm6NYk2(long nativeAwContents, Object caller, String origin, long resources);
+      // Original name: org_chromium_android_1webview_AwContents_grantFileSchemeAccesstoChildProcess
+      public static native void Mt543z$z(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_resumeLoadingCreatedPopupWebContents
+      public static native void MlAm1rvf(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_getRenderProcess
+      public static native Object Mj2HEglc(long nativeAwContents, Object caller);
+      // Original name: org_chromium_android_1webview_AwContents_addDocumentStartJavaScript
+      public static native int MrxnMTWN(long nativeAwContents, Object caller, String script, String[] allowedOriginRules);
+      // Original name: org_chromium_android_1webview_AwContents_removeDocumentStartJavaScript
+      public static native void MHUaOxdC(long nativeAwContents, Object caller, int scriptId);
+      // Original name: org_chromium_android_1webview_AwContents_addWebMessageListener
+      public static native String MxPw2eDG(long nativeAwContents, Object caller, Object listener, String jsObjectName, String[] allowedOrigins);
+      // Original name: org_chromium_android_1webview_AwContents_removeWebMessageListener
+      public static native void MJJ_9Fzq(long nativeAwContents, Object caller, String jsObjectName);
+      // Original name: org_chromium_android_1webview_AwContents_getJsObjectsInfo
+      public static native Object[] MM3s1PPD(long nativeAwContents, Object caller, Class clazz);
+      // Original name: org_chromium_android_1webview_AwContentsClientBridge_takeSafeBrowsingAction
+      public static native void MXMPzQYm(long nativeAwContentsClientBridge, Object caller, int action, boolean reporting, int requestId);
+      // Original name: org_chromium_android_1webview_AwContentsClientBridge_proceedSslError
+      public static native void MgWlsTs7(long nativeAwContentsClientBridge, Object caller, boolean proceed, int id);
+      // Original name: org_chromium_android_1webview_AwContentsClientBridge_provideClientCertificateResponse
+      public static native void MZT_Y79r(long nativeAwContentsClientBridge, Object caller, int id, byte[][] certChain, Object androidKey);
+      // Original name: org_chromium_android_1webview_AwContentsClientBridge_confirmJsResult
+      public static native void MNISBPG1(long nativeAwContentsClientBridge, Object caller, int id, String prompt);
+      // Original name: org_chromium_android_1webview_AwContentsClientBridge_cancelJsResult
+      public static native void MXWyhv9x(long nativeAwContentsClientBridge, Object caller, int id);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_logCommandLineForDebugging
+      public static native void MjT_gThK();
+      // Original name: org_chromium_android_1webview_AwContentsStatics_logFlagMetrics
+      public static native void MQi$Ykmj(String[] switches, String[] features);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_getSafeBrowsingPrivacyPolicyUrl
+      public static native String Mdfl4F0j();
+      // Original name: org_chromium_android_1webview_AwContentsStatics_clearClientCertPreferences
+      public static native void Ml71D$Ud(Object callback);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_getUnreachableWebDataUrl
+      public static native String M0AyjO$E();
+      // Original name: org_chromium_android_1webview_AwContentsStatics_getProductVersion
+      public static native String MhBmyxCD();
+      // Original name: org_chromium_android_1webview_AwContentsStatics_setServiceWorkerIoThreadClient
+      public static native void MhYNFMfv(Object ioThreadClient, Object browserContext);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_setSafeBrowsingAllowlist
+      public static native void MXyUVZLW(String[] urls, Object callback);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_setCheckClearTextPermitted
+      public static native void Mu0fMVv8(boolean permitted);
+      // Original name: org_chromium_android_1webview_AwContentsStatics_isMultiProcessEnabled
+      public static native boolean M04mALrd();
+      // Original name: org_chromium_android_1webview_AwCookieManager_getDefaultCookieManager
+      public static native long M2x3bkF7();
+      // Original name: org_chromium_android_1webview_AwCookieManager_setShouldAcceptCookies
+      public static native void MxGz1CMI(long nativeCookieManager, Object caller, boolean accept);
+      // Original name: org_chromium_android_1webview_AwCookieManager_getShouldAcceptCookies
+      public static native boolean MIaWBQxt(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_setCookie
+      public static native void MqWxZVFj(long nativeCookieManager, Object caller, String url, String value, Object callback);
+      // Original name: org_chromium_android_1webview_AwCookieManager_setCookieSync
+      public static native void M521ruQI(long nativeCookieManager, Object caller, String url, String value);
+      // Original name: org_chromium_android_1webview_AwCookieManager_getCookie
+      public static native String MwtyXc6D(long nativeCookieManager, Object caller, String url);
+      // Original name: org_chromium_android_1webview_AwCookieManager_removeSessionCookies
+      public static native void MPH4p3lP(long nativeCookieManager, Object caller, Object callback);
+      // Original name: org_chromium_android_1webview_AwCookieManager_removeSessionCookiesSync
+      public static native void MCvO0Hcd(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_removeAllCookies
+      public static native void MYNMnyIh(long nativeCookieManager, Object caller, Object callback);
+      // Original name: org_chromium_android_1webview_AwCookieManager_removeAllCookiesSync
+      public static native void M8tXWfBc(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_removeExpiredCookies
+      public static native void MtpZW_Jk(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_flushCookieStore
+      public static native void MgWRfeHz(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_hasCookies
+      public static native boolean MLEl9vQp(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_getAllowFileSchemeCookies
+      public static native boolean MjZje8ZY(long nativeCookieManager, Object caller);
+      // Original name: org_chromium_android_1webview_AwCookieManager_setAllowFileSchemeCookies
+      public static native void Mfo4YHeg(long nativeCookieManager, Object caller, boolean allow);
+      // Original name: org_chromium_android_1webview_AwCookieManager_setWorkaroundHttpSecureCookiesForTesting
+      public static native void MEu0P4_Z(long nativeCookieManager, Object caller, boolean allow);
+      // Original name: org_chromium_android_1webview_AwDebug_setSupportLibraryWebkitVersionCrashKey
+      public static native void M06DsVuS(String version);
+      // Original name: org_chromium_android_1webview_AwDebug_setCpuAffinityToLittleCores
+      public static native void MtTQsh81();
+      // Original name: org_chromium_android_1webview_AwDevToolsServer_initRemoteDebugging
+      public static native long MavwYLrk(Object caller);
+      // Original name: org_chromium_android_1webview_AwDevToolsServer_destroyRemoteDebugging
+      public static native void MQr9muLU(Object caller, long devToolsServer);
+      // Original name: org_chromium_android_1webview_AwDevToolsServer_setRemoteDebuggingEnabled
+      public static native void MQE$FZ2u(Object caller, long devToolsServer, boolean enabled);
+      // Original name: org_chromium_android_1webview_AwFeatureList_isEnabled
+      public static native boolean MA_KcuN3(String featureName);
+      // Original name: org_chromium_android_1webview_AwFormDatabase_hasFormData
+      public static native boolean MxzPtFuv();
+      // Original name: org_chromium_android_1webview_AwFormDatabase_clearFormData
+      public static native void MonDM6EC();
+      // Original name: org_chromium_android_1webview_AwHttpAuthHandler_proceed
+      public static native void MWR2vWXA(long nativeAwHttpAuthHandler, Object caller, String username, String password);
+      // Original name: org_chromium_android_1webview_AwHttpAuthHandler_cancel
+      public static native void MylO8zte(long nativeAwHttpAuthHandler, Object caller);
+      // Original name: org_chromium_android_1webview_AwPacProcessor_initializeEnvironment
+      public static native void MNlWqe6a();
+      // Original name: org_chromium_android_1webview_AwPacProcessor_createNativePacProcessor
+      public static native long M1XOiRvG();
+      // Original name: org_chromium_android_1webview_AwPacProcessor_setProxyScript
+      public static native boolean MEjwJwuS(long nativeAwPacProcessor, Object caller, String script);
+      // Original name: org_chromium_android_1webview_AwPacProcessor_makeProxyRequest
+      public static native String ME9i0MKK(long nativeAwPacProcessor, Object caller, String url);
+      // Original name: org_chromium_android_1webview_AwPacProcessor_destroyNative
+      public static native void M_7y1FCn(long nativeAwPacProcessor, Object caller);
+      // Original name: org_chromium_android_1webview_AwPacProcessor_setNetworkAndLinkAddresses
+      public static native void MN$L7RbV(long nativeAwPacProcessor, long networkHandle, String[] adresses);
+      // Original name: org_chromium_android_1webview_AwPdfExporter_exportToPdf
+      public static native void Mp2j15Oh(long nativeAwPdfExporter, Object caller, int fd, int[] pages, Object cancellationSignal);
+      // Original name: org_chromium_android_1webview_AwProxyController_setProxyOverride
+      public static native String M8RBhX3H(Object caller, String[] urlSchemes, String[] proxyUrls, String[] bypassRules, Object listener, Object executor, boolean reverseBypass);
+      // Original name: org_chromium_android_1webview_AwProxyController_clearProxyOverride
+      public static native void Mx5cEreM(Object caller, Object listener, Object executor);
+      // Original name: org_chromium_android_1webview_AwQuotaManagerBridge_init
+      public static native void MIrzsg_q(long nativeAwQuotaManagerBridge, Object caller);
+      // Original name: org_chromium_android_1webview_AwQuotaManagerBridge_deleteAllData
+      public static native void MMBD8oze(long nativeAwQuotaManagerBridge, Object caller);
+      // Original name: org_chromium_android_1webview_AwQuotaManagerBridge_deleteOrigin
+      public static native void MVmZoL1a(long nativeAwQuotaManagerBridge, Object caller, String origin);
+      // Original name: org_chromium_android_1webview_AwQuotaManagerBridge_getOrigins
+      public static native void MBqEItUo(long nativeAwQuotaManagerBridge, Object caller, int callbackId);
+      // Original name: org_chromium_android_1webview_AwQuotaManagerBridge_getUsageAndQuotaForOrigin
+      public static native void MJn4yzAu(long nativeAwQuotaManagerBridge, Object caller, String origin, int callbackId, boolean isQuota);
+      // Original name: org_chromium_android_1webview_AwRenderProcess_terminateChildProcess
+      public static native boolean MjS72mtS(long nativeAwRenderProcess, Object caller);
+      // Original name: org_chromium_android_1webview_AwRenderProcess_isProcessLockedToSiteForTesting
+      public static native boolean MPsgpP_t(long nativeAwRenderProcess, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_init
+      public static native long M4GPw_sx(Object caller, Object webContents);
+      // Original name: org_chromium_android_1webview_AwSettings_destroy
+      public static native void MtdU4vpL(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_populateWebPreferencesLocked
+      public static native void MrAp8rc4(long nativeAwSettings, Object caller, long webPrefsPtr);
+      // Original name: org_chromium_android_1webview_AwSettings_resetScrollAndScaleState
+      public static native void MYBohkOD(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateEverythingLocked
+      public static native void Mq8l4Aae(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateInitialPageScaleLocked
+      public static native void ManPyeB5(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateUserAgentLocked
+      public static native void MShmU87b(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateWebkitPreferencesLocked
+      public static native void MuI9Jt0j(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_getDefaultUserAgent
+      public static native String MEzAefkM();
+      // Original name: org_chromium_android_1webview_AwSettings_updateFormDataPreferencesLocked
+      public static native void Mt45ai_h(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateRendererPreferencesLocked
+      public static native void MbLkcpTV(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateOffscreenPreRasterLocked
+      public static native void ML5KB9Yq(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateWillSuppressErrorStateLocked
+      public static native void MVXG782O(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateCookiePolicyLocked
+      public static native void M2EmJ2$z(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_updateAllowFileAccessLocked
+      public static native void M_GO18v7(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwSettings_isDarkMode
+      public static native boolean M25c7NLN(long nativeAwSettings, Object caller);
+      // Original name: org_chromium_android_1webview_AwTracingController_init
+      public static native long MJiQrQ3Z(Object caller);
+      // Original name: org_chromium_android_1webview_AwTracingController_start
+      public static native boolean MDhATp5G(long nativeAwTracingController, Object caller, String categories, int traceMode);
+      // Original name: org_chromium_android_1webview_AwTracingController_stopAndFlush
+      public static native boolean MVnr_0Jw(long nativeAwTracingController, Object caller);
+      // Original name: org_chromium_android_1webview_AwTracingController_isTracing
+      public static native boolean MI9fwsnY(long nativeAwTracingController, Object caller);
+      // Original name: org_chromium_android_1webview_AwWebContentsDelegate_filesSelectedInChooser
+      public static native void MB5V$olG(int processId, int renderId, int modeFlags, String[] filePath, String[] displayName);
+      // Original name: org_chromium_android_1webview_JsReplyProxy_postMessage
+      public static native void MayS5i9E(long nativeJsReplyProxy, String message);
+      // Original name: org_chromium_android_1webview_PopupTouchHandleDrawable_init
+      public static native long MQ7e2Y0w(Object caller, float horizontalPaddingRatio);
+      // Original name: org_chromium_android_1webview_gfx_AwDrawFnImpl_getFunctorHandle
+      public static native int MVv$dooB(long nativeAwDrawFnImpl, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwDrawFnImpl_getCompositorFrameConsumer
+      public static native long MyqeD0HT(long nativeAwDrawFnImpl, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwDrawFnImpl_releaseHandle
+      public static native void MTNG5d$d(long nativeAwDrawFnImpl, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwDrawFnImpl_setDrawFnFunctionTable
+      public static native void Muf_UBRy(long functionTablePointer);
+      // Original name: org_chromium_android_1webview_gfx_AwDrawFnImpl_create
+      public static native long M_e6WGre();
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_deleteHardwareRenderer
+      public static native void MsCe5UVl(long nativeAwGLFunctor, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_removeFromCompositorFrameProducer
+      public static native void MOiMYd0I(long nativeAwGLFunctor, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_getCompositorFrameConsumer
+      public static native long MfRoRhka(long nativeAwGLFunctor, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_getAwDrawGLFunction
+      public static native long Mq4IKpgt();
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_destroy
+      public static native void Ms3_fBgF(long nativeAwGLFunctor);
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_create
+      public static native long Me9QwrxV(Object javaProxy);
+      // Original name: org_chromium_android_1webview_gfx_AwGLFunctor_getNativeInstanceCount
+      public static native int MW0m24ct();
+      // Original name: org_chromium_android_1webview_gfx_AwPicture_destroy
+      public static native void Mt$FsvYN(long nativeAwPicture);
+      // Original name: org_chromium_android_1webview_gfx_AwPicture_getWidth
+      public static native int MxvjfQIM(long nativeAwPicture, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwPicture_getHeight
+      public static native int MAAuagRx(long nativeAwPicture, Object caller);
+      // Original name: org_chromium_android_1webview_gfx_AwPicture_draw
+      public static native void MU5yPjvq(long nativeAwPicture, Object caller, Object canvas);
+      // Original name: org_chromium_android_1webview_gfx_RootBeginFrameSourceWebView_onUpdateRefreshRate
+      public static native void MsBIPWH$(long nativeRootBeginFrameSourceWebView, Object caller, float refreshRate);
+      // Original name: org_chromium_android_1webview_metrics_AwMetricsServiceClient_setHaveMetricsConsent
+      public static native void Mdl6A1eo(boolean userConsent, boolean appConsent);
+      // Original name: org_chromium_android_1webview_metrics_AwMetricsServiceClient_setFastStartupForTesting
+      public static native void M3qPS3Ay(boolean fastStartupForTesting);
+      // Original name: org_chromium_android_1webview_metrics_AwMetricsServiceClient_setUploadIntervalForTesting
+      public static native void Mo7ROkjk(long uploadIntervalMs);
+      // Original name: org_chromium_android_1webview_metrics_AwMetricsServiceClient_setOnFinalMetricsCollectedListenerForTesting
+      public static native void MF8QpxKk(Object listener);
+      // Original name: org_chromium_android_1webview_nonembedded_AwComponentUpdateService_maybeStartComponentUpdateService
+      public static native void M6xyQYKt();
+      // Original name: org_chromium_android_1webview_nonembedded_DownloadFileTask_callProgressCallback
+      public static native void MwVMJDdy(long weakPtr, long taskRunner, long current);
+      // Original name: org_chromium_android_1webview_nonembedded_DownloadFileTask_callResponseStartedCallback
+      public static native void MRSf0B7j(long weakPtr, long taskRunner, int responseCode, long contentLength);
+      // Original name: org_chromium_android_1webview_nonembedded_DownloadFileTask_callDownloadToFileCompleteCallback
+      public static native void MAWAGN2I(long weakPtr, long taskRunner, int networkError, long contentSize);
+      // Original name: org_chromium_android_1webview_nonembedded_WebViewApkApplication_initializeGlobalsAndResources
+      public static native void MOJaWKa6();
+      // Original name: org_chromium_android_1webview_permission_AwPermissionRequest_onAccept
+      public static native void Mk3Msvx7(long nativeAwPermissionRequest, Object caller, boolean allowed);
+      // Original name: org_chromium_android_1webview_permission_AwPermissionRequest_destroy
+      public static native void MhKumtZE(long nativeAwPermissionRequest);
+      // Original name: org_chromium_android_1webview_test_util_MemoryMetricsLoggerUtils_forceRecordHistograms
+      public static native boolean MESZdotC();
+      // Original name: org_chromium_android_1webview_test_util_RendererProcessMetricsProviderUtils_forceRecordHistograms
+      public static native void MOfxa29Q();
+      // Original name: org_chromium_android_1webview_test_util_VariationsTestUtils_disableSignatureVerificationForTesting
+      public static native void MEJdC_Ny();
+      // Original name: org_chromium_android_1webview_variations_VariationsSeedLoader_parseAndSaveSeedProto
+      public static native boolean MCf0AD9v(String path);
+      // Original name: org_chromium_android_1webview_variations_VariationsSeedLoader_getSavedSeedDate
+      public static native long MDwAh$S2();
+      // Original name: org_chromium_base_ApplicationStatus_onApplicationStateChange
+      public static native void MiAkQ_SU(int newState);
+      // Original name: org_chromium_base_CommandLine_init
+      public static native void MDkrKi31(String[] args);
+      // Original name: org_chromium_base_CommandLine_hasSwitch
+      public static native boolean MsCvypjU(String switchString);
+      // Original name: org_chromium_base_CommandLine_getSwitchValue
+      public static native String MZJ2lrZY(String switchString);
+      // Original name: org_chromium_base_CommandLine_getSwitchesFlattened
+      public static native String[] MHzche6O();
+      // Original name: org_chromium_base_CommandLine_appendSwitch
+      public static native void M5K_ewhl(String switchString);
+      // Original name: org_chromium_base_CommandLine_appendSwitchWithValue
+      public static native void MUoYiNbY(String switchString, String value);
+      // Original name: org_chromium_base_CommandLine_appendSwitchesAndArguments
+      public static native void MPquHBNa(String[] array);
+      // Original name: org_chromium_base_CommandLine_removeSwitch
+      public static native void M1cMYXGO(String switchString);
+      // Original name: org_chromium_base_CpuFeatures_getCoreCount
+      public static native int MOiBJ1qS();
+      // Original name: org_chromium_base_CpuFeatures_getCpuFeatures
+      public static native long ML0T8q1U();
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyBeginEvent
+      public static native void MrWG2uUW(String name, long timeNanos, int threadId, long threadMillis);
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyEndEvent
+      public static native void MmyrhqXB(String name, long timeNanos, int threadId, long threadMillis);
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyToplevelBeginEvent
+      public static native void M7UXCmoq(String name, long timeNanos, int threadId, long threadMillis);
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyToplevelEndEvent
+      public static native void MRlw2LEn(String name, long timeNanos, int threadId, long threadMillis);
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyAsyncBeginEvent
+      public static native void M_Gv8TwM(String name, long id, long timestamp);
+      // Original name: org_chromium_base_EarlyTraceEvent_recordEarlyAsyncEndEvent
+      public static native void MrKsqeCD(String name, long id, long timestamp);
+      // Original name: org_chromium_base_FeatureList_isInitialized
+      public static native boolean MFTJCvBh();
+      // Original name: org_chromium_base_FieldTrialList_findFullName
+      public static native String MdC43qwX(String trialName);
+      // Original name: org_chromium_base_FieldTrialList_trialExists
+      public static native boolean Mmqqda9c(String trialName);
+      // Original name: org_chromium_base_FieldTrialList_getVariationParameter
+      public static native String MZWMOP4I(String trialName, String parameterKey);
+      // Original name: org_chromium_base_FieldTrialList_logActiveTrials
+      public static native void MHz6Fn06();
+      // Original name: org_chromium_base_FieldTrialList_createFieldTrial
+      public static native boolean MGqzwlIM(String trialName, String groupName);
+      // Original name: org_chromium_base_ImportantFileWriterAndroid_writeFileAtomically
+      public static native boolean MsOKBrZ5(String fileName, byte[] data);
+      // Original name: org_chromium_base_JavaExceptionReporter_reportJavaException
+      public static native void MLlibBXh(boolean crashAfterReport, Throwable e);
+      // Original name: org_chromium_base_JavaExceptionReporter_reportJavaStackTrace
+      public static native void MmS4zlEt(String stackTrace);
+      // Original name: org_chromium_base_JavaHandlerThread_initializeThread
+      public static native void MJcct7gJ(long nativeJavaHandlerThread, long nativeEvent);
+      // Original name: org_chromium_base_JavaHandlerThread_onLooperStopped
+      public static native void MYwg$x8E(long nativeJavaHandlerThread);
+      // Original name: org_chromium_base_MemoryPressureListener_onMemoryPressure
+      public static native void MZJzyjAa(int pressure);
+      // Original name: org_chromium_base_PathService_override
+      public static native void M6H_IiaF(int what, String path);
+      // Original name: org_chromium_base_PowerMonitor_onBatteryChargingChanged
+      public static native void MCImhGql();
+      // Original name: org_chromium_base_SysUtils_logPageFaultCountToTracing
+      public static native void MOXOasS5();
+      // Original name: org_chromium_base_TimeUtils_getTimeTicksNowUs
+      public static native long MklbOJun();
+      // Original name: org_chromium_base_TraceEvent_registerEnabledObserver
+      public static native void MFFzPOVw();
+      // Original name: org_chromium_base_TraceEvent_startATrace
+      public static native void MRN$Vid3(String categoryFilter);
+      // Original name: org_chromium_base_TraceEvent_stopATrace
+      public static native void MOgCa3d$();
+      // Original name: org_chromium_base_TraceEvent_setupATraceStartupTrace
+      public static native void MlFM5bdC(String categoryFilter);
+      // Original name: org_chromium_base_TraceEvent_instant
+      public static native void ML40H8ed(String name, String arg);
+      // Original name: org_chromium_base_TraceEvent_begin
+      public static native void M9XfPu17(String name, String arg);
+      // Original name: org_chromium_base_TraceEvent_end
+      public static native void Mw73xTww(String name, String arg);
+      // Original name: org_chromium_base_TraceEvent_beginToplevel
+      public static native void M_y76mct(String target);
+      // Original name: org_chromium_base_TraceEvent_endToplevel
+      public static native void MLJecZJ9(String target);
+      // Original name: org_chromium_base_TraceEvent_startAsync
+      public static native void MHopMqLX(String name, long id);
+      // Original name: org_chromium_base_TraceEvent_finishAsync
+      public static native void MffNhCLU(String name, long id);
+      // Original name: org_chromium_base_library_1loader_LibraryLoader_libraryLoaded
+      public static native boolean M81WqFvs(int processType);
+      // Original name: org_chromium_base_library_1loader_LibraryLoader_registerNonMainDexJni
+      public static native void MIOj213u();
+      // Original name: org_chromium_base_library_1loader_LibraryLoader_recordRendererLibraryLoadTime
+      public static native void MiAWbgCC(long libraryLoadTime);
+      // Original name: org_chromium_base_library_1loader_LibraryLoader_getVersionNumber
+      public static native String M$HdV9JM();
+      // Original name: org_chromium_base_library_1loader_LibraryPrefetcher_forkAndPrefetchNativeLibrary
+      public static native void MUjpxN8d();
+      // Original name: org_chromium_base_library_1loader_LibraryPrefetcher_percentageOfResidentNativeLibraryCode
+      public static native int MdFgVRJJ();
+      // Original name: org_chromium_base_library_1loader_LibraryPrefetcher_periodicallyCollectResidency
+      public static native void MLXZo1U6();
+      // Original name: org_chromium_base_metrics_NativeUmaRecorder_recordBooleanHistogram
+      public static native long MtKTTHie(String name, long nativeHint, boolean sample);
+      // Original name: org_chromium_base_metrics_NativeUmaRecorder_recordExponentialHistogram
+      public static native long MILRV9Ch(String name, long nativeHint, int sample, int min, int max, int numBuckets);
+      // Original name: org_chromium_base_metrics_NativeUmaRecorder_recordLinearHistogram
+      public static native long M$oMD214(String name, long nativeHint, int sample, int min, int max, int numBuckets);
+      // Original name: org_chromium_base_metrics_NativeUmaRecorder_recordSparseHistogram
+      public static native long Mk1ai9mx(String name, long nativeHint, int sample);
+      // Original name: org_chromium_base_metrics_NativeUmaRecorder_recordUserAction
+      public static native void MTDsfZGe(String name, long millisSinceEvent);
+      // Original name: org_chromium_base_metrics_RecordHistogram_getHistogramValueCountForTesting
+      public static native int M1gJHszj(String name, int sample);
+      // Original name: org_chromium_base_metrics_RecordHistogram_getHistogramTotalCountForTesting
+      public static native int M4mrObfZ(String name);
+      // Original name: org_chromium_base_metrics_RecordUserAction_addActionCallbackForTesting
+      public static native long MH0bOwlk(Object callback);
+      // Original name: org_chromium_base_metrics_RecordUserAction_removeActionCallbackForTesting
+      public static native void MJl0LdjQ(long callbackId);
+      // Original name: org_chromium_base_metrics_StatisticsRecorderAndroid_toJson
+      public static native String MvO$oy3r(int verbosityLevel);
+      // Original name: org_chromium_base_process_1launcher_ChildProcessService_registerFileDescriptors
+      public static native void Ma6rsNQO(String[] keys, int[] id, int[] fd, long[] offset, long[] size);
+      // Original name: org_chromium_base_process_1launcher_ChildProcessService_exitChildProcess
+      public static native void McvJWQ0j();
+      // Original name: org_chromium_base_process_1launcher_ChildProcessService_dumpProcessStack
+      public static native void M6Y7Jzgj();
+      // Original name: org_chromium_base_task_PostTask_postDelayedTask
+      public static native void MTILOhAQ(int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData, Object task, long delay, String runnableClassName);
+      // Original name: org_chromium_base_task_TaskRunnerImpl_init
+      public static native long M5_IQXaH(int taskRunnerType, int priority, boolean mayBlock, boolean useThreadPool, byte extensionId, byte[] extensionData);
+      // Original name: org_chromium_base_task_TaskRunnerImpl_destroy
+      public static native void MERCiIV8(long nativeTaskRunnerAndroid);
+      // Original name: org_chromium_base_task_TaskRunnerImpl_postDelayedTask
+      public static native void MGnQU$47(long nativeTaskRunnerAndroid, Object task, long delay, String runnableClassName);
+      // Original name: org_chromium_base_task_TaskRunnerImpl_belongsToCurrentThread
+      public static native boolean MdFi6sVQ(long nativeTaskRunnerAndroid);
+      // Original name: org_chromium_base_test_ReachedCodeProfiler_isReachedCodeProfilerEnabled
+      public static native boolean MAvd5yDU();
+      // Original name: org_chromium_base_test_ReachedCodeProfiler_isReachedCodeProfilerSupported
+      public static native boolean MbYaLxm7();
+      // Original name: org_chromium_base_test_task_ThreadPoolTestHelpers_enableThreadPoolExecutionForTesting
+      public static native void Mf8BmU2z();
+      // Original name: org_chromium_base_test_task_ThreadPoolTestHelpers_disableThreadPoolExecutionForTesting
+      public static native void MBDE8BZX();
+      // Original name: org_chromium_components_aboutui_CreditUtils_writeCreditsHtml
+      public static native void MjdhoRtd(int fd);
+      // Original name: org_chromium_components_autofill_AutofillProvider_onAutofillAvailable
+      public static native void MxVH2h8w(long nativeAutofillProviderAndroid, Object caller, Object formData);
+      // Original name: org_chromium_components_autofill_AutofillProvider_onAcceptDataListSuggestion
+      public static native void MMueBMxQ(long nativeAutofillProviderAndroid, Object caller, String value);
+      // Original name: org_chromium_components_autofill_AutofillProvider_setAnchorViewRect
+      public static native void M3yksvyh(long nativeAutofillProviderAndroid, Object caller, Object anchorView, float x, float y, float width, float height);
+      // Original name: org_chromium_components_autofill_AutofillProvider_isQueryServerFieldTypesEnabled
+      public static native boolean M0nAoa3G();
+      // Original name: org_chromium_components_autofill_AutofillProviderTestHelper_disableDownloadServerForTesting
+      public static native void M_WtmnSd();
+      // Original name: org_chromium_components_autofill_AutofillProviderTestHelper_simulateMainFrameAutofillServerResponseForTesting
+      public static native boolean M_aHVqEu(Object webContents, String[] fieldIds, int[] fieldTypes);
+      // Original name: org_chromium_components_autofill_AutofillProviderTestHelper_simulateMainFramePredictionsAutofillServerResponseForTesting
+      public static native boolean MdA0W9re(Object webContents, String[] fieldIds, int[][] fieldTypes);
+      // Original name: org_chromium_components_autofill_AutofillProviderTestHelper_simulateMainFrameAutofillQueryFailedForTesting
+      public static native void MNyPCN4b(Object webContents);
+      // Original name: org_chromium_components_autofill_FormData_getNextFormFieldData
+      public static native Object MPHorj3A(long nativeFormDataAndroid);
+      // Original name: org_chromium_components_browser_1ui_client_1certificate_SSLClientCertificateRequest_notifyClientCertificatesChangedOnIOThread
+      public static native void MvoPqjlg();
+      // Original name: org_chromium_components_browser_1ui_client_1certificate_SSLClientCertificateRequest_onSystemRequestCompletion
+      public static native void M8LmNuWo(long requestPtr, byte[][] certChain, Object privateKey);
+      // Original name: org_chromium_components_browser_1ui_contacts_1picker_ContactsPickerFeatureList_isEnabled
+      public static native boolean Mk6X8tWe(String featureName);
+      // Original name: org_chromium_components_browser_1ui_photo_1picker_ImageDecoder_initializePhotoPickerSandbox
+      public static native void Mw4AD5hY();
+      // Original name: org_chromium_components_browser_1ui_site_1settings_SiteSettingsFeatureList_isEnabled
+      public static native boolean ManEQDnV(String featureName);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isNotificationEmbargoedForOrigin
+      public static native boolean Mi9B_Rpt(Object browserContextHandle, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_reportNotificationRevokedForOrigin
+      public static native void M$1c3w6w(Object browserContextHandle, String origin, int newSettingValue);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_clearBannerData
+      public static native void MyQGLOqU(Object browserContextHandle, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_clearMediaLicenses
+      public static native void MSoF8bn2(Object browserContextHandle, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_clearCookieData
+      public static native void Mks53EZS(Object browserContextHandle, String path);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_clearLocalStorageData
+      public static native void M101q5hN(Object browserContextHandle, String path, Object callback);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_clearStorageData
+      public static native void MykycHKg(Object browserContextHandle, String origin, int type, Object callback);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getChosenObjects
+      public static native void MA5QWuba(Object browserContextHandle, int type, Object list);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_resetNotificationsSettingsForTest
+      public static native void MOHgUpop(Object browserContextHandle);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_revokeObjectPermission
+      public static native void Mw9TjMNp(Object browserContextHandle, int type, String origin, String embedder, String object);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isContentSettingsPatternValid
+      public static native boolean Mo$6Pn$c(String pattern);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_urlMatchesContentSettingsPattern
+      public static native boolean MDL$4rLc(String url, String pattern);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_fetchStorageInfo
+      public static native void MlZM1XeP(Object browserContextHandle, Object callback);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_fetchLocalStorageInfo
+      public static native void MvKW9dxN(Object browserContextHandle, Object callback, boolean includeImportant);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getOriginsForPermission
+      public static native void MexN59P3(Object browserContextHandle, int contentSettingsType, Object list, boolean managedOnly);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getSettingForOrigin
+      public static native int MUU7dsx0(Object browserContextHandle, int contentSettingsType, String origin, String embedder);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_setSettingForOrigin
+      public static native void MxocgGQD(Object browserContextHandle, int contentSettingsType, String origin, String embedder, int value);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isPermissionControlledByDSE
+      public static native boolean Mno5HIHV(Object browserContextHandle, int contentSettingsType, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getAdBlockingActivated
+      public static native boolean Mq9o4NGp(Object browserContextHandle, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isContentSettingEnabled
+      public static native boolean MJSt3Ocq(Object browserContextHandle, int contentSettingType);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isContentSettingManaged
+      public static native boolean MnAiqOhu(Object browserContextHandle, int contentSettingType);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isCookieDeletionDisabled
+      public static native boolean M9l6T3Dg(Object browserContextHandle, String origin);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_setContentSettingEnabled
+      public static native void MM1KTgoi(Object browserContextHandle, int contentSettingType, boolean allow);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getContentSettingsExceptions
+      public static native void MI$w5f76(Object browserContextHandle, int contentSettingsType, Object list);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_setContentSettingForPattern
+      public static native void Mxr_KJ0u(Object browserContextHandle, int contentSettingType, String primaryPattern, String secondaryPattern, int setting);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getContentSetting
+      public static native int MFhlM$PH(Object browserContextHandle, int contentSettingType);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_setContentSetting
+      public static native void MWm6GHwj(Object browserContextHandle, int contentSettingType, int setting);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isContentSettingUserModifiable
+      public static native boolean MB23OvTV(Object browserContextHandle, int contentSettingType);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_isContentSettingManagedByCustodian
+      public static native boolean M1hZJgqW(Object browserContextHandle, int contentSettingType);
+      // Original name: org_chromium_components_browser_1ui_site_1settings_WebsitePreferenceBridge_getLocationAllowedByPolicy
+      public static native boolean M__mL5j3(Object browserContextHandle);
+      // Original name: org_chromium_components_content_1capture_ContentCaptureController_init
+      public static native long MM$06MFa(Object contentCaptureController);
+      // Original name: org_chromium_components_content_1capture_ContentCaptureController_setAllowlist
+      public static native void MxBXA3uk(long nativeContentCaptureController, Object caller, String[] allowlist, boolean[] isRegex);
+      // Original name: org_chromium_components_content_1capture_ContentCaptureController_shouldCapture
+      public static native boolean MntScnJN(long nativeContentCaptureController, Object caller, String[] urls);
+      // Original name: org_chromium_components_content_1capture_ContentCaptureFeatures_isEnabled
+      public static native boolean MRrWU$ia();
+      // Original name: org_chromium_components_content_1capture_ContentCaptureFeatures_shouldTriggerContentCaptureForExperiment
+      public static native boolean MxGt0EOk();
+      // Original name: org_chromium_components_content_1capture_ContentCaptureReceiverManager_createOrGet
+      public static native Object MxegY8Dy(Object webContents);
+      // Original name: org_chromium_components_content_1settings_CookieControlsBridge_init
+      public static native long Ma648rK8(Object caller, Object webContents, Object originalContextHandle);
+      // Original name: org_chromium_components_content_1settings_CookieControlsBridge_destroy
+      public static native void MupWWV0Q(long nativeCookieControlsBridge, Object caller);
+      // Original name: org_chromium_components_content_1settings_CookieControlsBridge_setThirdPartyCookieBlockingEnabledForSite
+      public static native void MTF7msU_(long nativeCookieControlsBridge, boolean blockCookies);
+      // Original name: org_chromium_components_content_1settings_CookieControlsBridge_onUiClosing
+      public static native void MGYjAHK4(long nativeCookieControlsBridge);
+      // Original name: org_chromium_components_content_1settings_CookieControlsBridge_isCookieControlsEnabled
+      public static native boolean Mvm8S6US(Object browserContextHandle);
+      // Original name: org_chromium_components_crash_CrashKeys_set
+      public static native void Mk$gnuuz(Object caller, int key, String value);
+      // Original name: org_chromium_components_crash_browser_CrashpadMain_crashpadMain
+      public static native void MT6tcXz3(String[] argv);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_init
+      public static native long MazIrxOm(Object caller, long distilledPagePrefPtr);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_setFontFamily
+      public static native void MfkxLC88(long nativeDistilledPagePrefsAndroid, Object caller, int fontFamily);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_getFontFamily
+      public static native int MSGVGQGo(long nativeDistilledPagePrefsAndroid, Object caller);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_setTheme
+      public static native void MJBehZGI(long nativeDistilledPagePrefsAndroid, Object caller, int theme);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_getTheme
+      public static native int Mi1cN$gk(long nativeDistilledPagePrefsAndroid, Object caller);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_setFontScaling
+      public static native void MaB$bTgz(long nativeDistilledPagePrefsAndroid, Object caller, float scaling);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_getFontScaling
+      public static native float MGNXZIUg(long nativeDistilledPagePrefsAndroid, Object caller);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_addObserver
+      public static native void MznRD745(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_removeObserver
+      public static native void M_HmEv0F(long nativeDistilledPagePrefsAndroid, Object caller, long nativeObserverPtr);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_initObserverAndroid
+      public static native long MxAdC41V(Object caller);
+      // Original name: org_chromium_components_dom_1distiller_core_DistilledPagePrefs_destroyObserverAndroid
+      public static native void MGXAfNxO(long nativeDistilledPagePrefsObserverAndroid);
+      // Original name: org_chromium_components_dom_1distiller_core_DomDistillerService_getDistilledPagePrefsPtr
+      public static native long MzVEzhvu(long nativeDomDistillerServiceAndroid);
+      // Original name: org_chromium_components_dom_1distiller_core_DomDistillerUrlUtils_getDistillerViewUrlFromUrl
+      public static native String MhGk9eKu(String scheme, String url, String title);
+      // Original name: org_chromium_components_dom_1distiller_core_DomDistillerUrlUtils_getOriginalUrlFromDistillerUrl
+      public static native Object M1WDPiaY(String viewerUrl);
+      // Original name: org_chromium_components_dom_1distiller_core_DomDistillerUrlUtils_isDistilledPage
+      public static native boolean Me1sexxj(String url);
+      // Original name: org_chromium_components_dom_1distiller_core_DomDistillerUrlUtils_getValueForKeyInUrl
+      public static native String MaYR73PH(String url, String key);
+      // Original name: org_chromium_components_download_DownloadCollectionBridge_getExpirationDurationInDays
+      public static native int M7rZ5uJE();
+      // Original name: org_chromium_components_embedder_1support_delegate_ColorChooserAndroid_onColorChosen
+      public static native void M2zph6xH(long nativeColorChooserAndroid, Object caller, int color);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isDownloadable
+      public static native boolean Mjv_BekT(Object url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isValidForIntentFallbackNavigation
+      public static native boolean MI2LJ$ny(String url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isAcceptedScheme
+      public static native boolean MR0YZiDd(String url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_sameDomainOrHost
+      public static native boolean MM5WUf_F(String primaryUrl, String secondaryUrl, boolean includePrivateRegistries);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_getDomainAndRegistry
+      public static native String M3l9sLoY(String url, boolean includePrivateRegistries);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isGoogleDomainUrl
+      public static native boolean MnXKAgH9(String url, boolean allowNonStandardPort);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isGoogleSubDomainUrl
+      public static native boolean Mn0fHwI$(String url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isGoogleSearchUrl
+      public static native boolean M$l72hrq(String url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isGoogleHomePageUrl
+      public static native boolean Mj1SQ9S8(String url);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_isUrlWithinScope
+      public static native boolean MLKUC6KA(String url, String scopeUrl);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_urlsMatchIgnoringFragments
+      public static native boolean Ml0jhLAz(String url, String url2);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_urlsFragmentsDiffer
+      public static native boolean MMsz$c1t(String url, String url2);
+      // Original name: org_chromium_components_external_1intents_ExternalIntentsFeatureList_isEnabled
+      public static native boolean MZOzKX8c(String featureName);
+      // Original name: org_chromium_components_external_1intents_InterceptNavigationDelegateImpl_associateWithWebContents
+      public static native void Mjjyc5BV(Object nativeInterceptNavigationDelegateImpl, Object webContents);
+      // Original name: org_chromium_components_favicon_LargeIconBridge_init
+      public static native long MwrhffLX();
+      // Original name: org_chromium_components_favicon_LargeIconBridge_destroy
+      public static native void MthPKzcb(long nativeLargeIconBridge);
+      // Original name: org_chromium_components_favicon_LargeIconBridge_getLargeIconForURL
+      public static native boolean M1pABITV(long nativeLargeIconBridge, Object browserContextHandle, Object pageUrl, int desiredSizePx, Object callback);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_init
+      public static native long MW6nK$q1(Object caller, Object webContents);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_destroy
+      public static native void MlPioXlo(long nativeFindInPageBridge, Object caller);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_startFinding
+      public static native void MiKuFRTN(long nativeFindInPageBridge, Object caller, String searchString, boolean forwardDirection, boolean caseSensitive);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_stopFinding
+      public static native void MWOuMqhA(long nativeFindInPageBridge, Object caller, boolean clearSelection);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_getPreviousFindText
+      public static native String M3t_h9OB(long nativeFindInPageBridge, Object caller);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_requestFindMatchRects
+      public static native void M4m8QCn$(long nativeFindInPageBridge, Object caller, int currentVersion);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_activateNearestFindResult
+      public static native void MqpwqIAC(long nativeFindInPageBridge, Object caller, float x, float y);
+      // Original name: org_chromium_components_find_1in_1page_FindInPageBridge_activateFindInPageResultForAccessibility
+      public static native void MNC06_Rq(long nativeFindInPageBridge, Object caller);
+      // Original name: org_chromium_components_infobars_InfoBar_getInfoBarIdentifier
+      public static native int MIZvQmze(long nativeInfoBarAndroid, Object caller);
+      // Original name: org_chromium_components_infobars_InfoBar_onLinkClicked
+      public static native void M2s4r3u7(long nativeInfoBarAndroid, Object caller);
+      // Original name: org_chromium_components_infobars_InfoBar_onButtonClicked
+      public static native void MQGsrOhB(long nativeInfoBarAndroid, Object caller, int action);
+      // Original name: org_chromium_components_infobars_InfoBar_onCloseButtonClicked
+      public static native void MKozrBH2(long nativeInfoBarAndroid, Object caller);
+      // Original name: org_chromium_components_javascript_1dialogs_JavascriptAppModalDialog_didAcceptAppModalDialog
+      public static native void Mo6rag0q(long nativeAppModalDialogViewAndroid, Object caller, String prompt, boolean suppress);
+      // Original name: org_chromium_components_javascript_1dialogs_JavascriptAppModalDialog_didCancelAppModalDialog
+      public static native void MOSW2s7O(long nativeAppModalDialogViewAndroid, Object caller, boolean suppress);
+      // Original name: org_chromium_components_javascript_1dialogs_JavascriptAppModalDialog_getCurrentModalDialog
+      public static native Object MpmiqdtU();
+      // Original name: org_chromium_components_javascript_1dialogs_JavascriptTabModalDialog_accept
+      public static native void M9yPJzg8(long nativeTabModalDialogViewAndroid, Object caller, String prompt);
+      // Original name: org_chromium_components_javascript_1dialogs_JavascriptTabModalDialog_cancel
+      public static native void M0YaeICP(long nativeTabModalDialogViewAndroid, Object caller, boolean buttonClicked);
+      // Original name: org_chromium_components_location_LocationSettings_onLocationSettingsDialogOutcome
+      public static native void MeFOXp9F(long callback, int result);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onSinksReceived
+      public static native void M2xU9exV(long nativeMediaRouterAndroidBridge, Object caller, String sourceUrn, int count);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onRouteCreated
+      public static native void MKeidYbK(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String mediaSinkId, int createRouteRequestId, boolean wasLaunched);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onCreateRouteRequestError
+      public static native void MpDGY7p4(long nativeMediaRouterAndroidBridge, Object caller, String errorText, int requestId);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onJoinRouteRequestError
+      public static native void M9VY0XZb(long nativeMediaRouterAndroidBridge, Object caller, String errorText, int requestId);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onRouteTerminated
+      public static native void MsmvhUN_(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onRouteClosed
+      public static native void MRz6aWnp(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String message);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouter_onMessage
+      public static native void MM5f2cm0(long nativeMediaRouterAndroidBridge, Object caller, String mediaRouteId, String message);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouterDialogController_onDialogCancelled
+      public static native void MsJMWxq0(long nativeMediaRouterDialogControllerAndroid, Object caller);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouterDialogController_onSinkSelected
+      public static native void MUhSLnzh(long nativeMediaRouterDialogControllerAndroid, Object caller, String sourceUrn, String sinkId);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouterDialogController_onRouteClosed
+      public static native void MSLqZyD4(long nativeMediaRouterDialogControllerAndroid, Object caller, String routeId);
+      // Original name: org_chromium_components_media_1router_BrowserMediaRouterDialogController_onMediaSourceNotSupported
+      public static native void MY1J7b0i(long nativeMediaRouterDialogControllerAndroid, Object caller);
+      // Original name: org_chromium_components_media_1router_FlingingControllerBridge_onMediaStatusUpdated
+      public static native void MR1NlI2Y(long nativeFlingingControllerBridge, Object caller, Object status);
+      // Original name: org_chromium_components_minidump_1uploader_CrashReportMimeWriter_rewriteMinidumpsAsMIMEs
+      public static native void MjZjkDM7(String srcDir, String destDir);
+      // Original name: org_chromium_components_minidump_1uploader_CrashReportMimeWriter_rewriteMinidumpsAsMIMEsAndGetCrashKeys
+      public static native String[] MdQEl6jg(String srcDir, String destDir);
+      // Original name: org_chromium_components_omnibox_AutocompleteResult_groupSuggestionsBySearchVsURL
+      public static native void Mc_qvuuv(long nativeAutocompleteResult, int firstIndex, int lastIndex);
+      // Original name: org_chromium_components_omnibox_OmniboxUrlEmphasizer_parseForEmphasizeComponents
+      public static native int[] M8aH4n_l(String text, Object autocompleteSchemeClassifier);
+      // Original name: org_chromium_components_page_1info_CertificateChainHelper_getCertificateChain
+      public static native byte[][] MW74qHgy(Object webContents);
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertIssuedToText
+      public static native String MVBnBWgu();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertInfoCommonNameText
+      public static native String M61$9xnN();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertInfoOrganizationText
+      public static native String M3Q$lPl0();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertInfoSerialNumberText
+      public static native String M2rGgvRp();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertInfoOrganizationUnitText
+      public static native String MtQn_hO9();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertIssuedByText
+      public static native String MsQpEHij();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertValidityText
+      public static native String MdXOhLT3();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertIssuedOnText
+      public static native String MnsPVX7Z();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertExpiresOnText
+      public static native String Mrqn7ZPZ();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertFingerprintsText
+      public static native String Mj6CXcHR();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertSHA256FingerprintText
+      public static native String MGc5t$JX();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertSHA1FingerprintText
+      public static native String M3Qp55TF();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertExtensionText
+      public static native String MRBlj4Pf();
+      // Original name: org_chromium_components_page_1info_CertificateViewer_getCertSANText
+      public static native String M_b6sZk8();
+      // Original name: org_chromium_components_page_1info_ConnectionInfoView_init
+      public static native long MJUBMbqq(Object popup, Object webContents);
+      // Original name: org_chromium_components_page_1info_ConnectionInfoView_destroy
+      public static native void MISU_God(long nativeConnectionInfoViewAndroid, Object caller);
+      // Original name: org_chromium_components_page_1info_ConnectionInfoView_resetCertDecisions
+      public static native void MYkS$dAY(long nativeConnectionInfoViewAndroid, Object caller, Object webContents);
+      // Original name: org_chromium_components_page_1info_PageInfoController_init
+      public static native long MuLM_ayx(Object controller, Object webContents);
+      // Original name: org_chromium_components_page_1info_PageInfoController_destroy
+      public static native void Mz6XBRgf(long nativePageInfoControllerAndroid, Object caller);
+      // Original name: org_chromium_components_page_1info_PageInfoController_recordPageInfoAction
+      public static native void M5DCRkGK(long nativePageInfoControllerAndroid, Object caller, int action);
+      // Original name: org_chromium_components_page_1info_PageInfoController_updatePermissions
+      public static native void MDd48bYq(long nativePageInfoControllerAndroid, Object caller);
+      // Original name: org_chromium_components_page_1info_PageInfoFeatureList_isEnabled
+      public static native boolean MJ8X0ZQd(String featureName);
+      // Original name: org_chromium_components_payments_CanMakePaymentQuery_canQuery
+      public static native boolean MNXjZ6_e(Object webContents, String topLevelOrigin, String frameOrigin, Object query);
+      // Original name: org_chromium_components_payments_CurrencyFormatter_initCurrencyFormatterAndroid
+      public static native long MRlatcKK(Object caller, String currencyCode, String localeName);
+      // Original name: org_chromium_components_payments_CurrencyFormatter_destroy
+      public static native void MkBG391d(long nativeCurrencyFormatterAndroid, Object caller);
+      // Original name: org_chromium_components_payments_CurrencyFormatter_format
+      public static native String MgDia2D2(long nativeCurrencyFormatterAndroid, Object caller, String amountValue);
+      // Original name: org_chromium_components_payments_CurrencyFormatter_setMaxFractionalDigits
+      public static native void M6ORVMPQ(long nativeCurrencyFormatterAndroid, int maxFractionalDigits);
+      // Original name: org_chromium_components_payments_CurrencyFormatter_getFormattedCurrencyCode
+      public static native String MnbePYrk(long nativeCurrencyFormatterAndroid, Object caller);
+      // Original name: org_chromium_components_payments_ErrorMessageUtil_getNotSupportedErrorMessage
+      public static native String M48LriN_(String[] methods);
+      // Original name: org_chromium_components_payments_JniPaymentApp_getInstrumentMethodNames
+      public static native String[] McL$JgEC(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_isValidForPaymentMethodData
+      public static native boolean MRag5HOD(long nativeJniPaymentApp, String method, Object dataByteBuffer);
+      // Original name: org_chromium_components_payments_JniPaymentApp_handlesShippingAddress
+      public static native boolean McrEaHZb(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_handlesPayerName
+      public static native boolean MFs5Lo5_(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_handlesPayerEmail
+      public static native boolean MxH2M7Qu(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_handlesPayerPhone
+      public static native boolean Mz9bB0kb(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_getCountryCode
+      public static native String MVauQfUP(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_canMakePayment
+      public static native boolean MSRfo5q7(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_canPreselect
+      public static native boolean MOoH91qV(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_isUserGestureRequiredToSkipUi
+      public static native boolean MU6Mtkqz(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_invokePaymentApp
+      public static native void MdDxV11A(long nativeJniPaymentApp, Object callback);
+      // Original name: org_chromium_components_payments_JniPaymentApp_updateWith
+      public static native void MKIICwOk(long nativeJniPaymentApp, Object responseByteBuffer);
+      // Original name: org_chromium_components_payments_JniPaymentApp_onPaymentDetailsNotUpdated
+      public static native void M1KlGngz(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_isWaitingForPaymentDetailsUpdate
+      public static native boolean MY9Q_PcC(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_abortPaymentApp
+      public static native void Mix09tOZ(long nativeJniPaymentApp, Object callback);
+      // Original name: org_chromium_components_payments_JniPaymentApp_isReadyForMinimalUI
+      public static native boolean MfxbAxL$(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_accountBalance
+      public static native String MBu_znl4(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_disableShowingOwnUI
+      public static native void M89HArmx(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_getApplicationIdentifierToHide
+      public static native String MJ23g7SX(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_getApplicationIdentifiersThatHideThisApp
+      public static native String[] MMxfB3ye(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_getUkmSourceId
+      public static native long MNEirz5D(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JniPaymentApp_setPaymentHandlerHost
+      public static native void M_McFosm(long nativeJniPaymentApp, Object paymentHandlerHost);
+      // Original name: org_chromium_components_payments_JniPaymentApp_freeNativeObject
+      public static native void MvY3Yqx_(long nativeJniPaymentApp);
+      // Original name: org_chromium_components_payments_JourneyLogger_initJourneyLoggerAndroid
+      public static native long MgtvkzAJ(Object caller, boolean isIncognito, Object webContents);
+      // Original name: org_chromium_components_payments_JourneyLogger_destroy
+      public static native void MK$_cVJA(long nativeJourneyLoggerAndroid, Object caller);
+      // Original name: org_chromium_components_payments_JourneyLogger_setNumberOfSuggestionsShown
+      public static native void MPFG5SwC(long nativeJourneyLoggerAndroid, Object caller, int section, int number, boolean hasCompleteSuggestion);
+      // Original name: org_chromium_components_payments_JourneyLogger_setCanMakePaymentValue
+      public static native void MzcQanKX(long nativeJourneyLoggerAndroid, Object caller, boolean value);
+      // Original name: org_chromium_components_payments_JourneyLogger_setHasEnrolledInstrumentValue
+      public static native void Ma1hMajT(long nativeJourneyLoggerAndroid, Object caller, boolean value);
+      // Original name: org_chromium_components_payments_JourneyLogger_setEventOccurred
+      public static native void Mb7SmCEg(long nativeJourneyLoggerAndroid, Object caller, int event);
+      // Original name: org_chromium_components_payments_JourneyLogger_setSelectedMethod
+      public static native void M9Jdo06k(long nativeJourneyLoggerAndroid, Object caller, int paymentMethodCategory);
+      // Original name: org_chromium_components_payments_JourneyLogger_setAvailableMethod
+      public static native void MH8h6Eyr(long nativeJourneyLoggerAndroid, Object caller, int paymentMethodCategory);
+      // Original name: org_chromium_components_payments_JourneyLogger_setRequestedInformation
+      public static native void MyrdhicN(long nativeJourneyLoggerAndroid, Object caller, boolean requestShipping, boolean requestEmail, boolean requestPhone, boolean requestName);
+      // Original name: org_chromium_components_payments_JourneyLogger_setRequestedPaymentMethodTypes
+      public static native void MTwV5iBO(long nativeJourneyLoggerAndroid, Object caller, boolean requestedBasicCard, boolean requestedMethodGoogle, boolean requestedMethodOther);
+      // Original name: org_chromium_components_payments_JourneyLogger_setCompleted
+      public static native void My$biNCo(long nativeJourneyLoggerAndroid, Object caller);
+      // Original name: org_chromium_components_payments_JourneyLogger_setAborted
+      public static native void MMB_UdCu(long nativeJourneyLoggerAndroid, Object caller, int reason);
+      // Original name: org_chromium_components_payments_JourneyLogger_setNotShown
+      public static native void MPhEgSJd(long nativeJourneyLoggerAndroid, Object caller, int reason);
+      // Original name: org_chromium_components_payments_JourneyLogger_recordTransactionAmount
+      public static native void M7kt1TFI(long nativeJourneyLoggerAndroid, Object caller, String currency, String value, boolean completed);
+      // Original name: org_chromium_components_payments_JourneyLogger_recordCheckoutStep
+      public static native void MpLIjj0f(long nativeJourneyLoggerAndroid, Object caller, int step);
+      // Original name: org_chromium_components_payments_JourneyLogger_setTriggerTime
+      public static native void MN_WbtBu(long nativeJourneyLoggerAndroid, Object caller);
+      // Original name: org_chromium_components_payments_JourneyLogger_setPaymentAppUkmSourceId
+      public static native void MMsq7cME(long nativeJourneyLoggerAndroid, Object caller, long sourceId);
+      // Original name: org_chromium_components_payments_OriginSecurityChecker_isOriginSecure
+      public static native boolean MdU5wLP0(Object url);
+      // Original name: org_chromium_components_payments_OriginSecurityChecker_isSchemeCryptographic
+      public static native boolean MHuHQ1NP(Object url);
+      // Original name: org_chromium_components_payments_PaymentFeatureList_isEnabled
+      public static native boolean M1X7xdZV(String featureName);
+      // Original name: org_chromium_components_payments_PaymentHandlerHost_init
+      public static native long MNMwlyDN(Object webContents, Object listener);
+      // Original name: org_chromium_components_payments_PaymentHandlerHost_isWaitingForPaymentDetailsUpdate
+      public static native boolean MP9HwcPo(long nativePaymentHandlerHost);
+      // Original name: org_chromium_components_payments_PaymentHandlerHost_updateWith
+      public static native void MctjpILQ(long nativePaymentHandlerHost, Object responseBuffer);
+      // Original name: org_chromium_components_payments_PaymentHandlerHost_onPaymentDetailsNotUpdated
+      public static native void MMPRXzHl(long nativePaymentHandlerHost);
+      // Original name: org_chromium_components_payments_PaymentHandlerHost_destroy
+      public static native void MDWZVETg(long nativePaymentHandlerHost);
+      // Original name: org_chromium_components_payments_PaymentHandlerNavigationThrottle_markPaymentHandlerWebContents
+      public static native void Ma2gt_BX(Object webContents);
+      // Original name: org_chromium_components_payments_PaymentManifestDownloader_init
+      public static native long MzoXDvTe(Object webContents);
+      // Original name: org_chromium_components_payments_PaymentManifestDownloader_downloadPaymentMethodManifest
+      public static native void MCkwfWHm(long nativePaymentManifestDownloaderAndroid, Object caller, Object merchantOrigin, Object methodName, Object callback);
+      // Original name: org_chromium_components_payments_PaymentManifestDownloader_downloadWebAppManifest
+      public static native void MpedIYcV(long nativePaymentManifestDownloaderAndroid, Object caller, Object paymentMethodManifestOrigin, Object webAppManifestUri, Object callback);
+      // Original name: org_chromium_components_payments_PaymentManifestDownloader_destroy
+      public static native void MJUrxDH$(long nativePaymentManifestDownloaderAndroid, Object caller);
+      // Original name: org_chromium_components_payments_PaymentManifestDownloader_createOpaqueOriginForTest
+      public static native Object MzutsE0Z();
+      // Original name: org_chromium_components_payments_PaymentManifestParser_createPaymentManifestParserAndroid
+      public static native long MfK4x$Iq(Object webContents);
+      // Original name: org_chromium_components_payments_PaymentManifestParser_destroyPaymentManifestParserAndroid
+      public static native void MFuu4tOD(long nativePaymentManifestParserAndroid);
+      // Original name: org_chromium_components_payments_PaymentManifestParser_parsePaymentMethodManifest
+      public static native void M$4TUaJ7(long nativePaymentManifestParserAndroid, Object manifestUrl, String content, Object callback);
+      // Original name: org_chromium_components_payments_PaymentManifestParser_parseWebAppManifest
+      public static native void MhPu7GL6(long nativePaymentManifestParserAndroid, String content, Object callback);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_create
+      public static native long MAELBHG4(Object optionsByteBuffer, Object detailsByteBuffer, Object[] methodDataByteBuffers, String appLocale);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_updateWith
+      public static native void MnD0tUEj(long nativePaymentRequestSpec, Object detailsByteBuffer);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_retry
+      public static native void MiyjJ0og(long nativePaymentRequestSpec, Object validationErrorsByteBuffer);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_recomputeSpecForDetails
+      public static native void M_B2Caox(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_selectedShippingOptionError
+      public static native String MCGOhrza(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_destroy
+      public static native void MiX2Cegu(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_getPaymentDetails
+      public static native byte[] MNkVMjnE(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_getMethodData
+      public static native byte[][] MFWoiqvU(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentRequestSpec_getPaymentOptions
+      public static native byte[] Mc7EwNM$(long nativePaymentRequestSpec);
+      // Original name: org_chromium_components_payments_PaymentValidator_validatePaymentDetailsAndroid
+      public static native boolean MFiPq6M_(Object buffer);
+      // Original name: org_chromium_components_payments_PaymentValidator_validatePaymentValidationErrorsAndroid
+      public static native boolean MQ3mQqrV(Object buffer);
+      // Original name: org_chromium_components_payments_SslValidityChecker_getInvalidSslCertificateErrorMessage
+      public static native String MnWerMBV(Object webContents);
+      // Original name: org_chromium_components_payments_SslValidityChecker_isValidPageInPaymentHandlerWindow
+      public static native boolean Me8yLh8j(Object webContents);
+      // Original name: org_chromium_components_payments_UrlUtil_isOriginAllowedToUseWebPaymentApis
+      public static native boolean MIhiwY_4(Object url);
+      // Original name: org_chromium_components_payments_UrlUtil_isLocalDevelopmentUrl
+      public static native boolean MSVZEfSr(Object url);
+      // Original name: org_chromium_components_permissions_PermissionDialogDelegate_accept
+      public static native void MoC5mife(long nativePermissionDialogDelegate, Object caller);
+      // Original name: org_chromium_components_permissions_PermissionDialogDelegate_cancel
+      public static native void MG2fhXvZ(long nativePermissionDialogDelegate, Object caller);
+      // Original name: org_chromium_components_permissions_PermissionDialogDelegate_dismissed
+      public static native void My1ZBTOK(long nativePermissionDialogDelegate, Object caller);
+      // Original name: org_chromium_components_permissions_PermissionDialogDelegate_destroy
+      public static native void MLMIuACo(long nativePermissionDialogDelegate, Object caller);
+      // Original name: org_chromium_components_permissions_nfc_NfcSystemLevelSetting_onNfcSystemLevelPromptCompleted
+      public static native void M4qSX4lZ(long callback);
+      // Original name: org_chromium_components_policy_CombinedPolicyProvider_flushPolicies
+      public static native void M81oD3lB(long nativeAndroidCombinedPolicyProvider, Object caller);
+      // Original name: org_chromium_components_policy_PolicyConverter_setPolicyBoolean
+      public static native void MNcVehwq(long nativePolicyConverter, Object caller, String policyKey, boolean value);
+      // Original name: org_chromium_components_policy_PolicyConverter_setPolicyInteger
+      public static native void MX$FOTbg(long nativePolicyConverter, Object caller, String policyKey, int value);
+      // Original name: org_chromium_components_policy_PolicyConverter_setPolicyString
+      public static native void Mu_Zn154(long nativePolicyConverter, Object caller, String policyKey, String value);
+      // Original name: org_chromium_components_policy_PolicyConverter_setPolicyStringArray
+      public static native void MLFU3fY7(long nativePolicyConverter, Object caller, String policyKey, String[] value);
+      // Original name: org_chromium_components_policy_PolicyMap_hasValue
+      public static native boolean MImr1kgV(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_getIntValue
+      public static native int MNIDvfzY(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_getBooleanValue
+      public static native boolean MG3FgY5r(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_getStringValue
+      public static native String MEWWQoKk(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_getListValue
+      public static native String MQRev50_(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_getDictValue
+      public static native String MKY_klU2(long nativePolicyMap, Object caller, String policy);
+      // Original name: org_chromium_components_policy_PolicyMap_equals
+      public static native boolean MiO$KcSn(long nativePolicyMap, Object caller, long nativeOtherPolicyMap);
+      // Original name: org_chromium_components_policy_PolicyService_addObserver
+      public static native void M4YsjnbO(long nativePolicyService, Object caller);
+      // Original name: org_chromium_components_policy_PolicyService_removeObserver
+      public static native void MU0pXsSP(long nativePolicyService, Object caller);
+      // Original name: org_chromium_components_policy_PolicyService_isInitializationComplete
+      public static native boolean MCCtS0px(long nativePolicyService, Object caller);
+      // Original name: org_chromium_components_policy_PolicyService_getPolicies
+      public static native Object MtJKACFn(long nativePolicyService, Object caller);
+      // Original name: org_chromium_components_prefs_PrefService_clearPref
+      public static native void MRGBEdxZ(long nativePrefServiceAndroid, String preference);
+      // Original name: org_chromium_components_prefs_PrefService_getBoolean
+      public static native boolean MzIXnlkD(long nativePrefServiceAndroid, String preference);
+      // Original name: org_chromium_components_prefs_PrefService_setBoolean
+      public static native void Mf2ABpoH(long nativePrefServiceAndroid, String preference, boolean value);
+      // Original name: org_chromium_components_prefs_PrefService_getInteger
+      public static native int MzGf81GW(long nativePrefServiceAndroid, String preference);
+      // Original name: org_chromium_components_prefs_PrefService_setInteger
+      public static native void MPBZLcVx(long nativePrefServiceAndroid, String preference, int value);
+      // Original name: org_chromium_components_prefs_PrefService_getString
+      public static native String Ma80fvz5(long nativePrefServiceAndroid, String preference);
+      // Original name: org_chromium_components_prefs_PrefService_setString
+      public static native void MY13p7Sp(long nativePrefServiceAndroid, String preference, String value);
+      // Original name: org_chromium_components_prefs_PrefService_isManagedPreference
+      public static native boolean MrEgF7hX(long nativePrefServiceAndroid, String preference);
+      // Original name: org_chromium_components_safe_1browsing_SafeBrowsingApiBridge_onUrlCheckDone
+      public static native void M3tDaVsh(long callbackId, int resultStatus, String metadata, long checkDelta);
+      // Original name: org_chromium_components_security_1interstitials_CaptivePortalHelper_setCaptivePortalCertificateForTesting
+      public static native void MZW64TXU(String spkiHash);
+      // Original name: org_chromium_components_security_1interstitials_CaptivePortalHelper_setOSReportsCaptivePortalForTesting
+      public static native void MVYBH9Mh(boolean osReportsCaptivePortal);
+      // Original name: org_chromium_components_security_1state_SecurityStateModel_getSecurityLevelForWebContents
+      public static native int MYsxmQ1h(Object webContents);
+      // Original name: org_chromium_components_spellcheck_SpellCheckerSessionBridge_processSpellCheckResults
+      public static native void M3JV9hBl(long nativeSpellCheckerSessionBridge, Object caller, int[] offsets, int[] lengths, String[][] suggestions);
+      // Original name: org_chromium_components_subresource_1filter_SubresourceFilterFeatureList_isEnabled
+      public static native boolean MK7GTxrW(String featureName);
+      // Original name: org_chromium_components_translate_TranslateFeatureList_isEnabled
+      public static native boolean MI_WWqtz(String featureName);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_fixupUrl
+      public static native Object Ml2KxI$W(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForDisplayOmitScheme
+      public static native String M25QTkfm(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForDisplayOmitHTTPScheme
+      public static native String MWAcU8Kr(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForDisplayOmitSchemeOmitTrivialSubdomains
+      public static native String MeroQv$e(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForDisplayOmitSchemePathAndTrivialSubdomains
+      public static native String MpICpYBr(Object url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForDisplayOmitUsernamePassword
+      public static native String M52RypMk(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForCopy
+      public static native String MWcP3rTG(String url);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatUrlForSecurityDisplay
+      public static native String MN7bz_Mm(Object url, int schemeDisplay);
+      // Original name: org_chromium_components_url_1formatter_UrlFormatter_formatStringUrlForSecurityDisplay
+      public static native String MR6Af3ZS(String url, int schemeDisplay);
+      // Original name: org_chromium_components_user_1prefs_UserPrefs_get
+      public static native Object MeUSzoBw(Object browserContextHandle);
+      // Original name: org_chromium_components_variations_VariationsAssociatedData_getVariationParamValue
+      public static native String MOVY9QtZ(String trialName, String paramName);
+      // Original name: org_chromium_components_variations_VariationsAssociatedData_getFeedbackVariations
+      public static native String Mkq2qJev();
+      // Original name: org_chromium_components_variations_VariationsAssociatedData_getGoogleAppVariations
+      public static native String M_cRNcHs();
+      // Original name: org_chromium_components_viz_service_frame_1sinks_ExternalBeginFrameSourceAndroid_onVSync
+      public static native void Mhc_M_H$(long nativeExternalBeginFrameSourceAndroid, Object caller, long vsyncTimeMicros, long vsyncPeriodMicros);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_initialize
+      public static native long MBJ_fnwd(Object instance);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_startForAppMenu
+      public static native void MH3_t6hY(long nativeAddToHomescreenMediator, Object webContents, int titleId);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_addToHomescreen
+      public static native void MQa5VwR6(long nativeAddToHomescreenMediator, String title);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_onNativeDetailsShown
+      public static native void MpeFYmhO(long nativeAddToHomescreenMediator);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_onUiDismissed
+      public static native void M3ujfdbM(long nativeAddToHomescreenMediator);
+      // Original name: org_chromium_components_webapps_AddToHomescreenMediator_destroy
+      public static native void MwQAZYNv(long nativeAddToHomescreenMediator);
+      // Original name: org_chromium_components_webapps_AppBannerManager_getJavaBannerManagerForWebContents
+      public static native Object MbHcYdCX(Object webContents);
+      // Original name: org_chromium_components_webapps_AppBannerManager_getInstallableWebAppName
+      public static native String MvBgz9uo(Object webContents);
+      // Original name: org_chromium_components_webapps_AppBannerManager_onAppDetailsRetrieved
+      public static native boolean MpPa5KMX(long nativeAppBannerManagerAndroid, Object caller, Object data, String title, String packageName, String imageUrl);
+      // Original name: org_chromium_components_webapps_AppBannerManager_ignoreChromeChannelForTesting
+      public static native void MM2ZWACv();
+      // Original name: org_chromium_components_webapps_AppBannerManager_isRunningForTesting
+      public static native boolean MDGrb$rI(long nativeAppBannerManagerAndroid, Object caller);
+      // Original name: org_chromium_components_webapps_AppBannerManager_setDaysAfterDismissAndIgnoreToTrigger
+      public static native void M69uI4fw(int dismissDays, int ignoreDays);
+      // Original name: org_chromium_components_webapps_AppBannerManager_setTimeDeltaForTesting
+      public static native void Mp7oANTj(int days);
+      // Original name: org_chromium_components_webapps_AppBannerManager_setTotalEngagementToTrigger
+      public static native void MP4$M5HJ(double engagement);
+      // Original name: org_chromium_components_webapps_installable_InstallableAmbientBadgeInfoBar_addToHomescreen
+      public static native void MzHO1MxZ(long nativeInstallableAmbientBadgeInfoBar, Object caller);
+      // Original name: org_chromium_content_app_ContentChildProcessServiceDelegate_initChildProcess
+      public static native void MBlO3kR9(Object caller, int cpuCount, long cpuFeatures);
+      // Original name: org_chromium_content_app_ContentChildProcessServiceDelegate_retrieveFileDescriptorsIdsToKeys
+      public static native void M0zXFFiu(Object caller);
+      // Original name: org_chromium_content_app_ContentMain_start
+      public static native int M1Y_XVCN(boolean startMinimalBrowser);
+      // Original name: org_chromium_content_browser_AppWebMessagePort_decodeStringMessage
+      public static native String MWL_OG7s(byte[] encodedData);
+      // Original name: org_chromium_content_browser_AppWebMessagePort_encodeStringMessage
+      public static native byte[] Mk6SEKCp(String message);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_createPair
+      public static native long[] MZ2WfWkn();
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_create
+      public static native long MsjrrfZt(int nativeHandle, long idLow, long idHigh, long sequenceNumber);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_takeHandleToEntangle
+      public static native int MbOQIpGw(long blinkMessagePortDescriptor);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_giveDisentangledHandle
+      public static native void MylsTJ$B(long blinkMessagePortDescriptor, int nativeHandle);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_onConnectionError
+      public static native void MpISG4bN(long blinkMessagePortDescriptor);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_passSerialized
+      public static native long[] MJJP$CQY(long blinkMessagePortDescriptor);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_closeAndDestroy
+      public static native void MWkkqfl2(long blinkMessagePortDescriptor);
+      // Original name: org_chromium_content_browser_AppWebMessagePortDescriptor_disentangleCloseAndDestroy
+      public static native void MgnCh9Wp(long blinkMessagePortDescriptor);
+      // Original name: org_chromium_content_browser_AudioFocusDelegate_onSuspend
+      public static native void MUFA7yj7(long nativeAudioFocusDelegateAndroid, Object caller);
+      // Original name: org_chromium_content_browser_AudioFocusDelegate_onResume
+      public static native void MqbF3KiE(long nativeAudioFocusDelegateAndroid, Object caller);
+      // Original name: org_chromium_content_browser_AudioFocusDelegate_onStartDucking
+      public static native void My_SIOp6(long nativeAudioFocusDelegateAndroid, Object caller);
+      // Original name: org_chromium_content_browser_AudioFocusDelegate_onStopDucking
+      public static native void MeoE5HbI(long nativeAudioFocusDelegateAndroid, Object caller);
+      // Original name: org_chromium_content_browser_AudioFocusDelegate_recordSessionDuck
+      public static native void Mn3dG6eh(long nativeAudioFocusDelegateAndroid, Object caller);
+      // Original name: org_chromium_content_browser_BackgroundSyncNetworkObserver_notifyConnectionTypeChanged
+      public static native void MJIG3QvD(long nativePtr, Object caller, int newConnectionType);
+      // Original name: org_chromium_content_browser_BrowserStartupControllerImpl_setCommandLineFlags
+      public static native void MwoPtAzD(boolean singleProcess);
+      // Original name: org_chromium_content_browser_BrowserStartupControllerImpl_flushStartupTasks
+      public static native void M9iLjy6T();
+      // Original name: org_chromium_content_browser_ChildProcessLauncherHelperImpl_onChildProcessStarted
+      public static native void MXR$KaDS(long nativeChildProcessLauncherHelper, int pid);
+      // Original name: org_chromium_content_browser_ChildProcessLauncherHelperImpl_setTerminationInfo
+      public static native void MJcoZ9pW(long termiantionInfoPtr, int bindingState, boolean killedByUs, boolean cleanExit, boolean exceptionDuringInit, int remainingStrong, int remainingModerate, int remainingWaived, int reverseRank);
+      // Original name: org_chromium_content_browser_ChildProcessLauncherHelperImpl_serviceGroupImportanceEnabled
+      public static native boolean MyYLH6Fg();
+      // Original name: org_chromium_content_browser_ContactsDialogHost_addContact
+      public static native void MS9BZrW0(long nativeContactsProviderAndroid, String[] names, String[] emails, String[] tel, Object[] addresses, Object[] icons);
+      // Original name: org_chromium_content_browser_ContactsDialogHost_endContactsList
+      public static native void MwwTaBAE(long nativeContactsProviderAndroid, int percentageShared, int propertiesRequested);
+      // Original name: org_chromium_content_browser_ContactsDialogHost_endWithPermissionDenied
+      public static native void MOM50EIZ(long nativeContactsProviderAndroid);
+      // Original name: org_chromium_content_browser_ContentFeatureListImpl_isEnabled
+      public static native boolean Mudil8Bg(String featureName);
+      // Original name: org_chromium_content_browser_ContentUiEventHandler_init
+      public static native long MXL6itCa(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_ContentUiEventHandler_sendMouseWheelEvent
+      public static native void MifdK0lh(long nativeContentUiEventHandler, Object caller, long timeMs, float x, float y, float ticksX, float ticksY);
+      // Original name: org_chromium_content_browser_ContentUiEventHandler_sendMouseEvent
+      public static native void MjyjK8Gd(long nativeContentUiEventHandler, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
+      // Original name: org_chromium_content_browser_ContentUiEventHandler_sendScrollEvent
+      public static native void M_1sgTVt(long nativeContentUiEventHandler, Object caller, long timeMs, float deltaX, float deltaY);
+      // Original name: org_chromium_content_browser_ContentUiEventHandler_cancelFling
+      public static native void MW$k83qi(long nativeContentUiEventHandler, Object caller, long timeMs);
+      // Original name: org_chromium_content_browser_ContentViewStaticsImpl_setWebKitSharedTimersSuspended
+      public static native void M556jcRe(boolean suspend);
+      // Original name: org_chromium_content_browser_GestureListenerManagerImpl_init
+      public static native long MefCIE9S(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_GestureListenerManagerImpl_resetGestureDetection
+      public static native void MMR0DKoy(long nativeGestureListenerManager, Object caller);
+      // Original name: org_chromium_content_browser_GestureListenerManagerImpl_setDoubleTapSupportEnabled
+      public static native void MrZmTSS9(long nativeGestureListenerManager, Object caller, boolean enabled);
+      // Original name: org_chromium_content_browser_GestureListenerManagerImpl_setMultiTouchZoomSupportEnabled
+      public static native void M6a5zchR(long nativeGestureListenerManager, Object caller, boolean enabled);
+      // Original name: org_chromium_content_browser_GestureListenerManagerImpl_setHasListenersAttached
+      public static native void M9FEGIKH(long nativeGestureListenerManager, boolean hasListeners);
+      // Original name: org_chromium_content_browser_GpuProcessCallback_completeScopedSurfaceRequest
+      public static native void M$O7xE3y(Object requestToken, Object surface);
+      // Original name: org_chromium_content_browser_GpuProcessCallback_getViewSurface
+      public static native Object Mm9rCM0m(int surfaceId);
+      // Original name: org_chromium_content_browser_JavascriptInjectorImpl_init
+      public static native long MaMB25XA(Object caller, Object webContents, Object retainedObjects);
+      // Original name: org_chromium_content_browser_JavascriptInjectorImpl_setAllowInspection
+      public static native void M9VsdpoI(long nativeJavascriptInjector, Object caller, boolean allow);
+      // Original name: org_chromium_content_browser_JavascriptInjectorImpl_addInterface
+      public static native void Mpa5DCUY(long nativeJavascriptInjector, Object caller, Object object, String name, Class requiredAnnotation);
+      // Original name: org_chromium_content_browser_JavascriptInjectorImpl_removeInterface
+      public static native void M5J62vXh(long nativeJavascriptInjector, Object caller, String name);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_resume
+      public static native void MlezJYnz(long nativeMediaSessionAndroid, Object caller);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_suspend
+      public static native void M5LC9gX$(long nativeMediaSessionAndroid, Object caller);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_stop
+      public static native void MW5s36cs(long nativeMediaSessionAndroid, Object caller);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_seek
+      public static native void My_T5ZML(long nativeMediaSessionAndroid, Object caller, long millis);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_seekTo
+      public static native void MK7btVfc(long nativeMediaSessionAndroid, Object caller, long millis);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_didReceiveAction
+      public static native void MAqRqyJa(long nativeMediaSessionAndroid, Object caller, int action);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_requestSystemAudioFocus
+      public static native void MdnoDrDw(long nativeMediaSessionAndroid, Object caller);
+      // Original name: org_chromium_content_browser_MediaSessionImpl_getMediaSessionFromWebContents
+      public static native Object Mtun$qW8(Object contents);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_isReady
+      public static native boolean MZn2HluM(long nativeRenderWidgetHostViewAndroid, Object caller);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_getBackgroundColor
+      public static native int MRWsmoin(long nativeRenderWidgetHostViewAndroid, Object caller);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_dismissTextHandles
+      public static native void MQWja$xA(long nativeRenderWidgetHostViewAndroid, Object caller);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_showContextMenuAtTouchHandle
+      public static native void McU85DFE(long nativeRenderWidgetHostViewAndroid, Object caller, int x, int y);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_onViewportInsetBottomChanged
+      public static native void Myd8R_Wn(long nativeRenderWidgetHostViewAndroid, Object caller);
+      // Original name: org_chromium_content_browser_RenderWidgetHostViewImpl_writeContentBitmapToDiskAsync
+      public static native void Mjmv7RJS(long nativeRenderWidgetHostViewAndroid, Object caller, int width, int height, String path, Object callback);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onAudioStart
+      public static native void MdhaXGcn(long nativeSpeechRecognizerImplAndroid, Object caller);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onSoundStart
+      public static native void M2Nl8ID9(long nativeSpeechRecognizerImplAndroid, Object caller);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onSoundEnd
+      public static native void MFB2QCbe(long nativeSpeechRecognizerImplAndroid, Object caller);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onAudioEnd
+      public static native void M2TRi32V(long nativeSpeechRecognizerImplAndroid, Object caller);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onRecognitionResults
+      public static native void MnkvkoGY(long nativeSpeechRecognizerImplAndroid, Object caller, String[] results, float[] scores, boolean provisional);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onRecognitionError
+      public static native void MUf_fHKN(long nativeSpeechRecognizerImplAndroid, Object caller, int error);
+      // Original name: org_chromium_content_browser_SpeechRecognitionImpl_onRecognitionEnd
+      public static native void MmgQYR9M(long nativeSpeechRecognizerImplAndroid, Object caller);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_init
+      public static native long MWlLnA$6(Object caller);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_destroy
+      public static native void MLYQdwUF(long nativeTracingControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_startTracing
+      public static native boolean MZYMIGWv(long nativeTracingControllerAndroid, Object caller, String categories, String traceOptions, boolean useProtobuf);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_stopTracing
+      public static native void M$HKWu8q(long nativeTracingControllerAndroid, Object caller, String filename, boolean compressFile, boolean useProtobuf, Object callback);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_getKnownCategoriesAsync
+      public static native boolean MdRNuqnW(long nativeTracingControllerAndroid, Object caller, Object callback);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_getDefaultCategories
+      public static native String My9pNx9O(Object caller);
+      // Original name: org_chromium_content_browser_TracingControllerAndroidImpl_getTraceBufferUsageAsync
+      public static native boolean MkLMghix(long nativeTracingControllerAndroid, Object caller, Object callback);
+      // Original name: org_chromium_content_browser_TtsPlatformImpl_voicesChanged
+      public static native void MpJkwIUo(long nativeTtsPlatformImplAndroid);
+      // Original name: org_chromium_content_browser_TtsPlatformImpl_onEndEvent
+      public static native void M47GdBO5(long nativeTtsPlatformImplAndroid, int utteranceId);
+      // Original name: org_chromium_content_browser_TtsPlatformImpl_onStartEvent
+      public static native void M2$X0reE(long nativeTtsPlatformImplAndroid, int utteranceId);
+      // Original name: org_chromium_content_browser_TtsPlatformImpl_onErrorEvent
+      public static native void M1Kw17GB(long nativeTtsPlatformImplAndroid, int utteranceId);
+      // Original name: org_chromium_content_browser_accessibility_BrowserAccessibilityState_onAnimatorDurationScaleChanged
+      public static native void MAa7bxOG();
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_init
+      public static native long MjYAnP1s(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_deleteEarly
+      public static native void MxGfnb$m(long nativeWebContentsAccessibilityAndroid);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_onAutofillPopupDisplayed
+      public static native void MMiqVowe(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_onAutofillPopupDismissed
+      public static native void MdET073e(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getIdForElementAfterElementHostingAutofillPopup
+      public static native int Mk31b3DX(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getRootId
+      public static native int MI8pU34f(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isNodeValid
+      public static native boolean MTBNGzHX(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isAutofillPopupNode
+      public static native boolean M5uHFthk(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isEditableText
+      public static native boolean MCMbXu4W(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isFocused
+      public static native boolean M8UuMlLD(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getEditableTextSelectionStart
+      public static native int MnVi6Frs(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getEditableTextSelectionEnd
+      public static native int Mxt_kc4Q(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_updateCachedAccessibilityNodeInfo
+      public static native boolean MZ7sDynr(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_populateAccessibilityNodeInfo
+      public static native boolean MJGtghd9(long nativeWebContentsAccessibilityAndroid, Object caller, Object info, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_populateAccessibilityEvent
+      public static native boolean M2E1dEU9(long nativeWebContentsAccessibilityAndroid, Object caller, Object event, int id, int eventType);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_click
+      public static native void MM4OAOXm(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_focus
+      public static native void MG_OiJKg(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_blur
+      public static native void MNm00fYN(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_scrollToMakeNodeVisible
+      public static native void MB302_MP(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_findElementType
+      public static native int MavOU0SM(long nativeWebContentsAccessibilityAndroid, Object caller, int startId, String elementType, boolean forwards, boolean canWrapToLastElement);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setTextFieldValue
+      public static native void MEJD7Boi(long nativeWebContentsAccessibilityAndroid, Object caller, int id, String newValue);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setSelection
+      public static native void MVuu0R4P(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int end);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_nextAtGranularity
+      public static native boolean McKjfBnu(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_previousAtGranularity
+      public static native boolean M3suD0ji(long nativeWebContentsAccessibilityAndroid, Object caller, int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_adjustSlider
+      public static native boolean MLjXc4lw(long nativeWebContentsAccessibilityAndroid, Object caller, int id, boolean increment);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_moveAccessibilityFocus
+      public static native void MPQKLw45(long nativeWebContentsAccessibilityAndroid, Object caller, int oldId, int newId);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isSlider
+      public static native boolean MkaakTGI(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_scroll
+      public static native boolean MNch0m9c(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int direction, boolean pageScroll);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setRangeValue
+      public static native boolean MfTAAcu8(long nativeWebContentsAccessibilityAndroid, Object caller, int id, float value);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getSupportedHtmlElementTypes
+      public static native String MPyIoFYC(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_showContextMenu
+      public static native void MOikWIf9(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_isEnabled
+      public static native boolean Mr9fGid2(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_enable
+      public static native void Mg$cuhZc(long nativeWebContentsAccessibilityAndroid, Object caller);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_areInlineTextBoxesLoaded
+      public static native boolean MZcfOSQW(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_loadInlineTextBoxes
+      public static native void M2WbOJ7$(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getCharacterBoundingBoxes
+      public static native int[] MVBiMGvZ(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int start, int len);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getTextLength
+      public static native int MhMiVz6m(long nativeWebContentsAccessibilityAndroid, Object caller, int id);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_addSpellingErrorForTesting
+      public static native void MzygGmQh(long nativeWebContentsAccessibilityAndroid, Object caller, int id, int startOffset, int endOffset);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setMaxContentChangedEventsToFireForTesting
+      public static native void MjtR1x1L(long nativeWebContentsAccessibilityAndroid, Object caller, int maxEvents);
+      // Original name: org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getMaxContentChangedEventsToFireForTesting
+      public static native int MoCCC$f_(long nativeWebContentsAccessibilityAndroid);
+      // Original name: org_chromium_content_browser_accessibility_captioning_CaptioningController_init
+      public static native long MX95jWaj(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_accessibility_captioning_CaptioningController_setTextTrackSettings
+      public static native void MM3_AH7F(long nativeCaptioningController, Object caller, boolean textTracksEnabled, String textTrackBackgroundColor, String textTrackFontFamily, String textTrackFontStyle, String textTrackFontVariant, String textTrackTextColor, String textTrackTextShadow, String textTrackTextSize);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_init
+      public static native long MqPi0d6D(Object caller, long high, long low, boolean isPowerEfficient);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_completeInit
+      public static native void MQAm7B7f(long nativeDialogOverlayImpl, Object caller);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_destroy
+      public static native void MJj9v_ba(long nativeDialogOverlayImpl, Object caller);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_getCompositorOffset
+      public static native void MAd6qeVr(long nativeDialogOverlayImpl, Object caller, Object rect);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_registerSurface
+      public static native int MpcpmTlm(Object surface);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_unregisterSurface
+      public static native void M1e4GdYZ(int surfaceId);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_lookupSurfaceForTesting
+      public static native Object MzUgOpRk(int surfaceId);
+      // Original name: org_chromium_content_browser_androidoverlay_DialogOverlayImpl_notifyDestroyedSynchronously
+      public static native void MFq0hOYg(int messagePipeHandle);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_canGoBack
+      public static native boolean MgAw5sIR(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_canGoForward
+      public static native boolean MCUxt83x(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_isInitialNavigation
+      public static native boolean MEOFE6aD(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_loadIfNecessary
+      public static native void MWJb9aa$(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_needsReload
+      public static native boolean MsUTH_HQ(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_setNeedsReload
+      public static native void MQgIP2q9(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_canGoToOffset
+      public static native boolean M4jjW0jG(long nativeNavigationControllerAndroid, Object caller, int offset);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_goBack
+      public static native void Mdhd0AR3(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_goForward
+      public static native void MEEEhNfT(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_goToOffset
+      public static native void ML_uBbdi(long nativeNavigationControllerAndroid, Object caller, int offset);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_goToNavigationIndex
+      public static native void MuxwAbEo(long nativeNavigationControllerAndroid, Object caller, int index);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_cancelPendingReload
+      public static native void MNF4lMMb(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_continuePendingReload
+      public static native void Mp5SLq_N(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_reload
+      public static native void M81h$w2r(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_reloadBypassingCache
+      public static native void My0bMgld(long nativeNavigationControllerAndroid, Object caller, boolean checkForRepost);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl
+      public static native void MAqmDh4t(long nativeNavigationControllerAndroid, Object caller, String url, int loadUrlType, int transitionType, String referrerUrl, int referrerPolicy, int uaOverrideOption, String extraHeaders, Object postData, String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString, boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_clearHistory
+      public static native void MK2ttcH1(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getNavigationHistory
+      public static native int MUZRDUOx(long nativeNavigationControllerAndroid, Object caller, Object history);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getDirectedNavigationHistory
+      public static native void Mx5VuK3_(long nativeNavigationControllerAndroid, Object caller, Object history, boolean isForward, int itemLimit);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_clearSslPreferences
+      public static native void MpKIKzer(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getUseDesktopUserAgent
+      public static native boolean MCIN9$qH(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_setUseDesktopUserAgent
+      public static native void MrilyCK6(long nativeNavigationControllerAndroid, Object caller, boolean override, boolean reloadOnChange);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getEntryAtIndex
+      public static native Object MLcS2$Fy(long nativeNavigationControllerAndroid, Object caller, int index);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getVisibleEntry
+      public static native Object MHqMy8sY(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getPendingEntry
+      public static native Object Mgxh2WfC(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getLastCommittedEntryIndex
+      public static native int Mil0WqAo(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_removeEntryAtIndex
+      public static native boolean MVbDeBRx(long nativeNavigationControllerAndroid, Object caller, int index);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_pruneForwardEntries
+      public static native void M2mQucXv(long nativeNavigationControllerAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_getEntryExtraData
+      public static native String McQE1GI8(long nativeNavigationControllerAndroid, Object caller, int index, String key);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_setEntryExtraData
+      public static native void Mw19wBW8(long nativeNavigationControllerAndroid, Object caller, int index, String key, String value);
+      // Original name: org_chromium_content_browser_framehost_NavigationControllerImpl_isEntryMarkedToBeSkipped
+      public static native boolean MVjP87pN(long nativeNavigationControllerAndroid, Object caller, int index);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_getLastCommittedURL
+      public static native Object MBg$jIAu(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_getLastCommittedOrigin
+      public static native Object Mcdslkop(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_getCanonicalUrlForSharing
+      public static native void MUV0o0vB(long nativeRenderFrameHostAndroid, Object caller, Object callback);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_isFeatureEnabled
+      public static native boolean MqDsGZSU(long nativeRenderFrameHostAndroid, Object caller, int feature);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_getAndroidOverlayRoutingToken
+      public static native Object MJDViTxW(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_notifyUserActivation
+      public static native void M$j92GA1(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_signalModalCloseWatcherIfActive
+      public static native boolean M3ps4Vah(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_isRenderFrameCreated
+      public static native boolean MhaRMzRy(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_getInterfaceToRendererFrame
+      public static native void MXQk8pKb(long nativeRenderFrameHostAndroid, Object caller, String interfacename, int messagePipeRawHandle);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_terminateRendererDueToBadMessage
+      public static native void MnlCu9CQ(long nativeRenderFrameHostAndroid, Object caller, int reason);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_isProcessBlocked
+      public static native boolean M6cbowZq(long nativeRenderFrameHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_performGetAssertionWebAuthSecurityChecks
+      public static native int M5dgGNo$(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
+      // Original name: org_chromium_content_browser_framehost_RenderFrameHostImpl_performMakeCredentialWebAuthSecurityChecks
+      public static native int M2ouq_qG(long nativeRenderFrameHostAndroid, Object caller, String relyingPartyId, Object effectiveOrigin);
+      // Original name: org_chromium_content_browser_input_DateTimeChooserAndroid_replaceDateTime
+      public static native void MgUhdCLo(long nativeDateTimeChooserAndroid, Object caller, double dialogValue);
+      // Original name: org_chromium_content_browser_input_DateTimeChooserAndroid_cancelDialog
+      public static native void MCtaZNwj(long nativeDateTimeChooserAndroid, Object caller);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_init
+      public static native long MhbsQh1H(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_sendKeyEvent
+      public static native boolean M1qwlrOP(long nativeImeAdapterAndroid, Object caller, Object event, int type, int modifiers, long timestampMs, int keyCode, int scanCode, boolean isSystemKey, int unicodeChar);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_appendUnderlineSpan
+      public static native void MFfRzF$Z(long spanPtr, int start, int end);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_appendBackgroundColorSpan
+      public static native void MqqhDONa(long spanPtr, int start, int end, int backgroundColor);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_appendSuggestionSpan
+      public static native void M$b45Vvn(long spanPtr, int start, int end, boolean isMisspelling, boolean removeOnFinishComposing, int underlineColor, int suggestionHighlightColor, String[] suggestions);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_setComposingText
+      public static native void Mlslst_P(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_commitText
+      public static native void Mb6t43di(long nativeImeAdapterAndroid, Object caller, Object text, String textStr, int newCursorPosition);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_finishComposingText
+      public static native void M_V5g5ie(long nativeImeAdapterAndroid, Object caller);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_setEditableSelectionOffsets
+      public static native void MmtjCblb(long nativeImeAdapterAndroid, Object caller, int start, int end);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_setComposingRegion
+      public static native void M8ty0WHb(long nativeImeAdapterAndroid, Object caller, int start, int end);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_deleteSurroundingText
+      public static native void M26GCjn5(long nativeImeAdapterAndroid, Object caller, int before, int after);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_deleteSurroundingTextInCodePoints
+      public static native void Mvb046o_(long nativeImeAdapterAndroid, Object caller, int before, int after);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_requestTextInputStateUpdate
+      public static native boolean M7o5Xhhi(long nativeImeAdapterAndroid, Object caller);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_requestCursorUpdate
+      public static native void MdwW1P2L(long nativeImeAdapterAndroid, Object caller, boolean immediateRequest, boolean monitorRequest);
+      // Original name: org_chromium_content_browser_input_ImeAdapterImpl_advanceFocusInForm
+      public static native void Mm_z91JF(long nativeImeAdapterAndroid, Object caller, int focusType);
+      // Original name: org_chromium_content_browser_input_SelectPopup_selectMenuItems
+      public static native void ME0LgXse(long nativeSelectPopup, Object caller, long nativeSelectPopupSourceFrame, int[] indices);
+      // Original name: org_chromium_content_browser_input_TextSuggestionHost_applySpellCheckSuggestion
+      public static native void M7RnYR2r(long nativeTextSuggestionHostAndroid, Object caller, String suggestion);
+      // Original name: org_chromium_content_browser_input_TextSuggestionHost_applyTextSuggestion
+      public static native void MIADbBhq(long nativeTextSuggestionHostAndroid, Object caller, int markerTag, int suggestionIndex);
+      // Original name: org_chromium_content_browser_input_TextSuggestionHost_deleteActiveSuggestionRange
+      public static native void MCBTtv2g(long nativeTextSuggestionHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_input_TextSuggestionHost_onNewWordAddedToDictionary
+      public static native void MpJ8AQhr(long nativeTextSuggestionHostAndroid, Object caller, String word);
+      // Original name: org_chromium_content_browser_input_TextSuggestionHost_onSuggestionMenuClosed
+      public static native void MnvYa0QF(long nativeTextSuggestionHostAndroid, Object caller);
+      // Original name: org_chromium_content_browser_selection_SelectionPopupControllerImpl_init
+      public static native long MJHXNa8U(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_selection_SelectionPopupControllerImpl_setTextHandlesTemporarilyHidden
+      public static native void M01adZlM(long nativeSelectionPopupController, Object caller, boolean hidden);
+      // Original name: org_chromium_content_browser_selection_SmartSelectionClient_init
+      public static native long MFA_dMJC(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_selection_SmartSelectionClient_requestSurroundingText
+      public static native void M2GZ6ZNR(long nativeSmartSelectionClient, Object caller, int numExtraCharacters, int callbackData);
+      // Original name: org_chromium_content_browser_selection_SmartSelectionClient_cancelAllRequests
+      public static native void MVHq2mA2(long nativeSmartSelectionClient, Object caller);
+      // Original name: org_chromium_content_browser_sms_SmsProviderGms_onReceive
+      public static native void MDAxNisW(long nativeSmsProviderGms, String sms, int backend);
+      // Original name: org_chromium_content_browser_sms_SmsProviderGms_onTimeout
+      public static native void Mz9c1Rem(long nativeSmsProviderGms);
+      // Original name: org_chromium_content_browser_sms_SmsProviderGms_onCancel
+      public static native void MqHdTL15(long nativeSmsProviderGms);
+      // Original name: org_chromium_content_browser_sms_SmsProviderGms_onNotAvailable
+      public static native void M$UJTj5O(long nativeSmsProviderGms);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_destroyWebContents
+      public static native void MxxzO9Pe(long webContentsAndroidPtr);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_fromNativePtr
+      public static native Object M$eaBDjM(long webContentsAndroidPtr);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_clearNativeReference
+      public static native void M0iG1Oc2(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getTopLevelNativeWindow
+      public static native Object MunY3e38(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setTopLevelNativeWindow
+      public static native void MOKG_Wbb(long nativeWebContentsAndroid, Object caller, Object windowAndroid);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getMainFrame
+      public static native Object MjidYpBx(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getFocusedFrame
+      public static native Object MT2cFaRc(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getRenderFrameHostFromId
+      public static native Object MZAK3_Tx(long nativeWebContentsAndroid, int renderProcessId, int renderFrameId);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getAllRenderFrameHosts
+      public static native Object[] MEpC20hN(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getRenderWidgetHostView
+      public static native Object Mj9slq6o(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getInnerWebContents
+      public static native Object[] MJSe_z5C(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getVisibility
+      public static native int MOzDgqoz(long nativeWebContentsAndroid);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getTitle
+      public static native String M7OgjMU8(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getVisibleURL
+      public static native Object M8927Uaf(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getEncoding
+      public static native String M4pZ82rG(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isLoading
+      public static native boolean MtSTkEp2(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isLoadingToDifferentDocument
+      public static native boolean M93b11tE(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_dispatchBeforeUnload
+      public static native void M6R_ShZs(long nativeWebContentsAndroid, Object caller, boolean autoCancel);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_stop
+      public static native void M$$25N5$(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_cut
+      public static native void MhIiCaN7(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_copy
+      public static native void MpfMxfut(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_paste
+      public static native void MYRJ_nNk(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_pasteAsPlainText
+      public static native void MdSkKRWg(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_replace
+      public static native void MevqfbP8(long nativeWebContentsAndroid, Object caller, String word);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_selectAll
+      public static native void MNvj1u1S(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_collapseSelection
+      public static native void MDK_KK0z(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_onHide
+      public static native void MHNkuuGQ(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_onShow
+      public static native void MtakfqIH(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setImportance
+      public static native void MkBVGSRs(long nativeWebContentsAndroid, Object caller, int importance);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_suspendAllMediaPlayers
+      public static native void MSOsA4Ii(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setAudioMuted
+      public static native void M4fkbrQM(long nativeWebContentsAndroid, Object caller, boolean mute);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_focusLocationBarByDefault
+      public static native boolean MkIL2bW9(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isFullscreenForCurrentTab
+      public static native boolean M2hIwGoV(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_exitFullscreen
+      public static native void M6c69Eq5(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_scrollFocusedEditableNodeIntoView
+      public static native void MgbVQff0(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_selectWordAroundCaret
+      public static native void MlfwWHGJ(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_adjustSelectionByCharacterOffset
+      public static native void MjgOFo_o(long nativeWebContentsAndroid, Object caller, int startAdjust, int endAdjust, boolean showSelectionMenu);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getLastCommittedURL
+      public static native Object MrqMRJsG(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isIncognito
+      public static native boolean MZbfAARG(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_resumeLoadingCreatedWebContents
+      public static native void MQnLkNkP(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_evaluateJavaScript
+      public static native void M0uS2SDH(long nativeWebContentsAndroid, Object caller, String script, Object callback);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_evaluateJavaScriptForTests
+      public static native void MPoHZQTR(long nativeWebContentsAndroid, Object caller, String script, Object callback);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_addMessageToDevToolsConsole
+      public static native void MseJ7A4a(long nativeWebContentsAndroid, Object caller, int level, String message);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_postMessageToMainFrame
+      public static native void MZFXk0el(long nativeWebContentsAndroid, Object caller, String message, String sourceOrigin, String targetOrigin, Object[] ports);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_hasAccessedInitialDocument
+      public static native boolean M6It8dra(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getThemeColor
+      public static native int MGZCJ6jO(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getLoadProgress
+      public static native float MoQgY_pw(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_requestSmartClipExtract
+      public static native void MHF1rPTW(long nativeWebContentsAndroid, Object caller, Object callback, int x, int y, int width, int height);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_requestAccessibilitySnapshot
+      public static native void M16eLpU9(long nativeWebContentsAndroid, Object caller, Object callback);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setOverscrollRefreshHandler
+      public static native void MTTB8znA(long nativeWebContentsAndroid, Object caller, Object nativeOverscrollRefreshHandler);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setSpatialNavigationDisabled
+      public static native void MjBPqNgx(long nativeWebContentsAndroid, Object caller, boolean disabled);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_downloadImage
+      public static native int Mi3V1mlO(long nativeWebContentsAndroid, Object caller, String url, boolean isFavicon, int maxBitmapSize, boolean bypassCache, Object callback);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setHasPersistentVideo
+      public static native void M12SiBFk(long nativeWebContentsAndroid, Object caller, boolean value);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_hasActiveEffectivelyFullscreenVideo
+      public static native boolean MZao1OQG(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isPictureInPictureAllowedForFullscreenVideo
+      public static native boolean MS0xMYL9(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getFullscreenVideoSize
+      public static native Object MN9JdEk5(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setSize
+      public static native void M7tTrJ_X(long nativeWebContentsAndroid, Object caller, int width, int height);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getWidth
+      public static native int MB0i5_ri(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getHeight
+      public static native int MRVeP4Wk(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_getOrCreateEventForwarder
+      public static native Object MJJFrmZs(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setViewAndroidDelegate
+      public static native void MgyWdCWB(long nativeWebContentsAndroid, Object caller, Object viewDelegate);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_sendOrientationChangeEvent
+      public static native void MlztHl3v(long nativeWebContentsAndroid, Object caller, int orientation);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_onScaleFactorChanged
+      public static native void MqhGkzSt(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setFocus
+      public static native void M9QxNoTJ(long nativeWebContentsAndroid, Object caller, boolean focused);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_setDisplayCutoutSafeArea
+      public static native void MtjP03pj(long nativeWebContentsAndroid, Object caller, int top, int left, int bottom, int right);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_notifyRendererPreferenceUpdate
+      public static native void Mzsx8Sk2(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_notifyBrowserControlsHeightChanged
+      public static native void MgcGzQax(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsImpl_isBeingDestroyed
+      public static native boolean M5A4vDoy(long nativeWebContentsAndroid, Object caller);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsObserverProxy_init
+      public static native long MTpUzW91(Object caller, Object webContents);
+      // Original name: org_chromium_content_browser_webcontents_WebContentsObserverProxy_destroy
+      public static native void M7giG0Ri(long nativeWebContentsObserverProxy, Object caller);
+      // Original name: org_chromium_content_1public_browser_LoadUrlParams_isDataScheme
+      public static native boolean MWH2gOYe(String url);
+      // Original name: org_chromium_content_1public_browser_NavigationHandle_setRequestHeader
+      public static native void MACALLtV(long nativeNavigationHandleProxy, String headerName, String headerValue);
+      // Original name: org_chromium_content_1public_browser_NavigationHandle_removeRequestHeader
+      public static native void Mo7byNs$(long nativeNavigationHandleProxy, String headerName);
+      // Original name: org_chromium_content_1public_common_ResourceRequestBody_createResourceRequestBodyFromBytes
+      public static native byte[] MugoAW_d(byte[] httpBody);
+      // Original name: org_chromium_content_1public_common_UseZoomForDSFPolicy_isUseZoomForDSFEnabled
+      public static native boolean MbmAQ8fm();
+      // Original name: org_chromium_device_DeviceFeatureList_isEnabled
+      public static native boolean MVi$blz$(String featureName);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothAdapter_onScanFailed
+      public static native void Mq3WoOFf(long nativeBluetoothAdapterAndroid, Object caller);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothAdapter_createOrUpdateDeviceOnScan
+      public static native void MOuw3NGo(long nativeBluetoothAdapterAndroid, Object caller, String address, Object deviceWrapper, String localName, int rssi, String[] advertisedUuids, int txPower, String[] serviceDataKeys, Object[] serviceDataValues, int[] manufacturerDataKeys, Object[] manufacturerDataValues, int advertiseFlags);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothAdapter_onAdapterStateChanged
+      public static native void MGGbKqrZ(long nativeBluetoothAdapterAndroid, Object caller, boolean powered);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothDevice_onConnectionStateChange
+      public static native void MmnW7gQC(long nativeBluetoothDeviceAndroid, Object caller, int status, boolean connected);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothDevice_createGattRemoteService
+      public static native void MAoRk69U(long nativeBluetoothDeviceAndroid, Object caller, String instanceId, Object serviceWrapper);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothDevice_onGattServicesDiscovered
+      public static native void M9HSgyay(long nativeBluetoothDeviceAndroid, Object caller);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onChanged
+      public static native void MZCKcdTH(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, byte[] value);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onRead
+      public static native void Mn9Gzi$d(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status, byte[] value);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_onWrite
+      public static native void M3TCxDs5(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, int status);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattCharacteristic_createGattRemoteDescriptor
+      public static native void MkqvrLoV(long nativeBluetoothRemoteGattCharacteristicAndroid, Object caller, String instanceId, Object descriptorWrapper, Object chromeBluetoothDevice);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattDescriptor_onRead
+      public static native void MaKNZo8k(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status, byte[] value);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattDescriptor_onWrite
+      public static native void M4SmPJiR(long nativeBluetoothRemoteGattDescriptorAndroid, Object caller, int status);
+      // Original name: org_chromium_device_bluetooth_ChromeBluetoothRemoteGattService_createGattRemoteCharacteristic
+      public static native void MM2CqKoK(long nativeBluetoothRemoteGattServiceAndroid, Object caller, String instanceId, Object characteristicWrapper, Object chromeBluetoothDevice);
+      // Original name: org_chromium_device_gamepad_GamepadList_setGamepadData
+      public static native void MOkngxPY(Object caller, long webGamepadsPtr, int index, boolean mapping, boolean connected, String devicename, long timestamp, float[] axes, float[] buttons, int buttonsLength);
+      // Original name: org_chromium_device_geolocation_LocationProviderAdapter_newLocationAvailable
+      public static native void MvJnRjJi(double latitude, double longitude, double timeStamp, boolean hasAltitude, double altitude, boolean hasAccuracy, double accuracy, boolean hasHeading, double heading, boolean hasSpeed, double speed);
+      // Original name: org_chromium_device_geolocation_LocationProviderAdapter_newErrorAvailable
+      public static native void M8Iz7Ptw(String message);
+      // Original name: org_chromium_device_sensors_PlatformSensor_notifyPlatformSensorError
+      public static native void MrHXg7he(long nativePlatformSensorAndroid, Object caller);
+      // Original name: org_chromium_device_sensors_PlatformSensor_updatePlatformSensorReading
+      public static native void Mb4JvlL7(long nativePlatformSensorAndroid, Object caller, double timestamp, double value1, double value2, double value3, double value4);
+      // Original name: org_chromium_device_time_1zone_1monitor_TimeZoneMonitor_timeZoneChangedFromJava
+      public static native void MjxIGcDd(long nativeTimeZoneMonitorAndroid, Object caller);
+      // Original name: org_chromium_device_usb_ChromeUsbService_deviceAttached
+      public static native void MNmyS$Xi(long nativeUsbServiceAndroid, Object caller, Object device);
+      // Original name: org_chromium_device_usb_ChromeUsbService_deviceDetached
+      public static native void MrBuy2sN(long nativeUsbServiceAndroid, Object caller, int deviceId);
+      // Original name: org_chromium_device_usb_ChromeUsbService_devicePermissionRequestComplete
+      public static native void MDvFAfgT(long nativeUsbServiceAndroid, Object caller, int deviceId, boolean granted);
+      // Original name: org_chromium_media_AudioManagerAndroid_setMute
+      public static native void MCgftn_d(long nativeAudioManagerAndroid, Object caller, boolean muted);
+      // Original name: org_chromium_media_AudioTrackOutputStream_onMoreData
+      public static native Object MEPH2V3G(long nativeAudioTrackOutputStream, Object caller, Object audioData, long delayInFrames);
+      // Original name: org_chromium_media_AudioTrackOutputStream_onError
+      public static native void Mr6$Ko2f(long nativeAudioTrackOutputStream, Object caller);
+      // Original name: org_chromium_media_AudioTrackOutputStream_getAddress
+      public static native long MMQ1O_vA(long nativeAudioTrackOutputStream, Object caller, Object byteBuffer);
+      // Original name: org_chromium_media_HdrMetadata_primaries
+      public static native int M6EY_9Mw(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_colorTransfer
+      public static native int Myx2EYmS(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_range
+      public static native int MGKRBsYQ(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryRChromaticityX
+      public static native float Mc0wiJ8$(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryRChromaticityY
+      public static native float MYP0SLZ2(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryGChromaticityX
+      public static native float MRQrYl4t(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryGChromaticityY
+      public static native float MtgfnGGz(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryBChromaticityX
+      public static native float McEG$Qxu(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_primaryBChromaticityY
+      public static native float MU6WBitK(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_whitePointChromaticityX
+      public static native float M8pzdQ$h(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_whitePointChromaticityY
+      public static native float MXbY07SE(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_maxMasteringLuminance
+      public static native float MOL90CVq(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_minMasteringLuminance
+      public static native float MM07Xk18(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_maxContentLuminance
+      public static native int MMmvZ$nS(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_HdrMetadata_maxFrameAverageLuminance
+      public static native int MzRCryEE(long nativeJniHdrMetadata, Object caller);
+      // Original name: org_chromium_media_MediaCodecBridge_onBuffersAvailable
+      public static native void MNqjfk23(long nativeMediaCodecBridge, Object caller);
+      // Original name: org_chromium_media_MediaDrmBridge_onMediaCryptoReady
+      public static native void MV9yuwVC(long nativeMediaDrmBridge, Object caller, Object mediaCrypto);
+      // Original name: org_chromium_media_MediaDrmBridge_onProvisionRequest
+      public static native void MmhSkOYV(long nativeMediaDrmBridge, Object caller, String defaultUrl, byte[] requestData);
+      // Original name: org_chromium_media_MediaDrmBridge_onProvisioningComplete
+      public static native void MAaklmRW(long nativeMediaDrmBridge, Object caller, boolean success);
+      // Original name: org_chromium_media_MediaDrmBridge_onPromiseResolved
+      public static native void MOzXytse(long nativeMediaDrmBridge, Object caller, long promiseId);
+      // Original name: org_chromium_media_MediaDrmBridge_onPromiseResolvedWithSession
+      public static native void MtWWjNjU(long nativeMediaDrmBridge, Object caller, long promiseId, byte[] emeSessionId);
+      // Original name: org_chromium_media_MediaDrmBridge_onPromiseRejected
+      public static native void M2P7BQ98(long nativeMediaDrmBridge, Object caller, long promiseId, String errorMessage);
+      // Original name: org_chromium_media_MediaDrmBridge_onSessionMessage
+      public static native void Mf7HZHqV(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, int requestType, byte[] message);
+      // Original name: org_chromium_media_MediaDrmBridge_onSessionClosed
+      public static native void MulYy5b7(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId);
+      // Original name: org_chromium_media_MediaDrmBridge_onSessionKeysChange
+      public static native void Mk8V79M2(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, Object[] keysInfo, boolean hasAdditionalUsableKey, boolean isKeyRelease);
+      // Original name: org_chromium_media_MediaDrmBridge_onSessionExpirationUpdate
+      public static native void MFLUFEZc(long nativeMediaDrmBridge, Object caller, byte[] emeSessionId, long expirationTime);
+      // Original name: org_chromium_media_MediaDrmStorageBridge_onProvisioned
+      public static native void ME6vNmlv(long nativeMediaDrmStorageBridge, Object caller, Object cb);
+      // Original name: org_chromium_media_MediaDrmStorageBridge_onLoadInfo
+      public static native void Mmi_qOX8(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
+      // Original name: org_chromium_media_MediaDrmStorageBridge_onSaveInfo
+      public static native void MeALR1v2(long nativeMediaDrmStorageBridge, Object caller, Object info, Object cb);
+      // Original name: org_chromium_media_MediaDrmStorageBridge_onClearInfo
+      public static native void MYa_y6Dg(long nativeMediaDrmStorageBridge, Object caller, byte[] sessionId, Object cb);
+      // Original name: org_chromium_media_MediaPlayerBridge_onDidSetDataUriDataSource
+      public static native void Mo4Rd8TE(long nativeMediaPlayerBridge, Object caller, boolean success);
+      // Original name: org_chromium_media_MediaPlayerListener_onMediaError
+      public static native void Myj2LnkZ(long nativeMediaPlayerListener, Object caller, int errorType);
+      // Original name: org_chromium_media_MediaPlayerListener_onVideoSizeChanged
+      public static native void Mfq$ZJpW(long nativeMediaPlayerListener, Object caller, int width, int height);
+      // Original name: org_chromium_media_MediaPlayerListener_onMediaPrepared
+      public static native void MQTompEl(long nativeMediaPlayerListener, Object caller);
+      // Original name: org_chromium_media_MediaPlayerListener_onPlaybackComplete
+      public static native void MX$D6jYE(long nativeMediaPlayerListener, Object caller);
+      // Original name: org_chromium_media_MediaServerCrashListener_onMediaServerCrashDetected
+      public static native void Mm$QSrAo(long nativeMediaServerCrashListener, Object caller, boolean watchdogNeedsRelease);
+      // Original name: org_chromium_media_ScreenCapture_onRGBAFrameAvailable
+      public static native void MjDBp6op(long nativeScreenCaptureMachineAndroid, Object caller, Object buf, int rowStride, int left, int top, int width, int height, long timestamp);
+      // Original name: org_chromium_media_ScreenCapture_onI420FrameAvailable
+      public static native void MgLL$kUF(long nativeScreenCaptureMachineAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int left, int top, int width, int height, long timestamp);
+      // Original name: org_chromium_media_ScreenCapture_onActivityResult
+      public static native void M2auslLM(long nativeScreenCaptureMachineAndroid, Object caller, boolean result);
+      // Original name: org_chromium_media_ScreenCapture_onOrientationChange
+      public static native void Ml8UDaFX(long nativeScreenCaptureMachineAndroid, Object caller, int rotation);
+      // Original name: org_chromium_media_VideoCapture_onFrameAvailable
+      public static native void Mq5gIPzl(long nativeVideoCaptureDeviceAndroid, Object caller, byte[] data, int length, int rotation);
+      // Original name: org_chromium_media_VideoCapture_onI420FrameAvailable
+      public static native void MlTacwJQ(long nativeVideoCaptureDeviceAndroid, Object caller, Object yBuffer, int yStride, Object uBuffer, Object vBuffer, int uvRowStride, int uvPixelStride, int width, int height, int rotation, long timestamp);
+      // Original name: org_chromium_media_VideoCapture_onError
+      public static native void MhmwjISE(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureError, String message);
+      // Original name: org_chromium_media_VideoCapture_onFrameDropped
+      public static native void M651cEC1(long nativeVideoCaptureDeviceAndroid, Object caller, int androidVideoCaptureFrameDropReason);
+      // Original name: org_chromium_media_VideoCapture_onGetPhotoCapabilitiesReply
+      public static native void MumkJZ3e(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, Object result);
+      // Original name: org_chromium_media_VideoCapture_onPhotoTaken
+      public static native void MdZBZ$ST(long nativeVideoCaptureDeviceAndroid, Object caller, long callbackId, byte[] data);
+      // Original name: org_chromium_media_VideoCapture_onStarted
+      public static native void MPaf3s5k(long nativeVideoCaptureDeviceAndroid, Object caller);
+      // Original name: org_chromium_media_VideoCapture_dCheckCurrentlyOnIncomingTaskRunner
+      public static native void Mqw5545M(long nativeVideoCaptureDeviceAndroid, Object caller);
+      // Original name: org_chromium_midi_MidiInputPortAndroid_onData
+      public static native void MzDIdqgH(long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
+      // Original name: org_chromium_midi_MidiManagerAndroid_onInitialized
+      public static native void M3znzcE9(long nativeMidiManagerAndroid, Object[] devices);
+      // Original name: org_chromium_midi_MidiManagerAndroid_onInitializationFailed
+      public static native void MfmZ2$zu(long nativeMidiManagerAndroid);
+      // Original name: org_chromium_midi_MidiManagerAndroid_onAttached
+      public static native void MEOWUhL5(long nativeMidiManagerAndroid, Object device);
+      // Original name: org_chromium_midi_MidiManagerAndroid_onDetached
+      public static native void Md3XPFG5(long nativeMidiManagerAndroid, Object device);
+      // Original name: org_chromium_midi_UsbMidiDeviceAndroid_onData
+      public static native void MNGB4bj1(long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
+      // Original name: org_chromium_midi_UsbMidiDeviceFactoryAndroid_onUsbMidiDeviceRequestDone
+      public static native void MrVQrlMA(long nativeUsbMidiDeviceFactoryAndroid, Object[] devices);
+      // Original name: org_chromium_midi_UsbMidiDeviceFactoryAndroid_onUsbMidiDeviceAttached
+      public static native void MGbhHafy(long nativeUsbMidiDeviceFactoryAndroid, Object device);
+      // Original name: org_chromium_midi_UsbMidiDeviceFactoryAndroid_onUsbMidiDeviceDetached
+      public static native void MQPqHj_p(long nativeUsbMidiDeviceFactoryAndroid, int index);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_createBaseRunLoop
+      public static native long MOJ55i7J(Object caller);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_run
+      public static native void MWXT8JHC(Object caller);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_runUntilIdle
+      public static native void MeWGVAnX(Object caller);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_quit
+      public static native void MvPYY0Pk(Object caller);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_postDelayedTask
+      public static native void Mg$AGbqU(Object caller, long runLoopID, Object runnable, long delay);
+      // Original name: org_chromium_mojo_system_impl_BaseRunLoop_deleteMessageLoop
+      public static native void MEexSuCr(Object caller, long runLoopID);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_getTimeTicksNow
+      public static native long M48BvrvK(Object caller);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_createMessagePipe
+      public static native Object MZhgS7uU(Object caller, Object optionsBuffer);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_createDataPipe
+      public static native Object MhNaf1lV(Object caller, Object optionsBuffer);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_createSharedBuffer
+      public static native Object MZ0nRPS0(Object caller, Object optionsBuffer, long numBytes);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_close
+      public static native int MLQe1QEw(Object caller, int mojoHandle);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_queryHandleSignalsState
+      public static native int MJr0GcyT(Object caller, int mojoHandle, Object signalsStateBuffer);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_writeMessage
+      public static native int Mkun8eIV(Object caller, int mojoHandle, Object bytes, int numBytes, Object handlesBuffer, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_readMessage
+      public static native Object MEHdfwD0(Object caller, int mojoHandle, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_readData
+      public static native Object MBDORBtR(Object caller, int mojoHandle, Object elements, int elementsSize, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_beginReadData
+      public static native Object M_DxS0Vi(Object caller, int mojoHandle, int numBytes, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_endReadData
+      public static native int MC3EsLAG(Object caller, int mojoHandle, int numBytesRead);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_writeData
+      public static native Object Mra2dnT9(Object caller, int mojoHandle, Object elements, int limit, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_beginWriteData
+      public static native Object M100xOXT(Object caller, int mojoHandle, int numBytes, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_endWriteData
+      public static native int MBed1sI2(Object caller, int mojoHandle, int numBytesWritten);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_duplicate
+      public static native Object M6nJbV6M(Object caller, int mojoHandle, Object optionsBuffer);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_map
+      public static native Object Mm6zKFIo(Object caller, int mojoHandle, long offset, long numBytes, int flags);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_unmap
+      public static native int MC_p8PYl(Object caller, Object buffer);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_getNativeBufferOffset
+      public static native int MBIRtXF8(Object caller, Object buffer, int alignment);
+      // Original name: org_chromium_mojo_system_impl_CoreImpl_createPlatformHandle
+      public static native int MDMdj6cc(int fd);
+      // Original name: org_chromium_mojo_system_impl_WatcherImpl_createWatcher
+      public static native long MXGgOw9k(Object caller);
+      // Original name: org_chromium_mojo_system_impl_WatcherImpl_start
+      public static native int MOmBVeTt(Object caller, long implPtr, int mojoHandle, int flags);
+      // Original name: org_chromium_mojo_system_impl_WatcherImpl_cancel
+      public static native void MPTT407x(Object caller, long implPtr);
+      // Original name: org_chromium_mojo_system_impl_WatcherImpl_delete
+      public static native void Mi32vqDA(Object caller, long implPtr);
+      // Original name: org_chromium_net_GURLUtils_getOrigin
+      public static native String MpCt7siL(String url);
+      // Original name: org_chromium_net_HttpNegotiateAuthenticator_setResult
+      public static native void M0s8NeYn(long nativeJavaNegotiateResultWrapper, Object caller, int status, String authToken);
+      // Original name: org_chromium_net_HttpUtil_isAllowedHeader
+      public static native boolean MorcXgQd(String headerName, String headerValue);
+      // Original name: org_chromium_net_NetworkActivationRequest_notifyAvailable
+      public static native void MJRUHS0T(long nativeNetworkActivationRequest, long netId);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyConnectionTypeChanged
+      public static native void MbPIImnU(long nativePtr, Object caller, int newConnectionType, long defaultNetId);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyMaxBandwidthChanged
+      public static native void Mt26m31j(long nativePtr, Object caller, int subType);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyOfNetworkConnect
+      public static native void MBT1i5cd(long nativePtr, Object caller, long netId, int connectionType);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyOfNetworkSoonToDisconnect
+      public static native void MiJIMrTb(long nativePtr, Object caller, long netId);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyOfNetworkDisconnect
+      public static native void MDpuHJTB(long nativePtr, Object caller, long netId);
+      // Original name: org_chromium_net_NetworkChangeNotifier_notifyPurgeActiveNetworkList
+      public static native void MpF$179U(long nativePtr, Object caller, long[] activeNetIds);
+      // Original name: org_chromium_net_ProxyChangeListener_proxySettingsChangedTo
+      public static native void MyoFZt$2(long nativePtr, Object caller, String host, int port, String pacUrl, String[] exclusionList);
+      // Original name: org_chromium_net_ProxyChangeListener_proxySettingsChanged
+      public static native void MCIk73GZ(long nativePtr, Object caller);
+      // Original name: org_chromium_net_X509Util_notifyKeyChainChanged
+      public static native void MGVAvp19();
+      // Original name: org_chromium_ui_base_Clipboard_onPrimaryClipChanged
+      public static native void M3YqItLq(long nativeClipboardAndroid, Object caller);
+      // Original name: org_chromium_ui_base_Clipboard_onPrimaryClipTimestampInvalidated
+      public static native void MWrNP8sy(long nativeClipboardAndroid, Object caller, long timestamp);
+      // Original name: org_chromium_ui_base_Clipboard_getLastModifiedTimeToJavaTime
+      public static native long MN49cYVC(long nativeClipboardAndroid);
+      // Original name: org_chromium_ui_base_EventForwarder_getJavaWindowAndroid
+      public static native Object M4_mlka_(long nativeEventForwarder, Object caller);
+      // Original name: org_chromium_ui_base_EventForwarder_onTouchEvent
+      public static native boolean Mcw1yi1C(long nativeEventForwarder, Object caller, Object event, long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0, float y0, float x1, float y1, int pointerId0, int pointerId1, float touchMajor0, float touchMajor1, float touchMinor0, float touchMinor1, float orientation0, float orientation1, float tilt0, float tilt1, float rawX, float rawY, int androidToolType0, int androidToolType1, int gestureClassification, int androidButtonState, int androidMetaState, boolean isTouchHandleEvent);
+      // Original name: org_chromium_ui_base_EventForwarder_onMouseEvent
+      public static native void M$2oj6EQ(long nativeEventForwarder, Object caller, long timeMs, int action, float x, float y, int pointerId, float pressure, float orientation, float tilt, int changedButton, int buttonState, int metaState, int toolType);
+      // Original name: org_chromium_ui_base_EventForwarder_onDragEvent
+      public static native void MZ1ZkPta(long nativeEventForwarder, Object caller, int action, int x, int y, int screenX, int screenY, String[] mimeTypes, String content);
+      // Original name: org_chromium_ui_base_EventForwarder_onGestureEvent
+      public static native boolean MtyC4Bd2(long nativeEventForwarder, Object caller, int type, long timeMs, float delta);
+      // Original name: org_chromium_ui_base_EventForwarder_onGenericMotionEvent
+      public static native boolean MvdB06Zi(long nativeEventForwarder, Object caller, Object event, long timeMs);
+      // Original name: org_chromium_ui_base_EventForwarder_onKeyUp
+      public static native boolean MRbfSEI1(long nativeEventForwarder, Object caller, Object event, int keyCode);
+      // Original name: org_chromium_ui_base_EventForwarder_dispatchKeyEvent
+      public static native boolean MZE$0qqv(long nativeEventForwarder, Object caller, Object event);
+      // Original name: org_chromium_ui_base_EventForwarder_scrollBy
+      public static native void MMwH$VBb(long nativeEventForwarder, Object caller, float deltaX, float deltaY);
+      // Original name: org_chromium_ui_base_EventForwarder_scrollTo
+      public static native void M6lTZ5w8(long nativeEventForwarder, Object caller, float x, float y);
+      // Original name: org_chromium_ui_base_EventForwarder_doubleTap
+      public static native void MNnWXapV(long nativeEventForwarder, Object caller, long timeMs, int x, int y);
+      // Original name: org_chromium_ui_base_EventForwarder_startFling
+      public static native void MT1C98PL(long nativeEventForwarder, Object caller, long timeMs, float velocityX, float velocityY, boolean syntheticScroll, boolean preventBoosting);
+      // Original name: org_chromium_ui_base_EventForwarder_cancelFling
+      public static native void MSvJWvYj(long nativeEventForwarder, Object caller, long timeMs, boolean preventBoosting);
+      // Original name: org_chromium_ui_base_LocalizationUtils_getFirstStrongCharacterDirection
+      public static native int MKiziH$q(String string);
+      // Original name: org_chromium_ui_base_LocalizationUtils_getNativeUiLocale
+      public static native String MqGtfAYA();
+      // Original name: org_chromium_ui_base_SelectFileDialog_onFileSelected
+      public static native void MBeWYy2V(long nativeSelectFileDialogImpl, Object caller, String filePath, String displayName);
+      // Original name: org_chromium_ui_base_SelectFileDialog_onMultipleFilesSelected
+      public static native void Mx1807vz(long nativeSelectFileDialogImpl, Object caller, String[] filePathArray, String[] displayNameArray);
+      // Original name: org_chromium_ui_base_SelectFileDialog_onFileNotSelected
+      public static native void MGVJOCWv(long nativeSelectFileDialogImpl, Object caller);
+      // Original name: org_chromium_ui_base_SelectFileDialog_onContactsSelected
+      public static native void MXucAq1Y(long nativeSelectFileDialogImpl, Object caller, String contacts);
+      // Original name: org_chromium_ui_base_WindowAndroid_init
+      public static native long MFjTMMS_(Object caller, int displayId, float scrollFactor, boolean windowIsWideColorGamut);
+      // Original name: org_chromium_ui_base_WindowAndroid_onVisibilityChanged
+      public static native void MrnNdVRa(long nativeWindowAndroid, Object caller, boolean visible);
+      // Original name: org_chromium_ui_base_WindowAndroid_onActivityStopped
+      public static native void MMLuxHp6(long nativeWindowAndroid, Object caller);
+      // Original name: org_chromium_ui_base_WindowAndroid_onActivityStarted
+      public static native void MbyUPhMo(long nativeWindowAndroid, Object caller);
+      // Original name: org_chromium_ui_base_WindowAndroid_setVSyncPaused
+      public static native void MotttR54(long nativeWindowAndroid, Object caller, boolean paused);
+      // Original name: org_chromium_ui_base_WindowAndroid_onUpdateRefreshRate
+      public static native void MWNjxKcW(long nativeWindowAndroid, Object caller, float refreshRate);
+      // Original name: org_chromium_ui_base_WindowAndroid_destroy
+      public static native void MV00Qksi(long nativeWindowAndroid, Object caller);
+      // Original name: org_chromium_ui_base_WindowAndroid_onSupportedRefreshRatesUpdated
+      public static native void MTDQeb$o(long nativeWindowAndroid, Object caller, float[] supportedRefreshRates);
+      // Original name: org_chromium_ui_display_DisplayAndroidManager_updateDisplay
+      public static native void M2$ANfTC(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId, int width, int height, float dipScale, int rotationDegrees, int bitsPerPixel, int bitsPerComponent, boolean isWideColorGamut);
+      // Original name: org_chromium_ui_display_DisplayAndroidManager_removeDisplay
+      public static native void MyzQIqd_(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
+      // Original name: org_chromium_ui_display_DisplayAndroidManager_setPrimaryDisplayId
+      public static native void MdOwtyr6(long nativeDisplayAndroidManager, Object caller, int sdkDisplayId);
+      // Original name: org_chromium_ui_events_devices_InputDeviceObserver_inputConfigurationChanged
+      public static native void MGCvz8lp(Object caller);
+      // Original name: org_chromium_ui_gfx_ViewConfigurationHelper_updateSharedViewConfiguration
+      public static native void MtrEpb2R(Object caller, float maximumFlingVelocity, float minimumFlingVelocity, float touchSlop, float doubleTapSlop, float minScalingSpan);
+      // Original name: org_chromium_ui_gl_SurfaceTextureListener_frameAvailable
+      public static native void MRbPfCZQ(long nativeSurfaceTextureListener, Object caller);
+      // Original name: org_chromium_ui_gl_SurfaceTextureListener_destroy
+      public static native void MUH2vhAN(long nativeSurfaceTextureListener, Object caller);
+      // Original name: org_chromium_ui_resources_ResourceFactory_createBitmapResource
+      public static native long MKzrMxwv();
+      // Original name: org_chromium_ui_resources_ResourceFactory_createNinePatchBitmapResource
+      public static native long MNZCYawX(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom, int apertureLeft, int apertureTop, int apertureRight, int apertureBottom);
+      // Original name: org_chromium_ui_resources_ResourceManager_onResourceReady
+      public static native void MM7E4tBk(long nativeResourceManagerImpl, Object caller, int resType, int resId, Object bitmap, int width, int height, long nativeResource);
+      // Original name: org_chromium_ui_resources_ResourceManager_removeResource
+      public static native void MxwZmAzJ(long nativeResourceManagerImpl, Object caller, int resType, int resId);
+      // Original name: org_chromium_ui_resources_ResourceManager_clearTintedResourceCache
+      public static native void MnAVuP1v(long nativeResourceManagerImpl, Object caller);
+      // Original name: org_chromium_url_GURL_init
+      public static native void MWBVWQ0I(String uri, Object target);
+      // Original name: org_chromium_url_GURL_getOrigin
+      public static native void MNBd3mFA(String spec, boolean isValid, long nativeParsed, Object target);
+      // Original name: org_chromium_url_GURL_createNative
+      public static native long MnPIH$$1(String spec, boolean isValid, long nativeParsed);
+      // Original name: org_chromium_url_Parsed_createNative
+      public static native long MsTyiXfW(int schemeBegin, int schemeLength, int usernameBegin, int usernameLength, int passwordBegin, int passwordLength, int hostBegin, int hostLength, int portBegin, int portLength, int pathBegin, int pathLength, int queryBegin, int queryLength, int refBegin, int refLength, boolean potentiallyDanglingMarkup, long innerUrl);
+      // Original name: org_chromium_weblayer_1private_AutocompleteSchemeClassifierImpl_createAutocompleteClassifier
+      public static native long MdSMvPKd();
+      // Original name: org_chromium_weblayer_1private_AutocompleteSchemeClassifierImpl_deleteAutocompleteClassifier
+      public static native void MlYZDcUq(long weblayerAutocompleteSchemeClassifier);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_createBrowserControlsContainerView
+      public static native long Me394HRR(Object view, long nativeContentViewRenderView, boolean isTop);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_deleteBrowserControlsContainerView
+      public static native void M8jqrC_w(long nativeBrowserControlsContainerView);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_createControlsLayer
+      public static native void MlXpxEY_(long nativeBrowserControlsContainerView, int id);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_deleteControlsLayer
+      public static native void M$BOyYG7(long nativeBrowserControlsContainerView);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_setTopControlsOffset
+      public static native void M6ePJPUh(long nativeBrowserControlsContainerView, int contentOffsetY);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_setBottomControlsOffset
+      public static native void MY2oZhd3(long nativeBrowserControlsContainerView);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_setControlsSize
+      public static native void Mi5Me0JY(long nativeBrowserControlsContainerView, int width, int height);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_updateControlsResource
+      public static native void McAxkPDo(long nativeBrowserControlsContainerView);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_setWebContents
+      public static native void MfdDvIeb(long nativeBrowserControlsContainerView, Object webContents);
+      // Original name: org_chromium_weblayer_1private_BrowserControlsContainerView_shouldDelayVisibilityChange
+      public static native boolean MXZ_n0Vr();
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_createBrowser
+      public static native long MChsAOfs(long profile, Object caller);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_deleteBrowser
+      public static native void MaMrnX9h(long browser);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_addTab
+      public static native void MJ$RHdW5(long nativeBrowserImpl, long nativeTab);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_getTabs
+      public static native Object[] MGDfuPeL(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_setActiveTab
+      public static native void MBT5EbFP(long nativeBrowserImpl, long nativeTab);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_getActiveTab
+      public static native Object Ms4h$LOA(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_prepareForShutdown
+      public static native void MM5Y8Vdi(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_getPersistenceId
+      public static native String Mtk__Xyp(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_saveBrowserPersisterIfNecessary
+      public static native void MaKl4w3e(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_getBrowserPersisterCryptoKey
+      public static native byte[] MxJsteK0(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_getMinimalPersistenceState
+      public static native byte[] MtZQkZrN(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_restoreStateIfNecessary
+      public static native void MF3mfzBs(long nativeBrowserImpl, String persistenceId, byte[] persistenceCryptoKey, byte[] minimalPersistenceState);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_webPreferencesChanged
+      public static native void MCP8kZaA(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_onFragmentStart
+      public static native void MJ3WqXoC(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_onFragmentResume
+      public static native void M9jlcLN8(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_onFragmentPause
+      public static native void Mu08S5Q_(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserImpl_isRestoringPreviousState
+      public static native boolean MyBeGQWT(long nativeBrowserImpl);
+      // Original name: org_chromium_weblayer_1private_BrowserList_createBrowserList
+      public static native void M55Lsrkg();
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_init
+      public static native long MuuxVGQm(Object caller, Object rootWindow);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_destroy
+      public static native void MAIaE0OG(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_setCurrentWebContents
+      public static native void MYMjn0mf(long nativeContentViewRenderView, Object webContents);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_onPhysicalBackingSizeChanged
+      public static native void MQtCkWmJ(long nativeContentViewRenderView, Object webContents, int width, int height, boolean forConfigChange);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_surfaceCreated
+      public static native void MUdnoeZS(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_surfaceDestroyed
+      public static native void MfxYKOP7(long nativeContentViewRenderView, boolean cacheBackBuffer);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_surfaceChanged
+      public static native void M4g6Q4ab(long nativeContentViewRenderView, boolean canBeUsedWithSurfaceControl, int width, int height, boolean transparentBackground, Object surface);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_setNeedsRedraw
+      public static native void MRC2ueBe(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_evictCachedSurface
+      public static native void M9bR5p1w(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_getResourceManager
+      public static native Object M7ewD88L(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_ContentViewRenderView_updateBackgroundColor
+      public static native void M41pvntE(long nativeContentViewRenderView);
+      // Original name: org_chromium_weblayer_1private_CookieManagerImpl_setCookie
+      public static native boolean MHaZNm_6(long nativeCookieManagerImpl, String url, String value, Object callback);
+      // Original name: org_chromium_weblayer_1private_CookieManagerImpl_getCookie
+      public static native void M55lJVED(long nativeCookieManagerImpl, String url, Object callback);
+      // Original name: org_chromium_weblayer_1private_CookieManagerImpl_addCookieChangedCallback
+      public static native int M9VhfsIF(long nativeCookieManagerImpl, String url, String name, Object callback);
+      // Original name: org_chromium_weblayer_1private_CookieManagerImpl_removeCookieChangedCallback
+      public static native void MGwEaaJt(long nativeCookieManagerImpl, int id);
+      // Original name: org_chromium_weblayer_1private_DownloadCallbackProxy_createDownloadCallbackProxy
+      public static native long McPAi5G9(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_DownloadCallbackProxy_deleteDownloadCallbackProxy
+      public static native void Mq3U77nO(long proxy);
+      // Original name: org_chromium_weblayer_1private_DownloadCallbackProxy_allowDownload
+      public static native void MYOOvdZV(long callbackId, boolean allow);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_setJavaDownload
+      public static native void MCQjxfAX(long nativeDownloadImpl, Object caller);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getState
+      public static native int Mg9vWlA3(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getTotalBytes
+      public static native long MLQnpV49(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getReceivedBytes
+      public static native long MLPJbQwI(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_pause
+      public static native void Mmh9t8Wp(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_resume
+      public static native void MBdFHh_o(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_cancel
+      public static native void M7ycbCea(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getLocation
+      public static native String MBNW0Bg1(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getFileNameToReportToUser
+      public static native String MI7IhsRn(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getMimeTypeImpl
+      public static native String MiYZ62wR(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_DownloadImpl_getError
+      public static native int MMo$maOT(long nativeDownloadImpl);
+      // Original name: org_chromium_weblayer_1private_ErrorPageCallbackProxy_createErrorPageCallbackProxy
+      public static native long M0JND2JE(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_ErrorPageCallbackProxy_deleteErrorPageCallbackProxy
+      public static native void MRiF9eNE(long proxy);
+      // Original name: org_chromium_weblayer_1private_FaviconCallbackProxy_createFaviconCallbackProxy
+      public static native long MyfmBjob(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_FaviconCallbackProxy_deleteFaviconCallbackProxy
+      public static native void MnfzceAY(long proxy);
+      // Original name: org_chromium_weblayer_1private_FullscreenCallbackProxy_createFullscreenCallbackProxy
+      public static native long MGmykU1g(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_FullscreenCallbackProxy_deleteFullscreenCallbackProxy
+      public static native void MeleUM$n(long proxy);
+      // Original name: org_chromium_weblayer_1private_FullscreenCallbackProxy_doExitFullscreen
+      public static native void MSOA10zg(long nativeFullscreenCallbackProxy);
+      // Original name: org_chromium_weblayer_1private_GoogleAccountAccessTokenFetcherProxy_createGoogleAccountAccessTokenFetcherProxy
+      public static native long Mx3lCmAx(Object proxy, long profile);
+      // Original name: org_chromium_weblayer_1private_GoogleAccountAccessTokenFetcherProxy_deleteGoogleAccountAccessTokenFetcherProxy
+      public static native void MUHuXlGs(long proxy);
+      // Original name: org_chromium_weblayer_1private_GoogleAccountAccessTokenFetcherProxy_runOnTokenFetchedCallback
+      public static native void MBWckw0j(long callbackId, String token);
+      // Original name: org_chromium_weblayer_1private_GoogleAccountsCallbackProxy_createGoogleAccountsCallbackProxy
+      public static native long MULN$uwi(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_GoogleAccountsCallbackProxy_deleteGoogleAccountsCallbackProxy
+      public static native void MRFq4cp6(long proxy);
+      // Original name: org_chromium_weblayer_1private_HttpAuthHandlerImpl_proceed
+      public static native void Mv_4SZop(long nativeHttpAuthHandlerImpl, String username, String password);
+      // Original name: org_chromium_weblayer_1private_HttpAuthHandlerImpl_cancel
+      public static native void M9H0Xoj7(long nativeHttpAuthHandlerImpl);
+      // Original name: org_chromium_weblayer_1private_InfoBarContainer_init
+      public static native long MvmrRAzz(Object caller);
+      // Original name: org_chromium_weblayer_1private_InfoBarContainer_setWebContents
+      public static native void MIDu$Gd$(long nativeInfoBarContainerAndroid, Object caller, Object webContents);
+      // Original name: org_chromium_weblayer_1private_InfoBarContainer_destroy
+      public static native void MtgOM66q(long nativeInfoBarContainerAndroid, Object caller);
+      // Original name: org_chromium_weblayer_1private_LocaleChangedBroadcastReceiver_localeChanged
+      public static native void MNVsdYhF();
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_setNavigationControllerImpl
+      public static native void MpejyhKI(long nativeNavigationControllerImpl, Object caller);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationController
+      public static native long MuaFsixb(long tab);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_navigate
+      public static native void MdNsGAMH(long nativeNavigationControllerImpl, String uri, boolean shouldReplaceCurrentEntry, boolean disableIntentProcessing, boolean allowIntentLaunchesInBackground, boolean disableNetworkErrorAutoReload, boolean enableAutoPlay, Object response);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_goBack
+      public static native void MZrOkH8X(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_goForward
+      public static native void MDkifRYV(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_canGoBack
+      public static native boolean Mk5Op77A(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_canGoForward
+      public static native boolean Myt080DX(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_goToIndex
+      public static native void M0Oi$rdJ(long nativeNavigationControllerImpl, int index);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_reload
+      public static native void MgCpZ61D(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_stop
+      public static native void Mcpd2RLR(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationListSize
+      public static native int MTQXD9PA(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationListCurrentIndex
+      public static native int MYvsya1k(long nativeNavigationControllerImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationEntryDisplayUri
+      public static native String MdarrSGz(long nativeNavigationControllerImpl, int index);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationEntryTitle
+      public static native String ME_QUEJm(long nativeNavigationControllerImpl, int index);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_isNavigationEntrySkippable
+      public static native boolean M1cVni5H(long nativeNavigationControllerImpl, int index);
+      // Original name: org_chromium_weblayer_1private_NavigationControllerImpl_getNavigationImplFromId
+      public static native Object MiqMU_16(long nativeNavigationControllerImpl, long id);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_setJavaNavigation
+      public static native void MAxzZ9OU(long nativeNavigationImpl, Object caller);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getState
+      public static native int MOjYwlCQ(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getUri
+      public static native String MLe5UH8x(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getRedirectChain
+      public static native String[] M4$r2b34(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getHttpStatusCode
+      public static native int MavL_hzo(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isSameDocument
+      public static native boolean MNvdMHI6(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isErrorPage
+      public static native boolean MIFgE7DZ(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isDownload
+      public static native boolean MN_nBiKo(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isKnownProtocol
+      public static native boolean MuyTe$xX(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_wasStopCalled
+      public static native boolean MiBmbu2p(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getLoadError
+      public static native int Mu3sbx92(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_setRequestHeader
+      public static native boolean MDotswwA(long nativeNavigationImpl, String name, String value);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isValidRequestHeaderName
+      public static native boolean MFHuFkAr(String name);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isValidRequestHeaderValue
+      public static native boolean MDc77mDW(String value);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_setUserAgentString
+      public static native boolean MylM4DA1(long nativeNavigationImpl, String value);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isPageInitiated
+      public static native boolean MpbIpLrc(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isReload
+      public static native boolean MbVVYHJf(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isServedFromBackForwardCache
+      public static native boolean MJ48705W(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_disableNetworkErrorAutoReload
+      public static native boolean MlMmQVE9(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_areIntentLaunchesAllowedInBackground
+      public static native boolean M4U68Scc(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_isFormSubmission
+      public static native boolean Mwx4wZuq(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getReferrer
+      public static native String MsHZd869(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NavigationImpl_getPage
+      public static native long Mbe3yREE(long nativeNavigationImpl);
+      // Original name: org_chromium_weblayer_1private_NewTabCallbackProxy_createNewTabCallbackProxy
+      public static native long Mm1ByG3d(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_NewTabCallbackProxy_deleteNewTabCallbackProxy
+      public static native void MxkBiJzp(long proxy);
+      // Original name: org_chromium_weblayer_1private_PageImpl_setJavaPage
+      public static native void Mdq0O0Gu(long nativePageImpl, Object caller);
+      // Original name: org_chromium_weblayer_1private_PrerenderControllerImpl_prerender
+      public static native void MUPlvIQU(long nativePrerenderControllerImpl, String url);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_enumerateAllProfileNames
+      public static native void Ms_xftcU(Object callback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_createProfile
+      public static native long MKGVVWNd(String name, Object caller, boolean isIncognito);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_deleteProfile
+      public static native void M_1y2G80(long profile);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getBrowserContext
+      public static native long MOV1crQP(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getNumBrowserImpl
+      public static native int MExAIK1i(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_destroyAndDeleteDataFromDisk
+      public static native void Mxdeo3Gx(long nativeProfileImpl, Object completionCallback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_clearBrowsingData
+      public static native void MTR7prkl(long nativeProfileImpl, int[] dataTypes, long fromMillis, long toMillis, Object callback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_setDownloadDirectory
+      public static native void Mq7GFTAG(long nativeProfileImpl, String directory);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getCookieManager
+      public static native long MxyNOHnU(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getPrerenderController
+      public static native long MhZhhQYg(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_ensureBrowserContextInitialized
+      public static native void M1$JPkux(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_setBooleanSetting
+      public static native void MfdyKPni(long nativeProfileImpl, int type, boolean value);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getBooleanSetting
+      public static native boolean MbEhNBrP(long nativeProfileImpl, int type);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getBrowserPersistenceIds
+      public static native void MaK4GRyf(long nativeProfileImpl, Object callback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_removeBrowserPersistenceStorage
+      public static native void M6_S2Eto(long nativeProfileImpl, String[] ids, Object callback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_prepareForPossibleCrossOriginNavigation
+      public static native void MAa5N2Fy(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_getCachedFaviconForPageUrl
+      public static native void MZVnG5ck(long nativeProfileImpl, String url, Object callback);
+      // Original name: org_chromium_weblayer_1private_ProfileImpl_markAsDeleted
+      public static native void MrkqJOF5(long nativeProfileImpl);
+      // Original name: org_chromium_weblayer_1private_TabCallbackProxy_createTabCallbackProxy
+      public static native long MOUs9Qy6(Object proxy, long tab);
+      // Original name: org_chromium_weblayer_1private_TabCallbackProxy_deleteTabCallbackProxy
+      public static native void Mpl66Ope(long proxy);
+      // Original name: org_chromium_weblayer_1private_TabImpl_fromWebContents
+      public static native Object Mbc7Xl0E(Object webContents);
+      // Original name: org_chromium_weblayer_1private_TabImpl_createTab
+      public static native long M0NNPeB3(long tab, Object caller);
+      // Original name: org_chromium_weblayer_1private_TabImpl_removeTabFromBrowserBeforeDestroying
+      public static native void M9fooq2v(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_deleteTab
+      public static native void MD18T2Ck(long tab);
+      // Original name: org_chromium_weblayer_1private_TabImpl_setJavaImpl
+      public static native void MKSJ4vB6(long nativeTabImpl, Object impl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_onAutofillProviderChanged
+      public static native void Myi236il(long nativeTabImpl, Object autofillProvider);
+      // Original name: org_chromium_weblayer_1private_TabImpl_setBrowserControlsContainerViews
+      public static native void M7aoqPkm(long nativeTabImpl, long nativeTopBrowserControlsContainerView, long nativeBottomBrowserControlsContainerView);
+      // Original name: org_chromium_weblayer_1private_TabImpl_getWebContents
+      public static native Object MV_K4t5p(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_executeScript
+      public static native void M9gymlSj(long nativeTabImpl, String script, boolean useSeparateIsolate, Object callback);
+      // Original name: org_chromium_weblayer_1private_TabImpl_updateBrowserControlsConstraint
+      public static native void MmnuNqYM(long nativeTabImpl, int newConstraint, boolean animate);
+      // Original name: org_chromium_weblayer_1private_TabImpl_getGuid
+      public static native String MDUS1J6g(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_captureScreenShot
+      public static native void MMWkDQW5(long nativeTabImpl, float scale, Object valueCallback);
+      // Original name: org_chromium_weblayer_1private_TabImpl_setData
+      public static native boolean MgVMsAds(long nativeTabImpl, String[] data);
+      // Original name: org_chromium_weblayer_1private_TabImpl_getData
+      public static native String[] MrvOtvmO(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_isRendererControllingBrowserControlsOffsets
+      public static native boolean MbX5H7T6(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_registerWebMessageCallback
+      public static native String MPKxPeqc(long nativeTabImpl, String jsObjectName, String[] allowedOrigins, Object client);
+      // Original name: org_chromium_weblayer_1private_TabImpl_unregisterWebMessageCallback
+      public static native void MajFds73(long nativeTabImpl, String jsObjectName);
+      // Original name: org_chromium_weblayer_1private_TabImpl_canTranslate
+      public static native boolean MQH8tyfT(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_showTranslateUi
+      public static native void M5P364$X(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_setTranslateTargetLanguage
+      public static native void MCsoCb3e(long nativeTabImpl, String targetLanguage);
+      // Original name: org_chromium_weblayer_1private_TabImpl_setDesktopUserAgentEnabled
+      public static native void MpMtYa7b(long nativeTabImpl, boolean enable);
+      // Original name: org_chromium_weblayer_1private_TabImpl_isDesktopUserAgentEnabled
+      public static native boolean MJRiqNu8(long nativeTabImpl);
+      // Original name: org_chromium_weblayer_1private_TabImpl_download
+      public static native void MuPxZLXk(long nativeTabImpl, long nativeContextMenuParams);
+      // Original name: org_chromium_weblayer_1private_TabImpl_destroyContextMenuParams
+      public static native void MdN3ERgX(long contextMenuParams);
+      // Original name: org_chromium_weblayer_1private_TranslateCompactInfoBar_applyStringTranslateOption
+      public static native void MMWKyuFU(long nativeTranslateCompactInfoBar, Object caller, int option, String value);
+      // Original name: org_chromium_weblayer_1private_TranslateCompactInfoBar_applyBoolTranslateOption
+      public static native void Mc1zGvz5(long nativeTranslateCompactInfoBar, Object caller, int option, boolean value);
+      // Original name: org_chromium_weblayer_1private_TranslateCompactInfoBar_shouldAutoNeverTranslate
+      public static native boolean MG9EGT5b(long nativeTranslateCompactInfoBar, Object caller, boolean menuExpanded);
+      // Original name: org_chromium_weblayer_1private_TranslateCompactInfoBar_isIncognito
+      public static native boolean MziN4Wi7(long nativeTranslateCompactInfoBar, Object caller);
+      // Original name: org_chromium_weblayer_1private_UrlBarControllerImpl_createUrlBarController
+      public static native long MBXTos2n(long browserPtr);
+      // Original name: org_chromium_weblayer_1private_UrlBarControllerImpl_deleteUrlBarController
+      public static native void MZ0OGKWB(long urlBarControllerImplPtr);
+      // Original name: org_chromium_weblayer_1private_UrlBarControllerImpl_getUrlForDisplay
+      public static native String M7Zzb0z2(long nativeUrlBarControllerImpl);
+      // Original name: org_chromium_weblayer_1private_UrlBarControllerImpl_getPublisherUrl
+      public static native String MxbojYlz(long nativeUrlBarControllerImpl);
+      // Original name: org_chromium_weblayer_1private_UrlBarControllerImpl_getConnectionSecurityLevel
+      public static native int MgfY0koX(long nativeUrlBarControllerImpl);
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_setRemoteDebuggingEnabled
+      public static native void M1lGn20V(boolean enabled);
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_isRemoteDebuggingEnabled
+      public static native boolean MdEjk1wX();
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_setIsWebViewCompatMode
+      public static native void MVSxAa8H(boolean value);
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_getUserAgentString
+      public static native String M3A3spS7();
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_registerExternalExperimentIDs
+      public static native void MHioz7v6(int[] experimentIDs);
+      // Original name: org_chromium_weblayer_1private_WebLayerImpl_isLocationPermissionManaged
+      public static native boolean MgVMRXwV(String origin);
+      // Original name: org_chromium_weblayer_1private_WebMessageReplyProxyImpl_postMessage
+      public static native void M$B6$KVY(long nativeWebMessageReplyProxyImpl, String message);
+      // Original name: org_chromium_weblayer_1private_WebMessageReplyProxyImpl_isActive
+      public static native boolean MPGjBrCL(long nativeWebMessageReplyProxyImpl);
+      // Original name: org_chromium_weblayer_1private_media_MediaStreamManager_create
+      public static native long MFPf_4ZA(Object caller, Object webContents);
+      // Original name: org_chromium_weblayer_1private_media_MediaStreamManager_destroy
+      public static native void MF0say92(long manager);
+      // Original name: org_chromium_weblayer_1private_media_MediaStreamManager_onClientReadyToStream
+      public static native void M5xN38XE(long nativeMediaStreamManager, int requestId, boolean allow);
+      // Original name: org_chromium_weblayer_1private_media_MediaStreamManager_stopStreaming
+      public static native void MgNVNxSj(long nativeMediaStreamManager);
+      // Original name: org_chromium_weblayer_1private_metrics_MetricsServiceClient_setHaveMetricsConsent
+      public static native void Mar1tTQP(boolean userConsent, boolean appConsent);
+      // Original name: org_chromium_weblayer_1private_permissions_PermissionRequestUtils_onResult
+      public static native void Ms$UzmXN(long callback, boolean result);
 }

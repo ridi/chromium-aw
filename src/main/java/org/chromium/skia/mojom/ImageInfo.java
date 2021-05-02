@@ -63,11 +63,13 @@ public final class ImageInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.colorType = decoder0.readInt(8);
                     ColorType.validate(result.colorType);
+                    result.colorType = ColorType.toKnownValue(result.colorType);
                 }
                 {
                     
                 result.alphaType = decoder0.readInt(12);
                     AlphaType.validate(result.alphaType);
+                    result.alphaType = AlphaType.toKnownValue(result.alphaType);
                 }
                 {
                     

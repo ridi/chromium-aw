@@ -408,7 +408,7 @@ public final class ContentSwitches {
     // also applys to workers.
     public static final String ENABLE_PRECISE_MEMORY_INFO = "enable-precise-memory-info";
 
-    // Set options to cache V8 data. (off, preparse data, or code)
+    // Set options to cache V8 data. (none, code, or default)
     public static final String V8_CACHE_OPTIONS = "v8-cache-options";
 
     // If true the ServiceProcessLauncher is used to launch services. This allows
@@ -580,6 +580,12 @@ public final class ContentSwitches {
 
     // Use a Mojo-based LocalStorage implementation.
     public static final String MOJO_LOCAL_STORAGE = "mojo-local-storage";
+
+    // Disables the unsandboxed zygote.
+    // Note: this flag should not be used on most platforms. It is introduced
+    // because some platforms (e.g. Cast) have very limited memory and binaries
+    // won't be updated when the browser process is running.
+    public static final String NO_UNSANDBOXED_ZYGOTE = "no-unsandboxed-zygote";
 
     // Disables the use of a zygote process for forking child processes. Instead,
     // child processes will be forked and exec'd directly. Note that --no-sandbox
@@ -771,8 +777,9 @@ public final class ContentSwitches {
     // Causes the utility process to display a dialog on launch.
     public static final String UTILITY_STARTUP_DIALOG = "utility-startup-dialog";
 
-    // This switch indicates the type of a utility process. It is not used by Chrome
-    // but is added to the command line for debugging and profiling purposes.
+    // This switch indicates the type of a utility process. It does not affect the
+    // services offered by the process, but is added to the command line for
+    // debugging and profiling purposes.
     public static final String UTILITY_SUB_TYPE = "utility-sub-type";
 
     // In debug builds, asserts that the stream of input events is valid.
@@ -915,9 +922,6 @@ public final class ContentSwitches {
     // Prevent the offline indicator from showing.
     public static final String FORCE_ONLINE_CONNECTION_STATE_FOR_INDICATOR = "force-online-connection-state-for-indicator";
 
-    // The telephony region (ISO country code) to use in phone number detection.
-    public static final String NETWORK_COUNTRY_ISO = "network-country-iso";
-
     // Enables remote debug over HTTP on the specified socket name.
     public static final String REMOTE_DEBUGGING_SOCKET_NAME = "remote-debugging-socket-name";
 
@@ -1000,6 +1004,9 @@ public final class ContentSwitches {
     // Causes the second GPU process used for gpu info collection to display a
     // dialog on launch.
     public static final String GPU2_STARTUP_DIALOG = "gpu2-startup-dialog";
+
+    // Use high priority for the audio process.
+    public static final String AUDIO_PROCESS_HIGH_PRIORITY = "audio-process-high-priority";
 
     // Dumps IPC messages sent from renderer processes to the browser process to
     // the given directory. Used primarily to gather samples for IPC fuzzing.

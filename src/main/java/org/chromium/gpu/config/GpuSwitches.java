@@ -118,6 +118,10 @@ public final class GpuSwitches {
     // TODO(crbug/1158000): Remove this switch.
     public static final String VULKAN_SYNC_CPU_MEMORY_LIMIT_MB = "vulkan-sync-cpu-memory-limit-mb";
 
+    // Crash Chrome if GPU process crashes. This is to force a test to fail when
+    // GPU process crashes unexpectedly.
+    public static final String FORCE_BROWSER_CRASH_ON_GPU_CRASH = "force-browser-crash-on-gpu-crash";
+
     // Prevent instantiation.
     private GpuSwitches() {}
 }

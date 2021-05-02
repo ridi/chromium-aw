@@ -66,11 +66,13 @@ public final class ContentSecurityPolicyHeader extends org.chromium.mojo.binding
                     
                 result.type = decoder0.readInt(16);
                     ContentSecurityPolicyType.validate(result.type);
+                    result.type = ContentSecurityPolicyType.toKnownValue(result.type);
                 }
                 {
                     
                 result.source = decoder0.readInt(20);
                     ContentSecurityPolicySource.validate(result.source);
+                    result.source = ContentSecurityPolicySource.toKnownValue(result.source);
                 }
 
         } finally {

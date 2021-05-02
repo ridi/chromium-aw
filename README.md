@@ -38,7 +38,7 @@ apply(plugin = "de.undercouch.download")
 Then you can include this library by adding dependency script to `build.gradle` file of your project.
 
 ```
-val version = "89.0.4389.100-1"
+val version = "90.0.4430.66-1"
 val fileName = "chromium-aw-release.aar"
 val destPath = "../libs/${fileName}"
 val downloadChromiumAwTaskName = "chromium-aw@aar"
@@ -58,7 +58,7 @@ tasks.matching { it.name != downloadChromiumAwTaskName }
 android {
   ...
   aaptOptions {
-    noCompress("dat", "pak")
+    noCompress("bin", "dat", "pak")
   }
   ...
 }
@@ -66,11 +66,12 @@ android {
 
 ## Chromium build information
 
-Current version is based on [`89.0.4389.100`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/89.0.4389.100)
+Current version is based on [`90.0.4430.66`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/90.0.4430.66)
 
-## Customizing
+## Customizing (Patch files are [here](patches))
 
-- Unix domain socket name prefix for Devtools is changed. (Patch files are [here](patches).)
+- Unix domain socket name prefix for Devtools is changed.
+- Added snapshot blob for x86/x86_64 arch.
 
 ## Build instructions
 
@@ -154,7 +155,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/89.0.4389.100
+$ git checkout tags/$VERSION # ex) tags/90.0.4430.66
 
 $ gclient sync
 ```
@@ -168,7 +169,7 @@ Apply [patch files](patches).
 In this project `$TARGET` must be one of `arm`, `arm64`, `x86`, and `x64`.
 
 ```sh
-$ gn gen --args='target_os="android" target_cpu="$TARGET" is_debug=false cc_wrapper="ccache" symbol_level=0 blink_symbol_level=0 enable_nacl=false use_debug_fission=false clang_use_chrome_plugins=false v8_use_external_startup_data=false' out/$TARGET
+$ gn gen --args='target_os="android" target_cpu="$TARGET" is_debug=false cc_wrapper="ccache" symbol_level=0 blink_symbol_level=0 enable_nacl=false use_debug_fission=false clang_use_chrome_plugins=false' out/$TARGET
 
 # It takes about 3 hours. (Intel i5-10400, RAM 16GB, WSL2, no-cache, local parallel build, x86 target)
 $ ninja -C out/$TARGET webview_instrumentation_apk
@@ -179,7 +180,7 @@ $ ninja -C out/$TARGET webview_instrumentation_apk
 **IMPORTANT : It may be different depending on Chromium version.**
 
 ```sh
-$ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 89.
+$ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 90.
 ```
 
 ## Crash dump decoding instructions

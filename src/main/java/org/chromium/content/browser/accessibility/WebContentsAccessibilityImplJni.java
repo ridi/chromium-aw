@@ -141,8 +141,9 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
 
   @Override
   public int findElementType(long nativeWebContentsAccessibilityAndroid,
-      WebContentsAccessibilityImpl caller, int startId, String elementType, boolean forwards) {
-    return (int)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_findElementType(nativeWebContentsAccessibilityAndroid, caller, startId, elementType, forwards);
+      WebContentsAccessibilityImpl caller, int startId, String elementType, boolean forwards,
+      boolean canWrapToLastElement) {
+    return (int)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_findElementType(nativeWebContentsAccessibilityAndroid, caller, startId, elementType, forwards, canWrapToLastElement);
   }
 
   @Override

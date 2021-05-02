@@ -59,6 +59,7 @@ public final class NdefError extends org.chromium.mojo.bindings.Struct {
                     
                 result.errorType = decoder0.readInt(8);
                     NdefErrorType.validate(result.errorType);
+                    result.errorType = NdefErrorType.toKnownValue(result.errorType);
                 }
                 {
                     

@@ -16,8 +16,8 @@ package org.chromium.network.mojom;
 
 public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 88;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
+    private static final int STRUCT_SIZE = 80;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(80, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public CspSource selfOrigin;
     public java.util.Map<Integer, String> rawDirectives;
@@ -29,7 +29,6 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
     public ContentSecurityPolicyHeader header;
     public boolean useReportingApi;
     public String[] reportEndpoints;
-    public String[] pluginTypes;
     public int requireTrustedTypesFor;
     public CspTrustedTypes trustedTypes;
     public String[] parsingErrors;
@@ -167,6 +166,7 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
                     
                 result.sandbox = decoder0.readInt(36);
                     WebSandboxFlags.validate(result.sandbox);
+                    result.sandbox = WebSandboxFlags.toKnownValue(result.sandbox);
                 }
                 {
                     
@@ -187,31 +187,18 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(56, true);
-                if (decoder1 == null) {
-                    result.pluginTypes = null;
-                } else {
-                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-                    result.pluginTypes = new String[si1.elementsOrVersion];
-                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
-                        
-                        result.pluginTypes[i1] = decoder1.readString(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
-                    }
-                }
-                }
-                {
-                    
-                result.requireTrustedTypesFor = decoder0.readInt(64);
+                result.requireTrustedTypesFor = decoder0.readInt(56);
                     CspRequireTrustedTypesFor.validate(result.requireTrustedTypesFor);
+                    result.requireTrustedTypesFor = CspRequireTrustedTypesFor.toKnownValue(result.requireTrustedTypesFor);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(72, true);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(64, true);
                 result.trustedTypes = CspTrustedTypes.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(80, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(72, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.parsingErrors = new String[si1.elementsOrVersion];
@@ -307,24 +294,14 @@ public final class ContentSecurityPolicy extends org.chromium.mojo.bindings.Stru
             }
         }
         
-        if (this.pluginTypes == null) {
-            encoder0.encodeNullPointer(56, true);
-        } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.pluginTypes.length, 56, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
-            for (int i0 = 0; i0 < this.pluginTypes.length; ++i0) {
-                
-                encoder1.encode(this.pluginTypes[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
-            }
-        }
+        encoder0.encode(this.requireTrustedTypesFor, 56);
         
-        encoder0.encode(this.requireTrustedTypesFor, 64);
-        
-        encoder0.encode(this.trustedTypes, 72, true);
+        encoder0.encode(this.trustedTypes, 64, true);
         
         if (this.parsingErrors == null) {
-            encoder0.encodeNullPointer(80, false);
+            encoder0.encodeNullPointer(72, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.parsingErrors.length, 80, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.parsingErrors.length, 72, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.parsingErrors.length; ++i0) {
                 
                 encoder1.encode(this.parsingErrors[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);

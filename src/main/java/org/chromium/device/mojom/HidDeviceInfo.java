@@ -90,6 +90,7 @@ public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.busType = decoder0.readInt(28);
                     HidBusType.validate(result.busType);
+                    result.busType = HidBusType.toKnownValue(result.busType);
                 }
                 {
                     

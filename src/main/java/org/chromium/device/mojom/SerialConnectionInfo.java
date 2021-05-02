@@ -70,16 +70,19 @@ public final class SerialConnectionInfo extends org.chromium.mojo.bindings.Struc
                     
                 result.dataBits = decoder0.readInt(12);
                     SerialDataBits.validate(result.dataBits);
+                    result.dataBits = SerialDataBits.toKnownValue(result.dataBits);
                 }
                 {
                     
                 result.parityBit = decoder0.readInt(16);
                     SerialParityBit.validate(result.parityBit);
+                    result.parityBit = SerialParityBit.toKnownValue(result.parityBit);
                 }
                 {
                     
                 result.stopBits = decoder0.readInt(20);
                     SerialStopBits.validate(result.stopBits);
+                    result.stopBits = SerialStopBits.toKnownValue(result.stopBits);
                 }
                 {
                     

@@ -61,6 +61,7 @@ public final class ImageDecodeAcceleratorSupportedProfile extends org.chromium.m
                     
                 result.imageType = decoder0.readInt(8);
                     ImageDecodeAcceleratorType.validate(result.imageType);
+                    result.imageType = ImageDecodeAcceleratorType.toKnownValue(result.imageType);
                 }
                 {
                     

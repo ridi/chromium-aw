@@ -16,9 +16,15 @@ package org.chromium.network.mojom;
 
 public final class AuthChallengeInfo extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 8;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(8, 0)};
+    private static final int STRUCT_SIZE = 56;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    public boolean isProxy;
+    public org.chromium.url.internal.mojom.Origin challenger;
+    public String scheme;
+    public String realm;
+    public String challenge;
+    public String path;
 
     private AuthChallengeInfo(int version) {
         super(STRUCT_SIZE, version);
@@ -53,6 +59,31 @@ public final class AuthChallengeInfo extends org.chromium.mojo.bindings.Struct {
             org.chromium.mojo.bindings.DataHeader mainDataHeader = decoder0.readAndValidateDataHeader(VERSION_ARRAY);
             final int elementsOrVersion = mainDataHeader.elementsOrVersion;
             result = new AuthChallengeInfo(elementsOrVersion);
+                {
+                    
+                result.isProxy = decoder0.readBoolean(8, 0);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
+                result.challenger = org.chromium.url.internal.mojom.Origin.decode(decoder1);
+                }
+                {
+                    
+                result.scheme = decoder0.readString(24, false);
+                }
+                {
+                    
+                result.realm = decoder0.readString(32, false);
+                }
+                {
+                    
+                result.challenge = decoder0.readString(40, false);
+                }
+                {
+                    
+                result.path = decoder0.readString(48, false);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -63,6 +94,18 @@ public final class AuthChallengeInfo extends org.chromium.mojo.bindings.Struct {
     @SuppressWarnings("unchecked")
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
-        encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+        org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
+        
+        encoder0.encode(this.isProxy, 8, 0);
+        
+        encoder0.encode(this.challenger, 16, false);
+        
+        encoder0.encode(this.scheme, 24, false);
+        
+        encoder0.encode(this.realm, 32, false);
+        
+        encoder0.encode(this.challenge, 40, false);
+        
+        encoder0.encode(this.path, 48, false);
     }
 }

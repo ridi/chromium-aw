@@ -37,6 +37,11 @@ public final class VizFeatures {
     // Viz for WebView architecture.
     public static final String VIZ_FOR_WEBVIEW = "VizForWebView";
 
+    // We use this feature for default value, because enabled VizForWebView forces
+    // skia renderer on and we want to have different feature state between webview
+    // and chrome. This one is set by webview, while the above can be set via finch.
+    public static final String VIZ_FOR_WEBVIEW_DEFAULT = "VizForWebViewDefault";
+
     // Submit CompositorFrame from SynchronousLayerTreeFrameSink directly to viz in
     // WebView.
     public static final String VIZ_FRAME_SUBMISSION_FOR_WEBVIEW = "VizFrameSubmissionForWebView";

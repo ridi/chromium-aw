@@ -395,11 +395,13 @@ GetActiveWakeLocksForTestsResponse callback) {
                         
                     result.type = decoder0.readInt(8);
                         WakeLockType.validate(result.type);
+                        result.type = WakeLockType.toKnownValue(result.type);
                     }
                     {
                         
                     result.reason = decoder0.readInt(12);
                         WakeLockReason.validate(result.reason);
+                        result.reason = WakeLockReason.toKnownValue(result.reason);
                     }
                     {
                         
@@ -479,6 +481,7 @@ GetActiveWakeLocksForTestsResponse callback) {
                         
                     result.type = decoder0.readInt(8);
                         WakeLockType.validate(result.type);
+                        result.type = WakeLockType.toKnownValue(result.type);
                     }
                     {
                         
@@ -549,6 +552,7 @@ GetActiveWakeLocksForTestsResponse callback) {
                         
                     result.type = decoder0.readInt(8);
                         WakeLockType.validate(result.type);
+                        result.type = WakeLockType.toKnownValue(result.type);
                     }
 
             } finally {

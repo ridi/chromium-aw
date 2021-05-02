@@ -82,6 +82,7 @@ public final class VkPhysicalDeviceProperties extends org.chromium.mojo.bindings
                     
                 result.deviceType = decoder0.readInt(24);
                     VkPhysicalDeviceType.validate(result.deviceType);
+                    result.deviceType = VkPhysicalDeviceType.toKnownValue(result.deviceType);
                 }
                 {
                     

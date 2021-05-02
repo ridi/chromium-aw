@@ -102,13 +102,13 @@ int bufferId, VideoBufferHandle bufferHandle) {
 
         @Override
         public void onBufferReady(
-int bufferId, VideoFrameInfo info) {
+ReadyBuffer buffer, ReadyBuffer[] scaledBuffers) {
 
             VideoCaptureObserverOnBufferReadyParams _message = new VideoCaptureObserverOnBufferReadyParams();
 
-            _message.bufferId = bufferId;
+            _message.buffer = buffer;
 
-            _message.info = info;
+            _message.scaledBuffers = scaledBuffers;
 
 
             getProxyHandler().getMessageReceiver().accept(
@@ -198,7 +198,7 @@ int bufferId) {
                         VideoCaptureObserverOnBufferReadyParams data =
                                 VideoCaptureObserverOnBufferReadyParams.deserialize(messageWithHeader.getPayload());
 
-                        getImpl().onBufferReady(data.bufferId, data.info);
+                        getImpl().onBufferReady(data.buffer, data.scaledBuffers);
                         return true;
                     }
 
@@ -309,6 +309,7 @@ int bufferId) {
                         
                     result.state = decoder0.readInt(8);
                         VideoCaptureState.validate(result.state);
+                        result.state = VideoCaptureState.toKnownValue(result.state);
                     }
 
             } finally {
@@ -404,8 +405,8 @@ int bufferId) {
         private static final int STRUCT_SIZE = 24;
         private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
-        public int bufferId;
-        public VideoFrameInfo info;
+        public ReadyBuffer buffer;
+        public ReadyBuffer[] scaledBuffers;
 
         private VideoCaptureObserverOnBufferReadyParams(int version) {
             super(STRUCT_SIZE, version);
@@ -442,12 +443,21 @@ int bufferId) {
                 result = new VideoCaptureObserverOnBufferReadyParams(elementsOrVersion);
                     {
                         
-                    result.bufferId = decoder0.readInt(8);
+                    org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
+                    result.buffer = ReadyBuffer.decode(decoder1);
                     }
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(16, false);
-                    result.info = VideoFrameInfo.decode(decoder1);
+                    {
+                        org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                        result.scaledBuffers = new ReadyBuffer[si1.elementsOrVersion];
+                        for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                            
+                            org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                            result.scaledBuffers[i1] = ReadyBuffer.decode(decoder2);
+                        }
+                    }
                     }
 
             } finally {
@@ -461,9 +471,17 @@ int bufferId) {
         protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
             org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
             
-            encoder0.encode(this.bufferId, 8);
+            encoder0.encode(this.buffer, 8, false);
             
-            encoder0.encode(this.info, 16, false);
+            if (this.scaledBuffers == null) {
+                encoder0.encodeNullPointer(16, false);
+            } else {
+                org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.scaledBuffers.length, 16, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                for (int i0 = 0; i0 < this.scaledBuffers.length; ++i0) {
+                    
+                    encoder1.encode(this.scaledBuffers[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+                }
+            }
         }
     }
 

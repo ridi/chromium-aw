@@ -28,6 +28,11 @@ final class LocalizationUtilsJni implements LocalizationUtils.Natives {
     return (int)GEN_JNI.org_chromium_ui_base_LocalizationUtils_getFirstStrongCharacterDirection(string);
   }
 
+  @Override
+  public String getNativeUiLocale() {
+    return (String)GEN_JNI.org_chromium_ui_base_LocalizationUtils_getNativeUiLocale();
+  }
+
   public static LocalizationUtils.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

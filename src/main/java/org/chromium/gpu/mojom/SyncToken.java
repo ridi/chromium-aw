@@ -65,6 +65,7 @@ public final class SyncToken extends org.chromium.mojo.bindings.Struct {
                     
                 result.namespaceId = decoder0.readInt(12);
                     CommandBufferNamespace.validate(result.namespaceId);
+                    result.namespaceId = CommandBufferNamespace.toKnownValue(result.namespaceId);
                 }
                 {
                     

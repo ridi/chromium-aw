@@ -411,6 +411,7 @@ int priority, int intraPriorityValue) {
                         
                     result.priority = decoder0.readInt(8);
                         RequestPriority.validate(result.priority);
+                        result.priority = RequestPriority.toKnownValue(result.priority);
                     }
                     {
                         

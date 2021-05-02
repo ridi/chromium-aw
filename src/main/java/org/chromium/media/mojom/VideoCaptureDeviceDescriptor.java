@@ -76,11 +76,13 @@ public final class VideoCaptureDeviceDescriptor extends org.chromium.mojo.bindin
                     
                 result.facingMode = decoder0.readInt(32);
                     VideoFacingMode.validate(result.facingMode);
+                    result.facingMode = VideoFacingMode.toKnownValue(result.facingMode);
                 }
                 {
                     
                 result.captureApi = decoder0.readInt(36);
                     VideoCaptureApi.validate(result.captureApi);
+                    result.captureApi = VideoCaptureApi.toKnownValue(result.captureApi);
                 }
                 {
                     
@@ -91,6 +93,7 @@ public final class VideoCaptureDeviceDescriptor extends org.chromium.mojo.bindin
                     
                 result.transportType = decoder0.readInt(48);
                     VideoCaptureTransportType.validate(result.transportType);
+                    result.transportType = VideoCaptureTransportType.toKnownValue(result.transportType);
                 }
 
         } finally {

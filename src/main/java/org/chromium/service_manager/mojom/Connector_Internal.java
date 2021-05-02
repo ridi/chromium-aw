@@ -394,6 +394,7 @@ org.chromium.mojo.bindings.InterfaceRequest<Connector> receiver) {
                         
                     result.priority = decoder0.readInt(28);
                         BindInterfacePriority.validate(result.priority);
+                        result.priority = BindInterfacePriority.toKnownValue(result.priority);
                     }
 
             } finally {
@@ -465,6 +466,7 @@ org.chromium.mojo.bindings.InterfaceRequest<Connector> receiver) {
                         
                     result.result = decoder0.readInt(8);
                         ConnectResult.validate(result.result);
+                        result.result = ConnectResult.toKnownValue(result.result);
                     }
                     {
                         
@@ -852,6 +854,7 @@ org.chromium.mojo.bindings.InterfaceRequest<Connector> receiver) {
                         
                     result.result = decoder0.readInt(8);
                         ConnectResult.validate(result.result);
+                        result.result = ConnectResult.toKnownValue(result.result);
                     }
                     {
                         
@@ -1065,6 +1068,7 @@ org.chromium.mojo.bindings.InterfaceRequest<Connector> receiver) {
                         
                     result.result = decoder0.readInt(8);
                         ConnectResult.validate(result.result);
+                        result.result = ConnectResult.toKnownValue(result.result);
                     }
 
             } finally {

@@ -19,8 +19,8 @@ import java.lang.annotation.RetentionPolicy;
     SBThreatType.UNUSED, SBThreatType.SAFE, SBThreatType.URL_PHISHING, SBThreatType.URL_MALWARE,
     SBThreatType.URL_UNWANTED, SBThreatType.URL_BINARY_MALWARE,
     SBThreatType.URL_CLIENT_SIDE_PHISHING, SBThreatType.EXTENSION,
-    SBThreatType.URL_CLIENT_SIDE_MALWARE, SBThreatType.BLACKLISTED_RESOURCE, SBThreatType.API_ABUSE,
-    SBThreatType.SUBRESOURCE_FILTER, SBThreatType.CSD_WHITELIST,
+    SBThreatType.URL_CLIENT_SIDE_MALWARE, SBThreatType.BLOCKLISTED_RESOURCE, SBThreatType.API_ABUSE,
+    SBThreatType.SUBRESOURCE_FILTER, SBThreatType.CSD_ALLOWLIST,
     SBThreatType.DEPRECATED_URL_PASSWORD_PROTECTION_PHISHING, SBThreatType.SAVED_PASSWORD_REUSE,
     SBThreatType.SIGNED_IN_SYNC_PASSWORD_REUSE, SBThreatType.SIGNED_IN_NON_SYNC_PASSWORD_REUSE,
     SBThreatType.BLOCKED_AD_REDIRECT, SBThreatType.AD_SAMPLE, SBThreatType.BLOCKED_AD_POPUP,
@@ -31,7 +31,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface SBThreatType {
   /**
    * This type can be used for lists that can be checked synchronously so a client callback isn't
-   * required, or for whitelists.
+   * required, or for allowlists.
    */
   int UNUSED = 0;
   /**
@@ -69,10 +69,10 @@ public @interface SBThreatType {
    */
   int URL_CLIENT_SIDE_MALWARE = 8;
   /**
-   * Url leads to a blacklisted resource script. Note that no warnings should be shown on this
+   * Url leads to a blocklisted resource script. Note that no warnings should be shown on this
    * threat type, but an incident report might be sent.
    */
-  int BLACKLISTED_RESOURCE = 9;
+  int BLOCKLISTED_RESOURCE = 9;
   /**
    * Url abuses a permission API.
    */
@@ -82,9 +82,9 @@ public @interface SBThreatType {
    */
   int SUBRESOURCE_FILTER = 11;
   /**
-   * CSD Phishing whitelist.  This "threat" means a URL matched the whitelist.
+   * CSD Phishing allowlist.  This "threat" means a URL matched the allowlist.
    */
-  int CSD_WHITELIST = 12;
+  int CSD_ALLOWLIST = 12;
   /**
    * DEPRECATED. Url detected by password protection service.
    */

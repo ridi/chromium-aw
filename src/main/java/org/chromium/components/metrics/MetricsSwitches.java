@@ -33,7 +33,8 @@ public final class MetricsSwitches {
     // known as the Chrome Variations state.
     public static final String RESET_VARIATION_STATE = "reset-variation-state";
 
-    // Forces metrics reporting to be enabled.
+    // Forces metrics reporting to be enabled. Should not be used for tests as it
+    // will send data to servers.
     public static final String FORCE_ENABLE_METRICS_REPORTING = "force-enable-metrics-reporting";
 
     // Prevents instantiation.

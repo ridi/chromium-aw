@@ -139,16 +139,22 @@ public final class VideoCaptureError {
     public static final int FUCHSIA_UNSUPPORTED_PIXEL_FORMAT = 120;
     public static final int FUCHSIA_FAILED_TO_MAP_SYSMEM_BUFFER = 121;
     public static final int CROS_HAL_V3_DEVICE_CONTEXT_DUPLICATED_CLIENT = 122;
+    public static final int DESKTOP_CAPTURE_DEVICE_MAC_FAILED_STREAM_CREATE = 123;
+    public static final int DESKTOP_CAPTURE_DEVICE_MAC_FAILED_STREAM_START = 124;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 122;
+    public static final int MAX_VALUE = 124;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 122;
+        return value >= 0 && value <= 124;
     }
 
     public static void validate(int value) {
         if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+    }
+
+    public static int toKnownValue(int value) {
+      return value;
     }
 
     private VideoCaptureError() {}

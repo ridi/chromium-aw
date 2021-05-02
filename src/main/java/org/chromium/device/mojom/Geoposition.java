@@ -40,6 +40,10 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private ErrorCode() {}
     }
     public boolean valid;
@@ -103,6 +107,7 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
                     
                 result.errorCode = decoder0.readInt(12);
                     Geoposition.ErrorCode.validate(result.errorCode);
+                    result.errorCode = Geoposition.ErrorCode.toKnownValue(result.errorCode);
                 }
                 {
                     

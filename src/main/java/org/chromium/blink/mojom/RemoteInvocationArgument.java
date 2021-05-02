@@ -23,6 +23,7 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
         public static final int SingletonValue = 3;
         public static final int ArrayValue = 4;
         public static final int TypedArrayValue = 5;
+        public static final int ObjectIdValue = 6;
     };
     private double mNumberValue;
     private boolean mBooleanValue;
@@ -30,6 +31,7 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
     private int mSingletonValue;
     private RemoteInvocationArgument[] mArrayValue;
     private RemoteTypedArray mTypedArrayValue;
+    private int mObjectIdValue;
 
     public void setNumberValue(double numberValue) {
         this.mTag = Tag.NumberValue;
@@ -91,6 +93,16 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
         return this.mTypedArrayValue;
     }
 
+    public void setObjectIdValue(int objectIdValue) {
+        this.mTag = Tag.ObjectIdValue;
+        this.mObjectIdValue = objectIdValue;
+    }
+
+    public int getObjectIdValue() {
+        assert this.mTag == Tag.ObjectIdValue;
+        return this.mObjectIdValue;
+    }
+
 
     @Override
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder0, int offset) {
@@ -136,6 +148,11 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
                 encoder0.encode(this.mTypedArrayValue, offset + 8, false);
                 break;
             }
+            case Tag.ObjectIdValue: {
+                
+                encoder0.encode(this.mObjectIdValue, offset + 8);
+                break;
+            }
             default: {
                 break;
             }
@@ -176,6 +193,7 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
                 
                 result.mSingletonValue = decoder0.readInt(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE);
                     SingletonJavaScriptValue.validate(result.mSingletonValue);
+                    result.mSingletonValue = SingletonJavaScriptValue.toKnownValue(result.mSingletonValue);
                 result.mTag = Tag.SingletonValue;
                 break;
             }
@@ -199,6 +217,12 @@ public final class RemoteInvocationArgument extends org.chromium.mojo.bindings.U
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE, false);
                 result.mTypedArrayValue = RemoteTypedArray.decode(decoder1);
                 result.mTag = Tag.TypedArrayValue;
+                break;
+            }
+            case Tag.ObjectIdValue: {
+                
+                result.mObjectIdValue = decoder0.readInt(offset + org.chromium.mojo.bindings.DataHeader.HEADER_SIZE);
+                result.mTag = Tag.ObjectIdValue;
                 break;
             }
             default: {

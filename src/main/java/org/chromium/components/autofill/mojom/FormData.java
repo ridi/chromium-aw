@@ -132,6 +132,7 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
                     
                 result.submissionEvent = decoder0.readInt(68);
                     SubmissionIndicatorEvent.validate(result.submissionEvent);
+                    result.submissionEvent = SubmissionIndicatorEvent.toKnownValue(result.submissionEvent);
                 }
                 {
                     

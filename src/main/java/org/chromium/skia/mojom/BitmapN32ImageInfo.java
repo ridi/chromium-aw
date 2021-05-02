@@ -62,6 +62,7 @@ public final class BitmapN32ImageInfo extends org.chromium.mojo.bindings.Struct 
                     
                 result.alphaType = decoder0.readInt(8);
                     AlphaType.validate(result.alphaType);
+                    result.alphaType = AlphaType.toKnownValue(result.alphaType);
                 }
                 {
                     

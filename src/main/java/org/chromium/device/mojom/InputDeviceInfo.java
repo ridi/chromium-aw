@@ -77,11 +77,13 @@ public final class InputDeviceInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.subsystem = decoder0.readInt(24);
                     InputDeviceSubsystem.validate(result.subsystem);
+                    result.subsystem = InputDeviceSubsystem.toKnownValue(result.subsystem);
                 }
                 {
                     
                 result.type = decoder0.readInt(28);
                     InputDeviceType.validate(result.type);
+                    result.type = InputDeviceType.toKnownValue(result.type);
                 }
                 {
                     

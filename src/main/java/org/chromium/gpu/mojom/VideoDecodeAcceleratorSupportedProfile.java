@@ -61,6 +61,7 @@ public final class VideoDecodeAcceleratorSupportedProfile extends org.chromium.m
                     
                 result.profile = decoder0.readInt(8);
                     VideoCodecProfile.validate(result.profile);
+                    result.profile = VideoCodecProfile.toKnownValue(result.profile);
                 }
                 {
                     

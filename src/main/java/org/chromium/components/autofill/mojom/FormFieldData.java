@@ -38,6 +38,10 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private CheckStatus() {}
     }
 
@@ -56,6 +60,10 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
         public static void validate(int value) {
             if (IS_EXTENSIBLE || isKnownValue(value)) return;
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+        }
+
+        public static int toKnownValue(int value) {
+          return value;
         }
 
         private RoleAttribute() {}
@@ -87,6 +95,10 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private LabelSource() {}
     }
     public org.chromium.mojo_base.mojom.String16 label;
@@ -113,7 +125,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
     public int textDirection;
     public boolean isEnabled;
     public boolean isReadonly;
-    public org.chromium.mojo_base.mojom.String16 typedValue;
+    public org.chromium.mojo_base.mojom.String16 userInput;
     public org.chromium.mojo_base.mojom.String16[] optionValues;
     public org.chromium.mojo_base.mojom.String16[] optionContents;
     public int labelSource;
@@ -248,6 +260,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                     
                 result.checkStatus = decoder0.readInt(124);
                     FormFieldData.CheckStatus.validate(result.checkStatus);
+                    result.checkStatus = FormFieldData.CheckStatus.toKnownValue(result.checkStatus);
                 }
                 {
                     
@@ -257,16 +270,18 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                     
                 result.role = decoder0.readInt(136);
                     FormFieldData.RoleAttribute.validate(result.role);
+                    result.role = FormFieldData.RoleAttribute.toKnownValue(result.role);
                 }
                 {
                     
                 result.textDirection = decoder0.readInt(140);
                     org.chromium.mojo_base.mojom.TextDirection.validate(result.textDirection);
+                    result.textDirection = org.chromium.mojo_base.mojom.TextDirection.toKnownValue(result.textDirection);
                 }
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(144, false);
-                result.typedValue = org.chromium.mojo_base.mojom.String16.decode(decoder1);
+                result.userInput = org.chromium.mojo_base.mojom.String16.decode(decoder1);
                 }
                 {
                     
@@ -298,6 +313,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                     
                 result.labelSource = decoder0.readInt(168);
                     FormFieldData.LabelSource.validate(result.labelSource);
+                    result.labelSource = FormFieldData.LabelSource.toKnownValue(result.labelSource);
                 }
                 {
                     
@@ -390,7 +406,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.textDirection, 140);
         
-        encoder0.encode(this.typedValue, 144, false);
+        encoder0.encode(this.userInput, 144, false);
         
         if (this.optionValues == null) {
             encoder0.encodeNullPointer(152, false);

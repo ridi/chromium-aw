@@ -63,6 +63,7 @@ public final class RRectF extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(8);
                     RRectFType.validate(result.type);
+                    result.type = RRectFType.toKnownValue(result.type);
                 }
                 {
                     

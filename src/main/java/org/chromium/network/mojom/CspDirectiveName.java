@@ -31,32 +31,35 @@ public final class CspDirectiveName {
     public static final int MEDIA_SRC = 12;
     public static final int NAVIGATE_TO = 13;
     public static final int OBJECT_SRC = 14;
-    public static final int PLUGIN_TYPES = 15;
-    public static final int PREFETCH_SRC = 16;
-    public static final int REPORT_TO = 17;
-    public static final int REPORT_URI = 18;
-    public static final int REQUIRE_TRUSTED_TYPES_FOR = 19;
-    public static final int SANDBOX = 20;
-    public static final int SCRIPT_SRC = 21;
-    public static final int SCRIPT_SRC_ATTR = 22;
-    public static final int SCRIPT_SRC_ELEM = 23;
-    public static final int STYLE_SRC = 24;
-    public static final int STYLE_SRC_ATTR = 25;
-    public static final int STYLE_SRC_ELEM = 26;
-    public static final int TREAT_AS_PUBLIC_ADDRESS = 27;
-    public static final int TRUSTED_TYPES = 28;
-    public static final int UPGRADE_INSECURE_REQUESTS = 29;
-    public static final int WORKER_SRC = 30;
+    public static final int PREFETCH_SRC = 15;
+    public static final int REPORT_TO = 16;
+    public static final int REPORT_URI = 17;
+    public static final int REQUIRE_TRUSTED_TYPES_FOR = 18;
+    public static final int SANDBOX = 19;
+    public static final int SCRIPT_SRC = 20;
+    public static final int SCRIPT_SRC_ATTR = 21;
+    public static final int SCRIPT_SRC_ELEM = 22;
+    public static final int STYLE_SRC = 23;
+    public static final int STYLE_SRC_ATTR = 24;
+    public static final int STYLE_SRC_ELEM = 25;
+    public static final int TREAT_AS_PUBLIC_ADDRESS = 26;
+    public static final int TRUSTED_TYPES = 27;
+    public static final int UPGRADE_INSECURE_REQUESTS = 28;
+    public static final int WORKER_SRC = 29;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 30;
+    public static final int MAX_VALUE = 29;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 30;
+        return value >= 0 && value <= 29;
     }
 
     public static void validate(int value) {
         if (IS_EXTENSIBLE || isKnownValue(value)) return;
         throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+    }
+
+    public static int toKnownValue(int value) {
+      return value;
     }
 
     private CspDirectiveName() {}

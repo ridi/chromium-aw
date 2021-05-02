@@ -69,6 +69,7 @@ public final class VideoCaptureFormat extends org.chromium.mojo.bindings.Struct 
                     
                 result.pixelFormat = decoder0.readInt(20);
                     VideoCapturePixelFormat.validate(result.pixelFormat);
+                    result.pixelFormat = VideoCapturePixelFormat.toKnownValue(result.pixelFormat);
                 }
 
         } finally {

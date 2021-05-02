@@ -237,6 +237,7 @@ int newState) {
                         
                     result.newState = decoder0.readInt(8);
                         BluetoothSystem.State.validate(result.newState);
+                        result.newState = BluetoothSystem.State.toKnownValue(result.newState);
                     }
 
             } finally {
@@ -301,6 +302,7 @@ int newState) {
                         
                     result.newState = decoder0.readInt(8);
                         BluetoothSystem.ScanState.validate(result.newState);
+                        result.newState = BluetoothSystem.ScanState.toKnownValue(result.newState);
                     }
 
             } finally {

@@ -20,8 +20,9 @@ public final class UiFeatures {
     // If enabled, calculate native window occlusion - Windows-only.
     public static final String CALCULATE_NATIVE_WIN_OCCLUSION = "CalculateNativeWinOcclusion";
 
-
-    public static final String CALCULATE_NATIVE_WIN_OCCLUSION_CHECK_VIRTUAL_DESKTOP_USED = "CalculateNativeWinOcclusionCheckVirtualDesktopUsed";
+    // Whether or not filenames are supported on the clipboard.
+    // https://crbug.com/1175483
+    public static final String CLIPBOARD_FILENAMES = "ClipboardFilenames";
 
     // Whether or not to delegate color queries to the color provider.
     public static final String COLOR_PROVIDER_REDIRECTION = "ColorProviderRedirection";
@@ -33,6 +34,9 @@ public final class UiFeatures {
     // Experimental shortcut handling and mapping to address i18n issues.
     // https://crbug.com/1067269
     public static final String NEW_SHORTCUT_MAPPING = "NewShortcutMapping";
+
+    // This feature supercedes kNewShortcutMapping.
+    public static final String IMPROVED_KEYBOARD_SHORTCUTS = "ImprovedKeyboardShortcuts";
 
     // Update of the virtual keyboard settings UI as described in
     // https://crbug.com/876901.
@@ -107,6 +111,9 @@ public final class UiFeatures {
     // Enable the common select popup.
     public static final String USE_COMMON_SELECT_POPUP = "UseCommonSelectPopup";
 
+    // Enables keyboard accessible tooltip.
+    public static final String KEYBOARD_ACCESSIBLE_TOOLTIP = "KeyboardAccessibleTooltip";
+
 
     public static final String HANDWRITING_GESTURE = "HandwritingGesture";
 
@@ -121,6 +128,9 @@ public final class UiFeatures {
 
 
     public static final String SWIPE_TO_MOVE_CURSOR = "SwipeToMoveCursor";
+
+
+    public static final String UI_DEBUG_TOOLS = "ui-debug-tools";
 
     // Prevent instantiation.
     private UiFeatures() {}

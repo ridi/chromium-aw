@@ -21,6 +21,9 @@ public final class BlinkFeatures {
     // frame without user activation.
     public static final String BLOCKING_DOWNLOADS_IN_AD_FRAME_WITHOUT_USER_ACTIVATION = "BlockingDownloadsInAdFrameWithoutUserActivation";
 
+
+    public static final String COLRV1_FONTS = "COLRV1Fonts";
+
     // Enable defer commits to avoid flash of unstyled content, for same origin
     // navigation only.
     public static final String PAINT_HOLDING = "PaintHolding";
@@ -90,9 +93,6 @@ public final class BlinkFeatures {
     public static final String LAYOUT_NG_TEXT_CONTROL = "LayoutNGTextControl";
 
 
-    public static final String FRAGMENT_ITEM = "FragmentItem";
-
-
     public static final String MIXED_CONTENT_AUTOUPGRADE = "AutoupgradeMixedContent";
 
     // Used to control the collection of anchor element metrics (crbug.com/856683).
@@ -103,8 +103,9 @@ public final class BlinkFeatures {
     // future navigations faster.
     public static final String NAVIGATION_PREDICTOR = "NavigationPredictor";
 
-
-    public static final String PARENT_NODE_REPLACE_CHILDREN = "ParentNodeReplaceChildren";
+    // This feature returns empty arrays for navigator.plugins and
+    // navigator.mimeTypes. It is disabled for now, due to compat issues.
+    public static final String NAVIGATOR_PLUGINS_EMPTY = "NavigatorPluginsEmpty";
 
     // Enable browser-initiated dedicated worker script loading
     // (PlzDedicatedWorker). https://crbug.com/906991
@@ -119,7 +120,7 @@ public final class BlinkFeatures {
     // https://crbug.com/1013389
     public static final String PORTALS_CROSS_ORIGIN = "PortalsCrossOrigin";
 
-    // Enable the prerender V2. https://crbug.com/1126305.
+    // Enable the prerender2. https://crbug.com/1126305.
     public static final String PRERENDER2 = "Prerender2";
 
     // Enable limiting previews loading hints to specific resource types.
@@ -136,7 +137,7 @@ public final class BlinkFeatures {
     // Enables Raw Clipboard. https://crbug.com/897289.
     public static final String RAW_CLIPBOARD = "RawClipboard";
 
-    // Enables usage of getCurrentBrowsingContextMedia() that allows capturing of
+    // Kill switch for getCurrentBrowsingContextMedia(), which allows capturing of
     // web content from the tab from which it is called. (crbug.com/1136940)
     public static final String RTC_GET_CURRENT_BROWSING_CONTEXT_MEDIA = "RTCGetCurrentBrowsingContextMedia";
 
@@ -212,8 +213,11 @@ public final class BlinkFeatures {
     // Font enumeration and data access. https://crbug.com/535764
     public static final String FONT_ACCESS = "FontAccess";
 
-    // Font access using a chooser interface. https://crbug.com/1138621
-    public static final String FONT_ACCESS_CHOOSER = "FontAccessChooser";
+    // Font enumeration and data access. https://crbug.com/1173275
+    public static final String FONT_ACCESS_PERSISTENT = "FontAccessPersistent";
+
+    // Compute pressure API. https://crbug.com/1067627
+    public static final String COMPUTE_PRESSURE = "ComputePressure";
 
     // Prefetch request properties are updated to be privacy-preserving. See
     // crbug.com/988956.
@@ -287,10 +291,6 @@ public final class BlinkFeatures {
     // https://crbug.com/538562
     public static final String IGNORE_CROSS_ORIGIN_WINDOW_WHEN_NAMED_ACCESS_ON_WINDOW = "IgnoreCrossOriginWindowWhenNamedAccessOnWindow";
 
-    // When enabled, loading priority of JavaScript requests is lowered when they
-    // are force deferred by the intervention.
-    public static final String LOWER_JAVA_SCRIPT_PRIORITY_WHEN_FORCE_DEFERRED = "LowerJavaScriptPriorityWhenForceDeferred";
-
     // When enabled, scripts in iframes are not force deferred by the DeferAllScript
     // intervention.
     public static final String DISABLE_FORCE_DEFER_IN_CHILD_FRAMES = "DisableForceDeferInChildFrames";
@@ -298,9 +298,6 @@ public final class BlinkFeatures {
     // Enables redirecting subresources in the page to better compressed and
     // optimized versions to provide data savings.
     public static final String SUBRESOURCE_REDIRECT = "SubresourceRedirect";
-
-    // When 'enabled', all cross-origin iframes will get a compositing layer.
-    public static final String COMPOSITE_CROSS_ORIGIN_IFRAMES = "CompositeCrossOriginIframes";
 
     // When enabled, enforces new interoperable semantics for 3D transforms.
     // See crbug.com/1008483.
@@ -358,9 +355,6 @@ public final class BlinkFeatures {
     public static final String FONT_PRELOADING_DELAYS_RENDERING = "FontPreloadingDelaysRendering";
 
 
-    public static final String FLEX_ASPECT_RATIO = "FlexAspectRatio";
-
-
     public static final String KEEP_SCRIPT_RESOURCE_ALIVE = "KeepScriptResourceAlive";
 
 
@@ -390,7 +384,8 @@ public final class BlinkFeatures {
     // Enable throttling of fetch() requests from service workers in the
     // installing state.  The limit of 3 was chosen to match the limit
     // in background main frames.  In addition, trials showed that this
-    // did not cause excessive install delays or timeouts.
+    // did not cause excessive timeouts and resulted in a net improvement
+    // in successful install rate on some platforms.
     public static final String THROTTLE_INSTALLING_SERVICE_WORKER = "ThrottleInstallingServiceWorker";
 
     // Enables storing and loading security policies (for now, referrer policy) in
@@ -423,13 +418,6 @@ public final class BlinkFeatures {
 
 
     public static final String SKIP_TOUCH_EVENT_FILTER = "SkipTouchEventFilter";
-
-    // Improves support for WebXR on computers with multiple GPUs.
-    public static final String WEB_XR_MULTI_GPU = "WebXRMultiGpu";
-
-    // Enables dependency support in blink::MatchedPropertiesCache, which allows
-    // caching of previously uncachable objects.
-    public static final String CSS_MATCHED_PROPERTIES_CACHE_DEPENDENCIES = "CSSMatchedPropertiesCacheDependencies";
 
     // Disabling this will cause parkable strings to never be compressed.
     // This is useful for headless mode + virtual time. Since virtual time advances
@@ -521,6 +509,9 @@ public final class BlinkFeatures {
     // for the requested URL.
     public static final String SEND_CNAME_ALIASES_TO_SUBRESOURCE_FILTER_FROM_RENDERER = "SendCnameAliasesToSubresourceFilterFromRenderer";
 
+    // Enables the declarative Shadow DOM feature.
+    public static final String DECLARATIVE_SHADOW_DOM = "DeclarativeShadowDOM";
+
     // Kill switch for the InterestCohort API origin trial, i.e. if disabled, the
     // API exposure will be disabled regardless of the OT config.
     // (See https://github.com/WICG/floc.)
@@ -529,11 +520,24 @@ public final class BlinkFeatures {
     // Enable the availability of the "interest-cohort" feature policy.
     public static final String INTEREST_COHORT_FEATURE_POLICY = "InterestCohortFeaturePolicy";
 
-    // Flags only used for testing purposes. No effect when enabled.
-    public static final String DOCUMENT_POLICY_RUNTIME_FLAG1_FOR_TEST = "kDocumentPolicyRuntimeFlag1ForTest";
+    // Changes the default background color of the Text Fragment from
+    // bright yellow rgb(255, 255, 0) to light purple rgb(233, 210, 253)
+    public static final String TEXT_FRAGMENT_COLOR_CHANGE = "TextFragmentColorChange";
 
 
-    public static final String DOCUMENT_POLICY_RUNTIME_FLAG2_FOR_TEST = "kDocumentPolicyRuntimeFlag2ForTest";
+    public static final String DISABLE_DOCUMENT_DOMAIN_BY_DEFAULT = "DisableDocumentDomainByDefault";
+
+    // Scopes the memory cache to a fetcher i.e. document/frame. Any resource cached
+    // in the blink cache will only be reused if the most recent fetcher that
+    // fetched it was the same as the current document.
+    public static final String SCOPE_MEMORY_CACHE_PER_CONTEXT = "ScopeMemoryCachePerContext";
+
+    // Allow image context menu selections to penetrate through transparent
+    // elements.
+    public static final String ENABLE_PENETRATING_IMAGE_SELECTION = "EnablePenetratingImageSelection";
+
+
+    public static final String CLSM90_IMPROVEMENTS = "CLSM90Improvements";
 
     // Do not instantiate this class.
     private BlinkFeatures() {}

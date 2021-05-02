@@ -79,6 +79,7 @@ public final class SerialPortInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(24);
                     DeviceType.validate(result.type);
+                    result.type = DeviceType.toKnownValue(result.type);
                 }
                 {
                     

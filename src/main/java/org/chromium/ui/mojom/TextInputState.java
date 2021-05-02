@@ -79,16 +79,19 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(8);
                     TextInputType.validate(result.type);
+                    result.type = TextInputType.toKnownValue(result.type);
                 }
                 {
                     
                 result.mode = decoder0.readInt(12);
                     TextInputMode.validate(result.mode);
+                    result.mode = TextInputMode.toKnownValue(result.mode);
                 }
                 {
                     
                 result.action = decoder0.readInt(16);
                     TextInputAction.validate(result.action);
+                    result.action = TextInputAction.toKnownValue(result.action);
                 }
                 {
                     
@@ -129,6 +132,7 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
                     
                 result.vkPolicy = decoder0.readInt(52);
                     VirtualKeyboardPolicy.validate(result.vkPolicy);
+                    result.vkPolicy = VirtualKeyboardPolicy.toKnownValue(result.vkPolicy);
                 }
                 {
                     
@@ -144,6 +148,7 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
                     
                 result.lastVkVisibilityRequest = decoder0.readInt(72);
                     VirtualKeyboardVisibilityRequest.validate(result.lastVkVisibilityRequest);
+                    result.lastVkVisibilityRequest = VirtualKeyboardVisibilityRequest.toKnownValue(result.lastVkVisibilityRequest);
                 }
                 {
                     

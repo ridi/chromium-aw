@@ -1415,6 +1415,7 @@ org.chromium.mojo_base.mojom.UnguessableToken deviceId, String message) {
                         
                     result.reason = decoder0.readInt(16);
                         VideoCaptureFrameDropReason.validate(result.reason);
+                        result.reason = VideoCaptureFrameDropReason.toKnownValue(result.reason);
                     }
 
             } finally {

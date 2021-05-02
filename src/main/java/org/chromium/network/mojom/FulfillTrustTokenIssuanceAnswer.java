@@ -38,6 +38,10 @@ public final class FulfillTrustTokenIssuanceAnswer extends org.chromium.mojo.bin
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private Status() {}
     }
     public int status;
@@ -80,6 +84,7 @@ public final class FulfillTrustTokenIssuanceAnswer extends org.chromium.mojo.bin
                     
                 result.status = decoder0.readInt(8);
                     FulfillTrustTokenIssuanceAnswer.Status.validate(result.status);
+                    result.status = FulfillTrustTokenIssuanceAnswer.Status.toKnownValue(result.status);
                 }
                 {
                     

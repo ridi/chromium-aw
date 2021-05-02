@@ -63,11 +63,13 @@ public final class CrossOriginOpenerPolicy extends org.chromium.mojo.bindings.St
                     
                 result.value = decoder0.readInt(8);
                     CrossOriginOpenerPolicyValue.validate(result.value);
+                    result.value = CrossOriginOpenerPolicyValue.toKnownValue(result.value);
                 }
                 {
                     
                 result.reportOnlyValue = decoder0.readInt(12);
                     CrossOriginOpenerPolicyValue.validate(result.reportOnlyValue);
+                    result.reportOnlyValue = CrossOriginOpenerPolicyValue.toKnownValue(result.reportOnlyValue);
                 }
                 {
                     

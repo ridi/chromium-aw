@@ -2190,6 +2190,7 @@ RequestTypeResponse callback) {
                         
                     result.type = decoder0.readInt(8);
                         BiometricType.validate(result.type);
+                        result.type = BiometricType.toKnownValue(result.type);
                     }
 
             } finally {

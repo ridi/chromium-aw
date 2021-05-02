@@ -35,7 +35,7 @@ int bufferId, VideoBufferHandle bufferHandle);
 
 
     void onBufferReady(
-int bufferId, VideoFrameInfo info);
+ReadyBuffer buffer, ReadyBuffer[] scaledBuffers);
 
 
 

@@ -57,6 +57,9 @@ public final class AwFeatures {
     // gamut activity.
     public static final String WEBVIEW_WIDE_COLOR_GAMUT_SUPPORT = "WebViewWideColorGamutSupport";
 
+    // Enable the new Java/JS Bridge code path with mojo implementation.
+    public static final String WEBVIEW_JAVA_JS_BRIDGE_MOJO = "WebViewJavaJsBridgeMojo";
+
     // Do not instantiate this class.
     private AwFeatures() {}
 }

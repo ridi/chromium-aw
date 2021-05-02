@@ -19,7 +19,7 @@ import java.lang.annotation.RetentionPolicy;
     LibraryProcessType.PROCESS_UNINITIALIZED, LibraryProcessType.PROCESS_BROWSER,
     LibraryProcessType.PROCESS_CHILD, LibraryProcessType.PROCESS_WEBVIEW,
     LibraryProcessType.PROCESS_WEBVIEW_CHILD, LibraryProcessType.PROCESS_WEBLAYER,
-    LibraryProcessType.PROCESS_WEBLAYER_CHILD
+    LibraryProcessType.PROCESS_WEBLAYER_CHILD, LibraryProcessType.PROCESS_WEBVIEW_NONEMBEDDED
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface LibraryProcessType {
@@ -51,4 +51,8 @@ public @interface LibraryProcessType {
    * Shared library is running in child process as part of weblayer.
    */
   int PROCESS_WEBLAYER_CHILD = 6;
+  /**
+   * Shared library is running in a non-embedded WebView process.
+   */
+  int PROCESS_WEBVIEW_NONEMBEDDED = 7;
 }

@@ -237,6 +237,7 @@ int error) {
                         
                     result.error = decoder0.readInt(8);
                         SerialReceiveError.validate(result.error);
+                        result.error = SerialReceiveError.toKnownValue(result.error);
                     }
 
             } finally {
@@ -301,6 +302,7 @@ int error) {
                         
                     result.error = decoder0.readInt(8);
                         SerialSendError.validate(result.error);
+                        result.error = SerialSendError.toKnownValue(result.error);
                     }
 
             } finally {

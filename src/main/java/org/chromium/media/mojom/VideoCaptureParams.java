@@ -67,16 +67,19 @@ public final class VideoCaptureParams extends org.chromium.mojo.bindings.Struct 
                     
                 result.bufferType = decoder0.readInt(16);
                     VideoCaptureBufferType.validate(result.bufferType);
+                    result.bufferType = VideoCaptureBufferType.toKnownValue(result.bufferType);
                 }
                 {
                     
                 result.resolutionChangePolicy = decoder0.readInt(20);
                     ResolutionChangePolicy.validate(result.resolutionChangePolicy);
+                    result.resolutionChangePolicy = ResolutionChangePolicy.toKnownValue(result.resolutionChangePolicy);
                 }
                 {
                     
                 result.powerLineFrequency = decoder0.readInt(24);
                     PowerLineFrequency.validate(result.powerLineFrequency);
+                    result.powerLineFrequency = PowerLineFrequency.toKnownValue(result.powerLineFrequency);
                 }
                 {
                     

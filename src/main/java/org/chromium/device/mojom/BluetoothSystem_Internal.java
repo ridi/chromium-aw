@@ -456,6 +456,7 @@ GetAvailableDevicesResponse callback) {
                         
                     result.state = decoder0.readInt(8);
                         BluetoothSystem.State.validate(result.state);
+                        result.state = BluetoothSystem.State.toKnownValue(result.state);
                     }
 
             } finally {
@@ -644,6 +645,7 @@ GetAvailableDevicesResponse callback) {
                         
                     result.result = decoder0.readInt(8);
                         BluetoothSystem.SetPoweredResult.validate(result.result);
+                        result.result = BluetoothSystem.SetPoweredResult.toKnownValue(result.result);
                     }
 
             } finally {
@@ -825,6 +827,7 @@ GetAvailableDevicesResponse callback) {
                         
                     result.scanState = decoder0.readInt(8);
                         BluetoothSystem.ScanState.validate(result.scanState);
+                        result.scanState = BluetoothSystem.ScanState.toKnownValue(result.scanState);
                     }
 
             } finally {
@@ -1006,6 +1009,7 @@ GetAvailableDevicesResponse callback) {
                         
                     result.result = decoder0.readInt(8);
                         BluetoothSystem.StartScanResult.validate(result.result);
+                        result.result = BluetoothSystem.StartScanResult.toKnownValue(result.result);
                     }
 
             } finally {
@@ -1187,6 +1191,7 @@ GetAvailableDevicesResponse callback) {
                         
                     result.result = decoder0.readInt(8);
                         BluetoothSystem.StopScanResult.validate(result.result);
+                        result.result = BluetoothSystem.StopScanResult.toKnownValue(result.result);
                     }
 
             } finally {

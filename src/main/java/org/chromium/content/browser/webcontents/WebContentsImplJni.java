@@ -233,8 +233,8 @@ final class WebContentsImplJni implements WebContentsImpl.Natives {
   }
 
   @Override
-  public String getLastCommittedURL(long nativeWebContentsAndroid, WebContentsImpl caller) {
-    return (String)GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_getLastCommittedURL(nativeWebContentsAndroid, caller);
+  public GURL getLastCommittedURL(long nativeWebContentsAndroid, WebContentsImpl caller) {
+    return (GURL)GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_getLastCommittedURL(nativeWebContentsAndroid, caller);
   }
 
   @Override

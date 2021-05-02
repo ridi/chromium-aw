@@ -212,6 +212,7 @@ int reportType, String property, SourceLocation sourceLocation, String reportedW
                         
                     result.reportType = decoder0.readInt(8);
                         CoopAccessReportType.validate(result.reportType);
+                        result.reportType = CoopAccessReportType.toKnownValue(result.reportType);
                     }
                     {
                         

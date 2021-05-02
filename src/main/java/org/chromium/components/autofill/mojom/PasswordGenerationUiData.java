@@ -87,6 +87,7 @@ public final class PasswordGenerationUiData extends org.chromium.mojo.bindings.S
                     
                 result.textDirection = decoder0.readInt(40);
                     org.chromium.mojo_base.mojom.TextDirection.validate(result.textDirection);
+                    result.textDirection = org.chromium.mojo_base.mojom.TextDirection.toKnownValue(result.textDirection);
                 }
                 {
                     

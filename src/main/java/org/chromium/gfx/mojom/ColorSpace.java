@@ -63,21 +63,25 @@ public final class ColorSpace extends org.chromium.mojo.bindings.Struct {
                     
                 result.primaries = decoder0.readInt(8);
                     ColorSpacePrimaryId.validate(result.primaries);
+                    result.primaries = ColorSpacePrimaryId.toKnownValue(result.primaries);
                 }
                 {
                     
                 result.transfer = decoder0.readInt(12);
                     ColorSpaceTransferId.validate(result.transfer);
+                    result.transfer = ColorSpaceTransferId.toKnownValue(result.transfer);
                 }
                 {
                     
                 result.matrix = decoder0.readInt(16);
                     ColorSpaceMatrixId.validate(result.matrix);
+                    result.matrix = ColorSpaceMatrixId.toKnownValue(result.matrix);
                 }
                 {
                     
                 result.range = decoder0.readInt(20);
                     ColorSpaceRangeId.validate(result.range);
+                    result.range = ColorSpaceRangeId.toKnownValue(result.range);
                 }
                 {
                     

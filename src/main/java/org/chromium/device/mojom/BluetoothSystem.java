@@ -38,6 +38,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private State() {}
     }
 
@@ -59,6 +63,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         public static void validate(int value) {
             if (IS_EXTENSIBLE || isKnownValue(value)) return;
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+        }
+
+        public static int toKnownValue(int value) {
+          return value;
         }
 
         private SetPoweredResult() {}
@@ -83,6 +91,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private ScanState() {}
     }
 
@@ -105,6 +117,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private StartScanResult() {}
     }
 
@@ -125,6 +141,10 @@ public interface BluetoothSystem extends org.chromium.mojo.bindings.Interface {
         public static void validate(int value) {
             if (IS_EXTENSIBLE || isKnownValue(value)) return;
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+        }
+
+        public static int toKnownValue(int value) {
+          return value;
         }
 
         private StopScanResult() {}

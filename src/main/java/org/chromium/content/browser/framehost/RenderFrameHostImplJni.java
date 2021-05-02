@@ -9,6 +9,7 @@ import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
+import org.chromium.url.GURL;
 import org.chromium.url.Origin;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
@@ -28,8 +29,8 @@ final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
   };
 
   @Override
-  public String getLastCommittedURL(long nativeRenderFrameHostAndroid, RenderFrameHostImpl caller) {
-    return (String)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_getLastCommittedURL(nativeRenderFrameHostAndroid, caller);
+  public GURL getLastCommittedURL(long nativeRenderFrameHostAndroid, RenderFrameHostImpl caller) {
+    return (GURL)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_getLastCommittedURL(nativeRenderFrameHostAndroid, caller);
   }
 
   @Override
@@ -40,7 +41,7 @@ final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
 
   @Override
   public void getCanonicalUrlForSharing(long nativeRenderFrameHostAndroid,
-      RenderFrameHostImpl caller, Callback<String> callback) {
+      RenderFrameHostImpl caller, Callback<GURL> callback) {
     GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_getCanonicalUrlForSharing(nativeRenderFrameHostAndroid, caller, callback);
   }
 
@@ -62,9 +63,27 @@ final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
   }
 
   @Override
+  public boolean signalModalCloseWatcherIfActive(long nativeRenderFrameHostAndroid,
+      RenderFrameHostImpl caller) {
+    return (boolean)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_signalModalCloseWatcherIfActive(nativeRenderFrameHostAndroid, caller);
+  }
+
+  @Override
   public boolean isRenderFrameCreated(long nativeRenderFrameHostAndroid,
       RenderFrameHostImpl caller) {
     return (boolean)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_isRenderFrameCreated(nativeRenderFrameHostAndroid, caller);
+  }
+
+  @Override
+  public void getInterfaceToRendererFrame(long nativeRenderFrameHostAndroid,
+      RenderFrameHostImpl caller, String interfacename, int messagePipeRawHandle) {
+    GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_getInterfaceToRendererFrame(nativeRenderFrameHostAndroid, caller, interfacename, messagePipeRawHandle);
+  }
+
+  @Override
+  public void terminateRendererDueToBadMessage(long nativeRenderFrameHostAndroid,
+      RenderFrameHostImpl caller, int reason) {
+    GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_terminateRendererDueToBadMessage(nativeRenderFrameHostAndroid, caller, reason);
   }
 
   @Override

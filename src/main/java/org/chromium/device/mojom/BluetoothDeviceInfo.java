@@ -38,6 +38,10 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
         }
 
+        public static int toKnownValue(int value) {
+          return value;
+        }
+
         private ConnectionState() {}
     }
 
@@ -68,6 +72,10 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         public static void validate(int value) {
             if (IS_EXTENSIBLE || isKnownValue(value)) return;
             throw new org.chromium.mojo.bindings.DeserializationException("Invalid enum value.");
+        }
+
+        public static int toKnownValue(int value) {
+          return value;
         }
 
         private DeviceType() {}
@@ -125,6 +133,7 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
                     
                 result.connectionState = decoder0.readInt(24);
                     BluetoothDeviceInfo.ConnectionState.validate(result.connectionState);
+                    result.connectionState = BluetoothDeviceInfo.ConnectionState.toKnownValue(result.connectionState);
                 }
                 {
                     
@@ -134,6 +143,7 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
                     
                 result.deviceType = decoder0.readInt(32);
                     BluetoothDeviceInfo.DeviceType.validate(result.deviceType);
+                    result.deviceType = BluetoothDeviceInfo.DeviceType.toKnownValue(result.deviceType);
                 }
                 {
                     

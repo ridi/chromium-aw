@@ -74,6 +74,7 @@ public final class VideoFrameInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.pixelFormat = decoder0.readInt(24);
                     VideoCapturePixelFormat.validate(result.pixelFormat);
+                    result.pixelFormat = VideoCapturePixelFormat.toKnownValue(result.pixelFormat);
                 }
                 {
                     

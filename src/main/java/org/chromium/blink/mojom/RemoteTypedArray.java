@@ -59,6 +59,7 @@ public final class RemoteTypedArray extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(8);
                     RemoteArrayType.validate(result.type);
+                    result.type = RemoteArrayType.toKnownValue(result.type);
                 }
                 {
                     

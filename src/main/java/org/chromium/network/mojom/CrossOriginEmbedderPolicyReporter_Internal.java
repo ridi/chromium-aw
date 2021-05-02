@@ -248,6 +248,7 @@ org.chromium.mojo.bindings.InterfaceRequest<CrossOriginEmbedderPolicyReporter> r
                         
                     result.destination = decoder0.readInt(16);
                         RequestDestination.validate(result.destination);
+                        result.destination = RequestDestination.toKnownValue(result.destination);
                     }
                     {
                         

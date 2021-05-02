@@ -16,8 +16,8 @@ package org.chromium.blink.mojom;
 
 public final class TransferableMessage extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 56;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
+    private static final int STRUCT_SIZE = 64;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(64, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public CloneableMessage message;
     public MessagePortDescriptor[] ports;
@@ -25,6 +25,7 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
     public SerializedArrayBufferContents[] arrayBufferContentsArray;
     public org.chromium.skia.mojom.BitmapN32[] imageBitmapContentsArray;
     public UserActivationSnapshot userActivation;
+    public boolean delegatePaymentRequest;
 
     private TransferableMessage(int version) {
         super(STRUCT_SIZE, version);
@@ -121,6 +122,10 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, true);
                 result.userActivation = UserActivationSnapshot.decode(decoder1);
                 }
+                {
+                    
+                result.delegatePaymentRequest = decoder0.readBoolean(56, 0);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -176,5 +181,7 @@ public final class TransferableMessage extends org.chromium.mojo.bindings.Struct
         }
         
         encoder0.encode(this.userActivation, 48, true);
+        
+        encoder0.encode(this.delegatePaymentRequest, 56, 0);
     }
 }

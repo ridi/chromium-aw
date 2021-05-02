@@ -104,6 +104,7 @@ public final class CspViolation extends org.chromium.mojo.bindings.Struct {
                     
                 result.type = decoder0.readInt(52);
                     ContentSecurityPolicyType.validate(result.type);
+                    result.type = ContentSecurityPolicyType.toKnownValue(result.type);
                 }
                 {
                     

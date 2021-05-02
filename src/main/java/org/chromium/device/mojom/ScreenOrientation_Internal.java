@@ -241,6 +241,7 @@ LockOrientationResponse callback) {
                         
                     result.orientation = decoder0.readInt(8);
                         ScreenOrientationLockType.validate(result.orientation);
+                        result.orientation = ScreenOrientationLockType.toKnownValue(result.orientation);
                     }
 
             } finally {
@@ -305,6 +306,7 @@ LockOrientationResponse callback) {
                         
                     result.result = decoder0.readInt(8);
                         ScreenOrientationLockResult.validate(result.result);
+                        result.result = ScreenOrientationLockResult.toKnownValue(result.result);
                     }
 
             } finally {

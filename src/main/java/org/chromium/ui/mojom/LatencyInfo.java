@@ -122,6 +122,7 @@ public final class LatencyInfo extends org.chromium.mojo.bindings.Struct {
                     
                 result.sourceEventType = decoder0.readInt(36);
                     SourceEventType.validate(result.sourceEventType);
+                    result.sourceEventType = SourceEventType.toKnownValue(result.sourceEventType);
                 }
                 {
                     

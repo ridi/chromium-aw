@@ -59,6 +59,7 @@ public final class CspHashSource extends org.chromium.mojo.bindings.Struct {
                     
                 result.algorithm = decoder0.readInt(8);
                     CspHashAlgorithm.validate(result.algorithm);
+                    result.algorithm = CspHashAlgorithm.toKnownValue(result.algorithm);
                 }
                 {
                     

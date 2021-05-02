@@ -25,6 +25,9 @@ public final class GpuFeatures {
     // SurfaceControl.
     public static final String ANDROID_SURFACE_CONTROL = "AndroidSurfaceControl";
 
+    // Hardware Overlays for WebView.
+    public static final String WEBVIEW_SURFACE_CONTROL = "WebViewSurfaceControl";
+
     // Use AImageReader for MediaCodec and MediaPlyer on android.
     public static final String A_IMAGE_READER = "AImageReader";
 
@@ -48,6 +51,9 @@ public final class GpuFeatures {
     // Enable out of process rasterization by default.  This can still be overridden
     // by --disable-oop-rasterization.
     public static final String DEFAULT_ENABLE_OOP_RASTERIZATION = "DefaultEnableOopRasterization";
+
+    // Enables the use of out of process rasterization for canvas.
+    public static final String CANVAS_OOP_RASTERIZATION = "CanvasOopRasterization";
 
     // Use a high priority for GPU process on Windows.
     public static final String GPU_PROCESS_HIGH_PRIORITY_WIN = "GpuProcessHighPriorityWin";
@@ -98,6 +104,9 @@ public final class GpuFeatures {
 
     // Enable GrShaderCache to use with Vulkan backend.
     public static final String ENABLE_GR_SHADER_CACHE_FOR_VULKAN = "EnableGrShaderCacheForVulkan";
+
+    // Enable persistent storage of VkPipelineCache data.
+    public static final String ENABLE_VK_PIPELINE_CACHE = "EnableVkPipelineCache";
 
     // Prevent instantiation.
     private GpuFeatures() {}

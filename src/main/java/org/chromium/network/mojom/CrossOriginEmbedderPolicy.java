@@ -63,11 +63,13 @@ public final class CrossOriginEmbedderPolicy extends org.chromium.mojo.bindings.
                     
                 result.value = decoder0.readInt(8);
                     CrossOriginEmbedderPolicyValue.validate(result.value);
+                    result.value = CrossOriginEmbedderPolicyValue.toKnownValue(result.value);
                 }
                 {
                     
                 result.reportOnlyValue = decoder0.readInt(12);
                     CrossOriginEmbedderPolicyValue.validate(result.reportOnlyValue);
+                    result.reportOnlyValue = CrossOriginEmbedderPolicyValue.toKnownValue(result.reportOnlyValue);
                 }
                 {
                     

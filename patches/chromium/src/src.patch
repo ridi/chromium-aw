@@ -1,11 +1,11 @@
 diff --git a/android_webview/browser/aw_devtools_server.cc b/android_webview/browser/aw_devtools_server.cc
-index 9ac0027..2f02ed5 100644
+index 6d5ab981c68a..a53a8854f9a7 100644
 --- a/android_webview/browser/aw_devtools_server.cc
 +++ b/android_webview/browser/aw_devtools_server.cc
-@@ -32,8 +32,8 @@ namespace {
+@@ -27,8 +27,8 @@ using content::DevToolsAgentHost;
  
- const char kFrontEndURL[] =
-     "http://chrome-devtools-frontend.appspot.com/serve_rev/%s/inspector.html";
+ namespace {
+ 
 -const char kSocketNameFormat[] = "webview_devtools_remote_%d";
 -const char kTetheringSocketName[] = "webview_devtools_tethering_%d_%d";
 +const char kSocketNameFormat[] = "ridi_webview_devtools_remote_%d";
@@ -13,3 +13,63 @@ index 9ac0027..2f02ed5 100644
  
  const int kBackLog = 10;
  
+diff --git a/gin/v8_initializer.cc b/gin/v8_initializer.cc
+index e9cc71b96842..e39b344c5a07 100644
+--- a/gin/v8_initializer.cc
++++ b/gin/v8_initializer.cc
+@@ -62,17 +62,34 @@ void GetMappedFileData(base::MemoryMappedFile* mapped_file,
+ #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+ 
+ #if defined(OS_ANDROID)
++#if defined(__i386__) || defined(__x86_64__)
++const char kV8ContextSnapshotFileName8664[] = "v8_context_snapshot_86_64.bin";
++const char kV8ContextSnapshotFileName86[] = "v8_context_snapshot_86.bin";
++const char kSnapshotFileName8664[] = "snapshot_blob_86_64.bin";
++const char kSnapshotFileName86[] = "snapshot_blob_86.bin";
++#else
+ const char kV8ContextSnapshotFileName64[] = "v8_context_snapshot_64.bin";
+ const char kV8ContextSnapshotFileName32[] = "v8_context_snapshot_32.bin";
+ const char kSnapshotFileName64[] = "snapshot_blob_64.bin";
+ const char kSnapshotFileName32[] = "snapshot_blob_32.bin";
++#endif // defined(__i386__) || defined(__x86_64__)
+ 
+ #if defined(__LP64__)
++#if defined(__x86_64__)
++#define kV8ContextSnapshotFileName kV8ContextSnapshotFileName8664
++#define kSnapshotFileName kSnapshotFileName8664
++#else
+ #define kV8ContextSnapshotFileName kV8ContextSnapshotFileName64
+ #define kSnapshotFileName kSnapshotFileName64
++#endif // defined(__x86_64__)
++#else
++#if defined(__i386__)
++#define kV8ContextSnapshotFileName kV8ContextSnapshotFileName86
++#define kSnapshotFileName kSnapshotFileName86
+ #else
+ #define kV8ContextSnapshotFileName kV8ContextSnapshotFileName32
+ #define kSnapshotFileName kSnapshotFileName32
++#endif // defined(__i386__)
+ #endif
+ 
+ #else  // defined(OS_ANDROID)
+@@ -399,11 +416,20 @@ base::FilePath V8Initializer::GetSnapshotFilePath(
+   const char* filename = nullptr;
+   switch (snapshot_file_type) {
+     case V8Initializer::V8SnapshotFileType::kDefault:
++#if defined(__i386__) || defined(__x86_64__)
++      filename = abi_32_bit ? kSnapshotFileName86 : kSnapshotFileName8664;
++#else
+       filename = abi_32_bit ? kSnapshotFileName32 : kSnapshotFileName64;
++#endif
+       break;
+     case V8Initializer::V8SnapshotFileType::kWithAdditionalContext:
++#if defined(__i386__) || defined(__x86_64__)
++      filename = abi_32_bit ? kV8ContextSnapshotFileName86
++                            : kV8ContextSnapshotFileName8664;
++#else
+       filename = abi_32_bit ? kV8ContextSnapshotFileName32
+                             : kV8ContextSnapshotFileName64;
++#endif // defined(__i386__) || defined(__x86_64__)
+       break;
+   }
+   CHECK(filename);
