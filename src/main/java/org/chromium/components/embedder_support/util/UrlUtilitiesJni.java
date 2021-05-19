@@ -86,6 +86,11 @@ public final class UrlUtilitiesJni implements UrlUtilities.Natives {
     return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_urlsFragmentsDiffer(url, url2);
   }
 
+  @Override
+  public String escapeQueryParamValue(String url, boolean usePlus) {
+    return (String)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_escapeQueryParamValue(url, usePlus);
+  }
+
   public static UrlUtilities.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

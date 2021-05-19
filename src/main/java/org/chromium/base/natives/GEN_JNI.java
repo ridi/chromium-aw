@@ -1322,6 +1322,10 @@ public class GEN_JNI {
     public static boolean org_chromium_components_embedder_1support_util_UrlUtilities_urlsFragmentsDiffer(String url, String url2) {
         return J.N.MMsz$c1t(url, url2);
     }
+
+    public static String org_chromium_components_embedder_1support_util_UrlUtilities_escapeQueryParamValue(String url, boolean usePlus) {
+        return J.N.MAuEtM2V(url, usePlus);
+    }
     public static boolean org_chromium_components_external_1intents_ExternalIntentsFeatureList_isEnabled(String featureName) {
         return J.N.MZOzKX8c(featureName);
     }

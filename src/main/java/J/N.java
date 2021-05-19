@@ -707,6 +707,8 @@ public class N {
       public static native boolean Ml0jhLAz(String url, String url2);
       // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_urlsFragmentsDiffer
       public static native boolean MMsz$c1t(String url, String url2);
+      // Original name: org_chromium_components_embedder_1support_util_UrlUtilities_escapeQueryParamValue
+      public static native String MAuEtM2V(String url, boolean usePlus);
       // Original name: org_chromium_components_external_1intents_ExternalIntentsFeatureList_isEnabled
       public static native boolean MZOzKX8c(String featureName);
       // Original name: org_chromium_components_external_1intents_InterceptNavigationDelegateImpl_associateWithWebContents
