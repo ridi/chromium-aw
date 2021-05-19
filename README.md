@@ -12,7 +12,7 @@ You should add [de.undercouch.download plugin](https://plugins.gradle.org/plugin
 
 Using the [plugins DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block):
 
-```
+```kts
 plugins {
   id("de.undercouch.download") version "4.1.1"
 }
