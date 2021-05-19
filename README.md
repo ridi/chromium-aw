@@ -20,7 +20,7 @@ plugins {
 
 Using [legacy plugin application](https://docs.gradle.org/current/userguide/plugins.html#sec:old_plugin_application):
 
-```
+```kts
 buildscript {
   repositories {
     maven {
@@ -37,7 +37,7 @@ apply(plugin = "de.undercouch.download")
 
 Then you can include this library by adding dependency script to `build.gradle` file of your project.
 
-```
+```kts
 val version = "90.0.4430.210-1"
 val fileName = "chromium-aw-release.aar"
 val destPath = "../libs/${fileName}"
@@ -54,7 +54,7 @@ tasks.matching { it.name != downloadChromiumAwTaskName }
 
 **IMPORTANT : Add following `aaptOptions` to prevent asset files being compressed.**
 
-```
+```kts
 android {
   ...
   aaptOptions {
