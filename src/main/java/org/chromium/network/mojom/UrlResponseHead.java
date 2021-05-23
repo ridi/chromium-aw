@@ -70,6 +70,7 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
     public org.chromium.mojo_base.mojom.UnguessableToken recursivePrefetchToken;
     public String[] dnsAliases;
     public org.chromium.url.mojom.Url webBundleUrl;
+    public boolean hasAuthorizationCoveredByWildcardOnPreflight;
 
     private UrlResponseHead(int version) {
         super(STRUCT_SIZE, version);
@@ -99,6 +100,7 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         this.isLegacyTlsVersion = (boolean) false;
         this.hasRangeRequested = (boolean) false;
         this.timingAllowPassed = (boolean) false;
+        this.hasAuthorizationCoveredByWildcardOnPreflight = (boolean) false;
     }
 
     public UrlResponseHead() {
@@ -230,6 +232,10 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 result.timingAllowPassed = decoder0.readBoolean(54, 1);
+                }
+                {
+                    
+                result.hasAuthorizationCoveredByWildcardOnPreflight = decoder0.readBoolean(54, 2);
                 }
                 {
                     
@@ -442,6 +448,8 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.hasRangeRequested, 54, 0);
         
         encoder0.encode(this.timingAllowPassed, 54, 1);
+        
+        encoder0.encode(this.hasAuthorizationCoveredByWildcardOnPreflight, 54, 2);
         
         encoder0.encode(this.contentLength, 56);
         

@@ -33,4 +33,9 @@ HidDeviceInfo deviceInfo);
 HidDeviceInfo deviceInfo);
 
 
+
+    void deviceChanged(
+HidDeviceInfo deviceInfo);
+
+
 }

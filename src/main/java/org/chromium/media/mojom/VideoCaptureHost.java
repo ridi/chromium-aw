@@ -50,7 +50,7 @@ org.chromium.mojo_base.mojom.UnguessableToken deviceId);
 
 
     void releaseBuffer(
-org.chromium.mojo_base.mojom.UnguessableToken deviceId, int bufferId, VideoFrameFeedback feedback);
+org.chromium.mojo_base.mojom.UnguessableToken deviceId, int bufferId, VideoCaptureFeedback feedback);
 
 
 

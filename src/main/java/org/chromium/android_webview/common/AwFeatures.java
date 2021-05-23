@@ -43,6 +43,9 @@ public final class AwFeatures {
     // origin; strip them from the request if a cross-origin redirect occurs.
     public static final String WEBVIEW_EXTRA_HEADERS_SAME_ORIGIN_ONLY = "WebViewExtraHeadersSameOriginOnly";
 
+    // Enable the new Java/JS Bridge code path with mojo implementation.
+    public static final String WEBVIEW_JAVA_JS_BRIDGE_MOJO = "WebViewJavaJsBridgeMojo";
+
     // Measure the number of pixels occupied by one or more WebViews as a
     // proportion of the total screen size. Depending on the number of
     // WebVieaws and the size of the screen this might be expensive so
@@ -50,15 +53,23 @@ public final class AwFeatures {
     // measured.
     public static final String WEBVIEW_MEASURE_SCREEN_COVERAGE = "WebViewMeasureScreenCoverage";
 
+    // Field trial feature for controlling support of Origin Trials on WebView.
+    public static final String WEBVIEW_ORIGIN_TRIALS = "WebViewOriginTrials";
+
+    // Restricts all of WebView's out-of-process renderer threads to use only LITTLE
+    // cores on big.LITTLE architectures when the power mode is idle.
+    public static final String WEBVIEW_POWER_SCHEDULER_THROTTLE_IDLE = "WebViewPowerSchedulerThrottleIdle";
+
+    // Disallows window.{alert, prompt, confirm} if triggered inside a subframe that
+    // is not same origin with the main frame.
+    public static final String WEBVIEW_SUPPRESS_DIFFERENT_ORIGIN_SUBFRAME_JS_DIALOGS = "WebViewSuppressDifferentOriginSubframeJSDialogs";
+
     // A Feature used for WebView variations tests. Not used in production.
     public static final String WEBVIEW_TEST_FEATURE = "WebViewTestFeature";
 
     // Enable raster in wide color gamut for apps that use webview in a wide color
     // gamut activity.
     public static final String WEBVIEW_WIDE_COLOR_GAMUT_SUPPORT = "WebViewWideColorGamutSupport";
-
-    // Enable the new Java/JS Bridge code path with mojo implementation.
-    public static final String WEBVIEW_JAVA_JS_BRIDGE_MOJO = "WebViewJavaJsBridgeMojo";
 
     // Do not instantiate this class.
     private AwFeatures() {}

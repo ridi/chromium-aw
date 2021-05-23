@@ -7,6 +7,7 @@ import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
+import org.chromium.components.component_updater.ComponentLoaderPolicyBridge;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -27,6 +28,11 @@ final class AwBrowserProcessJni implements AwBrowserProcess.Natives {
   @Override
   public void setProcessNameCrashKey(String processName) {
     GEN_JNI.org_chromium_android_1webview_AwBrowserProcess_setProcessNameCrashKey(processName);
+  }
+
+  @Override
+  public ComponentLoaderPolicyBridge[] getComponentLoaderPolicies() {
+    return (ComponentLoaderPolicyBridge[])GEN_JNI.org_chromium_android_1webview_AwBrowserProcess_getComponentLoaderPolicies();
   }
 
   public static AwBrowserProcess.Natives get() {

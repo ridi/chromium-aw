@@ -40,7 +40,7 @@ apply(plugin = "de.undercouch.download")
 Then you can include this library by adding dependency script to `build.gradle.kts` file of your project.
 
 ```kts
-val version = "90.0.4430.210-1"
+val version = "91.0.4472.70-1"
 val fileName = "chromium-aw-release.aar"
 val destPath = "../libs/${fileName}"
 val downloadChromiumAwTaskName = "chromium-aw@aar"
@@ -104,7 +104,7 @@ android {
 
 # Chromium build information
 
-Current version is based on [`90.0.4430.210`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/90.0.4430.210)
+Current version is based on [`91.0.4472.70`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/91.0.4472.70)
 
 ## Customizing (Patch files are [here](patches))
 
@@ -193,7 +193,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/90.0.4430.210
+$ git checkout tags/$VERSION # ex) tags/91.0.4472.70
 
 $ gclient sync
 ```

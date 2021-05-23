@@ -17,6 +17,9 @@ public final class VizFeatures {
     // Into
     //     ../../components/viz/common/java/src/org/chromium/components/viz/common/VizFeatures.java.tmpl
 
+    // Enables the use of CPU scheduling APIs on Android.
+    public static final String ADPF = "Adpf";
+
 
     public static final String ENABLE_OVERLAY_PRIORITIZATION = "EnableOverlayPrioritization";
 
@@ -66,9 +69,17 @@ public final class VizFeatures {
     // Uses X11 Present Extensions instead of the Vulkan swapchain for presenting.
     public static final String USE_X11_PRESENT = "UseX11Present";
 
+    // Enables platform supported delegated ink trails instead of Skia backed
+    // delegated ink trails.
+    public static final String USE_PLATFORM_DELEGATED_INK = "UsePlatformDelegatedInk";
+
     // Used to debug Android WebView Vulkan composite. Composite to an intermediate
     // buffer and draw the intermediate buffer to the secondary command buffer.
     public static final String WEBVIEW_VULKAN_INTERMEDIATE_BUFFER = "WebViewVulkanIntermediateBuffer";
+
+    // Hardcoded as disabled for WebView to have a different default for
+    // UseSurfaceLayerForVideo from chrome.
+    public static final String USE_SURFACE_LAYER_FOR_VIDEO_DEFAULT = "UseSurfaceLayerForVideoDefault";
 
     // Prevent instantiation.
     private VizFeatures() {}

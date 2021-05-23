@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class ResolutionChangePolicy {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int FIXED_RESOLUTION = 0;
     public static final int FIXED_ASPECT_RATIO = 1;

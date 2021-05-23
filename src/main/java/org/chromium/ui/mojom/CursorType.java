@@ -67,11 +67,15 @@ public final class CursorType {
     public static final int DND_MOVE = 47;
     public static final int DND_COPY = 48;
     public static final int DND_LINK = 49;
+    public static final int EAST_WEST_NO_RESIZE = 50;
+    public static final int NORTH_SOUTH_NO_RESIZE = 51;
+    public static final int NORTH_EAST_SOUTH_WEST_NO_RESIZE = 52;
+    public static final int NORTH_WEST_SOUTH_EAST_NO_RESIZE = 53;
     public static final int MIN_VALUE = -1;
-    public static final int MAX_VALUE = 49;
+    public static final int MAX_VALUE = 53;
 
     public static boolean isKnownValue(int value) {
-        return value >= -1 && value <= 49;
+        return value >= -1 && value <= 53;
     }
 
     public static void validate(int value) {

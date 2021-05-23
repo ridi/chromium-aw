@@ -26,11 +26,12 @@ public final class BufferUsage {
     public static final int GPU_READ_CPU_READ_WRITE = 7;
     public static final int SCANOUT_VEA_CPU_READ = 8;
     public static final int VEA_READ_CAMERA_AND_CPU_READ_WRITE = 9;
+    public static final int SCANOUT_FRONT_RENDERING = 10;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 9;
+    public static final int MAX_VALUE = 10;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 9;
+        return value >= 0 && value <= 10;
     }
 
     public static void validate(int value) {

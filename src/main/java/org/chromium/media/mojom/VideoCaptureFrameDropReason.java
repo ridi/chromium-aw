@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCaptureFrameDropReason {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int NONE = 0;
     public static final int DEVICE_CLIENT_FRAME_HAS_INVALID_FORMAT = 1;

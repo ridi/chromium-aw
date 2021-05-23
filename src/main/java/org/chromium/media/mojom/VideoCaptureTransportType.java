@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCaptureTransportType {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int MACOSX_USB_OR_BUILT_IN = 0;
     public static final int OTHER_TRANSPORT = 1;

@@ -33,6 +33,11 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
   }
 
   @Override
+  public long initWithAXTree(WebContentsAccessibilityImpl caller, long axTreePtr) {
+    return (long)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_initWithAXTree(caller, axTreePtr);
+  }
+
+  @Override
   public void deleteEarly(long nativeWebContentsAccessibilityAndroid) {
     GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_deleteEarly(nativeWebContentsAccessibilityAndroid);
   }
@@ -95,6 +100,12 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
   public int getEditableTextSelectionEnd(long nativeWebContentsAccessibilityAndroid,
       WebContentsAccessibilityImpl caller, int id) {
     return (int)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getEditableTextSelectionEnd(nativeWebContentsAccessibilityAndroid, caller, id);
+  }
+
+  @Override
+  public int[] getAbsolutePositionForNode(long nativeWebContentsAccessibilityAndroid,
+      WebContentsAccessibilityImpl caller, int id) {
+    return (int[])GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getAbsolutePositionForNode(nativeWebContentsAccessibilityAndroid, caller, id);
   }
 
   @Override
@@ -266,6 +277,17 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
   public int getMaxContentChangedEventsToFireForTesting(
       long nativeWebContentsAccessibilityAndroid) {
     return (int)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_getMaxContentChangedEventsToFireForTesting(nativeWebContentsAccessibilityAndroid);
+  }
+
+  @Override
+  public void signalEndOfTestForTesting(long nativeWebContentsAccessibilityAndroid) {
+    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_signalEndOfTestForTesting(nativeWebContentsAccessibilityAndroid);
+  }
+
+  @Override
+  public void setIsRunningAsWebView(long nativeWebContentsAccessibilityAndroid,
+      WebContentsAccessibilityImpl caller, boolean isWebView) {
+    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setIsRunningAsWebView(nativeWebContentsAccessibilityAndroid, caller, isWebView);
   }
 
   public static WebContentsAccessibilityImpl.Natives get() {

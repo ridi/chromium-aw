@@ -312,7 +312,7 @@ final class WebContentsImplJni implements WebContentsImpl.Natives {
   }
 
   @Override
-  public int downloadImage(long nativeWebContentsAndroid, WebContentsImpl caller, String url,
+  public int downloadImage(long nativeWebContentsAndroid, WebContentsImpl caller, GURL url,
       boolean isFavicon, int maxBitmapSize, boolean bypassCache, ImageDownloadCallback callback) {
     return (int)GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_downloadImage(nativeWebContentsAndroid, caller, url, isFavicon, maxBitmapSize, bypassCache, callback);
   }

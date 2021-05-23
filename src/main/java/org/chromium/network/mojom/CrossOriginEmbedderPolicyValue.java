@@ -17,12 +17,13 @@ public final class CrossOriginEmbedderPolicyValue {
     private static final boolean IS_EXTENSIBLE = false;
 
     public static final int NONE = 0;
-    public static final int REQUIRE_CORP = 1;
+    public static final int CORS_OR_CREDENTIALLESS = 1;
+    public static final int REQUIRE_CORP = 2;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 1;
+    public static final int MAX_VALUE = 2;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 1;
+        return value >= 0 && value <= 2;
     }
 
     public static void validate(int value) {

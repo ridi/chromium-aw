@@ -41,6 +41,11 @@ public final class BaseSwitches {
     // Force low-end device mode when set.
     public static final String ENABLE_LOW_END_DEVICE_MODE = "enable-low-end-device-mode";
 
+    // Enable the use of background thread priorities for background tasks in the
+    // ThreadPool even on systems where it is disabled by default, e.g. due to
+    // concerns about priority inversions.
+    public static final String ENABLE_BACKGROUND_THREAD_POOL = "enable-background-thread-pool";
+
     // This option can be used to force field trials when testing changes locally.
     // The argument is a list of name and value pairs, separated by slashes. If a
     // trial name is prefixed with an asterisk, that trial will start activated.

@@ -24,6 +24,27 @@ public final class BlinkFeatures {
 
     public static final String COLRV1_FONTS = "COLRV1Fonts";
 
+    // Enable CSS Container Queries. Also implies LayoutNGGrid and CSSContainSize1D.
+    public static final String CSS_CONTAINER_QUERIES = "CSSContainerQueries";
+
+
+    public static final String GMS_CORE_EMOJI = "GMSCoreEmoji";
+
+    // Whether the HandwritingRecognition API can be enabled. Disabling this feature
+    // disables both the origin trial and the mojo interface. Enabling this feature
+    // allows the API to be controlled by origin trial (see web runtime feature
+    // `HandwritingRecognition`) and finch (see
+    // `kHandwritingRecognitionWebPlatformApiFinch`).
+    // TODO (crbug.com/1166910): Remove once the HandwritingRecognition API is more
+    // widely available (likely M92).
+    public static final String HANDWRITING_RECOGNITION_WEB_PLATFORM_API = "HandwritingRecognitionWebPlatformApi";
+
+    // Whether the HandwritingRecognition API can be enabled. Disabling this feature
+    // disables both the origin trial and the mojo interface. Defaults to enabled
+    // so the feature can be controlled by finch, even when
+    // `kHandwritingRecognitionWebPlatformApi` is set from command-line.
+    public static final String HANDWRITING_RECOGNITION_WEB_PLATFORM_API_FINCH = "HandwritingRecognitionWebPlatformApiFinch";
+
     // Enable defer commits to avoid flash of unstyled content, for same origin
     // navigation only.
     public static final String PAINT_HOLDING = "PaintHolding";
@@ -85,12 +106,6 @@ public final class BlinkFeatures {
 
     // Enable TableNG
     public static final String LAYOUT_NG_TABLE = "LayoutNGTable";
-
-    // Enable LayoutNGFieldset by default. This feature is for a kill switch.
-    public static final String LAYOUT_NG_FIELDSET = "LayoutNGFieldset";
-
-
-    public static final String LAYOUT_NG_TEXT_CONTROL = "LayoutNGTextControl";
 
 
     public static final String MIXED_CONTENT_AUTOUPGRADE = "AutoupgradeMixedContent";
@@ -178,9 +193,10 @@ public final class BlinkFeatures {
     // BT709. http://crbug.com/1129243
     public static final String WEB_RTC_IGNORE_UNSPECIFIED_COLOR_SPACE = "WebRtcIgnoreUnspecifiedColorSpace";
 
-    // Note that the base::Feature should not be read from;
-    // rather the provided accessors should be used, which also take into account
-    // the managed policy override of the feature.
+    // The base::Feature is enabled by default on all platforms. However, on
+    // Android, it has no effect because page freezing kicks in at the same time. It
+    // would have an effect if the grace period ("grace_period_seconds" param) was
+    // reduced.
     public static final String INTENSIVE_WAKE_UP_THROTTLING = "IntensiveWakeUpThrottling";
 
     // Run-time feature for the |rtc_use_h264| encoder/decoder.
@@ -189,6 +205,11 @@ public final class BlinkFeatures {
     // Experiment of the delay from navigation to starting an update of a service
     // worker's script.
     public static final String SERVICE_WORKER_UPDATE_DELAY = "ServiceWorkerUpdateDelay";
+
+    // Enable the use of Speculation Rules in access the private prefetch proxy
+    // (chrome/browser/prefetch/prefetch_proxy/).
+    // https://crbug.com/1190167
+    public static final String SPECULATION_RULES_PREFETCH_PROXY = "SpeculationRulesPrefetchProxy";
 
     // Freeze scheduler task queues in background after allowed grace time.
     // "stop" is a legacy name.
@@ -291,13 +312,13 @@ public final class BlinkFeatures {
     // https://crbug.com/538562
     public static final String IGNORE_CROSS_ORIGIN_WINDOW_WHEN_NAMED_ACCESS_ON_WINDOW = "IgnoreCrossOriginWindowWhenNamedAccessOnWindow";
 
-    // When enabled, scripts in iframes are not force deferred by the DeferAllScript
-    // intervention.
-    public static final String DISABLE_FORCE_DEFER_IN_CHILD_FRAMES = "DisableForceDeferInChildFrames";
-
     // Enables redirecting subresources in the page to better compressed and
     // optimized versions to provide data savings.
     public static final String SUBRESOURCE_REDIRECT = "SubresourceRedirect";
+
+    // Enables redirecting src videos in the page to better compressed and optimized
+    // versions to provide data savings.
+    public static final String SUBRESOURCE_REDIRECT_SRC_VIDEO = "SubresourceRedirectSrcVideo";
 
     // When enabled, enforces new interoperable semantics for 3D transforms.
     // See crbug.com/1008483.
@@ -341,14 +362,6 @@ public final class BlinkFeatures {
     // and modules. Needed for the experiment in http://crbug.com/1045052.
     public static final String DISCARD_CODE_CACHE_AFTER_FIRST_USE = "DiscardCodeCacheAfterFirstUse";
 
-
-    public static final String BLOCK_HTML_PARSER_ON_STYLE_SHEETS = "BlockHTMLParserOnStyleSheets";
-
-    // Kill switch for the new <link disabled> behavior.
-    // TODO(crbug.com/1087043): Remove this once the feature has
-    // landed and no compat issues are reported.
-    public static final String LINK_DISABLED_NEW_SPEC_BEHAVIOR = "LinkDisabledNewSpecBehavior";
-
     // Slightly delays rendering if there are fonts being preloaded, so that
     // they don't miss the first paint if they can be loaded fast enough (e.g.,
     // from the disk cache)
@@ -376,6 +389,9 @@ public final class BlinkFeatures {
     // and their contents.
     public static final String APP_CACHE_REQUIRE_ORIGIN_TRIAL = "AppCacheRequireOriginTrial";
 
+    // Enables the JPEG XL Image File Format (JXL).
+    public static final String JXL = "JXL";
+
     // Make all pending 'display: auto' web fonts enter the swap or failure period
     // immediately before reaching the LCP time limit (~2500ms), so that web fonts
     // do not become a source of bad LCP.
@@ -388,11 +404,6 @@ public final class BlinkFeatures {
     // in successful install rate on some platforms.
     public static final String THROTTLE_INSTALLING_SERVICE_WORKER = "ThrottleInstallingServiceWorker";
 
-    // Enables storing and loading security policies (for now, referrer policy) in
-    // the policy container. The policy container for the current document is
-    // attached to the RenderFrameHost and mirrored to the LocalFrame in Blink.
-    public static final String POLICY_CONTAINER = "PolicyContainer";
-
 
     public static final String INPUT_PREDICTOR_TYPE_CHOICE = "InputPredictorTypeChoice";
 
@@ -400,11 +411,14 @@ public final class BlinkFeatures {
     public static final String RESAMPLING_INPUT_EVENTS = "ResamplingInputEvents";
 
 
+    public static final String INPUT_TARGET_CLIENT_HIGH_PRIORITY = "InputTargetClientHighPriority";
+
+
     public static final String RESAMPLING_SCROLL_EVENTS = "ResamplingScrollEvents";
 
     // Enables the device-memory, resource-width, viewport-width and DPR client
     // hints to be sent to third-party origins if the first-party has opted in to
-    // receiving client hints, regardless of Feature Policy.
+    // receiving client hints, regardless of Permissions Policy.
     public static final String ALLOW_CLIENT_HINTS_TO_THIRD_PARTY = "AllowClientHintsToThirdParty";
 
 
@@ -440,9 +454,6 @@ public final class BlinkFeatures {
 
     // Enables the constant streaming in the ContentCapture task.
     public static final String CONTENT_CAPTURE_CONSTANT_STREAMING = "ContentCaptureConstantStreaming";
-
-    // Enables the user activated exponential delay in the ContentCapture task.
-    public static final String CONTENT_CAPTURE_USER_ACTIVATED_DELAY = "ContentCaptureUserActivatedDelay";
 
     // Dispatches a fake fetch event to a service worker to check the offline
     // capability of the site before promoting installation.
@@ -487,6 +498,10 @@ public final class BlinkFeatures {
     // the page is frozen.
     public static final String LOADING_TASKS_UNFREEZABLE = "LoadingTasksUnfreezable";
 
+    // Makes freezing of frame-associated task queues happen even when KeepActive is
+    // true.
+    public static final String FREEZE_WHILE_KEEP_ACTIVE = "FreezeWhileKeepActive";
+
     // Kill switch for the new behavior whereby anchors with target=_blank get
     // noopener behavior by default. TODO(crbug.com/898942): Remove in Chrome 95.
     public static final String TARGET_BLANK_IMPLIES_NO_OPENER = "TargetBlankImpliesNoOpener";
@@ -517,7 +532,7 @@ public final class BlinkFeatures {
     // (See https://github.com/WICG/floc.)
     public static final String INTEREST_COHORT_API_ORIGIN_TRIAL = "InterestCohortAPIOriginTrial";
 
-    // Enable the availability of the "interest-cohort" feature policy.
+    // Enable the availability of the "interest-cohort" permissions policy.
     public static final String INTEREST_COHORT_FEATURE_POLICY = "InterestCohortFeaturePolicy";
 
     // Changes the default background color of the Text Fragment from
@@ -536,8 +551,40 @@ public final class BlinkFeatures {
     // elements.
     public static final String ENABLE_PENETRATING_IMAGE_SELECTION = "EnablePenetratingImageSelection";
 
+    // Used to configure a per-origin allowlist of performance.mark events that are
+    // permitted to be included in slow reports traces. See crbug.com/1181774.
+    public static final String BACKGROUND_TRACING_PERFORMANCE_MARK = "BackgroundTracingPerformanceMark";
+
 
     public static final String CLSM90_IMPROVEMENTS = "CLSM90Improvements";
+
+    // New compositing algorithm. See renderer/core/paint/README.md.
+    public static final String COMPOSITE_AFTER_PAINT = "CompositeAfterPaint";
+
+    // Controls whether the Sanitizer API is available.
+    public static final String SANITIZER_API = "SanitizerAPI";
+
+    // Kill switch for the blocking of the navigation of top from a cross origin
+    // iframe to a different protocol. TODO(https://crbug.com/1151507): Remove in
+    // M92.
+    public static final String BLOCK_CROSS_ORIGIN_TOP_NAVIGATION_TO_DIFFENT_SCHEME = "BlockCrossOriginTopNavigationToDiffentScheme";
+
+    // Enables a Web API for websites to access admin-provided configuration.
+    public static final String MANAGED_CONFIGURATION = "ManagedConfiguration";
+
+    // Causes all cross-origin iframes, both same-process and out-of-process, to
+    // have their rendering throttled on display:none or zero-area.
+    public static final String THROTTLE_DISPLAY_NONE_AND_VISIBILITY_HIDDEN_CROSS_ORIGIN_IFRAMES = "ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes";
+
+    // Kill switch for the Fledge Interest Group API, i.e. if disabled, the
+    // API exposure will be disabled regardless of the OT config.
+    // (See https://github.com/WICG/turtledove/blob/main/FLEDGE.md.)
+    // Enables FLEDGE implementation. See https://crbug.com/1186444.
+    public static final String FLEDGE_INTEREST_GROUPS = "FledgeInterestGroups";
+
+    // Enable the availability of the Fledge interest group API as part of the
+    // origin trial.
+    public static final String FLEDGE_INTEREST_GROUP_API = "FledgeInterestGroupAPI";
 
     // Do not instantiate this class.
     private BlinkFeatures() {}

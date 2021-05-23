@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCaptureBufferType {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int SHARED_MEMORY = 0;
     public static final int SHARED_MEMORY_VIA_RAW_FILE_DESCRIPTOR = 1;

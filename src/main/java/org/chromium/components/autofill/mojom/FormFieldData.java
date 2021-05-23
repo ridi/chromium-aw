@@ -16,8 +16,8 @@ package org.chromium.autofill.mojom;
 
 public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 200;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(200, 0)};
+    private static final int STRUCT_SIZE = 208;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(208, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
 
     public static final class CheckStatus {
@@ -112,6 +112,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
     public org.chromium.mojo_base.mojom.String16 cssClasses;
     public org.chromium.mojo_base.mojom.String16 ariaLabel;
     public org.chromium.mojo_base.mojom.String16 ariaDescription;
+    public LocalFrameToken hostFrame;
     public FieldRendererId uniqueRendererId;
     public int propertiesMask;
     public int formControlAxId;
@@ -222,70 +223,75 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(96, false);
+                result.hostFrame = LocalFrameToken.decode(decoder1);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(104, false);
                 result.uniqueRendererId = FieldRendererId.decode(decoder1);
                 }
                 {
                     
-                result.propertiesMask = decoder0.readInt(104);
+                result.propertiesMask = decoder0.readInt(112);
                 }
                 {
                     
-                result.formControlAxId = decoder0.readInt(108);
+                result.formControlAxId = decoder0.readInt(116);
                 }
                 {
                     
-                result.maxLength = decoder0.readLong(112);
+                result.maxLength = decoder0.readLong(120);
                 }
                 {
                     
-                result.isAutofilled = decoder0.readBoolean(120, 0);
+                result.isAutofilled = decoder0.readBoolean(128, 0);
                 }
                 {
                     
-                result.isFocusable = decoder0.readBoolean(120, 1);
+                result.isFocusable = decoder0.readBoolean(128, 1);
                 }
                 {
                     
-                result.shouldAutocomplete = decoder0.readBoolean(120, 2);
+                result.shouldAutocomplete = decoder0.readBoolean(128, 2);
                 }
                 {
                     
-                result.isEnabled = decoder0.readBoolean(120, 3);
+                result.isEnabled = decoder0.readBoolean(128, 3);
                 }
                 {
                     
-                result.isReadonly = decoder0.readBoolean(120, 4);
+                result.isReadonly = decoder0.readBoolean(128, 4);
                 }
                 {
                     
-                result.checkStatus = decoder0.readInt(124);
+                result.checkStatus = decoder0.readInt(132);
                     FormFieldData.CheckStatus.validate(result.checkStatus);
                     result.checkStatus = FormFieldData.CheckStatus.toKnownValue(result.checkStatus);
                 }
                 {
                     
-                result.section = decoder0.readString(128, false);
+                result.section = decoder0.readString(136, false);
                 }
                 {
                     
-                result.role = decoder0.readInt(136);
+                result.role = decoder0.readInt(144);
                     FormFieldData.RoleAttribute.validate(result.role);
                     result.role = FormFieldData.RoleAttribute.toKnownValue(result.role);
                 }
                 {
                     
-                result.textDirection = decoder0.readInt(140);
+                result.textDirection = decoder0.readInt(148);
                     org.chromium.mojo_base.mojom.TextDirection.validate(result.textDirection);
                     result.textDirection = org.chromium.mojo_base.mojom.TextDirection.toKnownValue(result.textDirection);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(144, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(152, false);
                 result.userInput = org.chromium.mojo_base.mojom.String16.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(152, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(160, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.optionValues = new org.chromium.mojo_base.mojom.String16[si1.elementsOrVersion];
@@ -298,7 +304,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(160, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(168, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.optionContents = new org.chromium.mojo_base.mojom.String16[si1.elementsOrVersion];
@@ -311,18 +317,18 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.labelSource = decoder0.readInt(168);
+                result.labelSource = decoder0.readInt(176);
                     FormFieldData.LabelSource.validate(result.labelSource);
                     result.labelSource = FormFieldData.LabelSource.toKnownValue(result.labelSource);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(176, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(184, false);
                 result.bounds = org.chromium.gfx.mojom.RectF.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(184, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(192, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.datalistValues = new org.chromium.mojo_base.mojom.String16[si1.elementsOrVersion];
@@ -335,7 +341,7 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(192, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(200, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.datalistLabels = new org.chromium.mojo_base.mojom.String16[si1.elementsOrVersion];
@@ -380,38 +386,40 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.ariaDescription, 88, false);
         
-        encoder0.encode(this.uniqueRendererId, 96, false);
+        encoder0.encode(this.hostFrame, 96, false);
         
-        encoder0.encode(this.propertiesMask, 104);
+        encoder0.encode(this.uniqueRendererId, 104, false);
         
-        encoder0.encode(this.formControlAxId, 108);
+        encoder0.encode(this.propertiesMask, 112);
         
-        encoder0.encode(this.maxLength, 112);
+        encoder0.encode(this.formControlAxId, 116);
         
-        encoder0.encode(this.isAutofilled, 120, 0);
+        encoder0.encode(this.maxLength, 120);
         
-        encoder0.encode(this.isFocusable, 120, 1);
+        encoder0.encode(this.isAutofilled, 128, 0);
         
-        encoder0.encode(this.shouldAutocomplete, 120, 2);
+        encoder0.encode(this.isFocusable, 128, 1);
         
-        encoder0.encode(this.isEnabled, 120, 3);
+        encoder0.encode(this.shouldAutocomplete, 128, 2);
         
-        encoder0.encode(this.isReadonly, 120, 4);
+        encoder0.encode(this.isEnabled, 128, 3);
         
-        encoder0.encode(this.checkStatus, 124);
+        encoder0.encode(this.isReadonly, 128, 4);
         
-        encoder0.encode(this.section, 128, false);
+        encoder0.encode(this.checkStatus, 132);
         
-        encoder0.encode(this.role, 136);
+        encoder0.encode(this.section, 136, false);
         
-        encoder0.encode(this.textDirection, 140);
+        encoder0.encode(this.role, 144);
         
-        encoder0.encode(this.userInput, 144, false);
+        encoder0.encode(this.textDirection, 148);
+        
+        encoder0.encode(this.userInput, 152, false);
         
         if (this.optionValues == null) {
-            encoder0.encodeNullPointer(152, false);
+            encoder0.encodeNullPointer(160, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.optionValues.length, 152, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.optionValues.length, 160, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.optionValues.length; ++i0) {
                 
                 encoder1.encode(this.optionValues[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
@@ -419,23 +427,23 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
         }
         
         if (this.optionContents == null) {
-            encoder0.encodeNullPointer(160, false);
+            encoder0.encodeNullPointer(168, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.optionContents.length, 160, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.optionContents.length, 168, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.optionContents.length; ++i0) {
                 
                 encoder1.encode(this.optionContents[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
             }
         }
         
-        encoder0.encode(this.labelSource, 168);
+        encoder0.encode(this.labelSource, 176);
         
-        encoder0.encode(this.bounds, 176, false);
+        encoder0.encode(this.bounds, 184, false);
         
         if (this.datalistValues == null) {
-            encoder0.encodeNullPointer(184, false);
+            encoder0.encodeNullPointer(192, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.datalistValues.length, 184, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.datalistValues.length, 192, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.datalistValues.length; ++i0) {
                 
                 encoder1.encode(this.datalistValues[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
@@ -443,9 +451,9 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
         }
         
         if (this.datalistLabels == null) {
-            encoder0.encodeNullPointer(192, false);
+            encoder0.encodeNullPointer(200, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.datalistLabels.length, 192, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.datalistLabels.length, 200, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.datalistLabels.length; ++i0) {
                 
                 encoder1.encode(this.datalistLabels[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);

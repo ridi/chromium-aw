@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCaptureApi {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int LINUX_V4L2_SINGLE_PLANE = 0;
     public static final int WIN_MEDIA_FOUNDATION = 1;

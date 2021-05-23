@@ -2,7 +2,7 @@
 //     build/android/gyp/write_native_libraries_java.py
 // Please do not change its content.
 
-package org.chromium.base.library_loader;
+package org.chromium.build;
 
 public class NativeLibraries {
     public static final int CPU_FAMILY_UNKNOWN = 0;
@@ -27,7 +27,7 @@ public class NativeLibraries {
     // TODO(torne): This is public to work around classloader issues in Trichrome
     // where NativeLibraries is not in the same dex as LibraryLoader.
     // We should instead split up Java code along package boundaries.
-    public static final String sVersionNumber = "90.0.4430.210";
+    public static final String sVersionNumber = "91.0.4472.70";
 
     public static final int sCpuFamily = CPU_FAMILY_UNKNOWN;
 }

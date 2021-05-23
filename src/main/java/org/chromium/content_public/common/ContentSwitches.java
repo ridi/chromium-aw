@@ -374,6 +374,15 @@ public final class ContentSwitches {
     // Enables Web Platform features that are in development.
     public static final String ENABLE_EXPERIMENTAL_WEB_PLATFORM_FEATURES = "enable-experimental-web-platform-features";
 
+    // Forces the V8/blink bindings to call all API entry points that use the
+    // [NoAllocDirectCall] extended IDL attribute as if V8 were using the fast call
+    // code path.  Using this flag will not make API calls use the true fast path,
+    // it will probably even make things a bit slower.  Its purpose is to guarantee
+    // test coverage for the blink side of V8 Fast API calls, independently of
+    // whether or not V8 actually activates the fast path, which depends on
+    // heuristics.
+    public static final String ENABLE_FAKE_NO_ALLOC_DIRECT_CALL_FOR_TESTING = "enable-fake-no-alloc-direct-call-for-testing";
+
     // Enables blink runtime enabled features with status:"test" or
     // status:"experimental", which are enabled when running web tests.
     public static final String ENABLE_BLINK_TEST_FEATURES = "enable-blink-test-features";
@@ -435,6 +444,16 @@ public final class ContentSwitches {
 
     // Enabled threaded compositing for web tests.
     public static final String ENABLE_THREADED_COMPOSITING = "enable-threaded-compositing";
+
+    // When specified along with a value in the range (0,1] will --enable-tracing
+    // for (roughly) that percentage of tests being run. This is done in a stable
+    // manner such that the same tests are chosen each run, and under the assumption
+    // that tests hash equally across the range of possible values.
+    // The flag will enable all tracing categories for those tests, and none for the
+    // rest. This flag could be used with other tracing switches like
+    // --enable-tracing-format, but any other switches that will enable tracing will
+    // turn tracing on for all tests.
+    public static final String ENABLE_TRACING_FRACTION = "enable-tracing-fraction";
 
     // Enable screen capturing support for MediaStream API.
     public static final String ENABLE_USER_MEDIA_SCREEN_CAPTURING = "enable-usermedia-screen-capturing";
@@ -511,10 +530,6 @@ public final class ContentSwitches {
 
     // Causes the GPU process to display a dialog on launch.
     public static final String GPU_STARTUP_DIALOG = "gpu-startup-dialog";
-
-    // Start the renderer with an initial virtual time override specified in
-    // seconds since the epoch.
-    public static final String INITIAL_VIRTUAL_TIME = "initial-virtual-time";
 
     // Run the GPU process as a thread in the browser process.
     public static final String IN_PROCESS_GPU = "in-process-gpu";
@@ -691,6 +706,9 @@ public final class ContentSwitches {
     // Causes the process to run as a sandbox IPC subprocess.
     public static final String SANDBOX_IPC_PROCESS = "sandbox-ipc";
 
+
+    public static final String SHARED_ARRAY_BUFFER_UNRESTRICTED_ACCESS_ALLOWED = "shared-array-buffer-unrestricted-access-allowed";
+
     // where <file_id> is an ID string from the manifest of the service being
     // launched and <descriptor_id> is the numeric identifier of the descriptor for
     // the child process can use to retrieve the file descriptor from the
@@ -857,11 +875,6 @@ public final class ContentSwitches {
     // consumed for desktop capturing. Default is 50. Set 100 to disable the
     // throttling of the capture.
     public static final String WEB_RTC_MAX_CPU_CONSUMPTION_PERCENTAGE = "webrtc-max-cpu-consumption-percentage";
-
-    // Renderer process parameter for WebRTC Stun probe trial to determine the
-    // interval. Please see SetupStunProbeTrial in
-    // chrome_browser_field_trials_desktop.cc for more detail.
-    public static final String WEB_RTC_STUN_PROBE_TRIAL_PARAMETER = "webrtc-stun-probe-trial";
 
     // Enable capture and local storage of WebRTC event logs without visiting
     // chrome://webrtc-internals. This is useful for automated testing. It accepts

@@ -25,9 +25,9 @@ final class GamepadListJni implements GamepadList.Natives {
 
   @Override
   public void setGamepadData(GamepadList caller, long webGamepadsPtr, int index, boolean mapping,
-      boolean connected, String devicename, long timestamp, float[] axes, float[] buttons,
-      int buttonsLength) {
-    GEN_JNI.org_chromium_device_gamepad_GamepadList_setGamepadData(caller, webGamepadsPtr, index, mapping, connected, devicename, timestamp, axes, buttons, buttonsLength);
+      boolean connected, String devicename, int vendorId, int productId, long timestamp,
+      float[] axes, float[] buttons, int buttonsLength) {
+    GEN_JNI.org_chromium_device_gamepad_GamepadList_setGamepadData(caller, webGamepadsPtr, index, mapping, connected, devicename, vendorId, productId, timestamp, axes, buttons, buttonsLength);
   }
 
   public static GamepadList.Natives get() {

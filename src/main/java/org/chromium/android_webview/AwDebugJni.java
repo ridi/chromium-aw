@@ -33,6 +33,11 @@ final class AwDebugJni implements AwDebug.Natives {
     GEN_JNI.org_chromium_android_1webview_AwDebug_setCpuAffinityToLittleCores();
   }
 
+  @Override
+  public void enableIdleThrottling() {
+    GEN_JNI.org_chromium_android_1webview_AwDebug_enableIdleThrottling();
+  }
+
   public static AwDebug.Natives get() {
     if (GEN_JNI.TESTING_ENABLED) {
       if (testInstance != null) {

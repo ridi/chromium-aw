@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCapturePixelFormat {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int UNKNOWN = 0;
     public static final int I420 = 1;

@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class VideoCaptureError {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int NONE = 0;
     public static final int VIDEO_CAPTURE_CONTROLLER_INVALID_OR_UNSUPPORTED_VIDEO_CAPTURE_PARAMETERS_REQUESTED = 1;
@@ -141,11 +141,12 @@ public final class VideoCaptureError {
     public static final int CROS_HAL_V3_DEVICE_CONTEXT_DUPLICATED_CLIENT = 122;
     public static final int DESKTOP_CAPTURE_DEVICE_MAC_FAILED_STREAM_CREATE = 123;
     public static final int DESKTOP_CAPTURE_DEVICE_MAC_FAILED_STREAM_START = 124;
+    public static final int CROS_HAL_V3_BUFFER_MANAGER_FAILED_TO_RESERVE_BUFFERS = 125;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 124;
+    public static final int MAX_VALUE = 125;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 124;
+        return value >= 0 && value <= 125;
     }
 
     public static void validate(int value) {

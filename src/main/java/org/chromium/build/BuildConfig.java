@@ -1,7 +1,7 @@
-package org.chromium.base;
+package org.chromium.build;
 public class BuildConfig {
     public static final boolean IS_MULTIDEX_ENABLED = true;
-    public static final boolean DCHECK_IS_ON = false;
+    public static final boolean ENABLE_ASSERTS = false;
     public static final boolean IS_UBSAN = false;
     public static final boolean IS_CHROME_BRANDED = false;
     public static final int R_STRING_PRODUCT_VERSION = 0;

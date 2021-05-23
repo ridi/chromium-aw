@@ -24,6 +24,11 @@ public interface UrlLoaderClient extends org.chromium.mojo.bindings.Interface {
     Manager<UrlLoaderClient, UrlLoaderClient.Proxy> MANAGER = UrlLoaderClient_Internal.MANAGER;
 
 
+    void onReceiveEarlyHints(
+EarlyHints earlyHints);
+
+
+
     void onReceiveResponse(
 UrlResponseHead head);
 

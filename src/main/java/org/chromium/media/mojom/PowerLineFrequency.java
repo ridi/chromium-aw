@@ -14,7 +14,7 @@
 package org.chromium.media.mojom;
 
 public final class PowerLineFrequency {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
 
     public static final int DEFAULT = 0;
     public static final int HZ_50 = 1;

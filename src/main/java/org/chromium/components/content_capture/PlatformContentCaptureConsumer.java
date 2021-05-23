@@ -20,7 +20,7 @@ import org.chromium.content_public.browser.WebContents;
  */
 @VerifiesOnQ
 @TargetApi(Build.VERSION_CODES.Q)
-public class ContentCaptureConsumerImpl extends ContentCaptureConsumer {
+public class PlatformContentCaptureConsumer implements ContentCaptureConsumer {
     private PlatformSession mPlatformSession;
     private final View mView;
 
@@ -32,26 +32,16 @@ public class ContentCaptureConsumerImpl extends ContentCaptureConsumer {
      */
     public static ContentCaptureConsumer create(
             Context context, View view, ViewStructure structure, WebContents webContents) {
-        if (ContentCaptureController.getInstance() == null) {
-            ContentCaptureControllerImpl.init(context.getApplicationContext());
+        if (PlatformContentCaptureController.getInstance() == null) {
+            PlatformContentCaptureController.init(context.getApplicationContext());
         }
 
-        if (!ContentCaptureController.getInstance().shouldStartCapture()) return null;
-        return new ContentCaptureConsumerImpl(view, structure, webContents);
+        if (!PlatformContentCaptureController.getInstance().shouldStartCapture()) return null;
+        return new PlatformContentCaptureConsumer(view, structure, webContents);
     }
 
-    /**
-     * This method is used when ViewStructure isn't available and needs to be
-     * created.
-     */
-    public static ContentCaptureConsumer create(
-            Context context, View view, WebContents webContents) {
-        return create(context, view, null, webContents);
-    }
-
-    private ContentCaptureConsumerImpl(
+    private PlatformContentCaptureConsumer(
             View view, ViewStructure viewStructure, WebContents webContents) {
-        super(webContents);
         mView = view;
         if (viewStructure != null) {
             mPlatformSession = new PlatformSession(
@@ -100,12 +90,7 @@ public class ContentCaptureConsumerImpl extends ContentCaptureConsumer {
     }
 
     @Override
-    protected boolean shouldCapture(String[] urls) {
-        // No need to check if the experiment is disabled, because it was done when the navigation
-        // committed, refer to ContentCaptureReceiverManager::ReadyToCommitNavigation().
-        if (!ContentCaptureFeatures.shouldTriggerContentCaptureForExperiment()) return true;
-        ContentCaptureController controller = ContentCaptureController.getInstance();
-        if (controller == null) return false;
-        return controller.shouldCapture(urls);
+    public boolean shouldCapture(String[] urls) {
+        return PlatformContentCaptureController.getInstance().shouldCapture(urls);
     }
 }

@@ -173,7 +173,7 @@ org.chromium.mojo_base.mojom.UnguessableToken deviceId) {
 
         @Override
         public void releaseBuffer(
-org.chromium.mojo_base.mojom.UnguessableToken deviceId, int bufferId, VideoFrameFeedback feedback) {
+org.chromium.mojo_base.mojom.UnguessableToken deviceId, int bufferId, VideoCaptureFeedback feedback) {
 
             VideoCaptureHostReleaseBufferParams _message = new VideoCaptureHostReleaseBufferParams();
 
@@ -867,7 +867,7 @@ org.chromium.mojo_base.mojom.UnguessableToken deviceId, String message) {
         private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
         public org.chromium.mojo_base.mojom.UnguessableToken deviceId;
         public int bufferId;
-        public VideoFrameFeedback feedback;
+        public VideoCaptureFeedback feedback;
 
         private VideoCaptureHostReleaseBufferParams(int version) {
             super(STRUCT_SIZE, version);
@@ -914,7 +914,7 @@ org.chromium.mojo_base.mojom.UnguessableToken deviceId, String message) {
                     {
                         
                     org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, false);
-                    result.feedback = VideoFrameFeedback.decode(decoder1);
+                    result.feedback = VideoCaptureFeedback.decode(decoder1);
                     }
 
             } finally {

@@ -58,10 +58,6 @@ public final class GpuFeatures {
     // Use a high priority for GPU process on Windows.
     public static final String GPU_PROCESS_HIGH_PRIORITY_WIN = "GpuProcessHighPriorityWin";
 
-    // Compute the root damage rect from the surface damage list for overlays on
-    // Windows.
-    public static final String DIRECT_COMPOSITION_USE_OVERLAY_DAMAGE_LIST = "DirectCompositionUseOverlayDamageList";
-
     // Use ThreadPriority::DISPLAY for GPU main, viz compositor and IO threads.
     public static final String GPU_USE_DISPLAY_THREAD_PRIORITY = "GpuUseDisplayThreadPriority";
 
@@ -97,10 +93,6 @@ public final class GpuFeatures {
     // Enable SkiaRenderer Dawn graphics backend. On Windows this will use D3D12,
     // and on Linux this will use Vulkan.
     public static final String SKIA_DAWN = "SkiaDawn";
-
-    // Used to enable shared image mailbox and disable legacy texture mailbox on
-    // webview.
-    public static final String ENABLE_SHARED_IMAGE_FOR_WEBVIEW = "EnableSharedImageForWebview";
 
     // Enable GrShaderCache to use with Vulkan backend.
     public static final String ENABLE_GR_SHADER_CACHE_FOR_VULKAN = "EnableGrShaderCacheForVulkan";

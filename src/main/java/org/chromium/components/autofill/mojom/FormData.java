@@ -16,8 +16,8 @@ package org.chromium.autofill.mojom;
 
 public final class FormData extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 104;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0)};
+    private static final int STRUCT_SIZE = 112;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(112, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public org.chromium.mojo_base.mojom.String16 idAttribute;
     public org.chromium.mojo_base.mojom.String16 nameAttribute;
@@ -29,7 +29,7 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
     public boolean isActionEmpty;
     public org.chromium.url.internal.mojom.Origin mainFrameOrigin;
     public boolean isFormTag;
-    public boolean isFormlessCheckout;
+    public LocalFrameToken hostFrame;
     public FormRendererId uniqueRendererId;
     public int submissionEvent;
     public FormFieldData[] fields;
@@ -122,11 +122,7 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.isFormlessCheckout = decoder0.readBoolean(64, 2);
-                }
-                {
-                    
-                result.isGaiaWithSkipSavePasswordForm = decoder0.readBoolean(64, 3);
+                result.isGaiaWithSkipSavePasswordForm = decoder0.readBoolean(64, 2);
                 }
                 {
                     
@@ -142,11 +138,16 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(80, false);
-                result.uniqueRendererId = FormRendererId.decode(decoder1);
+                result.hostFrame = LocalFrameToken.decode(decoder1);
                 }
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(88, false);
+                result.uniqueRendererId = FormRendererId.decode(decoder1);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(96, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.fields = new FormFieldData[si1.elementsOrVersion];
@@ -159,7 +160,7 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(96, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(104, false);
                 {
                     org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
                     result.usernamePredictions = new FieldRendererId[si1.elementsOrVersion];
@@ -208,20 +209,20 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.isFormTag, 64, 1);
         
-        encoder0.encode(this.isFormlessCheckout, 64, 2);
-        
-        encoder0.encode(this.isGaiaWithSkipSavePasswordForm, 64, 3);
+        encoder0.encode(this.isGaiaWithSkipSavePasswordForm, 64, 2);
         
         encoder0.encode(this.submissionEvent, 68);
         
         encoder0.encode(this.mainFrameOrigin, 72, false);
         
-        encoder0.encode(this.uniqueRendererId, 80, false);
+        encoder0.encode(this.hostFrame, 80, false);
+        
+        encoder0.encode(this.uniqueRendererId, 88, false);
         
         if (this.fields == null) {
-            encoder0.encodeNullPointer(88, false);
+            encoder0.encodeNullPointer(96, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.fields.length, 88, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.fields.length, 96, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.fields.length; ++i0) {
                 
                 encoder1.encode(this.fields[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
@@ -229,9 +230,9 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
         }
         
         if (this.usernamePredictions == null) {
-            encoder0.encodeNullPointer(96, false);
+            encoder0.encodeNullPointer(104, false);
         } else {
-            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.usernamePredictions.length, 96, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.usernamePredictions.length, 104, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
             for (int i0 = 0; i0 < this.usernamePredictions.length; ++i0) {
                 
                 encoder1.encode(this.usernamePredictions[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);

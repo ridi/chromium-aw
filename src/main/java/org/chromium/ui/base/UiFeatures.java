@@ -20,6 +20,10 @@ public final class UiFeatures {
     // If enabled, calculate native window occlusion - Windows-only.
     public static final String CALCULATE_NATIVE_WIN_OCCLUSION = "CalculateNativeWinOcclusion";
 
+    // If enabled, listen for screen power state change and factor into the native
+    // window occlusion detection - Windows-only.
+    public static final String SCREEN_POWER_LISTENER_FOR_NATIVE_WIN_OCCLUSION = "ScreenPowerListenerForNativeWinOcclusion";
+
     // Whether or not filenames are supported on the clipboard.
     // https://crbug.com/1175483
     public static final String CLIPBOARD_FILENAMES = "ClipboardFilenames";
@@ -37,6 +41,12 @@ public final class UiFeatures {
 
     // This feature supercedes kNewShortcutMapping.
     public static final String IMPROVED_KEYBOARD_SHORTCUTS = "ImprovedKeyboardShortcuts";
+
+
+    public static final String DEPRECATE_ALT_CLICK = "DeprecateAltClick";
+
+
+    public static final String SHORTCUT_CUSTOMIZATION_APP = "ShortcutCustomizationApp";
 
     // Update of the virtual keyboard settings UI as described in
     // https://crbug.com/876901.
@@ -93,19 +103,15 @@ public final class UiFeatures {
     // Enables forced colors mode for web content.
     public static final String FORCED_COLORS = "ForcedColors";
 
-    // Enables the eye-dropper in the refresh color-picker for Windows and Mac.
-    // This feature will be released for other platforms in later milestones.
+    // Enables the eye-dropper in the refresh color-picker for Windows, Mac
+    // and Linux. This feature will be released for other platforms in later
+    // milestones.
     public static final String EYE_DROPPER = "EyeDropper";
 
-    // Enable the CSSColorSchemeUARendering feature for Windows, ChromeOS, Linux,
-    // and Mac. This feature will be released for Android in later milestones. See
-    // crbug.com/1086530 for the Desktop launch bug.
+
     public static final String CSS_COLOR_SCHEME_UA_RENDERING = "CSSColorSchemeUARendering";
 
-    // Enable the FormControlsRefresh feature for Windows, ChromeOS, Linux, and Mac.
-    // This feature will be released for Android in later milestones. See
-    // crbug.com/1012106 for the Windows launch bug, and crbug.com/1012108 for the
-    // Mac launch bug.
+
     public static final String FORM_CONTROLS_REFRESH = "FormControlsRefresh";
 
     // Enable the common select popup.
