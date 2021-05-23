@@ -6,9 +6,11 @@
 
 ## Getting started
 
+### 86.x.x.x or later
+
 This library is distributed by [GitHub Releases](https://github.com/ridi/chromium-aw/releases).
 
-You should add [de.undercouch.download plugin](https://plugins.gradle.org/plugin/de.undercouch.download) to `build.gradle` file of your project.
+You should add [de.undercouch.download plugin](https://plugins.gradle.org/plugin/de.undercouch.download) to `build.gradle.kts` file of your project.
 
 Using the [plugins DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block):
 
@@ -59,6 +61,42 @@ android {
   ...
   aaptOptions {
     noCompress("bin", "dat", "pak")
+  }
+  ...
+}
+```
+
+### Less than 86.x.x.x
+
+This library is distributed by [jitpack](https://jitpack.io).
+
+You should add jitpack maven repository to `build.gradle` file of your project.
+
+```
+repositories {
+  ...
+  maven { url 'https://jitpack.io' }
+  ...
+}
+```
+
+Then you can include this library by adding dependency script to build.gradle file of your project.
+
+```
+dependencies {
+  ...
+  compile 'com.github.ridi:chromium-aw:<version>'
+  ...
+}
+```
+
+**IMPORTANT : Add following `aaptOptions` to prevent asset files being compressed.**
+
+```
+android {
+  ...
+  aaptOptions {
+    noCompress 'dat', 'pak'
   }
   ...
 }
@@ -181,6 +219,12 @@ $ ninja -C out/$TARGET webview_instrumentation_apk
 
 ```sh
 $ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 90.
+```
+
+5. Build
+
+```sh
+$ ./gradlew install
 ```
 
 ## Crash dump decoding instructions
