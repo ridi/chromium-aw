@@ -6,7 +6,7 @@
 
 ## Getting started
 
-### 86.x.x.x or later
+## 86.x.x.x or later
 
 This library is distributed by [GitHub Releases](https://github.com/ridi/chromium-aw/releases).
 
@@ -66,7 +66,7 @@ android {
 }
 ```
 
-### Less than 86.x.x.x
+## Less than 86.x.x.x
 
 This library is distributed by [jitpack](https://jitpack.io).
 
