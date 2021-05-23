@@ -15,4 +15,5 @@
 Thumbs.db
 .svn
 local.properties
-/build
+build
+demo/libs

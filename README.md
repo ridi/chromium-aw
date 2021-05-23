@@ -102,6 +102,10 @@ android {
 }
 ```
 
+## Usage
+
+See [the demo project](demo).
+
 # Chromium build information
 
 Current version is based on [`91.0.4472.70`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/91.0.4472.70)
