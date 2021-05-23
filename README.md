@@ -72,7 +72,7 @@ This library is distributed by [jitpack](https://jitpack.io).
 
 You should add jitpack maven repository to `build.gradle` file of your project.
 
-```
+```groovy
 repositories {
   ...
   maven { url 'https://jitpack.io' }
@@ -80,9 +80,9 @@ repositories {
 }
 ```
 
-Then you can include this library by adding dependency script to build.gradle file of your project.
+Then you can include this library by adding dependency script to `build.gradle` file of your project.
 
-```
+```groovy
 dependencies {
   ...
   compile 'com.github.ridi:chromium-aw:<version>'
@@ -92,7 +92,7 @@ dependencies {
 
 **IMPORTANT : Add following `aaptOptions` to prevent asset files being compressed.**
 
-```
+```groovy
 android {
   ...
   aaptOptions {
