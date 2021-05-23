@@ -4,7 +4,7 @@
 
 [Chromium](https://www.chromium.org) based Android WebView engine to be embedded in Ridibooks-Android
 
-## Getting started
+# Getting started
 
 ## 86.x.x.x-x or later
 
@@ -102,7 +102,7 @@ android {
 }
 ```
 
-## Chromium build information
+# Chromium build information
 
 Current version is based on [`90.0.4430.210`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/90.0.4430.210)
 
@@ -111,16 +111,16 @@ Current version is based on [`90.0.4430.210`](https://chromium.googlesource.com/
 - Unix domain socket name prefix for Devtools is changed.
 - Added snapshot blob for x86/x86_64 arch.
 
-## Build instructions
+# Build instructions
 
-### References
+## References
 
 - [Checking out and building Chromium for Android](https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md)
 - [Build Instructions(Android WebView)](https://www.chromium.org/developers/how-tos/build-instructions-android-webview)
 - [GN build configuration](https://www.chromium.org/developers/gn-build-configuration)
 - [Runtime Enabled Features](https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/blink/renderer/platform/RuntimeEnabledFeatures.md)
 
-### Environment install steps
+## Environment install steps
 
 - A 64-bit Intel machine running Linux with at least 8GB of RAM. More than 16GB is highly recommended.
 - At least 100GB of free disk space.
@@ -186,7 +186,7 @@ $ sudo sed -i -e 's/^ICECC_MAX_JOBS=""/ICECC_MAX_JOBS="$JOBS"/g' /etc/icecc/icec
 $ sudo service iceccd restart
 ```
 
-### Build steps
+## Build steps
 
 1. Checkout.
 
@@ -227,13 +227,13 @@ $ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 90.
 $ ./gradlew install
 ```
 
-## Crash dump decoding instructions
+# Crash dump decoding instructions
 
-### References
+## References
 
 - [Decoding Crash Dumps](https://www.chromium.org/developers/decoding-crash-dumps)
 
-### Environment install steps
+## Environment install steps
 
 ```sh
 $ cd ~
@@ -244,7 +244,7 @@ $ cd src
 $ ./configure && make
 ```
 
-### Decoding steps
+## Decoding steps
 
 1. Generate symbols file.
 
