@@ -37,7 +37,7 @@ buildscript {
 apply(plugin = "de.undercouch.download")
 ```
 
-Then you can include this library by adding dependency script to `build.gradle` file of your project.
+Then you can include this library by adding dependency script to `build.gradle.kts` file of your project.
 
 ```kts
 val version = "90.0.4430.210-1"
