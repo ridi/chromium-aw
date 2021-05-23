@@ -1,3 +1,0 @@
-# Implementation of the new in-app file picker.
-per-file SelectFileDialog.java=finnur@chromium.org
-per-file SelectFileDialog.java=peter@chromium.org

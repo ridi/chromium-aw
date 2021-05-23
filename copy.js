@@ -1300,6 +1300,22 @@ const tasks = [
     ],
     target: '/R.java',
   },
+  {
+    name: 'OWNERS',
+    action: Action.REMOVE,
+    src: [
+      'src/main/java/org/chromium',
+    ],
+    target: '/OWNERS',
+  },
+  {
+    name: 'DIR_METADATA',
+    action: Action.REMOVE,
+    src: [
+      'src/main/java/org/chromium',
+    ],
+    target: '/DIR_METADATA',
+  },
   ...(targets => {
     return targets.map(target => {
       return {
