@@ -120,7 +120,7 @@ Current version is based on [`92.0.4515.38`](https://chromium.googlesource.com/c
 ## References
 
 - [Checking out and building Chromium for Android](https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md)
-- [Build Instructions(Android WebView)](https://www.chromium.org/developers/how-tos/build-instructions-android-webview)
+- [Build Instructions(Android WebView)](https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/build-instructions.md)
 - [GN build configuration](https://www.chromium.org/developers/gn-build-configuration)
 - [Runtime Enabled Features](https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/blink/renderer/platform/RuntimeEnabledFeatures.md)
 
