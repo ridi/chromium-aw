@@ -13,8 +13,16 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class TextDirection {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        TextDirection.UNKNOWN_DIRECTION,
+        TextDirection.RIGHT_TO_LEFT,
+        TextDirection.LEFT_TO_RIGHT})
+    public @interface EnumType {}
 
     public static final int UNKNOWN_DIRECTION = 0;
     public static final int RIGHT_TO_LEFT = 1;

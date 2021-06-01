@@ -13,8 +13,18 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class GpuPeakMemoryAllocationSource {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        GpuPeakMemoryAllocationSource.UNKNOWN,
+        GpuPeakMemoryAllocationSource.COMMAND_BUFFER,
+        GpuPeakMemoryAllocationSource.SHARED_CONTEXT_STATE,
+        GpuPeakMemoryAllocationSource.SHARED_IMAGE_STUB,
+        GpuPeakMemoryAllocationSource.SKIA})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int COMMAND_BUFFER = 1;

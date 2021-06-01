@@ -11,6 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.common.ResourceRequestBody;
+import org.chromium.url.Origin;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -121,9 +122,10 @@ final class NavigationControllerImplJni implements NavigationControllerImpl.Nati
       String url, int loadUrlType, int transitionType, String referrerUrl, int referrerPolicy,
       int uaOverrideOption, String extraHeaders, ResourceRequestBody postData,
       String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString,
-      boolean canLoadLocalResources, boolean isRendererInitiated,
-      boolean shouldReplaceCurrentEntry) {
-    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry);
+      boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry,
+      Origin initiatorOrigin, boolean hasUserGesture, boolean shouldClearHistoryList,
+      long inputStart) {
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry, initiatorOrigin, hasUserGesture, shouldClearHistoryList, inputStart);
   }
 
   @Override

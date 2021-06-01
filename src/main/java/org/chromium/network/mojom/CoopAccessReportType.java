@@ -13,8 +13,19 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CoopAccessReportType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CoopAccessReportType.ACCESS_FROM_COOP_PAGE_TO_OPENER,
+        CoopAccessReportType.ACCESS_FROM_COOP_PAGE_TO_OPENEE,
+        CoopAccessReportType.ACCESS_FROM_COOP_PAGE_TO_OTHER,
+        CoopAccessReportType.ACCESS_TO_COOP_PAGE_FROM_OPENER,
+        CoopAccessReportType.ACCESS_TO_COOP_PAGE_FROM_OPENEE,
+        CoopAccessReportType.ACCESS_TO_COOP_PAGE_FROM_OTHER})
+    public @interface EnumType {}
 
     public static final int ACCESS_FROM_COOP_PAGE_TO_OPENER = 0;
     public static final int ACCESS_FROM_COOP_PAGE_TO_OPENEE = 1;

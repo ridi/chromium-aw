@@ -13,8 +13,16 @@
 
 package org.chromium.shape_detection.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class LandmarkType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        LandmarkType.MOUTH,
+        LandmarkType.EYE,
+        LandmarkType.NOSE})
+    public @interface EnumType {}
 
     public static final int MOUTH = 0;
     public static final int EYE = 1;

@@ -13,8 +13,16 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SerialSendError {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SerialSendError.NONE,
+        SerialSendError.DISCONNECTED,
+        SerialSendError.SYSTEM_ERROR})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int DISCONNECTED = 1;

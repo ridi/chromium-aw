@@ -13,6 +13,8 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class VkQueueFamilyProperties extends org.chromium.mojo.bindings.Struct {
 

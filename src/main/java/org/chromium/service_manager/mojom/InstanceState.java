@@ -13,8 +13,16 @@
 
 package org.chromium.service_manager.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class InstanceState {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        InstanceState.CREATED,
+        InstanceState.STARTED,
+        InstanceState.UNREACHABLE})
+    public @interface EnumType {}
 
     public static final int CREATED = 0;
     public static final int STARTED = 1;

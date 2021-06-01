@@ -13,8 +13,21 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class RemoteArrayType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        RemoteArrayType.INT8_ARRAY,
+        RemoteArrayType.UINT8_ARRAY,
+        RemoteArrayType.INT16_ARRAY,
+        RemoteArrayType.UINT16_ARRAY,
+        RemoteArrayType.INT32_ARRAY,
+        RemoteArrayType.UINT32_ARRAY,
+        RemoteArrayType.FLOAT32_ARRAY,
+        RemoteArrayType.FLOAT64_ARRAY})
+    public @interface EnumType {}
 
     public static final int INT8_ARRAY = 1;
     public static final int UINT8_ARRAY = 2;

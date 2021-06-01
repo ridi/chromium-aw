@@ -17,17 +17,7 @@ public class NativeLibraries {
 
     // This is the list of native libraries to be loaded (in the correct order)
     // by LibraryLoader.java.
-    // TODO(cjhopman): This is public since it is referenced by NativeTestActivity.java
-    // directly. The two ways of library loading should be refactored into one.
     public static final String[] LIBRARIES = {"standalonelibwebviewchromium"};
-
-    // This is the expected version of the 'main' native library, which is the one that
-    // implements the initial set of base JNI functions including
-    // base::android::nativeGetVersionName()
-    // TODO(torne): This is public to work around classloader issues in Trichrome
-    // where NativeLibraries is not in the same dex as LibraryLoader.
-    // We should instead split up Java code along package boundaries.
-    public static final String sVersionNumber = "91.0.4472.70";
 
     public static final int sCpuFamily = CPU_FAMILY_UNKNOWN;
 }

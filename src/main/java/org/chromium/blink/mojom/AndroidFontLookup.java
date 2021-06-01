@@ -13,6 +13,8 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface AndroidFontLookup extends org.chromium.mojo.bindings.Interface {
 

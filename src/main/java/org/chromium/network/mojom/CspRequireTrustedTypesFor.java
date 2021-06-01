@@ -13,8 +13,15 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CspRequireTrustedTypesFor {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CspRequireTrustedTypesFor.NONE,
+        CspRequireTrustedTypesFor.SCRIPT})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int SCRIPT = 1;

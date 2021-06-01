@@ -321,7 +321,9 @@ public final class ContentSwitches {
     // Disables WebGL rendering into a scanout buffer for overlay support.
     public static final String DISABLE_WEB_GL_IMAGE_CHROMIUM = "disable-webgl-image-chromium";
 
-    // Don't enforce the same-origin policy. (Used by people testing their sites.)
+    // Don't enforce the same-origin policy; meant for website testing only.
+    // This switch has no effect unless --user-data-dir (as defined by the content
+    // embedder) is also present.
     public static final String DISABLE_WEB_SECURITY = "disable-web-security";
 
     // Disable the video decoder from drawing directly to a texture.
@@ -380,7 +382,7 @@ public final class ContentSwitches {
     // it will probably even make things a bit slower.  Its purpose is to guarantee
     // test coverage for the blink side of V8 Fast API calls, independently of
     // whether or not V8 actually activates the fast path, which depends on
-    // heuristics.
+    // heuristics.  This flag is effective only when DCHECKs are enabled.
     public static final String ENABLE_FAKE_NO_ALLOC_DIRECT_CALL_FOR_TESTING = "enable-fake-no-alloc-direct-call-for-testing";
 
     // Enables blink runtime enabled features with status:"test" or
@@ -583,6 +585,9 @@ public final class ContentSwitches {
     // Sets the maximium decoded image size limitation.
     public static final String MAX_DECODED_IMAGE_SIZE_MB = "max-decoded-image-size-mb";
 
+    // Sets the maximum number of WebMediaPlayers allowed per frame.
+    public static final String MAX_WEB_MEDIA_PLAYER_COUNT = "max-web-media-player-count";
+
     // Indicates the utility process should run with a message loop type of UI.
     public static final String MESSAGE_LOOP_TYPE_UI = "message-loop-type-ui";
 
@@ -749,6 +754,9 @@ public final class ContentSwitches {
 
     // Type of the current test harness ("browser" or "ui").
     public static final String TEST_TYPE = "test-type";
+
+    // The time zone to use for testing. Passed to renderers and plugins on startup.
+    public static final String TIME_ZONE_FOR_TESTING = "time-zone-for-testing";
 
     // Enable support for touch event feature detection.
     public static final String TOUCH_EVENT_FEATURE_DETECTION = "touch-events";

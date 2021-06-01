@@ -13,8 +13,15 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SingletonJavaScriptValue {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SingletonJavaScriptValue.NULL,
+        SingletonJavaScriptValue.UNDEFINED})
+    public @interface EnumType {}
 
     public static final int NULL = 0;
     public static final int UNDEFINED = 1;

@@ -13,8 +13,18 @@
 
 package org.chromium.mojo.native_types;
 
+import androidx.annotation.IntDef;
+
 public final class SerializedHandleType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SerializedHandleType.MOJO_HANDLE,
+        SerializedHandleType.PLATFORM_FILE,
+        SerializedHandleType.WIN_HANDLE,
+        SerializedHandleType.MACH_PORT,
+        SerializedHandleType.FUCHSIA_HANDLE})
+    public @interface EnumType {}
 
     public static final int MOJO_HANDLE = 0;
     public static final int PLATFORM_FILE = 1;

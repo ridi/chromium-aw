@@ -13,8 +13,16 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SerialStopBits {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SerialStopBits.NONE,
+        SerialStopBits.ONE,
+        SerialStopBits.TWO})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int ONE = 1;

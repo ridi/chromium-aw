@@ -13,6 +13,8 @@
 
 package org.chromium.mojo.bindings.pipecontrol;
 
+import androidx.annotation.IntDef;
+
 
 public final class DisconnectReason extends org.chromium.mojo.bindings.Struct {
 

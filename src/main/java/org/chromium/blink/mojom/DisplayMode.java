@@ -13,8 +13,19 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class DisplayMode {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        DisplayMode.UNDEFINED,
+        DisplayMode.BROWSER,
+        DisplayMode.MINIMAL_UI,
+        DisplayMode.STANDALONE,
+        DisplayMode.FULLSCREEN,
+        DisplayMode.WINDOW_CONTROLS_OVERLAY})
+    public @interface EnumType {}
 
     public static final int UNDEFINED = 0;
     public static final int BROWSER = 1;

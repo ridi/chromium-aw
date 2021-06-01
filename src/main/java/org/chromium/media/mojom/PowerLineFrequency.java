@@ -13,8 +13,16 @@
 
 package org.chromium.media.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class PowerLineFrequency {
     private static final boolean IS_EXTENSIBLE = true;
+    @IntDef({
+
+        PowerLineFrequency.DEFAULT,
+        PowerLineFrequency.HZ_50,
+        PowerLineFrequency.HZ_60})
+    public @interface EnumType {}
 
     public static final int DEFAULT = 0;
     public static final int HZ_50 = 1;

@@ -13,8 +13,22 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SourceEventType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SourceEventType.UNKNOWN,
+        SourceEventType.WHEEL,
+        SourceEventType.MOUSE,
+        SourceEventType.TOUCH,
+        SourceEventType.INERTIAL,
+        SourceEventType.KEY_PRESS,
+        SourceEventType.TOUCHPAD,
+        SourceEventType.SCROLLBAR,
+        SourceEventType.OTHER})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int WHEEL = 1;

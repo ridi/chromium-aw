@@ -13,8 +13,22 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class TextInputMode {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        TextInputMode.DEFAULT,
+        TextInputMode.NONE,
+        TextInputMode.TEXT,
+        TextInputMode.TEL,
+        TextInputMode.URL,
+        TextInputMode.EMAIL,
+        TextInputMode.NUMERIC,
+        TextInputMode.DECIMAL,
+        TextInputMode.SEARCH})
+    public @interface EnumType {}
 
     public static final int DEFAULT = 0;
     public static final int NONE = 1;

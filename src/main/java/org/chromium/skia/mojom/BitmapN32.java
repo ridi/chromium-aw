@@ -13,6 +13,8 @@
 
 package org.chromium.skia.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class BitmapN32 extends org.chromium.mojo.bindings.Struct {
 

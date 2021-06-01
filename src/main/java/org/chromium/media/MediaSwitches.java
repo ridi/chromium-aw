@@ -90,8 +90,8 @@ public abstract class MediaSwitches {
     public static final String USE_CRAS = "use-cras";
 
     // For automated testing of protected content, this switch allows specific
-    // domains (e.g. example.com) to skip asking the user for permission to share
-    // the protected media identifier. In this context, domain does not include the
+    // domains (e.g. example.com) to always allow the permission to share the
+    // protected media identifier. In this context, domain does not include the
     // port number. User's content settings will not be affected by enabling this
     // switch.
     // Reference: http://crbug.com/718608
@@ -173,7 +173,8 @@ public abstract class MediaSwitches {
 
     // Overrides hardware secure codecs support for testing. If specified, real
     // platform hardware secure codecs check will be skipped. Codecs are separated
-    // by comma. Valid codecs are "vp8", "vp9" and "avc1". For example:
+    // by comma. Valid video codecs are "vp8", "vp9" and "avc1", and the only valid
+    // audio codec is "vorbis". For example:
     //  --override-hardware-secure-codecs-for-testing=vp8,vp9
     //  --override-hardware-secure-codecs-for-testing=avc1
     // CENC encryption scheme is assumed to be supported for the specified codecs.

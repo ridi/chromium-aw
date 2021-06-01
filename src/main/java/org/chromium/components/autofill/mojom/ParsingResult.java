@@ -13,6 +13,8 @@
 
 package org.chromium.autofill.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class ParsingResult extends org.chromium.mojo.bindings.Struct {
 

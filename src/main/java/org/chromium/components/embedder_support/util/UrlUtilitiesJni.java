@@ -26,21 +26,6 @@ public final class UrlUtilitiesJni implements UrlUtilities.Natives {
   };
 
   @Override
-  public boolean isDownloadable(GURL url) {
-    return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_isDownloadable(url);
-  }
-
-  @Override
-  public boolean isValidForIntentFallbackNavigation(String url) {
-    return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_isValidForIntentFallbackNavigation(url);
-  }
-
-  @Override
-  public boolean isAcceptedScheme(String url) {
-    return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_isAcceptedScheme(url);
-  }
-
-  @Override
   public boolean sameDomainOrHost(String primaryUrl, String secondaryUrl,
       boolean includePrivateRegistries) {
     return (boolean)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_sameDomainOrHost(primaryUrl, secondaryUrl, includePrivateRegistries);
@@ -89,6 +74,16 @@ public final class UrlUtilitiesJni implements UrlUtilities.Natives {
   @Override
   public String escapeQueryParamValue(String url, boolean usePlus) {
     return (String)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_escapeQueryParamValue(url, usePlus);
+  }
+
+  @Override
+  public String getValueForKeyInQuery(GURL url, String key) {
+    return (String)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_getValueForKeyInQuery(url, key);
+  }
+
+  @Override
+  public GURL clearPort(GURL url) {
+    return (GURL)GEN_JNI.org_chromium_components_embedder_1support_util_UrlUtilities_clearPort(url);
   }
 
   public static UrlUtilities.Natives get() {

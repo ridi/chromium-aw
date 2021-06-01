@@ -13,8 +13,17 @@
 
 package org.chromium.media.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class VideoRotation {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        VideoRotation.VIDEO_ROTATION0,
+        VideoRotation.VIDEO_ROTATION90,
+        VideoRotation.VIDEO_ROTATION180,
+        VideoRotation.VIDEO_ROTATION270})
+    public @interface EnumType {}
 
     public static final int VIDEO_ROTATION0 = 0;
     public static final int VIDEO_ROTATION90 = 1;

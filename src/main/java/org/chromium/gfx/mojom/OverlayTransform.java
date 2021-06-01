@@ -13,8 +13,21 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class OverlayTransform {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        OverlayTransform.OVERLAY_TRANSFORM_INVALID,
+        OverlayTransform.OVERLAY_TRANSFORM_NONE,
+        OverlayTransform.OVERLAY_TRANSFORM_FLIP_HORIZONTAL,
+        OverlayTransform.OVERLAY_TRANSFORM_FLIP_VERTICAL,
+        OverlayTransform.OVERLAY_TRANSFORM_ROTATE_90,
+        OverlayTransform.OVERLAY_TRANSFORM_ROTATE_180,
+        OverlayTransform.OVERLAY_TRANSFORM_ROTATE_270,
+        OverlayTransform.OVERLAY_TRANSFORM_LAST})
+    public @interface EnumType {}
 
     public static final int OVERLAY_TRANSFORM_INVALID = 0;
     public static final int OVERLAY_TRANSFORM_NONE = 1;

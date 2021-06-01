@@ -127,6 +127,14 @@ const tasks = [
     dest: 'src/main/java/org/chromium/base',
   },
   {
+    name: 'base/jank_tracker',
+    action: Action.COPY,
+    src: [
+      `src/out/${delegateTarget}/gen/base/base_java/generated_java/input_srcjars/org/chromium/base/jank_tracker`,
+    ],
+    dest: 'src/main/java/org/chromium/base/jank_tracker',
+  },
+  {
     name: 'base/library_loader',
     action: Action.COPY,
     src: [
@@ -281,6 +289,8 @@ const tasks = [
     name: 'components/autofill',
     action: Action.COPY,
     src: [
+      'src/components/android_autofill/android/java/src/org/chromium/components/autofill',
+      `src/out/${delegateTarget}/gen/components/android_autofill/android/java/generated_java/input_srcjars/org/chromium/components/autofill`,
       'src/components/autofill/android/java/src/org/chromium/components/autofill',
       'src/components/autofill/android/provider/java/src/org/chromium/components/autofill',
       'src/components/autofill/android/provider/src/org/chromium/components/autofill',
@@ -314,8 +324,10 @@ const tasks = [
     name: 'components/autofill_public',
     action: Action.COPY,
     src: [
+      'src/components/android_autofill/android/java/src/org/chromium/components/autofill_public',
       'src/components/autofill/android/provider/java/src/org/chromium/components/autofill_public',
       'src/components/autofill/android/provider/src/org/chromium/components/autofill_public',
+      `src/out/${delegateTarget}/gen/components/android_autofill/android/java/generated_java/input_srcjars/org/chromium/components/autofill_public`,
       `src/out/${delegateTarget}/gen/components/autofill/android/provider/java/generated_java/input_srcjars/org/chromium/components/autofill_public`,
     ],
     dest: 'src/main/java/org/chromium/components/autofill_public',
@@ -981,6 +993,7 @@ const tasks = [
           'RequestDestination.java',
           'RequestPriority.java',
           'SourceLocation.java',
+          'TimingAllowOrigin.java',
           'UrlLoader.java',
           'UrlLoader_Internal.java',
           'UrlLoaderClient.java',

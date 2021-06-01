@@ -13,8 +13,15 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ContentSecurityPolicyType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ContentSecurityPolicyType.REPORT,
+        ContentSecurityPolicyType.ENFORCE})
+    public @interface EnumType {}
 
     public static final int REPORT = 0;
     public static final int ENFORCE = 1;

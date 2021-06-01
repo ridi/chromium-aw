@@ -13,8 +13,43 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class VideoCodecProfile {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        VideoCodecProfile.VIDEO_CODEC_PROFILE_UNKNOWN,
+        VideoCodecProfile.H264PROFILE_BASELINE,
+        VideoCodecProfile.H264PROFILE_MAIN,
+        VideoCodecProfile.H264PROFILE_EXTENDED,
+        VideoCodecProfile.H264PROFILE_HIGH,
+        VideoCodecProfile.H264PROFILE_HIGH10PROFILE,
+        VideoCodecProfile.H264PROFILE_HIGH422PROFILE,
+        VideoCodecProfile.H264PROFILE_HIGH444PREDICTIVEPROFILE,
+        VideoCodecProfile.H264PROFILE_SCALABLEBASELINE,
+        VideoCodecProfile.H264PROFILE_SCALABLEHIGH,
+        VideoCodecProfile.H264PROFILE_STEREOHIGH,
+        VideoCodecProfile.H264PROFILE_MULTIVIEWHIGH,
+        VideoCodecProfile.VP8PROFILE_ANY,
+        VideoCodecProfile.VP9PROFILE_PROFILE0,
+        VideoCodecProfile.VP9PROFILE_PROFILE1,
+        VideoCodecProfile.VP9PROFILE_PROFILE2,
+        VideoCodecProfile.VP9PROFILE_PROFILE3,
+        VideoCodecProfile.HEVCPROFILE_MAIN,
+        VideoCodecProfile.HEVCPROFILE_MAIN10,
+        VideoCodecProfile.HEVCPROFILE_MAIN_STILL_PICTURE,
+        VideoCodecProfile.DOLBYVISION_PROFILE0,
+        VideoCodecProfile.DOLBYVISION_PROFILE4,
+        VideoCodecProfile.DOLBYVISION_PROFILE5,
+        VideoCodecProfile.DOLBYVISION_PROFILE7,
+        VideoCodecProfile.THEORAPROFILE_ANY,
+        VideoCodecProfile.AV1PROFILE_PROFILE_MAIN,
+        VideoCodecProfile.AV1PROFILE_PROFILE_HIGH,
+        VideoCodecProfile.AV1PROFILE_PROFILE_PRO,
+        VideoCodecProfile.DOLBYVISION_PROFILE8,
+        VideoCodecProfile.DOLBYVISION_PROFILE9})
+    public @interface EnumType {}
 
     public static final int VIDEO_CODEC_PROFILE_UNKNOWN = -1;
     public static final int H264PROFILE_BASELINE = 0;

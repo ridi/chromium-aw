@@ -13,8 +13,16 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class InputDeviceSubsystem {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        InputDeviceSubsystem.SUBSYSTEM_HID,
+        InputDeviceSubsystem.SUBSYSTEM_INPUT,
+        InputDeviceSubsystem.SUBSYSTEM_UNKNOWN})
+    public @interface EnumType {}
 
     public static final int SUBSYSTEM_HID = 0;
     public static final int SUBSYSTEM_INPUT = 1;

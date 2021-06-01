@@ -13,6 +13,8 @@
 
 package org.chromium.service_manager.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class InterfaceProviderSpec extends org.chromium.mojo.bindings.Struct {
 

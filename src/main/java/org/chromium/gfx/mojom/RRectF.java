@@ -13,6 +13,8 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class RRectF extends org.chromium.mojo.bindings.Struct {
 

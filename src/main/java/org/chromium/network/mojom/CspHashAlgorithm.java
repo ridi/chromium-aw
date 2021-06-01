@@ -13,8 +13,17 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CspHashAlgorithm {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CspHashAlgorithm.NONE,
+        CspHashAlgorithm.SHA256,
+        CspHashAlgorithm.SHA384,
+        CspHashAlgorithm.SHA512})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int SHA256 = 1;

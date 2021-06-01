@@ -13,8 +13,22 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ScreenOrientationLockType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ScreenOrientationLockType.DEFAULT,
+        ScreenOrientationLockType.PORTRAIT_PRIMARY,
+        ScreenOrientationLockType.PORTRAIT_SECONDARY,
+        ScreenOrientationLockType.LANDSCAPE_PRIMARY,
+        ScreenOrientationLockType.LANDSCAPE_SECONDARY,
+        ScreenOrientationLockType.ANY,
+        ScreenOrientationLockType.LANDSCAPE,
+        ScreenOrientationLockType.PORTRAIT,
+        ScreenOrientationLockType.NATURAL})
+    public @interface EnumType {}
 
     public static final int DEFAULT = 0;
     public static final int PORTRAIT_PRIMARY = 1;

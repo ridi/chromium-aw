@@ -13,8 +13,15 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class VirtualKeyboardPolicy {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        VirtualKeyboardPolicy.AUTO,
+        VirtualKeyboardPolicy.MANUAL})
+    public @interface EnumType {}
 
     public static final int AUTO = 0;
     public static final int MANUAL = 1;

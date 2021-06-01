@@ -13,8 +13,17 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ScreenOrientationLockResult {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ScreenOrientationLockResult.SCREEN_ORIENTATION_LOCK_RESULT_SUCCESS,
+        ScreenOrientationLockResult.SCREEN_ORIENTATION_LOCK_RESULT_ERROR_NOT_AVAILABLE,
+        ScreenOrientationLockResult.SCREEN_ORIENTATION_LOCK_RESULT_ERROR_FULLSCREEN_REQUIRED,
+        ScreenOrientationLockResult.SCREEN_ORIENTATION_LOCK_RESULT_ERROR_CANCELED})
+    public @interface EnumType {}
 
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_SUCCESS = 0;
     public static final int SCREEN_ORIENTATION_LOCK_RESULT_ERROR_NOT_AVAILABLE = 1;

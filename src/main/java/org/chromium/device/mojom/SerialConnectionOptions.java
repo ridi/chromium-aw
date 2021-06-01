@@ -13,6 +13,8 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class SerialConnectionOptions extends org.chromium.mojo.bindings.Struct {
 

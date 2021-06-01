@@ -13,11 +13,13 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 88;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
+    private static final int STRUCT_SIZE = 104;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(104, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public ContentSecurityPolicy[] contentSecurityPolicy;
     public AllowCspFromHeaderValue allowCspFrom;
@@ -29,11 +31,14 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
     public int[] criticalCh;
     public int xfo;
     public LinkHeader[] linkHeaders;
+    public TimingAllowOrigin timingAllowOrigin;
+    public boolean bfcacheOptInUnload;
 
     private ParsedHeaders(int version) {
         super(STRUCT_SIZE, version);
         this.originAgentCluster = (boolean) false;
         this.xfo = (int) XFrameOptionsValue.NONE;
+        this.bfcacheOptInUnload = (boolean) false;
     }
 
     public ParsedHeaders() {
@@ -98,6 +103,10 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
+                result.bfcacheOptInUnload = decoder0.readBoolean(48, 1);
+                }
+                {
+                    
                 result.xfo = decoder0.readInt(52);
                     XFrameOptionsValue.validate(result.xfo);
                     result.xfo = XFrameOptionsValue.toKnownValue(result.xfo);
@@ -138,6 +147,10 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                     }
                 }
                 }
+                {
+                    
+                result.timingAllowOrigin = TimingAllowOrigin.decode(decoder0, 88);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -168,6 +181,8 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.originAgentCluster, 48, 0);
         
+        encoder0.encode(this.bfcacheOptInUnload, 48, 1);
+        
         encoder0.encode(this.xfo, 52);
         
         encoder0.encode(this.acceptCh, 56, org.chromium.mojo.bindings.BindingsHelper.ARRAY_NULLABLE, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
@@ -185,5 +200,7 @@ public final class ParsedHeaders extends org.chromium.mojo.bindings.Struct {
                 encoder1.encode(this.linkHeaders[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
             }
         }
+        
+        encoder0.encode(this.timingAllowOrigin, 88, true);
     }
 }

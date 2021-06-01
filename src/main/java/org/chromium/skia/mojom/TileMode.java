@@ -13,8 +13,17 @@
 
 package org.chromium.skia.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class TileMode {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        TileMode.CLAMP,
+        TileMode.REPEAT,
+        TileMode.MIRROR,
+        TileMode.DECAL})
+    public @interface EnumType {}
 
     public static final int CLAMP = 0;
     public static final int REPEAT = 1;

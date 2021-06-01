@@ -13,8 +13,19 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class RRectFType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        RRectFType.EMPTY,
+        RRectFType.RECT,
+        RRectFType.SINGLE,
+        RRectFType.SIMPLE,
+        RRectFType.OVAL,
+        RRectFType.COMPLEX})
+    public @interface EnumType {}
 
     public static final int EMPTY = 0;
     public static final int RECT = 1;

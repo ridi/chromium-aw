@@ -13,8 +13,19 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CommandBufferNamespace {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CommandBufferNamespace.INVALID,
+        CommandBufferNamespace.GPU_IO,
+        CommandBufferNamespace.IN_PROCESS,
+        CommandBufferNamespace.MOJO,
+        CommandBufferNamespace.MOJO_LOCAL,
+        CommandBufferNamespace.NUM_COMMAND_BUFFER_NAMESPACES})
+    public @interface EnumType {}
 
     public static final int INVALID = -1;
     public static final int GPU_IO = 0;

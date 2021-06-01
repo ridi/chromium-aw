@@ -13,6 +13,8 @@
 
 package org.chromium.payments.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class AddressErrors extends org.chromium.mojo.bindings.Struct {
 

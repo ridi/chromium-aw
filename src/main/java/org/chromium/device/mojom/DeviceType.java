@@ -13,8 +13,15 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class DeviceType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        DeviceType.PLATFORM_SERIAL,
+        DeviceType.SPP_DEVICE})
+    public @interface EnumType {}
 
     public static final int PLATFORM_SERIAL = 0;
     public static final int SPP_DEVICE = 1;

@@ -13,6 +13,8 @@
 
 package org.chromium.autofill.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class FormData extends org.chromium.mojo.bindings.Struct {
 

@@ -13,8 +13,18 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SubpixelRendering {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SubpixelRendering.NONE,
+        SubpixelRendering.RGB,
+        SubpixelRendering.BGR,
+        SubpixelRendering.VRGB,
+        SubpixelRendering.VBGR})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int RGB = 1;

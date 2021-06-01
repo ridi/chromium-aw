@@ -13,8 +13,18 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ImeTextSpanUnderlineStyle {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ImeTextSpanUnderlineStyle.NONE,
+        ImeTextSpanUnderlineStyle.SOLID,
+        ImeTextSpanUnderlineStyle.DOT,
+        ImeTextSpanUnderlineStyle.DASH,
+        ImeTextSpanUnderlineStyle.SQUIGGLE})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int SOLID = 1;

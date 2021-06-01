@@ -13,6 +13,8 @@
 
 package org.chromium.url.internal.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class Origin extends org.chromium.mojo.bindings.Struct {
 

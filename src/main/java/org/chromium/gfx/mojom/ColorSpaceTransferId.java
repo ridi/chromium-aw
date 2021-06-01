@@ -13,8 +13,38 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ColorSpaceTransferId {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ColorSpaceTransferId.INVALID,
+        ColorSpaceTransferId.BT709,
+        ColorSpaceTransferId.BT709_APPLE,
+        ColorSpaceTransferId.GAMMA18,
+        ColorSpaceTransferId.GAMMA22,
+        ColorSpaceTransferId.GAMMA24,
+        ColorSpaceTransferId.GAMMA28,
+        ColorSpaceTransferId.SMPTE170M,
+        ColorSpaceTransferId.SMPTE240M,
+        ColorSpaceTransferId.LINEAR,
+        ColorSpaceTransferId.LOG,
+        ColorSpaceTransferId.LOG_SQRT,
+        ColorSpaceTransferId.IEC61966_2_4,
+        ColorSpaceTransferId.BT1361_ECG,
+        ColorSpaceTransferId.IEC61966_2_1,
+        ColorSpaceTransferId.BT2020_10,
+        ColorSpaceTransferId.BT2020_12,
+        ColorSpaceTransferId.SMPTEST2084,
+        ColorSpaceTransferId.SMPTEST428_1,
+        ColorSpaceTransferId.ARIB_STD_B67,
+        ColorSpaceTransferId.IEC61966_2_1_HDR,
+        ColorSpaceTransferId.LINEAR_HDR,
+        ColorSpaceTransferId.CUSTOM,
+        ColorSpaceTransferId.CUSTOM_HDR,
+        ColorSpaceTransferId.PIECEWISE_HDR})
+    public @interface EnumType {}
 
     public static final int INVALID = 0;
     public static final int BT709 = 1;

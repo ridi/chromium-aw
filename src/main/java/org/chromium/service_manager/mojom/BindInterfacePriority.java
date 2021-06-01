@@ -13,8 +13,15 @@
 
 package org.chromium.service_manager.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class BindInterfacePriority {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        BindInterfacePriority.IMPORTANT,
+        BindInterfacePriority.BEST_EFFORT})
+    public @interface EnumType {}
 
     public static final int IMPORTANT = 0;
     public static final int BEST_EFFORT = 1;

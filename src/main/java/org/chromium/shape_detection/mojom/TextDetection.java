@@ -13,6 +13,8 @@
 
 package org.chromium.shape_detection.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface TextDetection extends org.chromium.mojo.bindings.Interface {
 

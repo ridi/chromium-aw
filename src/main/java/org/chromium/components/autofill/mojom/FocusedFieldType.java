@@ -13,8 +13,20 @@
 
 package org.chromium.autofill.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class FocusedFieldType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        FocusedFieldType.UNKNOWN,
+        FocusedFieldType.UNFILLABLE_ELEMENT,
+        FocusedFieldType.FILLABLE_TEXT_AREA,
+        FocusedFieldType.FILLABLE_SEARCH_FIELD,
+        FocusedFieldType.FILLABLE_NON_SEARCH_FIELD,
+        FocusedFieldType.FILLABLE_USERNAME_FIELD,
+        FocusedFieldType.FILLABLE_PASSWORD_FIELD})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int UNFILLABLE_ELEMENT = 1;

@@ -13,8 +13,18 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SelectionBoundType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SelectionBoundType.LEFT,
+        SelectionBoundType.RIGHT,
+        SelectionBoundType.CENTER,
+        SelectionBoundType.EMPTY,
+        SelectionBoundType.LAST})
+    public @interface EnumType {}
 
     public static final int LEFT = 0;
     public static final int RIGHT = 1;

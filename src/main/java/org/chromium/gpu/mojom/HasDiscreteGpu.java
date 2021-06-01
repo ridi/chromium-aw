@@ -13,8 +13,16 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class HasDiscreteGpu {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        HasDiscreteGpu.UNKNOWN,
+        HasDiscreteGpu.NO,
+        HasDiscreteGpu.YES})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int NO = 1;

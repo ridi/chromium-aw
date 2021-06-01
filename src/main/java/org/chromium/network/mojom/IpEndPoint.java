@@ -13,6 +13,8 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class IpEndPoint extends org.chromium.mojo.bindings.Struct {
 

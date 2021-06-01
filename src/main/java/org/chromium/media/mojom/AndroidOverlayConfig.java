@@ -13,6 +13,8 @@
 
 package org.chromium.media.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class AndroidOverlayConfig extends org.chromium.mojo.bindings.Struct {
 

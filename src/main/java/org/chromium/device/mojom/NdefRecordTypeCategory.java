@@ -13,8 +13,16 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class NdefRecordTypeCategory {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        NdefRecordTypeCategory.STANDARDIZED,
+        NdefRecordTypeCategory.EXTERNAL,
+        NdefRecordTypeCategory.LOCAL})
+    public @interface EnumType {}
 
     public static final int STANDARDIZED = 0;
     public static final int EXTERNAL = 1;

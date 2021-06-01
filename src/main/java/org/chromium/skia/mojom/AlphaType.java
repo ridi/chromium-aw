@@ -13,8 +13,17 @@
 
 package org.chromium.skia.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class AlphaType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        AlphaType.UNKNOWN,
+        AlphaType.ALPHA_TYPE_OPAQUE,
+        AlphaType.PREMUL,
+        AlphaType.UNPREMUL})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int ALPHA_TYPE_OPAQUE = 1;

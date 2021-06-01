@@ -13,6 +13,8 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class VkExtent3D extends org.chromium.mojo.bindings.Struct {
 

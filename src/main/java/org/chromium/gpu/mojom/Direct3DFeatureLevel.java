@@ -13,8 +13,23 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class Direct3DFeatureLevel {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        Direct3DFeatureLevel.K1_0_CORE,
+        Direct3DFeatureLevel.K9_1,
+        Direct3DFeatureLevel.K9_2,
+        Direct3DFeatureLevel.K9_3,
+        Direct3DFeatureLevel.K10_0,
+        Direct3DFeatureLevel.K10_1,
+        Direct3DFeatureLevel.K11_0,
+        Direct3DFeatureLevel.K11_1,
+        Direct3DFeatureLevel.K12_0,
+        Direct3DFeatureLevel.K12_1})
+    public @interface EnumType {}
 
     public static final int K1_0_CORE = 0;
     public static final int K9_1 = 1;

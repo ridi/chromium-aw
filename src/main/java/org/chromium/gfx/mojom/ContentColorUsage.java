@@ -13,8 +13,16 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ContentColorUsage {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ContentColorUsage.SRGB,
+        ContentColorUsage.WIDE_COLOR_GAMUT,
+        ContentColorUsage.HDR})
+    public @interface EnumType {}
 
     public static final int SRGB = 0;
     public static final int WIDE_COLOR_GAMUT = 1;

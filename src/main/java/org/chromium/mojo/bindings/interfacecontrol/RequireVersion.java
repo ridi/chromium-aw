@@ -13,6 +13,8 @@
 
 package org.chromium.mojo.bindings.interfacecontrol;
 
+import androidx.annotation.IntDef;
+
 
 public final class RequireVersion extends org.chromium.mojo.bindings.Struct {
 
