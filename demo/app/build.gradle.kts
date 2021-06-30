@@ -10,6 +10,7 @@ plugins {
 // #1 Download chromium-aw from github releases.
 val downloadChromiumAwTaskName = "chromium-aw@aar"
 tasks.register<de.undercouch.gradle.tasks.download.Download>(downloadChromiumAwTaskName) {
+    isEnabled = file(Constants.AW_AAR_PATH).exists().not()
     src("https://github.com/ridi/chromium-aw/releases/download/${Constants.AW_VERSION}/${Constants.AW_AAR_NAME}")
     dest(Constants.AW_AAR_PATH)
     overwrite(true)

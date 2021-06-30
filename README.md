@@ -45,6 +45,7 @@ val fileName = "chromium-aw-release.aar"
 val destPath = "../libs/${fileName}"
 val downloadChromiumAwTaskName = "chromium-aw@aar"
 tasks.register<de.undercouch.gradle.tasks.download.Download>(downloadChromiumAwTaskName) {
+  isEnabled = file(destPath).exists().not()
   src("https://github.com/ridi/chromium-aw/releases/download/${version}/${fileName}")
   dest(destPath)
   overwrite(true)
