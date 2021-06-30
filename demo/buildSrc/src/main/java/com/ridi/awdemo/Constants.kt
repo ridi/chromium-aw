@@ -7,7 +7,7 @@ object Constants {
     const val COMPILE_SDK_VERSION = 29
     const val TARGET_SDK_VERSION = 29
     const val ANDROIDX_CORE_VERSION = "1.3.2"
-    const val AW_VERSION = "92.0.4515.38-1"
+    const val AW_VERSION = "91.0.4472.120-1"
     const val AW_AAR_NAME = "chromium-aw-release.aar"
     const val AW_AAR_PATH = "../libs/$AW_VERSION/$AW_AAR_NAME"
 }
