@@ -1,6 +1,6 @@
 # chromium-aw
 
-[![Build Status](https://github.com/ridi/chromium-aw/workflows/Build/badge.svg?branch=master)](https://github.com/ridi/chromium-aw/actions)
+[![Build Status](https://github.com/ridi/chromium-aw/workflows/Build/badge.svg?branch=master)](https://github.com/ridi/chromium-aw/actions) [![CodeQL](https://github.com/ridi/chromium-aw/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ridi/chromium-aw/actions/workflows/codeql-analysis.yml)
 
 [Chromium](https://www.chromium.org) based Android WebView engine to be embedded in Ridibooks-Android
 
