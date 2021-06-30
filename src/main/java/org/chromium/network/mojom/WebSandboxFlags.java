@@ -13,32 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class WebSandboxFlags {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        WebSandboxFlags.NONE,
-        WebSandboxFlags.NAVIGATION,
-        WebSandboxFlags.PLUGINS,
-        WebSandboxFlags.ORIGIN,
-        WebSandboxFlags.FORMS,
-        WebSandboxFlags.SCRIPTS,
-        WebSandboxFlags.TOP_NAVIGATION,
-        WebSandboxFlags.POPUPS,
-        WebSandboxFlags.AUTOMATIC_FEATURES,
-        WebSandboxFlags.POINTER_LOCK,
-        WebSandboxFlags.DOCUMENT_DOMAIN,
-        WebSandboxFlags.ORIENTATION_LOCK,
-        WebSandboxFlags.PROPAGATES_TO_AUXILIARY_BROWSING_CONTEXTS,
-        WebSandboxFlags.MODALS,
-        WebSandboxFlags.PRESENTATION_CONTROLLER,
-        WebSandboxFlags.TOP_NAVIGATION_BY_USER_ACTIVATION,
-        WebSandboxFlags.DOWNLOADS,
-        WebSandboxFlags.STORAGE_ACCESS_BY_USER_ACTIVATION,
-        WebSandboxFlags.ALL})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int NAVIGATION = 1;

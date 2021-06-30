@@ -13,8 +13,6 @@
 
 package org.chromium.mojo.native_types;
 
-import androidx.annotation.IntDef;
-
 
 public final class SerializedHandle extends org.chromium.mojo.bindings.Struct {
 

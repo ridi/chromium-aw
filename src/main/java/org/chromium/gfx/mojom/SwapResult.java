@@ -13,16 +13,8 @@
 
 package org.chromium.gfx.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class SwapResult {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        SwapResult.ACK,
-        SwapResult.FAILED,
-        SwapResult.NAK_RECREATE_BUFFERS})
-    public @interface EnumType {}
 
     public static final int ACK = 0;
     public static final int FAILED = 1;

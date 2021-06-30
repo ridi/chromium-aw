@@ -12,19 +12,17 @@ import android.view.textclassifier.TextClassificationContext;
 import android.view.textclassifier.TextClassificationManager;
 import android.view.textclassifier.TextClassifier;
 
-import androidx.annotation.Nullable;
-
 import org.chromium.base.Log;
 import org.chromium.base.annotations.VerifiesOnP;
 import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.WindowEventObserverManager;
 import org.chromium.content_public.browser.SelectionClient;
-import org.chromium.content_public.browser.SelectionEventProcessor;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
- * Logs various selection events and manages the lifecycle of a text classifier session.
+ * Smart Selection logger, wrapper of Android logger methods.
  * We are logging word indices here. For one example:
  *     New York City , NY
  *    -1   0    1    2 3  4
@@ -35,7 +33,7 @@ import org.chromium.ui.base.WindowAndroid;
  */
 @VerifiesOnP
 @TargetApi(Build.VERSION_CODES.P)
-public class SmartSelectionEventProcessor implements SelectionEventProcessor {
+public class SmartSelectionMetricsLogger implements SelectionMetricsLogger {
     private static final String TAG = "SmartSelectionLogger";
     private static final boolean DEBUG = false;
 
@@ -46,14 +44,14 @@ public class SmartSelectionEventProcessor implements SelectionEventProcessor {
 
     private SelectionIndicesConverter mConverter;
 
-    public static SmartSelectionEventProcessor create(WebContents webContents) {
+    public static SmartSelectionMetricsLogger create(WebContents webContents) {
         if (webContents.getTopLevelNativeWindow().getContext().get() == null) {
             return null;
         }
-        return new SmartSelectionEventProcessor(webContents);
+        return new SmartSelectionMetricsLogger(webContents);
     }
 
-    private SmartSelectionEventProcessor(WebContents webContents) {
+    private SmartSelectionMetricsLogger(WebContents webContents) {
         mWindowAndroid = webContents.getTopLevelNativeWindow();
         WindowEventObserverManager manager = WindowEventObserverManager.from(webContents);
         if (manager != null) {
@@ -66,7 +64,7 @@ public class SmartSelectionEventProcessor implements SelectionEventProcessor {
         }
     }
 
-    public void onSelectionStarted(String selectionText, int startOffset, boolean editable) {
+    public void logSelectionStarted(String selectionText, int startOffset, boolean editable) {
         if (mWindowAndroid == null) return;
 
         Context context = mWindowAndroid.getContext().get();
@@ -81,7 +79,7 @@ public class SmartSelectionEventProcessor implements SelectionEventProcessor {
         logEvent(SelectionEvent.createSelectionStartedEvent(SelectionEvent.INVOCATION_MANUAL, 0));
     }
 
-    public void onSelectionModified(
+    public void logSelectionModified(
             String selectionText, int startOffset, SelectionClient.Result result) {
         if (mSession == null) return;
         if (!mConverter.updateSelectionState(selectionText, startOffset)) {
@@ -110,7 +108,7 @@ public class SmartSelectionEventProcessor implements SelectionEventProcessor {
         }
     }
 
-    public void onSelectionAction(
+    public void logSelectionAction(
             String selectionText, int startOffset, int action, SelectionClient.Result result) {
         if (mSession == null) {
             return;
@@ -168,10 +166,5 @@ public class SmartSelectionEventProcessor implements SelectionEventProcessor {
 
     public void logEvent(SelectionEvent selectionEvent) {
         mSession.onSelectionEvent(selectionEvent);
-    }
-
-    @Nullable
-    public TextClassifier getTextClassifierSession() {
-        return mSession;
     }
 }

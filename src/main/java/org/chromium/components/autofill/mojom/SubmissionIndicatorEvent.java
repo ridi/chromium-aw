@@ -13,22 +13,8 @@
 
 package org.chromium.autofill.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class SubmissionIndicatorEvent {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        SubmissionIndicatorEvent.NONE,
-        SubmissionIndicatorEvent.HTML_FORM_SUBMISSION,
-        SubmissionIndicatorEvent.SAME_DOCUMENT_NAVIGATION,
-        SubmissionIndicatorEvent.XHR_SUCCEEDED,
-        SubmissionIndicatorEvent.FRAME_DETACHED,
-        SubmissionIndicatorEvent.DOM_MUTATION_AFTER_XHR,
-        SubmissionIndicatorEvent.PROVISIONALLY_SAVED_FORM_ON_START_PROVISIONAL_LOAD,
-        SubmissionIndicatorEvent.PROBABLE_FORM_SUBMISSION,
-        SubmissionIndicatorEvent.CHANGE_PASSWORD_FORM_CLEARED})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int HTML_FORM_SUBMISSION = 1;

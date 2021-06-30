@@ -13,22 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class ReferrerPolicy {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        ReferrerPolicy.ALWAYS,
-        ReferrerPolicy.DEFAULT,
-        ReferrerPolicy.NO_REFERRER_WHEN_DOWNGRADE,
-        ReferrerPolicy.NEVER,
-        ReferrerPolicy.ORIGIN,
-        ReferrerPolicy.ORIGIN_WHEN_CROSS_ORIGIN,
-        ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
-        ReferrerPolicy.SAME_ORIGIN,
-        ReferrerPolicy.STRICT_ORIGIN})
-    public @interface EnumType {}
 
     public static final int ALWAYS = 0;
     public static final int DEFAULT = 1;

@@ -13,19 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class RequestPriority {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        RequestPriority.THROTTLED,
-        RequestPriority.IDLE,
-        RequestPriority.LOWEST,
-        RequestPriority.LOW,
-        RequestPriority.MEDIUM,
-        RequestPriority.HIGHEST})
-    public @interface EnumType {}
 
     public static final int THROTTLED = 0;
     public static final int IDLE = 1;

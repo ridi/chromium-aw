@@ -13,8 +13,6 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class CloneableMessage extends org.chromium.mojo.bindings.Struct {
 

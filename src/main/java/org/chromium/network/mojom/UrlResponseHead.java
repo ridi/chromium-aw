@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
 
@@ -41,11 +39,11 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
     public int connectionInfo;
     public String alpnNegotiatedProtocol;
     public IpEndPoint remoteEndpoint;
-    public boolean isValidated;
     public boolean wasFetchedViaCache;
     public org.chromium.proxy_resolver.mojom.ProxyServer proxyServer;
     public boolean wasFetchedViaServiceWorker;
     public int serviceWorkerResponseSource;
+    public boolean wasFallbackRequiredByServiceWorker;
     public org.chromium.url.mojom.Url[] urlListViaServiceWorker;
     public int responseType;
     public long padding;
@@ -84,10 +82,10 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         this.wasFetchedViaSpdy = (boolean) false;
         this.wasAlpnNegotiated = (boolean) false;
         this.wasAlternateProtocolAvailable = (boolean) false;
-        this.isValidated = (boolean) false;
         this.wasFetchedViaCache = (boolean) false;
         this.wasFetchedViaServiceWorker = (boolean) false;
         this.serviceWorkerResponseSource = (int) FetchResponseSource.UNSPECIFIED;
+        this.wasFallbackRequiredByServiceWorker = (boolean) false;
         this.responseType = (int) FetchResponseType.DEFAULT;
         this.padding = (long) 0;
         this.certStatus = (int) 0;
@@ -181,15 +179,15 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.isValidated = decoder0.readBoolean(52, 4);
+                result.wasFetchedViaCache = decoder0.readBoolean(52, 4);
                 }
                 {
                     
-                result.wasFetchedViaCache = decoder0.readBoolean(52, 5);
+                result.wasFetchedViaServiceWorker = decoder0.readBoolean(52, 5);
                 }
                 {
                     
-                result.wasFetchedViaServiceWorker = decoder0.readBoolean(52, 6);
+                result.wasFallbackRequiredByServiceWorker = decoder0.readBoolean(52, 6);
                 }
                 {
                     
@@ -423,11 +421,11 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.wasAlternateProtocolAvailable, 52, 3);
         
-        encoder0.encode(this.isValidated, 52, 4);
+        encoder0.encode(this.wasFetchedViaCache, 52, 4);
         
-        encoder0.encode(this.wasFetchedViaCache, 52, 5);
+        encoder0.encode(this.wasFetchedViaServiceWorker, 52, 5);
         
-        encoder0.encode(this.wasFetchedViaServiceWorker, 52, 6);
+        encoder0.encode(this.wasFallbackRequiredByServiceWorker, 52, 6);
         
         encoder0.encode(this.didServiceWorkerNavigationPreload, 52, 7);
         

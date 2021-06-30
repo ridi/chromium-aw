@@ -13,17 +13,8 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class VideoCaptureBufferType {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        VideoCaptureBufferType.SHARED_MEMORY,
-        VideoCaptureBufferType.SHARED_MEMORY_VIA_RAW_FILE_DESCRIPTOR,
-        VideoCaptureBufferType.MAILBOX_HOLDER,
-        VideoCaptureBufferType.GPU_MEMORY_BUFFER})
-    public @interface EnumType {}
 
     public static final int SHARED_MEMORY = 0;
     public static final int SHARED_MEMORY_VIA_RAW_FILE_DESCRIPTOR = 1;

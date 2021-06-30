@@ -13,21 +13,8 @@
 
 package org.chromium.autofill.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class ButtonTitleType {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        ButtonTitleType.NONE,
-        ButtonTitleType.BUTTON_ELEMENT_SUBMIT_TYPE,
-        ButtonTitleType.BUTTON_ELEMENT_BUTTON_TYPE,
-        ButtonTitleType.INPUT_ELEMENT_SUBMIT_TYPE,
-        ButtonTitleType.INPUT_ELEMENT_BUTTON_TYPE,
-        ButtonTitleType.HYPERLINK,
-        ButtonTitleType.DIV,
-        ButtonTitleType.SPAN})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int BUTTON_ELEMENT_SUBMIT_TYPE = 1;

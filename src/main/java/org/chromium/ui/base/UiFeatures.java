@@ -39,6 +39,9 @@ public final class UiFeatures {
     // https://crbug.com/1067269
     public static final String NEW_SHORTCUT_MAPPING = "NewShortcutMapping";
 
+    // This feature supercedes kNewShortcutMapping.
+    public static final String IMPROVED_KEYBOARD_SHORTCUTS = "ImprovedKeyboardShortcuts";
+
 
     public static final String DEPRECATE_ALT_CLICK = "DeprecateAltClick";
 
@@ -93,9 +96,6 @@ public final class UiFeatures {
 
     // Enables Logging for DirectManipulation.
     public static final String PRECISION_TOUCHPAD_LOGGING = "PrecisionTouchpadLogging";
-
-    // This feature supercedes kNewShortcutMapping.
-    public static final String IMPROVED_KEYBOARD_SHORTCUTS = "ImprovedKeyboardShortcuts";
 
     // Enables stylus appearing as touch when in contact with digitizer.
     public static final String DIRECT_MANIPULATION_STYLUS = "DirectManipulationStylus";

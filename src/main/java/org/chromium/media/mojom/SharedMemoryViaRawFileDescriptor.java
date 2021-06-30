@@ -13,8 +13,6 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class SharedMemoryViaRawFileDescriptor extends org.chromium.mojo.bindings.Struct {
 

@@ -36,10 +36,9 @@ public class AccessibilitySnapshotNode {
     public int endSelection;
 
     public String htmlTag;
+    public String htmlId;
+    public String htmlClass;
     public String cssDisplay;
-
-    // HTML attributes: array of [lowercase HTML attribute name, value].
-    public String[][] htmlAttributes;
 
     public ArrayList<AccessibilitySnapshotNode> children =
             new ArrayList<AccessibilitySnapshotNode>();
@@ -75,10 +74,11 @@ public class AccessibilitySnapshotNode {
         this.isRootNode = isRootNode;
     }
 
-    public void setHtmlInfo(String htmlTag, String cssDisplay, String[][] htmlAttributes) {
+    public void setHtmlInfo(String htmlTag, String htmlId, String htmlClass, String cssDisplay) {
         this.htmlTag = htmlTag;
+        this.htmlId = htmlId;
+        this.htmlClass = htmlClass;
         this.cssDisplay = cssDisplay;
-        this.htmlAttributes = htmlAttributes;
     }
 
     public void addChild(AccessibilitySnapshotNode node) {

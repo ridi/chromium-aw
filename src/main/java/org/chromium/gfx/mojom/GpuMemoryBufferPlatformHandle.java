@@ -13,8 +13,6 @@
 
 package org.chromium.gfx.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class GpuMemoryBufferPlatformHandle extends org.chromium.mojo.bindings.Union {
 

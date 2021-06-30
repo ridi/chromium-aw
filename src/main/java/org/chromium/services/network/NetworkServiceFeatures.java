@@ -125,13 +125,6 @@ public final class NetworkServiceFeatures {
     // https://tools.ietf.org/html/draft-davidben-http-client-hint-reliability-02#section-4.3
     public static final String ACCEPT_CH_FRAME = "AcceptCHFrame";
 
-    // Enables support for FTP URLs. When disabled FTP URLs will behave the same as
-    // any other URL scheme that's unknown to the UA. See https://crbug.com/333943
-    public static final String FTP_PROTOCOL = "FtpProtocol";
-
-
-    public static final String SCT_AUDITING_RETRY_AND_PERSIST_REPORTS = "SCTAuditingRetryAndPersistReports";
-
     // Do not instantiate this class.
     private NetworkServiceFeatures() {}
 }

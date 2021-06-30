@@ -13,8 +13,6 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 
 class AndroidOverlay_Internal {
 

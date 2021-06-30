@@ -123,9 +123,8 @@ public class SysUtils {
     }
 
     /**
-     * @return amount of physical ram detected in KB, or 0 if detection failed.
+     * @return Whether or not this device should be considered a low end device.
      */
-    @CalledByNative
     public static int amountOfPhysicalMemoryKB() {
         if (sAmountOfPhysicalMemoryKB == null) {
             sAmountOfPhysicalMemoryKB = detectAmountOfPhysicalMemoryKB();

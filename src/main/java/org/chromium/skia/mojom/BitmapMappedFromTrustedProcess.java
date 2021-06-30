@@ -13,8 +13,6 @@
 
 package org.chromium.skia.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class BitmapMappedFromTrustedProcess extends org.chromium.mojo.bindings.Struct {
 

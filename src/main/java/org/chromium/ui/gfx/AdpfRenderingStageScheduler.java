@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 @JNINamespace("gfx")
 class AdpfRenderingStageScheduler {
     private static final String TAG = "Adpf";
-    private static final String HINT_SERVICE = "performance_hint";
+    private static final String HINT_SERVICE = "hint";
 
     // TODO(crbug.com/1157620): Remove reflection once SDK is public.
     private static final boolean sEnabled;
@@ -32,10 +32,10 @@ class AdpfRenderingStageScheduler {
         boolean enabled = false;
         if (BuildInfo.isAtLeastS()) {
             try {
-                Class hintManagerClazz = Class.forName("android.os.PerformanceHintManager");
+                Class hintManagerClazz = Class.forName("android.os.HintManager");
                 sHintManagerCreateHintSession =
-                        hintManagerClazz.getMethod("createHintSession", int[].class, long.class);
-                Class hintSessionClazz = Class.forName("android.os.PerformanceHintManager$Session");
+                        hintManagerClazz.getMethod("createHintSession", int[].class);
+                Class hintSessionClazz = Class.forName("android.os.HintManager$Session");
                 sHintSessionUpdateTargetWorkDuration =
                         hintSessionClazz.getMethod("updateTargetWorkDuration", long.class);
                 sHintSessionReportActualWorkDuration =
@@ -43,7 +43,7 @@ class AdpfRenderingStageScheduler {
                 sHintSessionClose = hintSessionClazz.getMethod("close");
                 enabled = true;
             } catch (ReflectiveOperationException e) {
-                Log.d(TAG, "PerformanceHintManager reflection exception", e);
+                Log.d(TAG, "HintManager reflection exception", e);
             }
         }
         sEnabled = enabled;
@@ -62,17 +62,18 @@ class AdpfRenderingStageScheduler {
             Log.d(TAG, "Null hint manager");
             return null;
         }
-        Object hintSession =
-                sHintManagerCreateHintSession.invoke(hintManager, threadIds, targetDurationNanos);
+        Object hintSession = sHintManagerCreateHintSession.invoke(hintManager, threadIds);
         if (hintSession == null) {
             Log.d(TAG, "Null hint session");
             return null;
         }
-        return new AdpfRenderingStageScheduler(hintSession);
+        return new AdpfRenderingStageScheduler(hintSession, targetDurationNanos);
     }
 
-    private AdpfRenderingStageScheduler(Object hintSession) throws ReflectiveOperationException {
+    private AdpfRenderingStageScheduler(Object hintSession, long targetDurationNanos)
+            throws ReflectiveOperationException {
         mHintSession = hintSession;
+        sHintSessionUpdateTargetWorkDuration.invoke(mHintSession, targetDurationNanos);
     }
 
     @CalledByNative

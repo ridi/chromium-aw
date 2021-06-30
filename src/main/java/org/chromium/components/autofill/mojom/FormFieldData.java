@@ -13,8 +13,6 @@
 
 package org.chromium.autofill.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
 
@@ -24,12 +22,6 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
 
     public static final class CheckStatus {
         private static final boolean IS_EXTENSIBLE = false;
-        @IntDef({
-
-            CheckStatus.NOT_CHECKABLE,
-            CheckStatus.CHECKABLE_BUT_UNCHECKED,
-            CheckStatus.CHECKED})
-        public @interface EnumType {}
 
         public static final int NOT_CHECKABLE = 0;
         public static final int CHECKABLE_BUT_UNCHECKED = 1;
@@ -55,11 +47,6 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
 
     public static final class RoleAttribute {
         private static final boolean IS_EXTENSIBLE = false;
-        @IntDef({
-
-            RoleAttribute.PRESENTATION,
-            RoleAttribute.OTHER})
-        public @interface EnumType {}
 
         public static final int PRESENTATION = 0;
         public static final int OTHER = 1;
@@ -84,20 +71,6 @@ public final class FormFieldData extends org.chromium.mojo.bindings.Struct {
 
     public static final class LabelSource {
         private static final boolean IS_EXTENSIBLE = false;
-        @IntDef({
-
-            LabelSource.UNKNOWN,
-            LabelSource.LABEL_TAG,
-            LabelSource.P_TAG,
-            LabelSource.DIV_TABLE,
-            LabelSource.TD_TAG,
-            LabelSource.DD_TAG,
-            LabelSource.LI_TAG,
-            LabelSource.PLACE_HOLDER,
-            LabelSource.ARIA_LABEL,
-            LabelSource.COMBINED,
-            LabelSource.VALUE})
-        public @interface EnumType {}
 
         public static final int UNKNOWN = 0;
         public static final int LABEL_TAG = 1;

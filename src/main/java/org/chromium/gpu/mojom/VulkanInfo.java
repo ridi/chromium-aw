@@ -13,8 +13,6 @@
 
 package org.chromium.gpu.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class VulkanInfo extends org.chromium.mojo.bindings.Struct {
 

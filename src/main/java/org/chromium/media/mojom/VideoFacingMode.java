@@ -13,16 +13,8 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class VideoFacingMode {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        VideoFacingMode.NONE,
-        VideoFacingMode.USER,
-        VideoFacingMode.ENVIRONMENT})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int USER = 1;

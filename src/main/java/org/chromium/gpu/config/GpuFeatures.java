@@ -42,9 +42,6 @@ public final class GpuFeatures {
     // android Tv devices do not support more than 1 images.
     public static final String LIMIT_A_IMAGE_READER_MAX_SIZE_TO_ONE = "LimitAImageReaderMaxSizeToOne";
 
-    // Increase number of buffers and pipeline depth for high frame rate devices.
-    public static final String INCREASE_BUFFER_COUNT_FOR_HIGH_FRAME_RATE = "IncreaseBufferCountForHighFrameRate";
-
     // Enable GPU Rasterization by default. This can still be overridden by
     // --enable-gpu-rasterization or --disable-gpu-rasterization.
     // DefaultEnableGpuRasterization has launched on Mac, Windows, ChromeOS, and
@@ -102,9 +99,6 @@ public final class GpuFeatures {
 
     // Enable persistent storage of VkPipelineCache data.
     public static final String ENABLE_VK_PIPELINE_CACHE = "EnableVkPipelineCache";
-
-    // Enable Skia reduceOpsTaskSplitting to reduce render passes.
-    public static final String REDUCE_OPS_TASK_SPLITTING = "ReduceOpsTaskSplitting";
 
     // Prevent instantiation.
     private GpuFeatures() {}

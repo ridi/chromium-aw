@@ -13,8 +13,6 @@
 
 package org.chromium.shape_detection.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface FaceDetection extends org.chromium.mojo.bindings.Interface {
 

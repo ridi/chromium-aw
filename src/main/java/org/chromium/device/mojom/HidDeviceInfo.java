@@ -13,8 +13,6 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class HidDeviceInfo extends org.chromium.mojo.bindings.Struct {
 

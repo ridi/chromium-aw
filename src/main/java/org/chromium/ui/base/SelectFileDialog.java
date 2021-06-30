@@ -23,12 +23,12 @@ import android.webkit.MimeTypeMap;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContextCompat;
 
 import org.chromium.android_webview.R;
 import org.chromium.base.ContentUriUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.PathUtils;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -638,19 +638,6 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
         return photoFile;
     }
 
-    private static boolean isUnderAppDir(String path, Context context) {
-        File file = new File(path);
-        File dataDir = ContextCompat.getDataDir(context);
-
-        try {
-            String pathCanonical = file.getCanonicalPath();
-            String dataDirCanonical = dataDir.getCanonicalPath();
-            return pathCanonical.startsWith(dataDirCanonical);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     // WindowAndroid.IntentCallback:
 
     /**
@@ -683,19 +670,12 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
             // http://crbug.com/423338.
             String path = ContentResolver.SCHEME_FILE.equals(mCameraOutputUri.getScheme())
                     ? mCameraOutputUri.getPath() : mCameraOutputUri.toString();
-
-            if (!isUnderAppDir(
-                        mCameraOutputUri.getSchemeSpecificPart(), window.getApplicationContext())) {
-                onFileSelected(
-                        mNativeSelectFileDialog, path, mCameraOutputUri.getLastPathSegment());
-                // Broadcast to the media scanner that there's a new photo on the device so it will
-                // show up right away in the gallery (rather than waiting until the next time the
-                // media scanner runs).
-                window.sendBroadcast(
-                        new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, mCameraOutputUri));
-            } else {
-                onFileNotSelected();
-            }
+            onFileSelected(mNativeSelectFileDialog, path, mCameraOutputUri.getLastPathSegment());
+            // Broadcast to the media scanner that there's a new photo on the device so it will
+            // show up right away in the gallery (rather than waiting until the next time the media
+            // scanner runs).
+            window.sendBroadcast(new Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, mCameraOutputUri));
             return;
         }
 
@@ -913,7 +893,17 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
 
         @Override
         public Boolean doInBackground() {
-            return !isUnderAppDir(mFilePath, mContext);
+            File file = new File(mFilePath);
+            File dataDir = new File(PathUtils.getDataDirectory());
+            try {
+                // Don't allow files under private data dir to be uploaded.
+                if (!file.getCanonicalPath().startsWith(dataDir.getCanonicalPath())) {
+                    return true;
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Unable to get canonical file path", e);
+            }
+            return false;
         }
 
         @Override
@@ -949,18 +939,14 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
                     // device was observed to return a file:// URI instead, so convert if necessary.
                     // See https://crbug.com/752834 for context.
                     if (ContentResolver.SCHEME_FILE.equals(mUris[i].getScheme())) {
-                        if (isUnderAppDir(mUris[i].getSchemeSpecificPart(), mContext)) {
-                            return null;
-                        }
                         mFilePaths[i] = mUris[i].getSchemeSpecificPart();
                     } else {
                         mFilePaths[i] = mUris[i].toString();
                     }
-
                     displayNames[i] = ContentUriUtils.getDisplayName(
                             mUris[i], mContext, MediaStore.MediaColumns.DISPLAY_NAME);
                 }
-            } catch (SecurityException e) {
+            }  catch (SecurityException e) {
                 // Some third party apps will present themselves as being able
                 // to handle the ACTION_GET_CONTENT intent but then declare themselves
                 // as exported=false (or more often omit the exported keyword in
@@ -1100,18 +1086,20 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback, PhotoPick
                 int column = cursor.getColumnIndex(filePathColumn[0]);
                 if (column != -1) {
                     String mimeType = cursor.getString(column);
-                    if (mimeType.startsWith("image/")) {
-                        mediaType = mediaPickerWasUsed
-                                ? FileSelectedAction.MEDIA_PICKER_IMAGE_BY_MIME_TYPE
-                                : FileSelectedAction.EXTERNAL_PICKER_IMAGE_BY_MIME_TYPE;
-                    } else if (mimeType.startsWith("video/")) {
-                        mediaType = mediaPickerWasUsed
-                                ? FileSelectedAction.MEDIA_PICKER_VIDEO_BY_MIME_TYPE
-                                : FileSelectedAction.EXTERNAL_PICKER_VIDEO_BY_MIME_TYPE;
-                    } else {
-                        mediaType = mediaPickerWasUsed
-                                ? FileSelectedAction.MEDIA_PICKER_OTHER_BY_MIME_TYPE
-                                : FileSelectedAction.EXTERNAL_PICKER_OTHER_BY_MIME_TYPE;
+                    if (mimeType != null) {
+                        if (mimeType.startsWith("image/")) {
+                            mediaType = mediaPickerWasUsed
+                                    ? FileSelectedAction.MEDIA_PICKER_IMAGE_BY_MIME_TYPE
+                                    : FileSelectedAction.EXTERNAL_PICKER_IMAGE_BY_MIME_TYPE;
+                        } else if (mimeType.startsWith("video/")) {
+                            mediaType = mediaPickerWasUsed
+                                    ? FileSelectedAction.MEDIA_PICKER_VIDEO_BY_MIME_TYPE
+                                    : FileSelectedAction.EXTERNAL_PICKER_VIDEO_BY_MIME_TYPE;
+                        } else {
+                            mediaType = mediaPickerWasUsed
+                                    ? FileSelectedAction.MEDIA_PICKER_OTHER_BY_MIME_TYPE
+                                    : FileSelectedAction.EXTERNAL_PICKER_OTHER_BY_MIME_TYPE;
+                        }
                     }
                 }
             }

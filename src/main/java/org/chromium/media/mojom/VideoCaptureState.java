@@ -13,19 +13,8 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class VideoCaptureState {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        VideoCaptureState.STARTED,
-        VideoCaptureState.PAUSED,
-        VideoCaptureState.RESUMED,
-        VideoCaptureState.STOPPED,
-        VideoCaptureState.FAILED,
-        VideoCaptureState.ENDED})
-    public @interface EnumType {}
 
     public static final int STARTED = 0;
     public static final int PAUSED = 1;

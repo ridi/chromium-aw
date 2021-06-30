@@ -13,8 +13,6 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class ReadyBuffer extends org.chromium.mojo.bindings.Struct {
 

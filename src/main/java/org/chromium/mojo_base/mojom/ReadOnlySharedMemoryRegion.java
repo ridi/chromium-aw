@@ -13,8 +13,6 @@
 
 package org.chromium.mojo_base.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class ReadOnlySharedMemoryRegion extends org.chromium.mojo.bindings.Struct {
 

@@ -13,20 +13,8 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class FocusType {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        FocusType.NONE,
-        FocusType.FORWARD,
-        FocusType.BACKWARD,
-        FocusType.SPATIAL_NAVIGATION,
-        FocusType.MOUSE,
-        FocusType.ACCESS_KEY,
-        FocusType.PAGE})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int FORWARD = 1;

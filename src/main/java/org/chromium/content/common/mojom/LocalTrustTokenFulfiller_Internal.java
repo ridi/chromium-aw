@@ -13,8 +13,6 @@
 
 package org.chromium.content.mojom;
 
-import androidx.annotation.IntDef;
-
 
 class LocalTrustTokenFulfiller_Internal {
 

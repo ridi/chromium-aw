@@ -13,35 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class RequestDestination {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        RequestDestination.EMPTY,
-        RequestDestination.AUDIO,
-        RequestDestination.AUDIO_WORKLET,
-        RequestDestination.DOCUMENT,
-        RequestDestination.EMBED,
-        RequestDestination.FONT,
-        RequestDestination.FRAME,
-        RequestDestination.IFRAME,
-        RequestDestination.IMAGE,
-        RequestDestination.MANIFEST,
-        RequestDestination.OBJECT,
-        RequestDestination.PAINT_WORKLET,
-        RequestDestination.REPORT,
-        RequestDestination.SCRIPT,
-        RequestDestination.SERVICE_WORKER,
-        RequestDestination.SHARED_WORKER,
-        RequestDestination.STYLE,
-        RequestDestination.TRACK,
-        RequestDestination.VIDEO,
-        RequestDestination.WEB_BUNDLE,
-        RequestDestination.WORKER,
-        RequestDestination.XSLT})
-    public @interface EnumType {}
 
     public static final int EMPTY = 0;
     public static final int AUDIO = 1;

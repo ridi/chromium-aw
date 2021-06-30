@@ -6,7 +6,6 @@ package org.chromium.content_public.browser;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStructure;
 import android.view.accessibility.AccessibilityNodeProvider;
@@ -125,10 +124,4 @@ public interface WebContentsAccessibility {
      * Called when the a11y focus gets cleared on the autofill popup.
      */
     void onAutofillPopupAccessibilityFocusCleared();
-
-    /**
-     * Called directly from A {@link View} in the absence of a WebView and renderer.
-     * @return Whether the hover event was consumed.
-     */
-    boolean onHoverEventNoRenderer(MotionEvent event);
 }

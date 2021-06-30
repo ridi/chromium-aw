@@ -13,8 +13,6 @@
 
 package org.chromium.payments.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class PaymentAddress extends org.chromium.mojo.bindings.Struct {
 

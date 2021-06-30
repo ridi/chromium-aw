@@ -8,7 +8,6 @@ import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
-import org.chromium.content_public.browser.WebContents;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
@@ -25,16 +24,6 @@ final class AutofillProviderJni implements AutofillProvider.Natives {
       testInstance = instance;
     }
   };
-
-  @Override
-  public long init(AutofillProvider caller, WebContents webContents) {
-    return (long)GEN_JNI.org_chromium_components_autofill_AutofillProvider_init(caller, webContents);
-  }
-
-  @Override
-  public void detachFromJavaAutofillProvider(long nativeAutofillProviderAndroid) {
-    GEN_JNI.org_chromium_components_autofill_AutofillProvider_detachFromJavaAutofillProvider(nativeAutofillProviderAndroid);
-  }
 
   @Override
   public void onAutofillAvailable(long nativeAutofillProviderAndroid, AutofillProvider caller,

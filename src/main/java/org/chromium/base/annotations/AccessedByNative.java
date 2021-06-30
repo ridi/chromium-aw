@@ -10,8 +10,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Applied to fields that are accessed from native via JNI. Causes R8 to not
- * rename them.
+ *  @AccessedByNative is used to ensure proguard will keep this field, since it's
+ *  only accessed by native.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)

@@ -10,14 +10,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Classes with native methods (contain @NativeMethods interfaces) that are used within renderer
- * processes must be annotated with with @MainDex in order for their native methods work.
+ * An annotation that signals that a class should be kept in the main dex file.
  *
- * Applies only for Chrome/ChromeModern (not needed for Monochrome+).
- *
- * For Cronet builds, which use a default_min_sdk_version of less than 21, this annotation also
- * causes classes to appear in the main dex file (for "Legacy multidex").
+ * This generally means it's used by child processes (renderer/utility), which can't load secondary
+ * dexes on K and below.
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS)
 public @interface MainDex {}

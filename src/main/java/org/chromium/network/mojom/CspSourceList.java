@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
 

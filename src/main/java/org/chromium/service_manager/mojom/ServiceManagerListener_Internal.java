@@ -13,8 +13,6 @@
 
 package org.chromium.service_manager.mojom;
 
-import androidx.annotation.IntDef;
-
 
 class ServiceManagerListener_Internal {
 

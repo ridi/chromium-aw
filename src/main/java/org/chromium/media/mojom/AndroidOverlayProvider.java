@@ -13,8 +13,6 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface AndroidOverlayProvider extends org.chromium.mojo.bindings.Interface {
 

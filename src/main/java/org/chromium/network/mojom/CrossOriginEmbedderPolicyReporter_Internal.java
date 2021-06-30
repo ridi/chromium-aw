@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 class CrossOriginEmbedderPolicyReporter_Internal {
 

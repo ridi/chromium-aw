@@ -13,20 +13,8 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class ScanResult {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        ScanResult.SUCCESS,
-        ScanResult.PARTIAL,
-        ScanResult.INSUFFICIENT,
-        ScanResult.SENSOR_DIRTY,
-        ScanResult.TOO_SLOW,
-        ScanResult.TOO_FAST,
-        ScanResult.IMMOBILE})
-    public @interface EnumType {}
 
     public static final int SUCCESS = 0;
     public static final int PARTIAL = 1;

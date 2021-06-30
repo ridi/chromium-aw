@@ -128,9 +128,9 @@ public interface SelectionClient {
     void cancelAllRequests();
 
     /**
-     * Returns a SelectionEventProcessor associated with the SelectionClient or null.
+     * Returns a SelectionMetricsLogger associated with the SelectionClient or null.
      */
-    default SelectionEventProcessor getSelectionEventProcessor() {
+    default SelectionMetricsLogger getSelectionMetricsLogger() {
         return null;
     }
 

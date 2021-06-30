@@ -13,8 +13,6 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class HidUsageAndPage extends org.chromium.mojo.bindings.Struct {
 

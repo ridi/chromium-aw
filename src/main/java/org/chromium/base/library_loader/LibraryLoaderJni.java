@@ -1,6 +1,7 @@
 package org.chromium.base.library_loader;
 
 import java.lang.Override;
+import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
@@ -38,6 +39,11 @@ final class LibraryLoaderJni implements LibraryLoader.Natives {
   @Override
   public void recordRendererLibraryLoadTime(long libraryLoadTime) {
     GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_recordRendererLibraryLoadTime(libraryLoadTime);
+  }
+
+  @Override
+  public String getVersionNumber() {
+    return (String)GEN_JNI.org_chromium_base_library_1loader_LibraryLoader_getVersionNumber();
   }
 
   public static LibraryLoader.Natives get() {

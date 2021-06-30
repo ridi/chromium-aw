@@ -13,8 +13,6 @@
 
 package org.chromium.mojo.bindings.interfacecontrol;
 
-import androidx.annotation.IntDef;
-
 
 public final class RunOutput extends org.chromium.mojo.bindings.Union {
 

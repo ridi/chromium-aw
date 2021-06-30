@@ -13,17 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class CrossOriginOpenerPolicyValue {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        CrossOriginOpenerPolicyValue.SAME_ORIGIN,
-        CrossOriginOpenerPolicyValue.SAME_ORIGIN_ALLOW_POPUPS,
-        CrossOriginOpenerPolicyValue.UNSAFE_NONE,
-        CrossOriginOpenerPolicyValue.SAME_ORIGIN_PLUS_COEP})
-    public @interface EnumType {}
 
     public static final int SAME_ORIGIN = 0;
     public static final int SAME_ORIGIN_ALLOW_POPUPS = 1;

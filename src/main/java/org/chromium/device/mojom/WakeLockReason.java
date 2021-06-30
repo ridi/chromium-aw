@@ -13,16 +13,8 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class WakeLockReason {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        WakeLockReason.AUDIO_PLAYBACK,
-        WakeLockReason.VIDEO_PLAYBACK,
-        WakeLockReason.OTHER})
-    public @interface EnumType {}
 
     public static final int AUDIO_PLAYBACK = 0;
     public static final int VIDEO_PLAYBACK = 1;

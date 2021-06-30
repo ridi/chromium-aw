@@ -13,8 +13,6 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface RemoteObject extends org.chromium.mojo.bindings.Interface {
 

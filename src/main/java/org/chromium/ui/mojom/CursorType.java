@@ -13,68 +13,8 @@
 
 package org.chromium.ui.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class CursorType {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        CursorType.NULL,
-        CursorType.POINTER,
-        CursorType.CROSS,
-        CursorType.HAND,
-        CursorType.I_BEAM,
-        CursorType.WAIT,
-        CursorType.HELP,
-        CursorType.EAST_RESIZE,
-        CursorType.NORTH_RESIZE,
-        CursorType.NORTH_EAST_RESIZE,
-        CursorType.NORTH_WEST_RESIZE,
-        CursorType.SOUTH_RESIZE,
-        CursorType.SOUTH_EAST_RESIZE,
-        CursorType.SOUTH_WEST_RESIZE,
-        CursorType.WEST_RESIZE,
-        CursorType.NORTH_SOUTH_RESIZE,
-        CursorType.EAST_WEST_RESIZE,
-        CursorType.NORTH_EAST_SOUTH_WEST_RESIZE,
-        CursorType.NORTH_WEST_SOUTH_EAST_RESIZE,
-        CursorType.COLUMN_RESIZE,
-        CursorType.ROW_RESIZE,
-        CursorType.MIDDLE_PANNING,
-        CursorType.EAST_PANNING,
-        CursorType.NORTH_PANNING,
-        CursorType.NORTH_EAST_PANNING,
-        CursorType.NORTH_WEST_PANNING,
-        CursorType.SOUTH_PANNING,
-        CursorType.SOUTH_EAST_PANNING,
-        CursorType.SOUTH_WEST_PANNING,
-        CursorType.WEST_PANNING,
-        CursorType.MOVE,
-        CursorType.VERTICAL_TEXT,
-        CursorType.CELL,
-        CursorType.CONTEXT_MENU,
-        CursorType.ALIAS,
-        CursorType.PROGRESS,
-        CursorType.NO_DROP,
-        CursorType.COPY,
-        CursorType.NONE,
-        CursorType.NOT_ALLOWED,
-        CursorType.ZOOM_IN,
-        CursorType.ZOOM_OUT,
-        CursorType.GRAB,
-        CursorType.GRABBING,
-        CursorType.MIDDLE_PANNING_VERTICAL,
-        CursorType.MIDDLE_PANNING_HORIZONTAL,
-        CursorType.CUSTOM,
-        CursorType.DND_NONE,
-        CursorType.DND_MOVE,
-        CursorType.DND_COPY,
-        CursorType.DND_LINK,
-        CursorType.EAST_WEST_NO_RESIZE,
-        CursorType.NORTH_SOUTH_NO_RESIZE,
-        CursorType.NORTH_EAST_SOUTH_WEST_NO_RESIZE,
-        CursorType.NORTH_WEST_SOUTH_EAST_NO_RESIZE})
-    public @interface EnumType {}
 
     public static final int NULL = -1;
     public static final int POINTER = 0;

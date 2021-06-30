@@ -13,8 +13,6 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface BluetoothSystemClient extends org.chromium.mojo.bindings.Interface {
 

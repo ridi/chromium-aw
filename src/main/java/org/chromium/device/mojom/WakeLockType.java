@@ -13,16 +13,8 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class WakeLockType {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        WakeLockType.PREVENT_APP_SUSPENSION,
-        WakeLockType.PREVENT_DISPLAY_SLEEP,
-        WakeLockType.PREVENT_DISPLAY_SLEEP_ALLOW_DIMMING})
-    public @interface EnumType {}
 
     public static final int PREVENT_APP_SUSPENSION = 0;
     public static final int PREVENT_DISPLAY_SLEEP = 1;

@@ -13,26 +13,8 @@
 
 package org.chromium.ui.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class LatencyComponentType {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        LatencyComponentType.INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_FIRST_SCROLL_UPDATE_ORIGINAL_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_UI_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_RENDERER_MAIN_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_RENDERING_SCHEDULED_MAIN_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_RENDERING_SCHEDULED_IMPL_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_SCROLL_UPDATE_LAST_EVENT_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_RENDERER_SWAP_COMPONENT,
-        LatencyComponentType.DISPLAY_COMPOSITOR_RECEIVED_FRAME_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT,
-        LatencyComponentType.INPUT_EVENT_LATENCY_FRAME_SWAP_COMPONENT})
-    public @interface EnumType {}
 
     public static final int INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT = 0;
     public static final int INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT = 1;

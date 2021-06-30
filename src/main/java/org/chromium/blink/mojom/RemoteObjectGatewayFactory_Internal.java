@@ -13,8 +13,6 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 
 class RemoteObjectGatewayFactory_Internal {
 

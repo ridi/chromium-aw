@@ -13,71 +13,8 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class PermissionsPolicyFeature {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        PermissionsPolicyFeature.NOT_FOUND,
-        PermissionsPolicyFeature.AUTOPLAY,
-        PermissionsPolicyFeature.CAMERA,
-        PermissionsPolicyFeature.ENCRYPTED_MEDIA,
-        PermissionsPolicyFeature.FULLSCREEN,
-        PermissionsPolicyFeature.GEOLOCATION,
-        PermissionsPolicyFeature.MICROPHONE,
-        PermissionsPolicyFeature.MIDI_FEATURE,
-        PermissionsPolicyFeature.PAYMENT,
-        PermissionsPolicyFeature.DOCUMENT_DOMAIN,
-        PermissionsPolicyFeature.SYNC_XHR,
-        PermissionsPolicyFeature.USB,
-        PermissionsPolicyFeature.ACCELEROMETER,
-        PermissionsPolicyFeature.AMBIENT_LIGHT_SENSOR,
-        PermissionsPolicyFeature.GYROSCOPE,
-        PermissionsPolicyFeature.MAGNETOMETER,
-        PermissionsPolicyFeature.PICTURE_IN_PICTURE,
-        PermissionsPolicyFeature.VERTICAL_SCROLL,
-        PermissionsPolicyFeature.SCREEN_WAKE_LOCK,
-        PermissionsPolicyFeature.FROBULATE,
-        PermissionsPolicyFeature.SERIAL,
-        PermissionsPolicyFeature.HID,
-        PermissionsPolicyFeature.IDLE_DETECTION,
-        PermissionsPolicyFeature.EXECUTION_WHILE_OUT_OF_VIEWPORT,
-        PermissionsPolicyFeature.EXECUTION_WHILE_NOT_RENDERED,
-        PermissionsPolicyFeature.FOCUS_WITHOUT_USER_ACTIVATION,
-        PermissionsPolicyFeature.CLIENT_HINT_DPR,
-        PermissionsPolicyFeature.CLIENT_HINT_DEVICE_MEMORY,
-        PermissionsPolicyFeature.CLIENT_HINT_DOWNLINK,
-        PermissionsPolicyFeature.CLIENT_HINT_ECT,
-        PermissionsPolicyFeature.CLIENT_HINT_LANG,
-        PermissionsPolicyFeature.CLIENT_HINT_RTT,
-        PermissionsPolicyFeature.CLIENT_HINT_UA,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_ARCH,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_MODEL,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_PLATFORM,
-        PermissionsPolicyFeature.CLIENT_HINT_VIEWPORT_WIDTH,
-        PermissionsPolicyFeature.CLIENT_HINT_WIDTH,
-        PermissionsPolicyFeature.WEB_XR,
-        PermissionsPolicyFeature.PUBLIC_KEY_CREDENTIALS_GET,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_MOBILE,
-        PermissionsPolicyFeature.STORAGE_ACCESS_API,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_FULL_VERSION,
-        PermissionsPolicyFeature.TRUST_TOKEN_REDEMPTION,
-        PermissionsPolicyFeature.ATTRIBUTION_REPORTING,
-        PermissionsPolicyFeature.CLIENT_HINT_UA_PLATFORM_VERSION,
-        PermissionsPolicyFeature.CROSS_ORIGIN_ISOLATED,
-        PermissionsPolicyFeature.CLIPBOARD_READ,
-        PermissionsPolicyFeature.CLIPBOARD_WRITE,
-        PermissionsPolicyFeature.WEB_SHARE,
-        PermissionsPolicyFeature.GAMEPAD,
-        PermissionsPolicyFeature.OTP_CREDENTIALS,
-        PermissionsPolicyFeature.DISPLAY_CAPTURE,
-        PermissionsPolicyFeature.INTEREST_COHORT,
-        PermissionsPolicyFeature.SHARED_AUTOFILL,
-        PermissionsPolicyFeature.DIRECT_SOCKETS,
-        PermissionsPolicyFeature.CLIENT_HINT_PREFERS_COLOR_SCHEME,
-        PermissionsPolicyFeature.WINDOW_PLACEMENT})
-    public @interface EnumType {}
 
     public static final int NOT_FOUND = 0;
     public static final int AUTOPLAY = 1;
@@ -123,7 +60,7 @@ public final class PermissionsPolicyFeature {
     public static final int STORAGE_ACCESS_API = 70;
     public static final int CLIENT_HINT_UA_FULL_VERSION = 71;
     public static final int TRUST_TOKEN_REDEMPTION = 72;
-    public static final int ATTRIBUTION_REPORTING = 73;
+    public static final int CONVERSION_MEASUREMENT = 73;
     public static final int CLIENT_HINT_UA_PLATFORM_VERSION = 74;
     public static final int CROSS_ORIGIN_ISOLATED = 75;
     public static final int CLIPBOARD_READ = 76;
@@ -133,12 +70,8 @@ public final class PermissionsPolicyFeature {
     public static final int OTP_CREDENTIALS = 80;
     public static final int DISPLAY_CAPTURE = 81;
     public static final int INTEREST_COHORT = 82;
-    public static final int SHARED_AUTOFILL = 83;
-    public static final int DIRECT_SOCKETS = 84;
-    public static final int CLIENT_HINT_PREFERS_COLOR_SCHEME = 85;
-    public static final int WINDOW_PLACEMENT = 86;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 86;
+    public static final int MAX_VALUE = 82;
 
     public static boolean isKnownValue(int value) {
         switch (value) {
@@ -196,10 +129,6 @@ public final class PermissionsPolicyFeature {
             case 80:
             case 81:
             case 82:
-            case 83:
-            case 84:
-            case 85:
-            case 86:
                 return true;
         }
         return false;

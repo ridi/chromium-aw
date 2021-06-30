@@ -13,39 +13,8 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class VideoCaptureFrameDropReason {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        VideoCaptureFrameDropReason.NONE,
-        VideoCaptureFrameDropReason.DEVICE_CLIENT_FRAME_HAS_INVALID_FORMAT,
-        VideoCaptureFrameDropReason.DEVICE_CLIENT_LIBYUV_CONVERT_TO_I420_FAILED,
-        VideoCaptureFrameDropReason.V4L2_BUFFER_ERROR_FLAG_WAS_SET,
-        VideoCaptureFrameDropReason.V4L2_INVALID_NUMBER_OF_BYTES_IN_BUFFER,
-        VideoCaptureFrameDropReason.ANDROID_THROTTLING,
-        VideoCaptureFrameDropReason.ANDROID_GET_BYTE_ARRAY_ELEMENTS_FAILED,
-        VideoCaptureFrameDropReason.ANDROID_API1_UNEXPECTED_DATA_LENGTH,
-        VideoCaptureFrameDropReason.ANDROID_API2_ACQUIRED_IMAGE_IS_NULL,
-        VideoCaptureFrameDropReason.WIN_DIRECT_SHOW_UNEXPECTED_SAMPLE_LENGTH,
-        VideoCaptureFrameDropReason.WIN_DIRECT_SHOW_FAILED_TO_GET_MEMORY_POINTER_FROM_MEDIA_SAMPLE,
-        VideoCaptureFrameDropReason.WIN_MEDIA_FOUNDATION_RECEIVED_SAMPLE_IS_NULL,
-        VideoCaptureFrameDropReason.WIN_MEDIA_FOUNDATION_LOCKING_BUFFER_DELIEVERED_NULLPTR,
-        VideoCaptureFrameDropReason.WIN_MEDIA_FOUNDATION_GET_BUFFER_BY_INDEX_RETURNED_NULL,
-        VideoCaptureFrameDropReason.BUFFER_POOL_MAX_BUFFER_COUNT_EXCEEDED,
-        VideoCaptureFrameDropReason.BUFFER_POOL_BUFFER_ALLOCATION_FAILED,
-        VideoCaptureFrameDropReason.VIDEO_CAPTURE_IMPL_NOT_IN_STARTED_STATE,
-        VideoCaptureFrameDropReason.VIDEO_CAPTURE_IMPL_FAILED_TO_WRAP_DATA_AS_MEDIA_VIDEO_FRAME,
-        VideoCaptureFrameDropReason.VIDEO_TRACK_ADAPTER_HAS_NO_RESOLUTION_ADAPTERS,
-        VideoCaptureFrameDropReason.RESOLUTION_ADAPTER_FRAME_IS_NOT_VALID,
-        VideoCaptureFrameDropReason.RESOLUTION_ADAPTER_WRAPPING_FRAME_FOR_CROPPING_FAILED,
-        VideoCaptureFrameDropReason.RESOLUTION_ADAPTER_TIMESTAMP_TOO_CLOSE_TO_PREVIOUS,
-        VideoCaptureFrameDropReason.RESOLUTION_ADAPTER_FRAME_RATE_IS_HIGHER_THAN_REQUESTED,
-        VideoCaptureFrameDropReason.RESOLUTION_ADAPTER_HAS_NO_CALLBACKS,
-        VideoCaptureFrameDropReason.VIDEO_TRACK_FRAME_DELIVERER_NOT_ENABLED_REPLACING_WITH_BLACK_FRAME,
-        VideoCaptureFrameDropReason.RENDERER_SINK_FRAME_DELIVERER_IS_NOT_STARTED})
-    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int DEVICE_CLIENT_FRAME_HAS_INVALID_FORMAT = 1;

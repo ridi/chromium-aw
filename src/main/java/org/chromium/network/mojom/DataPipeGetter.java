@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface DataPipeGetter extends org.chromium.mojo.bindings.Interface {
 

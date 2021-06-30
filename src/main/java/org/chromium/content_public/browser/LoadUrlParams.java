@@ -72,15 +72,6 @@ public class LoadUrlParams {
      * @param url the url to be loaded
      * @param transitionType the PageTransitionType constant corresponding to the load
      */
-    public LoadUrlParams(GURL url, int transitionType) {
-        this(url.getSpec(), transitionType);
-    }
-
-    /**
-     * Creates an instance with the given page transition type.
-     * @param url the url to be loaded
-     * @param transitionType the PageTransitionType constant corresponding to the load
-     */
     public LoadUrlParams(String url, int transitionType) {
         mUrl = url;
         mTransitionType = transitionType;
@@ -287,7 +278,6 @@ public class LoadUrlParams {
      */
     public void setExtraHeaders(Map<String, String> extraHeaders) {
         mExtraHeaders = extraHeaders;
-        verifyHeaders();
     }
 
     /**
@@ -340,16 +330,6 @@ public class LoadUrlParams {
      */
     public void setVerbatimHeaders(String headers) {
         mVerbatimHeaders = headers;
-        verifyHeaders();
-    }
-
-    private void verifyHeaders() {
-        // TODO(https://crbug.com/1199393): Merge extra and verbatim headers internally, and only
-        // expose one way to get headers, so users of this class don't miss headers.
-        if (mExtraHeaders != null && mVerbatimHeaders != null) {
-            // If both header types are set, ensure they're the same.
-            assert mVerbatimHeaders.equalsIgnoreCase(getExtraHeadersString());
-        }
     }
 
     /**
@@ -376,12 +356,12 @@ public class LoadUrlParams {
     }
 
     /**
-     * Set the post data of this load, and if non-null, sets the load type to HTTP_POST.
+     * Set the post data of this load. This field is ignored unless load type is
+     * LoadURLType.HTTP_POST.
      * @param postData Post data for this http post load.
      */
     public void setPostData(ResourceRequestBody postData) {
         mPostData = postData;
-        if (postData != null) setLoadType(LoadURLType.HTTP_POST);
     }
 
     /**
@@ -489,8 +469,7 @@ public class LoadUrlParams {
 
     /**
      * @param intentReceivedTimestamp the timestamp at which Chrome received the intent that
-     *                                triggered this URL load, as returned by
-     *                                SystemClock.uptimeMillis.
+     *                                triggered this URL load, as returned by System.currentMillis.
      */
     public void setIntentReceivedTimestamp(long intentReceivedTimestamp) {
         mIntentReceivedTimestamp = intentReceivedTimestamp;
@@ -505,7 +484,7 @@ public class LoadUrlParams {
 
     /**
      * @param inputStartTimestamp the timestamp of the event in the location bar that triggered
-     *                            this URL load, as returned by SystemClock.uptimeMillis.
+     *                            this URL load, as returned by System.currentMillis.
      */
     public void setInputStartTimestamp(long inputStartTimestamp) {
         mInputStartTimestamp = inputStartTimestamp;

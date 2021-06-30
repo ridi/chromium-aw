@@ -13,35 +13,8 @@
 
 package org.chromium.blink.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class AuthenticatorStatus {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        AuthenticatorStatus.SUCCESS,
-        AuthenticatorStatus.PENDING_REQUEST,
-        AuthenticatorStatus.NOT_ALLOWED_ERROR,
-        AuthenticatorStatus.INVALID_DOMAIN,
-        AuthenticatorStatus.INVALID_ICON_URL,
-        AuthenticatorStatus.CREDENTIAL_EXCLUDED,
-        AuthenticatorStatus.CREDENTIAL_NOT_RECOGNIZED,
-        AuthenticatorStatus.NOT_IMPLEMENTED,
-        AuthenticatorStatus.NOT_FOCUSED,
-        AuthenticatorStatus.RESIDENT_CREDENTIALS_UNSUPPORTED,
-        AuthenticatorStatus.USER_VERIFICATION_UNSUPPORTED,
-        AuthenticatorStatus.ALGORITHM_UNSUPPORTED,
-        AuthenticatorStatus.EMPTY_ALLOW_CREDENTIALS,
-        AuthenticatorStatus.ANDROID_NOT_SUPPORTED_ERROR,
-        AuthenticatorStatus.PROTECTION_POLICY_INCONSISTENT,
-        AuthenticatorStatus.ABORT_ERROR,
-        AuthenticatorStatus.OPAQUE_DOMAIN,
-        AuthenticatorStatus.INVALID_PROTOCOL,
-        AuthenticatorStatus.BAD_RELYING_PARTY_ID,
-        AuthenticatorStatus.CANNOT_READ_AND_WRITE_LARGE_BLOB,
-        AuthenticatorStatus.INVALID_ALLOW_CREDENTIALS_FOR_LARGE_BLOB,
-        AuthenticatorStatus.UNKNOWN_ERROR})
-    public @interface EnumType {}
 
     public static final int SUCCESS = 0;
     public static final int PENDING_REQUEST = 1;

@@ -11,6 +11,7 @@ import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
+import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.components.navigation_interception.InterceptNavigationDelegate;
 import org.chromium.content_public.browser.WebContents;
 
@@ -78,13 +79,9 @@ final class AwContentsJni implements AwContents.Natives {
   public void setJavaPeers(long nativeAwContents, AwContents caller, AwContents awContents,
       AwWebContentsDelegate webViewWebContentsDelegate, AwContentsClientBridge contentsClientBridge,
       AwContentsIoThreadClient ioThreadClient,
-      InterceptNavigationDelegate navigationInterceptionDelegate) {
-    GEN_JNI.org_chromium_android_1webview_AwContents_setJavaPeers(nativeAwContents, caller, awContents, webViewWebContentsDelegate, contentsClientBridge, ioThreadClient, navigationInterceptionDelegate);
-  }
-
-  @Override
-  public void initializeAndroidAutofill(long nativeAwContents) {
-    GEN_JNI.org_chromium_android_1webview_AwContents_initializeAndroidAutofill(nativeAwContents);
+      InterceptNavigationDelegate navigationInterceptionDelegate,
+      AutofillProvider autofillProvider) {
+    GEN_JNI.org_chromium_android_1webview_AwContents_setJavaPeers(nativeAwContents, caller, awContents, webViewWebContentsDelegate, contentsClientBridge, ioThreadClient, navigationInterceptionDelegate, autofillProvider);
   }
 
   @Override

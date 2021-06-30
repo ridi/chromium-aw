@@ -13,8 +13,6 @@
 
 package org.chromium.mojo.bindings.interfacecontrol;
 
-import androidx.annotation.IntDef;
-
 
 public final class RunMessageParams extends org.chromium.mojo.bindings.Struct {
 

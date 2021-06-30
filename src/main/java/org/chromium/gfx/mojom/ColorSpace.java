@@ -13,8 +13,6 @@
 
 package org.chromium.gfx.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class ColorSpace extends org.chromium.mojo.bindings.Struct {
 

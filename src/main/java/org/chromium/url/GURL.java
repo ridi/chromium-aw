@@ -248,13 +248,6 @@ public class GURL {
         GURLJni.get().getOrigin(mSpec, mIsValid, mParsed.toNativeParsed(), target);
     }
 
-    /**
-     * See native GURL::DomainIs().
-     */
-    public boolean domainIs(String domain) {
-        return GURLJni.get().domainIs(mSpec, mIsValid, mParsed.toNativeParsed(), domain);
-    }
-
     @Override
     public final int hashCode() {
         return mSpec.hashCode();
@@ -336,11 +329,6 @@ public class GURL {
          * Reconstructs the native GURL for this Java GURL and initializes |target| with its Origin.
          */
         void getOrigin(String spec, boolean isValid, long nativeParsed, GURL target);
-
-        /**
-         * Reconstructs the native GURL for this Java GURL, and calls GURL.DomainIs.
-         */
-        boolean domainIs(String spec, boolean isValid, long nativeParsed, String domain);
 
         /**
          * Reconstructs the native GURL for this Java GURL, returning its native pointer.

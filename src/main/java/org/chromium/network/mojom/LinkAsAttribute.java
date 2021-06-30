@@ -13,18 +13,8 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class LinkAsAttribute {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        LinkAsAttribute.UNSPECIFIED,
-        LinkAsAttribute.FONT,
-        LinkAsAttribute.IMAGE,
-        LinkAsAttribute.SCRIPT,
-        LinkAsAttribute.STYLE_SHEET})
-    public @interface EnumType {}
 
     public static final int UNSPECIFIED = 0;
     public static final int FONT = 1;

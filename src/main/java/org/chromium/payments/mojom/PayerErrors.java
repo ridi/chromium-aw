@@ -13,8 +13,6 @@
 
 package org.chromium.payments.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class PayerErrors extends org.chromium.mojo.bindings.Struct {
 

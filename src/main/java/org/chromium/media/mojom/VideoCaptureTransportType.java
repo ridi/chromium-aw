@@ -13,15 +13,8 @@
 
 package org.chromium.media.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class VideoCaptureTransportType {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        VideoCaptureTransportType.MACOSX_USB_OR_BUILT_IN,
-        VideoCaptureTransportType.OTHER_TRANSPORT})
-    public @interface EnumType {}
 
     public static final int MACOSX_USB_OR_BUILT_IN = 0;
     public static final int OTHER_TRANSPORT = 1;

@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public final class FulfillTrustTokenIssuanceAnswer extends org.chromium.mojo.bindings.Struct {
 
@@ -24,12 +22,6 @@ public final class FulfillTrustTokenIssuanceAnswer extends org.chromium.mojo.bin
 
     public static final class Status {
         private static final boolean IS_EXTENSIBLE = false;
-        @IntDef({
-
-            Status.OK,
-            Status.NOT_FOUND,
-            Status.UNKNOWN_ERROR})
-        public @interface EnumType {}
 
         public static final int OK = 0;
         public static final int NOT_FOUND = 1;

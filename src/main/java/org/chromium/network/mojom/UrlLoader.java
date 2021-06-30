@@ -13,8 +13,6 @@
 
 package org.chromium.network.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface UrlLoader extends org.chromium.mojo.bindings.Interface {
 

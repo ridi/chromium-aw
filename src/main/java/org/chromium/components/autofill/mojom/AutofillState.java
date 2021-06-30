@@ -13,16 +13,8 @@
 
 package org.chromium.autofill.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class AutofillState {
     private static final boolean IS_EXTENSIBLE = false;
-    @IntDef({
-
-        AutofillState.NO_SUGGESTIONS,
-        AutofillState.AUTOFILL_AVAILABLE,
-        AutofillState.AUTOCOMPLETE_AVAILABLE})
-    public @interface EnumType {}
 
     public static final int NO_SUGGESTIONS = 0;
     public static final int AUTOFILL_AVAILABLE = 1;

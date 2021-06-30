@@ -13,16 +13,8 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 public final class HidBusType {
     private static final boolean IS_EXTENSIBLE = true;
-    @IntDef({
-
-        HidBusType.HID_BUS_TYPE_USB,
-        HidBusType.HID_BUS_TYPE_BLUETOOTH,
-        HidBusType.HID_BUS_TYPE_UNKNOWN})
-    public @interface EnumType {}
 
     public static final int HID_BUS_TYPE_USB = 0;
     public static final int HID_BUS_TYPE_BLUETOOTH = 1;

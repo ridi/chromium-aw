@@ -13,8 +13,6 @@
 
 package org.chromium.device.mojom;
 
-import androidx.annotation.IntDef;
-
 
 public interface Nfc extends org.chromium.mojo.bindings.Interface {
 
