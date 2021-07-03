@@ -372,7 +372,7 @@ class WebView(context: Context) : FrameLayout(context) {
     }
 
     companion object {
-        // https://chromium.googlesource.com/chromium/src.git/+/refs/tags/91.0.4472.120/third_party/blink/renderer/platform/runtime_enabled_features.json5
+        // https://chromium.googlesource.com/chromium/src.git/+/refs/tags/92.0.4515.70/third_party/blink/renderer/platform/runtime_enabled_features.json5
         private val COMMAND =
             arrayOf(
                 "", // Just put an empty string or any string.
