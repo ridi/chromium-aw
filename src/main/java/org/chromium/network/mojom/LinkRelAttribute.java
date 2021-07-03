@@ -13,15 +13,23 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class LinkRelAttribute {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        LinkRelAttribute.PRELOAD,
+        LinkRelAttribute.MODULE_PRELOAD})
+    public @interface EnumType {}
 
     public static final int PRELOAD = 0;
+    public static final int MODULE_PRELOAD = 1;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 0;
+    public static final int MAX_VALUE = 1;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 0;
+        return value >= 0 && value <= 1;
     }
 
     public static void validate(int value) {

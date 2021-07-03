@@ -13,6 +13,8 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface WakeLockContext extends org.chromium.mojo.bindings.Interface {
 

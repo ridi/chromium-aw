@@ -13,18 +13,29 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ImeTextSpanType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ImeTextSpanType.COMPOSITION,
+        ImeTextSpanType.SUGGESTION,
+        ImeTextSpanType.MISSPELLING_SUGGESTION,
+        ImeTextSpanType.AUTOCORRECT,
+        ImeTextSpanType.GRAMMAR_SUGGESTION})
+    public @interface EnumType {}
 
     public static final int COMPOSITION = 0;
     public static final int SUGGESTION = 1;
     public static final int MISSPELLING_SUGGESTION = 2;
     public static final int AUTOCORRECT = 3;
+    public static final int GRAMMAR_SUGGESTION = 4;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 3;
+    public static final int MAX_VALUE = 4;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 3;
+        return value >= 0 && value <= 4;
     }
 
     public static void validate(int value) {

@@ -13,8 +13,17 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ThreadPriority {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ThreadPriority.BACKGROUND,
+        ThreadPriority.NORMAL,
+        ThreadPriority.DISPLAY,
+        ThreadPriority.REALTIME_AUDIO})
+    public @interface EnumType {}
 
     public static final int BACKGROUND = 0;
     public static final int NORMAL = 1;

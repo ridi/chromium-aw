@@ -13,8 +13,22 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SerialReceiveError {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SerialReceiveError.NONE,
+        SerialReceiveError.DISCONNECTED,
+        SerialReceiveError.DEVICE_LOST,
+        SerialReceiveError.BREAK,
+        SerialReceiveError.FRAME_ERROR,
+        SerialReceiveError.OVERRUN,
+        SerialReceiveError.BUFFER_OVERFLOW,
+        SerialReceiveError.PARITY_ERROR,
+        SerialReceiveError.SYSTEM_ERROR})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int DISCONNECTED = 1;

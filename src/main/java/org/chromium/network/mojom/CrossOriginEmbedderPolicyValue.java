@@ -13,11 +13,19 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CrossOriginEmbedderPolicyValue {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CrossOriginEmbedderPolicyValue.NONE,
+        CrossOriginEmbedderPolicyValue.CREDENTIALLESS,
+        CrossOriginEmbedderPolicyValue.REQUIRE_CORP})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
-    public static final int CORS_OR_CREDENTIALLESS = 1;
+    public static final int CREDENTIALLESS = 1;
     public static final int REQUIRE_CORP = 2;
     public static final int MIN_VALUE = 0;
     public static final int MAX_VALUE = 2;

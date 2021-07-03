@@ -13,8 +13,15 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CspDisposition {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CspDisposition.CHECK,
+        CspDisposition.DO_NOT_CHECK})
+    public @interface EnumType {}
 
     public static final int CHECK = 0;
     public static final int DO_NOT_CHECK = 1;

@@ -13,8 +13,18 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class RemoteInvocationError {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        RemoteInvocationError.OK,
+        RemoteInvocationError.METHOD_NOT_FOUND,
+        RemoteInvocationError.OBJECT_GET_CLASS_BLOCKED,
+        RemoteInvocationError.EXCEPTION_THROWN,
+        RemoteInvocationError.NON_ASSIGNABLE_TYPES})
+    public @interface EnumType {}
 
     public static final int OK = 0;
     public static final int METHOD_NOT_FOUND = 1;

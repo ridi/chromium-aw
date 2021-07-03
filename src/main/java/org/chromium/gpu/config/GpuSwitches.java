@@ -54,6 +54,9 @@ public final class GpuSwitches {
 
     public static final String ENABLE_UNSAFE_WEB_GPU = "enable-unsafe-webgpu";
 
+
+    public static final String ENABLE_UNSAFE_WEB_GPU_SERVICE = "enable-unsafe-webgpu-service";
+
     // Enable validation layers in Dawn backends.
     public static final String ENABLE_DAWN_BACKEND_VALIDATION = "enable-dawn-backend-validation";
 
@@ -103,9 +106,6 @@ public final class GpuSwitches {
     // Enables using protected memory for vulkan resources.
     public static final String ENABLE_VULKAN_PROTECTED_MEMORY = "enable-vulkan-protected-memory";
 
-    // Forces vulkan resources to use protected memory for vulkan compositing.
-    public static final String ENFORCE_VULKAN_PROTECTED_MEMORY = "enforce-vulkan-protected-memory";
-
     // Disables falling back to GL based hardware rendering if initializing Vulkan
     // fails. This is to allow tests to catch regressions in Vulkan.
     public static final String DISABLE_VULKAN_FALLBACK_TO_GL_FOR_TESTING = "disable-vulkan-fallback-to-gl-for-testing";
@@ -121,6 +121,9 @@ public final class GpuSwitches {
     // Crash Chrome if GPU process crashes. This is to force a test to fail when
     // GPU process crashes unexpectedly.
     public static final String FORCE_BROWSER_CRASH_ON_GPU_CRASH = "force-browser-crash-on-gpu-crash";
+
+    // Override value for the GPU watchdog timeout in seconds.
+    public static final String GPU_WATCHDOG_TIMEOUT_SECONDS = "gpu-watchdog-timeout-seconds";
 
     // Prevent instantiation.
     private GpuSwitches() {}

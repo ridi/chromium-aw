@@ -13,6 +13,8 @@
 
 package org.chromium.mojo.bindings.pipecontrol;
 
+import androidx.annotation.IntDef;
+
 
 public final class RunOrClosePipeInput extends org.chromium.mojo.bindings.Union {
 

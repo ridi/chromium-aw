@@ -13,8 +13,17 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ContextResult {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ContextResult.SUCCESS,
+        ContextResult.TRANSIENT_FAILURE,
+        ContextResult.FATAL_FAILURE,
+        ContextResult.SURFACE_FAILURE})
+    public @interface EnumType {}
 
     public static final int SUCCESS = 0;
     public static final int TRANSIENT_FAILURE = 1;

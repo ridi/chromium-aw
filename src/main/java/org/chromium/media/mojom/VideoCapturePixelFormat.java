@@ -13,8 +13,44 @@
 
 package org.chromium.media.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class VideoCapturePixelFormat {
     private static final boolean IS_EXTENSIBLE = true;
+    @IntDef({
+
+        VideoCapturePixelFormat.UNKNOWN,
+        VideoCapturePixelFormat.I420,
+        VideoCapturePixelFormat.YV12,
+        VideoCapturePixelFormat.I422,
+        VideoCapturePixelFormat.I420A,
+        VideoCapturePixelFormat.I444,
+        VideoCapturePixelFormat.NV12,
+        VideoCapturePixelFormat.NV21,
+        VideoCapturePixelFormat.UYVY,
+        VideoCapturePixelFormat.YUY2,
+        VideoCapturePixelFormat.ARGB,
+        VideoCapturePixelFormat.XRGB,
+        VideoCapturePixelFormat.RGB24,
+        VideoCapturePixelFormat.MJPEG,
+        VideoCapturePixelFormat.YUV420P9,
+        VideoCapturePixelFormat.YUV420P10,
+        VideoCapturePixelFormat.YUV422P9,
+        VideoCapturePixelFormat.YUV422P10,
+        VideoCapturePixelFormat.YUV444P9,
+        VideoCapturePixelFormat.YUV444P10,
+        VideoCapturePixelFormat.YUV420P12,
+        VideoCapturePixelFormat.YUV422P12,
+        VideoCapturePixelFormat.YUV444P12,
+        VideoCapturePixelFormat.Y16,
+        VideoCapturePixelFormat.ABGR,
+        VideoCapturePixelFormat.XBGR,
+        VideoCapturePixelFormat.P016LE,
+        VideoCapturePixelFormat.XR30,
+        VideoCapturePixelFormat.XB30,
+        VideoCapturePixelFormat.BGRA,
+        VideoCapturePixelFormat.RGBAF16})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int I420 = 1;

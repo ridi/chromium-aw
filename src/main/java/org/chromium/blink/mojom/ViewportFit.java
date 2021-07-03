@@ -13,8 +13,17 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ViewportFit {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ViewportFit.AUTO,
+        ViewportFit.CONTAIN,
+        ViewportFit.COVER,
+        ViewportFit.COVER_FORCED_BY_USER_AGENT})
+    public @interface EnumType {}
 
     public static final int AUTO = 0;
     public static final int CONTAIN = 1;

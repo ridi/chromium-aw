@@ -13,6 +13,8 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class Geoposition extends org.chromium.mojo.bindings.Struct {
 
@@ -22,6 +24,14 @@ public final class Geoposition extends org.chromium.mojo.bindings.Struct {
 
     public static final class ErrorCode {
         private static final boolean IS_EXTENSIBLE = false;
+        @IntDef({
+
+            ErrorCode.NONE,
+            ErrorCode.PERMISSION_DENIED,
+            ErrorCode.POSITION_UNAVAILABLE,
+            ErrorCode.TIMEOUT,
+            ErrorCode.LAST})
+        public @interface EnumType {}
 
         public static final int NONE = 0;
         public static final int PERMISSION_DENIED = 1;

@@ -233,8 +233,14 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
 
   @Override
   public void enable(long nativeWebContentsAccessibilityAndroid,
-      WebContentsAccessibilityImpl caller) {
-    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_enable(nativeWebContentsAccessibilityAndroid, caller);
+      WebContentsAccessibilityImpl caller, boolean screenReaderMode) {
+    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_enable(nativeWebContentsAccessibilityAndroid, caller, screenReaderMode);
+  }
+
+  @Override
+  public void setAXMode(long nativeWebContentsAccessibilityAndroid,
+      WebContentsAccessibilityImpl caller, boolean screenReaderMode) {
+    GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setAXMode(nativeWebContentsAccessibilityAndroid, caller, screenReaderMode);
   }
 
   @Override
@@ -288,6 +294,12 @@ final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityI
   public void setIsRunningAsWebView(long nativeWebContentsAccessibilityAndroid,
       WebContentsAccessibilityImpl caller, boolean isWebView) {
     GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_setIsRunningAsWebView(nativeWebContentsAccessibilityAndroid, caller, isWebView);
+  }
+
+  @Override
+  public boolean onHoverEventNoRenderer(long nativeWebContentsAccessibilityAndroid,
+      WebContentsAccessibilityImpl caller, float x, float y) {
+    return (boolean)GEN_JNI.org_chromium_content_browser_accessibility_WebContentsAccessibilityImpl_onHoverEventNoRenderer(nativeWebContentsAccessibilityAndroid, caller, x, y);
   }
 
   public static WebContentsAccessibilityImpl.Natives get() {

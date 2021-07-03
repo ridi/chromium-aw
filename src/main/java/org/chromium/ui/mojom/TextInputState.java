@@ -13,12 +13,15 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class TextInputState extends org.chromium.mojo.bindings.Struct {
 
     private static final int STRUCT_SIZE = 88;
     private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(88, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
+    public int nodeId;
     public int type;
     public int mode;
     public int action;
@@ -38,6 +41,7 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
 
     private TextInputState(int version) {
         super(STRUCT_SIZE, version);
+        this.nodeId = (int) 0;
         this.type = (int) TextInputType.NONE;
         this.mode = (int) TextInputMode.DEFAULT;
         this.action = (int) TextInputAction.DEFAULT;
@@ -77,62 +81,60 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
             result = new TextInputState(elementsOrVersion);
                 {
                     
-                result.type = decoder0.readInt(8);
+                result.nodeId = decoder0.readInt(8);
+                }
+                {
+                    
+                result.type = decoder0.readInt(12);
                     TextInputType.validate(result.type);
                     result.type = TextInputType.toKnownValue(result.type);
                 }
                 {
                     
-                result.mode = decoder0.readInt(12);
+                result.mode = decoder0.readInt(16);
                     TextInputMode.validate(result.mode);
                     result.mode = TextInputMode.toKnownValue(result.mode);
                 }
                 {
                     
-                result.action = decoder0.readInt(16);
+                result.action = decoder0.readInt(20);
                     TextInputAction.validate(result.action);
                     result.action = TextInputAction.toKnownValue(result.action);
                 }
                 {
                     
-                result.flags = decoder0.readInt(20);
+                result.flags = decoder0.readInt(24);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(24, true);
+                result.canComposeInline = decoder0.readBoolean(28, 0);
+                }
+                {
+                    
+                result.showImeIfNeeded = decoder0.readBoolean(28, 1);
+                }
+                {
+                    
+                result.alwaysHideIme = decoder0.readBoolean(28, 2);
+                }
+                {
+                    
+                result.replyToRequest = decoder0.readBoolean(28, 3);
+                }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, true);
                 result.value = org.chromium.mojo_base.mojom.BigString16.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, false);
                 result.selection = org.chromium.gfx.mojom.Range.decode(decoder1);
                 }
                 {
                     
-                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(40, true);
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, true);
                 result.composition = org.chromium.gfx.mojom.Range.decode(decoder1);
-                }
-                {
-                    
-                result.canComposeInline = decoder0.readBoolean(48, 0);
-                }
-                {
-                    
-                result.showImeIfNeeded = decoder0.readBoolean(48, 1);
-                }
-                {
-                    
-                result.alwaysHideIme = decoder0.readBoolean(48, 2);
-                }
-                {
-                    
-                result.replyToRequest = decoder0.readBoolean(48, 3);
-                }
-                {
-                    
-                result.vkPolicy = decoder0.readInt(52);
-                    VirtualKeyboardPolicy.validate(result.vkPolicy);
-                    result.vkPolicy = VirtualKeyboardPolicy.toKnownValue(result.vkPolicy);
                 }
                 {
                     
@@ -146,7 +148,13 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.lastVkVisibilityRequest = decoder0.readInt(72);
+                result.vkPolicy = decoder0.readInt(72);
+                    VirtualKeyboardPolicy.validate(result.vkPolicy);
+                    result.vkPolicy = VirtualKeyboardPolicy.toKnownValue(result.vkPolicy);
+                }
+                {
+                    
+                result.lastVkVisibilityRequest = decoder0.readInt(76);
                     VirtualKeyboardVisibilityRequest.validate(result.lastVkVisibilityRequest);
                     result.lastVkVisibilityRequest = VirtualKeyboardVisibilityRequest.toKnownValue(result.lastVkVisibilityRequest);
                 }
@@ -175,35 +183,37 @@ public final class TextInputState extends org.chromium.mojo.bindings.Struct {
     protected final void encode(org.chromium.mojo.bindings.Encoder encoder) {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
-        encoder0.encode(this.type, 8);
+        encoder0.encode(this.nodeId, 8);
         
-        encoder0.encode(this.mode, 12);
+        encoder0.encode(this.type, 12);
         
-        encoder0.encode(this.action, 16);
+        encoder0.encode(this.mode, 16);
         
-        encoder0.encode(this.flags, 20);
+        encoder0.encode(this.action, 20);
         
-        encoder0.encode(this.value, 24, true);
+        encoder0.encode(this.flags, 24);
         
-        encoder0.encode(this.selection, 32, false);
+        encoder0.encode(this.canComposeInline, 28, 0);
         
-        encoder0.encode(this.composition, 40, true);
+        encoder0.encode(this.showImeIfNeeded, 28, 1);
         
-        encoder0.encode(this.canComposeInline, 48, 0);
+        encoder0.encode(this.alwaysHideIme, 28, 2);
         
-        encoder0.encode(this.showImeIfNeeded, 48, 1);
+        encoder0.encode(this.replyToRequest, 28, 3);
         
-        encoder0.encode(this.alwaysHideIme, 48, 2);
+        encoder0.encode(this.value, 32, true);
         
-        encoder0.encode(this.replyToRequest, 48, 3);
+        encoder0.encode(this.selection, 40, false);
         
-        encoder0.encode(this.vkPolicy, 52);
+        encoder0.encode(this.composition, 48, true);
         
         encoder0.encode(this.editContextControlBounds, 56, true);
         
         encoder0.encode(this.editContextSelectionBounds, 64, true);
         
-        encoder0.encode(this.lastVkVisibilityRequest, 72);
+        encoder0.encode(this.vkPolicy, 72);
+        
+        encoder0.encode(this.lastVkVisibilityRequest, 76);
         
         if (this.imeTextSpansInfo == null) {
             encoder0.encodeNullPointer(80, false);

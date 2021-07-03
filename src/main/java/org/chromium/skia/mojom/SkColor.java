@@ -13,6 +13,8 @@
 
 package org.chromium.skia.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class SkColor extends org.chromium.mojo.bindings.Struct {
 

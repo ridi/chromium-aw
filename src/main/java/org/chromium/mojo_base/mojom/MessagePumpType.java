@@ -13,8 +13,18 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class MessagePumpType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        MessagePumpType.DEFAULT,
+        MessagePumpType.UI,
+        MessagePumpType.CUSTOM,
+        MessagePumpType.IO,
+        MessagePumpType.JAVA})
+    public @interface EnumType {}
 
     public static final int DEFAULT = 0;
     public static final int UI = 1;

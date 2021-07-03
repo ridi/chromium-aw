@@ -13,8 +13,23 @@
 
 package org.chromium.blink.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SpeechRecognitionErrorCode {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SpeechRecognitionErrorCode.NONE,
+        SpeechRecognitionErrorCode.NO_SPEECH,
+        SpeechRecognitionErrorCode.ABORTED,
+        SpeechRecognitionErrorCode.AUDIO_CAPTURE,
+        SpeechRecognitionErrorCode.NETWORK,
+        SpeechRecognitionErrorCode.NOT_ALLOWED,
+        SpeechRecognitionErrorCode.SERVICE_NOT_ALLOWED,
+        SpeechRecognitionErrorCode.BAD_GRAMMAR,
+        SpeechRecognitionErrorCode.LANGUAGE_NOT_SUPPORTED,
+        SpeechRecognitionErrorCode.NO_MATCH})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int NO_SPEECH = 1;

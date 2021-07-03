@@ -13,8 +13,18 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ApplicationState {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ApplicationState.UNKNOWN,
+        ApplicationState.HAS_RUNNING_ACTIVITIES,
+        ApplicationState.HAS_PAUSED_ACTIVITIES,
+        ApplicationState.HAS_STOPPED_ACTIVITIES,
+        ApplicationState.HAS_DESTROYED_ACTIVITIES})
+    public @interface EnumType {}
 
     public static final int UNKNOWN = 0;
     public static final int HAS_RUNNING_ACTIVITIES = 1;

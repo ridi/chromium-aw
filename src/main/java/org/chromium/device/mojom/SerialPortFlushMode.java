@@ -13,8 +13,16 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class SerialPortFlushMode {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        SerialPortFlushMode.RECEIVE_AND_TRANSMIT,
+        SerialPortFlushMode.RECEIVE,
+        SerialPortFlushMode.TRANSMIT})
+    public @interface EnumType {}
 
     public static final int RECEIVE_AND_TRANSMIT = 0;
     public static final int RECEIVE = 1;

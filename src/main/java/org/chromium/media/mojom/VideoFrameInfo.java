@@ -13,6 +13,8 @@
 
 package org.chromium.media.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class VideoFrameInfo extends org.chromium.mojo.bindings.Struct {
 
@@ -24,6 +26,7 @@ public final class VideoFrameInfo extends org.chromium.mojo.bindings.Struct {
     public int pixelFormat;
     public org.chromium.gfx.mojom.Size codedSize;
     public org.chromium.gfx.mojom.Rect visibleRect;
+    public boolean isPremapped;
     public org.chromium.gfx.mojom.ColorSpace colorSpace;
     public PlaneStrides strides;
 
@@ -78,6 +81,10 @@ public final class VideoFrameInfo extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
+                result.isPremapped = decoder0.readBoolean(28, 0);
+                }
+                {
+                    
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, false);
                 result.codedSize = org.chromium.gfx.mojom.Size.decode(decoder1);
                 }
@@ -113,6 +120,8 @@ public final class VideoFrameInfo extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.metadata, 16, false);
         
         encoder0.encode(this.pixelFormat, 24);
+        
+        encoder0.encode(this.isPremapped, 28, 0);
         
         encoder0.encode(this.codedSize, 32, false);
         

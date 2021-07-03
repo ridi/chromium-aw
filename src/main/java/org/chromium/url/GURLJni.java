@@ -36,6 +36,11 @@ final class GURLJni implements GURL.Natives {
   }
 
   @Override
+  public boolean domainIs(String spec, boolean isValid, long nativeParsed, String domain) {
+    return (boolean)GEN_JNI.org_chromium_url_GURL_domainIs(spec, isValid, nativeParsed, domain);
+  }
+
+  @Override
   public long createNative(String spec, boolean isValid, long nativeParsed) {
     return (long)GEN_JNI.org_chromium_url_GURL_createNative(spec, isValid, nativeParsed);
   }

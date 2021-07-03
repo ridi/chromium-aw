@@ -13,8 +13,16 @@
 
 package org.chromium.service_manager.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ConnectResult {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ConnectResult.SUCCEEDED,
+        ConnectResult.INVALID_ARGUMENT,
+        ConnectResult.ACCESS_DENIED})
+    public @interface EnumType {}
 
     public static final int SUCCEEDED = 0;
     public static final int INVALID_ARGUMENT = 1;

@@ -13,8 +13,21 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class TextInputAction {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        TextInputAction.DEFAULT,
+        TextInputAction.ENTER,
+        TextInputAction.DONE,
+        TextInputAction.GO,
+        TextInputAction.NEXT,
+        TextInputAction.PREVIOUS,
+        TextInputAction.SEARCH,
+        TextInputAction.SEND})
+    public @interface EnumType {}
 
     public static final int DEFAULT = 0;
     public static final int ENTER = 1;

@@ -13,6 +13,8 @@
 
 package org.chromium.shape_detection.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class BarcodeDetectionResult extends org.chromium.mojo.bindings.Struct {
 

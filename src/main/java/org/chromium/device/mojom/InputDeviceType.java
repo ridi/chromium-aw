@@ -13,8 +13,17 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class InputDeviceType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        InputDeviceType.TYPE_BLUETOOTH,
+        InputDeviceType.TYPE_USB,
+        InputDeviceType.TYPE_SERIO,
+        InputDeviceType.TYPE_UNKNOWN})
+    public @interface EnumType {}
 
     public static final int TYPE_BLUETOOTH = 0;
     public static final int TYPE_USB = 1;

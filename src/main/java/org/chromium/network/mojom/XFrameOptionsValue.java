@@ -13,8 +13,19 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class XFrameOptionsValue {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        XFrameOptionsValue.NONE,
+        XFrameOptionsValue.DENY,
+        XFrameOptionsValue.SAME_ORIGIN,
+        XFrameOptionsValue.ALLOW_ALL,
+        XFrameOptionsValue.INVALID,
+        XFrameOptionsValue.CONFLICT})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int DENY = 1;

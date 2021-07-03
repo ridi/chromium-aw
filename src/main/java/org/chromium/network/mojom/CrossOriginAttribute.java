@@ -13,8 +13,16 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class CrossOriginAttribute {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        CrossOriginAttribute.UNSPECIFIED,
+        CrossOriginAttribute.ANONYMOUS,
+        CrossOriginAttribute.USE_CREDENTIALS})
+    public @interface EnumType {}
 
     public static final int UNSPECIFIED = 0;
     public static final int ANONYMOUS = 1;

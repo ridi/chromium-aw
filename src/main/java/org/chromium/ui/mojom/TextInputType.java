@@ -13,8 +13,32 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class TextInputType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        TextInputType.NONE,
+        TextInputType.TEXT,
+        TextInputType.PASSWORD,
+        TextInputType.SEARCH,
+        TextInputType.EMAIL,
+        TextInputType.NUMBER,
+        TextInputType.TELEPHONE,
+        TextInputType.URL,
+        TextInputType.DATE,
+        TextInputType.DATE_TIME,
+        TextInputType.DATE_TIME_LOCAL,
+        TextInputType.MONTH,
+        TextInputType.TIME,
+        TextInputType.WEEK,
+        TextInputType.TEXT_AREA,
+        TextInputType.CONTENT_EDITABLE,
+        TextInputType.DATE_TIME_FIELD,
+        TextInputType.TYPE_NULL,
+        TextInputType.MAX})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int TEXT = 1;

@@ -13,8 +13,20 @@
 
 package org.chromium.proxy_resolver.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ProxyScheme {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ProxyScheme.INVALID,
+        ProxyScheme.DIRECT,
+        ProxyScheme.HTTP,
+        ProxyScheme.SOCKS4,
+        ProxyScheme.SOCKS5,
+        ProxyScheme.HTTPS,
+        ProxyScheme.QUIC})
+    public @interface EnumType {}
 
     public static final int INVALID = 0;
     public static final int DIRECT = 1;

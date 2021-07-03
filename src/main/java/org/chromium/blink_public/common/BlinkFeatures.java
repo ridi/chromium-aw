@@ -82,10 +82,6 @@ public final class BlinkFeatures {
     // screen’s real estate.
     public static final String FREQUENCY_CAPPING_FOR_LARGE_STICKY_AD_DETECTION = "FrequencyCappingForLargeStickyAdDetection";
 
-    // Enables support for FTP URLs. When disabled FTP URLs will behave the same as
-    // any other URL scheme that's unknown to the UA. See https://crbug.com/333943
-    public static final String FTP_PROTOCOL = "FtpProtocol";
-
     // Enable Display Locking JavaScript APIs.
     public static final String DISPLAY_LOCKING = "DisplayLocking";
 
@@ -135,6 +131,12 @@ public final class BlinkFeatures {
     // https://crbug.com/1013389
     public static final String PORTALS_CROSS_ORIGIN = "PortalsCrossOrigin";
 
+    // Enable the <fencedframe> element; see crbug.com/1123606. Note that enabling
+    // this feature does not automatically expose this element to the web, it only
+    // allows the element to be enabled by the runtime enabled feature, for origin
+    // trials.
+    public static final String FENCED_FRAMES = "FencedFrames";
+
     // Enable the prerender2. https://crbug.com/1126305.
     public static final String PRERENDER2 = "Prerender2";
 
@@ -144,10 +146,6 @@ public final class BlinkFeatures {
     // TODO(https://crbug.com/926186): Disabled by default on Android for historical
     // reasons. Consider enabling by default if experiment results are positive.
     public static final String PURGE_RENDERER_MEMORY_WHEN_BACKGROUNDED = "PurgeRendererMemoryWhenBackgrounded";
-
-    // Enables toggling overwrite mode when insert key is pressed.
-    // https://crbug.com/1030231.
-    public static final String INSERT_KEY_TOGGLE_MODE = "InsertKeyToggleMode";
 
     // Enables Raw Clipboard. https://crbug.com/897289.
     public static final String RAW_CLIPBOARD = "RawClipboard";
@@ -237,7 +235,7 @@ public final class BlinkFeatures {
     // Font enumeration and data access. https://crbug.com/1173275
     public static final String FONT_ACCESS_PERSISTENT = "FontAccessPersistent";
 
-    // Compute pressure API. https://crbug.com/1067627
+    // Kill switch for the Compute Pressure API. https://crbug.com/1067627
     public static final String COMPUTE_PRESSURE = "ComputePressure";
 
     // Prefetch request properties are updated to be privacy-preserving. See
@@ -261,9 +259,6 @@ public final class BlinkFeatures {
     // Enabled to block programmatic focus in subframes when not triggered by user
     // activation (see htpps://crbug.com/954349).
     public static final String BLOCKING_FOCUS_WITHOUT_USER_ACTIVATION = "BlockingFocusWithoutUserActivation";
-
-
-    public static final String AUDIO_WORKLET_REALTIME_THREAD = "AudioWorkletRealtimeThread";
 
     // A server-side switch for the REALTIME_AUDIO thread priority of
     // RealtimeAudioWorkletThread object. When disabled, it will use the NORMAL
@@ -361,6 +356,11 @@ public final class BlinkFeatures {
     // When enabled, frees up CachedMetadata after consumption by script resources
     // and modules. Needed for the experiment in http://crbug.com/1045052.
     public static final String DISCARD_CODE_CACHE_AFTER_FIRST_USE = "DiscardCodeCacheAfterFirstUse";
+
+    // Kill switch for the new element.offsetParent behavior.
+    // TODO(crbug.com/920069): Remove this once the feature has
+    // landed and no compat issues are reported.
+    public static final String OFFSET_PARENT_NEW_SPEC_BEHAVIOR = "OffsetParentNewSpecBehavior";
 
     // Slightly delays rendering if there are fonts being preloaded, so that
     // they don't miss the first paint if they can be loaded fast enough (e.g.,
@@ -490,6 +490,14 @@ public final class BlinkFeatures {
     // https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/URLProtocolHandler/explainer.md
     public static final String WEB_APP_ENABLE_PROTOCOL_HANDLERS = "WebAppEnableProtocolHandlers";
 
+    // Whether web apps are able to be treated as note-taking apps. Controls parsing
+    // of "note_taking" dictionary field and "new_note_url" entry in web app
+    // manifests. Also controls whether the parsed field is used in browser. See
+    // incubation spec:
+    // https://wicg.github.io/manifest-incubations/#note_taking-member
+    // TODO(crbug.com/1185678): Enable by default after M92 branches.
+    public static final String WEB_APP_NOTE_TAKING = "WebAppNoteTaking";
+
     // When enabled NV12 frames on a GPU will be forwarded to libvpx encoders
     // without conversion to I420.
     public static final String WEB_RTC_LIBVPX_ENCODE_NV12 = "WebRtcLibvpxEncodeNV12";
@@ -509,11 +517,6 @@ public final class BlinkFeatures {
     // Controls how max frame rates are enforced in MediaStreamTracks.
     // TODO(crbug.com/1152307): Remove in M91.
     public static final String MEDIA_STREAM_TRACK_USE_CONFIG_MAX_FRAME_RATE = "MediaStreamTrackUseConfigMaxFrameRate";
-
-    // Kill switch for the new behavior whereby noopener windows no longer get their
-    // sessionStorage cloned from their originator. TODO(crbug.com/1151381): Remove
-    // in Chrome 92.
-    public static final String CLONE_SESSION_STORAGE_FOR_NO_OPENER = "CloneSessionStorageForNoOpener";
 
     // When enabled, WebRTC's worker thread will run on a thread context distinct
     // from the WebRTC signaling and network threads.
@@ -551,6 +554,10 @@ public final class BlinkFeatures {
     // elements.
     public static final String ENABLE_PENETRATING_IMAGE_SELECTION = "EnablePenetratingImageSelection";
 
+    // When enabled, permits shared/root element transitions. See
+    // https://github.com/WICG/shared-element-transitions.
+    public static final String DOCUMENT_TRANSITION = "DocumentTransition";
+
     // Used to configure a per-origin allowlist of performance.mark events that are
     // permitted to be included in slow reports traces. See crbug.com/1181774.
     public static final String BACKGROUND_TRACING_PERFORMANCE_MARK = "BackgroundTracingPerformanceMark";
@@ -585,6 +592,11 @@ public final class BlinkFeatures {
     // Enable the availability of the Fledge interest group API as part of the
     // origin trial.
     public static final String FLEDGE_INTEREST_GROUP_API = "FledgeInterestGroupAPI";
+
+    // Enable the ability to minimize processing in the WebRTC APM when all audio
+    // tracks are disabled. If disabled, the APM in WebRTC will ignore attempts to
+    // set it in a low-processing mode when all audio tracks are disabled.
+    public static final String MINIMIZE_AUDIO_PROCESSING_FOR_UNUSED_OUTPUT = "MinimizeAudioProcessingForUnusedOutput";
 
     // Do not instantiate this class.
     private BlinkFeatures() {}

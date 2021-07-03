@@ -13,8 +13,16 @@
 
 package org.chromium.ui.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ImeTextSpanThickness {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ImeTextSpanThickness.NONE,
+        ImeTextSpanThickness.THIN,
+        ImeTextSpanThickness.THICK})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int THIN = 1;

@@ -13,6 +13,8 @@
 
 package org.chromium.url.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class Url extends org.chromium.mojo.bindings.Struct {
 

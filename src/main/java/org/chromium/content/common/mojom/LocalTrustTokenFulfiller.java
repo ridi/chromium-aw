@@ -13,6 +13,8 @@
 
 package org.chromium.content.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface LocalTrustTokenFulfiller extends org.chromium.mojo.bindings.Interface {
 

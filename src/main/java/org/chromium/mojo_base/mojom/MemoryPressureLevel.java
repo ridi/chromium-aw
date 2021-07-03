@@ -13,8 +13,16 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class MemoryPressureLevel {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        MemoryPressureLevel.NONE,
+        MemoryPressureLevel.MODERATE,
+        MemoryPressureLevel.CRITICAL})
+    public @interface EnumType {}
 
     public static final int NONE = 0;
     public static final int MODERATE = 1;

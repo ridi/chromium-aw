@@ -13,8 +13,19 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class FetchResponseType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        FetchResponseType.BASIC,
+        FetchResponseType.CORS,
+        FetchResponseType.DEFAULT,
+        FetchResponseType.ERROR,
+        FetchResponseType.OPAQUE,
+        FetchResponseType.OPAQUE_REDIRECT})
+    public @interface EnumType {}
 
     public static final int BASIC = 0;
     public static final int CORS = 1;

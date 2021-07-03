@@ -13,8 +13,19 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class VkPhysicalDeviceType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        VkPhysicalDeviceType.OTHER,
+        VkPhysicalDeviceType.INTEGRATED_GPU,
+        VkPhysicalDeviceType.DISCRETE_GPU,
+        VkPhysicalDeviceType.VIRTUAL_GPU,
+        VkPhysicalDeviceType.CPU,
+        VkPhysicalDeviceType.INVALID_VALUE})
+    public @interface EnumType {}
 
     public static final int OTHER = 0;
     public static final int INTEGRATED_GPU = 1;

@@ -13,8 +13,29 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class WebClientHintsType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        WebClientHintsType.DEVICE_MEMORY,
+        WebClientHintsType.DPR,
+        WebClientHintsType.RESOURCE_WIDTH,
+        WebClientHintsType.VIEWPORT_WIDTH,
+        WebClientHintsType.RTT,
+        WebClientHintsType.DOWNLINK,
+        WebClientHintsType.ECT,
+        WebClientHintsType.LANG,
+        WebClientHintsType.UA,
+        WebClientHintsType.UA_ARCH,
+        WebClientHintsType.UA_PLATFORM,
+        WebClientHintsType.UA_MODEL,
+        WebClientHintsType.UA_MOBILE,
+        WebClientHintsType.UA_FULL_VERSION,
+        WebClientHintsType.UA_PLATFORM_VERSION,
+        WebClientHintsType.PREFERS_COLOR_SCHEME})
+    public @interface EnumType {}
 
     public static final int DEVICE_MEMORY = 0;
     public static final int DPR = 1;
@@ -31,11 +52,12 @@ public final class WebClientHintsType {
     public static final int UA_MOBILE = 12;
     public static final int UA_FULL_VERSION = 13;
     public static final int UA_PLATFORM_VERSION = 14;
+    public static final int PREFERS_COLOR_SCHEME = 15;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 14;
+    public static final int MAX_VALUE = 15;
 
     public static boolean isKnownValue(int value) {
-        return value >= 0 && value <= 14;
+        return value >= 0 && value <= 15;
     }
 
     public static void validate(int value) {

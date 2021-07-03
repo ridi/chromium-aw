@@ -13,11 +13,13 @@
 
 package org.chromium.gfx.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class PresentationFeedback extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 56;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(56, 0)};
+    private static final int STRUCT_SIZE = 64;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(64, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public org.chromium.mojo_base.mojom.TimeTicks timestamp;
     public org.chromium.mojo_base.mojom.TimeDelta interval;
@@ -25,6 +27,7 @@ public final class PresentationFeedback extends org.chromium.mojo.bindings.Struc
     public org.chromium.mojo_base.mojom.TimeTicks availableTimestamp;
     public org.chromium.mojo_base.mojom.TimeTicks readyTimestamp;
     public org.chromium.mojo_base.mojom.TimeTicks latchTimestamp;
+    public org.chromium.mojo_base.mojom.TimeTicks writesDoneTimestamp;
 
     private PresentationFeedback(int version) {
         super(STRUCT_SIZE, version);
@@ -88,6 +91,11 @@ public final class PresentationFeedback extends org.chromium.mojo.bindings.Struc
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(48, false);
                 result.latchTimestamp = org.chromium.mojo_base.mojom.TimeTicks.decode(decoder1);
                 }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(56, false);
+                result.writesDoneTimestamp = org.chromium.mojo_base.mojom.TimeTicks.decode(decoder1);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -111,5 +119,7 @@ public final class PresentationFeedback extends org.chromium.mojo.bindings.Struc
         encoder0.encode(this.readyTimestamp, 40, false);
         
         encoder0.encode(this.latchTimestamp, 48, false);
+        
+        encoder0.encode(this.writesDoneTimestamp, 56, false);
     }
 }

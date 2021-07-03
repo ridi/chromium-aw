@@ -13,6 +13,8 @@
 
 package org.chromium.mojo.native_types;
 
+import androidx.annotation.IntDef;
+
 
 public final class NativeStruct extends org.chromium.mojo.bindings.Struct {
 

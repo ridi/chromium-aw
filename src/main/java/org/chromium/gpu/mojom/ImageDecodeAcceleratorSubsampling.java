@@ -13,8 +13,16 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ImageDecodeAcceleratorSubsampling {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ImageDecodeAcceleratorSubsampling.K420,
+        ImageDecodeAcceleratorSubsampling.K422,
+        ImageDecodeAcceleratorSubsampling.K444})
+    public @interface EnumType {}
 
     public static final int K420 = 0;
     public static final int K422 = 1;

@@ -13,6 +13,8 @@
 
 package org.chromium.mojo_base.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public final class Token extends org.chromium.mojo.bindings.Struct {
 

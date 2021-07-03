@@ -13,6 +13,8 @@
 
 package org.chromium.shape_detection.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface ShapeDetectionService extends org.chromium.mojo.bindings.Interface {
 

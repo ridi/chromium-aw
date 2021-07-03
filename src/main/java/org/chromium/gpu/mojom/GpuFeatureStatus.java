@@ -13,8 +13,19 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class GpuFeatureStatus {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        GpuFeatureStatus.ENABLED,
+        GpuFeatureStatus.BLOCKLISTED,
+        GpuFeatureStatus.DISABLED,
+        GpuFeatureStatus.SOFTWARE,
+        GpuFeatureStatus.UNDEFINED,
+        GpuFeatureStatus.MAX})
+    public @interface EnumType {}
 
     public static final int ENABLED = 0;
     public static final int BLOCKLISTED = 1;

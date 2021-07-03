@@ -13,6 +13,8 @@
 
 package org.chromium.device.mojom;
 
+import androidx.annotation.IntDef;
+
 
 public interface GeolocationControl extends org.chromium.mojo.bindings.Interface {
 

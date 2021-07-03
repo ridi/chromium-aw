@@ -13,8 +13,17 @@
 
 package org.chromium.network.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class FetchResponseSource {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        FetchResponseSource.UNSPECIFIED,
+        FetchResponseSource.NETWORK,
+        FetchResponseSource.HTTP_CACHE,
+        FetchResponseSource.CACHE_STORAGE})
+    public @interface EnumType {}
 
     public static final int UNSPECIFIED = 0;
     public static final int NETWORK = 1;

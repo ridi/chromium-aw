@@ -56,6 +56,9 @@ public final class AwFeatures {
     // Field trial feature for controlling support of Origin Trials on WebView.
     public static final String WEBVIEW_ORIGIN_TRIALS = "WebViewOriginTrials";
 
+    // Enables package name logging for the most popular WebView embedders.
+    public static final String WEBVIEW_PACKAGE_NAME_LOGGING = "WebViewPackageNameLogging";
+
     // Restricts all of WebView's out-of-process renderer threads to use only LITTLE
     // cores on big.LITTLE architectures when the power mode is idle.
     public static final String WEBVIEW_POWER_SCHEDULER_THROTTLE_IDLE = "WebViewPowerSchedulerThrottleIdle";

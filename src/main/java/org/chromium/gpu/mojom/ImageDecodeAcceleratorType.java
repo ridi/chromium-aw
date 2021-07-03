@@ -13,8 +13,16 @@
 
 package org.chromium.gpu.mojom;
 
+import androidx.annotation.IntDef;
+
 public final class ImageDecodeAcceleratorType {
     private static final boolean IS_EXTENSIBLE = false;
+    @IntDef({
+
+        ImageDecodeAcceleratorType.JPEG,
+        ImageDecodeAcceleratorType.WEB_P,
+        ImageDecodeAcceleratorType.UNKNOWN})
+    public @interface EnumType {}
 
     public static final int JPEG = 0;
     public static final int WEB_P = 1;

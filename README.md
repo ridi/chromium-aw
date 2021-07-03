@@ -109,7 +109,7 @@ See [the demo project](demo).
 
 # Chromium build information
 
-Current version is based on [`91.0.4472.120`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/91.0.4472.120)
+Current version is based on [`92.0.4515.70`](https://chromium.googlesource.com/chromium/src.git/+/refs/tags/92.0.4515.70)
 
 ## Customizing (Patch files are [here](patches))
 
@@ -198,7 +198,7 @@ $ sudo service iceccd restart
 ```sh
 $ cd ~/chromium/src
 
-$ git checkout tags/$VERSION # ex) tags/91.0.4472.120
+$ git checkout tags/$VERSION # ex) tags/92.0.4515.70
 
 $ gclient sync
 ```
