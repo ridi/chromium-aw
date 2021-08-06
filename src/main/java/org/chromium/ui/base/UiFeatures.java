@@ -97,6 +97,13 @@ public final class UiFeatures {
     // This feature supercedes kNewShortcutMapping.
     public static final String IMPROVED_KEYBOARD_SHORTCUTS = "ImprovedKeyboardShortcuts";
 
+    // Whether to deprecate the Alt-Based event rewrites that map to the
+    // Page Up/Down, Home/End, Insert/Delete keys. This feature was a
+    // part of kImprovedKeyboardShortcuts, but it is being postponed until
+    // the new shortcut customization app ships.
+    // TODO(crbug.com/1179893): Remove after the customization app ships.
+    public static final String DEPRECATE_ALT_BASED_SIX_PACK = "DeprecateAltBasedSixPack";
+
     // Enables stylus appearing as touch when in contact with digitizer.
     public static final String DIRECT_MANIPULATION_STYLUS = "DirectManipulationStylus";
 

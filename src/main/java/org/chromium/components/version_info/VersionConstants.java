@@ -10,7 +10,7 @@ import org.chromium.base.annotations.MainDex;
 // in ChromeVersionConstants.
 @MainDex
 public class VersionConstants {
-    public static final String PRODUCT_VERSION = "92.0.4515.70";
+    public static final String PRODUCT_VERSION = "92.0.4515.115";
     @SuppressWarnings({"ComplexBooleanConstant", "IdentityBinaryExpression"})
     public static final boolean IS_OFFICIAL_BUILD = 0 == 1;
 
