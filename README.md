@@ -253,12 +253,14 @@ $ ./configure && make
 
 1. Generate symbols file.
 
+`$PLATFORM` must be one of `linux2`, `darwin`, `android`, and `chromeos`.
+
 ```sh
 $ cp ~/breakpad/src/src/tools/linux/dump_syms ~/chromium/src/out/$TARGET
 $ sudo chmod +x ~/chromium/src/out/$TARGET/dump_syms
 
 $ cd ~/chromium/src
-$ components/crash/content/tools/generate_breakpad_symbols.py --build-dir=out/$TARGET --symbols-dir=/tmp/chromium --binary=out/$TARGET/lib.unstripped/libstandalonelibwebviewchromium.so --clear --verbose
+$ components/crash/content/tools/generate_breakpad_symbols.py --build-dir=out/$TARGET --symbols-dir=/tmp/chromium --binary=out/$TARGET/lib.unstripped/libstandalonelibwebviewchromium.so --platform=$PLATFORM --clear --verbose
 ```
 
 2. Decoding minidump file.
