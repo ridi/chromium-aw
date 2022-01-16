@@ -9,7 +9,7 @@ extra["androidXCore"] = Constants.ANDROIDX_CORE_VERSION
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
@@ -24,7 +24,7 @@ apply(plugin = "de.undercouch.download")
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
