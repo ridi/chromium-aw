@@ -209,7 +209,7 @@ Apply [patch files](patches).
 
 3. Generate target and build.
 
-In this project `$TARGET` must be one of `arm`, `arm64`, `x86`, and `x64`.
+In this project `$TARGET` must be one of `arm`, `arm64`, `x86` and `x64`.
 
 ```sh
 $ gn gen --args='target_os="android" target_cpu="$TARGET" is_debug=false cc_wrapper="ccache" symbol_level=0 blink_symbol_level=0 enable_nacl=false use_debug_fission=false clang_use_chrome_plugins=false' out/$TARGET
