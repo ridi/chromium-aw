@@ -1,6 +1,7 @@
 package org.chromium.base.jank_tracker;
 
 import java.lang.Override;
+import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
@@ -9,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class JankMetricUMARecorderJni implements JankMetricUMARecorder.Natives {
+class JankMetricUMARecorderJni implements JankMetricUMARecorder.Natives {
   private static JankMetricUMARecorder.Natives testInstance;
 
   public static final JniStaticTestMocker<JankMetricUMARecorder.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.jank_tracker.JankMetricUMARecorder.Natives>() {
@@ -24,8 +25,9 @@ final class JankMetricUMARecorderJni implements JankMetricUMARecorder.Natives {
   };
 
   @Override
-  public void recordJankMetrics(long[] durationsNs, long[] jankBurstsNs, int missedFrames) {
-    GEN_JNI.org_chromium_base_jank_1tracker_JankMetricUMARecorder_recordJankMetrics(durationsNs, jankBurstsNs, missedFrames);
+  public void recordJankMetrics(String scenarioName, long[] durationsNs, long[] jankBurstsNs,
+      int missedFrames) {
+    GEN_JNI.org_chromium_base_jank_1tracker_JankMetricUMARecorder_recordJankMetrics(scenarioName, durationsNs, jankBurstsNs, missedFrames);
   }
 
   public static JankMetricUMARecorder.Natives get() {

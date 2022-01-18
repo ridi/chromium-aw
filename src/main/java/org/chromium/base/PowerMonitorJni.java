@@ -7,7 +7,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class PowerMonitorJni implements PowerMonitor.Natives {
+class PowerMonitorJni implements PowerMonitor.Natives {
   private static PowerMonitor.Natives testInstance;
 
   public static final JniStaticTestMocker<PowerMonitor.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.PowerMonitor.Natives>() {

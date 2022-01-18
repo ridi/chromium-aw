@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class WindowAndroidJni implements WindowAndroid.Natives {
+class WindowAndroidJni implements WindowAndroid.Natives {
   private static WindowAndroid.Natives testInstance;
 
   public static final JniStaticTestMocker<WindowAndroid.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.base.WindowAndroid.Natives>() {

@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class SpeechRecognitionImplJni implements SpeechRecognitionImpl.Natives {
+class SpeechRecognitionImplJni implements SpeechRecognitionImpl.Natives {
   private static SpeechRecognitionImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<SpeechRecognitionImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.SpeechRecognitionImpl.Natives>() {

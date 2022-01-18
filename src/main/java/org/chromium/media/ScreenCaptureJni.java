@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ScreenCaptureJni implements ScreenCapture.Natives {
+class ScreenCaptureJni implements ScreenCapture.Natives {
   private static ScreenCapture.Natives testInstance;
 
   public static final JniStaticTestMocker<ScreenCapture.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.ScreenCapture.Natives>() {

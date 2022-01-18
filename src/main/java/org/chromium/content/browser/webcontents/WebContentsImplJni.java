@@ -1,7 +1,9 @@
 package org.chromium.content.browser.webcontents;
 
 import android.graphics.Rect;
+import android.view.ViewStructure;
 import java.lang.Override;
+import java.lang.Runnable;
 import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
@@ -9,7 +11,7 @@ import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
 import org.chromium.content.browser.RenderWidgetHostViewImpl;
-import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
+import org.chromium.content.browser.accessibility.ViewStructureBuilder;
 import org.chromium.content_public.browser.ImageDownloadCallback;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.MessagePort;
@@ -23,7 +25,7 @@ import org.chromium.url.GURL;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class WebContentsImplJni implements WebContentsImpl.Natives {
+class WebContentsImplJni implements WebContentsImpl.Natives {
   private static WebContentsImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<WebContentsImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.webcontents.WebContentsImpl.Natives>() {
@@ -294,9 +296,10 @@ final class WebContentsImplJni implements WebContentsImpl.Natives {
   }
 
   @Override
-  public void requestAccessibilitySnapshot(long nativeWebContentsAndroid, WebContentsImpl caller,
-      AccessibilitySnapshotCallback callback) {
-    GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_requestAccessibilitySnapshot(nativeWebContentsAndroid, caller, callback);
+  public void requestAccessibilitySnapshot(long nativeWebContentsAndroid,
+      ViewStructure viewStructureRoot, ViewStructureBuilder viewStructureBuilder,
+      Runnable doneCallback) {
+    GEN_JNI.org_chromium_content_browser_webcontents_WebContentsImpl_requestAccessibilitySnapshot(nativeWebContentsAndroid, viewStructureRoot, viewStructureBuilder, doneCallback);
   }
 
   @Override

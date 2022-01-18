@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class EarlyTraceEventJni implements EarlyTraceEvent.Natives {
+class EarlyTraceEventJni implements EarlyTraceEvent.Natives {
   private static EarlyTraceEvent.Natives testInstance;
 
   public static final JniStaticTestMocker<EarlyTraceEvent.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.EarlyTraceEvent.Natives>() {

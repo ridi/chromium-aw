@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwAutofillClientJni implements AwAutofillClient.Natives {
+class AwAutofillClientJni implements AwAutofillClient.Natives {
   private static AwAutofillClient.Natives testInstance;
 
   public static final JniStaticTestMocker<AwAutofillClient.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwAutofillClient.Natives>() {

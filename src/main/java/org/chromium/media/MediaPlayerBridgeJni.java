@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class MediaPlayerBridgeJni implements MediaPlayerBridge.Natives {
+class MediaPlayerBridgeJni implements MediaPlayerBridge.Natives {
   private static MediaPlayerBridge.Natives testInstance;
 
   public static final JniStaticTestMocker<MediaPlayerBridge.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.MediaPlayerBridge.Natives>() {

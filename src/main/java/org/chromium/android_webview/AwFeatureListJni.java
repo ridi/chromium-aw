@@ -12,7 +12,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class AwFeatureListJni implements AwFeatureList.Natives {
+class AwFeatureListJni implements AwFeatureList.Natives {
   private static AwFeatureList.Natives testInstance;
 
   public static final JniStaticTestMocker<AwFeatureList.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwFeatureList.Natives>() {

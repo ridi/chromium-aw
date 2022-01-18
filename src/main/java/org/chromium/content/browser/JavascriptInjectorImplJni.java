@@ -13,7 +13,7 @@ import org.chromium.content_public.browser.WebContents;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class JavascriptInjectorImplJni implements JavascriptInjectorImpl.Natives {
+class JavascriptInjectorImplJni implements JavascriptInjectorImpl.Natives {
   private static JavascriptInjectorImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<JavascriptInjectorImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.JavascriptInjectorImpl.Natives>() {

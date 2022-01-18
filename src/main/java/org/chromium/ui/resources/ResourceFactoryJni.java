@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ResourceFactoryJni implements ResourceFactory.Natives {
+class ResourceFactoryJni implements ResourceFactory.Natives {
   private static ResourceFactory.Natives testInstance;
 
   public static final JniStaticTestMocker<ResourceFactory.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.resources.ResourceFactory.Natives>() {

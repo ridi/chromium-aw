@@ -9,12 +9,13 @@ import org.chromium.base.NativeLibraryLoadedStatus;
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.CheckDiscard;
 import org.chromium.base.natives.GEN_JNI;
+import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.url.GURL;
 import org.chromium.url.Origin;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
+class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
   private static RenderFrameHostImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<RenderFrameHostImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.framehost.RenderFrameHostImpl.Natives>() {
@@ -92,15 +93,22 @@ final class RenderFrameHostImplJni implements RenderFrameHostImpl.Natives {
   }
 
   @Override
-  public int performGetAssertionWebAuthSecurityChecks(long nativeRenderFrameHostAndroid,
-      RenderFrameHostImpl caller, String relyingPartyId, Origin effectiveOrigin) {
-    return (int)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_performGetAssertionWebAuthSecurityChecks(nativeRenderFrameHostAndroid, caller, relyingPartyId, effectiveOrigin);
+  public RenderFrameHost.WebAuthSecurityChecksResults performGetAssertionWebAuthSecurityChecks(
+      long nativeRenderFrameHostAndroid, RenderFrameHostImpl caller, String relyingPartyId,
+      Origin effectiveOrigin) {
+    return (RenderFrameHost.WebAuthSecurityChecksResults)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_performGetAssertionWebAuthSecurityChecks(nativeRenderFrameHostAndroid, caller, relyingPartyId, effectiveOrigin);
   }
 
   @Override
   public int performMakeCredentialWebAuthSecurityChecks(long nativeRenderFrameHostAndroid,
-      RenderFrameHostImpl caller, String relyingPartyId, Origin effectiveOrigin) {
-    return (int)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_performMakeCredentialWebAuthSecurityChecks(nativeRenderFrameHostAndroid, caller, relyingPartyId, effectiveOrigin);
+      RenderFrameHostImpl caller, String relyingPartyId, Origin effectiveOrigin,
+      boolean isPaymentCredentialCreation) {
+    return (int)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_performMakeCredentialWebAuthSecurityChecks(nativeRenderFrameHostAndroid, caller, relyingPartyId, effectiveOrigin, isPaymentCredentialCreation);
+  }
+
+  @Override
+  public int getLifecycleState(long nativeRenderFrameHostAndroid, RenderFrameHostImpl caller) {
+    return (int)GEN_JNI.org_chromium_content_browser_framehost_RenderFrameHostImpl_getLifecycleState(nativeRenderFrameHostAndroid, caller);
   }
 
   public static RenderFrameHostImpl.Natives get() {

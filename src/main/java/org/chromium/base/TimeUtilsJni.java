@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-public final class TimeUtilsJni implements TimeUtils.Natives {
+public class TimeUtilsJni implements TimeUtils.Natives {
   private static TimeUtils.Natives testInstance;
 
   public static final JniStaticTestMocker<TimeUtils.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.TimeUtils.Natives>() {

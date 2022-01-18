@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwCookieManagerJni implements AwCookieManager.Natives {
+class AwCookieManagerJni implements AwCookieManager.Natives {
   private static AwCookieManager.Natives testInstance;
 
   public static final JniStaticTestMocker<AwCookieManager.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwCookieManager.Natives>() {

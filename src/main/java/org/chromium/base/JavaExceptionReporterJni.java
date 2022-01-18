@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class JavaExceptionReporterJni implements JavaExceptionReporter.Natives {
+class JavaExceptionReporterJni implements JavaExceptionReporter.Natives {
   private static JavaExceptionReporter.Natives testInstance;
 
   public static final JniStaticTestMocker<JavaExceptionReporter.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.JavaExceptionReporter.Natives>() {

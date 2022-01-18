@@ -14,7 +14,7 @@ public interface ISafeModeService extends android.os.IInterface
     //     empty list will disable SafeMode.
     //
     // Only certain trusted (Google-managed) services are permitted to call this API, as determined
-    // by an allowlist. If the caller's UID does not match a trusted package (determiend by both
+    // by an allowlist. If the caller's UID does not match a trusted package (determined by both
     // package name and signing certificate, looked up via the system PackageManager),
     // SafeModeService will throw a SecurityException.
 
@@ -101,7 +101,7 @@ public interface ISafeModeService extends android.os.IInterface
       //     empty list will disable SafeMode.
       //
       // Only certain trusted (Google-managed) services are permitted to call this API, as determined
-      // by an allowlist. If the caller's UID does not match a trusted package (determiend by both
+      // by an allowlist. If the caller's UID does not match a trusted package (determined by both
       // package name and signing certificate, looked up via the system PackageManager),
       // SafeModeService will throw a SecurityException.
 
@@ -151,7 +151,7 @@ public interface ISafeModeService extends android.os.IInterface
   //     empty list will disable SafeMode.
   //
   // Only certain trusted (Google-managed) services are permitted to call this API, as determined
-  // by an allowlist. If the caller's UID does not match a trusted package (determiend by both
+  // by an allowlist. If the caller's UID does not match a trusted package (determined by both
   // package name and signing certificate, looked up via the system PackageManager),
   // SafeModeService will throw a SecurityException.
 

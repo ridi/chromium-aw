@@ -24,6 +24,9 @@ public final class VizFeatures {
     public static final String ENABLE_OVERLAY_PRIORITIZATION = "EnableOverlayPrioritization";
 
 
+    public static final String DELEGATED_COMPOSITING = "DelegatedCompositing";
+
+
     public static final String SIMPLE_FRAME_RATE_THROTTLING = "SimpleFrameRateThrottling";
 
     // Use the SkiaRenderer.
@@ -32,6 +35,11 @@ public final class VizFeatures {
     // Kill-switch to disable de-jelly, even if flags/properties indicate it should
     // be enabled.
     public static final String DISABLE_DE_JELLY = "DisableDeJelly";
+
+    // On platform and configuration where viz controls the allocation of frame
+    // buffers (ie SkiaOutputDeviceBufferQueue is used), allocate and release frame
+    // buffers on demand.
+    public static final String DYNAMIC_BUFFER_QUEUE_ALLOCATION = "DynamicBufferQueueAllocation";
 
     // When wide color gamut content from the web is encountered, promote our
     // display to wide color gamut if supported.
@@ -75,6 +83,11 @@ public final class VizFeatures {
     // Hardcoded as disabled for WebView to have a different default for
     // UseSurfaceLayerForVideo from chrome.
     public static final String USE_SURFACE_LAYER_FOR_VIDEO_DEFAULT = "UseSurfaceLayerForVideoDefault";
+
+    // Used by CC to throttle frame production of older surfaces. Used by the
+    // Browser to batch SurfaceSync calls sent to the Renderer for properties can
+    // change in close proximity to each other.
+    public static final String SURFACE_SYNC_THROTTLING = "SurfaceSyncThrottling";
 
     // Prevent instantiation.
     private VizFeatures() {}

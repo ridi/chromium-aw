@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class LibraryLoaderJni implements LibraryLoader.Natives {
+class LibraryLoaderJni implements LibraryLoader.Natives {
   private static LibraryLoader.Natives testInstance;
 
   public static final JniStaticTestMocker<LibraryLoader.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.library_loader.LibraryLoader.Natives>() {

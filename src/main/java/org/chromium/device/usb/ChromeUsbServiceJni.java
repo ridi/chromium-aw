@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ChromeUsbServiceJni implements ChromeUsbService.Natives {
+class ChromeUsbServiceJni implements ChromeUsbService.Natives {
   private static ChromeUsbService.Natives testInstance;
 
   public static final JniStaticTestMocker<ChromeUsbService.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.device.usb.ChromeUsbService.Natives>() {

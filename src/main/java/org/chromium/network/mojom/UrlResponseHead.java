@@ -73,6 +73,7 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
     public String[] dnsAliases;
     public org.chromium.url.mojom.Url webBundleUrl;
     public boolean hasAuthorizationCoveredByWildcardOnPreflight;
+    public boolean requestIncludeCredentials;
 
     private UrlResponseHead(int version) {
         super(STRUCT_SIZE, version);
@@ -103,6 +104,7 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         this.hasRangeRequested = (boolean) false;
         this.timingAllowPassed = (boolean) false;
         this.hasAuthorizationCoveredByWildcardOnPreflight = (boolean) false;
+        this.requestIncludeCredentials = (boolean) true;
     }
 
     public UrlResponseHead() {
@@ -238,6 +240,10 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 result.hasAuthorizationCoveredByWildcardOnPreflight = decoder0.readBoolean(54, 2);
+                }
+                {
+                    
+                result.requestIncludeCredentials = decoder0.readBoolean(54, 3);
                 }
                 {
                     
@@ -452,6 +458,8 @@ public final class UrlResponseHead extends org.chromium.mojo.bindings.Struct {
         encoder0.encode(this.timingAllowPassed, 54, 1);
         
         encoder0.encode(this.hasAuthorizationCoveredByWildcardOnPreflight, 54, 2);
+        
+        encoder0.encode(this.requestIncludeCredentials, 54, 3);
         
         encoder0.encode(this.contentLength, 56);
         

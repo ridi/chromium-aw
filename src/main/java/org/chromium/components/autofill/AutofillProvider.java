@@ -530,12 +530,16 @@ public class AutofillProvider {
      */
     @CalledByNative
     public void onTextFieldDidScroll(int index, float x, float y, float width, float height) {
-        // crbug.com/730764 - from P and above, Android framework listens to the onScrollChanged()
-        // and repositions the autofill UI automatically.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) return;
         if (mRequest == null) return;
 
         short sIndex = (short) index;
+        FormFieldData fieldData = mRequest.getField(sIndex);
+        if (fieldData != null) fieldData.updateBounds(new RectF(x, y, x + width, y + height));
+
+        // crbug.com/730764 - from P and above, Android framework listens to the onScrollChanged()
+        // and repositions the autofill UI automatically.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) return;
+
         FocusField focusField = mRequest.getFocusField();
         if (focusField == null || sIndex != focusField.fieldIndex) return;
 
@@ -697,7 +701,8 @@ public class AutofillProvider {
         for (int i = 0; i < mDatalistSuggestions.length; i++) {
             mDatalistSuggestions[i] = new AutofillSuggestion(datalistValues[i], datalistLabels[i],
                     /* itemTag= */ "", DropdownItem.NO_ICON, false /* isIconAtLeft */, i,
-                    false /* isDeletable */, false /* isMultilineLabel */, false /* isBoldLabel */);
+                    false /* isDeletable */, false /* isMultilineLabel */, false /* isBoldLabel */,
+                    /* featureForIPH= */ "");
         }
         if (mWebContentsAccessibility == null) {
             mWebContentsAccessibility = WebContentsAccessibility.fromWebContents(mWebContents);

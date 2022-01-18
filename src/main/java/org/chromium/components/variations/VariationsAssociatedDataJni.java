@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class VariationsAssociatedDataJni implements VariationsAssociatedData.Natives {
+class VariationsAssociatedDataJni implements VariationsAssociatedData.Natives {
   private static VariationsAssociatedData.Natives testInstance;
 
   public static final JniStaticTestMocker<VariationsAssociatedData.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.variations.VariationsAssociatedData.Natives>() {

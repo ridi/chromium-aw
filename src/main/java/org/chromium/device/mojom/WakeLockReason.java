@@ -16,7 +16,7 @@ package org.chromium.device.mojom;
 import androidx.annotation.IntDef;
 
 public final class WakeLockReason {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
     @IntDef({
 
         WakeLockReason.AUDIO_PLAYBACK,

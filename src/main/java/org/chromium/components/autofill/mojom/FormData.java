@@ -31,8 +31,8 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
     public boolean isActionEmpty;
     public org.chromium.url.internal.mojom.Origin mainFrameOrigin;
     public boolean isFormTag;
-    public LocalFrameToken hostFrame;
     public FormRendererId uniqueRendererId;
+    public FrameTokenWithPredecessor[] childFrames;
     public int submissionEvent;
     public FormFieldData[] fields;
     public FieldRendererId[] usernamePredictions;
@@ -140,12 +140,20 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(80, false);
-                result.hostFrame = LocalFrameToken.decode(decoder1);
+                result.uniqueRendererId = FormRendererId.decode(decoder1);
                 }
                 {
                     
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(88, false);
-                result.uniqueRendererId = FormRendererId.decode(decoder1);
+                {
+                    org.chromium.mojo.bindings.DataHeader si1 = decoder1.readDataHeaderForPointerArray(org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+                    result.childFrames = new FrameTokenWithPredecessor[si1.elementsOrVersion];
+                    for (int i1 = 0; i1 < si1.elementsOrVersion; ++i1) {
+                        
+                        org.chromium.mojo.bindings.Decoder decoder2 = decoder1.readPointer(org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i1, false);
+                        result.childFrames[i1] = FrameTokenWithPredecessor.decode(decoder2);
+                    }
+                }
                 }
                 {
                     
@@ -217,9 +225,17 @@ public final class FormData extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.mainFrameOrigin, 72, false);
         
-        encoder0.encode(this.hostFrame, 80, false);
+        encoder0.encode(this.uniqueRendererId, 80, false);
         
-        encoder0.encode(this.uniqueRendererId, 88, false);
+        if (this.childFrames == null) {
+            encoder0.encodeNullPointer(88, false);
+        } else {
+            org.chromium.mojo.bindings.Encoder encoder1 = encoder0.encodePointerArray(this.childFrames.length, 88, org.chromium.mojo.bindings.BindingsHelper.UNSPECIFIED_ARRAY_LENGTH);
+            for (int i0 = 0; i0 < this.childFrames.length; ++i0) {
+                
+                encoder1.encode(this.childFrames[i0], org.chromium.mojo.bindings.DataHeader.HEADER_SIZE + org.chromium.mojo.bindings.BindingsHelper.POINTER_SIZE * i0, false);
+            }
+        }
         
         if (this.fields == null) {
             encoder0.encodeNullPointer(96, false);

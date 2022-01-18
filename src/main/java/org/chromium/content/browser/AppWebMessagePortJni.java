@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AppWebMessagePortJni implements AppWebMessagePort.Natives {
+class AppWebMessagePortJni implements AppWebMessagePort.Natives {
   private static AppWebMessagePort.Natives testInstance;
 
   public static final JniStaticTestMocker<AppWebMessagePort.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.AppWebMessagePort.Natives>() {

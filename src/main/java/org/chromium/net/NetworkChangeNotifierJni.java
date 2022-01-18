@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class NetworkChangeNotifierJni implements NetworkChangeNotifier.Natives {
+class NetworkChangeNotifierJni implements NetworkChangeNotifier.Natives {
   private static NetworkChangeNotifier.Natives testInstance;
 
   public static final JniStaticTestMocker<NetworkChangeNotifier.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.net.NetworkChangeNotifier.Natives>() {

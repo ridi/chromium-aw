@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwPictureJni implements AwPicture.Natives {
+class AwPictureJni implements AwPicture.Natives {
   private static AwPicture.Natives testInstance;
 
   public static final JniStaticTestMocker<AwPicture.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.gfx.AwPicture.Natives>() {

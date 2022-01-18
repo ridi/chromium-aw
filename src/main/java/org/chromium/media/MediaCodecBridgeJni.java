@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class MediaCodecBridgeJni implements MediaCodecBridge.Natives {
+class MediaCodecBridgeJni implements MediaCodecBridge.Natives {
   private static MediaCodecBridge.Natives testInstance;
 
   public static final JniStaticTestMocker<MediaCodecBridge.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.MediaCodecBridge.Natives>() {

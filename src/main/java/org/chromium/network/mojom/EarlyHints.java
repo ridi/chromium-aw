@@ -18,10 +18,11 @@ import androidx.annotation.IntDef;
 
 public final class EarlyHints extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 16;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(16, 0)};
+    private static final int STRUCT_SIZE = 24;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(24, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public ParsedHeaders headers;
+    public int ipAddressSpace;
 
     private EarlyHints(int version) {
         super(STRUCT_SIZE, version);
@@ -61,6 +62,12 @@ public final class EarlyHints extends org.chromium.mojo.bindings.Struct {
                 org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(8, false);
                 result.headers = ParsedHeaders.decode(decoder1);
                 }
+                {
+                    
+                result.ipAddressSpace = decoder0.readInt(16);
+                    IpAddressSpace.validate(result.ipAddressSpace);
+                    result.ipAddressSpace = IpAddressSpace.toKnownValue(result.ipAddressSpace);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -74,5 +81,7 @@ public final class EarlyHints extends org.chromium.mojo.bindings.Struct {
         org.chromium.mojo.bindings.Encoder encoder0 = encoder.getEncoderAtDataOffset(DEFAULT_STRUCT_INFO);
         
         encoder0.encode(this.headers, 8, false);
+        
+        encoder0.encode(this.ipAddressSpace, 16);
     }
 }

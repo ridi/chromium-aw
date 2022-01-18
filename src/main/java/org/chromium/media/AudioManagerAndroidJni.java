@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AudioManagerAndroidJni implements AudioManagerAndroid.Natives {
+class AudioManagerAndroidJni implements AudioManagerAndroid.Natives {
   private static AudioManagerAndroid.Natives testInstance;
 
   public static final JniStaticTestMocker<AudioManagerAndroid.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.AudioManagerAndroid.Natives>() {

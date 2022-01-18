@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class JsReplyProxyJni implements JsReplyProxy.Natives {
+class JsReplyProxyJni implements JsReplyProxy.Natives {
   private static JsReplyProxy.Natives testInstance;
 
   public static final JniStaticTestMocker<JsReplyProxy.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.JsReplyProxy.Natives>() {

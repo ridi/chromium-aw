@@ -12,7 +12,7 @@ import org.chromium.content.common.SurfaceWrapper;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class GpuProcessCallbackJni implements GpuProcessCallback.Natives {
+class GpuProcessCallbackJni implements GpuProcessCallback.Natives {
   private static GpuProcessCallback.Natives testInstance;
 
   public static final JniStaticTestMocker<GpuProcessCallback.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.GpuProcessCallback.Natives>() {

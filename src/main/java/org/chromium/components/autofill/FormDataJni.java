@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class FormDataJni implements FormData.Natives {
+class FormDataJni implements FormData.Natives {
   private static FormData.Natives testInstance;
 
   public static final JniStaticTestMocker<FormData.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.autofill.FormData.Natives>() {

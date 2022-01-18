@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class SelectFileDialogJni implements SelectFileDialog.Natives {
+class SelectFileDialogJni implements SelectFileDialog.Natives {
   private static SelectFileDialog.Natives testInstance;
 
   public static final JniStaticTestMocker<SelectFileDialog.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.base.SelectFileDialog.Natives>() {

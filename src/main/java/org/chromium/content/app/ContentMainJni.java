@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class ContentMainJni implements ContentMain.Natives {
+class ContentMainJni implements ContentMain.Natives {
   private static ContentMain.Natives testInstance;
 
   public static final JniStaticTestMocker<ContentMain.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.app.ContentMain.Natives>() {

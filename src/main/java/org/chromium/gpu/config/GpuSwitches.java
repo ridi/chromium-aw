@@ -60,6 +60,9 @@ public final class GpuSwitches {
     // Enable validation layers in Dawn backends.
     public static final String ENABLE_DAWN_BACKEND_VALIDATION = "enable-dawn-backend-validation";
 
+    // Force all WebGPU content to run on the WebGPU/Compat (GLES) backend.
+    public static final String FORCE_WEB_GPU_COMPAT = "force-webgpu-compat";
+
     // Set the Dawn features(toggles) enabled on the creation of Dawn devices.
     public static final String ENABLE_DAWN_FEATURES = "enable-dawn-features";
 

@@ -24,10 +24,6 @@ public final class UiFeatures {
     // window occlusion detection - Windows-only.
     public static final String SCREEN_POWER_LISTENER_FOR_NATIVE_WIN_OCCLUSION = "ScreenPowerListenerForNativeWinOcclusion";
 
-    // Whether or not filenames are supported on the clipboard.
-    // https://crbug.com/1175483
-    public static final String CLIPBOARD_FILENAMES = "ClipboardFilenames";
-
     // Whether or not to delegate color queries to the color provider.
     public static final String COLOR_PROVIDER_REDIRECTION = "ColorProviderRedirection";
 
@@ -79,8 +75,11 @@ public final class UiFeatures {
     // native apps on Windows.
     public static final String EXPERIMENTAL_FLING_ANIMATION = "ExperimentalFlingAnimation";
 
+    // Cached in Java as well, make sure defaults are updated together.
+    public static final String ELASTIC_OVERSCROLL = "ElasticOverscroll";
 
-    public static final String ELASTIC_OVERSCROLL_WIN = "ElasticOverscrollWin";
+    // Enables focus follow follow cursor (sloppyfocus).
+    public static final String FOCUS_FOLLOWS_CURSOR = "FocusFollowsCursor";
 
     // Enables InputPane API for controlling on screen keyboard.
     public static final String INPUT_PANE_ON_SCREEN_KEYBOARD = "InputPaneOnScreenKeyboard";
@@ -104,9 +103,6 @@ public final class UiFeatures {
     // TODO(crbug.com/1179893): Remove after the customization app ships.
     public static final String DEPRECATE_ALT_BASED_SIX_PACK = "DeprecateAltBasedSixPack";
 
-    // Enables stylus appearing as touch when in contact with digitizer.
-    public static final String DIRECT_MANIPULATION_STYLUS = "DirectManipulationStylus";
-
     // Enables forced colors mode for web content.
     public static final String FORCED_COLORS = "ForcedColors";
 
@@ -114,12 +110,6 @@ public final class UiFeatures {
     // and Linux. This feature will be released for other platforms in later
     // milestones.
     public static final String EYE_DROPPER = "EyeDropper";
-
-
-    public static final String CSS_COLOR_SCHEME_UA_RENDERING = "CSSColorSchemeUARendering";
-
-
-    public static final String FORM_CONTROLS_REFRESH = "FormControlsRefresh";
 
     // Enable the common select popup.
     public static final String USE_COMMON_SELECT_POPUP = "UseCommonSelectPopup";

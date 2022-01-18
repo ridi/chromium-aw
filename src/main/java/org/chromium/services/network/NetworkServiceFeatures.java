@@ -65,6 +65,12 @@ public final class NetworkServiceFeatures {
     // network contention with high priority requests that may arrive soon.
     public static final String PROACTIVELY_THROTTLE_LOW_PRIORITY_REQUESTS = "ProactivelyThrottleLowPriorityRequests";
 
+    // Enables Cross-Origin-Embedder-Policy credentialless origin trial. It will be
+    // used as a kill switch during the experiment.
+    // Intent-to-experiment:
+    // https://groups.google.com/a/chromium.org/g/blink-dev/c/Sdc0G1bvKr0/m/YHR8RuWyAAAJ
+    public static final String CROSS_ORIGIN_EMBEDDER_POLICY_CREDENTIALLESS_ORIGIN_TRIAL = "CrossOriginEmbedderPolicyCredentiallessOriginTrial";
+
     // Enables Cross-Origin Opener Policy (COOP).
     // https://gist.github.com/annevk/6f2dd8c79c77123f39797f6bdac43f3e
     // https://html.spec.whatwg.org/#cross-origin-opener-policy
@@ -87,10 +93,6 @@ public final class NetworkServiceFeatures {
     // https://github.com/mikewest/coop-by-default/
     public static final String CROSS_ORIGIN_OPENER_POLICY_BY_DEFAULT = "CrossOriginOpenerPolicyByDefault";
 
-    // Enables the most recent developments on the crossOriginIsolated property.
-    // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/crossOriginIsolated
-    public static final String CROSS_ORIGIN_ISOLATED = "CrossOriginIsolated";
-
     // Enables or defaults splittup up server (not proxy) entries in the
     // HttpAuthCache.
     public static final String SPLIT_AUTH_CACHE_BY_NETWORK_ISOLATION_KEY = "SplitAuthCacheByNetworkIsolationKey";
@@ -108,9 +110,6 @@ public final class NetworkServiceFeatures {
     // https://fetch.spec.whatwg.org/#request-keepalive-flag). This is introduced
     // for investigation on the memory usage, and should not be enabled widely.
     public static final String DISABLE_KEEPALIVE_FETCH = "DisableKeepaliveFetch";
-
-    // See also https://crbug.com/920634
-    public static final String REQUEST_INITIATOR_SITE_LOCK_ENFOCEMENT = "RequestInitiatorSiteLockEnfocement";
 
     // Enables preprocessing requests with the Trust Tokens API Fetch flags set,
     // and handling their responses, according to the protocol.
@@ -131,6 +130,10 @@ public final class NetworkServiceFeatures {
 
 
     public static final String SCT_AUDITING_RETRY_AND_PERSIST_REPORTS = "SCTAuditingRetryAndPersistReports";
+
+    // This feature is used for tuning several loading-related data pipe
+    // parameters. See crbug.com/1041006.
+    public static final String LOADER_DATA_PIPE_TUNING_FEATURE = "LoaderDataPipeTuning";
 
     // Do not instantiate this class.
     private NetworkServiceFeatures() {}

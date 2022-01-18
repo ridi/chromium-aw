@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ViewConfigurationHelperJni implements ViewConfigurationHelper.Natives {
+class ViewConfigurationHelperJni implements ViewConfigurationHelper.Natives {
   private static ViewConfigurationHelper.Natives testInstance;
 
   public static final JniStaticTestMocker<ViewConfigurationHelper.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.gfx.ViewConfigurationHelper.Natives>() {

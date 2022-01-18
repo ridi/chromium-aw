@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class ExternalBeginFrameSourceAndroidJni implements ExternalBeginFrameSourceAndroid.Natives {
+class ExternalBeginFrameSourceAndroidJni implements ExternalBeginFrameSourceAndroid.Natives {
   private static ExternalBeginFrameSourceAndroid.Natives testInstance;
 
   public static final JniStaticTestMocker<ExternalBeginFrameSourceAndroid.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.viz.service.frame_sinks.ExternalBeginFrameSourceAndroid.Natives>() {

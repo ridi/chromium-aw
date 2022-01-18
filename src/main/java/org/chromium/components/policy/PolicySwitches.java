@@ -34,6 +34,12 @@ public final class PolicySwitches {
     // Set policy value by command line.
     public static final String CHROME_POLICY = "policy";
 
+    // Disables the verification of policy signing keys. It just works on Chrome OS
+    // test images and crashes otherwise.
+    // TODO(crbug.com/1225054): This flag might introduce security risks. Find a
+    // better solution to enable policy tast test for Family Link account.
+    public static final String DISABLE_POLICY_KEY_VERIFICATION = "disable-policy-key-verification";
+
     // Prevents instantiation.
     private PolicySwitches() {}
 }

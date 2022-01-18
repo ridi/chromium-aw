@@ -1,5 +1,5 @@
 
-// Copyright 2021 The Chromium Authors. All rights reserved.
+// Copyright 2022 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -30,7 +30,8 @@ import java.lang.annotation.RetentionPolicy;
     PopupItemId.ITEM_ID_ACCOUNT_STORAGE_PASSWORD_ENTRY,
     PopupItemId.ITEM_ID_ACCOUNT_STORAGE_USERNAME_ENTRY,
     PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_RE_SIGNIN,
-    PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_EMPTY, PopupItemId.ITEM_ID_MIXED_FORM_MESSAGE
+    PopupItemId.ITEM_ID_PASSWORD_ACCOUNT_STORAGE_EMPTY, PopupItemId.ITEM_ID_MIXED_FORM_MESSAGE,
+    PopupItemId.ITEM_ID_VIRTUAL_CREDIT_CARD_ENTRY
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface PopupItemId {
@@ -57,4 +58,5 @@ public @interface PopupItemId {
   int ITEM_ID_PASSWORD_ACCOUNT_STORAGE_RE_SIGNIN = -24;
   int ITEM_ID_PASSWORD_ACCOUNT_STORAGE_EMPTY = -25;
   int ITEM_ID_MIXED_FORM_MESSAGE = -26;
+  int ITEM_ID_VIRTUAL_CREDIT_CARD_ENTRY = -27;
 }

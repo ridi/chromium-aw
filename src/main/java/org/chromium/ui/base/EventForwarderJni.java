@@ -12,7 +12,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class EventForwarderJni implements EventForwarder.Natives {
+class EventForwarderJni implements EventForwarder.Natives {
   private static EventForwarder.Natives testInstance;
 
   public static final JniStaticTestMocker<EventForwarder.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.base.EventForwarder.Natives>() {

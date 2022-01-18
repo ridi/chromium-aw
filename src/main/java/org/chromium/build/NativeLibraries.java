@@ -19,5 +19,5 @@ public class NativeLibraries {
     // by LibraryLoader.java.
     public static final String[] LIBRARIES = {"standalonelibwebviewchromium"};
 
-    public static final int sCpuFamily = CPU_FAMILY_X86;
+    public static final int sCpuFamily = CPU_FAMILY_UNKNOWN;
 }

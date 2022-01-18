@@ -15,7 +15,7 @@ import org.chromium.url.Origin;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class NavigationControllerImplJni implements NavigationControllerImpl.Natives {
+class NavigationControllerImplJni implements NavigationControllerImpl.Natives {
   private static NavigationControllerImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<NavigationControllerImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.framehost.NavigationControllerImpl.Natives>() {
@@ -124,8 +124,9 @@ final class NavigationControllerImplJni implements NavigationControllerImpl.Nati
       String baseUrlForDataUrl, String virtualUrlForDataUrl, String dataUrlAsString,
       boolean canLoadLocalResources, boolean isRendererInitiated, boolean shouldReplaceCurrentEntry,
       Origin initiatorOrigin, boolean hasUserGesture, boolean shouldClearHistoryList,
-      long inputStart) {
-    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry, initiatorOrigin, hasUserGesture, shouldClearHistoryList, inputStart);
+      long inputStart, String sourcePackageName, String attributionSourceEventId,
+      String attributionDestination, String attributionReportTo, long attributionExpiry) {
+    GEN_JNI.org_chromium_content_browser_framehost_NavigationControllerImpl_loadUrl(nativeNavigationControllerAndroid, caller, url, loadUrlType, transitionType, referrerUrl, referrerPolicy, uaOverrideOption, extraHeaders, postData, baseUrlForDataUrl, virtualUrlForDataUrl, dataUrlAsString, canLoadLocalResources, isRendererInitiated, shouldReplaceCurrentEntry, initiatorOrigin, hasUserGesture, shouldClearHistoryList, inputStart, sourcePackageName, attributionSourceEventId, attributionDestination, attributionReportTo, attributionExpiry);
   }
 
   @Override

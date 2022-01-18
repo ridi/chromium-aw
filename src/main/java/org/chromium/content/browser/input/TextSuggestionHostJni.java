@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class TextSuggestionHostJni implements TextSuggestionHost.Natives {
+class TextSuggestionHostJni implements TextSuggestionHost.Natives {
   private static TextSuggestionHost.Natives testInstance;
 
   public static final JniStaticTestMocker<TextSuggestionHost.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.input.TextSuggestionHost.Natives>() {

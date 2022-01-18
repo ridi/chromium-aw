@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ChromeBluetoothAdapterJni implements ChromeBluetoothAdapter.Natives {
+class ChromeBluetoothAdapterJni implements ChromeBluetoothAdapter.Natives {
   private static ChromeBluetoothAdapter.Natives testInstance;
 
   public static final JniStaticTestMocker<ChromeBluetoothAdapter.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.device.bluetooth.ChromeBluetoothAdapter.Natives>() {

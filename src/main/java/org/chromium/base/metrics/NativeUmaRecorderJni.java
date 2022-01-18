@@ -12,7 +12,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class NativeUmaRecorderJni implements NativeUmaRecorder.Natives {
+class NativeUmaRecorderJni implements NativeUmaRecorder.Natives {
   private static NativeUmaRecorder.Natives testInstance;
 
   public static final JniStaticTestMocker<NativeUmaRecorder.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.metrics.NativeUmaRecorder.Natives>() {

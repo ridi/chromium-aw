@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwGLFunctorJni implements AwGLFunctor.Natives {
+class AwGLFunctorJni implements AwGLFunctor.Natives {
   private static AwGLFunctor.Natives testInstance;
 
   public static final JniStaticTestMocker<AwGLFunctor.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.gfx.AwGLFunctor.Natives>() {

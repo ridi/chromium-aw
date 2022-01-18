@@ -13,7 +13,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class MediaDrmStorageBridgeJni implements MediaDrmStorageBridge.Natives {
+class MediaDrmStorageBridgeJni implements MediaDrmStorageBridge.Natives {
   private static MediaDrmStorageBridge.Natives testInstance;
 
   public static final JniStaticTestMocker<MediaDrmStorageBridge.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.MediaDrmStorageBridge.Natives>() {

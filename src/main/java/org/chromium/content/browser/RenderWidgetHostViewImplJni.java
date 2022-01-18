@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class RenderWidgetHostViewImplJni implements RenderWidgetHostViewImpl.Natives {
+class RenderWidgetHostViewImplJni implements RenderWidgetHostViewImpl.Natives {
   private static RenderWidgetHostViewImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<RenderWidgetHostViewImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.RenderWidgetHostViewImpl.Natives>() {

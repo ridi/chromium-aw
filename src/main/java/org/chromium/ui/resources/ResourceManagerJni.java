@@ -12,7 +12,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class ResourceManagerJni implements ResourceManager.Natives {
+class ResourceManagerJni implements ResourceManager.Natives {
   private static ResourceManager.Natives testInstance;
 
   public static final JniStaticTestMocker<ResourceManager.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.resources.ResourceManager.Natives>() {

@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwFormDatabaseJni implements AwFormDatabase.Natives {
+class AwFormDatabaseJni implements AwFormDatabase.Natives {
   private static AwFormDatabase.Natives testInstance;
 
   public static final JniStaticTestMocker<AwFormDatabase.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwFormDatabase.Natives>() {

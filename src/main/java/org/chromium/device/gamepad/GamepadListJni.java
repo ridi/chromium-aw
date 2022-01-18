@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class GamepadListJni implements GamepadList.Natives {
+class GamepadListJni implements GamepadList.Natives {
   private static GamepadList.Natives testInstance;
 
   public static final JniStaticTestMocker<GamepadList.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.device.gamepad.GamepadList.Natives>() {

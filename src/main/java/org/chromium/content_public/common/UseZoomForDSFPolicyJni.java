@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class UseZoomForDSFPolicyJni implements UseZoomForDSFPolicy.Natives {
+class UseZoomForDSFPolicyJni implements UseZoomForDSFPolicy.Natives {
   private static UseZoomForDSFPolicy.Natives testInstance;
 
   public static final JniStaticTestMocker<UseZoomForDSFPolicy.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content_public.common.UseZoomForDSFPolicy.Natives>() {

@@ -13,7 +13,7 @@ import org.chromium.content_public.browser.WebContents;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class WebContentsAccessibilityImplJni implements WebContentsAccessibilityImpl.Natives {
+class WebContentsAccessibilityImplJni implements WebContentsAccessibilityImpl.Natives {
   private static WebContentsAccessibilityImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<WebContentsAccessibilityImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.accessibility.WebContentsAccessibilityImpl.Natives>() {

@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class DisplayAndroidManagerJni implements DisplayAndroidManager.Natives {
+class DisplayAndroidManagerJni implements DisplayAndroidManager.Natives {
   private static DisplayAndroidManager.Natives testInstance;
 
   public static final JniStaticTestMocker<DisplayAndroidManager.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.display.DisplayAndroidManager.Natives>() {

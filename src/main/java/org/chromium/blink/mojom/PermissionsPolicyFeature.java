@@ -76,7 +76,8 @@ public final class PermissionsPolicyFeature {
         PermissionsPolicyFeature.SHARED_AUTOFILL,
         PermissionsPolicyFeature.DIRECT_SOCKETS,
         PermissionsPolicyFeature.CLIENT_HINT_PREFERS_COLOR_SCHEME,
-        PermissionsPolicyFeature.WINDOW_PLACEMENT})
+        PermissionsPolicyFeature.WINDOW_PLACEMENT,
+        PermissionsPolicyFeature.CLIENT_HINT_UA_BITNESS})
     public @interface EnumType {}
 
     public static final int NOT_FOUND = 0;
@@ -137,8 +138,9 @@ public final class PermissionsPolicyFeature {
     public static final int DIRECT_SOCKETS = 84;
     public static final int CLIENT_HINT_PREFERS_COLOR_SCHEME = 85;
     public static final int WINDOW_PLACEMENT = 86;
+    public static final int CLIENT_HINT_UA_BITNESS = 87;
     public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 86;
+    public static final int MAX_VALUE = 87;
 
     public static boolean isKnownValue(int value) {
         switch (value) {
@@ -200,6 +202,7 @@ public final class PermissionsPolicyFeature {
             case 84:
             case 85:
             case 86:
+            case 87:
                 return true;
         }
         return false;

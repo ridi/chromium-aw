@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class VariationsSeedLoaderJni implements VariationsSeedLoader.Natives {
+class VariationsSeedLoaderJni implements VariationsSeedLoader.Natives {
   private static VariationsSeedLoader.Natives testInstance;
 
   public static final JniStaticTestMocker<VariationsSeedLoader.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.variations.VariationsSeedLoader.Natives>() {

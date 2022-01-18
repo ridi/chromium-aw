@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class WebContentsObserverProxyJni implements WebContentsObserverProxy.Natives {
+class WebContentsObserverProxyJni implements WebContentsObserverProxy.Natives {
   private static WebContentsObserverProxy.Natives testInstance;
 
   public static final JniStaticTestMocker<WebContentsObserverProxy.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.webcontents.WebContentsObserverProxy.Natives>() {

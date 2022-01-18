@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class PopupTouchHandleDrawableJni implements PopupTouchHandleDrawable.Natives {
+class PopupTouchHandleDrawableJni implements PopupTouchHandleDrawable.Natives {
   private static PopupTouchHandleDrawable.Natives testInstance;
 
   public static final JniStaticTestMocker<PopupTouchHandleDrawable.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.PopupTouchHandleDrawable.Natives>() {

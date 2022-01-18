@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class LoadUrlParamsJni implements LoadUrlParams.Natives {
+class LoadUrlParamsJni implements LoadUrlParams.Natives {
   private static LoadUrlParams.Natives testInstance;
 
   public static final JniStaticTestMocker<LoadUrlParams.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content_public.browser.LoadUrlParams.Natives>() {

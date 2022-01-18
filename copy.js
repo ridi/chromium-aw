@@ -201,6 +201,7 @@ const tasks = [
           'BlobReaderClient.java',
           'BlobReaderClient_Internal.java',
           'ContactIconBlob.java',
+          'PaymentOptions.java',
           'RemoteArrayType.java',
           'RemoteInvocationArgument.java',
           'RemoteInvocationError.java',
@@ -238,6 +239,7 @@ const tasks = [
           'FileSystemAccessTransferToken.java',
           'FileSystemAccessTransferToken_Internal.java',
           'FocusType.java',
+          'Impression.java',
           'NativeFileSystemDragDropToken.java',
           'NativeFileSystemDragDropToken_Internal.java',
           'NativeFileSystemTransferToken.java',
@@ -290,7 +292,9 @@ const tasks = [
     action: Action.COPY,
     src: [
       'src/components/android_autofill/android/java/src/org/chromium/components/autofill',
+      'src/components/android_autofill/browser/java/src/org/chromium/components/autofill',
       `src/out/${delegateTarget}/gen/components/android_autofill/android/java/generated_java/input_srcjars/org/chromium/components/autofill`,
+      `src/out/${delegateTarget}/gen/components/android_autofill/browser/java/generated_java/input_srcjars/org/chromium/components/autofill`,
       'src/components/autofill/android/java/src/org/chromium/components/autofill',
       'src/components/autofill/android/provider/java/src/org/chromium/components/autofill',
       'src/components/autofill/android/provider/src/org/chromium/components/autofill',
@@ -325,9 +329,11 @@ const tasks = [
     action: Action.COPY,
     src: [
       'src/components/android_autofill/android/java/src/org/chromium/components/autofill_public',
+      'src/components/android_autofill/browser/java/src/org/chromium/components/autofill_public',
       'src/components/autofill/android/provider/java/src/org/chromium/components/autofill_public',
       'src/components/autofill/android/provider/src/org/chromium/components/autofill_public',
       `src/out/${delegateTarget}/gen/components/android_autofill/android/java/generated_java/input_srcjars/org/chromium/components/autofill_public`,
+      `src/out/${delegateTarget}/gen/components/android_autofill/browser/java/generated_java/input_srcjars/org/chromium/components/autofill_public`,
       `src/out/${delegateTarget}/gen/components/autofill/android/provider/java/generated_java/input_srcjars/org/chromium/components/autofill_public`,
     ],
     dest: 'src/main/java/org/chromium/components/autofill_public',
@@ -468,6 +474,14 @@ const tasks = [
       `src/out/${delegateTarget}/gen/components/policy/android/policy_java/generated_java/input_srcjars/org/chromium/components/policy`,
     ],
     dest: 'src/main/java/org/chromium/components/policy',
+  },
+  {
+    name: 'power_scheduler',
+    action: Action.COPY,
+    src: [
+      `src/out/${delegateTarget}/gen/components/power_scheduler/power_scheduler_java/generated_java/input_srcjars/org/chromium/components/power_scheduler`,
+    ],
+    dest: 'src/main/java/org/chromium/components/power_scheduler',
   },
   {
     name: 'components/safe_browsing',
@@ -980,6 +994,7 @@ const tasks = [
           'HttpRawRequestResponseInfo.java',
           'HttpRequestHeaderKeyValuePair.java',
           'HttpRequestHeaders.java',
+          'IpAddressSpace.java',
           'LinkAsAttribute.java',
           'LinkHeader.java',
           'LinkRelAttribute.java',
@@ -1022,6 +1037,12 @@ const tasks = [
     action: Action.COPY,
     src: [
       `src/out/${delegateTarget}/gen/components/payments/mojom/mojom_java/generated_java/input_srcjars/org/chromium/payments/mojom`,
+      [
+        `src/out/${delegateTarget}/gen/third_party/blink/public/mojom/android_mojo_bindings_java/generated_java/input_srcjars/org/chromium/payments/mojom`,
+        [
+          'PaymentCredentialInstrument.java',
+        ],
+      ],
     ],
     dest: 'src/main/java/org/chromium/payments/mojom',
   },

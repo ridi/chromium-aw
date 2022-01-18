@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class BrowserAccessibilityStateJni implements BrowserAccessibilityState.Natives {
+class BrowserAccessibilityStateJni implements BrowserAccessibilityState.Natives {
   private static BrowserAccessibilityState.Natives testInstance;
 
   public static final JniStaticTestMocker<BrowserAccessibilityState.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.accessibility.BrowserAccessibilityState.Natives>() {

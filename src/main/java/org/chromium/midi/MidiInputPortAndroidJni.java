@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class MidiInputPortAndroidJni implements MidiInputPortAndroid.Natives {
+class MidiInputPortAndroidJni implements MidiInputPortAndroid.Natives {
   private static MidiInputPortAndroid.Natives testInstance;
 
   public static final JniStaticTestMocker<MidiInputPortAndroid.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.midi.MidiInputPortAndroid.Natives>() {

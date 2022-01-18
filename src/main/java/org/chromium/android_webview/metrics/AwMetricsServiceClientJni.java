@@ -2,6 +2,7 @@ package org.chromium.android_webview.metrics;
 
 import java.lang.Override;
 import java.lang.Runnable;
+import java.lang.String;
 import javax.annotation.Generated;
 import org.chromium.base.JniStaticTestMocker;
 import org.chromium.base.NativeLibraryLoadedStatus;
@@ -10,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwMetricsServiceClientJni implements AwMetricsServiceClient.Natives {
+class AwMetricsServiceClientJni implements AwMetricsServiceClient.Natives {
   private static AwMetricsServiceClient.Natives testInstance;
 
   public static final JniStaticTestMocker<AwMetricsServiceClient.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.metrics.AwMetricsServiceClient.Natives>() {
@@ -42,6 +43,11 @@ final class AwMetricsServiceClientJni implements AwMetricsServiceClient.Natives 
   @Override
   public void setOnFinalMetricsCollectedListenerForTesting(Runnable listener) {
     GEN_JNI.org_chromium_android_1webview_metrics_AwMetricsServiceClient_setOnFinalMetricsCollectedListenerForTesting(listener);
+  }
+
+  @Override
+  public void setAppPackageNameLoggingRuleForTesting(String version, long expiryDateMs) {
+    GEN_JNI.org_chromium_android_1webview_metrics_AwMetricsServiceClient_setAppPackageNameLoggingRuleForTesting(version, expiryDateMs);
   }
 
   public static AwMetricsServiceClient.Natives get() {

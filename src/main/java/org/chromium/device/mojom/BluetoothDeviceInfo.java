@@ -111,9 +111,11 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
     public boolean isPaired;
     public int deviceType;
     public BluetoothDeviceBatteryInfo batteryInfo;
+    public boolean isBlockedByPolicy;
 
     private BluetoothDeviceInfo(int version) {
         super(STRUCT_SIZE, version);
+        this.isBlockedByPolicy = (boolean) false;
     }
 
     public BluetoothDeviceInfo() {
@@ -166,6 +168,10 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
                 }
                 {
                     
+                result.isBlockedByPolicy = decoder0.readBoolean(28, 1);
+                }
+                {
+                    
                 result.deviceType = decoder0.readInt(32);
                     BluetoothDeviceInfo.DeviceType.validate(result.deviceType);
                     result.deviceType = BluetoothDeviceInfo.DeviceType.toKnownValue(result.deviceType);
@@ -194,6 +200,8 @@ public final class BluetoothDeviceInfo extends org.chromium.mojo.bindings.Struct
         encoder0.encode(this.connectionState, 24);
         
         encoder0.encode(this.isPaired, 28, 0);
+        
+        encoder0.encode(this.isBlockedByPolicy, 28, 1);
         
         encoder0.encode(this.deviceType, 32);
         

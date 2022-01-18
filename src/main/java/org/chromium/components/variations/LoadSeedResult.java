@@ -1,5 +1,5 @@
 
-// Copyright 2021 The Chromium Authors. All rights reserved.
+// Copyright 2022 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -16,16 +16,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @IntDef({
-    LoadSeedResult.SUCCESS, LoadSeedResult.EMPTY, LoadSeedResult.CORRUPT,
-    LoadSeedResult.INVALID_SIGNATURE, LoadSeedResult.CORRUPT_BASE64,
-    LoadSeedResult.CORRUPT_PROTOBUF, LoadSeedResult.CORRUPT_GZIP, LoadSeedResult.LOAD_TIMED_OUT,
-    LoadSeedResult.LOAD_INTERRUPTED, LoadSeedResult.LOAD_OTHER_FAILURE, LoadSeedResult.ENUM_SIZE
+    LoadSeedResult.SUCCESS, LoadSeedResult.EMPTY, LoadSeedResult.INVALID_SIGNATURE,
+    LoadSeedResult.CORRUPT_BASE64, LoadSeedResult.CORRUPT_PROTOBUF, LoadSeedResult.CORRUPT_GZIP,
+    LoadSeedResult.LOAD_TIMED_OUT, LoadSeedResult.LOAD_INTERRUPTED,
+    LoadSeedResult.LOAD_OTHER_FAILURE, LoadSeedResult.MAX_VALUE
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface LoadSeedResult {
   int SUCCESS = 0;
   int EMPTY = 1;
-  int CORRUPT = 2;
+  /**
+   * kCorrupt = 2,  // Deprecated.
+   */
   int INVALID_SIGNATURE = 3;
   int CORRUPT_BASE64 = 4;
   int CORRUPT_PROTOBUF = 5;
@@ -33,5 +35,5 @@ public @interface LoadSeedResult {
   int LOAD_TIMED_OUT = 7;
   int LOAD_INTERRUPTED = 8;
   int LOAD_OTHER_FAILURE = 9;
-  int ENUM_SIZE = 10;
+  int MAX_VALUE = LOAD_OTHER_FAILURE;
 }

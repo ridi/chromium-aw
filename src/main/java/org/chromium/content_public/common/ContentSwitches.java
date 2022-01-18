@@ -131,6 +131,9 @@ public final class ContentSwitches {
     // Disable gpu-accelerated 2d canvas.
     public static final String DISABLE_ACCELERATED2D_CANVAS = "disable-accelerated-2d-canvas";
 
+    // Enable in-progress canvas 2d API methods BeginLayer and EndLayer.
+    public static final String ENABLE_CANVAS2D_LAYERS = "canvas-2d-layers";
+
     // Enable in-progress canvas 2d API features.
     public static final String ENABLE_NEW_CANVAS2DAPI = "new-canvas-2d-api";
 
@@ -476,6 +479,10 @@ public final class ContentSwitches {
     // only to run web-platform-tests on content shell.
     // Removal of this deprecated API is blocked on crbug.com/937369.
     public static final String ENABLE_WEB_AUTH_DEPRECATED_MOJO_TESTING_API = "enable-web-auth-deprecated-mojo-testing-api";
+
+    // Enables WebGL developer extensions which are not generally exposed
+    // to the web platform.
+    public static final String ENABLE_WEB_GL_DEVELOPER_EXTENSIONS = "enable-webgl-developer-extensions";
 
     // Enables WebGL extensions not yet approved by the community.
     public static final String ENABLE_WEB_GL_DRAFT_EXTENSIONS = "enable-webgl-draft-extensions";
@@ -864,9 +871,6 @@ public final class ContentSwitches {
     // TODO(https://crbug.com/954201): Remove this.
     public static final String ENABLE_WEB_RTC_SRTP_ENCRYPTED_HEADERS = "enable-webrtc-srtp-encrypted-headers";
 
-    // Enables Origin header in Stun messages for WebRTC.
-    public static final String ENABLE_WEB_RTC_STUN_ORIGIN = "enable-webrtc-stun-origin";
-
     // Enforce IP Permission check. TODO(guoweis): Remove this once the feature is
     // not under finch and becomes the default.
     public static final String ENFORCE_WEB_RTC_IP_PERMISSION_CHECK = "enforce-webrtc-ip-permission-check";
@@ -916,12 +920,6 @@ public final class ContentSwitches {
     // Disable Media Session API
     public static final String DISABLE_MEDIA_SESSION_API = "disable-media-session-api";
 
-    // Disable overscroll edge effects like those found in Android views.
-    public static final String DISABLE_OVERSCROLL_EDGE_EFFECT = "disable-overscroll-edge-effect";
-
-    // Disable the pull-to-refresh effect when vertically overscrolling content.
-    public static final String DISABLE_PULL_TO_REFRESH_EFFECT = "disable-pull-to-refresh-effect";
-
     // Disable the locking feature of the screen orientation API.
     public static final String DISABLE_SCREEN_ORIENTATION_LOCK = "disable-screen-orientation-lock";
 
@@ -952,9 +950,6 @@ public final class ContentSwitches {
 
     // Disables debug crash dumps for OOPR.
     public static final String DISABLE_OOPR_DEBUG_CRASH_DUMP = "disable-oopr-debug-crash-dump";
-
-    // Enable the experimental Accessibility Object Model APIs in development.
-    public static final String ENABLE_ACCESSIBILITY_OBJECT_MODEL = "enable-accessibility-object-model";
 
     // Enable the aggressive flushing of DOM Storage to minimize data loss.
     public static final String ENABLE_AGGRESSIVE_DOM_STORAGE_FLUSHING = "enable-aggressive-domstorage-flushing";

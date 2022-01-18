@@ -11,7 +11,7 @@ import org.chromium.url.GURL;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-public final class UrlUtilitiesJni implements UrlUtilities.Natives {
+public class UrlUtilitiesJni implements UrlUtilities.Natives {
   private static UrlUtilities.Natives testInstance;
 
   public static final JniStaticTestMocker<UrlUtilities.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.embedder_support.util.UrlUtilities.Natives>() {

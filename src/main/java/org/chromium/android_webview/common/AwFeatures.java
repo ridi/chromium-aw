@@ -24,10 +24,6 @@ public final class AwFeatures {
     // Feature is checked and used in downstream internal code.
     public static final String WEBVIEW_CONNECTIONLESS_SAFE_BROWSING = "WebViewConnectionlessSafeBrowsing";
 
-    // Restricts WebView child processes to use only LITTLE cores on big.LITTLE
-    // architectures.
-    public static final String WEBVIEW_CPU_AFFINITY_RESTRICT_TO_LITTLE_CORES = "WebViewCpuAffinityRestrictToLittleCores";
-
     // Enable display cutout support for Android P and above.
     public static final String WEBVIEW_DISPLAY_CUTOUT = "WebViewDisplayCutout";
 
@@ -56,12 +52,9 @@ public final class AwFeatures {
     // Field trial feature for controlling support of Origin Trials on WebView.
     public static final String WEBVIEW_ORIGIN_TRIALS = "WebViewOriginTrials";
 
-    // Enables package name logging for the most popular WebView embedders.
-    public static final String WEBVIEW_PACKAGE_NAME_LOGGING = "WebViewPackageNameLogging";
-
-    // Restricts all of WebView's out-of-process renderer threads to use only LITTLE
-    // cores on big.LITTLE architectures when the power mode is idle.
-    public static final String WEBVIEW_POWER_SCHEDULER_THROTTLE_IDLE = "WebViewPowerSchedulerThrottleIdle";
+    // Enables package name logging for the most popular WebView embedders that are
+    // on a dynamically generated allowlist.
+    public static final String WEBVIEW_APPS_PACKAGE_NAMES_ALLOWLIST = "WebViewAppsPackageNamesAllowlist";
 
     // Disallows window.{alert, prompt, confirm} if triggered inside a subframe that
     // is not same origin with the main frame.

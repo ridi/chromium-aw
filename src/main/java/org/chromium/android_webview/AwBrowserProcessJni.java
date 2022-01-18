@@ -11,7 +11,7 @@ import org.chromium.components.component_updater.ComponentLoaderPolicyBridge;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwBrowserProcessJni implements AwBrowserProcess.Natives {
+class AwBrowserProcessJni implements AwBrowserProcess.Natives {
   private static AwBrowserProcess.Natives testInstance;
 
   public static final JniStaticTestMocker<AwBrowserProcess.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwBrowserProcess.Natives>() {

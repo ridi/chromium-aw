@@ -58,6 +58,9 @@ public final class GpuFeatures {
     // Enables the use of out of process rasterization for canvas.
     public static final String CANVAS_OOP_RASTERIZATION = "CanvasOopRasterization";
 
+    // Enables the use of ANGLE validation for non-WebGL contexts.
+    public static final String DEFAULT_ENABLE_ANGLE_VALIDATION = "DefaultEnableANGLEValidation";
+
     // Use a high priority for GPU process on Windows.
     public static final String GPU_PROCESS_HIGH_PRIORITY_WIN = "GpuProcessHighPriorityWin";
 
@@ -92,6 +95,9 @@ public final class GpuFeatures {
     // --use-vulkan will be followed.
     // Note Android WebView uses kWebViewVulkan instead of this.
     public static final String VULKAN = "Vulkan";
+
+
+    public static final String ENABLE_DR_DC = "EnableDrDc";
 
     // Enable SkiaRenderer Dawn graphics backend. On Windows this will use D3D12,
     // and on Linux this will use Vulkan.

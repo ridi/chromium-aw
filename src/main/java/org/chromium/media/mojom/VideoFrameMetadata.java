@@ -43,6 +43,7 @@ public final class VideoFrameMetadata extends org.chromium.mojo.bindings.Struct 
     public boolean hwProtected;
     public org.chromium.mojo_base.mojom.UnguessableToken overlayPlaneId;
     public boolean powerEfficient;
+    public boolean textureOriginIsTopLeft;
     public boolean hasDeviceScaleFactor;
     public double deviceScaleFactor;
     public boolean hasPageScaleFactor;
@@ -145,27 +146,31 @@ public final class VideoFrameMetadata extends org.chromium.mojo.bindings.Struct 
                 }
                 {
                     
-                result.hasDeviceScaleFactor = decoder0.readBoolean(9, 4);
+                result.textureOriginIsTopLeft = decoder0.readBoolean(9, 4);
                 }
                 {
                     
-                result.hasPageScaleFactor = decoder0.readBoolean(9, 5);
+                result.hasDeviceScaleFactor = decoder0.readBoolean(9, 5);
                 }
                 {
                     
-                result.hasRootScrollOffsetX = decoder0.readBoolean(9, 6);
+                result.hasPageScaleFactor = decoder0.readBoolean(9, 6);
                 }
                 {
                     
-                result.hasRootScrollOffsetY = decoder0.readBoolean(9, 7);
+                result.hasRootScrollOffsetX = decoder0.readBoolean(9, 7);
                 }
                 {
                     
-                result.hasTopControlsVisibleHeight = decoder0.readBoolean(10, 0);
+                result.hasRootScrollOffsetY = decoder0.readBoolean(10, 0);
                 }
                 {
                     
-                result.hasRtpTimestamp = decoder0.readBoolean(10, 1);
+                result.hasTopControlsVisibleHeight = decoder0.readBoolean(10, 1);
+                }
+                {
+                    
+                result.hasRtpTimestamp = decoder0.readBoolean(10, 2);
                 }
                 {
                     
@@ -305,17 +310,19 @@ public final class VideoFrameMetadata extends org.chromium.mojo.bindings.Struct 
         
         encoder0.encode(this.powerEfficient, 9, 3);
         
-        encoder0.encode(this.hasDeviceScaleFactor, 9, 4);
+        encoder0.encode(this.textureOriginIsTopLeft, 9, 4);
         
-        encoder0.encode(this.hasPageScaleFactor, 9, 5);
+        encoder0.encode(this.hasDeviceScaleFactor, 9, 5);
         
-        encoder0.encode(this.hasRootScrollOffsetX, 9, 6);
+        encoder0.encode(this.hasPageScaleFactor, 9, 6);
         
-        encoder0.encode(this.hasRootScrollOffsetY, 9, 7);
+        encoder0.encode(this.hasRootScrollOffsetX, 9, 7);
         
-        encoder0.encode(this.hasTopControlsVisibleHeight, 10, 0);
+        encoder0.encode(this.hasRootScrollOffsetY, 10, 0);
         
-        encoder0.encode(this.hasRtpTimestamp, 10, 1);
+        encoder0.encode(this.hasTopControlsVisibleHeight, 10, 1);
+        
+        encoder0.encode(this.hasRtpTimestamp, 10, 2);
         
         encoder0.encode(this.captureCounter, 12);
         

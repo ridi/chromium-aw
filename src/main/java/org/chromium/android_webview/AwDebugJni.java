@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwDebugJni implements AwDebug.Natives {
+class AwDebugJni implements AwDebug.Natives {
   private static AwDebug.Natives testInstance;
 
   public static final JniStaticTestMocker<AwDebug.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwDebug.Natives>() {

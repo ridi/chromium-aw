@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwPacProcessorJni implements AwPacProcessor.Natives {
+class AwPacProcessorJni implements AwPacProcessor.Natives {
   private static AwPacProcessor.Natives testInstance;
 
   public static final JniStaticTestMocker<AwPacProcessor.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwPacProcessor.Natives>() {

@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ContentViewStaticsImplJni implements ContentViewStaticsImpl.Natives {
+class ContentViewStaticsImplJni implements ContentViewStaticsImpl.Natives {
   private static ContentViewStaticsImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<ContentViewStaticsImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.ContentViewStaticsImpl.Natives>() {

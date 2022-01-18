@@ -16,7 +16,7 @@ package org.chromium.device.mojom;
 import androidx.annotation.IntDef;
 
 public final class WakeLockType {
-    private static final boolean IS_EXTENSIBLE = false;
+    private static final boolean IS_EXTENSIBLE = true;
     @IntDef({
 
         WakeLockType.PREVENT_APP_SUSPENSION,

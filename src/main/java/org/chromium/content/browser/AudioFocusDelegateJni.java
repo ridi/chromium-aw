@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AudioFocusDelegateJni implements AudioFocusDelegate.Natives {
+class AudioFocusDelegateJni implements AudioFocusDelegate.Natives {
   private static AudioFocusDelegate.Natives testInstance;
 
   public static final JniStaticTestMocker<AudioFocusDelegate.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.AudioFocusDelegate.Natives>() {

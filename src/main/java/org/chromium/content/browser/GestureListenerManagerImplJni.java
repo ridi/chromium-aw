@@ -10,7 +10,7 @@ import org.chromium.content.browser.webcontents.WebContentsImpl;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class GestureListenerManagerImplJni implements GestureListenerManagerImpl.Natives {
+class GestureListenerManagerImplJni implements GestureListenerManagerImpl.Natives {
   private static GestureListenerManagerImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<GestureListenerManagerImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.GestureListenerManagerImpl.Natives>() {

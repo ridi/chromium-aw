@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ProxyChangeListenerJni implements ProxyChangeListener.Natives {
+class ProxyChangeListenerJni implements ProxyChangeListener.Natives {
   private static ProxyChangeListener.Natives testInstance;
 
   public static final JniStaticTestMocker<ProxyChangeListener.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.net.ProxyChangeListener.Natives>() {

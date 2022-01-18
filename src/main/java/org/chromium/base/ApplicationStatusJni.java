@@ -7,7 +7,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ApplicationStatusJni implements ApplicationStatus.Natives {
+class ApplicationStatusJni implements ApplicationStatus.Natives {
   private static ApplicationStatus.Natives testInstance;
 
   public static final JniStaticTestMocker<ApplicationStatus.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.ApplicationStatus.Natives>() {

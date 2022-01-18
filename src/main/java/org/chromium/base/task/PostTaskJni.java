@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class PostTaskJni implements PostTask.Natives {
+class PostTaskJni implements PostTask.Natives {
   private static PostTask.Natives testInstance;
 
   public static final JniStaticTestMocker<PostTask.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.task.PostTask.Natives>() {

@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class SysUtilsJni implements SysUtils.Natives {
+class SysUtilsJni implements SysUtils.Natives {
   private static SysUtils.Natives testInstance;
 
   public static final JniStaticTestMocker<SysUtils.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.SysUtils.Natives>() {

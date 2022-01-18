@@ -117,6 +117,9 @@ public final class CcSwitches {
     // Switches the ui compositor to use layer lists instead of layer trees.
     public static final String UI_ENABLE_LAYER_LISTS = "ui-enable-layer-lists";
 
+    // Enables the resume method on animated images.
+    public static final String ANIMATED_IMAGE_RESUME = "animated-image-resume";
+
     // Allows scaling clipped images in GpuImageDecodeCache. Note that this may
     // cause color-bleeding.
     // TODO(crbug.com/1157548): Remove this workaround flag once the underlying

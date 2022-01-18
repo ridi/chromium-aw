@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class UsbMidiDeviceAndroidJni implements UsbMidiDeviceAndroid.Natives {
+class UsbMidiDeviceAndroidJni implements UsbMidiDeviceAndroid.Natives {
   private static UsbMidiDeviceAndroid.Natives testInstance;
 
   public static final JniStaticTestMocker<UsbMidiDeviceAndroid.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.midi.UsbMidiDeviceAndroid.Natives>() {

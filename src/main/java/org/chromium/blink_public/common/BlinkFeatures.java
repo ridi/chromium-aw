@@ -21,28 +21,23 @@ public final class BlinkFeatures {
     // frame without user activation.
     public static final String BLOCKING_DOWNLOADS_IN_AD_FRAME_WITHOUT_USER_ACTIVATION = "BlockingDownloadsInAdFrameWithoutUserActivation";
 
+    // Support COEP on SharedWorker.
+    public static final String COEP_FOR_SHARED_WORKER = "COEPForSharedWorker";
+
 
     public static final String COLRV1_FONTS = "COLRV1Fonts";
 
     // Enable CSS Container Queries. Also implies LayoutNGGrid and CSSContainSize1D.
     public static final String CSS_CONTAINER_QUERIES = "CSSContainerQueries";
 
+    // Controls whether the Conversion Measurement API infrastructure is enabled.
+    public static final String CONVERSION_MEASUREMENT = "ConversionMeasurement";
+
 
     public static final String GMS_CORE_EMOJI = "GMSCoreEmoji";
 
-    // Whether the HandwritingRecognition API can be enabled. Disabling this feature
-    // disables both the origin trial and the mojo interface. Enabling this feature
-    // allows the API to be controlled by origin trial (see web runtime feature
-    // `HandwritingRecognition`) and finch (see
-    // `kHandwritingRecognitionWebPlatformApiFinch`).
-    // TODO (crbug.com/1166910): Remove once the HandwritingRecognition API is more
-    // widely available (likely M92).
-    public static final String HANDWRITING_RECOGNITION_WEB_PLATFORM_API = "HandwritingRecognitionWebPlatformApi";
-
-    // Whether the HandwritingRecognition API can be enabled. Disabling this feature
-    // disables both the origin trial and the mojo interface. Defaults to enabled
-    // so the feature can be controlled by finch, even when
-    // `kHandwritingRecognitionWebPlatformApi` is set from command-line.
+    // Whether the HandwritingRecognition API can be enabled by origin trial.
+    // Disabling this feature disables both the origin trial and the mojo interface.
     public static final String HANDWRITING_RECOGNITION_WEB_PLATFORM_API_FINCH = "HandwritingRecognitionWebPlatformApiFinch";
 
     // Enable defer commits to avoid flash of unstyled content, for same origin
@@ -70,7 +65,7 @@ public final class BlinkFeatures {
     public static final String FREEZE_PURGE_MEMORY_ALL_PAGES_FROZEN = "FreezePurgeMemoryAllPagesFrozen";
 
     // Freezes the user-agent as part of https://github.com/WICG/ua-client-hints.
-    public static final String FREEZE_USER_AGENT = "FreezeUserAgent";
+    public static final String REDUCE_USER_AGENT = "ReduceUserAgent";
 
     // Enables the frequency capping for detecting overlay popups. Overlay-popups
     // are the interstitials that pop up and block the main content of the page.
@@ -138,6 +133,12 @@ public final class BlinkFeatures {
     public static final String FENCED_FRAMES = "FencedFrames";
 
     // Enable the prerender2. https://crbug.com/1126305.
+    // Note that default enabling this does not enable the Prerender2 features
+    // because kSetOnlyIfOverridden is used for setting WebRuntimeFeatures'
+    // Prerender2. To enable this feature, we need to force-enable this feature
+    // using chrome://flags/#enable-prerender2 or --enable-features=Prerender2
+    // command line or a valid Origin Trial token in the page after default-enabling
+    // this feature.
     public static final String PRERENDER2 = "Prerender2";
 
     // Enable limiting previews loading hints to specific resource types.
@@ -157,8 +158,13 @@ public final class BlinkFeatures {
     // Changes the default RTCPeerConnection constructor behavior to use Unified
     // Plan as the SDP semantics. When the feature is enabled, Unified Plan is used
     // unless the default is overridden (by passing {sdpSemantics:'plan-b'} as the
-    // argument).
+    // argument). This was shipped in M72.
+    // The feature is still used by virtual test suites exercising Plan B.
     public static final String RTC_UNIFIED_PLAN_BY_DEFAULT = "RTCUnifiedPlanByDefault";
+
+    // When enabled, throw an exception when an RTCPeerConnection is constructed
+    // with {sdpSemantics:"plan-b"} and the Deprecation Trial is not enabled.
+    public static final String RTC_DISALLOW_PLAN_B_OUTSIDE_DEPRECATION_TRIAL = "RTCDisallowPlanBOutsideDeprecationTrial";
 
     // Determines if the SDP attrbute extmap-allow-mixed should be offered by
     // default or not. The default value can be overridden by passing
@@ -225,6 +231,9 @@ public final class BlinkFeatures {
 
     // File handling integration. https://crbug.com/829689
     public static final String FILE_HANDLING_API = "FileHandlingAPI";
+
+    // File handling icons. https://crbug.com/1218213
+    public static final String FILE_HANDLING_ICONS = "FileHandlingIcons";
 
     // Allows for synchronous XHR requests during page dismissal
     public static final String ALLOW_SYNC_XHR_IN_PAGE_DISMISSAL = "AllowSyncXHRInPageDismissal";
@@ -318,6 +327,9 @@ public final class BlinkFeatures {
     // When enabled, enforces new interoperable semantics for 3D transforms.
     // See crbug.com/1008483.
     public static final String TRANSFORM_INTEROP = "TransformInterop";
+
+
+    public static final String BACKFACE_VISIBILITY_INTEROP = "BackfaceVisibilityInterop";
 
     // When enabled, beacons (and friends) have ResourceLoadPriority::kLow,
     // not ResourceLoadPriority::kVeryLow.
@@ -446,7 +458,7 @@ public final class BlinkFeatures {
     public static final String CR_OS_AUTO_SELECT = "CrOSAutoSelect";
 
 
-    public static final String COMPOSITING_OPTIMIZATIONS = "CompositingOptimizations";
+    public static final String CLS_SCROLL_ANCHORING = "CLSScrollAnchoring";
 
     // Reduce the amount of information in the default 'referer' header for
     // cross-origin requests.
@@ -474,10 +486,18 @@ public final class BlinkFeatures {
 
     public static final String LOG_UNEXPECTED_IPC_POSTED_TO_BACK_FORWARD_CACHED_DOCUMENTS = "LogUnexpectedIPCPostedToBackForwardCachedDocuments";
 
+    // Enables web apps to request isolated storage.
+    public static final String WEB_APP_ENABLE_ISOLATED_STORAGE = "WebAppEnableIsolatedStorage";
+
     // Enables declarative link capturing in web apps.
     // Explainer:
     // https://github.com/WICG/sw-launch/blob/master/declarative_link_capturing.md
     public static final String WEB_APP_ENABLE_LINK_CAPTURING = "WebAppEnableLinkCapturing";
+
+    // Enables Unique ID feature in web apps. Controls parsing of "id" field in web
+    // app manifests. See explainer for more information:
+    // https://github.com/philloooo/pwa-unique-id
+    public static final String WEB_APP_ENABLE_MANIFEST_ID = "WebAppEnableManifestId";
 
     // Controls URL handling feature in web apps. Controls parsing of "url_handlers"
     // field in web app manifests. See explainer for more information:
@@ -495,12 +515,7 @@ public final class BlinkFeatures {
     // manifests. Also controls whether the parsed field is used in browser. See
     // incubation spec:
     // https://wicg.github.io/manifest-incubations/#note_taking-member
-    // TODO(crbug.com/1185678): Enable by default after M92 branches.
     public static final String WEB_APP_NOTE_TAKING = "WebAppNoteTaking";
-
-    // When enabled NV12 frames on a GPU will be forwarded to libvpx encoders
-    // without conversion to I420.
-    public static final String WEB_RTC_LIBVPX_ENCODE_NV12 = "WebRtcLibvpxEncodeNV12";
 
     // Makes network loading tasks unfreezable so that they can be processed while
     // the page is frozen.
@@ -562,9 +577,6 @@ public final class BlinkFeatures {
     // permitted to be included in slow reports traces. See crbug.com/1181774.
     public static final String BACKGROUND_TRACING_PERFORMANCE_MARK = "BackgroundTracingPerformanceMark";
 
-
-    public static final String CLSM90_IMPROVEMENTS = "CLSM90Improvements";
-
     // New compositing algorithm. See renderer/core/paint/README.md.
     public static final String COMPOSITE_AFTER_PAINT = "CompositeAfterPaint";
 
@@ -597,6 +609,36 @@ public final class BlinkFeatures {
     // tracks are disabled. If disabled, the APM in WebRTC will ignore attempts to
     // set it in a low-processing mode when all audio tracks are disabled.
     public static final String MINIMIZE_AUDIO_PROCESSING_FOR_UNUSED_OUTPUT = "MinimizeAudioProcessingForUnusedOutput";
+
+    // When <dialog>s are closed, this focuses the "previously focused" element
+    // which had focus when the <dialog> was first opened.
+    // TODO(crbug.com/649162): Remove DialogFocusNewSpecBehavior after
+    // the feature is in stable with no issues.
+    public static final String DIALOG_FOCUS_NEW_SPEC_BEHAVIOR = "DialogFocusNewSpecBehavior";
+
+    // Makes autofill look across shadow boundaries when collecting form controls to
+    // fill.
+    public static final String AUTOFILL_SHADOW_DOM = "AutofillShadowDOM";
+
+    // Allows read/write of custom formats with unsanitized clipboard content. See
+    // crbug.com/106449.
+    public static final String CLIPBOARD_CUSTOM_FORMATS = "ClipboardCustomFormats";
+
+    // Uses page viewport instead of frame viewport in the Largest Contentful Paint
+    // heuristic where images occupying the full viewport are ignored.
+    public static final String USE_PAGE_VIEWPORT_IN_LCP = "UsePageViewportInLCP";
+
+    // Enable `Sec-CH-UA-Platform` client hint and request header to be sent by
+    // default
+    public static final String UACH_PLATFORM_ENABLED_BY_DEFAULT = "UACHPlatformEnabledByDefault";
+
+    // When enabled, allow dropping alpha on media streams for rendering sinks if
+    // other sinks connected do not use alpha.
+    public static final String ALLOW_DROP_ALPHA_FOR_MEDIA_STREAM = "AllowDropAlphaForMediaStream";
+
+    // Enables partitioning of third party storage (IndexedDB, CacheStorage, etc.)
+    // by the top level site to reduce fingerprinting.
+    public static final String THIRD_PARTY_STORAGE_PARTITIONING = "ThirdPartyStoragePartitioning";
 
     // Do not instantiate this class.
     private BlinkFeatures() {}

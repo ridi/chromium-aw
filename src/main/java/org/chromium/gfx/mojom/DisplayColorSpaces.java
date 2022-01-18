@@ -18,12 +18,13 @@ import androidx.annotation.IntDef;
 
 public final class DisplayColorSpaces extends org.chromium.mojo.bindings.Struct {
 
-    private static final int STRUCT_SIZE = 32;
-    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(32, 0)};
+    private static final int STRUCT_SIZE = 40;
+    private static final org.chromium.mojo.bindings.DataHeader[] VERSION_ARRAY = new org.chromium.mojo.bindings.DataHeader[] {new org.chromium.mojo.bindings.DataHeader(40, 0)};
     private static final org.chromium.mojo.bindings.DataHeader DEFAULT_STRUCT_INFO = VERSION_ARRAY[0];
     public ColorSpace[] colorSpaces;
     public int[] bufferFormats;
     public float sdrWhiteLevel;
+    public HdrStaticMetadata hdrStaticMetadata;
 
     private DisplayColorSpaces(int version) {
         super(STRUCT_SIZE, version);
@@ -84,6 +85,11 @@ public final class DisplayColorSpaces extends org.chromium.mojo.bindings.Struct 
                     
                 result.sdrWhiteLevel = decoder0.readFloat(24);
                 }
+                {
+                    
+                org.chromium.mojo.bindings.Decoder decoder1 = decoder0.readPointer(32, true);
+                result.hdrStaticMetadata = HdrStaticMetadata.decode(decoder1);
+                }
 
         } finally {
             decoder0.decreaseStackDepth();
@@ -109,5 +115,7 @@ public final class DisplayColorSpaces extends org.chromium.mojo.bindings.Struct 
         encoder0.encode(this.bufferFormats, 16, org.chromium.mojo.bindings.BindingsHelper.NOTHING_NULLABLE, 6);
         
         encoder0.encode(this.sdrWhiteLevel, 24);
+        
+        encoder0.encode(this.hdrStaticMetadata, 32, true);
     }
 }

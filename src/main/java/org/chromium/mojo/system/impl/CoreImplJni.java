@@ -15,7 +15,7 @@ import org.chromium.mojo.system.ResultAnd;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class CoreImplJni implements CoreImpl.Natives {
+class CoreImplJni implements CoreImpl.Natives {
   private static CoreImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<CoreImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.mojo.system.impl.CoreImpl.Natives>() {

@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AwBrowserContextJni implements AwBrowserContext.Natives {
+class AwBrowserContextJni implements AwBrowserContext.Natives {
   private static AwBrowserContext.Natives testInstance;
 
   public static final JniStaticTestMocker<AwBrowserContext.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.android_webview.AwBrowserContext.Natives>() {

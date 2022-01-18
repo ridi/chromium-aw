@@ -13,7 +13,7 @@ import org.chromium.content_public.browser.WebContents;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ImeAdapterImplJni implements ImeAdapterImpl.Natives {
+class ImeAdapterImplJni implements ImeAdapterImpl.Natives {
   private static ImeAdapterImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<ImeAdapterImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.input.ImeAdapterImpl.Natives>() {

@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ComponentLoaderPolicyBridgeJni implements ComponentLoaderPolicyBridge.Natives {
+class ComponentLoaderPolicyBridgeJni implements ComponentLoaderPolicyBridge.Natives {
   private static ComponentLoaderPolicyBridge.Natives testInstance;
 
   public static final JniStaticTestMocker<ComponentLoaderPolicyBridge.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.component_updater.ComponentLoaderPolicyBridge.Natives>() {
@@ -31,8 +31,8 @@ final class ComponentLoaderPolicyBridgeJni implements ComponentLoaderPolicyBridg
   }
 
   @Override
-  public void componentLoadFailed(long nativeAndroidComponentLoaderPolicy) {
-    GEN_JNI.org_chromium_components_component_1updater_ComponentLoaderPolicyBridge_componentLoadFailed(nativeAndroidComponentLoaderPolicy);
+  public void componentLoadFailed(long nativeAndroidComponentLoaderPolicy, int errorCode) {
+    GEN_JNI.org_chromium_components_component_1updater_ComponentLoaderPolicyBridge_componentLoadFailed(nativeAndroidComponentLoaderPolicy, errorCode);
   }
 
   @Override

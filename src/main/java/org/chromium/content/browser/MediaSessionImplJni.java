@@ -10,7 +10,7 @@ import org.chromium.content_public.browser.WebContents;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class MediaSessionImplJni implements MediaSessionImpl.Natives {
+class MediaSessionImplJni implements MediaSessionImpl.Natives {
   private static MediaSessionImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<MediaSessionImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.MediaSessionImpl.Natives>() {

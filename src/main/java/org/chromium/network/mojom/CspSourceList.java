@@ -30,6 +30,7 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
     public boolean allowInline;
     public boolean allowEval;
     public boolean allowWasmEval;
+    public boolean allowWasmUnsafeEval;
     public boolean allowDynamic;
     public boolean allowUnsafeHashes;
     public boolean reportSample;
@@ -42,6 +43,7 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
         this.allowInline = (boolean) false;
         this.allowEval = (boolean) false;
         this.allowWasmEval = (boolean) false;
+        this.allowWasmUnsafeEval = (boolean) false;
         this.allowDynamic = (boolean) false;
         this.allowUnsafeHashes = (boolean) false;
         this.reportSample = (boolean) false;
@@ -140,15 +142,19 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
                 }
                 {
                     
-                result.allowDynamic = decoder0.readBoolean(32, 6);
+                result.allowWasmUnsafeEval = decoder0.readBoolean(32, 6);
                 }
                 {
                     
-                result.allowUnsafeHashes = decoder0.readBoolean(32, 7);
+                result.allowDynamic = decoder0.readBoolean(32, 7);
                 }
                 {
                     
-                result.reportSample = decoder0.readBoolean(33, 0);
+                result.allowUnsafeHashes = decoder0.readBoolean(33, 0);
+                }
+                {
+                    
+                result.reportSample = decoder0.readBoolean(33, 1);
                 }
 
         } finally {
@@ -204,10 +210,12 @@ public final class CspSourceList extends org.chromium.mojo.bindings.Struct {
         
         encoder0.encode(this.allowWasmEval, 32, 5);
         
-        encoder0.encode(this.allowDynamic, 32, 6);
+        encoder0.encode(this.allowWasmUnsafeEval, 32, 6);
         
-        encoder0.encode(this.allowUnsafeHashes, 32, 7);
+        encoder0.encode(this.allowDynamic, 32, 7);
         
-        encoder0.encode(this.reportSample, 33, 0);
+        encoder0.encode(this.allowUnsafeHashes, 33, 0);
+        
+        encoder0.encode(this.reportSample, 33, 1);
     }
 }

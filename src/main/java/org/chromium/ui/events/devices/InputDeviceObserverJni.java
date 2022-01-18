@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class InputDeviceObserverJni implements InputDeviceObserver.Natives {
+class InputDeviceObserverJni implements InputDeviceObserver.Natives {
   private static InputDeviceObserver.Natives testInstance;
 
   public static final JniStaticTestMocker<InputDeviceObserver.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.ui.events.devices.InputDeviceObserver.Natives>() {

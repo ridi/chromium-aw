@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class ContactsDialogHostJni implements ContactsDialogHost.Natives {
+class ContactsDialogHostJni implements ContactsDialogHost.Natives {
   private static ContactsDialogHost.Natives testInstance;
 
   public static final JniStaticTestMocker<ContactsDialogHost.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.content.browser.ContactsDialogHost.Natives>() {

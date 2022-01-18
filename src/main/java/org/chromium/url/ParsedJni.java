@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class ParsedJni implements Parsed.Natives {
+class ParsedJni implements Parsed.Natives {
   private static Parsed.Natives testInstance;
 
   public static final JniStaticTestMocker<Parsed.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.url.Parsed.Natives>() {

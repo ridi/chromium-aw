@@ -47,6 +47,12 @@ public final class AwSwitches {
     // job, even if one is already pending.
     public static final String FINCH_SEED_IGNORE_PENDING_DOWNLOAD = "finch-seed-ignore-pending-download";
 
+    // Forces WebView's service to always schedule a new variations seed download
+    // job, even if the device is not charging. Note this switch may be necessary
+    // for testing on Android emulators as these are not always considered to be
+    // charging.
+    public static final String FINCH_SEED_NO_CHARGING_REQUIREMENT = "finch-seed-no-charging-requirement";
+
     // The minimum amount of time in seconds that WebView's service will wait
     // between two variations seed downloads from the variations server.
     public static final String FINCH_SEED_MIN_DOWNLOAD_PERIOD = "finch-seed-min-download-period";
@@ -61,6 +67,9 @@ public final class AwSwitches {
     // enabled by default. This enables the same-site-by-default-cookies,
     // cookies-without-SameSite-must-be-secure, and schemeful-same-site features.
     public static final String WEBVIEW_ENABLE_MODERN_COOKIE_SAME_SITE = "webview-enable-modern-cookie-same-site";
+
+    // Disables downloading/updating Apps Package Names Allowlist.
+    public static final String WEBVIEW_DISABLE_APPS_PACKAGE_NAMES_ALLOWLIST_COMPONENT = "disable-webview-apps-package-names-allowlist-component";
 
     // Do not instantiate this class.
     private AwSwitches() {}

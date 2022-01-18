@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class AudioTrackOutputStreamJni implements AudioTrackOutputStream.Natives {
+class AudioTrackOutputStreamJni implements AudioTrackOutputStream.Natives {
   private static AudioTrackOutputStream.Natives testInstance;
 
   public static final JniStaticTestMocker<AudioTrackOutputStream.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.media.AudioTrackOutputStream.Natives>() {

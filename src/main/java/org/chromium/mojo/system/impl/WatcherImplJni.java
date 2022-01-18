@@ -11,7 +11,7 @@ import org.chromium.base.natives.GEN_JNI;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-final class WatcherImplJni implements WatcherImpl.Natives {
+class WatcherImplJni implements WatcherImpl.Natives {
   private static WatcherImpl.Natives testInstance;
 
   public static final JniStaticTestMocker<WatcherImpl.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.mojo.system.impl.WatcherImpl.Natives>() {

@@ -10,7 +10,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class PolicyConverterJni implements PolicyConverter.Natives {
+class PolicyConverterJni implements PolicyConverter.Natives {
   private static PolicyConverter.Natives testInstance;
 
   public static final JniStaticTestMocker<PolicyConverter.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.policy.PolicyConverter.Natives>() {

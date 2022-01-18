@@ -9,7 +9,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class RecordUserActionJni implements RecordUserAction.Natives {
+class RecordUserActionJni implements RecordUserAction.Natives {
   private static RecordUserAction.Natives testInstance;
 
   public static final JniStaticTestMocker<RecordUserAction.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.metrics.RecordUserAction.Natives>() {

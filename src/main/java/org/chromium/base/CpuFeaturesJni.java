@@ -7,7 +7,7 @@ import org.chromium.base.natives.GEN_JNI;
 
 @Generated("org.chromium.jni_generator.JniProcessor")
 @CheckDiscard("crbug.com/993421")
-final class CpuFeaturesJni implements CpuFeatures.Natives {
+class CpuFeaturesJni implements CpuFeatures.Natives {
   private static CpuFeatures.Natives testInstance;
 
   public static final JniStaticTestMocker<CpuFeatures.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.base.CpuFeatures.Natives>() {

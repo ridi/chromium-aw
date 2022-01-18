@@ -13,7 +13,7 @@ import org.chromium.url.GURL;
 @Generated("org.chromium.jni_generator.JniProcessor")
 @MainDex
 @CheckDiscard("crbug.com/993421")
-public final class UrlFormatterJni implements UrlFormatter.Natives {
+public class UrlFormatterJni implements UrlFormatter.Natives {
   private static UrlFormatter.Natives testInstance;
 
   public static final JniStaticTestMocker<UrlFormatter.Natives> TEST_HOOKS = new org.chromium.base.JniStaticTestMocker<org.chromium.components.url_formatter.UrlFormatter.Natives>() {
