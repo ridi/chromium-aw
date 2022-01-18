@@ -708,6 +708,22 @@ const tasks = [
     dest: 'src/main/java/org/chromium/device/power_save_blocker',
   },
   {
+    name: 'device/sensors',
+    action: Action.COPY,
+    src: [
+      'src/services/device/generic_sensor/android/java/src/org/chromium/device/sensors',
+      `src/out/${delegateTarget}/gen/services/device/generic_sensor/java/generated_java/input_srcjars/org/chromium/device/sensors`,
+      [
+        `src/out/${delegateTarget}/gen/services/device/public/mojom/generic_sensor_java/generated_java/input_srcjars/org/chromium/device/mojom`,
+        [
+          'ReportingMode.java',
+          'SensorType.java',
+        ],
+      ],
+    ],
+    dest: 'src/main/java/org/chromium/device/sensors',
+  },
+  {
     name: 'device/time_zone_monitor',
     action: Action.COPY,
     src: [
