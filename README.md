@@ -223,7 +223,7 @@ $ ninja -C out/$TARGET webview_instrumentation_apk
 **IMPORTANT : It may be different depending on Chromium version.**
 
 ```sh
-$ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 92.
+$ node ~/chromium-aw/copy.js ~/chromium . # tested on 61 ~ 93.
 ```
 
 5. Build
