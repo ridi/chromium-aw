@@ -28,6 +28,7 @@ version = '92.0.4515.115-1'
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
+    ndkVersion '21.1.6352462'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
