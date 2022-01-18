@@ -146,10 +146,7 @@ class WebView(context: Context) : FrameLayout(context) {
     companion object {
         // https://chromium.googlesource.com/chromium/src.git/+/refs/tags/93.0.4577.82/third_party/blink/renderer/platform/runtime_enabled_features.json5
         private val COMMAND =
-                arrayOf(
-                        "", // Just put an empty string or any string.
-                        "--enable-blink-features=LayoutNG,LayoutNGBlockFragmentation"
-                )
+                arrayOf("")
 
         fun initialize(application: Application) {
             AwShellResourceProvider.registerResources(application)
