@@ -40,7 +40,7 @@ apply(plugin = "de.undercouch.download")
 Then you can include this library by adding dependency script to `build.gradle.kts` file of your project.
 
 ```kts
-val version = "92.0.4515.115-1"
+val version = "93.0.4577.82-1"
 val fileName = "chromium-aw-release.aar"
 val destPath = "../libs/${fileName}"
 val downloadChromiumAwTaskName = "chromium-aw@aar"
